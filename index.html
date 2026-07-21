@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="nb">
+<html lang="nb" data-theme="light">
   <head>
     <meta charset="UTF-8" />
     <meta
@@ -15,6 +15,13 @@
     <link rel="apple-touch-icon" href="favicon.svg" />
     <title>Cinema Info · Buen</title>
     <link rel="stylesheet" href="styles.css" />
+    <script>
+      try {
+        var p = JSON.parse(localStorage.getItem("cinemaInfoPrefs") || "{}");
+        if (p.theme === "dark") document.documentElement.dataset.theme = "dark";
+        if (p.lang === "en") document.documentElement.lang = "en";
+      } catch (e) {}
+    </script>
   </head>
   <body>
     <header class="top">
@@ -33,34 +40,114 @@
         </button>
       </div>
 
-      <div id="dayTabs" class="day-tabs" role="tablist" aria-label="Velg dag"></div>
+      <div id="dayControls" class="day-controls">
+        <div id="dayTabs" class="day-tabs" role="tablist" aria-label="Velg dag"></div>
 
-      <div class="screen-row">
-        <label class="screen-field">
-          <span>Sal</span>
-          <select id="screenSelect" aria-label="Filtrer sal">
-            <option value="all">Alle saler</option>
-          </select>
-        </label>
-        <p id="statusText" class="status">—</p>
+        <div class="screen-row">
+          <label class="screen-field">
+            <span data-i18n="screen">Sal</span>
+            <select id="screenSelect" aria-label="Filtrer sal">
+              <option value="all">Alle saler</option>
+            </select>
+          </label>
+          <p id="statusText" class="status">—</p>
+        </div>
+
+        <section id="summary" class="summary" hidden></section>
       </div>
-
-      <section id="summary" class="summary" hidden></section>
     </header>
 
-    <main id="content" class="content" aria-live="polite">
-      <div class="state loading">
-        <div class="spinner" aria-hidden="true"></div>
-        <p>Henter program…</p>
-      </div>
+    <main class="main">
+      <section id="view-day" class="view" data-view="day" aria-live="polite">
+        <div id="content" class="content">
+          <div class="state loading">
+            <div class="spinner" aria-hidden="true"></div>
+            <p data-i18n="loading">Henter program…</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="view-movies" class="view" data-view="movies" hidden>
+        <div id="moviesContent" class="content movies-content"></div>
+      </section>
+
+      <section id="view-stats" class="view" data-view="stats" hidden>
+        <div id="statsContent" class="content stats-content"></div>
+      </section>
+
+      <section id="view-settings" class="view" data-view="settings" hidden>
+        <div id="settingsContent" class="content settings-content"></div>
+      </section>
     </main>
 
-    <footer class="footer">
-      <span>Sluttid + solgt fra eBillett</span>
-      <a href="https://www.buenkino.no/program?dato=alle" target="_blank" rel="noopener noreferrer"
-        >buenkino.no</a
-      >
-    </footer>
+    <nav class="pill-nav" aria-label="Hovedmeny">
+      <div class="pill-nav-inner" role="tablist">
+        <button
+          type="button"
+          class="pill-tab"
+          data-tab="day"
+          role="tab"
+          aria-selected="true"
+          aria-controls="view-day"
+        >
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+            <path
+              fill="currentColor"
+              d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2Zm0 16H5V10h14v10Zm0-12H5V6h14v2ZM7 12h5v5H7v-5Z"
+            />
+          </svg>
+          <span data-i18n="nav.day">Dager</span>
+        </button>
+        <button
+          type="button"
+          class="pill-tab"
+          data-tab="movies"
+          role="tab"
+          aria-selected="false"
+          aria-controls="view-movies"
+        >
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+            <path
+              fill="currentColor"
+              d="M18 4v1h-2V4H8v1H6V4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2ZM8 18H6v-2h2v2Zm0-4H6v-2h2v2Zm0-4H6V8h2v2Zm10 8h-8v-2h8v2Zm0-4h-8v-2h8v2Zm0-4h-8V8h8v2Z"
+            />
+          </svg>
+          <span data-i18n="nav.movies">Filmer</span>
+        </button>
+        <button
+          type="button"
+          class="pill-tab"
+          data-tab="stats"
+          role="tab"
+          aria-selected="false"
+          aria-controls="view-stats"
+        >
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+            <path
+              fill="currentColor"
+              d="M5 9.2h3V19H5V9.2ZM10.6 5h2.8v14h-2.8V5Zm5.6 8H19v6h-2.8v-6Z"
+            />
+          </svg>
+          <span data-i18n="nav.stats">Statistikk</span>
+        </button>
+        <button
+          type="button"
+          class="pill-tab"
+          data-tab="settings"
+          role="tab"
+          aria-selected="false"
+          aria-controls="view-settings"
+        >
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+            <path
+              fill="currentColor"
+              d="M19.14 12.94c.04-.31.06-.63.06-.94s-.02-.63-.06-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.49.49 0 0 0-.59-.22l-2.39.96a7.1 7.1 0 0 0-1.63-.94l-.36-2.54A.49.49 0 0 0 13.9 2h-3.8a.49.49 0 0 0-.48.41l-.36 2.54c-.6.24-1.14.55-1.63.94l-2.39-.96a.49.49 0 0 0-.59.22L2.73 8.87a.48.48 0 0 0 .12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.39 1.04.71 1.63.94l.36 2.54c.05.24.24.41.48.41h3.8c.24 0 .44-.17.49-.41l.36-2.54c.6-.24 1.14-.55 1.63-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32a.49.49 0 0 0-.12-.61l-2.01-1.58ZM12 15.6A3.6 3.6 0 1 1 12 8.4a3.6 3.6 0 0 1 0 7.2Z"
+            />
+          </svg>
+          <span data-i18n="nav.settings">Innstillinger</span>
+        </button>
+      </div>
+    </nav>
 
     <script src="app.js" type="module"></script>
   </body>
