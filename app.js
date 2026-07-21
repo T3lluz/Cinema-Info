@@ -834,7 +834,17 @@ function renderStats() {
     cur.sold += soldOf(show);
     dayMap.set(show.dayKey, cur);
   }
-  const byDay = [...dayMap.values()].sort((a, b) => a.day.localeCompare(b.day));
+  // Chart every day up to the last one with sales, so future
+  // zero-days don't add a long empty tail but mid-range gaps stay visible.
+  const todayKey = toDayKey(new Date());
+  const allDays = [...dayMap.values()].sort((a, b) =>
+    a.day.localeCompare(b.day)
+  );
+  const lastRelevant = allDays.reduce(
+    (max, d) => (d.sold > 0 && d.day > max ? d.day : max),
+    todayKey
+  );
+  const byDay = allDays.filter((d) => d.day <= lastRelevant);
   const maxDaySold = Math.max(...byDay.map((d) => d.sold), 1);
   const daysWithSold = byDay.filter((d) => d.sold > 0);
   const avgDay = daysWithSold.length
@@ -960,7 +970,7 @@ function renderStats() {
               ${topSold
                 .map(
                   (m, i) => `
-                <div class="top-row" style="--i:${i}">
+                <div class="rank-row" style="--i:${i}">
                   <span class="top-rank">${i + 1}</span>
                   ${renderPoster(m, 36, 52, "stats-poster")}
                   <div class="top-body">

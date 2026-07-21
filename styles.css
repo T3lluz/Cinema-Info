@@ -790,7 +790,7 @@ h1 {
 }
 
 .bar-row,
-.top-row {
+.rank-row {
   animation: rise 0.35s ease both;
   animation-delay: calc(var(--i, 0) * 28ms);
 }
@@ -854,7 +854,7 @@ h1 {
   text-align: right;
 }
 
-.top-row {
+.rank-row {
   display: grid;
   grid-template-columns: 24px 36px minmax(0, 1fr) auto;
   gap: 10px;

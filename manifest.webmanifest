@@ -4,7 +4,7 @@
   "description": "Program, tider og solgte billetter for Buen kino",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#f0eeeb",
+  "background_color": "#efece8",
   "theme_color": "#c41e2a",
   "lang": "nb",
   "icons": [
