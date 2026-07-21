@@ -45,7 +45,7 @@ const I18N = {
     soldBestDay: "Beste dag",
     soldByDay: "Solgt per dag",
     soldByWeek: "Solgt per uke",
-    soldByMovie: "Solgt per film",
+    topSold: "Mest solgte filmer",
     weekLabel: "Uke {n}",
     tickets: "billetter",
     noSoldData: "Ingen solgtdata ennå — trykk oppdater.",
@@ -124,7 +124,7 @@ const I18N = {
     soldBestDay: "Best day",
     soldByDay: "Sold by day",
     soldByWeek: "Sold by week",
-    soldByMovie: "Sold by movie",
+    topSold: "Top sold movies",
     weekLabel: "Week {n}",
     tickets: "tickets",
     noSoldData: "No sales data yet — tap refresh.",
@@ -858,14 +858,16 @@ function renderStats() {
   const byWeek = [...weekMap.values()].sort((a, b) => a.key.localeCompare(b.key));
   const maxWeekSold = Math.max(...byWeek.map((w) => w.sold), 1);
 
-  const movies = groupMovies()
+  const topSold = groupMovies()
     .map((m) => ({
-      ...m,
+      title: m.title,
+      posterUrl: m.posterUrl,
       soldSum: m.shows.reduce((n, s) => n + soldOf(s), 0),
       showCount: m.shows.length,
     }))
-    .sort((a, b) => b.soldSum - a.soldSum || a.title.localeCompare(b.title));
-  const maxMovieSold = Math.max(...movies.map((m) => m.soldSum), 1);
+    .filter((m) => m.soldSum > 0)
+    .sort((a, b) => b.soldSum - a.soldSum)
+    .slice(0, 10);
 
   if (!hasSold && totalSold === 0) {
     els.statsContent.innerHTML = `
@@ -903,26 +905,16 @@ function renderStats() {
     <section class="stats-panel">
       <div class="stats-panel-head">
         <h3>${escapeHtml(t("soldByDay"))}</h3>
-        <span class="stats-panel-meta">${byDay.length} ${
-          lang === "en" ? "days" : "dager"
-        }</span>
       </div>
-      <div class="col-chart">
+      <div class="bar-list">
         ${byDay
           .map((row, i) => {
-            const h = Math.max((row.sold / maxDaySold) * 100, row.sold ? 4 : 0);
-            const label = chartDayParts(row.day);
+            const pct = Math.max((row.sold / maxDaySold) * 100, row.sold ? 4 : 0);
             return `
-              <div class="col-item" style="--i:${i}" title="${escapeHtml(
-                shortShowDay(row.day)
-              )}: ${row.sold}">
-                <span class="col-value">${row.sold || ""}</span>
-                <div class="col-bar-wrap">
-                  <div class="col-bar" style="height:${h}%"></div>
-                </div>
-                <span class="col-label"><span>${escapeHtml(
-                  label.wd
-                )}</span><span>${escapeHtml(label.dm)}</span></span>
+              <div class="bar-row" style="--i:${i}">
+                <span class="bar-label">${escapeHtml(shortShowDay(row.day))}</span>
+                <div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div>
+                <span class="bar-value">${row.sold}</span>
               </div>`;
           })
           .join("")}
@@ -933,27 +925,25 @@ function renderStats() {
       <div class="stats-panel-head">
         <h3>${escapeHtml(t("soldByWeek"))}</h3>
       </div>
-      <div class="week-list">
+      <div class="bar-list">
         ${byWeek
           .map((row, i) => {
             const pct = Math.max(
               (row.sold / maxWeekSold) * 100,
-              row.sold ? 3 : 0
+              row.sold ? 4 : 0
             );
             return `
-              <div class="week-row" style="--i:${i}">
-                <div class="week-meta">
-                  <span class="week-name">${escapeHtml(
+              <div class="bar-row" style="--i:${i}">
+                <div class="bar-label-stack">
+                  <span class="bar-label">${escapeHtml(
                     t("weekLabel", { n: row.week })
                   )}</span>
-                  <span class="week-range">${escapeHtml(
+                  <span class="bar-sub">${escapeHtml(
                     weekRangeLabel(row.days)
                   )}</span>
                 </div>
-                <div class="week-track">
-                  <div class="week-fill" style="width:${pct}%"></div>
-                </div>
-                <span class="week-sold">${row.sold}</span>
+                <div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div>
+                <span class="bar-value">${row.sold}</span>
               </div>`;
           })
           .join("")}
@@ -962,46 +952,30 @@ function renderStats() {
 
     <section class="stats-panel">
       <div class="stats-panel-head">
-        <h3>${escapeHtml(t("soldByMovie"))}</h3>
-        <span class="stats-panel-meta">${escapeHtml(t("tickets"))}</span>
+        <h3>${escapeHtml(t("topSold"))}</h3>
       </div>
-      <div class="movie-sold-list">
-        ${movies
-          .map((m, i) => {
-            const pct = Math.max(
-              (m.soldSum / maxMovieSold) * 100,
-              m.soldSum ? 3 : 0
-            );
-            return `
-              <div class="movie-sold-row" style="--i:${i}">
-                ${renderPoster(m, 40, 58, "stats-poster")}
-                <div class="movie-sold-body">
-                  <div class="movie-sold-top">
-                    <span class="movie-sold-title">${escapeHtml(m.title)}</span>
-                    <span class="movie-sold-num">${m.soldSum}</span>
+      ${
+        topSold.length
+          ? `<div class="top-list">
+              ${topSold
+                .map(
+                  (m, i) => `
+                <div class="top-row" style="--i:${i}">
+                  <span class="top-rank">${i + 1}</span>
+                  ${renderPoster(m, 36, 52, "stats-poster")}
+                  <div class="top-body">
+                    <span class="top-title">${escapeHtml(m.title)}</span>
+                    <span class="top-sub">${escapeHtml(showsLabel(m.showCount))}</span>
                   </div>
-                  <div class="movie-sold-track">
-                    <div class="movie-sold-fill" style="width:${pct}%"></div>
-                  </div>
-                  <span class="movie-sold-sub">${escapeHtml(
-                    showsLabel(m.showCount)
-                  )}</span>
-                </div>
-              </div>`;
-          })
-          .join("")}
-      </div>
+                  <span class="top-sold">${m.soldSum}</span>
+                </div>`
+                )
+                .join("")}
+            </div>`
+          : `<p class="empty-note soft">${escapeHtml(t("noSoldData"))}</p>`
+      }
     </section>
   `;
-}
-
-function chartDayParts(dayKey) {
-  const [y, m, d] = dayKey.split("-").map(Number);
-  const date = new Date(y, m - 1, d);
-  return {
-    wd: capitalize(weekdays()[date.getDay()]).slice(0, 2),
-    dm: `${d}.${m}`,
-  };
 }
 
 function renderSettings() {
