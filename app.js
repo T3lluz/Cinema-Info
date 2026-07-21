@@ -33,8 +33,8 @@ const I18N = {
     soldOut: "Utsolgt",
     fewLeft: "{n} igjen",
     reservedShort: "{n} res.",
-    occupancy: "belegg",
-    occupancyTotal: "Snittbelegg",
+    occupancy: "fylt",
+    occupancyTotal: "Snitt fylt sal",
     nextShow: "Neste {time}",
     inMinutes: "om {n} min",
     today: "I dag",
@@ -119,8 +119,8 @@ const I18N = {
     soldOut: "Sold out",
     fewLeft: "{n} left",
     reservedShort: "{n} res.",
-    occupancy: "occupancy",
-    occupancyTotal: "Avg. occupancy",
+    occupancy: "full",
+    occupancyTotal: "Avg. seats filled",
     nextShow: "Next {time}",
     inMinutes: "in {n} min",
     today: "Today",
@@ -464,7 +464,7 @@ function applyTheme(next) {
   applyTheme._t = setTimeout(() => root.classList.remove("theme-anim"), 400);
   document.documentElement.dataset.theme = theme;
   const meta = document.querySelector('meta[name="theme-color"]');
-  if (meta) meta.content = theme === "dark" ? "#1a1816" : "#c41e2a";
+  if (meta) meta.content = theme === "dark" ? "#151312" : "#c41e2a";
   const bar = document.querySelector(
     'meta[name="apple-mobile-web-app-status-bar-style"]'
   );
@@ -501,8 +501,16 @@ function liquidMove(indicator, target, { instant = false } = {}) {
   const newL = target.offsetLeft;
   const newW = target.offsetWidth;
 
+  // Hidden targets measure 0×0; bail so we don't park the indicator at
+  // width 0 and leave the selected pill unstyled when it shows again.
+  if (!newW) {
+    delete indicator.dataset.placed;
+    return;
+  }
+
   const hasPos = indicator.dataset.placed === "1";
   if (instant || !hasPos) {
+    clearTimeout(indicator._contract);
     indicator.classList.add("no-trans");
     indicator.style.left = `${newL}px`;
     indicator.style.width = `${newW}px`;
@@ -573,6 +581,9 @@ async function setActiveTab(tab, { skipRender = false } = {}) {
 
   els.dayControls.hidden = tab !== "day";
   els.refreshBtn.hidden = tab === "settings";
+  // The day strip was unmeasurable while hidden; re-seat its indicator
+  // now that it is visible again so the selected pill keeps its color.
+  if (tab === "day") moveDayIndicator({ instant: true });
 
   if (skipRender || !state?.shows) return;
 
