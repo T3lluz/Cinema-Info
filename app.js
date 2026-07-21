@@ -197,6 +197,8 @@ const els = {
   },
 };
 
+const TAB_ORDER = ["day", "movies", "stats", "settings"];
+
 /** @type {{ shows: any[], updatedAt?: string } | null} */
 let state = null;
 let selectedDay = "";
@@ -441,6 +443,11 @@ function mergeShows(snapshotShows) {
 
 function applyTheme(next) {
   theme = next;
+  // Cross-fade colors while the theme flips, then drop the hook.
+  const root = document.documentElement;
+  root.classList.add("theme-anim");
+  clearTimeout(applyTheme._t);
+  applyTheme._t = setTimeout(() => root.classList.remove("theme-anim"), 400);
   document.documentElement.dataset.theme = theme;
   const meta = document.querySelector('meta[name="theme-color"]');
   if (meta) meta.content = theme === "dark" ? "#1a1816" : "#c41e2a";
@@ -471,19 +478,47 @@ function applyLanguage() {
   );
 }
 
+function movePillIndicator(tab) {
+  const indicator = document.querySelector(".pill-indicator");
+  const idx = TAB_ORDER.indexOf(tab);
+  if (indicator && idx >= 0) {
+    indicator.style.transform = `translateX(calc(${idx} * (100% + 2px)))`;
+  }
+}
+
 async function setActiveTab(tab, { skipRender = false } = {}) {
   if (!els.views[tab]) return;
+  const prevTab = activeTab;
   activeTab = tab;
   savePrefs();
   document.body.dataset.tab = tab;
 
   Object.entries(els.views).forEach(([key, el]) => {
     el.hidden = key !== tab;
+    el.classList.remove("slide-in-right", "slide-in-left");
   });
+
+  // Slide the incoming view in from the side it lives on.
+  if (!skipRender && prevTab !== tab) {
+    const dir =
+      TAB_ORDER.indexOf(tab) > TAB_ORDER.indexOf(prevTab)
+        ? "slide-in-right"
+        : "slide-in-left";
+    const view = els.views[tab];
+    // Restart the animation even if the class was just removed.
+    void view.offsetWidth;
+    view.classList.add(dir);
+    view.addEventListener(
+      "animationend",
+      () => view.classList.remove("slide-in-right", "slide-in-left"),
+      { once: true }
+    );
+  }
 
   document.querySelectorAll(".pill-tab").forEach((btn) => {
     btn.setAttribute("aria-selected", String(btn.dataset.tab === tab));
   });
+  movePillIndicator(tab);
 
   els.dayControls.hidden = tab !== "day";
   els.refreshBtn.hidden = tab === "settings";
@@ -655,6 +690,15 @@ function renderDay() {
   if (!state?.shows) return;
   const shows = visibleShows();
   const now = new Date();
+
+  // Replay entrance animations only when the visible day/screen changes,
+  // not on periodic live refreshes.
+  const renderKey = `${selectedDay}|${els.screenSelect.value}`;
+  const isRefresh = els.content.dataset.key === renderKey;
+  els.content.classList.toggle("no-anim", isRefresh);
+  els.summary.classList.toggle("no-anim", isRefresh);
+  els.content.dataset.key = renderKey;
+
   renderSummary(shows, now);
 
   if (!shows.length) {
@@ -677,7 +721,7 @@ function renderDay() {
         );
       }
     }
-    parts.push(renderShowCard(show, now));
+    parts.push(renderShowCard(show, now, i));
   }
 
   els.content.innerHTML = `
@@ -751,7 +795,7 @@ function statusOf(show, now) {
   return "upcoming";
 }
 
-function renderShowCard(show, now) {
+function renderShowCard(show, now, index = 0) {
   const status = statusOf(show, now);
   const badge =
     status === "live"
@@ -808,11 +852,11 @@ function renderShowCard(show, now) {
   // Link to the eBillett page so staff can jump straight to the seat map.
   if (show.ticketUrl) {
     return `
-      <a class="show-card ${status} linked" href="${escapeHtml(show.ticketUrl)}"
+      <a class="show-card ${status} linked" style="--i:${index}" href="${escapeHtml(show.ticketUrl)}"
          target="_blank" rel="noopener">${inner}</a>
     `;
   }
-  return `<article class="show-card ${status}">${inner}</article>`;
+  return `<article class="show-card ${status}" style="--i:${index}">${inner}</article>`;
 }
 
 function renderPoster(show, w, h, className = "poster") {
@@ -904,6 +948,12 @@ function renderMovies() {
   const movies = groupMovies();
   const now = new Date();
 
+  els.moviesContent.classList.toggle(
+    "no-anim",
+    els.moviesContent.dataset.rendered === "1"
+  );
+  els.moviesContent.dataset.rendered = "1";
+
   if (!movies.length) {
     els.moviesContent.innerHTML = `<div class="empty-note">${escapeHtml(
       t("noMovies")
@@ -917,12 +967,12 @@ function renderMovies() {
       <p>${escapeHtml(t("moviesSubtitle"))}</p>
     </div>
     <div class="movie-grid">
-      ${movies.map((m) => renderMovieTile(m, now)).join("")}
+      ${movies.map((m, i) => renderMovieTile(m, now, i)).join("")}
     </div>
   `;
 }
 
-function renderMovieTile(movie, now) {
+function renderMovieTile(movie, now, index = 0) {
   const duration = movie.runningLabel
     ? movie.runningLabel.replace(" t. ", "t ").replace(" min.", "m")
     : formatDuration(movie.runningMinutes);
@@ -960,7 +1010,7 @@ function renderMovieTile(movie, now) {
     .join("");
 
   return `
-    <article class="movie-tile">
+    <article class="movie-tile" style="--i:${index}">
       ${renderPoster(movie, 72, 104, "movie-poster")}
       <div class="movie-tile-body">
         <h3 class="movie-tile-title">${escapeHtml(movie.title)}</h3>

@@ -46,6 +46,14 @@
   box-sizing: border-box;
 }
 
+.theme-anim body,
+.theme-anim body * {
+  transition:
+    background-color 0.35s ease,
+    color 0.35s ease,
+    border-color 0.35s ease !important;
+}
+
 html,
 body {
   margin: 0;
@@ -187,6 +195,12 @@ h1 {
   cursor: pointer;
   white-space: nowrap;
   line-height: 1.2;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease,
+    transform 0.15s ease;
+}
+
+.day-tab:active {
+  transform: scale(0.95);
 }
 
 .day-tab.past {
@@ -252,6 +266,21 @@ h1 {
   margin: 0;
 }
 
+.summary .chip {
+  animation: chipIn 0.3s ease both;
+}
+
+@keyframes chipIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 .summary[hidden] {
   display: none;
 }
@@ -304,6 +333,36 @@ h1 {
   display: none;
 }
 
+.view.slide-in-right {
+  animation: slideInRight 0.28s cubic-bezier(0.25, 0.9, 0.35, 1) both;
+}
+
+.view.slide-in-left {
+  animation: slideInLeft 0.28s cubic-bezier(0.25, 0.9, 0.35, 1) both;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 .content {
   flex: 1;
   padding: 12px 14px 20px;
@@ -336,6 +395,17 @@ h1 {
   border: 1px solid var(--line);
   color: inherit;
   text-decoration: none;
+}
+
+.show-card {
+  animation: rise 0.32s ease both;
+  animation-delay: calc(var(--i, 0) * 35ms);
+}
+
+.no-anim .show-card,
+.no-anim .movie-tile,
+.no-anim .chip {
+  animation: none;
 }
 
 .show-card.linked {
@@ -700,6 +770,8 @@ h1 {
   border-radius: 14px;
   background: var(--surface);
   border: 1px solid var(--line);
+  animation: rise 0.32s ease both;
+  animation-delay: calc(min(var(--i, 0), 10) * 35ms);
 }
 
 .movie-poster {
@@ -1107,6 +1179,11 @@ a.tile-show:hover {
   background: transparent;
   color: var(--muted);
   cursor: pointer;
+  transition: background 0.25s ease, color 0.25s ease, transform 0.15s ease;
+}
+
+.seg-btn:active {
+  transform: scale(0.96);
 }
 
 .seg-btn[aria-pressed="true"] {
@@ -1129,6 +1206,7 @@ a.tile-show:hover {
 
 .pill-nav-inner {
   pointer-events: auto;
+  position: relative;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 2px;
@@ -1140,7 +1218,22 @@ a.tile-show:hover {
   box-shadow: var(--nav-shadow);
 }
 
+.pill-indicator {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 4px;
+  /* One grid cell: full width minus 2x4px padding and 3x2px gaps, over 4. */
+  width: calc((100% - 8px - 6px) / 4);
+  border-radius: 999px;
+  background: var(--accent-soft);
+  transition: transform 0.38s cubic-bezier(0.3, 1.35, 0.45, 1);
+  pointer-events: none;
+}
+
 .pill-tab {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1157,18 +1250,59 @@ a.tile-show:hover {
   letter-spacing: 0.01em;
   cursor: pointer;
   padding: 5px 4px;
-  transition: background 0.15s ease, color 0.15s ease;
+  transition: color 0.2s ease;
 }
 
 .pill-tab svg {
   flex-shrink: 0;
   width: 18px;
   height: 18px;
+  transition: transform 0.25s cubic-bezier(0.3, 1.5, 0.5, 1);
+}
+
+.pill-tab:active svg {
+  transform: scale(0.85);
 }
 
 .pill-tab[aria-selected="true"] {
-  background: var(--accent-soft);
   color: var(--accent);
+}
+
+.pill-tab[aria-selected="true"] svg {
+  transform: translateY(-1px) scale(1.06);
+}
+
+.stats-hero,
+.stats-panel,
+.settings-section,
+.view-intro {
+  animation: rise 0.32s ease both;
+}
+
+.stats-panel:nth-of-type(2) {
+  animation-delay: 60ms;
+}
+
+.stats-panel:nth-of-type(3) {
+  animation-delay: 120ms;
+}
+
+.bar-fill,
+.week-fill,
+.occ-fill,
+.live-fill {
+  transition: width 0.5s cubic-bezier(0.25, 0.9, 0.35, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 @media (min-width: 700px) {
