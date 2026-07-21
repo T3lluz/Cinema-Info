@@ -5,9 +5,11 @@
  * Sold counts + real end times come from DX/eBillett.
  */
 
-import { writeFileSync, mkdirSync } from "node:fs";
+import { writeFileSync, mkdirSync, readFileSync, existsSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+
+const KEEP_DAYS = 120;
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUT = join(__dirname, "..", "data", "program.json");
@@ -56,6 +58,54 @@ function pickPosterUrl(movie) {
 
 function dayKeyFromShowStart(value) {
   return String(value).slice(0, 10);
+}
+
+function dayKeyDaysAgo(days) {
+  const d = new Date();
+  d.setDate(d.getDate() - days);
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
+}
+
+function loadPreviousShows() {
+  if (!existsSync(OUT)) return [];
+  try {
+    const prev = JSON.parse(readFileSync(OUT, "utf8"));
+    return Array.isArray(prev.shows) ? prev.shows : [];
+  } catch {
+    return [];
+  }
+}
+
+function mergeWithHistory(freshShows) {
+  const byId = new Map();
+  const cutoff = dayKeyDaysAgo(KEEP_DAYS);
+
+  for (const show of loadPreviousShows()) {
+    if (!show?.id || !show.dayKey || show.dayKey < cutoff) continue;
+    byId.set(show.id, show);
+  }
+
+  for (const show of freshShows) {
+    const prev = byId.get(show.id);
+    if (prev && show.sold == null && prev.sold != null) {
+      byId.set(show.id, {
+        ...show,
+        sold: prev.sold,
+        end: show.end || prev.end,
+        eventStatus:
+          show.eventStatus === "ok" ? "ok" : prev.eventStatus || show.eventStatus,
+      });
+    } else {
+      byId.set(show.id, show);
+    }
+  }
+
+  return [...byId.values()].sort((a, b) =>
+    String(a.start).localeCompare(String(b.start))
+  );
 }
 
 async function enrichShow(show) {
@@ -136,16 +186,17 @@ async function main() {
     shows.push(...enriched);
   }
 
+  const merged = mergeWithHistory(shows);
   const payload = {
     updatedAt: new Date().toISOString(),
     cinema: "Buen kino",
-    shows,
+    shows: merged,
   };
 
   mkdirSync(dirname(OUT), { recursive: true });
   writeFileSync(OUT, JSON.stringify(payload, null, 2) + "\n");
   console.log(
-    `Wrote ${shows.length} shows → ${OUT} (${payload.updatedAt})`
+    `Wrote ${merged.length} shows (${shows.length} fresh + history) → ${OUT} (${payload.updatedAt})`
   );
 }
 

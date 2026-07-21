@@ -1,5 +1,7 @@
 const DATA_URL = "./data/program.json";
 const PREFS_KEY = "cinemaInfoPrefs";
+const HISTORY_KEY = "cinemaInfoHistory";
+const HISTORY_KEEP_DAYS = 120;
 
 const I18N = {
   nb: {
@@ -20,33 +22,28 @@ const I18N = {
     error: "Feil",
     retry: "Prøv igjen",
     loadError: "Kunne ikke hente programmet.",
-    snapshot: "Snapshot {time}",
+    updated: "Oppdatert {time}",
     liveAt: "Live {time}",
-    shows: "visninger",
+    moviesOne: "1 film",
+    moviesMany: "{n} filmer",
+    showsOne: "1 forestilling",
+    showsMany: "{n} forestillinger",
     ongoing: "pågår",
-    soldTotal: "solgt totalt",
-    today: "I dag {d}.{m}",
-    tomorrow: "I morgen {d}.{m}",
-    dayShort: "{weekday} {d}.{m}",
+    soldLabel: "solgt",
+    today: "I dag",
+    yesterday: "I går",
+    tomorrow: "I morgen",
+    dayTab: "{weekday} {d}.{m}",
     dayFull: "{weekday} {d}. {month}",
-    footerSold: "Sluttid + solgt fra eBillett",
     moviesTitle: "Filmer",
-    moviesSubtitle: "Alle forestillinger gruppert per film",
+    moviesSubtitle: "Alle tider gruppert per film",
     noMovies: "Ingen filmer i programmet.",
-    showtimes: "Forestillinger",
-    statsTitle: "Solgte billetter",
-    statsSubtitle: "Live salgstall for hele perioden",
-    soldTotalLabel: "Totalt solgt",
-    soldAvgDay: "Snitt per dag",
-    soldBestDay: "Beste dag",
+    statsTitle: "Statistikk",
     soldByDay: "Solgt per dag",
     soldByWeek: "Solgt per uke",
-    soldByMovie: "Solgt per film",
-    soldByScreen: "Solgt per sal",
+    topSold: "Mest solgte filmer",
     weekLabel: "Uke {n}",
-    tickets: "billetter",
-    showsCount: "{n} visninger",
-    noSoldData: "Ingen solgtdata ennå — trykk oppdater for live tall.",
+    noSoldData: "Ingen solgtdata ennå — trykk oppdater.",
     settingsTitle: "Innstillinger",
     settingsSubtitle: "Språk og utseende",
     language: "Språk",
@@ -90,7 +87,7 @@ const I18N = {
     allScreens: "All screens",
     loading: "Loading program…",
     refresh: "Refresh",
-    emptyDay: "No showtimes for selected day/screen.",
+    emptyDay: "No movies for selected day/screen.",
     gap: "{n} min break",
     now: "Now",
     soon: "Soon",
@@ -99,33 +96,28 @@ const I18N = {
     error: "Error",
     retry: "Try again",
     loadError: "Could not load the program.",
-    snapshot: "Snapshot {time}",
+    updated: "Updated {time}",
     liveAt: "Live {time}",
-    shows: "showtimes",
+    moviesOne: "1 movie",
+    moviesMany: "{n} movies",
+    showsOne: "1 showtime",
+    showsMany: "{n} showtimes",
     ongoing: "playing",
-    soldTotal: "sold total",
-    today: "Today {d}.{m}",
-    tomorrow: "Tomorrow {d}.{m}",
-    dayShort: "{weekday} {d}.{m}",
+    soldLabel: "sold",
+    today: "Today",
+    yesterday: "Yesterday",
+    tomorrow: "Tomorrow",
+    dayTab: "{weekday} {d}.{m}",
     dayFull: "{weekday} {d} {month}",
-    footerSold: "End time + sold from eBillett",
     moviesTitle: "Movies",
-    moviesSubtitle: "All showtimes grouped by film",
+    moviesSubtitle: "All times grouped by movie",
     noMovies: "No movies in the program.",
-    showtimes: "Showtimes",
-    statsTitle: "Tickets sold",
-    statsSubtitle: "Live sales for the full period",
-    soldTotalLabel: "Total sold",
-    soldAvgDay: "Avg per day",
-    soldBestDay: "Best day",
+    statsTitle: "Statistics",
     soldByDay: "Sold by day",
     soldByWeek: "Sold by week",
-    soldByMovie: "Sold by movie",
-    soldByScreen: "Sold by screen",
+    topSold: "Top sold movies",
     weekLabel: "Week {n}",
-    tickets: "tickets",
-    showsCount: "{n} showtimes",
-    noSoldData: "No sales data yet — tap refresh for live numbers.",
+    noSoldData: "No sales data yet — tap refresh.",
     settingsTitle: "Settings",
     settingsSubtitle: "Language and appearance",
     language: "Language",
@@ -206,7 +198,6 @@ async function init() {
 
   els.screenSelect.addEventListener("change", onFilterChange);
   els.refreshBtn.addEventListener("click", () => load({ forceLive: true }));
-
   document.querySelectorAll(".pill-tab").forEach((btn) => {
     btn.addEventListener("click", () => setActiveTab(btn.dataset.tab));
   });
@@ -231,6 +222,14 @@ function months() {
   return (I18N[lang] || I18N.nb).months;
 }
 
+function moviesLabel(n) {
+  return n === 1 ? t("moviesOne") : t("moviesMany", { n });
+}
+
+function showsLabel(n) {
+  return n === 1 ? t("showsOne") : t("showsMany", { n });
+}
+
 function loadPrefs() {
   try {
     return JSON.parse(localStorage.getItem(PREFS_KEY) || "{}");
@@ -250,6 +249,68 @@ function savePrefs() {
       theme,
     })
   );
+}
+
+function loadHistory() {
+  try {
+    return JSON.parse(localStorage.getItem(HISTORY_KEY) || "{}");
+  } catch {
+    return {};
+  }
+}
+
+function serializeShow(show) {
+  return {
+    ...show,
+    start: formatLocalDateTime(show.start),
+    end: show.end ? formatLocalDateTime(show.end) : null,
+  };
+}
+
+function persistHistory(shows) {
+  const hist = loadHistory();
+  for (const show of shows) {
+    hist[show.id] = serializeShow(show);
+  }
+
+  const cutoff = new Date();
+  cutoff.setDate(cutoff.getDate() - HISTORY_KEEP_DAYS);
+  const cutoffKey = toDayKey(cutoff);
+
+  for (const [id, show] of Object.entries(hist)) {
+    if (!show?.dayKey || show.dayKey < cutoffKey) delete hist[id];
+  }
+
+  try {
+    localStorage.setItem(HISTORY_KEY, JSON.stringify(hist));
+  } catch (err) {
+    console.warn("Could not persist history", err);
+  }
+}
+
+function mergeShows(snapshotShows) {
+  const byId = new Map();
+
+  for (const raw of Object.values(loadHistory())) {
+    if (!raw?.id) continue;
+    byId.set(raw.id, normalizeCachedShow(raw));
+  }
+
+  for (const show of snapshotShows) {
+    const next = normalizeCachedShow(show);
+    const prev = byId.get(next.id);
+    if (prev) {
+      // Keep better live fields when snapshot is stale/empty.
+      if (next.sold == null && prev.sold != null) next.sold = prev.sold;
+      if (!next.end && prev.end) next.end = prev.end;
+      if (next.eventStatus === "pending" && prev.eventStatus === "ok") {
+        next.eventStatus = "ok";
+      }
+    }
+    byId.set(next.id, next);
+  }
+
+  return [...byId.values()].sort((a, b) => a.start - b.start);
 }
 
 function applyTheme(next) {
@@ -295,8 +356,7 @@ async function setActiveTab(tab, { skipRender = false } = {}) {
   });
 
   document.querySelectorAll(".pill-tab").forEach((btn) => {
-    const selected = btn.dataset.tab === tab;
-    btn.setAttribute("aria-selected", String(selected));
+    btn.setAttribute("aria-selected", String(btn.dataset.tab === tab));
   });
 
   els.dayControls.hidden = tab !== "day";
@@ -304,17 +364,14 @@ async function setActiveTab(tab, { skipRender = false } = {}) {
 
   if (skipRender || !state?.shows) return;
 
-  if (tab === "day") {
-    renderDay();
-  } else if (tab === "movies") {
+  if (tab === "day") renderDay();
+  else if (tab === "movies") {
     await ensureAllEnriched();
     renderMovies();
   } else if (tab === "stats") {
     await ensureAllEnriched();
     renderStats();
-  } else if (tab === "settings") {
-    renderSettings();
-  }
+  } else if (tab === "settings") renderSettings();
 }
 
 async function onFilterChange() {
@@ -328,23 +385,24 @@ async function load({ forceLive = false } = {}) {
   enrichedAll = false;
   try {
     const data = await loadProgramSnapshot();
+    const shows = mergeShows(data.shows || []);
+    persistHistory(shows);
 
     state = {
       updatedAt: data.updatedAt,
-      shows: (data.shows || []).map(normalizeCachedShow),
+      shows,
     };
 
     populateFilters();
     els.statusText.textContent = state.updatedAt
-      ? t("snapshot", { time: formatClock(new Date(state.updatedAt)) })
-      : lang === "en"
-        ? "Program loaded"
-        : "Program lastet";
+      ? t("updated", { time: formatClock(new Date(state.updatedAt)) })
+      : t("updated", { time: formatClock(new Date()) });
 
-    if (forceLive && activeTab === "day") {
-      await enrichVisibleDay();
-    } else if (forceLive && (activeTab === "movies" || activeTab === "stats")) {
-      await enrichAllShows();
+    if (forceLive) {
+      if (activeTab === "day") await enrichVisibleDay();
+      else if (activeTab === "movies" || activeTab === "stats") {
+        await enrichAllShows({ force: true });
+      }
     }
 
     renderActiveView();
@@ -372,8 +430,14 @@ async function loadProgramSnapshot() {
 function normalizeCachedShow(show) {
   return {
     ...show,
-    start: parseLocalDateTime(show.start),
-    end: show.end ? parseLocalDateTime(show.end) : null,
+    start:
+      show.start instanceof Date ? show.start : parseLocalDateTime(show.start),
+    end:
+      show.end instanceof Date
+        ? show.end
+        : show.end
+          ? parseLocalDateTime(show.end)
+          : null,
   };
 }
 
@@ -385,13 +449,16 @@ function populateFilters() {
 
   const today = toDayKey(new Date());
   if (!selectedDay || !days.includes(selectedDay)) {
-    selectedDay = days.includes(today) ? today : days[0] || today;
+    selectedDay = days.includes(today)
+      ? today
+      : days.find((d) => d >= today) || days[days.length - 1] || today;
   }
 
   els.dayTabs.innerHTML = days
     .map((day) => {
+      const past = day < today;
       const selected = day === selectedDay;
-      return `<button type="button" class="day-tab" role="tab" data-day="${day}" aria-selected="${selected}">${escapeHtml(
+      return `<button type="button" class="day-tab${past ? " past" : ""}" role="tab" data-day="${day}" aria-selected="${selected}">${escapeHtml(
         shortDayLabel(day)
       )}</button>`;
     })
@@ -418,19 +485,24 @@ function populateFilters() {
     ? currentScreen
     : "all";
 
-  const active = els.dayTabs.querySelector('.day-tab[aria-selected="true"]');
-  active?.scrollIntoView({ inline: "center", block: "nearest" });
+  els.dayTabs
+    .querySelector('.day-tab[aria-selected="true"]')
+    ?.scrollIntoView({ inline: "center", block: "nearest" });
 }
 
 function shortDayLabel(dayKey) {
   const [y, m, d] = dayKey.split("-").map(Number);
   const date = new Date(y, m - 1, d);
   const weekday = capitalize(weekdays()[date.getDay()]).slice(0, 3);
-  if (dayKey === toDayKey(new Date())) return t("today", { d, m });
+  const today = toDayKey(new Date());
+  if (dayKey === today) return `${t("today")} ${d}.${m}`;
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  if (dayKey === toDayKey(yesterday)) return `${t("yesterday")} ${d}.${m}`;
   const tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);
-  if (dayKey === toDayKey(tomorrow)) return t("tomorrow", { d, m });
-  return t("dayShort", { weekday, d, m });
+  if (dayKey === toDayKey(tomorrow)) return `${t("tomorrow")} ${d}.${m}`;
+  return t("dayTab", { weekday, d, m });
 }
 
 function formatDayLabel(dayKey) {
@@ -445,9 +517,12 @@ function formatDayLabel(dayKey) {
 
 function visibleShows() {
   const screen = els.screenSelect.value;
-  return state.shows.filter(
-    (s) => s.dayKey === selectedDay && (screen === "all" || s.screen === screen)
-  );
+  return state.shows
+    .filter(
+      (s) =>
+        s.dayKey === selectedDay && (screen === "all" || s.screen === screen)
+    )
+    .sort((a, b) => a.start - b.start);
 }
 
 function renderDay() {
@@ -494,21 +569,22 @@ function renderSummary(shows, now) {
     return;
   }
 
+  const movieCount = new Set(shows.map((s) => s.title)).size;
   const live = shows.filter((s) => statusOf(s, now) === "live").length;
-  const withSold = shows.filter((s) => s.eventStatus === "ok" && s.sold != null);
-  const soldSum = withSold.reduce((n, s) => n + (s.sold || 0), 0);
+  const soldSum = shows.reduce((n, s) => n + soldOf(s), 0);
+  const hasSold = shows.some((s) => s.sold != null);
 
   els.summary.hidden = false;
   els.summary.innerHTML = `
-    <span class="chip"><strong>${shows.length}</strong> ${escapeHtml(t("shows"))}</span>
+    <span class="chip">${escapeHtml(moviesLabel(movieCount))}</span>
     ${
       live
         ? `<span class="chip live"><strong>${live}</strong> ${escapeHtml(t("ongoing"))}</span>`
         : ""
     }
     ${
-      withSold.length
-        ? `<span class="chip"><strong>${soldSum}</strong> ${escapeHtml(t("soldTotal"))}</span>`
+      hasSold
+        ? `<span class="chip"><strong>${soldSum}</strong> ${escapeHtml(t("soldLabel"))}</span>`
         : ""
     }
   `;
@@ -555,7 +631,7 @@ function renderShowCard(show, now) {
 
   return `
     <article class="show-card ${status}">
-      ${renderPoster(show, 48, 68)}
+      ${renderPoster(show, 52, 74)}
       <div class="show-main">
         <div class="time-range">${formatClock(show.start)}<span class="sep">–</span>${endLabel}</div>
         <h2 class="show-title">${escapeHtml(show.title)}</h2>
@@ -620,10 +696,7 @@ function groupMovies() {
   return [...map.values()]
     .map((m) => {
       m.shows.sort((a, b) => a.start - b.start);
-      m.soldSum = m.shows.reduce(
-        (n, s) => n + (s.sold != null ? s.sold : 0),
-        0
-      );
+      m.soldSum = m.shows.reduce((n, s) => n + soldOf(s), 0);
       return m;
     })
     .sort((a, b) => a.title.localeCompare(b.title, lang === "en" ? "en" : "nb"));
@@ -657,12 +730,7 @@ function renderMovieTile(movie, now) {
     ? movie.runningLabel.replace(" t. ", "t ").replace(" min.", "m")
     : formatDuration(movie.runningMinutes);
 
-  const meta = [
-    movie.age,
-    duration,
-    movie.tags?.[0],
-    `${movie.shows.length}×`,
-  ]
+  const meta = [movie.age, duration, movie.tags?.[0], showsLabel(movie.shows.length)]
     .filter(Boolean)
     .map((x) => escapeHtml(String(x)))
     .join(" · ");
@@ -670,14 +738,13 @@ function renderMovieTile(movie, now) {
   const times = movie.shows
     .map((show) => {
       const status = statusOf(show, now);
-      const day = shortShowDay(show.dayKey);
       const sold =
         show.sold != null
           ? `<span class="tile-sold">${show.sold}</span>`
           : "";
       return `
         <div class="tile-show ${status}">
-          <span class="tile-day">${escapeHtml(day)}</span>
+          <span class="tile-day">${escapeHtml(shortShowDay(show.dayKey))}</span>
           <span class="tile-time">${formatClock(show.start)}</span>
           <span class="tile-screen">${escapeHtml(show.screen)}</span>
           ${sold}
@@ -700,21 +767,23 @@ function renderMovieTile(movie, now) {
 
 function shortShowDay(dayKey) {
   const [y, m, d] = dayKey.split("-").map(Number);
-  if (dayKey === toDayKey(new Date())) {
-    return lang === "en" ? "Today" : "I dag";
-  }
+  const today = toDayKey(new Date());
+  if (dayKey === today) return t("today");
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  if (dayKey === toDayKey(yesterday)) return t("yesterday");
   const tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);
-  if (dayKey === toDayKey(tomorrow)) {
-    return lang === "en" ? "Tmrw" : "Imorg.";
-  }
+  if (dayKey === toDayKey(tomorrow)) return t("tomorrow");
   const date = new Date(y, m - 1, d);
   const wd = capitalize(weekdays()[date.getDay()]).slice(0, 3);
   return `${wd} ${d}.${m}`;
 }
 
 function soldOf(show) {
-  return show.sold != null && show.eventStatus !== "error" ? Number(show.sold) || 0 : 0;
+  return show.sold != null && show.eventStatus !== "error"
+    ? Number(show.sold) || 0
+    : 0;
 }
 
 function isoWeekInfo(dayKey) {
@@ -724,8 +793,10 @@ function isoWeekInfo(dayKey) {
   date.setUTCDate(date.getUTCDate() + 4 - dayNum);
   const yearStart = new Date(Date.UTC(date.getUTCFullYear(), 0, 1));
   const week = Math.ceil(((date - yearStart) / 86400000 + 1) / 7);
-  const year = date.getUTCFullYear();
-  return { key: `${year}-W${String(week).padStart(2, "0")}`, year, week };
+  return {
+    key: `${date.getUTCFullYear()}-W${String(week).padStart(2, "0")}`,
+    week,
+  };
 }
 
 function weekRangeLabel(dayKeys) {
@@ -741,23 +812,17 @@ function weekRangeLabel(dayKeys) {
 function renderStats() {
   if (!state?.shows) return;
   const shows = state.shows;
-  const hasSold = shows.some((s) => s.sold != null && s.eventStatus === "ok");
+  const hasSold = shows.some((s) => s.sold != null);
   const totalSold = shows.reduce((n, s) => n + soldOf(s), 0);
 
   const dayMap = new Map();
   for (const show of shows) {
-    const cur = dayMap.get(show.dayKey) || { day: show.dayKey, sold: 0, shows: 0 };
+    const cur = dayMap.get(show.dayKey) || { day: show.dayKey, sold: 0 };
     cur.sold += soldOf(show);
-    cur.shows += 1;
     dayMap.set(show.dayKey, cur);
   }
   const byDay = [...dayMap.values()].sort((a, b) => a.day.localeCompare(b.day));
   const maxDaySold = Math.max(...byDay.map((d) => d.sold), 1);
-  const daysWithSold = byDay.filter((d) => d.sold > 0);
-  const avgDay = daysWithSold.length
-    ? Math.round(totalSold / daysWithSold.length)
-    : 0;
-  const bestDay = [...byDay].sort((a, b) => b.sold - a.sold)[0];
 
   const weekMap = new Map();
   for (const row of byDay) {
@@ -765,7 +830,6 @@ function renderStats() {
     const cur = weekMap.get(info.key) || {
       key: info.key,
       week: info.week,
-      year: info.year,
       sold: 0,
       days: [],
     };
@@ -776,23 +840,16 @@ function renderStats() {
   const byWeek = [...weekMap.values()].sort((a, b) => a.key.localeCompare(b.key));
   const maxWeekSold = Math.max(...byWeek.map((w) => w.sold), 1);
 
-  const movies = groupMovies()
+  const topSold = groupMovies()
     .map((m) => ({
-      ...m,
+      title: m.title,
+      posterUrl: m.posterUrl,
       soldSum: m.shows.reduce((n, s) => n + soldOf(s), 0),
       showCount: m.shows.length,
     }))
-    .sort((a, b) => b.soldSum - a.soldSum || a.title.localeCompare(b.title));
-  const maxMovieSold = Math.max(...movies.map((m) => m.soldSum), 1);
-
-  const screenMap = new Map();
-  for (const show of shows) {
-    const cur = screenMap.get(show.screen) || { screen: show.screen, sold: 0 };
-    cur.sold += soldOf(show);
-    screenMap.set(show.screen, cur);
-  }
-  const byScreen = [...screenMap.values()].sort((a, b) => b.sold - a.sold);
-  const maxScreenSold = Math.max(...byScreen.map((s) => s.sold), 1);
+    .filter((m) => m.soldSum > 0)
+    .sort((a, b) => b.soldSum - a.soldSum)
+    .slice(0, 10);
 
   if (!hasSold && totalSold === 0) {
     els.statsContent.innerHTML = `
@@ -805,47 +862,23 @@ function renderStats() {
   }
 
   els.statsContent.innerHTML = `
-    <div class="stats-hero">
-      <div class="stats-hero-main">
-        <p class="stats-hero-label">${escapeHtml(t("soldTotalLabel"))}</p>
-        <p class="stats-hero-value">${totalSold.toLocaleString(lang === "en" ? "en-GB" : "nb-NO")}</p>
-        <p class="stats-hero-sub">${escapeHtml(t("statsSubtitle"))}</p>
-      </div>
-      <div class="stats-hero-side">
-        <div class="stats-mini">
-          <span class="stats-mini-value">${avgDay}</span>
-          <span class="stats-mini-label">${escapeHtml(t("soldAvgDay"))}</span>
-        </div>
-        <div class="stats-mini">
-          <span class="stats-mini-value">${bestDay?.sold ?? 0}</span>
-          <span class="stats-mini-label">${escapeHtml(t("soldBestDay"))}${
-            bestDay ? ` · ${escapeHtml(shortShowDay(bestDay.day))}` : ""
-          }</span>
-        </div>
-      </div>
+    <div class="view-intro">
+      <h2>${escapeHtml(t("statsTitle"))}</h2>
     </div>
 
     <section class="stats-panel">
       <div class="stats-panel-head">
         <h3>${escapeHtml(t("soldByDay"))}</h3>
-        <span class="stats-panel-meta">${byDay.length} ${lang === "en" ? "days" : "dager"}</span>
       </div>
-      <div class="col-chart">
+      <div class="day-sold-list">
         ${byDay
           .map((row, i) => {
-            const h = Math.max((row.sold / maxDaySold) * 100, row.sold ? 4 : 0);
-            const label = chartDayParts(row.day);
+            const pct = Math.max((row.sold / maxDaySold) * 100, row.sold ? 4 : 0);
             return `
-              <div class="col-item" style="--i:${i}" title="${escapeHtml(
-                shortShowDay(row.day)
-              )}: ${row.sold}">
-                <span class="col-value">${row.sold || ""}</span>
-                <div class="col-bar-wrap">
-                  <div class="col-bar" style="height:${h}%"></div>
-                </div>
-                <span class="col-label"><span>${escapeHtml(
-                  label.wd
-                )}</span><span>${escapeHtml(label.dm)}</span></span>
+              <div class="stat-row" style="--i:${i}">
+                <span class="stat-row-label">${escapeHtml(shortShowDay(row.day))}</span>
+                <div class="stat-track"><div class="stat-fill" style="width:${pct}%"></div></div>
+                <span class="stat-row-value">${row.sold}</span>
               </div>`;
           })
           .join("")}
@@ -859,17 +892,22 @@ function renderStats() {
       <div class="week-list">
         ${byWeek
           .map((row, i) => {
-            const pct = Math.max((row.sold / maxWeekSold) * 100, row.sold ? 3 : 0);
+            const pct = Math.max(
+              (row.sold / maxWeekSold) * 100,
+              row.sold ? 4 : 0
+            );
             return `
-              <div class="week-row" style="--i:${i}">
-                <div class="week-meta">
-                  <span class="week-name">${escapeHtml(t("weekLabel", { n: row.week }))}</span>
-                  <span class="week-range">${escapeHtml(weekRangeLabel(row.days))}</span>
+              <div class="stat-row" style="--i:${i}">
+                <div class="stat-row-stack">
+                  <span class="stat-row-label">${escapeHtml(
+                    t("weekLabel", { n: row.week })
+                  )}</span>
+                  <span class="stat-row-sub">${escapeHtml(
+                    weekRangeLabel(row.days)
+                  )}</span>
                 </div>
-                <div class="week-track">
-                  <div class="week-fill" style="width:${pct}%"></div>
-                </div>
-                <span class="week-sold">${row.sold}</span>
+                <div class="stat-track"><div class="stat-fill" style="width:${pct}%"></div></div>
+                <span class="stat-row-value">${row.sold}</span>
               </div>`;
           })
           .join("")}
@@ -878,71 +916,30 @@ function renderStats() {
 
     <section class="stats-panel">
       <div class="stats-panel-head">
-        <h3>${escapeHtml(t("soldByMovie"))}</h3>
-        <span class="stats-panel-meta">${escapeHtml(t("tickets"))}</span>
+        <h3>${escapeHtml(t("topSold"))}</h3>
       </div>
-      <div class="movie-sold-list">
-        ${movies
-          .map((m, i) => {
-            const pct = Math.max((m.soldSum / maxMovieSold) * 100, m.soldSum ? 3 : 0);
-            return `
-              <div class="movie-sold-row" style="--i:${i}">
-                ${renderPoster(m, 40, 58, "stats-poster")}
-                <div class="movie-sold-body">
-                  <div class="movie-sold-top">
-                    <span class="movie-sold-title">${escapeHtml(m.title)}</span>
-                    <span class="movie-sold-num">${m.soldSum}</span>
+      ${
+        topSold.length
+          ? `<div class="top-list">
+              ${topSold
+                .map(
+                  (m, i) => `
+                <div class="top-row" style="--i:${i}">
+                  <span class="top-rank">${i + 1}</span>
+                  ${renderPoster(m, 36, 52, "stats-poster")}
+                  <div class="top-body">
+                    <span class="top-title">${escapeHtml(m.title)}</span>
+                    <span class="top-sub">${escapeHtml(showsLabel(m.showCount))}</span>
                   </div>
-                  <div class="movie-sold-track">
-                    <div class="movie-sold-fill" style="width:${pct}%"></div>
-                  </div>
-                  <span class="movie-sold-sub">${escapeHtml(
-                    t("showsCount", { n: m.showCount })
-                  )}</span>
-                </div>
-              </div>`;
-          })
-          .join("")}
-      </div>
-    </section>
-
-    ${
-      byScreen.length > 1
-        ? `<section class="stats-panel">
-            <div class="stats-panel-head">
-              <h3>${escapeHtml(t("soldByScreen"))}</h3>
-            </div>
-            <div class="screen-sold">
-              ${byScreen
-                .map((row, i) => {
-                  const pct = Math.max(
-                    (row.sold / maxScreenSold) * 100,
-                    row.sold ? 8 : 0
-                  );
-                  return `
-                    <div class="screen-sold-card" style="--i:${i}">
-                      <span class="screen-sold-name">${escapeHtml(row.screen)}</span>
-                      <span class="screen-sold-num">${row.sold}</span>
-                      <div class="screen-sold-track">
-                        <div class="screen-sold-fill" style="width:${pct}%"></div>
-                      </div>
-                    </div>`;
-                })
+                  <span class="top-sold">${m.soldSum}</span>
+                </div>`
+                )
                 .join("")}
-            </div>
-          </section>`
-        : ""
-    }
+            </div>`
+          : `<p class="empty-note soft">${escapeHtml(t("noSoldData"))}</p>`
+      }
+    </section>
   `;
-}
-
-function chartDayParts(dayKey) {
-  const [y, m, d] = dayKey.split("-").map(Number);
-  const date = new Date(y, m - 1, d);
-  return {
-    wd: capitalize(weekdays()[date.getDay()]).slice(0, 2),
-    dm: `${d}.${m}`,
-  };
 }
 
 function renderSettings() {
@@ -982,11 +979,7 @@ function renderSettings() {
       applyLanguage();
       if (state?.shows) populateFilters();
       renderSettings();
-      if (state?.shows) {
-        if (activeTab === "day") renderDay();
-        else if (activeTab === "movies") renderMovies();
-        else if (activeTab === "stats") renderStats();
-      }
+      renderActiveView();
     });
   });
 
@@ -999,19 +992,19 @@ function renderSettings() {
   });
 }
 
-/** Live-refresh sold + end times from DX (CORS-friendly). */
 async function enrichVisibleDay() {
   if (!state?.shows || !selectedDay) return;
-
-  const dayShows = state.shows.filter((s) => s.dayKey === selectedDay && s.eventId);
+  const dayShows = state.shows.filter(
+    (s) => s.dayKey === selectedDay && s.eventId
+  );
   if (!dayShows.length) return;
 
   const token = ++enrichToken;
   els.refreshBtn.classList.add("spinning");
-
   await Promise.all(dayShows.map((show) => enrichOne(show)));
-
   if (token !== enrichToken) return;
+
+  persistHistory(dayShows);
   if (activeTab === "day") renderDay();
   els.statusText.textContent = t("liveAt", { time: formatClock(new Date()) });
   els.refreshBtn.classList.remove("spinning");
@@ -1022,12 +1015,14 @@ async function ensureAllEnriched() {
   await enrichAllShows();
 }
 
-async function enrichAllShows() {
+async function enrichAllShows({ force = false } = {}) {
   if (!state?.shows) return;
-  const pending = state.shows.filter(
-    (s) => s.eventId && (s.sold == null || s.eventStatus === "pending")
+  const targets = state.shows.filter(
+    (s) =>
+      s.eventId &&
+      (force || s.sold == null || s.eventStatus === "pending")
   );
-  if (!pending.length) {
+  if (!targets.length) {
     enrichedAll = true;
     return;
   }
@@ -1036,12 +1031,13 @@ async function enrichAllShows() {
   els.refreshBtn.classList.add("spinning");
 
   const batchSize = 8;
-  for (let i = 0; i < pending.length; i += batchSize) {
+  for (let i = 0; i < targets.length; i += batchSize) {
     if (token !== enrichToken) return;
-    await Promise.all(pending.slice(i, i + batchSize).map((s) => enrichOne(s)));
+    await Promise.all(targets.slice(i, i + batchSize).map((s) => enrichOne(s)));
   }
 
   if (token !== enrichToken) return;
+  persistHistory(targets);
   enrichedAll = true;
   els.statusText.textContent = t("liveAt", { time: formatClock(new Date()) });
   els.refreshBtn.classList.remove("spinning");
@@ -1095,6 +1091,17 @@ function parseLocalDateTime(value) {
     Number(m[5]),
     Number(m[6] || 0)
   );
+}
+
+function formatLocalDateTime(date) {
+  if (!(date instanceof Date) || Number.isNaN(date.getTime())) return null;
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, "0");
+  const d = String(date.getDate()).padStart(2, "0");
+  const hh = String(date.getHours()).padStart(2, "0");
+  const mm = String(date.getMinutes()).padStart(2, "0");
+  const ss = String(date.getSeconds()).padStart(2, "0");
+  return `${y}-${m}-${d}T${hh}:${mm}:${ss}`;
 }
 
 function toDayKey(date) {
