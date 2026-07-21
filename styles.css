@@ -321,6 +321,164 @@ h1 {
   font-weight: 750;
 }
 
+/* —— Header timeline —— */
+.timeline {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 8px;
+  align-items: stretch;
+  margin-top: 2px;
+  animation: rise 0.32s ease both;
+}
+
+.timeline[hidden] {
+  display: none;
+}
+
+.tl-names {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  justify-content: flex-start;
+  padding-bottom: 16px;
+}
+
+.tl-lane-name {
+  height: 20px;
+  display: flex;
+  align-items: center;
+  font-size: 0.62rem;
+  font-weight: 750;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.tl-area {
+  position: relative;
+  min-width: 0;
+}
+
+.tl-gridlines {
+  position: absolute;
+  inset: 0 0 16px;
+  pointer-events: none;
+}
+
+.tl-gridline {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: color-mix(in srgb, var(--line) 70%, transparent);
+}
+
+.tl-tracks {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tl-track {
+  position: relative;
+  height: 20px;
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--bg) 60%, var(--surface));
+}
+
+.tl-block {
+  position: absolute;
+  top: 2px;
+  bottom: 2px;
+  border-radius: 5px;
+  background: var(--accent);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  padding: 0 5px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.tl-block-label {
+  font-size: 0.58rem;
+  font-weight: 750;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+.tl-block.done {
+  background: var(--done-soft);
+  color: var(--done);
+}
+
+.tl-block.live {
+  background: var(--ok);
+  color: #fff;
+}
+
+.tl-block.soon {
+  background: var(--warn);
+  color: #fff;
+}
+
+.tl-block.estimated {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent 0 5px,
+    rgba(255, 255, 255, 0.14) 5px 9px
+  );
+}
+
+.tl-now {
+  position: absolute;
+  top: -3px;
+  bottom: 13px;
+  width: 2px;
+  border-radius: 2px;
+  background: var(--accent);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.tl-now-dot {
+  position: absolute;
+  top: -3px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 45%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 0 5px transparent;
+  }
+}
+
+.tl-hours {
+  position: relative;
+  height: 16px;
+  margin-top: 2px;
+}
+
+.tl-hour {
+  position: absolute;
+  transform: translateX(-50%);
+  font-size: 0.58rem;
+  font-weight: 650;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
 .main {
   flex: 1;
   display: flex;

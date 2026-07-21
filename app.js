@@ -34,7 +34,7 @@ const I18N = {
     fewLeft: "{n} igjen",
     reservedShort: "{n} res.",
     occupancy: "belegg",
-    occupancyTotal: "Belegg (snitt)",
+    occupancyTotal: "Snittbelegg",
     nextShow: "Neste {time}",
     inMinutes: "om {n} min",
     today: "I dag",
@@ -55,7 +55,7 @@ const I18N = {
     topSold: "Mest solgte filmer",
     weekLabel: "Uke {n}",
     tickets: "billetter",
-    noSoldData: "Ingen solgtdata ennå — trykk oppdater.",
+    noSoldData: "Ingen salgsdata ennå — trykk oppdater.",
     settingsTitle: "Innstillinger",
     settingsSubtitle: "Språk og utseende",
     language: "Språk",
@@ -120,7 +120,7 @@ const I18N = {
     fewLeft: "{n} left",
     reservedShort: "{n} res.",
     occupancy: "occupancy",
-    occupancyTotal: "Occupancy (avg)",
+    occupancyTotal: "Avg. occupancy",
     nextShow: "Next {time}",
     inMinutes: "in {n} min",
     today: "Today",
@@ -189,6 +189,7 @@ const els = {
   refreshBtn: document.getElementById("refreshBtn"),
   statusText: document.getElementById("statusText"),
   summary: document.getElementById("summary"),
+  timeline: document.getElementById("timeline"),
   views: {
     day: document.getElementById("view-day"),
     movies: document.getElementById("view-movies"),
@@ -245,6 +246,17 @@ async function init() {
   setInterval(() => {
     if (document.visibilityState === "visible") refreshLive();
   }, 120_000);
+
+  // Nudge the timeline "now" marker every minute.
+  setInterval(() => {
+    if (
+      document.visibilityState === "visible" &&
+      activeTab === "day" &&
+      state?.shows
+    ) {
+      renderTimeline();
+    }
+  }, 60_000);
   document.addEventListener("visibilitychange", () => {
     if (document.visibilityState !== "visible") return;
     rollToTodayIfStale();
@@ -700,6 +712,7 @@ function renderDay() {
   els.content.dataset.key = renderKey;
 
   renderSummary(shows, now);
+  renderTimeline();
 
   if (!shows.length) {
     els.content.innerHTML = `<div class="empty-note">${escapeHtml(
@@ -728,6 +741,95 @@ function renderDay() {
     <div class="day-block">
       <div class="section-label">${escapeHtml(formatDayLabel(selectedDay))}</div>
       ${parts.join("")}
+    </div>
+  `;
+}
+
+function showEndOf(show) {
+  if (show.end) return show.end;
+  const mins = Number(show.runningMinutes) || 120;
+  // No confirmed end time: estimate from runtime plus ads/trailers.
+  return new Date(show.start.getTime() + (mins + 15) * 60_000);
+}
+
+function renderTimeline() {
+  if (!state?.shows) return;
+  const now = new Date();
+  const shows = state.shows
+    .filter((s) => s.dayKey === selectedDay)
+    .sort((a, b) => a.start - b.start);
+
+  if (!shows.length) {
+    els.timeline.hidden = true;
+    els.timeline.innerHTML = "";
+    return;
+  }
+
+  const HOUR = 3_600_000;
+  let t0 = Math.min(...shows.map((s) => s.start.getTime()));
+  let t1 = Math.max(...shows.map((s) => showEndOf(s).getTime()));
+  t0 = Math.floor((t0 - 20 * 60_000) / HOUR) * HOUR;
+  t1 = Math.ceil((t1 + 15 * 60_000) / HOUR) * HOUR;
+  const span = t1 - t0;
+  const pctOf = (ms) => ((ms - t0) / span) * 100;
+
+  const screens = [...new Set(shows.map((s) => s.screen))].sort((a, b) =>
+    a.localeCompare(b, "nb")
+  );
+
+  const stepHours = span > 9 * HOUR ? 2 : 1;
+  const hourMarks = [];
+  for (let ts = t0; ts <= t1; ts += stepHours * HOUR) {
+    hourMarks.push(
+      `<span class="tl-hour" style="left:${pctOf(ts)}%">${new Date(ts).getHours()}</span>`
+    );
+  }
+
+  const names = screens
+    .map((s) => `<span class="tl-lane-name">${escapeHtml(s)}</span>`)
+    .join("");
+
+  const tracks = screens
+    .map((screen) => {
+      const blocks = shows
+        .filter((s) => s.screen === screen)
+        .map((s) => {
+          const start = s.start.getTime();
+          const end = showEndOf(s).getTime();
+          const left = pctOf(start);
+          const width = Math.max(pctOf(end) - left, 1.5);
+          const status = statusOf(s, now);
+          const estimated = !s.end ? " estimated" : "";
+          return `<div class="tl-block ${status}${estimated}"
+            style="left:${left}%;width:${width}%"
+            title="${escapeHtml(s.title)} · ${formatClock(s.start)}–${s.end ? formatClock(s.end) : "~" + formatClock(showEndOf(s))}">
+            <span class="tl-block-label">${formatClock(s.start)}</span>
+          </div>`;
+        })
+        .join("");
+      return `<div class="tl-track">${blocks}</div>`;
+    })
+    .join("");
+
+  let gridlines = "";
+  for (let ts = t0; ts <= t1; ts += stepHours * HOUR) {
+    gridlines += `<span class="tl-gridline" style="left:${pctOf(ts)}%"></span>`;
+  }
+
+  const nowTs = now.getTime();
+  const showNow = selectedDay === toDayKey(now) && nowTs >= t0 && nowTs <= t1;
+  const nowLine = showNow
+    ? `<div class="tl-now" style="left:${pctOf(nowTs)}%"><span class="tl-now-dot"></span></div>`
+    : "";
+
+  els.timeline.hidden = false;
+  els.timeline.innerHTML = `
+    <div class="tl-names">${names}</div>
+    <div class="tl-area">
+      <div class="tl-gridlines">${gridlines}</div>
+      <div class="tl-tracks">${tracks}</div>
+      ${nowLine}
+      <div class="tl-hours">${hourMarks.join("")}</div>
     </div>
   `;
 }
