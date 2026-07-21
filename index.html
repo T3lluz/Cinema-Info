@@ -31,29 +31,27 @@
           <p class="subtitle">Buen kino</p>
         </div>
         <div class="top-actions">
-          <p id="statusText" class="status">—</p>
           <button id="refreshBtn" class="icon-btn" type="button" aria-label="Oppdater">
-            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
               <path
                 fill="currentColor"
                 d="M17.65 6.35A7.95 7.95 0 0 0 12 4a8 8 0 1 0 7.75 10h-2.1A6 6 0 1 1 12 6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35Z"
               />
             </svg>
           </button>
+          <p id="statusText" class="status">—</p>
         </div>
       </div>
 
       <div id="dayControls" class="day-controls">
         <div id="dayTabs" class="day-tabs" role="tablist" aria-label="Velg dag"></div>
-        <div class="filters-row">
-          <label class="screen-field">
-            <span data-i18n="screen">Sal</span>
-            <select id="screenSelect" aria-label="Filtrer sal">
-              <option value="all">Alle saler</option>
-            </select>
-          </label>
-          <section id="summary" class="summary" hidden></section>
-        </div>
+        <label class="screen-field">
+          <span data-i18n="screen">Sal</span>
+          <select id="screenSelect" aria-label="Filtrer sal">
+            <option value="all">Alle saler</option>
+          </select>
+        </label>
+        <section id="summary" class="summary" hidden></section>
       </div>
     </header>
 
