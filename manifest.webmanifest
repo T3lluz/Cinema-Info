@@ -1,0 +1,18 @@
+{
+  "name": "Cinema Info – Buen kino",
+  "short_name": "Cinema Info",
+  "description": "Program, tider og solgte billetter for Buen kino",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f0eeeb",
+  "theme_color": "#c41e2a",
+  "lang": "nb",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
