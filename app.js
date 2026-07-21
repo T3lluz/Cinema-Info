@@ -249,11 +249,7 @@ async function init() {
 
   // Nudge the timeline "now" marker every minute.
   setInterval(() => {
-    if (
-      document.visibilityState === "visible" &&
-      activeTab === "day" &&
-      state?.shows
-    ) {
+    if (document.visibilityState === "visible" && state?.shows) {
       renderTimeline();
     }
   }, 60_000);
@@ -264,6 +260,12 @@ async function init() {
   });
 
   setupPullToRefresh();
+
+  // Keep liquid indicators aligned after layout changes.
+  window.addEventListener("resize", () => {
+    movePillIndicator(activeTab, { instant: true });
+    moveDayIndicator({ instant: true });
+  });
 
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("./sw.js").catch(() => {});
@@ -490,12 +492,48 @@ function applyLanguage() {
   );
 }
 
-function movePillIndicator(tab) {
-  const indicator = document.querySelector(".pill-indicator");
-  const idx = TAB_ORDER.indexOf(tab);
-  if (indicator && idx >= 0) {
-    indicator.style.transform = `translateX(calc(${idx} * (100% + 2px)))`;
+/**
+ * Wolt-style liquid move: the blob first stretches to cover both the old
+ * and new pill, then contracts onto the target — it "bleeds" across.
+ */
+function liquidMove(indicator, target, { instant = false } = {}) {
+  if (!indicator || !target) return;
+  const newL = target.offsetLeft;
+  const newW = target.offsetWidth;
+
+  const hasPos = indicator.dataset.placed === "1";
+  if (instant || !hasPos) {
+    indicator.classList.add("no-trans");
+    indicator.style.left = `${newL}px`;
+    indicator.style.width = `${newW}px`;
+    indicator.dataset.placed = "1";
+    requestAnimationFrame(() =>
+      requestAnimationFrame(() => indicator.classList.remove("no-trans"))
+    );
+    return;
   }
+
+  const curL = parseFloat(indicator.style.left) || newL;
+  const curW = parseFloat(indicator.style.width) || newW;
+  if (Math.abs(curL - newL) < 1 && Math.abs(curW - newW) < 1) return;
+
+  clearTimeout(indicator._contract);
+  // Phase 1: stretch across both pills.
+  const stretchL = Math.min(curL, newL);
+  const stretchR = Math.max(curL + curW, newL + newW);
+  indicator.style.left = `${stretchL}px`;
+  indicator.style.width = `${stretchR - stretchL}px`;
+  // Phase 2: contract onto the target.
+  indicator._contract = setTimeout(() => {
+    indicator.style.left = `${newL}px`;
+    indicator.style.width = `${newW}px`;
+  }, 170);
+}
+
+function movePillIndicator(tab, opts = {}) {
+  const indicator = document.querySelector(".pill-indicator");
+  const btn = document.querySelector(`.pill-tab[data-tab="${tab}"]`);
+  liquidMove(indicator, btn, opts);
 }
 
 async function setActiveTab(tab, { skipRender = false } = {}) {
@@ -530,7 +568,8 @@ async function setActiveTab(tab, { skipRender = false } = {}) {
   document.querySelectorAll(".pill-tab").forEach((btn) => {
     btn.setAttribute("aria-selected", String(btn.dataset.tab === tab));
   });
-  movePillIndicator(tab);
+  movePillIndicator(tab, { instant: skipRender });
+  if (state?.shows) renderTimeline();
 
   els.dayControls.hidden = tab !== "day";
   els.refreshBtn.hidden = tab === "settings";
@@ -592,6 +631,7 @@ function renderActiveView() {
   else if (activeTab === "movies") renderMovies();
   else if (activeTab === "stats") renderStats();
   else if (activeTab === "settings") renderSettings();
+  if (activeTab !== "day") renderTimeline();
 }
 
 async function loadProgramSnapshot() {
@@ -627,24 +667,31 @@ function populateFilters() {
       : days.find((d) => d >= today) || days[days.length - 1] || today;
   }
 
-  els.dayTabs.innerHTML = days
-    .map((day) => {
-      const past = day < today;
-      const selected = day === selectedDay;
-      return `<button type="button" class="day-tab${past ? " past" : ""}" role="tab" data-day="${day}" aria-selected="${selected}">${escapeHtml(
-        shortDayLabel(day)
-      )}</button>`;
-    })
-    .join("");
+  els.dayTabs.innerHTML =
+    `<span class="day-indicator" aria-hidden="true"></span>` +
+    days
+      .map((day) => {
+        const past = day < today;
+        const selected = day === selectedDay;
+        return `<button type="button" class="day-tab${past ? " past" : ""}" role="tab" data-day="${day}" aria-selected="${selected}">${escapeHtml(
+          shortDayLabel(day)
+        )}</button>`;
+      })
+      .join("");
 
   els.dayTabs.querySelectorAll(".day-tab").forEach((btn) => {
     btn.addEventListener("click", async () => {
+      if (btn.dataset.day === selectedDay) return;
       selectedDay = btn.dataset.day;
       savePrefs();
-      populateFilters();
+      // Update selection in place so the liquid indicator can travel.
+      els.dayTabs.querySelectorAll(".day-tab").forEach((b) => {
+        b.setAttribute("aria-selected", String(b === btn));
+      });
+      moveDayIndicator();
       renderDay();
-      await enrichVisibleDay();
       btn.scrollIntoView({ inline: "center", block: "nearest", behavior: "smooth" });
+      await enrichVisibleDay();
     });
   });
 
@@ -661,6 +708,13 @@ function populateFilters() {
   els.dayTabs
     .querySelector('.day-tab[aria-selected="true"]')
     ?.scrollIntoView({ inline: "center", block: "nearest" });
+  moveDayIndicator({ instant: true });
+}
+
+function moveDayIndicator(opts = {}) {
+  const indicator = els.dayTabs.querySelector(".day-indicator");
+  const btn = els.dayTabs.querySelector('.day-tab[aria-selected="true"]');
+  liquidMove(indicator, btn, opts);
 }
 
 function shortDayLabel(dayKey) {
@@ -755,8 +809,10 @@ function showEndOf(show) {
 function renderTimeline() {
   if (!state?.shows) return;
   const now = new Date();
+  // Day tab follows the selected day; other tabs always show today.
+  const day = activeTab === "day" ? selectedDay : toDayKey(now);
   const shows = state.shows
-    .filter((s) => s.dayKey === selectedDay)
+    .filter((s) => s.dayKey === day)
     .sort((a, b) => a.start - b.start);
 
   if (!shows.length) {
@@ -817,7 +873,7 @@ function renderTimeline() {
   }
 
   const nowTs = now.getTime();
-  const showNow = selectedDay === toDayKey(now) && nowTs >= t0 && nowTs <= t1;
+  const showNow = day === toDayKey(now) && nowTs >= t0 && nowTs <= t1;
   const nowLine = showNow
     ? `<div class="tl-now" style="left:${pctOf(nowTs)}%"><span class="tl-now-dot"></span></div>`
     : "";
@@ -1363,6 +1419,7 @@ function renderSettings() {
         <p>${escapeHtml(t("languageHint"))}</p>
       </div>
       <div class="segmented" role="group" aria-label="${escapeHtml(t("language"))}">
+        <span class="seg-indicator" aria-hidden="true"></span>
         <button type="button" class="seg-btn" data-lang="nb" aria-pressed="${lang === "nb"}">${escapeHtml(t("langNb"))}</button>
         <button type="button" class="seg-btn" data-lang="en" aria-pressed="${lang === "en"}">${escapeHtml(t("langEn"))}</button>
       </div>
@@ -1374,30 +1431,53 @@ function renderSettings() {
         <p>${escapeHtml(t("themeHint"))}</p>
       </div>
       <div class="segmented" role="group" aria-label="${escapeHtml(t("theme"))}">
+        <span class="seg-indicator" aria-hidden="true"></span>
         <button type="button" class="seg-btn" data-theme-opt="light" aria-pressed="${theme === "light"}">${escapeHtml(t("themeLight"))}</button>
         <button type="button" class="seg-btn" data-theme-opt="dark" aria-pressed="${theme === "dark"}">${escapeHtml(t("themeDark"))}</button>
       </div>
     </section>
   `;
 
+  // Place each liquid indicator on the pressed button.
+  els.settingsContent.querySelectorAll(".segmented").forEach((group) => {
+    const indicator = group.querySelector(".seg-indicator");
+    const active = group.querySelector('.seg-btn[aria-pressed="true"]');
+    liquidMove(indicator, active, { instant: true });
+  });
+
   els.settingsContent.querySelectorAll("[data-lang]").forEach((btn) => {
     btn.addEventListener("click", () => {
+      if ((btn.dataset.lang === "en") === (lang === "en")) return;
       lang = btn.dataset.lang === "en" ? "en" : "nb";
       savePrefs();
-      applyLanguage();
-      if (state?.shows) populateFilters();
-      renderSettings();
-      renderActiveView();
+      segSelect(btn);
+      // Let the liquid animation play before texts re-render.
+      setTimeout(() => {
+        applyLanguage();
+        if (state?.shows) populateFilters();
+        renderSettings();
+        renderActiveView();
+      }, 340);
     });
   });
 
   els.settingsContent.querySelectorAll("[data-theme-opt]").forEach((btn) => {
     btn.addEventListener("click", () => {
-      applyTheme(btn.dataset.themeOpt === "dark" ? "dark" : "light");
+      const next = btn.dataset.themeOpt === "dark" ? "dark" : "light";
+      if (next === theme) return;
+      applyTheme(next);
       savePrefs();
-      renderSettings();
+      segSelect(btn);
     });
   });
+}
+
+function segSelect(btn) {
+  const group = btn.closest(".segmented");
+  group.querySelectorAll(".seg-btn").forEach((b) => {
+    b.setAttribute("aria-pressed", String(b === btn));
+  });
+  liquidMove(group.querySelector(".seg-indicator"), btn);
 }
 
 async function enrichVisibleDay() {

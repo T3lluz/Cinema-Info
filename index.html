@@ -14,7 +14,7 @@
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="favicon.svg" />
     <title>Cinema Info · Buen</title>
-    <link rel="stylesheet" href="styles.css?v=6" />
+    <link rel="stylesheet" href="styles.css?v=7" />
     <script>
       try {
         var p = JSON.parse(localStorage.getItem("cinemaInfoPrefs") || "{}");
@@ -43,6 +43,8 @@
         </div>
       </div>
 
+      <div id="timeline" class="timeline" hidden></div>
+
       <div id="dayControls" class="day-controls">
         <div id="dayTabs" class="day-tabs" role="tablist" aria-label="Velg dag"></div>
         <label class="screen-field">
@@ -52,7 +54,6 @@
           </select>
         </label>
         <section id="summary" class="summary" hidden></section>
-        <div id="timeline" class="timeline" hidden></div>
       </div>
     </header>
 
@@ -109,6 +110,6 @@
       </div>
     </nav>
 
-    <script src="app.js?v=6" type="module"></script>
+    <script src="app.js?v=7" type="module"></script>
   </body>
 </html>
