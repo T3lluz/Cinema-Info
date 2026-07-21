@@ -244,15 +244,67 @@ async function init() {
     if (document.visibilityState === "visible") refreshLive();
   }, 120_000);
   document.addEventListener("visibilitychange", () => {
-    if (
-      document.visibilityState === "visible" &&
-      Date.now() - lastLiveAt > 120_000
-    ) {
-      refreshLive();
-    }
+    if (document.visibilityState !== "visible") return;
+    rollToTodayIfStale();
+    if (Date.now() - lastLiveAt > 120_000) refreshLive();
   });
 
+  setupPullToRefresh();
+
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("./sw.js").catch(() => {});
+  }
+
   await load({ forceLive: true });
+}
+
+function setupPullToRefresh() {
+  let startY = 0;
+  let pulling = false;
+
+  document.addEventListener(
+    "touchstart",
+    (e) => {
+      if (window.scrollY <= 0 && !els.refreshBtn.disabled) {
+        startY = e.touches[0].clientY;
+        pulling = true;
+      }
+    },
+    { passive: true }
+  );
+
+  document.addEventListener(
+    "touchmove",
+    (e) => {
+      if (!pulling) return;
+      const dy = e.touches[0].clientY - startY;
+      if (dy > 90 && window.scrollY <= 0) {
+        pulling = false;
+        load({ forceLive: true });
+      }
+    },
+    { passive: true }
+  );
+
+  document.addEventListener("touchend", () => {
+    pulling = false;
+  });
+}
+
+let sessionDay = toDayKey(new Date());
+
+/** If the device slept past midnight, move selection to the new "today". */
+function rollToTodayIfStale() {
+  const today = toDayKey(new Date());
+  if (today === sessionDay || !state?.shows) return;
+  sessionDay = today;
+  const days = new Set(state.shows.map((s) => s.dayKey));
+  if (days.has(today)) {
+    selectedDay = today;
+    savePrefs();
+    populateFilters();
+    if (activeTab === "day") renderDay();
+  }
 }
 
 async function refreshLive() {
@@ -670,7 +722,22 @@ function renderSummary(shows, now) {
         ? `<span class="chip"><strong>${occPct}%</strong> ${escapeHtml(t("occupancy"))}</span>`
         : ""
     }
+    ${nextChip(shows, now)}
   `;
+}
+
+function nextChip(shows, now) {
+  const next = shows.find((s) => s.start > now);
+  if (!next) return "";
+  const mins = Math.round((next.start - now) / 60_000);
+  if (mins > 12 * 60) return "";
+  const when =
+    mins < 60
+      ? t("inMinutes", { n: mins })
+      : formatClock(next.start);
+  return `<span class="chip next"><strong>${escapeHtml(
+    t("nextShow", { time: when })
+  )}</strong></span>`;
 }
 
 function statusOf(show, now) {
@@ -727,8 +794,7 @@ function renderShowCard(show, now) {
     `;
   }
 
-  return `
-    <article class="show-card ${status}">
+  const inner = `
       ${renderPoster(show, 52, 74)}
       <div class="show-main">
         <div class="time-range">${formatClock(show.start)}<span class="sep">–</span>${endLabel}</div>
@@ -737,8 +803,16 @@ function renderShowCard(show, now) {
         ${progress}
       </div>
       ${renderTicketCol(show)}
-    </article>
   `;
+
+  // Link to the eBillett page so staff can jump straight to the seat map.
+  if (show.ticketUrl) {
+    return `
+      <a class="show-card ${status} linked" href="${escapeHtml(show.ticketUrl)}"
+         target="_blank" rel="noopener">${inner}</a>
+    `;
+  }
+  return `<article class="show-card ${status}">${inner}</article>`;
 }
 
 function renderPoster(show, w, h, className = "poster") {
@@ -870,14 +944,18 @@ function renderMovieTile(movie, now) {
                 show.capacity ? `<span class="tile-cap">/${show.capacity}</span>` : ""
               }</span>`
           : "";
-      return `
-        <div class="tile-show ${status}">
+      const inner = `
           <span class="tile-day">${escapeHtml(shortShowDay(show.dayKey))}</span>
           <span class="tile-time">${formatClock(show.start)}</span>
           <span class="tile-screen">${escapeHtml(show.screen)}</span>
           ${sold}
-        </div>
       `;
+      if (show.ticketUrl) {
+        return `<a class="tile-show ${status}" href="${escapeHtml(
+          show.ticketUrl
+        )}" target="_blank" rel="noopener">${inner}</a>`;
+      }
+      return `<div class="tile-show ${status}">${inner}</div>`;
     })
     .join("");
 
