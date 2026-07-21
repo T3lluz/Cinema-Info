@@ -4,8 +4,15 @@ Mobile-friendly schedule for **Buen kino** — same info as the KinoProgram Chro
 
 - Movies with posters
 - Real start / end times (from eBillett)
-- Sold ticket counts
-- Filter by day and screen
+- Live sold / capacity / occupancy per show, with sold-out and few-left flags
+- Progress bar + minutes left for shows playing right now
+- Sales statistics (per day, per week, top movies, average occupancy)
+- Filter by day and screen — past days stay scrollable as history accumulates
+- Auto-refreshes live numbers every 2 minutes while open
+- Norwegian/English + light/dark theme
+
+> Checked-in (scanned tickets) counts are **not** available from the public
+> DX/eBillett API — that data sits behind the eBillett admin login.
 
 ## Live site
 

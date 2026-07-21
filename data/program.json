@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-21T17:08:38.664Z",
+  "updatedAt": "2026-07-21T19:21:28.287Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -64,8 +64,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92735/purchase?kanal=dxf",
       "eventId": "92735",
       "promoterId": "202",
-      "sold": 47,
-      "eventStatus": "ok"
+      "sold": 50,
+      "eventStatus": "ok",
+      "reserved": 0,
+      "capacity": 110,
+      "available": 60
     },
     {
       "id": "EDI20260626-2026-07-21T20:15:00-Storsal",
@@ -86,7 +89,10 @@
       "eventId": "92643",
       "promoterId": "202",
       "sold": 0,
-      "eventStatus": "ok"
+      "eventStatus": "ok",
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
     },
     {
       "id": "UIP20241749-2026-07-22T17:00:00-Kinosal",
@@ -108,7 +114,10 @@
       "eventId": "92647",
       "promoterId": "202",
       "sold": 0,
-      "eventStatus": "ok"
+      "eventStatus": "ok",
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
     },
     {
       "id": "EDI20260819-2026-07-22T17:30:00-Storsal",
@@ -130,7 +139,10 @@
       "eventId": "92663",
       "promoterId": "202",
       "sold": 0,
-      "eventStatus": "ok"
+      "eventStatus": "ok",
+      "reserved": 0,
+      "capacity": 246,
+      "available": 246
     },
     {
       "id": "UIP20241680-2026-07-22T19:30:00-Kinosal",
@@ -150,8 +162,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92645/purchase?kanal=dxf",
       "eventId": "92645",
       "promoterId": "202",
-      "sold": 16,
-      "eventStatus": "ok"
+      "sold": 22,
+      "eventStatus": "ok",
+      "reserved": 0,
+      "capacity": 110,
+      "available": 88
     },
     {
       "id": "EDI20260535-2026-07-22T20:15:00-Storsal",
@@ -172,7 +187,10 @@
       "eventId": "92674",
       "promoterId": "202",
       "sold": 3,
-      "eventStatus": "ok"
+      "eventStatus": "ok",
+      "reserved": 0,
+      "capacity": 246,
+      "available": 243
     },
     {
       "id": "EDI20260556-2026-07-23T17:00:00-Kinosal",
@@ -194,7 +212,10 @@
       "eventId": "92665",
       "promoterId": "202",
       "sold": 0,
-      "eventStatus": "ok"
+      "eventStatus": "ok",
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
     },
     {
       "id": "UIP20241749-2026-07-23T17:30:00-Storsal",
@@ -216,7 +237,10 @@
       "eventId": "92692",
       "promoterId": "202",
       "sold": 0,
-      "eventStatus": "ok"
+      "eventStatus": "ok",
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
     },
     {
       "id": "UIP20241680-2026-07-23T19:30:00-Kinosal",
@@ -237,7 +261,10 @@
       "eventId": "92680",
       "promoterId": "202",
       "sold": 9,
-      "eventStatus": "ok"
+      "eventStatus": "ok",
+      "reserved": 0,
+      "capacity": 110,
+      "available": 101
     },
     {
       "id": "EDI20260626-2026-07-23T20:15:00-Storsal",
@@ -258,7 +285,10 @@
       "eventId": "92668",
       "promoterId": "202",
       "sold": 0,
-      "eventStatus": "ok"
+      "eventStatus": "ok",
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
     },
     {
       "id": "UIP20241749-2026-07-24T16:50:00-Storsal",
@@ -280,7 +310,10 @@
       "eventId": "92652",
       "promoterId": "202",
       "sold": 0,
-      "eventStatus": "ok"
+      "eventStatus": "ok",
+      "reserved": 0,
+      "capacity": 246,
+      "available": 246
     },
     {
       "id": "EDI20260819-2026-07-24T17:30:00-Kinosal",
@@ -302,7 +335,10 @@
       "eventId": "92675",
       "promoterId": "202",
       "sold": 0,
-      "eventStatus": "ok"
+      "eventStatus": "ok",
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
     },
     {
       "id": "EDI20260535-2026-07-24T19:00:00-Storsal",
@@ -323,7 +359,10 @@
       "eventId": "92653",
       "promoterId": "202",
       "sold": 0,
-      "eventStatus": "ok"
+      "eventStatus": "ok",
+      "reserved": 0,
+      "capacity": 246,
+      "available": 246
     },
     {
       "id": "UIP20241680-2026-07-24T20:15:00-Kinosal",
@@ -344,7 +383,10 @@
       "eventId": "92650",
       "promoterId": "202",
       "sold": 2,
-      "eventStatus": "ok"
+      "eventStatus": "ok",
+      "reserved": 0,
+      "capacity": 110,
+      "available": 108
     },
     {
       "id": "EDI20260626-2026-07-24T21:15:00-Storsal",
@@ -365,7 +407,10 @@
       "eventId": "92654",
       "promoterId": "202",
       "sold": 0,
-      "eventStatus": "ok"
+      "eventStatus": "ok",
+      "reserved": 0,
+      "capacity": 246,
+      "available": 246
     },
     {
       "id": "UIP20241749-2026-07-25T15:00:00-Kinosal",
@@ -387,7 +432,10 @@
       "eventId": "92658",
       "promoterId": "202",
       "sold": 0,
-      "eventStatus": "ok"
+      "eventStatus": "ok",
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
     },
     {
       "id": "EDI20260556-2026-07-25T15:30:00-Storsal",
@@ -409,7 +457,10 @@
       "eventId": "92659",
       "promoterId": "202",
       "sold": 0,
-      "eventStatus": "ok"
+      "eventStatus": "ok",
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
     },
     {
       "id": "EDI20260819-2026-07-25T17:15:00-Kinosal",
@@ -431,7 +482,10 @@
       "eventId": "92677",
       "promoterId": "202",
       "sold": 0,
-      "eventStatus": "ok"
+      "eventStatus": "ok",
+      "reserved": 1,
+      "capacity": 110,
+      "available": 109
     },
     {
       "id": "EDI20260535-2026-07-25T18:00:00-Storsal",
@@ -452,7 +506,10 @@
       "eventId": "92657",
       "promoterId": "202",
       "sold": 0,
-      "eventStatus": "ok"
+      "eventStatus": "ok",
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
     },
     {
       "id": "UIP20241680-2026-07-25T20:00:00-Kinosal",
@@ -472,8 +529,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92656/purchase?kanal=dxf",
       "eventId": "92656",
       "promoterId": "202",
-      "sold": 12,
-      "eventStatus": "ok"
+      "sold": 14,
+      "eventStatus": "ok",
+      "reserved": 0,
+      "capacity": 108,
+      "available": 94
     },
     {
       "id": "EDI20260626-2026-07-25T20:35:00-Storsal",
@@ -494,7 +554,10 @@
       "eventId": "92655",
       "promoterId": "202",
       "sold": 0,
-      "eventStatus": "ok"
+      "eventStatus": "ok",
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
     },
     {
       "id": "EDI20260556-2026-07-26T14:50:00-Kinosal",
@@ -516,7 +579,10 @@
       "eventId": "92662",
       "promoterId": "202",
       "sold": 0,
-      "eventStatus": "ok"
+      "eventStatus": "ok",
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
     },
     {
       "id": "EDI20260819-2026-07-26T15:20:00-Storsal",
@@ -538,7 +604,10 @@
       "eventId": "92669",
       "promoterId": "202",
       "sold": 0,
-      "eventStatus": "ok"
+      "eventStatus": "ok",
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
     },
     {
       "id": "EDI20260731-2026-07-26T17:15:00-Kinosal",
@@ -560,7 +629,10 @@
       "eventId": "92670",
       "promoterId": "202",
       "sold": 2,
-      "eventStatus": "ok"
+      "eventStatus": "ok",
+      "reserved": 0,
+      "capacity": 110,
+      "available": 108
     },
     {
       "id": "EDI20260535-2026-07-26T18:00:00-Storsal",
@@ -581,7 +653,10 @@
       "eventId": "92678",
       "promoterId": "202",
       "sold": 0,
-      "eventStatus": "ok"
+      "eventStatus": "ok",
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
     },
     {
       "id": "UIP20241680-2026-07-26T19:30:00-Kinosal",
@@ -602,7 +677,10 @@
       "eventId": "92671",
       "promoterId": "202",
       "sold": 0,
-      "eventStatus": "ok"
+      "eventStatus": "ok",
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
     },
     {
       "id": "EDI20260626-2026-07-26T20:15:00-Storsal",
@@ -623,7 +701,10 @@
       "eventId": "92679",
       "promoterId": "202",
       "sold": 0,
-      "eventStatus": "ok"
+      "eventStatus": "ok",
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
     },
     {
       "id": "EDI20260556-2026-07-27T17:00:00-Kinosal",
@@ -645,7 +726,10 @@
       "eventId": "92702",
       "promoterId": "202",
       "sold": 0,
-      "eventStatus": "ok"
+      "eventStatus": "ok",
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
     },
     {
       "id": "EDI20260819-2026-07-27T17:30:00-Storsal",
@@ -667,7 +751,10 @@
       "eventId": "92676",
       "promoterId": "202",
       "sold": 0,
-      "eventStatus": "ok"
+      "eventStatus": "ok",
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
     },
     {
       "id": "UIP20241680-2026-07-27T19:30:00-Kinosal",
@@ -688,7 +775,10 @@
       "eventId": "92672",
       "promoterId": "202",
       "sold": 0,
-      "eventStatus": "ok"
+      "eventStatus": "ok",
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
     },
     {
       "id": "EDI20260535-2026-07-27T20:15:00-Storsal",
@@ -709,7 +799,10 @@
       "eventId": "92703",
       "promoterId": "202",
       "sold": 0,
-      "eventStatus": "ok"
+      "eventStatus": "ok",
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
     },
     {
       "id": "UIP20241749-2026-07-28T17:00:00-Kinosal",
@@ -731,7 +824,10 @@
       "eventId": "92682",
       "promoterId": "202",
       "sold": 0,
-      "eventStatus": "ok"
+      "eventStatus": "ok",
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
     },
     {
       "id": "EDI20260556-2026-07-28T17:30:00-Storsal",
@@ -753,7 +849,10 @@
       "eventId": "92754",
       "promoterId": "202",
       "sold": 0,
-      "eventStatus": "ok"
+      "eventStatus": "ok",
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
     },
     {
       "id": "UIP20241680-2026-07-28T19:30:00-Kinosal",
@@ -774,7 +873,10 @@
       "eventId": "92715",
       "promoterId": "202",
       "sold": 0,
-      "eventStatus": "ok"
+      "eventStatus": "ok",
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
     },
     {
       "id": "EDI20260626-2026-07-28T20:15:00-Storsal",
@@ -795,7 +897,10 @@
       "eventId": "92693",
       "promoterId": "202",
       "sold": 0,
-      "eventStatus": "ok"
+      "eventStatus": "ok",
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
     },
     {
       "id": "EDI20260819-2026-07-29T16:50:00-Kinosal",
@@ -817,7 +922,10 @@
       "eventId": "92753",
       "promoterId": "202",
       "sold": 0,
-      "eventStatus": "ok"
+      "eventStatus": "ok",
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
     },
     {
       "id": "UIP20241749-2026-07-29T17:30:00-Storsal",
@@ -839,7 +947,10 @@
       "eventId": "92335",
       "promoterId": "202",
       "sold": 0,
-      "eventStatus": "ok"
+      "eventStatus": "ok",
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
     },
     {
       "id": "EDI20240688-2026-07-29T19:30:00-Kinosal",
@@ -859,8 +970,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92334/purchase?kanal=dxf",
       "eventId": "92334",
       "promoterId": "202",
-      "sold": 28,
-      "eventStatus": "ok"
+      "sold": 27,
+      "eventStatus": "ok",
+      "reserved": 0,
+      "capacity": 110,
+      "available": 83
     },
     {
       "id": "EDI20260626-2026-07-29T20:15:00-Storsal",
@@ -881,7 +995,10 @@
       "eventId": "92522",
       "promoterId": "202",
       "sold": 0,
-      "eventStatus": "ok"
+      "eventStatus": "ok",
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
     },
     {
       "id": "EDI20260556-2026-07-30T17:00:00-Kinosal",
@@ -903,7 +1020,10 @@
       "eventId": "92549",
       "promoterId": "202",
       "sold": 0,
-      "eventStatus": "ok"
+      "eventStatus": "ok",
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
     },
     {
       "id": "UIP20241749-2026-07-30T17:30:00-Storsal",
@@ -925,7 +1045,10 @@
       "eventId": "92550",
       "promoterId": "202",
       "sold": 0,
-      "eventStatus": "ok"
+      "eventStatus": "ok",
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
     },
     {
       "id": "EDI20240688-2026-07-30T19:30:00-Kinosal",
@@ -945,8 +1068,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92337/purchase?kanal=dxf",
       "eventId": "92337",
       "promoterId": "202",
-      "sold": 6,
-      "eventStatus": "ok"
+      "sold": 8,
+      "eventStatus": "ok",
+      "reserved": 0,
+      "capacity": 108,
+      "available": 100
     },
     {
       "id": "EDI20260535-2026-07-30T20:15:00-Storsal",
@@ -967,7 +1093,10 @@
       "eventId": "92755",
       "promoterId": "202",
       "sold": 0,
-      "eventStatus": "ok"
+      "eventStatus": "ok",
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
     },
     {
       "id": "UIP20241749-2026-07-31T16:50:00-Storsal",
@@ -989,7 +1118,10 @@
       "eventId": "92551",
       "promoterId": "202",
       "sold": 0,
-      "eventStatus": "ok"
+      "eventStatus": "ok",
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
     },
     {
       "id": "EDI20240688-2026-07-31T17:20:00-Kinosal",
@@ -1010,7 +1142,10 @@
       "eventId": "92338",
       "promoterId": "202",
       "sold": 3,
-      "eventStatus": "ok"
+      "eventStatus": "ok",
+      "reserved": 0,
+      "capacity": 107,
+      "available": 104
     },
     {
       "id": "EDI20260535-2026-07-31T19:00:00-Storsal",
@@ -1031,7 +1166,10 @@
       "eventId": "92683",
       "promoterId": "202",
       "sold": 0,
-      "eventStatus": "ok"
+      "eventStatus": "ok",
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
     },
     {
       "id": "UIP20241680-2026-07-31T20:30:00-Kinosal",
@@ -1052,7 +1190,10 @@
       "eventId": "92524",
       "promoterId": "202",
       "sold": 0,
-      "eventStatus": "ok"
+      "eventStatus": "ok",
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
     },
     {
       "id": "EDI20260626-2026-07-31T21:15:00-Storsal",
@@ -1073,7 +1214,10 @@
       "eventId": "92684",
       "promoterId": "202",
       "sold": 0,
-      "eventStatus": "ok"
+      "eventStatus": "ok",
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
     },
     {
       "id": "UIP20241680-2026-08-11T12:30:00-Kinosal",
@@ -1094,7 +1238,10 @@
       "eventId": "92716",
       "promoterId": "202",
       "sold": 0,
-      "eventStatus": "ok"
+      "eventStatus": "ok",
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
     },
     {
       "id": "EDI20260623-2026-08-18T13:00:00-Kinosal",
@@ -1115,7 +1262,10 @@
       "eventId": "92500",
       "promoterId": "202",
       "sold": 0,
-      "eventStatus": "ok"
+      "eventStatus": "ok",
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
     },
     {
       "id": "EDI20260623-2026-08-18T19:30:00-Kinosal",
@@ -1136,7 +1286,10 @@
       "eventId": "92640",
       "promoterId": "202",
       "sold": 0,
-      "eventStatus": "ok"
+      "eventStatus": "ok",
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
     },
     {
       "id": "EDI20260087-2026-09-01T13:00:00-Kinosal",
@@ -1157,7 +1310,10 @@
       "eventId": "92498",
       "promoterId": "202",
       "sold": 0,
-      "eventStatus": "ok"
+      "eventStatus": "ok",
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
     }
   ]
 }

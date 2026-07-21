@@ -79,11 +79,11 @@ function loadPreviousShows() {
   }
 }
 
-function mergeWithHistory(freshShows) {
+function mergeWithHistory(freshShows, previousShows) {
   const byId = new Map();
   const cutoff = dayKeyDaysAgo(KEEP_DAYS);
 
-  for (const show of loadPreviousShows()) {
+  for (const show of previousShows) {
     if (!show?.id || !show.dayKey || show.dayKey < cutoff) continue;
     byId.set(show.id, show);
   }
@@ -94,6 +94,9 @@ function mergeWithHistory(freshShows) {
       byId.set(show.id, {
         ...show,
         sold: prev.sold,
+        reserved: show.reserved ?? prev.reserved ?? null,
+        capacity: show.capacity ?? prev.capacity ?? null,
+        available: show.available ?? prev.available ?? null,
         end: show.end || prev.end,
         eventStatus:
           show.eventStatus === "ok" ? "ok" : prev.eventStatus || show.eventStatus,
@@ -106,6 +109,25 @@ function mergeWithHistory(freshShows) {
   return [...byId.values()].sort((a, b) =>
     String(a.start).localeCompare(String(b.start))
   );
+}
+
+/**
+ * Buen's program API drops ticketSaleUrl once a show has started,
+ * which loses the DX eventId. Restore it from the previous snapshot
+ * so live sold counts keep working during and after the show.
+ */
+function restoreEventIds(baseShows, previousShows) {
+  const prevById = new Map(previousShows.map((s) => [s.id, s]));
+  for (const show of baseShows) {
+    if (show.eventId) continue;
+    const prev = prevById.get(show.id);
+    if (prev?.eventId) {
+      show.eventId = prev.eventId;
+      show.promoterId = prev.promoterId || show.promoterId;
+      show.ticketUrl = show.ticketUrl || prev.ticketUrl || "";
+      show.eventStatus = "pending";
+    }
+  }
 }
 
 async function enrichShow(show) {
@@ -128,12 +150,16 @@ async function enrichShow(show) {
       screen = String(event.locationName).replace(/\s*-\s*Kino$/i, "").trim();
     }
 
+    const sale = event.ticketSale || {};
     return {
       ...show,
       screen,
       start: event.begin ? event.begin.replace(" ", "T") : show.start,
       end: event.end ? event.end.replace(" ", "T") : null,
-      sold: Number(event.ticketSale?.sold) || 0,
+      sold: Number(sale.sold) || 0,
+      reserved: Number(sale.reserved) || 0,
+      capacity: Number(sale.capacity) || null,
+      available: sale.available != null ? Number(sale.available) : null,
       eventStatus: "ok",
     };
   } catch (err) {
@@ -177,6 +203,21 @@ async function main() {
     .filter(Boolean)
     .sort((a, b) => a.start.localeCompare(b.start));
 
+  const previousShows = loadPreviousShows();
+  restoreEventIds(baseShows, previousShows);
+
+  // Buen's program API also drops entire shows once they've started.
+  // Pull recent ones back from the previous snapshot so their sold
+  // counts keep updating during and right after the show.
+  const rescueCutoff = dayKeyDaysAgo(2);
+  const baseIds = new Set(baseShows.map((s) => s.id));
+  for (const prev of previousShows) {
+    if (!baseIds.has(prev.id) && prev.eventId && prev.dayKey >= rescueCutoff) {
+      baseShows.push({ ...prev, eventStatus: "pending" });
+    }
+  }
+  baseShows.sort((a, b) => String(a.start).localeCompare(String(b.start)));
+
   // Enrich in modest batches to avoid rate limits.
   const shows = [];
   const batchSize = 6;
@@ -186,7 +227,7 @@ async function main() {
     shows.push(...enriched);
   }
 
-  const merged = mergeWithHistory(shows);
+  const merged = mergeWithHistory(shows, previousShows);
   const payload = {
     updatedAt: new Date().toISOString(),
     cinema: "Buen kino",

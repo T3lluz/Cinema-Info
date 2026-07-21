@@ -30,6 +30,13 @@ const I18N = {
     showsMany: "{n} forestillinger",
     ongoing: "pågår",
     soldLabel: "solgt",
+    soldOut: "Utsolgt",
+    fewLeft: "{n} igjen",
+    reservedShort: "{n} res.",
+    occupancy: "belegg",
+    occupancyTotal: "Belegg (snitt)",
+    nextShow: "Neste {time}",
+    inMinutes: "om {n} min",
     today: "I dag",
     yesterday: "I går",
     tomorrow: "I morgen",
@@ -109,6 +116,13 @@ const I18N = {
     showsMany: "{n} showings",
     ongoing: "playing",
     soldLabel: "sold",
+    soldOut: "Sold out",
+    fewLeft: "{n} left",
+    reservedShort: "{n} res.",
+    occupancy: "occupancy",
+    occupancyTotal: "Occupancy (avg)",
+    nextShow: "Next {time}",
+    inMinutes: "in {n} min",
     today: "Today",
     yesterday: "Yesterday",
     tomorrow: "Tomorrow",
@@ -191,6 +205,7 @@ let activeTab = "day";
 let lang = "nb";
 let theme = "light";
 let enrichedAll = false;
+let lastLiveAt = 0;
 
 init();
 
@@ -212,7 +227,43 @@ async function init() {
     btn.addEventListener("click", () => setActiveTab(btn.dataset.tab));
   });
 
+  // Let mouse users scroll the day strip with the wheel.
+  els.dayTabs.addEventListener(
+    "wheel",
+    (e) => {
+      if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+        e.preventDefault();
+        els.dayTabs.scrollLeft += e.deltaY;
+      }
+    },
+    { passive: false }
+  );
+
+  // Keep numbers live while the tab is open (e.g. box-office screen).
+  setInterval(() => {
+    if (document.visibilityState === "visible") refreshLive();
+  }, 120_000);
+  document.addEventListener("visibilitychange", () => {
+    if (
+      document.visibilityState === "visible" &&
+      Date.now() - lastLiveAt > 120_000
+    ) {
+      refreshLive();
+    }
+  });
+
   await load({ forceLive: true });
+}
+
+async function refreshLive() {
+  if (!state?.shows) return;
+  lastLiveAt = Date.now();
+  if (activeTab === "day") {
+    await enrichVisibleDay();
+  } else if (activeTab === "movies" || activeTab === "stats") {
+    await enrichAllShows({ force: true });
+    renderActiveView();
+  }
 }
 
 function t(key, vars = {}) {
@@ -313,7 +364,19 @@ function mergeShows(snapshotShows) {
     if (prev) {
       // Keep better live fields when snapshot is stale/empty.
       if (next.sold == null && prev.sold != null) next.sold = prev.sold;
+      if (next.capacity == null && prev.capacity != null) {
+        next.capacity = prev.capacity;
+        next.available = prev.available ?? null;
+        next.reserved = prev.reserved ?? null;
+      }
       if (!next.end && prev.end) next.end = prev.end;
+      // The program API drops ticket links once a show starts;
+      // restore the DX eventId so live updates keep working.
+      if (!next.eventId && prev.eventId) {
+        next.eventId = prev.eventId;
+        next.promoterId = prev.promoterId || next.promoterId;
+        if (next.eventStatus === "unavailable") next.eventStatus = "pending";
+      }
       if (next.eventStatus === "pending" && prev.eventStatus === "ok") {
         next.eventStatus = "ok";
       }
@@ -584,6 +647,8 @@ function renderSummary(shows, now) {
   const live = shows.filter((s) => statusOf(s, now) === "live").length;
   const soldSum = shows.reduce((n, s) => n + soldOf(s), 0);
   const hasSold = shows.some((s) => s.sold != null);
+  const capSum = shows.reduce((n, s) => n + (Number(s.capacity) || 0), 0);
+  const occPct = capSum ? Math.round((soldSum / capSum) * 100) : null;
 
   els.summary.hidden = false;
   els.summary.innerHTML = `
@@ -598,6 +663,11 @@ function renderSummary(shows, now) {
     ${
       hasSold
         ? `<span class="chip"><strong>${soldSum}</strong> ${escapeHtml(t("soldLabel"))}</span>`
+        : ""
+    }
+    ${
+      occPct != null
+        ? `<span class="chip"><strong>${occPct}%</strong> ${escapeHtml(t("occupancy"))}</span>`
         : ""
     }
   `;
@@ -642,6 +712,21 @@ function renderShowCard(show, now) {
     .filter(Boolean)
     .join("");
 
+  let progress = "";
+  if (status === "live" && show.end) {
+    const pct = Math.min(
+      Math.round(((now - show.start) / (show.end - show.start)) * 100),
+      100
+    );
+    const left = Math.max(Math.round((show.end - now) / 60_000), 0);
+    progress = `
+      <div class="live-progress">
+        <div class="live-track"><div class="live-fill" style="width:${pct}%"></div></div>
+        <span class="live-left">${left} min</span>
+      </div>
+    `;
+  }
+
   return `
     <article class="show-card ${status}">
       ${renderPoster(show, 52, 74)}
@@ -649,6 +734,7 @@ function renderShowCard(show, now) {
         <div class="time-range">${formatClock(show.start)}<span class="sep">–</span>${endLabel}</div>
         <h2 class="show-title">${escapeHtml(show.title)}</h2>
         <div class="meta-line">${metaBits}</div>
+        ${progress}
       </div>
       ${renderTicketCol(show)}
     </article>
@@ -678,10 +764,34 @@ function renderTicketCol(show) {
   if (show.sold == null) {
     return `<div class="ticket-col"><span class="ticket-loading">…</span></div>`;
   }
+
+  const cap = show.capacity || 0;
+  const pct = cap ? Math.min(Math.round((show.sold / cap) * 100), 100) : null;
+  const level = pct == null ? "" : pct >= 100 ? "full" : pct >= 75 ? "high" : pct >= 40 ? "mid" : "low";
+
+  const flag =
+    cap && show.available === 0
+      ? `<span class="ticket-flag full">${escapeHtml(t("soldOut"))}</span>`
+      : cap && show.available != null && show.available <= 10
+        ? `<span class="ticket-flag few">${escapeHtml(t("fewLeft", { n: show.available }))}</span>`
+        : "";
+
   return `
     <div class="ticket-col">
-      <div class="ticket-ratio">${show.sold}</div>
-      <div class="ticket-sub">${escapeHtml(t("sold"))}</div>
+      <div class="ticket-ratio">${show.sold}${
+        cap ? `<span class="ticket-cap">/${cap}</span>` : ""
+      }</div>
+      ${
+        pct != null
+          ? `<div class="occ-track" title="${pct}%"><div class="occ-fill ${level}" style="width:${pct}%"></div></div>`
+          : `<div class="ticket-sub">${escapeHtml(t("sold"))}</div>`
+      }
+      ${flag}
+      ${
+        show.reserved
+          ? `<span class="ticket-res">${escapeHtml(t("reservedShort", { n: show.reserved }))}</span>`
+          : ""
+      }
     </div>
   `;
 }
@@ -751,9 +861,14 @@ function renderMovieTile(movie, now) {
   const times = movie.shows
     .map((show) => {
       const status = statusOf(show, now);
+      const soldOut = show.capacity && show.available === 0;
       const sold =
         show.sold != null
-          ? `<span class="tile-sold">${show.sold}</span>`
+          ? soldOut
+            ? `<span class="tile-sold out">${escapeHtml(t("soldOut"))}</span>`
+            : `<span class="tile-sold">${show.sold}${
+                show.capacity ? `<span class="tile-cap">/${show.capacity}</span>` : ""
+              }</span>`
           : "";
       return `
         <div class="tile-show ${status}">
@@ -852,6 +967,15 @@ function renderStats() {
     : 0;
   const bestDay = [...byDay].sort((a, b) => b.sold - a.sold)[0];
 
+  // Occupancy across started shows that have both sales and capacity data.
+  const now = new Date();
+  const capShows = shows.filter(
+    (s) => Number(s.capacity) > 0 && s.sold != null && s.start <= now
+  );
+  const capTotal = capShows.reduce((n, s) => n + Number(s.capacity), 0);
+  const capSold = capShows.reduce((n, s) => n + soldOf(s), 0);
+  const occupancyPct = capTotal ? Math.round((capSold / capTotal) * 100) : null;
+
   const weekMap = new Map();
   for (const row of byDay) {
     const info = isoWeekInfo(row.day);
@@ -909,6 +1033,14 @@ function renderStats() {
             bestDay ? ` · ${escapeHtml(shortShowDay(bestDay.day))}` : ""
           }</span>
         </div>
+        ${
+          occupancyPct != null
+            ? `<div class="stats-mini">
+                <span class="stats-mini-value">${occupancyPct}%</span>
+                <span class="stats-mini-label">${escapeHtml(t("occupancyTotal"))}</span>
+              </div>`
+            : ""
+        }
       </div>
     </div>
 
@@ -1051,6 +1183,7 @@ async function enrichVisibleDay() {
   if (token !== enrichToken) return;
 
   persistHistory(dayShows);
+  lastLiveAt = Date.now();
   if (activeTab === "day") renderDay();
   els.statusText.textContent = t("liveAt", { time: formatClock(new Date()) });
   els.refreshBtn.classList.remove("spinning");
@@ -1085,6 +1218,7 @@ async function enrichAllShows({ force = false } = {}) {
   if (token !== enrichToken) return;
   persistHistory(targets);
   enrichedAll = true;
+  lastLiveAt = Date.now();
   els.statusText.textContent = t("liveAt", { time: formatClock(new Date()) });
   els.refreshBtn.classList.remove("spinning");
 }
@@ -1096,7 +1230,11 @@ async function enrichOne(show) {
     const begin = parseLocalDateTime(event.begin);
     if (begin) show.start = begin;
     if (end) show.end = end;
-    show.sold = Number(event.ticketSale?.sold) || 0;
+    const sale = event.ticketSale || {};
+    show.sold = Number(sale.sold) || 0;
+    show.reserved = Number(sale.reserved) || 0;
+    show.capacity = Number(sale.capacity) || null;
+    show.available = sale.available != null ? Number(sale.available) : null;
     if (event.locationName) {
       show.screen = String(event.locationName)
         .replace(/\s*-\s*Kino$/i, "")
