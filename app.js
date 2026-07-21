@@ -80,9 +80,7 @@ async function onFilterChange() {
 async function load({ forceLive = false } = {}) {
   setLoading(true);
   try {
-    const res = await fetch(`${DATA_URL}?t=${Date.now()}`, { cache: "no-store" });
-    if (!res.ok) throw new Error(`Kunne ikke lese program (${res.status})`);
-    const data = await res.json();
+    const data = await loadProgramSnapshot();
 
     state = {
       updatedAt: data.updatedAt,
@@ -104,6 +102,12 @@ async function load({ forceLive = false } = {}) {
   } finally {
     setLoading(false);
   }
+}
+
+async function loadProgramSnapshot() {
+  const res = await fetch(`${DATA_URL}?t=${Date.now()}`, { cache: "no-store" });
+  if (!res.ok) throw new Error(`Kunne ikke lese program (${res.status})`);
+  return res.json();
 }
 
 function normalizeCachedShow(show) {

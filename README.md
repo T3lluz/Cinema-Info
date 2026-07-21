@@ -13,14 +13,13 @@ https://t3lluz.github.io/Cinema-Info/
 
 ## How data works
 
-1. `scripts/fetch-data.mjs` snapshots the Buen program (no browser CORS) into `data/program.json`
-2. GitHub Actions refreshes that file about every 15 minutes
-3. The phone site also live-updates sold counts + end times from the DX/eBillett API when you open or refresh
+1. `scripts/fetch-data.mjs` snapshots the Buen program into `data/program.json` (Buen’s API blocks browser CORS)
+2. The phone site live-updates **sold counts + real end times** from the DX/eBillett API when you open or refresh
+3. Re-run the fetch script and push when the movie schedule itself changes
 
 ## Local
 
 ```bash
 node scripts/fetch-data.mjs
-# open index.html via any static server, e.g.
 python3 -m http.server 8080
 ```
