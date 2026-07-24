@@ -257,6 +257,7 @@ async function init() {
   });
 
   setupPullToRefresh();
+  setupDaySwipe();
 
   // Keep liquid indicators aligned after layout changes.
   window.addEventListener("resize", () => {
@@ -301,6 +302,46 @@ function setupPullToRefresh() {
 
   document.addEventListener("touchend", () => {
     pulling = false;
+  });
+}
+
+/** Swipe left/right on the day view to move between days. */
+function setupDaySwipe() {
+  const view = els.views.day;
+  let startX = 0;
+  let startY = 0;
+  let tracking = false;
+
+  view.addEventListener(
+    "touchstart",
+    (e) => {
+      if (e.touches.length !== 1) return;
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+      tracking = true;
+    },
+    { passive: true }
+  );
+
+  view.addEventListener(
+    "touchend",
+    (e) => {
+      if (!tracking) return;
+      tracking = false;
+      const dx = e.changedTouches[0].clientX - startX;
+      const dy = e.changedTouches[0].clientY - startY;
+      // Only clearly horizontal gestures, so vertical scrolling stays untouched.
+      if (Math.abs(dx) < 60 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
+      const days = [...new Set((state?.shows || []).map((s) => s.dayKey))].sort();
+      const idx = days.indexOf(selectedDay);
+      if (idx === -1) return;
+      selectDay(dx < 0 ? days[idx + 1] : days[idx - 1]);
+    },
+    { passive: true }
+  );
+
+  view.addEventListener("touchcancel", () => {
+    tracking = false;
   });
 }
 
@@ -691,19 +732,7 @@ function populateFilters() {
       .join("");
 
   els.dayTabs.querySelectorAll(".day-tab").forEach((btn) => {
-    btn.addEventListener("click", async () => {
-      if (btn.dataset.day === selectedDay) return;
-      selectedDay = btn.dataset.day;
-      savePrefs();
-      // Update selection in place so the liquid indicator can travel.
-      els.dayTabs.querySelectorAll(".day-tab").forEach((b) => {
-        b.setAttribute("aria-selected", String(b === btn));
-      });
-      moveDayIndicator();
-      renderDay();
-      btn.scrollIntoView({ inline: "center", block: "nearest", behavior: "smooth" });
-      await enrichVisibleDay();
-    });
+    btn.addEventListener("click", () => selectDay(btn.dataset.day));
   });
 
   const currentScreen = els.screenSelect.value || "all";
@@ -720,6 +749,22 @@ function populateFilters() {
     .querySelector('.day-tab[aria-selected="true"]')
     ?.scrollIntoView({ inline: "center", block: "nearest" });
   moveDayIndicator({ instant: true });
+}
+
+async function selectDay(day) {
+  if (!day || day === selectedDay || !state?.shows) return;
+  selectedDay = day;
+  savePrefs();
+  // Update selection in place so the liquid indicator can travel.
+  els.dayTabs.querySelectorAll(".day-tab").forEach((b) => {
+    b.setAttribute("aria-selected", String(b.dataset.day === day));
+  });
+  moveDayIndicator();
+  renderDay();
+  els.dayTabs
+    .querySelector('.day-tab[aria-selected="true"]')
+    ?.scrollIntoView({ inline: "center", block: "nearest", behavior: "smooth" });
+  await enrichVisibleDay();
 }
 
 function moveDayIndicator(opts = {}) {
