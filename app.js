@@ -33,9 +33,8 @@ const I18N = {
     soldOut: "Utsolgt",
     fewLeft: "{n} igjen",
     reservedShort: "{n} res.",
-    occupancy: "fylt",
-    occupancyTotal: "Snitt fylt sal",
     nextShow: "Neste {time}",
+    endsShow: "Slutt {time}",
     inMinutes: "om {n} min",
     today: "I dag",
     yesterday: "I går",
@@ -119,9 +118,8 @@ const I18N = {
     soldOut: "Sold out",
     fewLeft: "{n} left",
     reservedShort: "{n} res.",
-    occupancy: "full",
-    occupancyTotal: "Avg. seats filled",
     nextShow: "Next {time}",
+    endsShow: "Ends {time}",
     inMinutes: "in {n} min",
     today: "Today",
     yesterday: "Yesterday",
@@ -493,9 +491,12 @@ function applyLanguage() {
 }
 
 /**
- * Wolt-style liquid move: the blob first stretches to cover both the old
- * and new pill, then contracts onto the target — it "bleeds" across.
+ * Wolt-style liquid move: the blob stretches toward the new pill while
+ * squishing thinner — like slime bridging the gap — then contracts onto
+ * the target and springs back to full height.
  */
+const LIQUID_STRETCH_MS = 150;
+
 function liquidMove(indicator, target, { instant = false } = {}) {
   if (!indicator || !target) return;
   const newL = target.offsetLeft;
@@ -511,6 +512,7 @@ function liquidMove(indicator, target, { instant = false } = {}) {
   const hasPos = indicator.dataset.placed === "1";
   if (instant || !hasPos) {
     clearTimeout(indicator._contract);
+    indicator.classList.remove("liquid-stretch");
     indicator.classList.add("no-trans");
     indicator.style.left = `${newL}px`;
     indicator.style.width = `${newW}px`;
@@ -526,16 +528,18 @@ function liquidMove(indicator, target, { instant = false } = {}) {
   if (Math.abs(curL - newL) < 1 && Math.abs(curW - newW) < 1) return;
 
   clearTimeout(indicator._contract);
-  // Phase 1: stretch across both pills.
+  // Phase 1: bleed across to the target while squished thin.
   const stretchL = Math.min(curL, newL);
   const stretchR = Math.max(curL + curW, newL + newW);
+  indicator.classList.add("liquid-stretch");
   indicator.style.left = `${stretchL}px`;
   indicator.style.width = `${stretchR - stretchL}px`;
-  // Phase 2: contract onto the target.
+  // Phase 2: contract onto the target and pop back to full height.
   indicator._contract = setTimeout(() => {
+    indicator.classList.remove("liquid-stretch");
     indicator.style.left = `${newL}px`;
     indicator.style.width = `${newW}px`;
-  }, 170);
+  }, LIQUID_STRETCH_MS);
 }
 
 function movePillIndicator(tab, opts = {}) {
@@ -912,8 +916,6 @@ function renderSummary(shows, now) {
   const live = shows.filter((s) => statusOf(s, now) === "live").length;
   const soldSum = shows.reduce((n, s) => n + soldOf(s), 0);
   const hasSold = shows.some((s) => s.sold != null);
-  const capSum = shows.reduce((n, s) => n + (Number(s.capacity) || 0), 0);
-  const occPct = capSum ? Math.round((soldSum / capSum) * 100) : null;
 
   els.summary.hidden = false;
   els.summary.innerHTML = `
@@ -930,12 +932,8 @@ function renderSummary(shows, now) {
         ? `<span class="chip"><strong>${soldSum}</strong> ${escapeHtml(t("soldLabel"))}</span>`
         : ""
     }
-    ${
-      occPct != null
-        ? `<span class="chip"><strong>${occPct}%</strong> ${escapeHtml(t("occupancy"))}</span>`
-        : ""
-    }
     ${nextChip(shows, now)}
+    ${endsChip(shows, now)}
   `;
 }
 
@@ -950,6 +948,20 @@ function nextChip(shows, now) {
       : formatClock(next.start);
   return `<span class="chip next"><strong>${escapeHtml(
     t("nextShow", { time: when })
+  )}</strong></span>`;
+}
+
+/** Chip for when the movie that finishes soonest is ending. */
+function endsChip(shows, now) {
+  const ending = shows
+    .filter((s) => s.start <= now && showEndOf(s) > now)
+    .sort((a, b) => showEndOf(a) - showEndOf(b))[0];
+  if (!ending) return "";
+  const end = showEndOf(ending);
+  const mins = Math.round((end - now) / 60_000);
+  const when = mins < 60 ? t("inMinutes", { n: mins }) : formatClock(end);
+  return `<span class="chip ends"><strong>${escapeHtml(
+    t("endsShow", { time: when })
   )}</strong></span>`;
 }
 
@@ -1264,15 +1276,6 @@ function renderStats() {
     : 0;
   const bestDay = [...byDay].sort((a, b) => b.sold - a.sold)[0];
 
-  // Occupancy across started shows that have both sales and capacity data.
-  const now = new Date();
-  const capShows = shows.filter(
-    (s) => Number(s.capacity) > 0 && s.sold != null && s.start <= now
-  );
-  const capTotal = capShows.reduce((n, s) => n + Number(s.capacity), 0);
-  const capSold = capShows.reduce((n, s) => n + soldOf(s), 0);
-  const occupancyPct = capTotal ? Math.round((capSold / capTotal) * 100) : null;
-
   const weekMap = new Map();
   for (const row of byDay) {
     const info = isoWeekInfo(row.day);
@@ -1330,14 +1333,6 @@ function renderStats() {
             bestDay ? ` · ${escapeHtml(shortShowDay(bestDay.day))}` : ""
           }</span>
         </div>
-        ${
-          occupancyPct != null
-            ? `<div class="stats-mini">
-                <span class="stats-mini-value">${occupancyPct}%</span>
-                <span class="stats-mini-label">${escapeHtml(t("occupancyTotal"))}</span>
-              </div>`
-            : ""
-        }
       </div>
     </div>
 
