@@ -24,8 +24,6 @@ const I18N = {
     loadError: "Kunne ikke hente programmet.",
     updated: "Oppdatert {time}",
     liveAt: "Live {time}",
-    moviesOne: "1 film",
-    moviesMany: "{n} filmer",
     showsOne: "1 forestilling",
     showsMany: "{n} forestillinger",
     ongoing: "pågår",
@@ -109,8 +107,6 @@ const I18N = {
     loadError: "Could not load the program.",
     updated: "Updated {time}",
     liveAt: "Live {time}",
-    moviesOne: "1 movie",
-    moviesMany: "{n} movies",
     showsOne: "1 showing",
     showsMany: "{n} showings",
     ongoing: "playing",
@@ -245,10 +241,11 @@ async function init() {
     if (document.visibilityState === "visible") refreshLive();
   }, 120_000);
 
-  // Nudge the timeline "now" marker every minute.
+  // Nudge the timeline "now" marker and chip countdowns every minute.
   setInterval(() => {
     if (document.visibilityState === "visible" && state?.shows) {
       renderTimeline();
+      renderSummary();
     }
   }, 60_000);
   document.addEventListener("visibilitychange", () => {
@@ -347,11 +344,6 @@ function weekdays() {
 
 function months() {
   return (I18N[lang] || I18N.nb).months;
-}
-
-function moviesWord(n) {
-  if (lang === "en") return n === 1 ? "movie" : "movies";
-  return n === 1 ? "film" : "filmer";
 }
 
 function showsLabel(n) {
@@ -491,11 +483,11 @@ function applyLanguage() {
 }
 
 /**
- * Wolt-style liquid move: the blob stretches toward the new pill while
- * squishing thinner — like slime bridging the gap — then contracts onto
- * the target and springs back to full height.
+ * Liquid indicator move: the blob glides to the target in one springy
+ * motion while squashing flatter and slightly wider — a droplet sliding
+ * across — then relaxes back to its resting shape as it lands.
  */
-const LIQUID_STRETCH_MS = 150;
+const LIQUID_SETTLE_MS = 170;
 
 function liquidMove(indicator, target, { instant = false } = {}) {
   if (!indicator || !target) return;
@@ -511,8 +503,8 @@ function liquidMove(indicator, target, { instant = false } = {}) {
 
   const hasPos = indicator.dataset.placed === "1";
   if (instant || !hasPos) {
-    clearTimeout(indicator._contract);
-    indicator.classList.remove("liquid-stretch");
+    clearTimeout(indicator._settle);
+    indicator.classList.remove("liquid-travel");
     indicator.classList.add("no-trans");
     indicator.style.left = `${newL}px`;
     indicator.style.width = `${newW}px`;
@@ -527,19 +519,15 @@ function liquidMove(indicator, target, { instant = false } = {}) {
   const curW = parseFloat(indicator.style.width) || newW;
   if (Math.abs(curL - newL) < 1 && Math.abs(curW - newW) < 1) return;
 
-  clearTimeout(indicator._contract);
-  // Phase 1: bleed across to the target while squished thin.
-  const stretchL = Math.min(curL, newL);
-  const stretchR = Math.max(curL + curW, newL + newW);
-  indicator.classList.add("liquid-stretch");
-  indicator.style.left = `${stretchL}px`;
-  indicator.style.width = `${stretchR - stretchL}px`;
-  // Phase 2: contract onto the target and pop back to full height.
-  indicator._contract = setTimeout(() => {
-    indicator.classList.remove("liquid-stretch");
-    indicator.style.left = `${newL}px`;
-    indicator.style.width = `${newW}px`;
-  }, LIQUID_STRETCH_MS);
+  clearTimeout(indicator._settle);
+  indicator.classList.add("liquid-travel");
+  indicator.style.left = `${newL}px`;
+  indicator.style.width = `${newW}px`;
+  // Mid-flight, release the squash so the blob springs back to full
+  // height while it finishes gliding onto the target.
+  indicator._settle = setTimeout(() => {
+    indicator.classList.remove("liquid-travel");
+  }, LIQUID_SETTLE_MS);
 }
 
 function movePillIndicator(tab, opts = {}) {
@@ -581,7 +569,10 @@ async function setActiveTab(tab, { skipRender = false } = {}) {
     btn.setAttribute("aria-selected", String(btn.dataset.tab === tab));
   });
   movePillIndicator(tab, { instant: skipRender });
-  if (state?.shows) renderTimeline();
+  if (state?.shows) {
+    renderTimeline();
+    renderSummary();
+  }
 
   els.dayControls.hidden = tab !== "day";
   els.refreshBtn.hidden = tab === "settings";
@@ -646,7 +637,10 @@ function renderActiveView() {
   else if (activeTab === "movies") renderMovies();
   else if (activeTab === "stats") renderStats();
   else if (activeTab === "settings") renderSettings();
-  if (activeTab !== "day") renderTimeline();
+  if (activeTab !== "day") {
+    renderTimeline();
+    renderSummary();
+  }
 }
 
 async function loadProgramSnapshot() {
@@ -777,10 +771,9 @@ function renderDay() {
   const renderKey = `${selectedDay}|${els.screenSelect.value}`;
   const isRefresh = els.content.dataset.key === renderKey;
   els.content.classList.toggle("no-anim", isRefresh);
-  els.summary.classList.toggle("no-anim", isRefresh);
   els.content.dataset.key = renderKey;
 
-  renderSummary(shows, now);
+  renderSummary();
   renderTimeline();
 
   if (!shows.length) {
@@ -905,23 +898,39 @@ function renderTimeline() {
   `;
 }
 
-function renderSummary(shows, now) {
+/** Header stat chips. Shown on every tab: the day tab follows the
+ * selected day/screen, other tabs always show today. */
+function renderSummary() {
+  if (!state?.shows) return;
+  const now = new Date();
+  const day = activeTab === "day" ? selectedDay : toDayKey(now);
+  const screen = activeTab === "day" ? els.screenSelect.value : "all";
+  const shows = state.shows
+    .filter(
+      (s) => s.dayKey === day && (screen === "all" || s.screen === screen)
+    )
+    .sort((a, b) => a.start - b.start);
+
+  // Replay chip entrance only when the day/screen context changes,
+  // not on periodic live refreshes.
+  const renderKey = `${day}|${screen}`;
+  els.summary.classList.toggle("no-anim", els.summary.dataset.key === renderKey);
+  els.summary.dataset.key = renderKey;
+
+  // Keep the row mounted even for empty days so the header height is
+  // stable and the layout doesn't jump when flipping between days.
+  els.summary.hidden = false;
+
   if (!shows.length) {
-    els.summary.hidden = true;
     els.summary.innerHTML = "";
     return;
   }
 
-  const movieCount = new Set(shows.map((s) => s.title)).size;
   const live = shows.filter((s) => statusOf(s, now) === "live").length;
   const soldSum = shows.reduce((n, s) => n + soldOf(s), 0);
   const hasSold = shows.some((s) => s.sold != null);
 
-  els.summary.hidden = false;
   els.summary.innerHTML = `
-    <span class="chip"><strong>${movieCount}</strong> ${escapeHtml(
-      moviesWord(movieCount)
-    )}</span>
     ${
       live
         ? `<span class="chip live"><strong>${live}</strong> ${escapeHtml(t("ongoing"))}</span>`

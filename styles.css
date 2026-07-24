@@ -195,22 +195,22 @@ h1 {
   z-index: 0;
   pointer-events: none;
   transition:
-    left 0.3s cubic-bezier(0.3, 1.1, 0.4, 1),
-    width 0.3s cubic-bezier(0.3, 1.1, 0.4, 1),
-    transform 0.26s cubic-bezier(0.3, 1.4, 0.4, 1);
+    left 0.32s cubic-bezier(0.3, 1.25, 0.4, 1),
+    width 0.32s cubic-bezier(0.3, 1.25, 0.4, 1),
+    transform 0.28s cubic-bezier(0.34, 1.56, 0.5, 1);
 }
 
-/* Travel phase of the liquid move: the blob races toward the target
-   squished thin, so the bridge between pills looks like stretching slime.
-   The contract phase pops back to full height with a springy overshoot. */
-.day-indicator.liquid-stretch,
-.seg-indicator.liquid-stretch,
-.pill-indicator.liquid-stretch {
-  transform: scaleY(0.4);
+/* Travel shape of the liquid move: while gliding, the blob squashes
+   flatter and a touch wider like a droplet in motion, then the base
+   transition springs it back to its resting shape as it lands. */
+.day-indicator.liquid-travel,
+.seg-indicator.liquid-travel,
+.pill-indicator.liquid-travel {
+  transform: scaleX(1.08) scaleY(0.75);
   transition:
-    left 0.15s cubic-bezier(0.55, 0, 0.7, 0.5),
-    width 0.15s cubic-bezier(0.55, 0, 0.7, 0.5),
-    transform 0.1s cubic-bezier(0.2, 0.6, 0.4, 1);
+    left 0.32s cubic-bezier(0.3, 1.25, 0.4, 1),
+    width 0.32s cubic-bezier(0.3, 1.25, 0.4, 1),
+    transform 0.14s cubic-bezier(0.3, 0.7, 0.4, 1);
 }
 
 .day-tabs::-webkit-scrollbar {
@@ -297,15 +297,22 @@ h1 {
   max-width: 7.5rem;
 }
 
+/* Single non-wrapping line with a stable height, so the sticky header
+   doesn't jump when the chip set changes between days or tabs. Extra
+   chips scroll horizontally like the day strip. */
 .summary {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  align-items: center;
   gap: 6px;
   margin: 12px 0 0;
+  min-height: 30px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
 }
 
-/* The summary lives in the sticky header but only applies to the day view. */
-body:not([data-tab="day"]) .summary {
+.summary::-webkit-scrollbar {
   display: none;
 }
 
@@ -330,6 +337,7 @@ body:not([data-tab="day"]) .summary {
 
 .chip {
   display: inline-flex;
+  flex: 0 0 auto;
   align-items: center;
   gap: 4px;
   padding: 6px 10px;
@@ -1401,9 +1409,9 @@ a.tile-show:hover {
   z-index: 0;
   pointer-events: none;
   transition:
-    left 0.3s cubic-bezier(0.3, 1.1, 0.4, 1),
-    width 0.3s cubic-bezier(0.3, 1.1, 0.4, 1),
-    transform 0.26s cubic-bezier(0.3, 1.4, 0.4, 1);
+    left 0.32s cubic-bezier(0.3, 1.25, 0.4, 1),
+    width 0.32s cubic-bezier(0.3, 1.25, 0.4, 1),
+    transform 0.28s cubic-bezier(0.34, 1.56, 0.5, 1);
 }
 
 .seg-btn {
@@ -1463,9 +1471,9 @@ a.tile-show:hover {
   border-radius: 999px;
   background: var(--accent-soft);
   transition:
-    left 0.3s cubic-bezier(0.3, 1.1, 0.4, 1),
-    width 0.3s cubic-bezier(0.3, 1.1, 0.4, 1),
-    transform 0.26s cubic-bezier(0.3, 1.4, 0.4, 1);
+    left 0.32s cubic-bezier(0.3, 1.25, 0.4, 1),
+    width 0.32s cubic-bezier(0.3, 1.25, 0.4, 1),
+    transform 0.28s cubic-bezier(0.34, 1.56, 0.5, 1);
   pointer-events: none;
 }
 
