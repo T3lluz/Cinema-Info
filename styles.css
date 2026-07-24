@@ -166,6 +166,7 @@ h1 {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  margin-top: 10px;
 }
 
 .day-controls[hidden] {
@@ -195,7 +196,21 @@ h1 {
   pointer-events: none;
   transition:
     left 0.3s cubic-bezier(0.3, 1.1, 0.4, 1),
-    width 0.3s cubic-bezier(0.3, 1.1, 0.4, 1);
+    width 0.3s cubic-bezier(0.3, 1.1, 0.4, 1),
+    transform 0.26s cubic-bezier(0.3, 1.4, 0.4, 1);
+}
+
+/* Travel phase of the liquid move: the blob races toward the target
+   squished thin, so the bridge between pills looks like stretching slime.
+   The contract phase pops back to full height with a springy overshoot. */
+.day-indicator.liquid-stretch,
+.seg-indicator.liquid-stretch,
+.pill-indicator.liquid-stretch {
+  transform: scaleY(0.4);
+  transition:
+    left 0.15s cubic-bezier(0.55, 0, 0.7, 0.5),
+    width 0.15s cubic-bezier(0.55, 0, 0.7, 0.5),
+    transform 0.1s cubic-bezier(0.2, 0.6, 0.4, 1);
 }
 
 .day-tabs::-webkit-scrollbar {
@@ -286,7 +301,12 @@ h1 {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  margin: 0;
+  margin: 12px 0 0;
+}
+
+/* The summary lives in the sticky header but only applies to the day view. */
+body:not([data-tab="day"]) .summary {
+  display: none;
 }
 
 .summary .chip {
@@ -340,6 +360,17 @@ h1 {
 }
 
 .chip.next strong {
+  color: inherit;
+  font-weight: 750;
+}
+
+.chip.ends {
+  background: var(--warn-soft);
+  border-color: color-mix(in srgb, var(--warn) 22%, var(--surface));
+  color: var(--warn);
+}
+
+.chip.ends strong {
   color: inherit;
   font-weight: 750;
 }
@@ -1371,7 +1402,8 @@ a.tile-show:hover {
   pointer-events: none;
   transition:
     left 0.3s cubic-bezier(0.3, 1.1, 0.4, 1),
-    width 0.3s cubic-bezier(0.3, 1.1, 0.4, 1);
+    width 0.3s cubic-bezier(0.3, 1.1, 0.4, 1),
+    transform 0.26s cubic-bezier(0.3, 1.4, 0.4, 1);
 }
 
 .seg-btn {
@@ -1432,7 +1464,8 @@ a.tile-show:hover {
   background: var(--accent-soft);
   transition:
     left 0.3s cubic-bezier(0.3, 1.1, 0.4, 1),
-    width 0.3s cubic-bezier(0.3, 1.1, 0.4, 1);
+    width 0.3s cubic-bezier(0.3, 1.1, 0.4, 1),
+    transform 0.26s cubic-bezier(0.3, 1.4, 0.4, 1);
   pointer-events: none;
 }
 

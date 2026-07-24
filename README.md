@@ -6,7 +6,7 @@ Mobile-friendly schedule for **Buen kino** — same info as the KinoProgram Chro
 - Real start / end times (from eBillett)
 - Live sold / capacity / occupancy per show, with sold-out and few-left flags
 - Progress bar + minutes left for shows playing right now
-- Sales statistics (per day, per week, top movies, average occupancy)
+- Sales statistics (per day, per week, top movies)
 - Filter by day and screen — past days stay scrollable as history accumulates
 - Auto-refreshes live numbers every 2 minutes while open
 - Norwegian/English + light/dark theme
