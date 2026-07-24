@@ -634,8 +634,28 @@ h1 {
   transition: border-color 0.15s ease, transform 0.1s ease;
 }
 
-.show-card.linked:hover {
-  border-color: color-mix(in srgb, var(--accent) 35%, var(--line));
+@media (hover: hover) {
+  .show-card.linked:hover {
+    border-color: color-mix(in srgb, var(--accent) 35%, var(--line));
+  }
+}
+
+/* No outline or highlight when tapping/clicking through to the ticket page;
+   keyboard users still get a visible focus ring. */
+a.show-card,
+a.tile-show {
+  -webkit-tap-highlight-color: transparent;
+}
+
+a.show-card:focus,
+a.tile-show:focus {
+  outline: none;
+}
+
+a.show-card:focus-visible,
+a.tile-show:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 .show-card.linked:active {
@@ -1069,8 +1089,10 @@ h1 {
   text-decoration: none;
 }
 
-a.tile-show:hover {
-  outline: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+@media (hover: hover) {
+  a.tile-show:hover {
+    outline: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  }
 }
 
 .tile-show.live {
