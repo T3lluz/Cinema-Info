@@ -729,18 +729,33 @@ h1 {
 }
 
 .live-track {
+  position: relative;
   flex: 1;
-  height: 4px;
+  height: 6px;
   border-radius: 999px;
   background: color-mix(in srgb, var(--line) 70%, var(--surface));
-  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
 }
 
 .live-fill {
   height: 100%;
   border-radius: 999px;
   background: var(--ok);
-  min-width: 2px;
+}
+
+/* Slider-style thumb riding the leading edge of the fill. */
+.live-dot {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translate(-50%, -50%);
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--ok);
+  border: 2px solid var(--surface);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  pointer-events: none;
 }
 
 .live-left {
@@ -817,7 +832,6 @@ h1 {
 .occ-fill {
   height: 100%;
   border-radius: 999px;
-  min-width: 2px;
   background: var(--ok);
 }
 
@@ -1292,7 +1306,6 @@ a.tile-show:hover {
   height: 100%;
   border-radius: 999px;
   background: var(--accent);
-  min-width: 2px;
 }
 
 .bar-value,
@@ -1537,6 +1550,10 @@ a.tile-show:hover {
 .occ-fill,
 .live-fill {
   transition: width 0.5s cubic-bezier(0.25, 0.9, 0.35, 1);
+}
+
+.live-dot {
+  transition: left 0.5s cubic-bezier(0.25, 0.9, 0.35, 1);
 }
 
 @media (prefers-reduced-motion: reduce) {

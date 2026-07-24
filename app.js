@@ -43,8 +43,9 @@ const I18N = {
     moviesSubtitle: "Alle tider gruppert per film",
     noMovies: "Ingen filmer i programmet.",
     statsTitle: "Solgte billetter",
-    statsSubtitle: "Live salgstall for hele perioden",
-    soldTotalLabel: "Totalt solgt",
+    statsSubtitle: "Ukens salgstall, live",
+    soldWeekLabel: "Solgt denne uken",
+    periodTotal: "{n} totalt i perioden",
     soldAvgDay: "Snitt per dag",
     soldBestDay: "Beste dag",
     soldByDay: "Solgt per dag",
@@ -126,8 +127,9 @@ const I18N = {
     moviesSubtitle: "All times grouped by movie",
     noMovies: "No movies in the program.",
     statsTitle: "Tickets sold",
-    statsSubtitle: "Live sales for the full period",
-    soldTotalLabel: "Total sold",
+    statsSubtitle: "This week's sales, live",
+    soldWeekLabel: "Sold this week",
+    periodTotal: "{n} total for the period",
     soldAvgDay: "Avg per day",
     soldBestDay: "Best day",
     soldByDay: "Sold by day",
@@ -926,16 +928,10 @@ function renderSummary() {
     return;
   }
 
-  const live = shows.filter((s) => statusOf(s, now) === "live").length;
   const soldSum = shows.reduce((n, s) => n + soldOf(s), 0);
   const hasSold = shows.some((s) => s.sold != null);
 
   els.summary.innerHTML = `
-    ${
-      live
-        ? `<span class="chip live"><strong>${live}</strong> ${escapeHtml(t("ongoing"))}</span>`
-        : ""
-    }
     ${
       hasSold
         ? `<span class="chip"><strong>${soldSum}</strong> ${escapeHtml(t("soldLabel"))}</span>`
@@ -1022,7 +1018,10 @@ function renderShowCard(show, now, index = 0) {
     const left = Math.max(Math.round((show.end - now) / 60_000), 0);
     progress = `
       <div class="live-progress">
-        <div class="live-track"><div class="live-fill" style="width:${pct}%"></div></div>
+        <div class="live-track">
+          <div class="live-fill" style="width:${pct}%"></div>
+          <span class="live-dot" style="left:${pct}%"></span>
+        </div>
         <span class="live-left">${left} min</span>
       </div>
     `;
@@ -1075,6 +1074,8 @@ function renderTicketCol(show) {
 
   const cap = show.capacity || 0;
   const pct = cap ? Math.min(Math.round((show.sold / cap) * 100), 100) : null;
+  // Zero sold renders an empty track; any sales get a visible sliver.
+  const fillPct = pct == null ? null : show.sold ? Math.max(pct, 6) : 0;
   const level = pct == null ? "" : pct >= 100 ? "full" : pct >= 75 ? "high" : pct >= 40 ? "mid" : "low";
 
   const flag =
@@ -1091,7 +1092,7 @@ function renderTicketCol(show) {
       }</div>
       ${
         pct != null
-          ? `<div class="occ-track" title="${pct}%"><div class="occ-fill ${level}" style="width:${pct}%"></div></div>`
+          ? `<div class="occ-track" title="${pct}%"><div class="occ-fill ${level}" style="width:${fillPct}%"></div></div>`
           : `<div class="ticket-sub">${escapeHtml(t("sold"))}</div>`
       }
       ${flag}
@@ -1267,26 +1268,51 @@ function renderStats() {
     cur.sold += soldOf(show);
     dayMap.set(show.dayKey, cur);
   }
-  // Chart every day up to the last one with sales, so future
-  // zero-days don't add a long empty tail but mid-range gaps stay visible.
   const todayKey = toDayKey(new Date());
   const allDays = [...dayMap.values()].sort((a, b) =>
     a.day.localeCompare(b.day)
   );
-  const lastRelevant = allDays.reduce(
+
+  // Weekly focus: hero + day chart follow the current ISO week. If the
+  // current week has no program days (period over / not started), fall
+  // back to the closest week that does.
+  let weekInfo = isoWeekInfo(todayKey);
+  let weekDays = allDays.filter(
+    (d) => isoWeekInfo(d.day).key === weekInfo.key
+  );
+  if (!weekDays.length && allDays.length) {
+    const pastDays = allDays.filter((d) => d.day <= todayKey);
+    const anchor = pastDays[pastDays.length - 1] || allDays[0];
+    weekInfo = isoWeekInfo(anchor.day);
+    weekDays = allDays.filter((d) => isoWeekInfo(d.day).key === weekInfo.key);
+  }
+  const weekSold = weekDays.reduce((n, d) => n + d.sold, 0);
+
+  // Chart the week's days up to the last one with sales, so future
+  // zero-days don't add an empty tail but mid-week gaps stay visible.
+  const lastRelevant = weekDays.reduce(
     (max, d) => (d.sold > 0 && d.day > max ? d.day : max),
     todayKey
   );
-  const byDay = allDays.filter((d) => d.day <= lastRelevant);
+  let byDay = weekDays.filter((d) => d.day <= lastRelevant);
+  if (!byDay.length) byDay = weekDays;
   const maxDaySold = Math.max(...byDay.map((d) => d.sold), 1);
   const daysWithSold = byDay.filter((d) => d.sold > 0);
   const avgDay = daysWithSold.length
-    ? Math.round(totalSold / daysWithSold.length)
+    ? Math.round(weekSold / daysWithSold.length)
     : 0;
-  const bestDay = [...byDay].sort((a, b) => b.sold - a.sold)[0];
+  const bestDay = daysWithSold.length
+    ? [...daysWithSold].sort((a, b) => b.sold - a.sold)[0]
+    : null;
 
+  // The week chart still covers the whole period, trimmed of the
+  // future zero-week tail.
+  const lastSaleDay = allDays.reduce(
+    (max, d) => (d.sold > 0 && d.day > max ? d.day : max),
+    todayKey
+  );
   const weekMap = new Map();
-  for (const row of byDay) {
+  for (const row of allDays.filter((d) => d.day <= lastSaleDay)) {
     const info = isoWeekInfo(row.day);
     const cur = weekMap.get(info.key) || {
       key: info.key,
@@ -1322,14 +1348,20 @@ function renderStats() {
     return;
   }
 
+  const weekMeta = weekDays.length
+    ? `${t("weekLabel", { n: weekInfo.week })} · ${weekRangeLabel(
+        weekDays.map((d) => d.day)
+      )}`
+    : t("weekLabel", { n: weekInfo.week });
+
   els.statsContent.innerHTML = `
     <div class="stats-hero">
       <div class="stats-hero-main">
-        <p class="stats-hero-label">${escapeHtml(t("soldTotalLabel"))}</p>
-        <p class="stats-hero-value">${totalSold.toLocaleString(
+        <p class="stats-hero-label">${escapeHtml(t("soldWeekLabel"))}</p>
+        <p class="stats-hero-value">${weekSold.toLocaleString(
           lang === "en" ? "en-GB" : "nb-NO"
         )}</p>
-        <p class="stats-hero-sub">${escapeHtml(t("statsSubtitle"))}</p>
+        <p class="stats-hero-sub">${escapeHtml(weekMeta)}</p>
       </div>
       <div class="stats-hero-side">
         <div class="stats-mini">
@@ -1348,6 +1380,7 @@ function renderStats() {
     <section class="stats-panel">
       <div class="stats-panel-head">
         <h3>${escapeHtml(t("soldByDay"))}</h3>
+        <span class="stats-panel-meta">${escapeHtml(weekMeta)}</span>
       </div>
       <div class="bar-list">
         ${byDay
@@ -1367,6 +1400,11 @@ function renderStats() {
     <section class="stats-panel">
       <div class="stats-panel-head">
         <h3>${escapeHtml(t("soldByWeek"))}</h3>
+        <span class="stats-panel-meta">${escapeHtml(
+          t("periodTotal", {
+            n: totalSold.toLocaleString(lang === "en" ? "en-GB" : "nb-NO"),
+          })
+        )}</span>
       </div>
       <div class="bar-list">
         ${byWeek
