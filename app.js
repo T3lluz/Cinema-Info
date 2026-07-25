@@ -176,6 +176,9 @@ const I18N = {
 
 const els = {
   content: document.getElementById("content"),
+  daySwipe: document.getElementById("daySwipe"),
+  dayPanePrev: document.getElementById("dayPanePrev"),
+  dayPaneNext: document.getElementById("dayPaneNext"),
   moviesContent: document.getElementById("moviesContent"),
   statsContent: document.getElementById("statsContent"),
   settingsContent: document.getElementById("settingsContent"),
@@ -305,44 +308,156 @@ function setupPullToRefresh() {
   });
 }
 
-/** Swipe left/right on the day view to move between days. */
+/**
+ * Interactive swipe between days: the page follows the finger while the
+ * neighbouring day peeks in from the side, then snaps to the new day
+ * (or springs back) on release.
+ */
 function setupDaySwipe() {
   const view = els.views.day;
+  const track = els.daySwipe;
+
+  /** @type {"idle"|"pending"|"drag"|"ignore"|"animating"} */
+  let mode = "idle";
   let startX = 0;
   let startY = 0;
-  let tracking = false;
+  let curX = 0;
+  let width = 0;
+  let days = [];
+  let idx = -1;
+  let lastX = 0;
+  let lastT = 0;
+  let vx = 0;
+
+  const setX = (x) => {
+    curX = x;
+    track.style.transform = x ? `translate3d(${x}px, 0, 0)` : "";
+  };
 
   view.addEventListener(
     "touchstart",
     (e) => {
-      if (e.touches.length !== 1) return;
-      startX = e.touches[0].clientX;
+      if (e.touches.length !== 1 || mode === "animating") return;
+      startX = lastX = e.touches[0].clientX;
       startY = e.touches[0].clientY;
-      tracking = true;
+      lastT = e.timeStamp;
+      vx = 0;
+      mode = "pending";
     },
     { passive: true }
   );
 
   view.addEventListener(
-    "touchend",
+    "touchmove",
     (e) => {
-      if (!tracking) return;
-      tracking = false;
-      const dx = e.changedTouches[0].clientX - startX;
-      const dy = e.changedTouches[0].clientY - startY;
-      // Only clearly horizontal gestures, so vertical scrolling stays untouched.
-      if (Math.abs(dx) < 60 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
-      const days = [...new Set((state?.shows || []).map((s) => s.dayKey))].sort();
-      const idx = days.indexOf(selectedDay);
-      if (idx === -1) return;
-      selectDay(dx < 0 ? days[idx + 1] : days[idx - 1]);
+      if (mode !== "pending" && mode !== "drag") return;
+      const x = e.touches[0].clientX;
+      const y = e.touches[0].clientY;
+      const dx = x - startX;
+      const dy = y - startY;
+
+      if (mode === "pending") {
+        // Wait until the gesture direction is clear; vertical wins so
+        // normal scrolling is never hijacked.
+        if (Math.abs(dy) > 10 && Math.abs(dy) >= Math.abs(dx)) {
+          mode = "ignore";
+          return;
+        }
+        if (Math.abs(dx) < 10 || Math.abs(dx) < Math.abs(dy) * 1.2) return;
+        if (!state?.shows) {
+          mode = "ignore";
+          return;
+        }
+        days = [...new Set(state.shows.map((s) => s.dayKey))].sort();
+        idx = days.indexOf(selectedDay);
+        if (idx === -1) {
+          mode = "ignore";
+          return;
+        }
+        width = track.offsetWidth || view.offsetWidth || 1;
+        els.dayPanePrev.innerHTML = idx > 0 ? buildDayListHTML(days[idx - 1]) : "";
+        els.dayPaneNext.innerHTML =
+          idx < days.length - 1 ? buildDayListHTML(days[idx + 1]) : "";
+        mode = "drag";
+      }
+
+      if (e.cancelable) e.preventDefault();
+
+      const dt = e.timeStamp - lastT;
+      if (dt > 0) vx = (x - lastX) / dt;
+      lastX = x;
+      lastT = e.timeStamp;
+
+      // Rubber-band past the first/last day instead of moving freely.
+      const blocked = (dx > 0 && idx <= 0) || (dx < 0 && idx >= days.length - 1);
+      setX(blocked ? dx * 0.3 : dx);
     },
-    { passive: true }
+    { passive: false }
   );
 
+  const settle = () => {
+    if (mode !== "drag") {
+      mode = "idle";
+      return;
+    }
+    const canPrev = idx > 0;
+    const canNext = idx < days.length - 1;
+    const passedDistance = Math.abs(curX) > width * 0.32;
+    const flicked = Math.abs(vx) > 0.45 && Math.abs(curX) > 24;
+    let dir = 0;
+    if (curX < 0 && canNext && (passedDistance || (flicked && vx < 0))) dir = 1;
+    else if (curX > 0 && canPrev && (passedDistance || (flicked && vx > 0))) dir = -1;
+    snapTo(dir);
+  };
+
+  view.addEventListener("touchend", settle, { passive: true });
   view.addEventListener("touchcancel", () => {
-    tracking = false;
+    if (mode === "drag") snapTo(0);
+    else mode = "idle";
   });
+
+  /** Animate the track to its resting spot; dir −1/1 commits to the
+   * previous/next day, 0 springs back to the current one. */
+  function snapTo(dir) {
+    mode = "animating";
+    const target = dir === 0 ? 0 : dir === 1 ? -width : width;
+    let finished = false;
+
+    const finish = () => {
+      if (finished) return;
+      finished = true;
+      track.removeEventListener("transitionend", onTransEnd);
+      track.classList.remove("snapping");
+      if (dir !== 0) {
+        const newDay = days[idx + dir];
+        // The peeked pane already shows the new day, so skip the card
+        // entrance animation when it becomes the real content.
+        els.content.dataset.key = `${newDay}|${els.screenSelect.value}`;
+        selectDay(newDay);
+      }
+      track.classList.add("no-trans");
+      setX(0);
+      els.dayPanePrev.innerHTML = "";
+      els.dayPaneNext.innerHTML = "";
+      requestAnimationFrame(() =>
+        requestAnimationFrame(() => track.classList.remove("no-trans"))
+      );
+      mode = "idle";
+    };
+
+    const onTransEnd = (e) => {
+      if (e.target === track) finish();
+    };
+
+    if (curX === target) {
+      finish();
+      return;
+    }
+    track.classList.add("snapping");
+    track.addEventListener("transitionend", onTransEnd);
+    setTimeout(finish, 420);
+    setX(target);
+  }
 }
 
 let sessionDay = toDayKey(new Date());
@@ -579,6 +694,17 @@ function movePillIndicator(tab, opts = {}) {
   liquidMove(indicator, btn, opts);
 }
 
+const TAB_ANIM_CLASSES = [
+  "tab-in-right",
+  "tab-in-left",
+  "tab-ghost",
+  "tab-out-right",
+  "tab-out-left",
+];
+
+/** Undo hook for an in-flight tab slide, so a new switch can start clean. */
+let tabAnimCleanup = null;
+
 async function setActiveTab(tab, { skipRender = false } = {}) {
   if (!els.views[tab]) return;
   const prevTab = activeTab;
@@ -586,26 +712,49 @@ async function setActiveTab(tab, { skipRender = false } = {}) {
   savePrefs();
   document.body.dataset.tab = tab;
 
+  if (tabAnimCleanup) tabAnimCleanup();
+
   Object.entries(els.views).forEach(([key, el]) => {
     el.hidden = key !== tab;
-    el.classList.remove("slide-in-right", "slide-in-left");
   });
 
-  // Slide the incoming view in from the side it lives on.
-  if (!skipRender && prevTab !== tab) {
-    const dir =
-      TAB_ORDER.indexOf(tab) > TAB_ORDER.indexOf(prevTab)
-        ? "slide-in-right"
-        : "slide-in-left";
+  // Slide the whole page sideways: the old view glides out while the new
+  // one comes in from the side it lives on in the tab order.
+  if (!skipRender && prevTab !== tab && els.views[prevTab]) {
+    const forward = TAB_ORDER.indexOf(tab) > TAB_ORDER.indexOf(prevTab);
     const view = els.views[tab];
+    const prevView = els.views[prevTab];
+
+    // The outgoing view turns into an absolutely-positioned ghost; shift
+    // it by the old scroll offset so it doesn't jump when we scroll the
+    // new view to the top.
+    const scrollY = window.scrollY || 0;
+    prevView.hidden = false;
+    prevView.style.setProperty("--tab-shift", `${-scrollY}px`);
+    prevView.classList.add("tab-ghost", forward ? "tab-out-left" : "tab-out-right");
+    window.scrollTo(0, 0);
+
+    const cleanup = () => {
+      if (tabAnimCleanup === cleanup) tabAnimCleanup = null;
+      clearTimeout(fallback);
+      view.removeEventListener("animationend", onEnd);
+      view.classList.remove(...TAB_ANIM_CLASSES);
+      prevView.classList.remove(...TAB_ANIM_CLASSES);
+      prevView.style.removeProperty("--tab-shift");
+      prevView.hidden = true;
+    };
+    // Card entrance animations bubble up from children; only the view's
+    // own slide ending should finish the transition.
+    const onEnd = (e) => {
+      if (e.target === view) cleanup();
+    };
+    const fallback = setTimeout(cleanup, 450);
+    tabAnimCleanup = cleanup;
+
     // Restart the animation even if the class was just removed.
     void view.offsetWidth;
-    view.classList.add(dir);
-    view.addEventListener(
-      "animationend",
-      () => view.classList.remove("slide-in-right", "slide-in-left"),
-      { once: true }
-    );
+    view.classList.add(forward ? "tab-in-right" : "tab-in-left");
+    view.addEventListener("animationend", onEnd);
   }
 
   document.querySelectorAll(".pill-tab").forEach((btn) => {
@@ -798,36 +947,21 @@ function formatDayLabel(dayKey) {
   });
 }
 
-function visibleShows() {
+function dayShows(day) {
   const screen = els.screenSelect.value;
   return state.shows
-    .filter(
-      (s) =>
-        s.dayKey === selectedDay && (screen === "all" || s.screen === screen)
-    )
+    .filter((s) => s.dayKey === day && (screen === "all" || s.screen === screen))
     .sort((a, b) => a.start - b.start);
 }
 
-function renderDay() {
-  if (!state?.shows) return;
-  const shows = visibleShows();
+/** Full markup for one day's list; used for the visible day and for the
+ * peek panes while swiping between days. */
+function buildDayListHTML(day) {
+  const shows = dayShows(day);
   const now = new Date();
 
-  // Replay entrance animations only when the visible day/screen changes,
-  // not on periodic live refreshes.
-  const renderKey = `${selectedDay}|${els.screenSelect.value}`;
-  const isRefresh = els.content.dataset.key === renderKey;
-  els.content.classList.toggle("no-anim", isRefresh);
-  els.content.dataset.key = renderKey;
-
-  renderSummary();
-  renderTimeline();
-
   if (!shows.length) {
-    els.content.innerHTML = `<div class="empty-note">${escapeHtml(
-      t("emptyDay")
-    )}</div>`;
-    return;
+    return `<div class="empty-note">${escapeHtml(t("emptyDay"))}</div>`;
   }
 
   const screenFilter = els.screenSelect.value;
@@ -846,12 +980,28 @@ function renderDay() {
     parts.push(renderShowCard(show, now, i));
   }
 
-  els.content.innerHTML = `
+  return `
     <div class="day-block">
-      <div class="section-label">${escapeHtml(formatDayLabel(selectedDay))}</div>
+      <div class="section-label">${escapeHtml(formatDayLabel(day))}</div>
       ${parts.join("")}
     </div>
   `;
+}
+
+function renderDay() {
+  if (!state?.shows) return;
+
+  // Replay entrance animations only when the visible day/screen changes,
+  // not on periodic live refreshes.
+  const renderKey = `${selectedDay}|${els.screenSelect.value}`;
+  const isRefresh = els.content.dataset.key === renderKey;
+  els.content.classList.toggle("no-anim", isRefresh);
+  els.content.dataset.key = renderKey;
+
+  renderSummary();
+  renderTimeline();
+
+  els.content.innerHTML = buildDayListHTML(selectedDay);
 }
 
 function showEndOf(show) {
