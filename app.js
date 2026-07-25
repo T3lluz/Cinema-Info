@@ -62,6 +62,8 @@ const I18N = {
     themeDark: "Mørk",
     langNb: "Norsk",
     langEn: "English",
+    spokenNorwegian: "Norsk tale",
+    spokenEnglish: "Engelsk tale",
     weekdays: [
       "søndag",
       "mandag",
@@ -144,6 +146,8 @@ const I18N = {
     themeDark: "Dark",
     langNb: "Norsk",
     langEn: "English",
+    spokenNorwegian: "Norwegian",
+    spokenEnglish: "English",
     weekdays: [
       "Sunday",
       "Monday",
@@ -838,13 +842,22 @@ function cleanTags(tags) {
   });
 }
 
-/** Spoken language tags only — drop subtitle/text tags like "Norsk tekst". */
-function languageTags(tags) {
-  if (!Array.isArray(tags)) return [];
-  return tags.filter((tag) => {
-    const value = String(tag || "").trim().toLowerCase();
-    return value && !value.includes("tekst");
-  });
+/**
+ * Best-effort spoken language from Buen's version tags. Norwegian-dubbed
+ * shows are tagged "Norsk tale"; English-language shows never carry an
+ * explicit English tag — they run in original version ("Original tale")
+ * and/or with Norwegian subtitles ("Norsk tekst").
+ * Returns "nb", "en" or "" when unknown.
+ */
+function spokenLanguage(tags) {
+  if (!Array.isArray(tags)) return "";
+  const values = tags.map((tag) => String(tag || "").trim().toLowerCase());
+  if (values.some((v) => v.includes("norsk tale"))) return "nb";
+  if (values.some((v) => v.includes("engelsk"))) return "en";
+  if (values.some((v) => v.includes("original tale") || v.includes("norsk tekst"))) {
+    return "en";
+  }
+  return "";
 }
 
 function normalizeCachedShow(show) {
@@ -1191,15 +1204,11 @@ function renderShowCard(show, now, index = 0) {
     .filter(Boolean)
     .join("");
 
-  const langs = languageTags(show.tags);
-  const langLine = langs.length
-    ? `<div class="meta-line lang-line">${langs
-        .map((tag, i) =>
-          i === 0
-            ? `<span>${escapeHtml(tag)}</span>`
-            : `<span class="dot">${escapeHtml(tag)}</span>`
-        )
-        .join("")}</div>`
+  const spoken = spokenLanguage(show.tags);
+  const langLine = spoken
+    ? `<div class="meta-line lang-line"><span>${escapeHtml(
+        t(spoken === "nb" ? "spokenNorwegian" : "spokenEnglish")
+      )}</span></div>`
     : "";
 
   let progress = "";
