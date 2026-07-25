@@ -9,11 +9,9 @@ const I18N = {
     "nav.movies": "Filmer",
     "nav.stats": "Statistikk",
     "nav.settings": "Innstillinger",
-    screen: "Sal",
-    allScreens: "Alle saler",
     loading: "Henter program…",
     refresh: "Oppdater",
-    emptyDay: "Ingen filmer for valgt dag/sal.",
+    emptyDay: "Ingen filmer for valgt dag.",
     gap: "{n} min pause",
     now: "Nå",
     soon: "Snart",
@@ -93,11 +91,9 @@ const I18N = {
     "nav.movies": "Movies",
     "nav.stats": "Stats",
     "nav.settings": "Settings",
-    screen: "Screen",
-    allScreens: "All screens",
     loading: "Loading program…",
     refresh: "Refresh",
-    emptyDay: "No movies for the selected day/screen.",
+    emptyDay: "No movies for the selected day.",
     gap: "{n} min break",
     now: "Now",
     soon: "Soon",
@@ -181,7 +177,6 @@ const els = {
   settingsContent: document.getElementById("settingsContent"),
   dayTabs: document.getElementById("dayTabs"),
   dayControls: document.getElementById("dayControls"),
-  screenSelect: document.getElementById("screenSelect"),
   refreshBtn: document.getElementById("refreshBtn"),
   statusText: document.getElementById("statusText"),
   summary: document.getElementById("summary"),
@@ -214,13 +209,11 @@ async function init() {
   activeTab = prefs.activeTab || "day";
   lang = prefs.lang === "en" ? "en" : "nb";
   theme = prefs.theme === "dark" ? "dark" : "light";
-  if (prefs.selectedScreen) els.screenSelect.value = prefs.selectedScreen;
 
   applyTheme(theme);
   applyLanguage();
   setActiveTab(activeTab, { skipRender: true });
 
-  els.screenSelect.addEventListener("change", onFilterChange);
   els.refreshBtn.addEventListener("click", () => load({ forceLive: true }));
   document.querySelectorAll(".pill-tab").forEach((btn) => {
     btn.addEventListener("click", () => setActiveTab(btn.dataset.tab));
@@ -406,7 +399,6 @@ function savePrefs() {
     PREFS_KEY,
     JSON.stringify({
       selectedDay,
-      selectedScreen: els.screenSelect.value,
       activeTab,
       lang,
       theme,
@@ -511,10 +503,6 @@ function applyLanguage() {
     if (key) el.textContent = t(key);
   });
   els.refreshBtn.setAttribute("aria-label", t("refresh"));
-  els.screenSelect.setAttribute(
-    "aria-label",
-    lang === "en" ? "Filter screen" : "Filtrer sal"
-  );
   els.dayTabs.setAttribute(
     "aria-label",
     lang === "en" ? "Choose day" : "Velg dag"
@@ -635,12 +623,6 @@ async function setActiveTab(tab, { skipRender = false } = {}) {
   } else if (tab === "settings") renderSettings();
 }
 
-async function onFilterChange() {
-  savePrefs();
-  renderDay();
-  await enrichVisibleDay();
-}
-
 async function load({ forceLive = false } = {}) {
   setLoading(true);
   enrichedAll = false;
@@ -717,9 +699,6 @@ function normalizeCachedShow(show) {
 
 function populateFilters() {
   const days = [...new Set(state.shows.map((s) => s.dayKey))].sort();
-  const screens = [...new Set(state.shows.map((s) => s.screen))].sort((a, b) =>
-    a.localeCompare(b, lang === "en" ? "en" : "nb")
-  );
 
   const today = toDayKey(new Date());
   if (!selectedDay || !days.includes(selectedDay)) {
@@ -743,16 +722,6 @@ function populateFilters() {
   els.dayTabs.querySelectorAll(".day-tab").forEach((btn) => {
     btn.addEventListener("click", () => selectDay(btn.dataset.day));
   });
-
-  const currentScreen = els.screenSelect.value || "all";
-  els.screenSelect.innerHTML =
-    `<option value="all">${escapeHtml(t("allScreens"))}</option>` +
-    screens
-      .map((s) => `<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`)
-      .join("");
-  els.screenSelect.value = screens.includes(currentScreen)
-    ? currentScreen
-    : "all";
 
   els.dayTabs
     .querySelector('.day-tab[aria-selected="true"]')
@@ -808,12 +777,8 @@ function formatDayLabel(dayKey) {
 }
 
 function visibleShows() {
-  const screen = els.screenSelect.value;
   return state.shows
-    .filter(
-      (s) =>
-        s.dayKey === selectedDay && (screen === "all" || s.screen === screen)
-    )
+    .filter((s) => s.dayKey === selectedDay)
     .sort((a, b) => a.start - b.start);
 }
 
@@ -822,9 +787,9 @@ function renderDay() {
   const shows = visibleShows();
   const now = new Date();
 
-  // Replay entrance animations only when the visible day/screen changes,
+  // Replay entrance animations only when the visible day changes,
   // not on periodic live refreshes.
-  const renderKey = `${selectedDay}|${els.screenSelect.value}`;
+  const renderKey = selectedDay;
   const isRefresh = els.content.dataset.key === renderKey;
   els.content.classList.toggle("no-anim", isRefresh);
   els.content.dataset.key = renderKey;
@@ -839,12 +804,12 @@ function renderDay() {
     return;
   }
 
-  const screenFilter = els.screenSelect.value;
   const parts = [];
   for (let i = 0; i < shows.length; i++) {
     const show = shows[i];
     const prev = shows[i - 1];
-    if (prev && screenFilter !== "all" && show.end && prev.end) {
+    // Gaps only make sense between consecutive shows in the same screen.
+    if (prev && prev.screen === show.screen && show.end && prev.end) {
       const gapMin = Math.round((show.start - prev.end) / 60_000);
       if (gapMin >= 15) {
         parts.push(
@@ -955,21 +920,18 @@ function renderTimeline() {
 }
 
 /** Header stat chips. Shown on every tab: the day tab follows the
- * selected day/screen, other tabs always show today. */
+ * selected day, other tabs always show today. */
 function renderSummary() {
   if (!state?.shows) return;
   const now = new Date();
   const day = activeTab === "day" ? selectedDay : toDayKey(now);
-  const screen = activeTab === "day" ? els.screenSelect.value : "all";
   const shows = state.shows
-    .filter(
-      (s) => s.dayKey === day && (screen === "all" || s.screen === screen)
-    )
+    .filter((s) => s.dayKey === day)
     .sort((a, b) => a.start - b.start);
 
-  // Replay chip entrance only when the day/screen context changes,
+  // Replay chip entrance only when the day context changes,
   // not on periodic live refreshes.
-  const renderKey = `${day}|${screen}`;
+  const renderKey = day;
   els.summary.classList.toggle("no-anim", els.summary.dataset.key === renderKey);
   els.summary.dataset.key = renderKey;
 
