@@ -674,9 +674,18 @@ async function loadProgramSnapshot() {
   return res.json();
 }
 
+function cleanTags(tags) {
+  if (!Array.isArray(tags)) return [];
+  return tags.filter((tag) => {
+    const t = String(tag || "").trim().toUpperCase();
+    return t && t !== "2D" && t !== "3D";
+  });
+}
+
 function normalizeCachedShow(show) {
   return {
     ...show,
+    tags: cleanTags(show.tags),
     start:
       show.start instanceof Date ? show.start : parseLocalDateTime(show.start),
     end:

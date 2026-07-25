@@ -56,6 +56,15 @@ function pickPosterUrl(movie) {
   return `${base}?w=240&h=340&fit=crop&auto=format`;
 }
 
+/** Drop obsolete dimension tags — 3D is gone, so "2D" is just noise. */
+function cleanTags(tags) {
+  if (!Array.isArray(tags)) return [];
+  return tags.filter((tag) => {
+    const t = String(tag || "").trim().toUpperCase();
+    return t && t !== "2D" && t !== "3D";
+  });
+}
+
 function dayKeyFromShowStart(value) {
   return String(value).slice(0, 10);
 }
@@ -191,7 +200,7 @@ async function main() {
         runningMinutes: parseRunningTime(movie?.runningTime),
         runningLabel: movie?.runningTime || null,
         age: movie?.ageRating?.age || null,
-        tags: (show.versionTags || []).map((t) => t.tag).filter(Boolean),
+        tags: cleanTags((show.versionTags || []).map((t) => t.tag)),
         posterUrl: pickPosterUrl(movie),
         ticketUrl: ticket?.url || "",
         eventId: ticket?.eventId || null,
@@ -227,7 +236,10 @@ async function main() {
     shows.push(...enriched);
   }
 
-  const merged = mergeWithHistory(shows, previousShows);
+  const merged = mergeWithHistory(shows, previousShows).map((show) => ({
+    ...show,
+    tags: cleanTags(show.tags),
+  }));
   const payload = {
     updatedAt: new Date().toISOString(),
     cinema: "Buen kino",
