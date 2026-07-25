@@ -252,42 +252,6 @@ h1 {
   opacity: 1;
 }
 
-.screen-field {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  min-width: 0;
-  max-width: 240px;
-}
-
-.screen-field span {
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: var(--muted);
-  flex-shrink: 0;
-}
-
-.screen-field select {
-  min-width: 0;
-  flex: 1;
-  appearance: none;
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  background: var(--surface)
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%236a645e' d='M1.2 1.2 6 6l4.8-4.8'/%3E%3C/svg%3E")
-    no-repeat right 10px center;
-  padding: 9px 28px 9px 11px;
-  font: inherit;
-  font-size: 0.88rem;
-  color: var(--ink);
-}
-
-[data-theme="dark"] .screen-field select {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23a89f95' d='M1.2 1.2 6 6l4.8-4.8'/%3E%3C/svg%3E");
-}
-
 .status {
   margin: 0;
   font-size: 0.72rem;
