@@ -420,7 +420,7 @@ h1 {
   bottom: 0;
   width: 1px;
   background: color-mix(in srgb, var(--line) 70%, transparent);
-  transition: left 0.45s cubic-bezier(0.3, 0.75, 0.25, 1), opacity 0.3s ease;
+  transition: left 0.4s cubic-bezier(0.3, 0.75, 0.25, 1), opacity 0.3s ease;
 }
 
 .tl-tracks {
@@ -437,7 +437,8 @@ h1 {
   transition: height 0.35s ease, opacity 0.3s ease;
 }
 
-/* Morphing between days: bars glide and stretch to the new day's shows. */
+/* Morphing between days: bars glide and stretch to the new day's shows,
+   timed to land with the page as it slides in. */
 .tl-block {
   position: absolute;
   top: 2px;
@@ -451,8 +452,8 @@ h1 {
   overflow: hidden;
   white-space: nowrap;
   transition:
-    left 0.45s cubic-bezier(0.3, 0.75, 0.25, 1),
-    width 0.45s cubic-bezier(0.3, 0.75, 0.25, 1),
+    left 0.4s cubic-bezier(0.3, 0.75, 0.25, 1),
+    width 0.4s cubic-bezier(0.3, 0.75, 0.25, 1),
     opacity 0.3s ease,
     background-color 0.3s ease,
     color 0.3s ease;

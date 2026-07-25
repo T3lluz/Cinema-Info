@@ -219,6 +219,11 @@ let theme = "light";
 let enrichedAll = false;
 let lastLiveAt = 0;
 
+/** Set by setupDaySwipe: play the swipe slide for a day change that did not
+ * come from a gesture. Returns false when it cannot run and the caller
+ * should switch day without animating. */
+let slideToDay = null;
+
 init();
 
 async function init() {
@@ -344,6 +349,11 @@ function releaseDayRender({ discardQueued = false } = {}) {
  *   exactly where it is; if the grabbed animation was already committing,
  *   the day is committed on the spot so quick repeated swipes flow
  *   naturally from day to day.
+ *
+ * The header (day pills and timeline) travels with the page rather than
+ * after it: it moves onto the incoming day as soon as the drag is clearly
+ * heading there, and at the latest when the settle animation starts, so
+ * both land together. Day-pill taps run the same slide via slideToDay.
  */
 function setupDaySwipe() {
   const view = els.views.day;
@@ -369,10 +379,39 @@ function setupDaySwipe() {
   let raf = 0;
   /** Direction of the currently running snap animation (−1/0/1). */
   let animDir = 0;
+  /** Day that animation commits to on arrival ("" while springing back). */
+  let animDay = "";
+  /** Ends the running snap animation right now, or null when idle. */
+  let finishAnim = null;
+  /** Side the header is previewing mid-drag (−1/0/1). */
+  let previewDir = 0;
 
   const setX = (x) => {
     curX = x;
     track.style.transform = x ? `translate3d(${x}px, 0, 0)` : "";
+  };
+
+  /** Land on `day`: the peek pane already showed it, so the list swaps in
+   * without replaying the card entrance animation. */
+  const commitDay = (day) => {
+    els.content.dataset.key = day;
+    setSelectedDay(day);
+    renderDay();
+    enrichVisibleDay();
+  };
+
+  /** Move the header onto the day the drag is heading for once it is past
+   * halfway, so the pills and timeline animate alongside the page instead
+   * of starting over once it has landed. The wider entry threshold keeps a
+   * drag that hovers around the middle from flip-flopping. */
+  const previewHeader = () => {
+    const frac = -curX / width;
+    const enter = previewDir !== 0 && Math.sign(frac) === previewDir ? 0.3 : 0.45;
+    let dir = Math.abs(frac) > enter ? Math.sign(frac) : 0;
+    if ((dir > 0 && idx >= days.length - 1) || (dir < 0 && idx <= 0)) dir = 0;
+    if (dir === previewDir) return;
+    previewDir = dir;
+    setSelectedDay(days[idx + dir]);
   };
 
   view.addEventListener("pointerdown", (e) => {
@@ -389,21 +428,25 @@ function setupDaySwipe() {
       // was already committing to a neighbour day, commit it now and
       // rebase the track so a follow-up swipe moves on from the new day.
       cancelAnimationFrame(raf);
+      finishAnim = null;
       if (animDir !== 0) {
-        const newDay = days[idx + animDir];
-        els.content.dataset.key = newDay;
+        const newDay = animDay;
         releaseDayRender({ discardQueued: true });
-        selectDay(newDay);
+        commitDay(newDay);
         holdDayRender = true;
-        idx += animDir;
         setX(curX + width * animDir);
+        // A tapped pill can slide in a day that is not the neighbour, so
+        // re-find where we landed instead of stepping the index.
+        idx = days.indexOf(newDay);
         els.dayPanePrev.innerHTML =
           idx > 0 ? buildDayListHTML(days[idx - 1]) : "";
         els.dayPaneNext.innerHTML =
           idx < days.length - 1 ? buildDayListHTML(days[idx + 1]) : "";
         animDir = 0;
+        animDay = "";
       }
       baseX = curX;
+      previewDir = 0;
       mode = "drag";
       try {
         view.setPointerCapture(pointerId);
@@ -478,6 +521,7 @@ function setupDaySwipe() {
     if (next > width) next = width + (next - width) * 0.2;
     else if (next < -width) next = -width + (next + width) * 0.2;
     setX(next);
+    previewHeader();
   });
 
   const settle = () => {
@@ -524,31 +568,40 @@ function setupDaySwipe() {
     else if (mode !== "animating") mode = "idle";
   });
 
-  /** Spring the track to its resting spot; dir −1/1 commits to the
-   * previous/next day, 0 springs back to the current one. */
-  function snapTo(dir) {
+  /** Spring the track to its resting spot; dir −1/1 slides to the
+   * previous/next side, 0 springs back to the current day. `day` is the
+   * day to land on ("" for a spring-back) and `v0` the launch velocity. */
+  function snapTo(dir, { day = dir === 0 ? "" : days[idx + dir], v0 = vx } = {}) {
+    // Never leave an earlier spring running: two loops would fight over
+    // the transform and neither could be stopped.
+    cancelAnimationFrame(raf);
     mode = "animating";
     animDir = dir;
+    animDay = day;
     const target = dir === 0 ? 0 : dir === 1 ? -width : width;
+
+    // Send the header off now so the pills and timeline animate while the
+    // page glides, and both arrive at roughly the same moment. A gesture
+    // that gave up goes back to the day the list still shows.
+    if (day) setSelectedDay(day);
+    else if (previewDir !== 0) setSelectedDay(days[idx]);
+    previewDir = 0;
 
     const finish = () => {
       cancelAnimationFrame(raf);
+      finishAnim = null;
       animDir = 0;
+      animDay = "";
       // Commits re-render anyway; a queued refresh is only replayed
       // when the gesture ends back on the same day.
       releaseDayRender({ discardQueued: dir !== 0 });
-      if (dir !== 0) {
-        const newDay = days[idx + dir];
-        // The peeked pane already shows the new day, so skip the card
-        // entrance animation when it becomes the real content.
-        els.content.dataset.key = newDay;
-        selectDay(newDay);
-      }
+      if (day) commitDay(day);
       setX(0);
       els.dayPanePrev.innerHTML = "";
       els.dayPaneNext.innerHTML = "";
       mode = "idle";
     };
+    finishAnim = finish;
 
     if (curX === target || reduceMotion.matches) {
       finish();
@@ -557,9 +610,11 @@ function setupDaySwipe() {
 
     // Critically damped spring driven by the release velocity: fast
     // flicks land fast, gentle releases glide, and it never oscillates.
-    const omega = 0.015; // spring frequency, rad/ms (~300ms settle)
+    // The frequency is picked so even a full-width slide is done in about
+    // 350ms — in step with the header's morph, so the two land together.
+    const omega = 0.024; // rad/ms
     let x = curX;
-    let v = Math.max(-3, Math.min(3, vx));
+    let v = Math.max(-3, Math.min(3, v0));
     const side = Math.sign(x - target);
     let prevTs = performance.now();
 
@@ -584,6 +639,40 @@ function setupDaySwipe() {
     };
     raf = requestAnimationFrame(stepFrame);
   }
+
+  /** Slide to `day` without a gesture (day-pill taps), reusing the swipe
+   * animation so the page and the header always move as one. Returns false
+   * when no slide is possible and the caller should just switch day. */
+  slideToDay = (day) => {
+    if (!state?.shows || els.views.day.hidden) return false;
+    // A gesture owns the track; let it finish and win.
+    if (mode === "pending" || mode === "drag" || pointerId !== null) return false;
+    // Tapped during a slide: land that one first, then start from there.
+    if (mode === "animating") finishAnim?.();
+    if (day === selectedDay) return true;
+
+    const all = [...new Set(state.shows.map((s) => s.dayKey))].sort();
+    const from = all.indexOf(selectedDay);
+    const to = all.indexOf(day);
+    if (from === -1 || to === -1) return false;
+    width = track.offsetWidth || view.offsetWidth || 0;
+    if (!width) return false;
+
+    days = all;
+    idx = from;
+    baseX = 0;
+    setX(0);
+    const dir = to > from ? 1 : -1;
+    // A far-away day slides in from the near side, so every tap gets the
+    // same one-screen motion a swipe would give.
+    els.dayPanePrev.innerHTML = dir === -1 ? buildDayListHTML(day) : "";
+    els.dayPaneNext.innerHTML = dir === 1 ? buildDayListHTML(day) : "";
+    holdDayRender = true;
+    // A tap brings no release velocity, so launch it with a gentle flick's
+    // worth — a full screen from a standstill otherwise starts sluggishly.
+    snapTo(dir, { day, v0: -dir * 2 });
+    return true;
+  };
 }
 
 let sessionDay = toDayKey(new Date());
@@ -1018,8 +1107,14 @@ function populateFilters() {
   moveDayIndicator({ instant: true });
 }
 
-async function selectDay(day) {
-  if (!day || day === selectedDay || !state?.shows) return;
+/**
+ * Point the app at `day` and bring the header (pills, timeline, chips)
+ * along, without touching the day list. Kept apart from the list so a
+ * swipe can start the header moving while the page is still gliding.
+ * Returns true when the day actually changed.
+ */
+function setSelectedDay(day) {
+  if (!day || day === selectedDay || !state?.shows) return false;
   selectedDay = day;
   savePrefs();
   // Update selection in place so the liquid indicator can travel.
@@ -1027,10 +1122,21 @@ async function selectDay(day) {
     b.setAttribute("aria-selected", String(b.dataset.day === day));
   });
   moveDayIndicator();
-  renderDay();
   els.dayTabs
     .querySelector('.day-tab[aria-selected="true"]')
     ?.scrollIntoView({ inline: "center", block: "nearest", behavior: "smooth" });
+  renderSummary();
+  renderTimeline();
+  return true;
+}
+
+/** Day change from a tap: slides the page like a swipe would, so the list
+ * and the header move together whichever way the day was picked. */
+async function selectDay(day) {
+  if (!day || day === selectedDay || !state?.shows) return;
+  if (slideToDay?.(day)) return;
+  if (!setSelectedDay(day)) return;
+  renderDay();
   await enrichVisibleDay();
 }
 
