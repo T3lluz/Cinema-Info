@@ -682,6 +682,15 @@ function cleanTags(tags) {
   });
 }
 
+/** Spoken language tags only — drop subtitle/text tags like "Norsk tekst". */
+function languageTags(tags) {
+  if (!Array.isArray(tags)) return [];
+  return tags.filter((tag) => {
+    const value = String(tag || "").trim().toLowerCase();
+    return value && !value.includes("tekst");
+  });
+}
+
 function normalizeCachedShow(show) {
   return {
     ...show,
@@ -1017,13 +1026,21 @@ function renderShowCard(show, now, index = 0) {
     `<span class="screen">${escapeHtml(show.screen)}</span>`,
     show.age ? `<span class="dot">${escapeHtml(show.age)}</span>` : "",
     `<span class="dot">${escapeHtml(duration)}</span>`,
-    show.tags?.[0]
-      ? `<span class="dot">${escapeHtml(show.tags[0])}</span>`
-      : "",
     badge,
   ]
     .filter(Boolean)
     .join("");
+
+  const langs = languageTags(show.tags);
+  const langLine = langs.length
+    ? `<div class="meta-line lang-line">${langs
+        .map((tag, i) =>
+          i === 0
+            ? `<span>${escapeHtml(tag)}</span>`
+            : `<span class="dot">${escapeHtml(tag)}</span>`
+        )
+        .join("")}</div>`
+    : "";
 
   let progress = "";
   if (status === "live" && show.end) {
@@ -1049,6 +1066,7 @@ function renderShowCard(show, now, index = 0) {
         <div class="time-range">${formatClock(show.start)}<span class="sep">–</span>${endLabel}</div>
         <h2 class="show-title">${escapeHtml(show.title)}</h2>
         <div class="meta-line">${metaBits}</div>
+        ${langLine}
         ${progress}
       </div>
       ${renderTicketCol(show)}
