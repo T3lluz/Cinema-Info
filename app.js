@@ -316,21 +316,49 @@ function setupPullToRefresh() {
   });
 }
 
+/** While a swipe gesture is in progress, live refreshes must not replace
+ * the day list under the finger (that used to kill the touch stream and
+ * leave the page frozen between days). renderDay checks this flag and
+ * queues itself; the swipe code replays the render once the gesture ends. */
+let holdDayRender = false;
+let queuedDayRender = false;
+
+function releaseDayRender({ discardQueued = false } = {}) {
+  holdDayRender = false;
+  const replay = queuedDayRender && !discardQueued;
+  queuedDayRender = false;
+  if (replay) renderDay();
+}
+
 /**
  * Interactive swipe between days: the page follows the finger while the
- * neighbouring day peeks in from the side, then snaps to the new day
- * (or springs back) on release.
+ * neighbouring day peeks in from the side, then a spring animation
+ * carries it to the new day (or back) using the release velocity.
+ *
+ * Built for robustness against every "stuck between days" failure mode:
+ * - Pointer events with capture on the (stable) day view, so the gesture
+ *   survives DOM re-renders that would silently end a touch-event stream.
+ * - The settle animation runs on requestAnimationFrame instead of a CSS
+ *   transition, so it can never be left hanging by a missed transitionend.
+ * - A new touch can grab the page mid-flight and keep dragging from
+ *   exactly where it is; if the grabbed animation was already committing,
+ *   the day is committed on the spot so quick repeated swipes flow
+ *   naturally from day to day.
  */
 function setupDaySwipe() {
   const view = els.views.day;
   const track = els.daySwipe;
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
   /** @type {"idle"|"pending"|"drag"|"ignore"|"animating"} */
   let mode = "idle";
-  /** Commits the in-flight snap immediately so a new swipe can start. */
-  let finishSnap = null;
+  /** Pointer that owns the gesture; extra fingers are ignored so a stray
+   * second touch can't end the drag early. */
+  let pointerId = null;
   let startX = 0;
   let startY = 0;
+  /** Track offset at gesture start (non-zero when grabbing an animation). */
+  let baseX = 0;
   let curX = 0;
   let width = 0;
   let days = [];
@@ -338,110 +366,177 @@ function setupDaySwipe() {
   let lastX = 0;
   let lastT = 0;
   let vx = 0;
+  let raf = 0;
+  /** Direction of the currently running snap animation (−1/0/1). */
+  let animDir = 0;
 
   const setX = (x) => {
     curX = x;
     track.style.transform = x ? `translate3d(${x}px, 0, 0)` : "";
   };
 
-  view.addEventListener(
-    "touchstart",
-    (e) => {
-      if (e.touches.length !== 1) return;
-      // Don't make the user wait for a snap animation: jump it to its
-      // end state so the next swipe can begin right away.
-      if (mode === "animating") finishSnap?.();
-      startX = lastX = e.touches[0].clientX;
-      startY = e.touches[0].clientY;
-      lastT = e.timeStamp;
-      vx = 0;
-      mode = "pending";
-    },
-    { passive: true }
-  );
-
-  view.addEventListener(
-    "touchmove",
-    (e) => {
-      if (mode !== "pending" && mode !== "drag") return;
-      const x = e.touches[0].clientX;
-      const y = e.touches[0].clientY;
-      const dx = x - startX;
-      const dy = y - startY;
-
-      if (mode === "pending") {
-        // Wait until the gesture direction is clear; vertical wins so
-        // normal scrolling is never hijacked.
-        if (Math.abs(dy) > 10 && Math.abs(dy) >= Math.abs(dx)) {
-          mode = "ignore";
-          return;
-        }
-        if (Math.abs(dx) < 10 || Math.abs(dx) < Math.abs(dy) * 1.2) return;
-        if (!state?.shows) {
-          mode = "ignore";
-          return;
-        }
-        days = [...new Set(state.shows.map((s) => s.dayKey))].sort();
-        idx = days.indexOf(selectedDay);
-        if (idx === -1) {
-          mode = "ignore";
-          return;
-        }
-        width = track.offsetWidth || view.offsetWidth || 1;
-        els.dayPanePrev.innerHTML = idx > 0 ? buildDayListHTML(days[idx - 1]) : "";
+  view.addEventListener("pointerdown", (e) => {
+    // Touch/pen only: mouse users scroll and click, they don't swipe.
+    if (e.pointerType === "mouse" || !e.isPrimary || pointerId !== null) return;
+    pointerId = e.pointerId;
+    startX = lastX = e.clientX;
+    startY = e.clientY;
+    lastT = e.timeStamp;
+    vx = 0;
+    if (mode === "animating") {
+      // Catch the page mid-flight and let the finger take over from
+      // exactly where it is — no jump, no waiting. If the animation
+      // was already committing to a neighbour day, commit it now and
+      // rebase the track so a follow-up swipe moves on from the new day.
+      cancelAnimationFrame(raf);
+      if (animDir !== 0) {
+        const newDay = days[idx + animDir];
+        els.content.dataset.key = newDay;
+        releaseDayRender({ discardQueued: true });
+        selectDay(newDay);
+        holdDayRender = true;
+        idx += animDir;
+        setX(curX + width * animDir);
+        els.dayPanePrev.innerHTML =
+          idx > 0 ? buildDayListHTML(days[idx - 1]) : "";
         els.dayPaneNext.innerHTML =
           idx < days.length - 1 ? buildDayListHTML(days[idx + 1]) : "";
-        mode = "drag";
+        animDir = 0;
       }
-
-      if (e.cancelable) e.preventDefault();
-
-      const dt = e.timeStamp - lastT;
-      if (dt > 0) vx = (x - lastX) / dt;
-      lastX = x;
-      lastT = e.timeStamp;
-
-      // Rubber-band past the first/last day instead of moving freely.
-      const blocked = (dx > 0 && idx <= 0) || (dx < 0 && idx >= days.length - 1);
-      setX(blocked ? dx * 0.3 : dx);
-    },
-    { passive: false }
-  );
-
-  const settle = () => {
-    if (mode !== "drag") {
-      mode = "idle";
-      return;
+      baseX = curX;
+      mode = "drag";
+      try {
+        view.setPointerCapture(pointerId);
+      } catch {}
+    } else {
+      baseX = 0;
+      mode = "pending";
     }
-    const canPrev = idx > 0;
-    const canNext = idx < days.length - 1;
-    const passedDistance = Math.abs(curX) > width * 0.22;
-    const flicked = Math.abs(vx) > 0.3 && Math.abs(curX) > 18;
-    let dir = 0;
-    if (curX < 0 && canNext && (passedDistance || (flicked && vx < 0))) dir = 1;
-    else if (curX > 0 && canPrev && (passedDistance || (flicked && vx > 0))) dir = -1;
-    snapTo(dir);
-  };
-
-  view.addEventListener("touchend", settle, { passive: true });
-  view.addEventListener("touchcancel", () => {
-    if (mode === "drag") snapTo(0);
-    else mode = "idle";
   });
 
-  /** Animate the track to its resting spot; dir −1/1 commits to the
+  view.addEventListener("pointermove", (e) => {
+    if (e.pointerId !== pointerId) return;
+    if (mode !== "pending" && mode !== "drag") return;
+    const x = e.clientX;
+    const y = e.clientY;
+
+    if (mode === "pending") {
+      const dx = x - startX;
+      const dy = y - startY;
+      // Wait until the gesture direction is clear; vertical wins so
+      // normal scrolling is never hijacked (touch-action: pan-y keeps
+      // vertical panning with the browser).
+      if (Math.abs(dy) > 10 && Math.abs(dy) >= Math.abs(dx)) {
+        mode = "ignore";
+        return;
+      }
+      if (Math.abs(dx) < 10 || Math.abs(dx) < Math.abs(dy) * 1.2) return;
+      if (!state?.shows) {
+        mode = "ignore";
+        return;
+      }
+      days = [...new Set(state.shows.map((s) => s.dayKey))].sort();
+      idx = days.indexOf(selectedDay);
+      if (idx === -1) {
+        mode = "ignore";
+        return;
+      }
+      width = track.offsetWidth || view.offsetWidth || 1;
+      els.dayPanePrev.innerHTML = idx > 0 ? buildDayListHTML(days[idx - 1]) : "";
+      els.dayPaneNext.innerHTML =
+        idx < days.length - 1 ? buildDayListHTML(days[idx + 1]) : "";
+      // Re-base on the engage point so the page starts moving from
+      // right under the finger instead of jumping the 10px dead zone.
+      startX = x;
+      lastX = x;
+      lastT = e.timeStamp;
+      mode = "drag";
+      holdDayRender = true;
+      // Route the rest of the gesture to this (permanent) element, so a
+      // background re-render of the list can't cut the swipe short.
+      try {
+        view.setPointerCapture(pointerId);
+      } catch {}
+    }
+
+    const dt = e.timeStamp - lastT;
+    if (dt > 0) {
+      const inst = (x - lastX) / dt;
+      // Low-pass the velocity so one noisy sample can't fake a flick.
+      vx = vx === 0 ? inst : inst * 0.6 + vx * 0.4;
+      lastX = x;
+      lastT = e.timeStamp;
+    }
+
+    const target = baseX + (x - startX);
+    // Rubber-band past the first/last day instead of moving freely.
+    const blocked =
+      (target > 0 && idx <= 0) || (target < 0 && idx >= days.length - 1);
+    let next = blocked ? target * 0.3 : target;
+    // Only one neighbour is rendered on each side; resist dragging
+    // past it instead of exposing blank space.
+    if (next > width) next = width + (next - width) * 0.2;
+    else if (next < -width) next = -width + (next + width) * 0.2;
+    setX(next);
+  });
+
+  const settle = () => {
+    if (mode === "drag") {
+      const canPrev = idx > 0;
+      const canNext = idx < days.length - 1;
+      // Where would the page coast to? Position plus a bit of momentum
+      // decides, so slow far drags and quick short flicks both commit.
+      const projected = curX + vx * 140;
+      const dragDX = curX - baseX;
+      let dir = 0;
+      if (canNext && dragDX < -8 && (projected < -width * 0.3 || vx < -0.25)) {
+        dir = 1;
+      } else if (canPrev && dragDX > 8 && (projected > width * 0.3 || vx > 0.25)) {
+        dir = -1;
+      }
+      snapTo(dir);
+    } else if (mode !== "animating") {
+      mode = "idle";
+    }
+  };
+
+  view.addEventListener("pointerup", (e) => {
+    if (e.pointerId !== pointerId) return;
+    pointerId = null;
+    settle();
+  });
+
+  view.addEventListener("pointercancel", (e) => {
+    if (e.pointerId !== pointerId) return;
+    pointerId = null;
+    if (mode === "drag") snapTo(0);
+    else if (mode !== "animating") mode = "idle";
+  });
+
+  // Last-resort recovery: if the view's own capture is ever lost without
+  // a pointerup or pointercancel, spring back instead of freezing
+  // mid-swipe. (Bubbled events from a child losing its implicit capture
+  // when ours kicks in must not end the gesture, hence the target check.)
+  view.addEventListener("lostpointercapture", (e) => {
+    if (e.target !== view || e.pointerId !== pointerId) return;
+    pointerId = null;
+    if (mode === "drag") snapTo(0);
+    else if (mode !== "animating") mode = "idle";
+  });
+
+  /** Spring the track to its resting spot; dir −1/1 commits to the
    * previous/next day, 0 springs back to the current one. */
   function snapTo(dir) {
     mode = "animating";
+    animDir = dir;
     const target = dir === 0 ? 0 : dir === 1 ? -width : width;
-    let finished = false;
 
     const finish = () => {
-      if (finished) return;
-      finished = true;
-      finishSnap = null;
-      track.removeEventListener("transitionend", onTransEnd);
-      track.classList.remove("snapping");
+      cancelAnimationFrame(raf);
+      animDir = 0;
+      // Commits re-render anyway; a queued refresh is only replayed
+      // when the gesture ends back on the same day.
+      releaseDayRender({ discardQueued: dir !== 0 });
       if (dir !== 0) {
         const newDay = days[idx + dir];
         // The peeked pane already shows the new day, so skip the card
@@ -449,29 +544,45 @@ function setupDaySwipe() {
         els.content.dataset.key = newDay;
         selectDay(newDay);
       }
-      track.classList.add("no-trans");
       setX(0);
       els.dayPanePrev.innerHTML = "";
       els.dayPaneNext.innerHTML = "";
-      requestAnimationFrame(() =>
-        requestAnimationFrame(() => track.classList.remove("no-trans"))
-      );
       mode = "idle";
     };
 
-    const onTransEnd = (e) => {
-      if (e.target === track) finish();
-    };
-
-    finishSnap = finish;
-    if (curX === target) {
+    if (curX === target || reduceMotion.matches) {
       finish();
       return;
     }
-    track.classList.add("snapping");
-    track.addEventListener("transitionend", onTransEnd);
-    setTimeout(finish, 420);
-    setX(target);
+
+    // Critically damped spring driven by the release velocity: fast
+    // flicks land fast, gentle releases glide, and it never oscillates.
+    const omega = 0.015; // spring frequency, rad/ms (~300ms settle)
+    let x = curX;
+    let v = Math.max(-3, Math.min(3, vx));
+    const side = Math.sign(x - target);
+    let prevTs = performance.now();
+
+    const stepFrame = (ts) => {
+      const dt = Math.min(Math.max(ts - prevTs, 0.001), 64);
+      prevTs = ts;
+      // Exact closed-form step of x'' = -ω²(x-target) - 2ωx'.
+      const A = x - target;
+      const B = v + omega * A;
+      const decay = Math.exp(-omega * dt);
+      x = target + (A + B * dt) * decay;
+      v = (B - omega * (A + B * dt)) * decay;
+      const done =
+        (Math.abs(x - target) < 0.5 && Math.abs(v) < 0.02) ||
+        Math.sign(x - target) !== side;
+      if (done) {
+        finish();
+        return;
+      }
+      setX(x);
+      raf = requestAnimationFrame(stepFrame);
+    };
+    raf = requestAnimationFrame(stepFrame);
   }
 }
 
@@ -997,6 +1108,13 @@ function buildDayListHTML(day) {
 function renderDay() {
   if (!state?.shows) return;
 
+  // Never replace the list while a swipe is following the finger —
+  // wait for the gesture to finish, then apply the freshest data.
+  if (holdDayRender) {
+    queuedDayRender = true;
+    return;
+  }
+
   // Replay entrance animations only when the visible day changes,
   // not on periodic live refreshes.
   const renderKey = selectedDay;
@@ -1017,8 +1135,12 @@ function showEndOf(show) {
   return new Date(show.start.getTime() + (mins + 15) * 60_000);
 }
 
-function renderTimeline() {
-  if (!state?.shows) return;
+/** How long timeline pieces get to finish their exit transition. */
+const TL_EXIT_MS = 500;
+
+/** Everything needed to draw the header timeline for one day, expressed
+ * as percentages so the same data drives both a fresh build and a morph. */
+function computeTimelineLayout() {
   const now = new Date();
   // Day tab follows the selected day; other tabs always show today.
   const day = activeTab === "day" ? selectedDay : toDayKey(now);
@@ -1026,11 +1148,7 @@ function renderTimeline() {
     .filter((s) => s.dayKey === day)
     .sort((a, b) => a.start - b.start);
 
-  if (!shows.length) {
-    els.timeline.hidden = true;
-    els.timeline.innerHTML = "";
-    return;
-  }
+  if (!shows.length) return { day, lanes: [] };
 
   const HOUR = 3_600_000;
   let t0 = Math.min(...shows.map((s) => s.start.getTime()));
@@ -1044,61 +1162,275 @@ function renderTimeline() {
     a.localeCompare(b, "nb")
   );
 
+  const lanes = screens.map((screen) => ({
+    screen,
+    blocks: shows
+      .filter((s) => s.screen === screen)
+      .map((s) => {
+        const start = s.start.getTime();
+        const end = showEndOf(s).getTime();
+        const left = pctOf(start);
+        return {
+          left,
+          width: Math.max(pctOf(end) - left, 1.5),
+          status: statusOf(s, now),
+          estimated: !s.end,
+          label: formatClock(s.start),
+          title: `${s.title} · ${formatClock(s.start)}–${
+            s.end ? formatClock(s.end) : "~" + formatClock(showEndOf(s))
+          }`,
+        };
+      }),
+  }));
+
+  // Hour marks double as gridlines; keyed by timestamp so a morph can
+  // slide marks for the same hour and cross-fade the rest.
   const stepHours = span > 9 * HOUR ? 2 : 1;
-  const hourMarks = [];
+  const marks = [];
   for (let ts = t0; ts <= t1; ts += stepHours * HOUR) {
-    hourMarks.push(
-      `<span class="tl-hour" style="left:${pctOf(ts)}%">${new Date(ts).getHours()}</span>`
-    );
-  }
-
-  const names = screens
-    .map((s) => `<span class="tl-lane-name">${escapeHtml(s)}</span>`)
-    .join("");
-
-  const tracks = screens
-    .map((screen) => {
-      const blocks = shows
-        .filter((s) => s.screen === screen)
-        .map((s) => {
-          const start = s.start.getTime();
-          const end = showEndOf(s).getTime();
-          const left = pctOf(start);
-          const width = Math.max(pctOf(end) - left, 1.5);
-          const status = statusOf(s, now);
-          const estimated = !s.end ? " estimated" : "";
-          return `<div class="tl-block ${status}${estimated}"
-            style="left:${left}%;width:${width}%"
-            title="${escapeHtml(s.title)} · ${formatClock(s.start)}–${s.end ? formatClock(s.end) : "~" + formatClock(showEndOf(s))}">
-            <span class="tl-block-label">${formatClock(s.start)}</span>
-          </div>`;
-        })
-        .join("");
-      return `<div class="tl-track">${blocks}</div>`;
-    })
-    .join("");
-
-  let gridlines = "";
-  for (let ts = t0; ts <= t1; ts += stepHours * HOUR) {
-    gridlines += `<span class="tl-gridline" style="left:${pctOf(ts)}%"></span>`;
+    marks.push({ ts, pct: pctOf(ts), label: String(new Date(ts).getHours()) });
   }
 
   const nowTs = now.getTime();
   const showNow = day === toDayKey(now) && nowTs >= t0 && nowTs <= t1;
-  const nowLine = showNow
-    ? `<div class="tl-now" style="left:${pctOf(nowTs)}%"><span class="tl-now-dot"></span></div>`
-    : "";
+  return { day, lanes, marks, nowPct: showNow ? pctOf(nowTs) : null };
+}
+
+function renderTimeline() {
+  if (!state?.shows) return;
+  const layout = computeTimelineLayout();
+
+  if (!layout.lanes.length) {
+    els.timeline.hidden = true;
+    els.timeline.innerHTML = "";
+    return;
+  }
+
+  // Morph the existing bars into the new day's layout when possible;
+  // build from scratch only when there is nothing on screen yet.
+  if (!els.timeline.hidden && els.timeline.querySelector(".tl-tracks")) {
+    morphTimeline(layout);
+  } else {
+    buildTimeline(layout);
+  }
+}
+
+function buildTimeline(layout) {
+  const blockHTML = (b) => `<div class="tl-block ${b.status}${b.estimated ? " estimated" : ""}"
+      style="left:${b.left}%;width:${b.width}%"
+      title="${escapeHtml(b.title)}">
+      <span class="tl-block-label">${b.label}</span>
+    </div>`;
 
   els.timeline.hidden = false;
   els.timeline.innerHTML = `
-    <div class="tl-names">${names}</div>
+    <div class="tl-names">${layout.lanes
+      .map(
+        (l) =>
+          `<span class="tl-lane-name" data-screen="${escapeHtml(l.screen)}">${escapeHtml(l.screen)}</span>`
+      )
+      .join("")}</div>
     <div class="tl-area">
-      <div class="tl-gridlines">${gridlines}</div>
-      <div class="tl-tracks">${tracks}</div>
-      ${nowLine}
-      <div class="tl-hours">${hourMarks.join("")}</div>
+      <div class="tl-gridlines">${layout.marks
+        .map(
+          (m) =>
+            `<span class="tl-gridline" data-ts="${m.ts}" style="left:${m.pct}%"></span>`
+        )
+        .join("")}</div>
+      <div class="tl-tracks">${layout.lanes
+        .map(
+          (l) =>
+            `<div class="tl-track" data-screen="${escapeHtml(l.screen)}">${l.blocks
+              .map(blockHTML)
+              .join("")}</div>`
+        )
+        .join("")}</div>
+      ${
+        layout.nowPct != null
+          ? `<div class="tl-now" style="left:${layout.nowPct}%"><span class="tl-now-dot"></span></div>`
+          : ""
+      }
+      <div class="tl-hours">${layout.marks
+        .map(
+          (m) =>
+            `<span class="tl-hour" data-ts="${m.ts}" style="left:${m.pct}%">${m.label}</span>`
+        )
+        .join("")}</div>
     </div>
   `;
+}
+
+/**
+ * Update the timeline in place so CSS transitions carry every piece to
+ * its new spot: bars stretch/shrink and slide to the new day's shows,
+ * leftover bars collapse away, new ones grow in, and hour marks slide
+ * or cross-fade. Also used by the minute refresh, where only statuses
+ * and the "now" line move.
+ */
+function morphTimeline(layout) {
+  const namesBox = els.timeline.querySelector(".tl-names");
+  const gridsBox = els.timeline.querySelector(".tl-gridlines");
+  const tracksBox = els.timeline.querySelector(".tl-tracks");
+  const hoursBox = els.timeline.querySelector(".tl-hours");
+  const area = els.timeline.querySelector(".tl-area");
+
+  /** Finishing touches for entering nodes, applied one frame after they
+   * are inserted with their start styles so the transition can play. */
+  const entered = [];
+
+  const applyBlock = (el, b) => {
+    el.className = `tl-block ${b.status}${b.estimated ? " estimated" : ""}`;
+    el.style.left = `${b.left}%`;
+    el.style.width = `${b.width}%`;
+    el.style.opacity = "";
+    el.title = b.title;
+    el.firstElementChild.textContent = b.label;
+  };
+
+  const exitEl = (el, style) => {
+    el.classList.add("tl-exit");
+    Object.assign(el.style, style, { opacity: "0" });
+    setTimeout(() => el.remove(), TL_EXIT_MS);
+  };
+
+  // Lanes (screen names + their tracks), keyed by screen name.
+  const oldNames = new Map(
+    [...namesBox.querySelectorAll(".tl-lane-name:not(.tl-exit)")].map((el) => [
+      el.dataset.screen,
+      el,
+    ])
+  );
+  const oldTracks = new Map(
+    [...tracksBox.querySelectorAll(".tl-track:not(.tl-exit)")].map((el) => [
+      el.dataset.screen,
+      el,
+    ])
+  );
+
+  let prevName = null;
+  let prevTrack = null;
+  for (const lane of layout.lanes) {
+    let nameEl = oldNames.get(lane.screen);
+    let trackEl = oldTracks.get(lane.screen);
+    oldNames.delete(lane.screen);
+    oldTracks.delete(lane.screen);
+
+    if (!nameEl) {
+      nameEl = document.createElement("span");
+      nameEl.className = "tl-lane-name";
+      nameEl.dataset.screen = lane.screen;
+      nameEl.textContent = lane.screen;
+      nameEl.style.height = "0px";
+      nameEl.style.opacity = "0";
+      entered.push(() => {
+        nameEl.style.height = "20px";
+        nameEl.style.opacity = "1";
+      });
+    }
+    if (!trackEl) {
+      trackEl = document.createElement("div");
+      trackEl.className = "tl-track";
+      trackEl.dataset.screen = lane.screen;
+      trackEl.style.height = "0px";
+      trackEl.style.opacity = "0";
+      entered.push(() => {
+        trackEl.style.height = "20px";
+        trackEl.style.opacity = "1";
+      });
+    }
+    // Keep names and tracks in the same (sorted) order.
+    namesBox.insertBefore(nameEl, prevName ? prevName.nextSibling : namesBox.firstChild);
+    tracksBox.insertBefore(
+      trackEl,
+      prevTrack ? prevTrack.nextSibling : tracksBox.firstChild
+    );
+    prevName = nameEl;
+    prevTrack = trackEl;
+
+    // Pair old and new bars in time order: paired bars glide and stretch
+    // into place, extras collapse into their midpoint, new ones grow out.
+    const oldBlocks = [...trackEl.querySelectorAll(".tl-block:not(.tl-exit)")];
+    lane.blocks.forEach((b, i) => {
+      if (i < oldBlocks.length) {
+        applyBlock(oldBlocks[i], b);
+        return;
+      }
+      const el = document.createElement("div");
+      el.className = `tl-block ${b.status}${b.estimated ? " estimated" : ""}`;
+      el.style.left = `${b.left + b.width / 2}%`;
+      el.style.width = "0%";
+      el.style.opacity = "0";
+      el.appendChild(document.createElement("span")).className = "tl-block-label";
+      trackEl.appendChild(el);
+      entered.push(() => applyBlock(el, b));
+    });
+    for (let i = lane.blocks.length; i < oldBlocks.length; i++) {
+      const el = oldBlocks[i];
+      const mid =
+        (parseFloat(el.style.left) || 0) + (parseFloat(el.style.width) || 0) / 2;
+      exitEl(el, { left: `${mid}%`, width: "0%" });
+    }
+  }
+  for (const el of oldNames.values()) exitEl(el, { height: "0px" });
+  for (const el of oldTracks.values()) exitEl(el, { height: "0px" });
+
+  // Hour gridlines and labels, keyed by timestamp.
+  const patchMarks = (box, cls, withLabel) => {
+    const old = new Map(
+      [...box.querySelectorAll(`.${cls}:not(.tl-exit)`)].map((el) => [
+        el.dataset.ts,
+        el,
+      ])
+    );
+    for (const m of layout.marks) {
+      let el = old.get(String(m.ts));
+      if (el) {
+        old.delete(String(m.ts));
+        el.style.left = `${m.pct}%`;
+        if (withLabel) el.textContent = m.label;
+      } else {
+        el = document.createElement("span");
+        el.className = cls;
+        el.dataset.ts = m.ts;
+        el.style.left = `${m.pct}%`;
+        el.style.opacity = "0";
+        if (withLabel) el.textContent = m.label;
+        box.appendChild(el);
+        entered.push(() => {
+          el.style.opacity = "1";
+        });
+      }
+    }
+    for (const el of old.values()) exitEl(el, {});
+  };
+  patchMarks(gridsBox, "tl-gridline", false);
+  patchMarks(hoursBox, "tl-hour", true);
+
+  // "Now" line: slide when it stays, fade when it appears or leaves.
+  let nowEl = area.querySelector(".tl-now:not(.tl-exit)");
+  if (layout.nowPct != null) {
+    if (nowEl) {
+      nowEl.style.left = `${layout.nowPct}%`;
+    } else {
+      nowEl = document.createElement("div");
+      nowEl.className = "tl-now";
+      nowEl.style.left = `${layout.nowPct}%`;
+      nowEl.style.opacity = "0";
+      nowEl.appendChild(document.createElement("span")).className = "tl-now-dot";
+      area.insertBefore(nowEl, hoursBox);
+      entered.push(() => {
+        nowEl.style.opacity = "1";
+      });
+    }
+  } else if (nowEl) {
+    exitEl(nowEl, {});
+  }
+
+  // Flush start styles, then let entering pieces transition into place.
+  if (entered.length) {
+    void area.offsetWidth;
+    for (const fn of entered) fn();
+  }
 }
 
 /** Header stat chips. Shown on every tab: the day tab follows the
