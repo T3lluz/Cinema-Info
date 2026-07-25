@@ -323,6 +323,8 @@ function setupDaySwipe() {
 
   /** @type {"idle"|"pending"|"drag"|"ignore"|"animating"} */
   let mode = "idle";
+  /** Commits the in-flight snap immediately so a new swipe can start. */
+  let finishSnap = null;
   let startX = 0;
   let startY = 0;
   let curX = 0;
@@ -341,7 +343,10 @@ function setupDaySwipe() {
   view.addEventListener(
     "touchstart",
     (e) => {
-      if (e.touches.length !== 1 || mode === "animating") return;
+      if (e.touches.length !== 1) return;
+      // Don't make the user wait for a snap animation: jump it to its
+      // end state so the next swipe can begin right away.
+      if (mode === "animating") finishSnap?.();
       startX = lastX = e.touches[0].clientX;
       startY = e.touches[0].clientY;
       lastT = e.timeStamp;
@@ -406,8 +411,8 @@ function setupDaySwipe() {
     }
     const canPrev = idx > 0;
     const canNext = idx < days.length - 1;
-    const passedDistance = Math.abs(curX) > width * 0.32;
-    const flicked = Math.abs(vx) > 0.45 && Math.abs(curX) > 24;
+    const passedDistance = Math.abs(curX) > width * 0.22;
+    const flicked = Math.abs(vx) > 0.3 && Math.abs(curX) > 18;
     let dir = 0;
     if (curX < 0 && canNext && (passedDistance || (flicked && vx < 0))) dir = 1;
     else if (curX > 0 && canPrev && (passedDistance || (flicked && vx > 0))) dir = -1;
@@ -430,6 +435,7 @@ function setupDaySwipe() {
     const finish = () => {
       if (finished) return;
       finished = true;
+      finishSnap = null;
       track.removeEventListener("transitionend", onTransEnd);
       track.classList.remove("snapping");
       if (dir !== 0) {
@@ -453,6 +459,7 @@ function setupDaySwipe() {
       if (e.target === track) finish();
     };
 
+    finishSnap = finish;
     if (curX === target) {
       finish();
       return;
