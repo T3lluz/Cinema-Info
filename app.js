@@ -199,6 +199,17 @@ const els = {
 
 const TAB_ORDER = ["day", "movies", "stats", "settings"];
 
+const TAB_ANIM_CLASSES = [
+  "tab-in-right",
+  "tab-in-left",
+  "tab-ghost",
+  "tab-out-right",
+  "tab-out-left",
+];
+
+/** Undo hook for an in-flight tab slide, so a new switch can start clean. */
+let tabAnimCleanup = null;
+
 /** @type {{ shows: any[], updatedAt?: string } | null} */
 let state = null;
 let selectedDay = "";
@@ -693,17 +704,6 @@ function movePillIndicator(tab, opts = {}) {
   const btn = document.querySelector(`.pill-tab[data-tab="${tab}"]`);
   liquidMove(indicator, btn, opts);
 }
-
-const TAB_ANIM_CLASSES = [
-  "tab-in-right",
-  "tab-in-left",
-  "tab-ghost",
-  "tab-out-right",
-  "tab-out-left",
-];
-
-/** Undo hook for an in-flight tab slide, so a new switch can start clean. */
-let tabAnimCleanup = null;
 
 async function setActiveTab(tab, { skipRender = false } = {}) {
   if (!els.views[tab]) return;
