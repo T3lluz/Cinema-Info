@@ -96,6 +96,11 @@ body {
   align-items: center;
   justify-content: space-between;
   gap: 16px;
+  margin-bottom: 0;
+  transition: margin-bottom 0.25s ease;
+}
+
+body[data-tab="day"] .top-row {
   margin-bottom: 14px;
 }
 
@@ -159,30 +164,42 @@ h1 {
   animation: spin 0.8s linear infinite;
 }
 
+/* The pill row collapses via a 1fr→0fr grid track so the header resizes
+   smoothly on tab switches instead of jumping when the pills vanish. */
 .day-controls {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  display: grid;
+  grid-template-rows: 1fr;
   margin-top: 10px;
-  transition: opacity 0.18s ease, visibility 0.18s ease;
+  transition:
+    grid-template-rows 0.25s ease,
+    margin-top 0.25s ease,
+    opacity 0.2s ease,
+    visibility 0.25s;
 }
 
-/* Keep the pills' space reserved so the header never changes height when
-   switching tabs — only the pills themselves fade in and out. */
 .day-controls[hidden] {
-  display: flex;
+  display: grid;
+  grid-template-rows: 0fr;
+  margin-top: 0;
   visibility: hidden;
   opacity: 0;
   pointer-events: none;
+}
+
+/* Padding would keep the collapsed track 2px tall; fold it away too. */
+.day-controls[hidden] .day-tabs {
+  padding-bottom: 0;
 }
 
 .day-tabs {
   position: relative;
   display: flex;
   gap: 6px;
+  min-height: 0;
   overflow-x: auto;
   margin: 0 -4px;
   padding: 0 4px 2px;
+  transition: padding-bottom 0.25s ease;
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
   scroll-snap-type: x proximity;
