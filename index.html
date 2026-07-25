@@ -21,7 +21,7 @@
     <meta property="og:image" content="https://t3lluz.github.io/Cinema-Info/icons/icon-512.png" />
     <meta name="twitter:card" content="summary" />
     <title>Cinema Info · Buen</title>
-    <link rel="stylesheet" href="styles.css?v=13" />
+    <link rel="stylesheet" href="styles.css?v=14" />
     <script>
       try {
         var p = JSON.parse(localStorage.getItem("cinemaInfoPrefs") || "{}");
@@ -65,11 +65,15 @@
 
     <main class="main">
       <section id="view-day" class="view" data-view="day" aria-live="polite">
-        <div id="content" class="content">
-          <div class="state loading">
-            <div class="spinner" aria-hidden="true"></div>
-            <p data-i18n="loading">Henter program…</p>
+        <div id="daySwipe" class="day-swipe">
+          <div id="dayPanePrev" class="content day-pane prev no-anim" aria-hidden="true"></div>
+          <div id="content" class="content">
+            <div class="state loading">
+              <div class="spinner" aria-hidden="true"></div>
+              <p data-i18n="loading">Henter program…</p>
+            </div>
           </div>
+          <div id="dayPaneNext" class="content day-pane next no-anim" aria-hidden="true"></div>
         </div>
       </section>
 
@@ -116,6 +120,6 @@
       </div>
     </nav>
 
-    <script src="app.js?v=13" type="module"></script>
+    <script src="app.js?v=14" type="module"></script>
   </body>
 </html>
