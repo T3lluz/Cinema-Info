@@ -22,7 +22,7 @@
   --nav-h: 56px;
   /* Shared content column — stays phone-sized on mobile, widens on larger screens. */
   --page-max: 720px;
-  --page-pad-x: 14px;
+  --page-pad-x: 16px;
   --day-max: 560px;
   --nav-max: 420px;
 }
@@ -83,18 +83,22 @@ body {
   position: sticky;
   top: 0;
   z-index: 10;
-  padding: calc(16px + var(--safe-top)) max(16px, var(--page-pad-x)) 14px;
+  /* Horizontal inset lives on the inner column so header + main share one center. */
+  padding: calc(16px + var(--safe-top)) 0 14px;
   background: color-mix(in srgb, var(--bg) 92%, var(--surface));
   border-bottom: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
   backdrop-filter: blur(10px);
 }
 
-/* Center header content with the page column while the bar spans full width. */
+/* Same centered column as .content: max width, then shared side padding. */
 .top > * {
+  box-sizing: border-box;
   max-width: var(--page-max);
   margin-left: auto;
   margin-right: auto;
   width: 100%;
+  padding-left: var(--page-pad-x);
+  padding-right: var(--page-pad-x);
 }
 
 .top-row {
@@ -295,7 +299,8 @@ h1 {
   flex-wrap: nowrap;
   align-items: center;
   gap: 6px;
-  margin: 12px 0 0;
+  /* Only set vertical margin — horizontal auto centering comes from .top > *. */
+  margin-top: 12px;
   min-height: 30px;
   overflow-x: auto;
   scrollbar-width: none;
@@ -379,7 +384,8 @@ h1 {
   grid-template-columns: auto 1fr;
   gap: 8px;
   align-items: stretch;
-  margin: 12px 0 0;
+  /* Only set vertical margin — horizontal auto centering comes from .top > *. */
+  margin-top: 12px;
   animation: rise 0.32s ease both;
 }
 
@@ -1571,7 +1577,7 @@ a.tile-show:focus-visible {
   z-index: 20;
   display: flex;
   justify-content: center;
-  padding: 0 max(14px, var(--page-pad-x)) calc(10px + var(--safe-bottom));
+  padding: 0 var(--page-pad-x) calc(10px + var(--safe-bottom));
   pointer-events: none;
 }
 
