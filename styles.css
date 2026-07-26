@@ -1671,7 +1671,7 @@ a.tile-show:focus-visible {
 /* —— Responsive: tablet & desktop ——
    Mobile stays identical. From ~860px the shared column widens so header,
    lists, and stats share one aligned stage; day cards stop being narrower
-   than the timeline above them. */
+   than the timeline above them and flow into two columns. */
 @media (min-width: 860px) {
   :root {
     --page-max: 900px;
@@ -1689,8 +1689,24 @@ a.tile-show:focus-visible {
     font-size: 1.85rem;
   }
 
+  /* Chronological day list flows into two columns; gap markers span full
+     width so breaks between shows stay readable. */
   .day-block {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 14px;
+    align-items: start;
     max-width: none;
+  }
+
+  .day-block > .section-label,
+  .day-block > .gap-row,
+  .day-block > .empty-note {
+    grid-column: 1 / -1;
+  }
+
+  .day-block > .gap-row {
+    margin: 2px 0;
   }
 
   .show-card {
@@ -1728,23 +1744,8 @@ a.tile-show:focus-visible {
     --nav-max: 500px;
   }
 
-  /* Chronological day list flows into two columns; gap markers span full width
-     so the timeline between shows stays readable. */
   .day-block {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
     gap: 10px 16px;
-    align-items: start;
-  }
-
-  .day-block > .section-label,
-  .day-block > .gap-row,
-  .day-block > .empty-note {
-    grid-column: 1 / -1;
-  }
-
-  .day-block > .gap-row {
-    margin: 2px 0;
   }
 
   .movie-tile {
