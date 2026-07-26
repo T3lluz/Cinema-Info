@@ -20,6 +20,11 @@
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
   --nav-h: 56px;
+  /* Shared content column — stays phone-sized on mobile, widens on larger screens. */
+  --page-max: 720px;
+  --page-pad-x: 14px;
+  --day-max: 560px;
+  --nav-max: 420px;
 }
 
 [data-theme="dark"] {
@@ -78,7 +83,7 @@ body {
   position: sticky;
   top: 0;
   z-index: 10;
-  padding: calc(16px + var(--safe-top)) 16px 14px;
+  padding: calc(16px + var(--safe-top)) max(16px, var(--page-pad-x)) 14px;
   background: color-mix(in srgb, var(--bg) 92%, var(--surface));
   border-bottom: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
   backdrop-filter: blur(10px);
@@ -86,9 +91,10 @@ body {
 
 /* Center header content with the page column while the bar spans full width. */
 .top > * {
-  max-width: 720px;
+  max-width: var(--page-max);
   margin-left: auto;
   margin-right: auto;
+  width: 100%;
 }
 
 .top-row {
@@ -662,8 +668,8 @@ h1 {
 
 .content {
   flex: 1;
-  padding: 12px 14px 20px;
-  max-width: 720px;
+  padding: 12px var(--page-pad-x) 20px;
+  max-width: var(--page-max);
   margin-left: auto;
   margin-right: auto;
   width: 100%;
@@ -681,8 +687,9 @@ h1 {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  max-width: 560px;
+  max-width: var(--day-max);
   margin: 0 auto;
+  width: 100%;
 }
 
 .show-card {
@@ -1056,7 +1063,7 @@ a.tile-show:focus-visible {
 
 /* —— Views intro —— */
 .view-intro {
-  max-width: 720px;
+  max-width: var(--page-max);
   margin: 0 auto 14px;
 }
 
@@ -1083,6 +1090,12 @@ a.tile-show:focus-visible {
 @media (min-width: 560px) {
   .movie-grid {
     grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 1100px) {
+  .movie-grid {
+    grid-template-columns: 1fr 1fr 1fr;
   }
 }
 
@@ -1558,7 +1571,7 @@ a.tile-show:focus-visible {
   z-index: 20;
   display: flex;
   justify-content: center;
-  padding: 0 14px calc(10px + var(--safe-bottom));
+  padding: 0 max(14px, var(--page-pad-x)) calc(10px + var(--safe-bottom));
   pointer-events: none;
 }
 
@@ -1568,7 +1581,7 @@ a.tile-show:focus-visible {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 2px;
-  width: min(420px, 100%);
+  width: min(var(--nav-max), 100%);
   padding: 4px;
   border-radius: 999px;
   background: var(--nav-bg);
@@ -1653,6 +1666,106 @@ a.tile-show:focus-visible {
 
 .live-dot {
   transition: left 0.5s cubic-bezier(0.25, 0.9, 0.35, 1);
+}
+
+/* —— Responsive: tablet & desktop ——
+   Mobile stays identical. From ~860px the shared column widens so header,
+   lists, and stats share one aligned stage; day cards stop being narrower
+   than the timeline above them and flow into two columns. */
+@media (min-width: 860px) {
+  :root {
+    --page-max: 900px;
+    --page-pad-x: 20px;
+    --day-max: none;
+    --nav-max: 460px;
+  }
+
+  .top {
+    padding-top: calc(18px + var(--safe-top));
+    padding-bottom: 16px;
+  }
+
+  h1 {
+    font-size: 1.85rem;
+  }
+
+  /* Chronological day list flows into two columns; gap markers span full
+     width so breaks between shows stay readable. */
+  .day-block {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 14px;
+    align-items: start;
+    max-width: none;
+  }
+
+  .day-block > .section-label,
+  .day-block > .gap-row,
+  .day-block > .empty-note {
+    grid-column: 1 / -1;
+  }
+
+  .day-block > .gap-row {
+    margin: 2px 0;
+  }
+
+  .show-card {
+    grid-template-columns: 56px minmax(0, 1fr) 64px;
+    gap: 12px;
+    padding: 12px;
+  }
+
+  .poster,
+  .poster-fallback {
+    width: 56px;
+    height: 80px;
+  }
+
+  .content {
+    padding-top: 16px;
+    padding-bottom: 24px;
+  }
+
+  .stats-hero {
+    grid-template-columns: 1.35fr 1fr;
+    gap: 12px;
+  }
+
+  .pill-tab {
+    min-height: 50px;
+    font-size: 0.68rem;
+  }
+}
+
+@media (min-width: 1100px) {
+  :root {
+    --page-max: 1100px;
+    --page-pad-x: 24px;
+    --nav-max: 500px;
+  }
+
+  .day-block {
+    gap: 10px 16px;
+  }
+
+  .movie-tile {
+    padding: 14px;
+  }
+
+  .stats-hero-value {
+    font-size: clamp(2.2rem, 4vw, 2.8rem);
+  }
+
+  .settings-section {
+    padding: 18px 20px;
+  }
+}
+
+@media (min-width: 1400px) {
+  :root {
+    --page-max: 1240px;
+    --page-pad-x: 28px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
