@@ -1,7 +1,12 @@
 const DATA_URL = "./data/program.json";
 const PREFS_KEY = "cinemaInfoPrefs";
 const HISTORY_KEY = "cinemaInfoHistory";
+const DX_AUTH_KEY = "cinemaInfoDxAuth";
 const HISTORY_KEEP_DAYS = 120;
+const DX_PARTNER_ID = "202";
+const DX_API = "https://api.dx.no/v3";
+const DX_PUBLIC_API = "https://public.dx.no/v1";
+const DX_ID_URL = "https://id.dx.no";
 
 const I18N = {
   nb: {
@@ -29,6 +34,9 @@ const I18N = {
     soldOut: "Utsolgt",
     fewLeft: "{n} igjen",
     reservedShort: "{n} res.",
+    scanned: "skannet",
+    scannedLabel: "skannet",
+    scannedShort: "{n} skannet",
     nextShow: "Neste {time}",
     endsShow: "Slutt {time}",
     inMinutes: "om {n} min",
@@ -53,7 +61,7 @@ const I18N = {
     tickets: "billetter",
     noSoldData: "Ingen salgsdata ennå — trykk oppdater.",
     settingsTitle: "Innstillinger",
-    settingsSubtitle: "Språk og utseende",
+    settingsSubtitle: "Språk, utseende og DX-konto",
     language: "Språk",
     languageHint: "Velg språk for appen",
     theme: "Tema",
@@ -64,6 +72,28 @@ const I18N = {
     langEn: "English",
     spokenNorwegian: "Norsk tale",
     spokenEnglish: "Engelsk tale",
+    dxTitle: "DX-konto",
+    dxSubtitle:
+      "Koble til DX for å vise antall skannede billetter (innsjekk).",
+    dxConnectedAs: "Tilkoblet som {email}",
+    dxConnectedPat: "Tilkoblet med tilgangstoken",
+    dxConnectedHint: "Skannede billetter hentes live når du åpner appen.",
+    dxPatLabel: "Personal Access Token",
+    dxPatHint:
+      "Logg inn på id.dx.no, opprett et Personal Access Token, og lim det inn her.",
+    dxPatPlaceholder: "Lim inn token…",
+    dxEmailLabel: "E-post",
+    dxPasswordLabel: "Passord",
+    dxLoginHint: "Eller logg inn med DX Web / Check-in-brukeren din.",
+    dxConnect: "Koble til",
+    dxDisconnect: "Koble fra",
+    dxOpenId: "Åpne id.dx.no",
+    dxConnecting: "Kobler til…",
+    dxConnectOk: "Tilkoblet",
+    dxConnectFail: "Kunne ikke koble til. Sjekk token eller passord.",
+    dxNeedCreds: "Fyll inn token, eller e-post og passord.",
+    dxInvalidToken: "Ugyldig eller utløpt token.",
+    dxInvalidLogin: "Feil e-post eller passord.",
     weekdays: [
       "søndag",
       "mandag",
@@ -113,6 +143,9 @@ const I18N = {
     soldOut: "Sold out",
     fewLeft: "{n} left",
     reservedShort: "{n} res.",
+    scanned: "scanned",
+    scannedLabel: "scanned",
+    scannedShort: "{n} scanned",
     nextShow: "Next {time}",
     endsShow: "Ends {time}",
     inMinutes: "in {n} min",
@@ -137,7 +170,7 @@ const I18N = {
     tickets: "tickets",
     noSoldData: "No sales data yet — tap refresh.",
     settingsTitle: "Settings",
-    settingsSubtitle: "Language and appearance",
+    settingsSubtitle: "Language, appearance, and DX account",
     language: "Language",
     languageHint: "Choose app language",
     theme: "Theme",
@@ -148,6 +181,28 @@ const I18N = {
     langEn: "English",
     spokenNorwegian: "Norwegian",
     spokenEnglish: "English",
+    dxTitle: "DX account",
+    dxSubtitle:
+      "Connect DX to show scanned (checked-in) ticket counts.",
+    dxConnectedAs: "Connected as {email}",
+    dxConnectedPat: "Connected with access token",
+    dxConnectedHint: "Scanned tickets refresh live when you open the app.",
+    dxPatLabel: "Personal Access Token",
+    dxPatHint:
+      "Sign in at id.dx.no, create a Personal Access Token, and paste it here.",
+    dxPatPlaceholder: "Paste token…",
+    dxEmailLabel: "Email",
+    dxPasswordLabel: "Password",
+    dxLoginHint: "Or sign in with your DX Web / Check-in account.",
+    dxConnect: "Connect",
+    dxDisconnect: "Disconnect",
+    dxOpenId: "Open id.dx.no",
+    dxConnecting: "Connecting…",
+    dxConnectOk: "Connected",
+    dxConnectFail: "Could not connect. Check the token or password.",
+    dxNeedCreds: "Enter a token, or email and password.",
+    dxInvalidToken: "Invalid or expired token.",
+    dxInvalidLogin: "Wrong email or password.",
     weekdays: [
       "Sunday",
       "Monday",
@@ -218,6 +273,8 @@ let lang = "nb";
 let theme = "light";
 let enrichedAll = false;
 let lastLiveAt = 0;
+/** @type {null | { type: 'pat'|'session', token: string, email?: string, partnerId?: string, connectedAt?: string }} */
+let dxAuth = loadDxAuth();
 
 /** Set by setupDaySwipe: play the swipe slide for a day change that did not
  * come from a gesture. Returns false when it cannot run and the caller
@@ -731,6 +788,27 @@ function loadPrefs() {
   }
 }
 
+function loadDxAuth() {
+  try {
+    const raw = JSON.parse(localStorage.getItem(DX_AUTH_KEY) || "null");
+    if (!raw || typeof raw !== "object") return null;
+    if (!raw.token || (raw.type !== "pat" && raw.type !== "session")) return null;
+    return raw;
+  } catch {
+    return null;
+  }
+}
+
+function saveDxAuth(next) {
+  dxAuth = next;
+  if (!next) localStorage.removeItem(DX_AUTH_KEY);
+  else localStorage.setItem(DX_AUTH_KEY, JSON.stringify(next));
+}
+
+function isDxConnected() {
+  return Boolean(dxAuth?.token);
+}
+
 function savePrefs() {
   localStorage.setItem(
     PREFS_KEY,
@@ -798,6 +876,9 @@ function mergeShows(snapshotShows) {
         next.capacity = prev.capacity;
         next.available = prev.available ?? null;
         next.reserved = prev.reserved ?? null;
+      }
+      if (next.scanned == null && prev.scanned != null) {
+        next.scanned = prev.scanned;
       }
       if (!next.end && prev.end) next.end = prev.end;
       // The program API drops ticket links once a show starts;
@@ -1566,11 +1647,21 @@ function renderSummary() {
 
   const soldSum = shows.reduce((n, s) => n + soldOf(s), 0);
   const hasSold = shows.some((s) => s.sold != null);
+  const scannedSum = shows.reduce(
+    (n, s) => n + (s.scanned != null ? Number(s.scanned) || 0 : 0),
+    0
+  );
+  const hasScanned = isDxConnected() && shows.some((s) => s.scanned != null);
 
   els.summary.innerHTML = `
     ${
       hasSold
         ? `<span class="chip"><strong>${soldSum}</strong> ${escapeHtml(t("soldLabel"))}</span>`
+        : ""
+    }
+    ${
+      hasScanned
+        ? `<span class="chip scanned"><strong>${scannedSum}</strong> ${escapeHtml(t("scannedLabel"))}</span>`
         : ""
     }
     ${nextChip(shows, now)}
@@ -1737,6 +1828,13 @@ function renderTicketCol(show) {
           : `<div class="ticket-sub">${escapeHtml(t("sold"))}</div>`
       }
       ${flag}
+      ${
+        show.scanned != null
+          ? `<span class="ticket-scanned">${escapeHtml(
+              t("scannedShort", { n: show.scanned })
+            )}</span>`
+          : ""
+      }
       ${
         show.reserved
           ? `<span class="ticket-res">${escapeHtml(t("reservedShort", { n: show.reserved }))}</span>`
@@ -2101,6 +2199,13 @@ function renderStats() {
 }
 
 function renderSettings() {
+  const connected = isDxConnected();
+  const statusLabel = connected
+    ? dxAuth.email
+      ? t("dxConnectedAs", { email: dxAuth.email })
+      : t("dxConnectedPat")
+    : "";
+
   els.settingsContent.innerHTML = `
     <div class="view-intro">
       <h2>${escapeHtml(t("settingsTitle"))}</h2>
@@ -2129,6 +2234,42 @@ function renderSettings() {
         <button type="button" class="seg-btn" data-theme-opt="light" aria-pressed="${theme === "light"}">${escapeHtml(t("themeLight"))}</button>
         <button type="button" class="seg-btn" data-theme-opt="dark" aria-pressed="${theme === "dark"}">${escapeHtml(t("themeDark"))}</button>
       </div>
+    </section>
+
+    <section class="settings-section dx-section">
+      <div class="settings-head">
+        <h3>${escapeHtml(t("dxTitle"))}</h3>
+        <p>${escapeHtml(t("dxSubtitle"))}</p>
+      </div>
+      ${
+        connected
+          ? `<div class="dx-status connected">
+              <p class="dx-status-title">${escapeHtml(statusLabel)}</p>
+              <p class="dx-status-hint">${escapeHtml(t("dxConnectedHint"))}</p>
+              <button type="button" class="dx-btn ghost" id="dxDisconnectBtn">${escapeHtml(t("dxDisconnect"))}</button>
+            </div>`
+          : `<form class="dx-form" id="dxConnectForm" autocomplete="on">
+              <label class="dx-field">
+                <span>${escapeHtml(t("dxPatLabel"))}</span>
+                <input id="dxPatInput" name="dx-token" type="password" autocomplete="off" spellcheck="false" placeholder="${escapeHtml(t("dxPatPlaceholder"))}" />
+              </label>
+              <p class="dx-hint">${escapeHtml(t("dxPatHint"))}
+                <a href="${DX_ID_URL}" target="_blank" rel="noopener noreferrer">${escapeHtml(t("dxOpenId"))}</a>
+              </p>
+              <div class="dx-divider"><span>${escapeHtml(lang === "en" ? "or" : "eller")}</span></div>
+              <p class="dx-hint">${escapeHtml(t("dxLoginHint"))}</p>
+              <label class="dx-field">
+                <span>${escapeHtml(t("dxEmailLabel"))}</span>
+                <input id="dxEmailInput" name="dx-email" type="email" autocomplete="username" />
+              </label>
+              <label class="dx-field">
+                <span>${escapeHtml(t("dxPasswordLabel"))}</span>
+                <input id="dxPasswordInput" name="dx-password" type="password" autocomplete="current-password" />
+              </label>
+              <p class="dx-msg" id="dxConnectMsg" hidden></p>
+              <button type="submit" class="dx-btn primary" id="dxConnectBtn">${escapeHtml(t("dxConnect"))}</button>
+            </form>`
+      }
     </section>
   `;
 
@@ -2164,6 +2305,177 @@ function renderSettings() {
       segSelect(btn);
     });
   });
+
+  const disconnectBtn = els.settingsContent.querySelector("#dxDisconnectBtn");
+  if (disconnectBtn) {
+    disconnectBtn.addEventListener("click", () => {
+      saveDxAuth(null);
+      if (state?.shows) {
+        for (const show of state.shows) show.scanned = null;
+      }
+      renderSettings();
+      renderActiveView();
+    });
+  }
+
+  const form = els.settingsContent.querySelector("#dxConnectForm");
+  if (form) {
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      await connectDxAccount();
+    });
+  }
+}
+
+async function connectDxAccount() {
+  const pat = els.settingsContent.querySelector("#dxPatInput")?.value?.trim() || "";
+  const email = els.settingsContent.querySelector("#dxEmailInput")?.value?.trim() || "";
+  const password = els.settingsContent.querySelector("#dxPasswordInput")?.value || "";
+  const msg = els.settingsContent.querySelector("#dxConnectMsg");
+  const btn = els.settingsContent.querySelector("#dxConnectBtn");
+
+  const setMsg = (text, ok = false) => {
+    if (!msg) return;
+    msg.hidden = !text;
+    msg.textContent = text || "";
+    msg.classList.toggle("ok", ok);
+    msg.classList.toggle("err", Boolean(text) && !ok);
+  };
+
+  if (!pat && !(email && password)) {
+    setMsg(t("dxNeedCreds"));
+    return;
+  }
+
+  if (btn) {
+    btn.disabled = true;
+    btn.textContent = t("dxConnecting");
+  }
+  setMsg("");
+
+  try {
+    let next = null;
+    if (pat) {
+      await validateDxPat(pat);
+      next = {
+        type: "pat",
+        token: pat,
+        partnerId: DX_PARTNER_ID,
+        connectedAt: new Date().toISOString(),
+      };
+    } else {
+      const session = await loginDxSession(email, password);
+      next = {
+        type: "session",
+        token: session.token,
+        email: session.email || email,
+        partnerId: session.partnerId || DX_PARTNER_ID,
+        connectedAt: new Date().toISOString(),
+      };
+    }
+    saveDxAuth(next);
+    setMsg(t("dxConnectOk"), true);
+    renderSettings();
+    await enrichAllShows({ force: true });
+    renderActiveView();
+  } catch (err) {
+    console.warn("DX connect failed", err);
+    const code = err?.code;
+    setMsg(
+      code === "token"
+        ? t("dxInvalidToken")
+        : code === "login"
+          ? t("dxInvalidLogin")
+          : t("dxConnectFail")
+    );
+    if (btn) {
+      btn.disabled = false;
+      btn.textContent = t("dxConnect");
+    }
+  }
+}
+
+async function validateDxPat(token) {
+  const res = await fetch(`${DX_PUBLIC_API}/partners/${DX_PARTNER_ID}`, {
+    cache: "no-store",
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  if (res.status === 401 || res.status === 403) {
+    const err = new Error("Invalid PAT");
+    err.code = "token";
+    throw err;
+  }
+  // Some tenants return 404 for partner root but accept event routes.
+  if (!res.ok && res.status !== 404) {
+    // Fall back: try listing events — proves the token works.
+    const ev = await fetch(
+      `${DX_PUBLIC_API}/partners/${DX_PARTNER_ID}/events`,
+      {
+        cache: "no-store",
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    if (ev.status === 401 || ev.status === 403) {
+      const err = new Error("Invalid PAT");
+      err.code = "token";
+      throw err;
+    }
+    if (!ev.ok) {
+      const err = new Error(`DX public ${ev.status}`);
+      err.code = "token";
+      throw err;
+    }
+  }
+}
+
+async function loginDxSession(email, password) {
+  const res = await fetch(`${DX_API}/auth/login`, {
+    method: "POST",
+    cache: "no-store",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ email, password }),
+  });
+  if (res.status === 401 || res.status === 403) {
+    const err = new Error("Invalid login");
+    err.code = "login";
+    throw err;
+  }
+  if (!res.ok) {
+    const err = new Error(`DX login ${res.status}`);
+    err.code = "login";
+    throw err;
+  }
+  const data = await res.json();
+  const token =
+    data.authToken ||
+    data.token ||
+    data.access_token ||
+    data.accessToken ||
+    data?.data?.authToken ||
+    data?.data?.token;
+  if (!token) {
+    const err = new Error("DX login missing token");
+    err.code = "login";
+    throw err;
+  }
+  return {
+    token: String(token),
+    email: data.email || data.user?.email || email,
+    partnerId:
+      data.partnerId ||
+      data.partner_id ||
+      data.user?.partnerId ||
+      DX_PARTNER_ID,
+  };
 }
 
 function segSelect(btn) {
@@ -2183,7 +2495,9 @@ async function enrichVisibleDay() {
 
   const token = ++enrichToken;
   els.refreshBtn.classList.add("spinning");
-  await Promise.all(dayShows.map((show) => enrichOne(show)));
+  await Promise.all(
+    dayShows.map((show) => enrichOne(show, { forceScanned: isDxConnected() }))
+  );
   if (token !== enrichToken) return;
 
   persistHistory(dayShows);
@@ -2200,10 +2514,14 @@ async function ensureAllEnriched() {
 
 async function enrichAllShows({ force = false } = {}) {
   if (!state?.shows) return;
+  const wantScanned = isDxConnected();
   const targets = state.shows.filter(
     (s) =>
       s.eventId &&
-      (force || s.sold == null || s.eventStatus === "pending")
+      (force ||
+        s.sold == null ||
+        s.eventStatus === "pending" ||
+        (wantScanned && s.scanned == null))
   );
   if (!targets.length) {
     enrichedAll = true;
@@ -2216,7 +2534,11 @@ async function enrichAllShows({ force = false } = {}) {
   const batchSize = 8;
   for (let i = 0; i < targets.length; i += batchSize) {
     if (token !== enrichToken) return;
-    await Promise.all(targets.slice(i, i + batchSize).map((s) => enrichOne(s)));
+    await Promise.all(
+      targets
+        .slice(i, i + batchSize)
+        .map((s) => enrichOne(s, { forceScanned: force && wantScanned }))
+    );
   }
 
   if (token !== enrichToken) return;
@@ -2227,7 +2549,7 @@ async function enrichAllShows({ force = false } = {}) {
   els.refreshBtn.classList.remove("spinning");
 }
 
-async function enrichOne(show) {
+async function enrichOne(show, { forceScanned = false } = {}) {
   try {
     const event = await fetchDxEvent(show);
     const end = parseLocalDateTime(event.end);
@@ -2239,6 +2561,8 @@ async function enrichOne(show) {
     show.reserved = Number(sale.reserved) || 0;
     show.capacity = Number(sale.capacity) || null;
     show.available = sale.available != null ? Number(sale.available) : null;
+    const scannedFromSale = extractScannedCount(sale);
+    if (scannedFromSale != null) show.scanned = scannedFromSale;
     if (event.locationName) {
       show.screen = String(event.locationName)
         .replace(/\s*-\s*Kino$/i, "")
@@ -2249,20 +2573,212 @@ async function enrichOne(show) {
     console.warn("Live event fetch failed", show.eventId, err);
     if (show.sold == null) show.eventStatus = "error";
   }
+
+  if (
+    isDxConnected() &&
+    show.eventId &&
+    (forceScanned || show.scanned == null)
+  ) {
+    try {
+      const scanned = await fetchDxScanned(show);
+      if (scanned != null) show.scanned = scanned;
+    } catch (err) {
+      console.warn("Scanned fetch failed", show.eventId, err);
+      if (err?.code === "auth") {
+        // Token no longer valid — drop the connection quietly.
+        saveDxAuth(null);
+      }
+    }
+  }
 }
 
 async function fetchDxEvent(show) {
-  const promoterId = show.promoterId || "202";
-  const url = `https://api.dx.no/v3/partners/${promoterId}/events/${show.eventId}`;
-  const res = await fetch(url, {
-    cache: "no-store",
-    headers: {
-      Accept: "application/json",
-      Referer: show.ticketUrl || "https://checkout.ebillett.no/",
-    },
-  });
+  const promoterId = show.promoterId || DX_PARTNER_ID;
+  const url = `${DX_API}/partners/${promoterId}/events/${show.eventId}`;
+  const headers = {
+    Accept: "application/json",
+    Referer: show.ticketUrl || "https://checkout.ebillett.no/",
+  };
+  // Authenticated session may unlock extra ticketSale fields (e.g. scanned).
+  if (dxAuth?.type === "session" && dxAuth.token) {
+    headers.authToken = dxAuth.token;
+  }
+  const res = await fetch(url, { cache: "no-store", headers });
   if (!res.ok) throw new Error(`DX ${res.status}`);
   return res.json();
+}
+
+/** Fetch scanned/checked-in count using connected DX credentials. */
+async function fetchDxScanned(show) {
+  if (!dxAuth?.token || !show.eventId) return null;
+  const promoterId = show.promoterId || dxAuth.partnerId || DX_PARTNER_ID;
+
+  if (dxAuth.type === "session") {
+    const fromTickets = await fetchScannedFromTickets(promoterId, show.eventId, {
+      authToken: dxAuth.token,
+    });
+    if (fromTickets != null) return fromTickets;
+  }
+
+  if (dxAuth.type === "pat") {
+    // Public API event detail (Bearer PAT).
+    const publicCount = await fetchScannedFromPublic(promoterId, show.eventId);
+    if (publicCount != null) return publicCount;
+
+    // Some PATs also work as api.dx.no authToken for /tickets.
+    const fromTickets = await fetchScannedFromTickets(promoterId, show.eventId, {
+      authToken: dxAuth.token,
+      authorization: `Bearer ${dxAuth.token}`,
+    });
+    if (fromTickets != null) return fromTickets;
+  }
+
+  return null;
+}
+
+async function fetchScannedFromPublic(promoterId, eventId) {
+  const res = await fetch(
+    `${DX_PUBLIC_API}/partners/${promoterId}/events/${eventId}`,
+    {
+      cache: "no-store",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${dxAuth.token}`,
+      },
+    }
+  );
+  if (res.status === 401 || res.status === 403) {
+    const err = new Error("DX auth expired");
+    err.code = "auth";
+    throw err;
+  }
+  if (!res.ok) return null;
+  const data = await res.json();
+  return (
+    extractScannedCount(data?.ticketSale) ??
+    extractScannedCount(data) ??
+    extractScannedCount(data?.data)
+  );
+}
+
+async function fetchScannedFromTickets(promoterId, eventId, auth = {}) {
+  const headers = { Accept: "application/json" };
+  if (auth.authToken) headers.authToken = auth.authToken;
+  if (auth.authorization) headers.Authorization = auth.authorization;
+
+  const res = await fetch(
+    `${DX_API}/partners/${promoterId}/events/${eventId}/tickets`,
+    { cache: "no-store", headers }
+  );
+  if (res.status === 401 || res.status === 403) {
+    // Wrong auth scheme for this credential — not necessarily expired.
+    return null;
+  }
+  if (!res.ok) return null;
+  const data = await res.json();
+  return extractScannedCount(data);
+}
+
+/**
+ * Best-effort extraction of checked-in / scanned ticket counts from
+ * heterogeneous DX payloads (ticketSale, tickets list, meta, etc.).
+ */
+function extractScannedCount(payload) {
+  if (payload == null) return null;
+
+  if (typeof payload === "number" && Number.isFinite(payload)) {
+    return payload;
+  }
+
+  if (Array.isArray(payload)) {
+    return countScannedTickets(payload);
+  }
+
+  if (typeof payload !== "object") return null;
+
+  const directKeys = [
+    "scanned",
+    "scannedCount",
+    "scannedTickets",
+    "checkedIn",
+    "checked_in",
+    "checkedInCount",
+    "checked_in_count",
+    "verified",
+    "verifiedCount",
+    "verifiedTickets",
+    "admitted",
+    "admittedCount",
+    "used",
+    "usedCount",
+    "checkIns",
+    "checkins",
+    "checkInCount",
+    "innsjekket",
+    "innsjekk",
+  ];
+  for (const key of directKeys) {
+    if (payload[key] != null && typeof payload[key] !== "object") {
+      const n = Number(payload[key]);
+      if (Number.isFinite(n)) return n;
+    }
+  }
+
+  for (const nest of ["ticketSale", "ticket_sale", "sale", "stats", "statistics", "meta", "summary"]) {
+    if (payload[nest] && typeof payload[nest] === "object") {
+      const nested = extractScannedCount(payload[nest]);
+      if (nested != null) return nested;
+    }
+  }
+
+  for (const listKey of ["tickets", "data", "items", "results", "seats"]) {
+    if (Array.isArray(payload[listKey])) {
+      const n = countScannedTickets(payload[listKey]);
+      if (n != null) return n;
+    }
+  }
+
+  return null;
+}
+
+function countScannedTickets(tickets) {
+  if (!Array.isArray(tickets) || !tickets.length) return tickets?.length === 0 ? 0 : null;
+  let scanned = 0;
+  let sawFlag = false;
+  for (const ticket of tickets) {
+    if (!ticket || typeof ticket !== "object") continue;
+    const flag =
+      ticket.scanned ??
+      ticket.checkedIn ??
+      ticket.checked_in ??
+      ticket.verified ??
+      ticket.isVerified ??
+      ticket.isScanned ??
+      ticket.admitted ??
+      ticket.used ??
+      ticket.innsjekket;
+    if (flag != null) {
+      sawFlag = true;
+      if (flag === true || flag === 1 || flag === "1" || flag === "true") scanned += 1;
+      else if (typeof flag === "string" && flag && flag !== "0" && flag !== "false") {
+        // Timestamp-like verifiedAt stored under a boolean-ish key.
+        scanned += 1;
+      }
+    } else if (
+      ticket.scannedAt ||
+      ticket.checkedInAt ||
+      ticket.checked_in_at ||
+      ticket.verifiedAt ||
+      ticket.verified_at ||
+      ticket.usedAt ||
+      ticket.used_at ||
+      ticket.admittedAt
+    ) {
+      sawFlag = true;
+      scanned += 1;
+    }
+  }
+  return sawFlag ? scanned : null;
 }
 
 function parseLocalDateTime(value) {
