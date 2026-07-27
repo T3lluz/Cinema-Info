@@ -6,7 +6,11 @@ const HISTORY_KEEP_DAYS = 120;
 const DX_PARTNER_ID = "202";
 const DX_API = "https://api.dx.no/v3";
 const DX_PUBLIC_API = "https://public.dx.no/v1";
-const DX_ID_URL = "https://id.dx.no";
+const DX_WEB_URL = "https://app.dx.no";
+const DX_LOGIN_PROXY =
+  "https://kypeegsbfaivyqeidnqp.supabase.co/functions/v1/dx-web-login";
+const DX_LOGIN_ANON_KEY =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt5cGVlZ3NiZmFpdnlxZWlkbnFwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUxODczMzQsImV4cCI6MjEwMDc2MzMzNH0.xUuL6dC8u_Nm6DqxS0y4KyjpMNlVn6IrxcvivSHeaaM";
 
 const I18N = {
   nb: {
@@ -74,26 +78,28 @@ const I18N = {
     spokenEnglish: "Engelsk tale",
     dxTitle: "DX-konto",
     dxSubtitle:
-      "Koble til DX for å vise antall skannede billetter (innsjekk).",
+      "Logg inn med DX Web (w.dx.no / app.dx.no) for å vise skannede billetter.",
     dxConnectedAs: "Tilkoblet som {email}",
     dxConnectedPat: "Tilkoblet med tilgangstoken",
     dxConnectedHint: "Skannede billetter hentes live når du åpner appen.",
-    dxPatLabel: "Personal Access Token",
+    dxPatLabel: "Personal Access Token (valgfritt)",
     dxPatHint:
-      "Logg inn på id.dx.no, opprett et Personal Access Token, og lim det inn her.",
+      "Kun hvis du har token fra id.dx.no. De fleste bruker DX Web-innlogging over.",
     dxPatPlaceholder: "Lim inn token…",
     dxEmailLabel: "E-post",
     dxPasswordLabel: "Passord",
-    dxLoginHint: "Eller logg inn med DX Web / Check-in-brukeren din.",
+    dxLoginHint:
+      "Samme e-post og passord som du bruker på app.dx.no / DX Check-in.",
     dxConnect: "Koble til",
     dxDisconnect: "Koble fra",
-    dxOpenId: "Åpne id.dx.no",
+    dxOpenWeb: "Åpne DX Web",
     dxConnecting: "Kobler til…",
     dxConnectOk: "Tilkoblet",
-    dxConnectFail: "Kunne ikke koble til. Sjekk token eller passord.",
-    dxNeedCreds: "Fyll inn token, eller e-post og passord.",
+    dxConnectFail: "Kunne ikke koble til. Sjekk e-post og passord.",
+    dxNeedCreds: "Fyll inn e-post og passord, eller lim inn et token under Avansert.",
     dxInvalidToken: "Ugyldig eller utløpt token.",
     dxInvalidLogin: "Feil e-post eller passord.",
+    dxAdvanced: "Avansert",
     weekdays: [
       "søndag",
       "mandag",
@@ -183,26 +189,28 @@ const I18N = {
     spokenEnglish: "English",
     dxTitle: "DX account",
     dxSubtitle:
-      "Connect DX to show scanned (checked-in) ticket counts.",
+      "Sign in with DX Web (w.dx.no / app.dx.no) to show scanned tickets.",
     dxConnectedAs: "Connected as {email}",
     dxConnectedPat: "Connected with access token",
     dxConnectedHint: "Scanned tickets refresh live when you open the app.",
-    dxPatLabel: "Personal Access Token",
+    dxPatLabel: "Personal Access Token (optional)",
     dxPatHint:
-      "Sign in at id.dx.no, create a Personal Access Token, and paste it here.",
+      "Only if you have a token from id.dx.no. Most people use DX Web login above.",
     dxPatPlaceholder: "Paste token…",
     dxEmailLabel: "Email",
     dxPasswordLabel: "Password",
-    dxLoginHint: "Or sign in with your DX Web / Check-in account.",
+    dxLoginHint:
+      "Same email and password you use on app.dx.no / DX Check-in.",
     dxConnect: "Connect",
     dxDisconnect: "Disconnect",
-    dxOpenId: "Open id.dx.no",
+    dxOpenWeb: "Open DX Web",
     dxConnecting: "Connecting…",
     dxConnectOk: "Connected",
-    dxConnectFail: "Could not connect. Check the token or password.",
-    dxNeedCreds: "Enter a token, or email and password.",
+    dxConnectFail: "Could not connect. Check email and password.",
+    dxNeedCreds: "Enter email and password, or paste a token under Advanced.",
     dxInvalidToken: "Invalid or expired token.",
     dxInvalidLogin: "Wrong email or password.",
+    dxAdvanced: "Advanced",
     weekdays: [
       "Sunday",
       "Monday",
@@ -273,7 +281,7 @@ let lang = "nb";
 let theme = "light";
 let enrichedAll = false;
 let lastLiveAt = 0;
-/** @type {null | { type: 'pat'|'session', token: string, email?: string, partnerId?: string, connectedAt?: string }} */
+/** @type {null | { type: 'pat'|'session'|'auth0', token: string, email?: string, partnerId?: string, connectedAt?: string, refreshToken?: string }} */
 let dxAuth = loadDxAuth();
 
 /** Set by setupDaySwipe: play the swipe slide for a day change that did not
@@ -792,7 +800,12 @@ function loadDxAuth() {
   try {
     const raw = JSON.parse(localStorage.getItem(DX_AUTH_KEY) || "null");
     if (!raw || typeof raw !== "object") return null;
-    if (!raw.token || (raw.type !== "pat" && raw.type !== "session")) return null;
+    if (
+      !raw.token ||
+      (raw.type !== "pat" && raw.type !== "session" && raw.type !== "auth0")
+    ) {
+      return null;
+    }
     return raw;
   } catch {
     return null;
@@ -2249,15 +2262,9 @@ function renderSettings() {
               <button type="button" class="dx-btn ghost" id="dxDisconnectBtn">${escapeHtml(t("dxDisconnect"))}</button>
             </div>`
           : `<form class="dx-form" id="dxConnectForm" autocomplete="on">
-              <label class="dx-field">
-                <span>${escapeHtml(t("dxPatLabel"))}</span>
-                <input id="dxPatInput" name="dx-token" type="password" autocomplete="off" spellcheck="false" placeholder="${escapeHtml(t("dxPatPlaceholder"))}" />
-              </label>
-              <p class="dx-hint">${escapeHtml(t("dxPatHint"))}
-                <a href="${DX_ID_URL}" target="_blank" rel="noopener noreferrer">${escapeHtml(t("dxOpenId"))}</a>
+              <p class="dx-hint">${escapeHtml(t("dxLoginHint"))}
+                <a href="${DX_WEB_URL}" target="_blank" rel="noopener noreferrer">${escapeHtml(t("dxOpenWeb"))}</a>
               </p>
-              <div class="dx-divider"><span>${escapeHtml(lang === "en" ? "or" : "eller")}</span></div>
-              <p class="dx-hint">${escapeHtml(t("dxLoginHint"))}</p>
               <label class="dx-field">
                 <span>${escapeHtml(t("dxEmailLabel"))}</span>
                 <input id="dxEmailInput" name="dx-email" type="email" autocomplete="username" />
@@ -2268,6 +2275,14 @@ function renderSettings() {
               </label>
               <p class="dx-msg" id="dxConnectMsg" hidden></p>
               <button type="submit" class="dx-btn primary" id="dxConnectBtn">${escapeHtml(t("dxConnect"))}</button>
+              <details class="dx-advanced">
+                <summary>${escapeHtml(t("dxAdvanced"))}</summary>
+                <label class="dx-field">
+                  <span>${escapeHtml(t("dxPatLabel"))}</span>
+                  <input id="dxPatInput" name="dx-token" type="password" autocomplete="off" spellcheck="false" placeholder="${escapeHtml(t("dxPatPlaceholder"))}" />
+                </label>
+                <p class="dx-hint">${escapeHtml(t("dxPatHint"))}</p>
+              </details>
             </form>`
       }
     </section>
@@ -2355,7 +2370,7 @@ async function connectDxAccount() {
 
   try {
     let next = null;
-    if (pat) {
+    if (pat && !(email && password)) {
       await validateDxPat(pat);
       next = {
         type: "pat",
@@ -2364,10 +2379,11 @@ async function connectDxAccount() {
         connectedAt: new Date().toISOString(),
       };
     } else {
-      const session = await loginDxSession(email, password);
+      const session = await loginDxWeb(email, password);
       next = {
-        type: "session",
+        type: session.type === "auth0" ? "auth0" : "session",
         token: session.token,
+        refreshToken: session.refreshToken,
         email: session.email || email,
         partnerId: session.partnerId || DX_PARTNER_ID,
         connectedAt: new Date().toISOString(),
@@ -2434,47 +2450,36 @@ async function validateDxPat(token) {
   }
 }
 
-async function loginDxSession(email, password) {
-  const res = await fetch(`${DX_API}/auth/login`, {
+/** Sign in with DX Web (w.dx.no / app.dx.no) credentials via login proxy. */
+async function loginDxWeb(email, password) {
+  const res = await fetch(DX_LOGIN_PROXY, {
     method: "POST",
     cache: "no-store",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
+      Authorization: `Bearer ${DX_LOGIN_ANON_KEY}`,
+      apikey: DX_LOGIN_ANON_KEY,
     },
     body: JSON.stringify({ email, password }),
   });
-  if (res.status === 401 || res.status === 403) {
-    const err = new Error("Invalid login");
-    err.code = "login";
-    throw err;
+  let data = {};
+  try {
+    data = await res.json();
+  } catch {
+    data = {};
   }
-  if (!res.ok) {
-    const err = new Error(`DX login ${res.status}`);
-    err.code = "login";
-    throw err;
-  }
-  const data = await res.json();
-  const token =
-    data.authToken ||
-    data.token ||
-    data.access_token ||
-    data.accessToken ||
-    data?.data?.authToken ||
-    data?.data?.token;
-  if (!token) {
-    const err = new Error("DX login missing token");
-    err.code = "login";
+  if (!res.ok || !data.token) {
+    const err = new Error(data.error || `DX login ${res.status}`);
+    err.code = data.code === "login" || res.status === 403 ? "login" : "auth0";
     throw err;
   }
   return {
-    token: String(token),
-    email: data.email || data.user?.email || email,
-    partnerId:
-      data.partnerId ||
-      data.partner_id ||
-      data.user?.partnerId ||
-      DX_PARTNER_ID,
+    type: data.type === "auth0" ? "auth0" : "session",
+    token: String(data.token),
+    refreshToken: data.refreshToken ? String(data.refreshToken) : undefined,
+    email: data.email || email,
+    partnerId: data.partnerId || DX_PARTNER_ID,
   };
 }
 
@@ -2603,6 +2608,12 @@ async function fetchDxEvent(show) {
   if (dxAuth?.type === "session" && dxAuth.token) {
     headers.authToken = dxAuth.token;
   }
+  if (
+    (dxAuth?.type === "auth0" || dxAuth?.type === "pat") &&
+    dxAuth.token
+  ) {
+    headers.Authorization = `Bearer ${dxAuth.token}`;
+  }
   const res = await fetch(url, { cache: "no-store", headers });
   if (!res.ok) throw new Error(`DX ${res.status}`);
   return res.json();
@@ -2620,6 +2631,17 @@ async function fetchDxScanned(show) {
     if (fromTickets != null) return fromTickets;
   }
 
+  if (dxAuth.type === "auth0") {
+    const fromTickets = await fetchScannedFromTickets(promoterId, show.eventId, {
+      authorization: `Bearer ${dxAuth.token}`,
+      authToken: dxAuth.token,
+    });
+    if (fromTickets != null) return fromTickets;
+
+    const fromApp = await fetchScannedFromDxWeb(promoterId, show.eventId);
+    if (fromApp != null) return fromApp;
+  }
+
   if (dxAuth.type === "pat") {
     // Public API event detail (Bearer PAT).
     const publicCount = await fetchScannedFromPublic(promoterId, show.eventId);
@@ -2633,6 +2655,34 @@ async function fetchDxScanned(show) {
     if (fromTickets != null) return fromTickets;
   }
 
+  return null;
+}
+
+async function fetchScannedFromDxWeb(promoterId, eventId) {
+  // DX Web sales API (same auth audience as app.dx.no).
+  const urls = [
+    `${DX_WEB_URL}/api/v1/sales/tickets/?partnerId=${promoterId}&eventId=${eventId}`,
+    `${DX_WEB_URL}/api/v1/sales/tickets?partner_id=${promoterId}&event_id=${eventId}`,
+    `${DX_API}/partners/${promoterId}/events/${eventId}/tickets`,
+  ];
+  for (const url of urls) {
+    try {
+      const res = await fetch(url, {
+        cache: "no-store",
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${dxAuth.token}`,
+        },
+      });
+      if (res.status === 401 || res.status === 403) continue;
+      if (!res.ok) continue;
+      const data = await res.json();
+      const n = extractScannedCount(data);
+      if (n != null) return n;
+    } catch {
+      /* try next */
+    }
+  }
   return null;
 }
 

@@ -1633,6 +1633,29 @@ a.tile-show:focus-visible {
   color: color-mix(in srgb, var(--accent) 85%, #600);
 }
 
+.dx-advanced {
+  margin-top: 4px;
+  border-top: 1px solid var(--line);
+  padding-top: 10px;
+}
+
+.dx-advanced summary {
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--muted);
+  margin-bottom: 8px;
+  list-style: none;
+}
+
+.dx-advanced summary::-webkit-details-marker {
+  display: none;
+}
+
+.dx-advanced[open] summary {
+  margin-bottom: 10px;
+}
+
 .dx-status {
   display: flex;
   flex-direction: column;
