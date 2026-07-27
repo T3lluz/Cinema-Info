@@ -1520,6 +1520,149 @@ a.tile-show:focus-visible {
   color: var(--muted);
 }
 
+.dx-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dx-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.dx-field input {
+  appearance: none;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--bg) 88%, var(--surface));
+  color: var(--text);
+  font: inherit;
+  font-size: 0.92rem;
+  font-weight: 600;
+  padding: 11px 12px;
+}
+
+.dx-field input:focus {
+  outline: 2px solid color-mix(in srgb, var(--accent) 55%, transparent);
+  outline-offset: 1px;
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+}
+
+.dx-hint {
+  margin: 0;
+  font-size: 0.78rem;
+  line-height: 1.35;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.dx-hint a {
+  color: var(--accent);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.dx-divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin: 2px 0;
+}
+
+.dx-divider::before,
+.dx-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+
+.dx-btn {
+  appearance: none;
+  border: 0;
+  border-radius: 12px;
+  padding: 12px 14px;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 750;
+  cursor: pointer;
+  transition: transform 0.12s ease, opacity 0.15s ease;
+}
+
+.dx-btn:active {
+  transform: scale(0.98);
+}
+
+.dx-btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.dx-btn.primary {
+  background: var(--accent);
+  color: #fff;
+}
+
+.dx-btn.ghost {
+  background: color-mix(in srgb, var(--bg) 80%, var(--surface));
+  color: var(--text);
+  border: 1px solid var(--line);
+}
+
+.dx-msg {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 650;
+}
+
+.dx-msg.ok {
+  color: color-mix(in srgb, #1a7f37 70%, var(--text));
+}
+
+.dx-msg.err {
+  color: color-mix(in srgb, var(--accent) 85%, #600);
+}
+
+.dx-status {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dx-status-title {
+  margin: 0;
+  font-size: 0.92rem;
+  font-weight: 750;
+}
+
+.dx-status-hint {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.ticket-scanned {
+  display: block;
+  margin-top: 3px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: color-mix(in srgb, var(--accent) 70%, var(--muted));
+}
+
+.chip.scanned strong {
+  color: inherit;
+}
+
 .segmented {
   position: relative;
   display: grid;
