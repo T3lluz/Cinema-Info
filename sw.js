@@ -1,12 +1,12 @@
 /* Cinema Info service worker: network-first with cache fallback,
    so the app opens instantly and still works offline with the
    last-seen program. Live DX calls are never cached. */
-const CACHE = "cinema-info-v20";
+const CACHE = "cinema-info-v21";
 const PRECACHE = [
   "./",
   "./index.html",
-  "./styles.css?v=22",
-  "./app.js?v=18",
+  "./styles.css?v=23",
+  "./app.js?v=19",
   "./favicon.svg",
   "./apple-touch-icon.png",
   "./icons/icon-192.png",
@@ -39,8 +39,15 @@ self.addEventListener("activate", (event) => {
 self.addEventListener("fetch", (event) => {
   const url = new URL(event.request.url);
 
-  // Never cache live ticket data.
-  if (url.hostname === "api.dx.no" || url.hostname === "public.dx.no") return;
+  // Never cache live ticket data or the DX login proxy.
+  if (
+    url.hostname === "api.dx.no" ||
+    url.hostname === "public.dx.no" ||
+    url.hostname === "login.dx.no" ||
+    url.hostname.endsWith(".supabase.co")
+  ) {
+    return;
+  }
   if (event.request.method !== "GET") return;
 
   // Same-origin app files + data: network first, fall back to cache.

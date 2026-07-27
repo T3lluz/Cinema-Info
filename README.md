@@ -14,15 +14,18 @@ Mobile-friendly schedule for **Buen kino** — same info as the KinoProgram Chro
 
 ## DX account (scanned tickets)
 
-Scanned / innsjekk counts are not on the anonymous checkout API. Connect your DX
-account under **Settings → DX-konto**:
+Scanned / innsjekk counts need a DX Web staff login. Connect under
+**Settings → DX-konto** with the same email and password you use on
+[app.dx.no](https://app.dx.no) (the product marketed at [w.dx.no](https://w.dx.no))
+or DX Check-in.
 
-1. **Personal Access Token** (recommended): sign in at [id.dx.no](https://id.dx.no),
-   create a token, paste it in the app
-2. Or sign in with your **DX Web / Check-in** email and password
-
-The token stays in this device’s browser storage only. After connecting, each
+Login goes through a small Supabase Edge Function
+(`supabase/functions/dx-web-login`) that talks to `api.dx.no` and Auth0 at
+`login.dx.no` — browsers cannot call Auth0 cross-origin from GitHub Pages.
+Credentials stay in this device’s browser storage only. After connecting, each
 show can show how many tickets have been scanned.
+
+Advanced: a Personal Access Token from id.dx.no still works if you have one.
 
 ## Live site
 
