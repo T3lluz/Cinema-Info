@@ -281,7 +281,7 @@ let lang = "nb";
 let theme = "light";
 let enrichedAll = false;
 let lastLiveAt = 0;
-/** @type {null | { type: 'pat'|'session'|'auth0', token: string, email?: string, partnerId?: string, connectedAt?: string, refreshToken?: string }} */
+/** @type {null | { type: 'pat'|'session'|'auth0'|'dxweb', token: string, email?: string, partnerId?: string, connectedAt?: string, refreshToken?: string }} */
 let dxAuth = loadDxAuth();
 
 /** Set by setupDaySwipe: play the swipe slide for a day change that did not
@@ -802,7 +802,10 @@ function loadDxAuth() {
     if (!raw || typeof raw !== "object") return null;
     if (
       !raw.token ||
-      (raw.type !== "pat" && raw.type !== "session" && raw.type !== "auth0")
+      (raw.type !== "pat" &&
+        raw.type !== "session" &&
+        raw.type !== "auth0" &&
+        raw.type !== "dxweb")
     ) {
       return null;
     }
@@ -2381,7 +2384,7 @@ async function connectDxAccount() {
     } else {
       const session = await loginDxWeb(email, password);
       next = {
-        type: session.type === "auth0" ? "auth0" : "session",
+        type: session.type || "dxweb",
         token: session.token,
         refreshToken: session.refreshToken,
         email: session.email || email,
@@ -2474,13 +2477,54 @@ async function loginDxWeb(email, password) {
     err.code = data.code === "login" || res.status === 403 ? "login" : "auth0";
     throw err;
   }
+  const type =
+    data.type === "dxweb" ||
+    data.type === "auth0" ||
+    data.type === "session" ||
+    data.type === "pat"
+      ? data.type
+      : "dxweb";
   return {
-    type: data.type === "auth0" ? "auth0" : "session",
+    type,
     token: String(data.token),
     refreshToken: data.refreshToken ? String(data.refreshToken) : undefined,
     email: data.email || email,
     partnerId: data.partnerId || DX_PARTNER_ID,
   };
+}
+
+/** Ask the login proxy to resolve scanned counts with stored DX Web cookies. */
+async function fetchScannedViaProxy(promoterId, eventId) {
+  const res = await fetch(DX_LOGIN_PROXY, {
+    method: "POST",
+    cache: "no-store",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${DX_LOGIN_ANON_KEY}`,
+      apikey: DX_LOGIN_ANON_KEY,
+    },
+    body: JSON.stringify({
+      action: "scanned",
+      type: dxAuth?.type,
+      token: dxAuth?.token,
+      partnerId: promoterId,
+      eventId,
+    }),
+  });
+  if (res.status === 401 || res.status === 403) {
+    const err = new Error("DX auth expired");
+    err.code = "auth";
+    throw err;
+  }
+  if (!res.ok) return null;
+  let data = {};
+  try {
+    data = await res.json();
+  } catch {
+    return null;
+  }
+  return typeof data.scanned === "number" ? data.scanned : null;
 }
 
 function segSelect(btn) {
@@ -2624,11 +2668,11 @@ async function fetchDxScanned(show) {
   if (!dxAuth?.token || !show.eventId) return null;
   const promoterId = show.promoterId || dxAuth.partnerId || DX_PARTNER_ID;
 
-  if (dxAuth.type === "session") {
-    const fromTickets = await fetchScannedFromTickets(promoterId, show.eventId, {
-      authToken: dxAuth.token,
-    });
-    if (fromTickets != null) return fromTickets;
+  // DX Web / api.dx.no session cookies cannot be sent cross-origin from the
+  // browser — resolve scanned counts through the login proxy.
+  if (dxAuth.type === "dxweb" || dxAuth.type === "session") {
+    const viaProxy = await fetchScannedViaProxy(promoterId, show.eventId);
+    if (viaProxy != null) return viaProxy;
   }
 
   if (dxAuth.type === "auth0") {
