@@ -20,10 +20,10 @@ Scanned / innsjekk counts need a DX Web staff login. Connect under
 or DX Check-in.
 
 Login goes through a small Supabase Edge Function
-(`supabase/functions/dx-web-login`) that talks to `api.dx.no` and Auth0 at
-`login.dx.no` — browsers cannot call Auth0 cross-origin from GitHub Pages.
-Credentials stay in this device’s browser storage only. After connecting, each
-show can show how many tickets have been scanned.
+(`supabase/functions/dx-web-login`) that completes the official
+`app.dx.no` → Auth0 (`login.dx.no`) → `apiweb/callback` flow (browsers
+cannot finish Auth0 from GitHub Pages). Wrong passwords fail clearly;
+successful logins store a DX Web session on this device only.
 
 Advanced: a Personal Access Token from id.dx.no still works if you have one.
 
