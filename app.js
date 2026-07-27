@@ -11,6 +11,10 @@ const DX_LOGIN_PROXY =
   "https://kypeegsbfaivyqeidnqp.supabase.co/functions/v1/dx-web-login";
 const DX_LOGIN_ANON_KEY =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt5cGVlZ3NiZmFpdnlxZWlkbnFwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUxODczMzQsImV4cCI6MjEwMDc2MzMzNH0.xUuL6dC8u_Nm6DqxS0y4KyjpMNlVn6IrxcvivSHeaaM";
+/** Example scanned counts for UI preview (`?previewScanned=1`). */
+const PREVIEW_SCANNED = new URLSearchParams(location.search).has(
+  "previewScanned"
+);
 
 const I18N = {
   nb: {
@@ -100,6 +104,8 @@ const I18N = {
     dxInvalidToken: "Ugyldig eller utløpt token.",
     dxInvalidLogin: "Feil e-post eller passord.",
     dxAdvanced: "Avansert",
+    previewScannedBanner:
+      "Forhåndsvisning: skannet-tall er eksempeldata (ikke live fra DX).",
     weekdays: [
       "søndag",
       "mandag",
@@ -211,6 +217,8 @@ const I18N = {
     dxInvalidToken: "Invalid or expired token.",
     dxInvalidLogin: "Wrong email or password.",
     dxAdvanced: "Advanced",
+    previewScannedBanner:
+      "Preview: scanned counts are sample data (not live from DX).",
     weekdays: [
       "Sunday",
       "Monday",
@@ -351,6 +359,18 @@ async function init() {
   }
 
   await load({ forceLive: true });
+
+  // With DX connected (or scanned preview), backfill every day — not only
+  // the visible one — so flipping to yesterday already has scanned counts.
+  if (isDxConnected() || PREVIEW_SCANNED) {
+    enrichAllShows({ force: true })
+      .then(() => {
+        applyPreviewScanned();
+        if (activeTab === "day") renderDay();
+        else renderActiveView();
+      })
+      .catch((err) => console.warn("Background enrich failed", err));
+  }
 }
 
 function setupPullToRefresh() {
@@ -825,6 +845,39 @@ function isDxConnected() {
   return Boolean(dxAuth?.token);
 }
 
+/**
+ * Fill example scanned counts so the UI can be reviewed without live DX
+ * check-in data (`?previewScanned=1`). Skips shows that already have a
+ * real scanned value.
+ */
+function applyPreviewScanned() {
+  if (!PREVIEW_SCANNED || !state?.shows) return false;
+  const now = new Date();
+  let changed = false;
+  for (const show of state.shows) {
+    if (show.sold == null) continue;
+    const sold = Number(show.sold) || 0;
+    const status = statusOf(show, now);
+    const jitter = (hashStr(show.id) % 13) / 100;
+    let ratio = 0.08;
+    if (status === "done") ratio = 0.78 + jitter;
+    else if (status === "live") ratio = 0.42 + jitter;
+    else if (status === "soon") ratio = 0.12 + jitter / 2;
+    const next = Math.min(sold, Math.max(0, Math.round(sold * ratio)));
+    if (show.scanned !== next) {
+      show.scanned = next;
+      changed = true;
+    }
+  }
+  return changed;
+}
+
+function hashStr(s) {
+  let h = 0;
+  for (const ch of String(s || "")) h = (h * 31 + ch.charCodeAt(0)) | 0;
+  return Math.abs(h);
+}
+
 function savePrefs() {
   localStorage.setItem(
     PREFS_KEY,
@@ -1105,6 +1158,7 @@ async function load({ forceLive = false } = {}) {
       }
     }
 
+    applyPreviewScanned();
     renderActiveView();
   } catch (err) {
     console.error(err);
@@ -1301,6 +1355,11 @@ function buildDayListHTML(day) {
   }
 
   return `
+    ${
+      PREVIEW_SCANNED
+        ? `<p class="preview-banner">${escapeHtml(t("previewScannedBanner"))}</p>`
+        : ""
+    }
     <div class="day-block">
       <div class="section-label">${escapeHtml(formatDayLabel(day))}</div>
       ${parts.join("")}
@@ -1667,7 +1726,9 @@ function renderSummary() {
     (n, s) => n + (s.scanned != null ? Number(s.scanned) || 0 : 0),
     0
   );
-  const hasScanned = isDxConnected() && shows.some((s) => s.scanned != null);
+  const hasScanned =
+    (isDxConnected() || PREVIEW_SCANNED) &&
+    shows.some((s) => s.scanned != null);
 
   els.summary.innerHTML = `
     ${
@@ -1846,8 +1907,8 @@ function renderTicketCol(show) {
       ${flag}
       ${
         show.scanned != null
-          ? `<span class="ticket-scanned">${escapeHtml(
-              t("scannedShort", { n: show.scanned })
+          ? `<span class="ticket-scanned"><strong>${show.scanned}</strong> ${escapeHtml(
+              t("scannedLabel")
             )}</span>`
           : ""
       }
@@ -1940,11 +2001,18 @@ function renderMovieTile(movie, now, index = 0) {
                 show.capacity ? `<span class="tile-cap">/${show.capacity}</span>` : ""
               }</span>`
           : "";
+      const scanned =
+        show.scanned != null
+          ? `<span class="tile-scanned">${escapeHtml(
+              t("scannedShort", { n: show.scanned })
+            )}</span>`
+          : "";
       const inner = `
           <span class="tile-day">${escapeHtml(shortShowDay(show.dayKey))}</span>
           <span class="tile-time">${formatClock(show.start)}</span>
           <span class="tile-screen">${escapeHtml(show.screen)}</span>
           ${sold}
+          ${scanned}
       `;
       if (show.ticketUrl) {
         return `<a class="tile-show ${status}" href="${escapeHtml(
@@ -2551,6 +2619,7 @@ async function enrichVisibleDay() {
 
   persistHistory(dayShows);
   lastLiveAt = Date.now();
+  applyPreviewScanned();
   if (activeTab === "day") renderDay();
   els.statusText.textContent = t("liveAt", { time: formatClock(new Date()) });
   els.refreshBtn.classList.remove("spinning");
@@ -2594,6 +2663,7 @@ async function enrichAllShows({ force = false } = {}) {
   persistHistory(targets);
   enrichedAll = true;
   lastLiveAt = Date.now();
+  applyPreviewScanned();
   els.statusText.textContent = t("liveAt", { time: formatClock(new Date()) });
   els.refreshBtn.classList.remove("spinning");
 }

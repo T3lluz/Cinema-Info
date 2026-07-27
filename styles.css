@@ -1675,15 +1675,51 @@ a.tile-show:focus-visible {
 }
 
 .ticket-scanned {
-  display: block;
-  margin-top: 3px;
-  font-size: 0.68rem;
-  font-weight: 700;
-  color: color-mix(in srgb, var(--accent) 70%, var(--muted));
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  margin-top: 5px;
+  padding: 2px 7px;
+  border-radius: 999px;
+  font-size: 0.66rem;
+  font-weight: 650;
+  color: color-mix(in srgb, var(--ok) 82%, var(--ink));
+  background: var(--ok-soft);
+  border: 1px solid color-mix(in srgb, var(--ok) 22%, var(--surface));
+  font-variant-numeric: tabular-nums;
+}
+
+.ticket-scanned strong {
+  font-weight: 800;
+}
+
+.chip.scanned {
+  background: var(--ok-soft);
+  border-color: color-mix(in srgb, var(--ok) 22%, var(--surface));
+  color: color-mix(in srgb, var(--ok) 75%, var(--ink));
 }
 
 .chip.scanned strong {
   color: inherit;
+}
+
+.tile-scanned {
+  margin-left: auto;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: color-mix(in srgb, var(--ok) 80%, var(--ink));
+  font-variant-numeric: tabular-nums;
+}
+
+.preview-banner {
+  margin: 0 0 10px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  font-size: 0.78rem;
+  line-height: 1.35;
+  color: color-mix(in srgb, var(--accent) 70%, var(--ink));
+  background: var(--accent-soft);
+  border: 1px solid color-mix(in srgb, var(--accent) 18%, var(--surface));
 }
 
 .segmented {

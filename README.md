@@ -27,6 +27,9 @@ successful logins store a DX Web session on this device only.
 
 Advanced: a Personal Access Token from id.dx.no still works if you have one.
 
+To preview how scanned counts look in the UI without live check-in data,
+open the site with `?previewScanned=1` (example numbers derived from sold).
+
 ## Live site
 
 https://t3lluz.github.io/Cinema-Info/
