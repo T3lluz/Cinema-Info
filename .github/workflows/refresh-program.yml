@@ -1,0 +1,45 @@
+name: Refresh program snapshot
+
+# Buen's program API drops a show as soon as it starts, and the fetch
+# script only rescues the last two days from the previous snapshot. If
+# nobody runs it for a week, those days are gone for good — and with them
+# the DX event ids the app needs to look up who scanned their ticket.
+# Running nightly keeps the 120-day history accumulating on its own.
+
+on:
+  schedule:
+    # 01:10 Europe/Oslo (after the last show of the evening has ended).
+    - cron: "10 23 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-program
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Fetch program + live ticket data
+        run: node scripts/fetch-data.mjs
+
+      - name: Commit when the snapshot changed
+        run: |
+          if git diff --quiet -- data/program.json; then
+            echo "No program changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/program.json
+          git commit -m "Refresh program snapshot"
+          git push

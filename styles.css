@@ -1173,8 +1173,8 @@ a.tile-show:focus-visible {
 
 .tile-show {
   display: grid;
-  grid-template-columns: minmax(52px, auto) 48px 1fr auto;
-  gap: 6px;
+  grid-template-columns: minmax(46px, auto) 42px minmax(0, 1fr) auto;
+  gap: 5px;
   align-items: center;
   padding: 5px 8px;
   border-radius: 8px;
@@ -1674,41 +1674,268 @@ a.tile-show:focus-visible {
   color: var(--muted);
 }
 
-.ticket-scanned {
-  display: inline-flex;
+.dx-facts {
+  list-style: none;
+  margin: 2px 0 0;
+  padding: 10px 12px;
+  display: grid;
+  gap: 7px;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--bg) 82%, var(--surface));
+  border: 1px solid var(--line);
+}
+
+.dx-facts li {
+  display: flex;
   align-items: baseline;
-  gap: 4px;
-  margin-top: 5px;
-  padding: 2px 7px;
-  border-radius: 999px;
+  justify-content: space-between;
+  gap: 14px;
+  font-size: 0.78rem;
+}
+
+.dx-facts span {
+  color: var(--muted);
+  flex: 0 0 auto;
+}
+
+.dx-facts strong {
+  font-weight: 750;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.dx-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+@media (max-width: 380px) {
+  .dx-actions {
+    grid-template-columns: 1fr;
+  }
+}
+
+.dx-btn.danger {
+  color: var(--accent);
+}
+
+.dx-log {
+  margin: 0;
+  padding: 9px 11px;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--bg) 80%, var(--surface));
+  border: 1px solid var(--line);
+  font-family: var(--mono);
   font-size: 0.66rem;
-  font-weight: 650;
-  color: color-mix(in srgb, var(--ok) 82%, var(--ink));
-  background: var(--ok-soft);
-  border: 1px solid color-mix(in srgb, var(--ok) 22%, var(--surface));
+  line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  color: var(--muted);
+}
+
+/* —— Admission (scanned tickets) ——
+   One strip per show answering the only question that matters at the
+   door: is everyone who bought a ticket inside yet? Colour carries the
+   answer — green means done, amber means people are still coming. */
+.admit {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: auto auto minmax(24px, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+  margin-top: 9px;
+  padding: 6px 9px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  font-size: 0.72rem;
   font-variant-numeric: tabular-nums;
 }
 
-.ticket-scanned strong {
+.admit-glyph {
+  width: 13px;
+  height: 13px;
+  flex: 0 0 auto;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.admit-glyph.dashed {
+  stroke-width: 1.4;
+  stroke-dasharray: 2.6 2.6;
+}
+
+.admit-count {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+.admit-count strong {
   font-weight: 800;
 }
 
-.chip.scanned {
-  background: var(--ok-soft);
-  border-color: color-mix(in srgb, var(--ok) 22%, var(--surface));
-  color: color-mix(in srgb, var(--ok) 75%, var(--ink));
+.admit-count.unknown {
+  opacity: 0.75;
 }
 
-.chip.scanned strong {
+.admit-total {
+  opacity: 0.65;
+  font-weight: 600;
+}
+
+.admit-track {
+  height: 6px;
+  border-radius: 999px;
+  background: color-mix(in srgb, currentColor 16%, transparent);
+  overflow: hidden;
+}
+
+.admit-fill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: currentColor;
+}
+
+.admit-state {
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+
+.admit.complete {
+  background: var(--ok-soft);
+  border-color: color-mix(in srgb, var(--ok) 28%, var(--surface));
+  color: color-mix(in srgb, var(--ok) 88%, var(--ink));
+}
+
+.admit.partial {
+  background: var(--warn-soft);
+  border-color: color-mix(in srgb, var(--warn) 28%, var(--surface));
+  color: color-mix(in srgb, var(--warn) 88%, var(--ink));
+}
+
+.admit.none {
+  background: color-mix(in srgb, var(--line) 28%, var(--surface));
+  border-color: var(--line);
+  color: var(--muted);
+}
+
+.admit.unknown {
+  background: transparent;
+  border-style: dashed;
+  border-color: var(--line);
+  color: var(--muted);
+}
+
+.admit.unknown .admit-track {
+  visibility: hidden;
+}
+
+/* Still filling up while the film is running — keep the eye on it. */
+.show-card.live .admit.partial .admit-fill,
+.show-card.soon .admit.partial .admit-fill {
+  animation: admitPulse 2.4s ease-in-out infinite;
+}
+
+@keyframes admitPulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.55;
+  }
+}
+
+.show-card.admit-complete {
+  border-color: color-mix(in srgb, var(--ok) 26%, var(--line));
+}
+
+.show-card.admit-partial {
+  border-color: color-mix(in srgb, var(--warn) 26%, var(--line));
+}
+
+/* Finished shows are dimmed, but their admission result stays readable. */
+.show-card.done.has-admit {
+  opacity: 0.88;
+}
+
+.chip.admit {
+  gap: 5px;
+}
+
+.chip.admit strong {
   color: inherit;
 }
 
-.tile-scanned {
-  margin-left: auto;
-  font-size: 0.68rem;
-  font-weight: 700;
-  color: color-mix(in srgb, var(--ok) 80%, var(--ink));
-  font-variant-numeric: tabular-nums;
+.chip.admit .admit-glyph {
+  width: 12px;
+  height: 12px;
+}
+
+.chip.admit.complete {
+  background: var(--ok-soft);
+  border-color: color-mix(in srgb, var(--ok) 26%, var(--surface));
+  color: color-mix(in srgb, var(--ok) 85%, var(--ink));
+}
+
+.chip.admit.partial {
+  background: var(--warn-soft);
+  border-color: color-mix(in srgb, var(--warn) 26%, var(--surface));
+  color: color-mix(in srgb, var(--warn) 85%, var(--ink));
+}
+
+.chip.admit.none {
+  color: var(--muted);
+}
+
+.tile-nums {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+.tile-admit {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 1px 5px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  font-size: 0.64rem;
+  font-weight: 800;
+}
+
+.tile-admit .admit-glyph {
+  width: 9px;
+  height: 9px;
+  stroke-width: 2.2;
+}
+
+.tile-admit.complete {
+  background: var(--ok-soft);
+  border-color: color-mix(in srgb, var(--ok) 30%, var(--surface));
+  color: color-mix(in srgb, var(--ok) 88%, var(--ink));
+}
+
+.tile-admit.partial {
+  background: var(--warn-soft);
+  border-color: color-mix(in srgb, var(--warn) 30%, var(--surface));
+  color: color-mix(in srgb, var(--warn) 88%, var(--ink));
+}
+
+.tile-admit.none {
+  background: color-mix(in srgb, var(--line) 35%, var(--surface));
+  border-color: var(--line);
+  color: var(--muted);
 }
 
 .preview-banner {
@@ -1868,6 +2095,7 @@ a.tile-show:focus-visible {
 
 .bar-fill,
 .occ-fill,
+.admit-fill,
 .live-fill {
   transition: width 0.5s cubic-bezier(0.25, 0.9, 0.35, 1);
 }

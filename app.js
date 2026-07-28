@@ -11,6 +11,26 @@ const DX_LOGIN_PROXY =
   "https://kypeegsbfaivyqeidnqp.supabase.co/functions/v1/dx-web-login";
 const DX_LOGIN_ANON_KEY =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt5cGVlZ3NiZmFpdnlxZWlkbnFwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUxODczMzQsImV4cCI6MjEwMDc2MzMzNH0.xUuL6dC8u_Nm6DqxS0y4KyjpMNlVn6IrxcvivSHeaaM";
+
+/**
+ * api.dx.no answers CORS preflights with `Access-Control-Allow-Headers:
+ * authToken, Content-Type`, so a browser may only pass the DX Check-in
+ * token as that header or as a query parameter — `Authorization` is
+ * rejected before the request is even sent. The working variant is probed
+ * once when the account is connected and then remembered.
+ */
+const DX_TOKEN_SCHEMES = ["authToken", "query"];
+
+/** Credential kinds we know how to read check-in counts with. */
+const DX_AUTH_TYPES = ["dxapi", "pat", "session", "auth0", "dxweb"];
+
+/** Nothing is scanned long before the doors open; don't poll those shows. */
+const SCAN_LEAD_MS = 4 * 60 * 60 * 1000;
+/** After this long past the end time a show's check-in count is final. */
+const SCAN_FINAL_AFTER_MS = 6 * 60 * 60 * 1000;
+/** How long a fetched count stays fresh for a show that is still relevant. */
+const SCAN_FRESH_MS = 60 * 1000;
+
 /** Example scanned counts for UI preview (`?previewScanned=1`). */
 const PREVIEW_SCANNED = new URLSearchParams(location.search).has(
   "previewScanned"
@@ -42,9 +62,15 @@ const I18N = {
     soldOut: "Utsolgt",
     fewLeft: "{n} igjen",
     reservedShort: "{n} res.",
-    scanned: "skannet",
-    scannedLabel: "skannet",
-    scannedShort: "{n} skannet",
+    admittedLabel: "inne",
+    admitAllIn: "Alle inne",
+    admitMissing: "{n} mangler",
+    admitNoShow: "{n} møtte ikke",
+    admitNone: "Ingen inne ennå",
+    admitNobodyCame: "Ingen skannet",
+    admitUnknown: "Ingen skann-data",
+    admitDayAllIn: "Alle inne",
+    admitAria: "Innslipp: {n} av {total} billetter skannet",
     nextShow: "Neste {time}",
     endsShow: "Slutt {time}",
     inMinutes: "om {n} min",
@@ -82,18 +108,19 @@ const I18N = {
     spokenEnglish: "Engelsk tale",
     dxTitle: "DX-konto",
     dxSubtitle:
-      "Logg inn med DX Web (w.dx.no / app.dx.no) for å vise skannede billetter.",
+      "Logg inn med DX-kontoen din for å se hvor mange som har skannet billetten.",
     dxConnectedAs: "Tilkoblet som {email}",
     dxConnectedPat: "Tilkoblet med tilgangstoken",
-    dxConnectedHint: "Skannede billetter hentes live når du åpner appen.",
+    dxConnectedHint:
+      "Innslipp hentes for i dag og tidligere dager når du åpner appen.",
     dxPatLabel: "Personal Access Token (valgfritt)",
     dxPatHint:
-      "Kun hvis du har token fra id.dx.no. De fleste bruker DX Web-innlogging over.",
+      "Kun hvis du har token fra id.dx.no. De fleste bruker innlogging over.",
     dxPatPlaceholder: "Lim inn token…",
     dxEmailLabel: "E-post",
     dxPasswordLabel: "Passord",
     dxLoginHint:
-      "Samme e-post og passord som du bruker på app.dx.no / DX Check-in.",
+      "Samme e-post og passord som i DX Check-in / på app.dx.no.",
     dxConnect: "Koble til",
     dxDisconnect: "Koble fra",
     dxOpenWeb: "Åpne DX Web",
@@ -103,7 +130,23 @@ const I18N = {
     dxNeedCreds: "Fyll inn e-post og passord, eller lim inn et token under Avansert.",
     dxInvalidToken: "Ugyldig eller utløpt token.",
     dxInvalidLogin: "Feil e-post eller passord.",
+    dxNetworkFail: "Fikk ikke kontakt med DX. Sjekk nettforbindelsen.",
     dxAdvanced: "Avansert",
+    dxSourceLabel: "Kilde",
+    dxSyncedLabel: "Sist oppdatert",
+    dxCoverageLabel: "Skann-data",
+    dxCoverageValue: "{n} av {total} forestillinger",
+    dxNeverSynced: "Ikke hentet ennå",
+    dxTest: "Test innslipp",
+    dxTesting: "Tester…",
+    dxRefreshScans: "Hent på nytt",
+    dxRefreshing: "Henter…",
+    dxTestOk: "OK — DX svarte med {n} skannede billetter for {show}.",
+    dxTestEmpty:
+      "Innlogget, men DX ga ingen skann-tall for {show}. Detaljene under kan sendes videre.",
+    dxTestNoShows: "Ingen forestillinger med DX-ID å teste mot ennå.",
+    dxTestAuth: "DX avviste pålogging. Koble til på nytt.",
+    dxDetails: "Detaljer",
     previewScannedBanner:
       "Forhåndsvisning: skannet-tall er eksempeldata (ikke live fra DX).",
     weekdays: [
@@ -155,9 +198,15 @@ const I18N = {
     soldOut: "Sold out",
     fewLeft: "{n} left",
     reservedShort: "{n} res.",
-    scanned: "scanned",
-    scannedLabel: "scanned",
-    scannedShort: "{n} scanned",
+    admittedLabel: "in",
+    admitAllIn: "All in",
+    admitMissing: "{n} to go",
+    admitNoShow: "{n} no-shows",
+    admitNone: "None in yet",
+    admitNobodyCame: "None scanned",
+    admitUnknown: "No scan data",
+    admitDayAllIn: "All in",
+    admitAria: "Admission: {n} of {total} tickets scanned",
     nextShow: "Next {time}",
     endsShow: "Ends {time}",
     inMinutes: "in {n} min",
@@ -195,18 +244,19 @@ const I18N = {
     spokenEnglish: "English",
     dxTitle: "DX account",
     dxSubtitle:
-      "Sign in with DX Web (w.dx.no / app.dx.no) to show scanned tickets.",
+      "Sign in with your DX account to see how many guests have scanned their ticket.",
     dxConnectedAs: "Connected as {email}",
     dxConnectedPat: "Connected with access token",
-    dxConnectedHint: "Scanned tickets refresh live when you open the app.",
+    dxConnectedHint:
+      "Admissions are fetched for today and earlier days when you open the app.",
     dxPatLabel: "Personal Access Token (optional)",
     dxPatHint:
-      "Only if you have a token from id.dx.no. Most people use DX Web login above.",
+      "Only if you have a token from id.dx.no. Most people use the login above.",
     dxPatPlaceholder: "Paste token…",
     dxEmailLabel: "Email",
     dxPasswordLabel: "Password",
     dxLoginHint:
-      "Same email and password you use on app.dx.no / DX Check-in.",
+      "Same email and password you use in DX Check-in / on app.dx.no.",
     dxConnect: "Connect",
     dxDisconnect: "Disconnect",
     dxOpenWeb: "Open DX Web",
@@ -216,7 +266,23 @@ const I18N = {
     dxNeedCreds: "Enter email and password, or paste a token under Advanced.",
     dxInvalidToken: "Invalid or expired token.",
     dxInvalidLogin: "Wrong email or password.",
+    dxNetworkFail: "Could not reach DX. Check your connection.",
     dxAdvanced: "Advanced",
+    dxSourceLabel: "Source",
+    dxSyncedLabel: "Last updated",
+    dxCoverageLabel: "Scan data",
+    dxCoverageValue: "{n} of {total} showings",
+    dxNeverSynced: "Not fetched yet",
+    dxTest: "Test admissions",
+    dxTesting: "Testing…",
+    dxRefreshScans: "Fetch again",
+    dxRefreshing: "Fetching…",
+    dxTestOk: "OK — DX returned {n} scanned tickets for {show}.",
+    dxTestEmpty:
+      "Signed in, but DX returned no scan numbers for {show}. The details below can be passed on.",
+    dxTestNoShows: "No showings with a DX id to test against yet.",
+    dxTestAuth: "DX rejected the sign-in. Please connect again.",
+    dxDetails: "Details",
     previewScannedBanner:
       "Preview: scanned counts are sample data (not live from DX).",
     weekdays: [
@@ -289,8 +355,14 @@ let lang = "nb";
 let theme = "light";
 let enrichedAll = false;
 let lastLiveAt = 0;
-/** @type {null | { type: 'pat'|'session'|'auth0'|'dxweb', token: string, email?: string, partnerId?: string, connectedAt?: string, refreshToken?: string }} */
+/** @type {null | { type: 'dxapi'|'pat'|'session'|'auth0'|'dxweb', token: string, scheme?: string, email?: string, partnerId?: string, connectedAt?: string, refreshToken?: string }} */
 let dxAuth = loadDxAuth();
+/** Last outcome of syncing check-in counts, surfaced under Settings → DX. */
+let dxScanStatus = { at: 0, source: "", error: "" };
+/** Guards against two check-in syncs racing over the same shows. */
+let scanSyncRunning = false;
+/** How many fetches are in flight; the refresh button spins while any are. */
+let busyCount = 0;
 
 /** Set by setupDaySwipe: play the swipe slide for a day change that did not
  * come from a gesture. Returns false when it cannot run and the caller
@@ -360,14 +432,15 @@ async function init() {
 
   await load({ forceLive: true });
 
-  // With DX connected (or scanned preview), backfill every day — not only
-  // the visible one — so flipping to yesterday already has scanned counts.
-  if (isDxConnected() || PREVIEW_SCANNED) {
-    enrichAllShows({ force: true })
+  // Backfill check-in counts for every day in the background — not only
+  // the visible one — so flipping back to yesterday already has numbers.
+  if (isDxConnected()) {
+    syncScanned().catch((err) => console.warn("Scan backfill failed", err));
+  } else if (PREVIEW_SCANNED) {
+    enrichAllShows()
       .then(() => {
         applyPreviewScanned();
-        if (activeTab === "day") renderDay();
-        else renderActiveView();
+        renderActiveView();
       })
       .catch((err) => console.warn("Background enrich failed", err));
   }
@@ -784,6 +857,8 @@ async function refreshLive() {
   } else if (activeTab === "movies" || activeTab === "stats") {
     await enrichAllShows({ force: true });
     renderActiveView();
+  } else {
+    await syncScanned();
   }
 }
 
@@ -820,15 +895,7 @@ function loadDxAuth() {
   try {
     const raw = JSON.parse(localStorage.getItem(DX_AUTH_KEY) || "null");
     if (!raw || typeof raw !== "object") return null;
-    if (
-      !raw.token ||
-      (raw.type !== "pat" &&
-        raw.type !== "session" &&
-        raw.type !== "auth0" &&
-        raw.type !== "dxweb")
-    ) {
-      return null;
-    }
+    if (!raw.token || !DX_AUTH_TYPES.includes(raw.type)) return null;
     return raw;
   } catch {
     return null;
@@ -843,6 +910,37 @@ function saveDxAuth(next) {
 
 function isDxConnected() {
   return Boolean(dxAuth?.token);
+}
+
+/** True when the UI should make room for check-in numbers at all. */
+function scanVisible() {
+  return isDxConnected() || PREVIEW_SCANNED;
+}
+
+/**
+ * Forget the DX account and every check-in number that came with it, in
+ * memory and in the stored history, so disconnecting really clears the UI.
+ */
+function disconnectDx() {
+  saveDxAuth(null);
+  dxScanStatus = { at: 0, source: "", error: "" };
+  for (const show of state?.shows || []) {
+    show.scanned = null;
+    show.scannedAt = null;
+    show.scanDone = false;
+  }
+  try {
+    const hist = loadHistory();
+    for (const show of Object.values(hist)) {
+      if (!show || typeof show !== "object") continue;
+      show.scanned = null;
+      show.scannedAt = null;
+      show.scanDone = false;
+    }
+    localStorage.setItem(HISTORY_KEY, JSON.stringify(hist));
+  } catch (err) {
+    console.warn("Could not clear scanned history", err);
+  }
 }
 
 /**
@@ -948,6 +1046,13 @@ function mergeShows(snapshotShows) {
       }
       if (next.scanned == null && prev.scanned != null) {
         next.scanned = prev.scanned;
+      }
+      // Keep the sync bookkeeping so finished days aren't re-fetched.
+      if (next.scannedAt == null && prev.scannedAt != null) {
+        next.scannedAt = prev.scannedAt;
+      }
+      if (next.scanDone == null && prev.scanDone != null) {
+        next.scanDone = prev.scanDone;
       }
       if (!next.end && prev.end) next.end = prev.end;
       // The program API drops ticket links once a show starts;
@@ -1123,8 +1228,18 @@ async function setActiveTab(tab, { skipRender = false } = {}) {
 
   if (skipRender || !state?.shows) return;
 
-  if (tab === "day") renderDay();
-  else if (tab === "movies") {
+  if (tab === "day") {
+    renderDay();
+    // Arriving from a tab that never needed live numbers (e.g. settings)
+    // can leave the day without sold counts — top it up, but only when
+    // what we already have has gone stale.
+    const stale =
+      Date.now() - lastLiveAt > 60_000 ||
+      state.shows.some(
+        (s) => s.dayKey === selectedDay && s.eventId && s.sold == null
+      );
+    if (stale) await enrichVisibleDay();
+  } else if (tab === "movies") {
     await ensureAllEnriched();
     renderMovies();
   } else if (tab === "stats") {
@@ -1152,9 +1267,11 @@ async function load({ forceLive = false } = {}) {
       : t("updated", { time: formatClock(new Date()) });
 
     if (forceLive) {
-      if (activeTab === "day") await enrichVisibleDay();
+      if (activeTab === "day") await enrichVisibleDay({ force: true });
       else if (activeTab === "movies" || activeTab === "stats") {
         await enrichAllShows({ force: true });
+      } else {
+        await syncScanned();
       }
     }
 
@@ -1338,6 +1455,10 @@ function buildDayListHTML(day) {
     return `<div class="empty-note">${escapeHtml(t("emptyDay"))}</div>`;
   }
 
+  // If DX answered for some of the day's shows, the ones it skipped are
+  // worth flagging; if it answered for none, stay quiet about it.
+  const gaps = shows.some((s) => s.scanned != null);
+
   const parts = [];
   for (let i = 0; i < shows.length; i++) {
     const show = shows[i];
@@ -1351,7 +1472,7 @@ function buildDayListHTML(day) {
         );
       }
     }
-    parts.push(renderShowCard(show, now, i));
+    parts.push(renderShowCard(show, now, i, { gaps }));
   }
 
   return `
@@ -1722,13 +1843,6 @@ function renderSummary() {
 
   const soldSum = shows.reduce((n, s) => n + soldOf(s), 0);
   const hasSold = shows.some((s) => s.sold != null);
-  const scannedSum = shows.reduce(
-    (n, s) => n + (s.scanned != null ? Number(s.scanned) || 0 : 0),
-    0
-  );
-  const hasScanned =
-    (isDxConnected() || PREVIEW_SCANNED) &&
-    shows.some((s) => s.scanned != null);
 
   els.summary.innerHTML = `
     ${
@@ -1736,14 +1850,23 @@ function renderSummary() {
         ? `<span class="chip"><strong>${soldSum}</strong> ${escapeHtml(t("soldLabel"))}</span>`
         : ""
     }
-    ${
-      hasScanned
-        ? `<span class="chip scanned"><strong>${scannedSum}</strong> ${escapeHtml(t("scannedLabel"))}</span>`
-        : ""
-    }
+    ${admissionChip(shows)}
     ${nextChip(shows, now)}
     ${endsChip(shows, now)}
   `;
+}
+
+/** Day total for the header: how much of the day's audience is inside. */
+function admissionChip(shows) {
+  const admission = dayAdmission(shows);
+  if (!admission) return "";
+  const body =
+    admission.state === "complete"
+      ? `${admissionIcon("complete")}<strong>${escapeHtml(t("admitDayAllIn"))}</strong>`
+      : `<strong>${admission.scanned}/${admission.sold}</strong> ${escapeHtml(
+          t("admittedLabel")
+        )}`;
+  return `<span class="chip admit ${admission.state}">${body}</span>`;
 }
 
 function nextChip(shows, now) {
@@ -1785,7 +1908,112 @@ function statusOf(show, now) {
   return "upcoming";
 }
 
-function renderShowCard(show, now, index = 0) {
+/**
+ * The check-in picture for one show: how many of the sold tickets have
+ * been scanned, and what someone working the door needs to read off it.
+ *
+ *  complete — every sold ticket is scanned, the room is full
+ *  partial  — people are still coming in, `missing` are outstanding
+ *  none     — doors are open but nobody has scanned yet
+ *  unknown  — DX is connected but hasn't given a number for this show
+ *
+ * Returns null when there is simply nothing to say (no DX account, show
+ * still hours away, nothing sold).
+ */
+function admissionOf(show, now = new Date(), { gaps = false } = {}) {
+  if (!scanVisible() || show.sold == null) return null;
+
+  const sold = Number(show.sold) || 0;
+  const scanned =
+    show.scanned == null ? null : Math.max(0, Number(show.scanned) || 0);
+  const status = statusOf(show, now);
+  // Before the doors open there is nothing to let in yet.
+  const open = status !== "upcoming";
+  const over = status === "done";
+
+  if (scanned == null) {
+    if (!open || !sold) return null;
+    // A blank slot is only worth pointing out while people are actually
+    // coming in, or when the rest of the day did report numbers.
+    if (!gaps && status !== "live" && status !== "soon") return null;
+    return { state: "unknown", scanned: null, sold, missing: null, pct: 0, over };
+  }
+  if (!sold) {
+    if (!scanned) return null;
+    return { state: "complete", scanned, sold: scanned, missing: 0, pct: 100, over };
+  }
+
+  const missing = Math.max(sold - scanned, 0);
+  const pct = Math.min(Math.round((scanned / sold) * 100), 100);
+  const state = scanned >= sold ? "complete" : scanned > 0 ? "partial" : "none";
+  if (state === "none" && !open) return null;
+  return { state, scanned, sold, missing, pct, over };
+}
+
+/** The same picture for a whole day, summed over the shows DX answered for. */
+function dayAdmission(shows) {
+  if (!scanVisible()) return null;
+  const counted = shows.filter((s) => s.scanned != null && s.sold != null);
+  if (!counted.length) return null;
+
+  const sold = counted.reduce((n, s) => n + (Number(s.sold) || 0), 0);
+  const scanned = counted.reduce(
+    (n, s) => n + Math.max(0, Number(s.scanned) || 0),
+    0
+  );
+  if (!sold && !scanned) return null;
+
+  const missing = Math.max(sold - scanned, 0);
+  const pct = sold ? Math.min(Math.round((scanned / sold) * 100), 100) : 100;
+  const state = scanned >= sold ? "complete" : scanned > 0 ? "partial" : "none";
+  return { state, scanned, sold, missing, pct };
+}
+
+function admissionLabel(admission) {
+  if (admission.state === "unknown") return t("admitUnknown");
+  if (admission.state === "complete") return t("admitAllIn");
+  // Once the film is over the gap is no-shows, not people still queueing.
+  if (admission.state === "none") {
+    return admission.over ? t("admitNobodyCame") : t("admitNone");
+  }
+  const key = admission.over ? "admitNoShow" : "admitMissing";
+  return t(key, { n: admission.missing });
+}
+
+function admissionIcon(state) {
+  if (state === "complete") {
+    return `<svg class="admit-glyph" viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 8.4l3.6 3.6 7.4-8" /></svg>`;
+  }
+  if (state === "unknown") {
+    return `<svg class="admit-glyph dashed" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5.6" /></svg>`;
+  }
+  // Someone stepping through the door.
+  return `<svg class="admit-glyph" viewBox="0 0 16 16" aria-hidden="true"><path d="M9.6 2.6h3.1v10.8H9.6" /><path d="M2.2 8h6.2M6.1 5.6 8.5 8l-2.4 2.4" /></svg>`;
+}
+
+/** The admission strip under a show card — the door-side answer at a glance. */
+function renderAdmission(show, now, opts) {
+  const admission = admissionOf(show, now, opts);
+  if (!admission) return "";
+
+  const count =
+    admission.state === "unknown"
+      ? `<span class="admit-count unknown">–<span class="admit-total">/${admission.sold}</span></span>`
+      : `<span class="admit-count"><strong>${admission.scanned}</strong><span class="admit-total">/${admission.sold}</span></span>`;
+
+  return `
+      <div class="admit ${admission.state}" role="group" aria-label="${escapeHtml(
+        t("admitAria", { n: admission.scanned ?? 0, total: admission.sold })
+      )}">
+        ${admissionIcon(admission.state)}
+        ${count}
+        <span class="admit-track" aria-hidden="true"><span class="admit-fill" style="width:${admission.pct}%"></span></span>
+        <span class="admit-state">${escapeHtml(admissionLabel(admission))}</span>
+      </div>
+  `;
+}
+
+function renderShowCard(show, now, index = 0, opts = {}) {
   const status = statusOf(show, now);
   const badge =
     status === "live"
@@ -1835,6 +2063,16 @@ function renderShowCard(show, now, index = 0) {
     `;
   }
 
+  const admissionRow = renderAdmission(show, now, opts);
+  const admissionState = admissionOf(show, now, opts)?.state || "";
+  const cardClass = [
+    "show-card",
+    status,
+    admissionState ? `has-admit admit-${admissionState}` : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
   const inner = `
       ${renderPoster(show, 52, 74)}
       <div class="show-main">
@@ -1845,16 +2083,17 @@ function renderShowCard(show, now, index = 0) {
         ${progress}
       </div>
       ${renderTicketCol(show)}
+      ${admissionRow}
   `;
 
   // Link to the eBillett page so staff can jump straight to the seat map.
   if (show.ticketUrl) {
     return `
-      <a class="show-card ${status} linked" style="--i:${index}" href="${escapeHtml(show.ticketUrl)}"
+      <a class="${cardClass} linked" style="--i:${index}" href="${escapeHtml(show.ticketUrl)}"
          target="_blank" rel="noopener">${inner}</a>
     `;
   }
-  return `<article class="show-card ${status}" style="--i:${index}">${inner}</article>`;
+  return `<article class="${cardClass}" style="--i:${index}">${inner}</article>`;
 }
 
 function renderPoster(show, w, h, className = "poster") {
@@ -1905,13 +2144,6 @@ function renderTicketCol(show) {
           : `<div class="ticket-sub">${escapeHtml(t("sold"))}</div>`
       }
       ${flag}
-      ${
-        show.scanned != null
-          ? `<span class="ticket-scanned"><strong>${show.scanned}</strong> ${escapeHtml(
-              t("scannedLabel")
-            )}</span>`
-          : ""
-      }
       ${
         show.reserved
           ? `<span class="ticket-res">${escapeHtml(t("reservedShort", { n: show.reserved }))}</span>`
@@ -2001,18 +2233,18 @@ function renderMovieTile(movie, now, index = 0) {
                 show.capacity ? `<span class="tile-cap">/${show.capacity}</span>` : ""
               }</span>`
           : "";
-      const scanned =
-        show.scanned != null
-          ? `<span class="tile-scanned">${escapeHtml(
-              t("scannedShort", { n: show.scanned })
-            )}</span>`
+      const admission = admissionOf(show, now);
+      const admitted =
+        admission && admission.state !== "unknown"
+          ? `<span class="tile-admit ${admission.state}" title="${escapeHtml(
+              admissionLabel(admission)
+            )}">${admissionIcon(admission.state)}${admission.scanned}</span>`
           : "";
       const inner = `
           <span class="tile-day">${escapeHtml(shortShowDay(show.dayKey))}</span>
           <span class="tile-time">${formatClock(show.start)}</span>
           <span class="tile-screen">${escapeHtml(show.screen)}</span>
-          ${sold}
-          ${scanned}
+          <span class="tile-nums">${sold}${admitted}</span>
       `;
       if (show.ticketUrl) {
         return `<a class="tile-show ${status}" href="${escapeHtml(
@@ -2330,7 +2562,17 @@ function renderSettings() {
           ? `<div class="dx-status connected">
               <p class="dx-status-title">${escapeHtml(statusLabel)}</p>
               <p class="dx-status-hint">${escapeHtml(t("dxConnectedHint"))}</p>
-              <button type="button" class="dx-btn ghost" id="dxDisconnectBtn">${escapeHtml(t("dxDisconnect"))}</button>
+              ${renderDxFacts()}
+              <p class="dx-msg" id="dxTestMsg" hidden></p>
+              <details class="dx-advanced" id="dxDetails" hidden>
+                <summary>${escapeHtml(t("dxDetails"))}</summary>
+                <pre class="dx-log" id="dxLog"></pre>
+              </details>
+              <div class="dx-actions">
+                <button type="button" class="dx-btn ghost" id="dxRefreshBtn">${escapeHtml(t("dxRefreshScans"))}</button>
+                <button type="button" class="dx-btn ghost" id="dxTestBtn">${escapeHtml(t("dxTest"))}</button>
+              </div>
+              <button type="button" class="dx-btn ghost danger" id="dxDisconnectBtn">${escapeHtml(t("dxDisconnect"))}</button>
             </div>`
           : `<form class="dx-form" id="dxConnectForm" autocomplete="on">
               <p class="dx-hint">${escapeHtml(t("dxLoginHint"))}
@@ -2395,13 +2637,30 @@ function renderSettings() {
   const disconnectBtn = els.settingsContent.querySelector("#dxDisconnectBtn");
   if (disconnectBtn) {
     disconnectBtn.addEventListener("click", () => {
-      saveDxAuth(null);
-      if (state?.shows) {
-        for (const show of state.shows) show.scanned = null;
-      }
+      disconnectDx();
       renderSettings();
       renderActiveView();
     });
+  }
+
+  const refreshBtn = els.settingsContent.querySelector("#dxRefreshBtn");
+  if (refreshBtn) {
+    refreshBtn.addEventListener("click", async () => {
+      refreshBtn.disabled = true;
+      refreshBtn.textContent = t("dxRefreshing");
+      // A manual re-fetch should also revisit days already written off.
+      for (const show of state?.shows || []) show.scanDone = false;
+      try {
+        await syncScanned({ force: true });
+      } finally {
+        renderSettings();
+      }
+    });
+  }
+
+  const testBtn = els.settingsContent.querySelector("#dxTestBtn");
+  if (testBtn) {
+    testBtn.addEventListener("click", () => runDxTest(testBtn));
   }
 
   const form = els.settingsContent.querySelector("#dxConnectForm");
@@ -2410,6 +2669,75 @@ function renderSettings() {
       e.preventDefault();
       await connectDxAccount();
     });
+  }
+}
+
+/** Connection facts, so a blank admission column is never a mystery. */
+function renderDxFacts() {
+  const shows = (state?.shows || []).filter((s) => s.eventId);
+  const withScan = shows.filter((s) => s.scanned != null).length;
+  const source = dxScanStatus.source || dxAuth?.type || "—";
+  const synced = dxScanStatus.at
+    ? formatClock(new Date(dxScanStatus.at))
+    : t("dxNeverSynced");
+
+  const facts = [
+    [t("dxSourceLabel"), source],
+    [t("dxSyncedLabel"), synced],
+    [
+      t("dxCoverageLabel"),
+      t("dxCoverageValue", { n: withScan, total: shows.length }),
+    ],
+  ];
+
+  return `<ul class="dx-facts">${facts
+    .map(
+      ([label, value]) =>
+        `<li><span>${escapeHtml(label)}</span><strong>${escapeHtml(
+          String(value)
+        )}</strong></li>`
+    )
+    .join("")}</ul>`;
+}
+
+async function runDxTest(btn) {
+  btn.disabled = true;
+  btn.textContent = t("dxTesting");
+
+  let result;
+  try {
+    result = await runDxScanDiagnostics();
+  } catch (err) {
+    result = { code: "empty", details: String(err?.message || err) };
+  }
+
+  const title = result.show
+    ? `${result.show.title} ${formatClock(result.show.start)}`
+    : "";
+  const text =
+    result.code === "ok"
+      ? t("dxTestOk", { n: result.scanned, show: title })
+      : result.code === "noShows"
+        ? t("dxTestNoShows")
+        : result.code === "auth"
+          ? t("dxTestAuth")
+          : t("dxTestEmpty", { show: title });
+
+  // Rebuild first so the facts above reflect the run, then write the
+  // verdict into the fresh markup.
+  renderSettings();
+  const msg = els.settingsContent.querySelector("#dxTestMsg");
+  if (msg) {
+    msg.hidden = false;
+    msg.textContent = text;
+    msg.classList.toggle("ok", result.code === "ok");
+    msg.classList.toggle("err", result.code !== "ok");
+  }
+  const details = els.settingsContent.querySelector("#dxDetails");
+  const log = els.settingsContent.querySelector("#dxLog");
+  if (details && log && result.details) {
+    details.hidden = false;
+    log.textContent = result.details;
   }
 }
 
@@ -2440,30 +2768,20 @@ async function connectDxAccount() {
   setMsg("");
 
   try {
-    let next = null;
-    if (pat && !(email && password)) {
-      await validateDxPat(pat);
-      next = {
-        type: "pat",
-        token: pat,
-        partnerId: DX_PARTNER_ID,
-        connectedAt: new Date().toISOString(),
-      };
-    } else {
-      const session = await loginDxWeb(email, password);
-      next = {
-        type: session.type || "dxweb",
-        token: session.token,
-        refreshToken: session.refreshToken,
-        email: session.email || email,
-        partnerId: session.partnerId || DX_PARTNER_ID,
-        connectedAt: new Date().toISOString(),
-      };
-    }
+    const next =
+      pat && !(email && password)
+        ? await connectWithPat(pat)
+        : await connectWithPassword(email, password);
     saveDxAuth(next);
+    dxScanStatus = { at: 0, source: "", error: "" };
+    // A new credential deserves a clean sweep over every day again.
+    for (const show of state?.shows || []) {
+      show.scannedAt = null;
+      show.scanDone = false;
+    }
     setMsg(t("dxConnectOk"), true);
     renderSettings();
-    await enrichAllShows({ force: true });
+    await syncScanned({ force: true });
     renderActiveView();
   } catch (err) {
     console.warn("DX connect failed", err);
@@ -2473,13 +2791,161 @@ async function connectDxAccount() {
         ? t("dxInvalidToken")
         : code === "login"
           ? t("dxInvalidLogin")
-          : t("dxConnectFail")
+          : code === "network"
+            ? t("dxNetworkFail")
+            : t("dxConnectFail")
     );
     if (btn) {
       btn.disabled = false;
       btn.textContent = t("dxConnect");
     }
   }
+}
+
+async function connectWithPat(token) {
+  await validateDxPat(token);
+  return {
+    type: "pat",
+    token,
+    partnerId: DX_PARTNER_ID,
+    connectedAt: new Date().toISOString(),
+  };
+}
+
+/**
+ * Email + password from the settings screen. The DX Check-in API
+ * (api.dx.no/v3) is reachable straight from the browser and is the only
+ * DX surface that exposes per-ticket scan state, so it is tried first;
+ * the Auth0 proxy only comes into play when that login is unavailable.
+ */
+async function connectWithPassword(email, password) {
+  let apiError = null;
+  try {
+    const session = await loginDxApi(email, password);
+    const probe = await probeDxTokenScheme(session.token, session.partnerId);
+    return {
+      type: "dxapi",
+      token: session.token,
+      scheme: probe.scheme,
+      email: session.email || email,
+      partnerId: session.partnerId || DX_PARTNER_ID,
+      connectedAt: new Date().toISOString(),
+    };
+  } catch (err) {
+    // Wrong password is final — no other DX login is going to accept it.
+    if (err?.code === "login") throw err;
+    apiError = err;
+  }
+
+  try {
+    const session = await loginDxWebProxy(email, password);
+    return {
+      type: session.type,
+      token: session.token,
+      refreshToken: session.refreshToken,
+      email: session.email || email,
+      partnerId: session.partnerId || DX_PARTNER_ID,
+      connectedAt: new Date().toISOString(),
+    };
+  } catch (err) {
+    throw err?.code === "login" ? err : apiError || err;
+  }
+}
+
+/**
+ * Sign in against api.dx.no/v3 — the API behind the DX Check-in scanner.
+ * Its CORS policy allows this call from the browser, so no proxy is
+ * involved and the resulting token can read ticket scan state directly.
+ */
+async function loginDxApi(email, password) {
+  let res;
+  try {
+    res = await fetch(`${DX_API}/auth/login`, {
+      method: "POST",
+      cache: "no-store",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    });
+  } catch (err) {
+    throw dxError("DX API unreachable", "network");
+  }
+
+  if (res.status === 401 || res.status === 403 || res.status === 422) {
+    throw dxError("Invalid DX credentials", "login");
+  }
+  let data = {};
+  try {
+    data = await res.json();
+  } catch {
+    data = {};
+  }
+  if (!res.ok) throw dxError(`DX login ${res.status}`, "api");
+
+  const token = pickDxToken(data);
+  if (!token) throw dxError("DX login returned no token", "api");
+  return {
+    token,
+    email: pickString(data, ["email"]) || email,
+    partnerId: pickDxPartnerId(data) || DX_PARTNER_ID,
+  };
+}
+
+function dxError(message, code) {
+  const err = new Error(message);
+  err.code = code;
+  return err;
+}
+
+/** Pull a bearer-ish token out of the many shapes DX login can answer with. */
+function pickDxToken(payload) {
+  const keys = [
+    "authToken",
+    "auth_token",
+    "token",
+    "accessToken",
+    "access_token",
+    "apiToken",
+    "sessionToken",
+  ];
+  const nests = [null, "data", "user", "auth", "session", "result"];
+  for (const nest of nests) {
+    const scope = nest ? payload?.[nest] : payload;
+    if (!scope || typeof scope !== "object") continue;
+    for (const key of keys) {
+      const value = scope[key];
+      if (typeof value === "string" && value.length >= 8) return value;
+    }
+  }
+  return "";
+}
+
+function pickDxPartnerId(payload) {
+  const direct = pickString(payload, ["partnerId", "partner_id", "partnerID"]);
+  if (direct) return direct;
+  const roles = payload?.partnerRoles;
+  if (Array.isArray(roles) && roles[0]?.partner?.id != null) {
+    return String(roles[0].partner.id);
+  }
+  const partners = payload?.partners;
+  if (Array.isArray(partners) && partners.length) {
+    const first = partners[0];
+    const id = first?.partnerID ?? first?.partnerId ?? first?.id;
+    if (id != null) return String(id);
+  }
+  return "";
+}
+
+function pickString(payload, keys) {
+  if (!payload || typeof payload !== "object") return "";
+  for (const key of keys) {
+    const value = payload[key];
+    if (typeof value === "string" && value) return value;
+    if (typeof value === "number") return String(value);
+  }
+  return "";
 }
 
 async function validateDxPat(token) {
@@ -2491,9 +2957,7 @@ async function validateDxPat(token) {
     },
   });
   if (res.status === 401 || res.status === 403) {
-    const err = new Error("Invalid PAT");
-    err.code = "token";
-    throw err;
+    throw dxError("Invalid PAT", "token");
   }
   // Some tenants return 404 for partner root but accept event routes.
   if (!res.ok && res.status !== 404) {
@@ -2508,32 +2972,28 @@ async function validateDxPat(token) {
         },
       }
     );
-    if (ev.status === 401 || ev.status === 403) {
-      const err = new Error("Invalid PAT");
-      err.code = "token";
-      throw err;
-    }
-    if (!ev.ok) {
-      const err = new Error(`DX public ${ev.status}`);
-      err.code = "token";
-      throw err;
-    }
+    if (!ev.ok) throw dxError(`DX public ${ev.status}`, "token");
   }
 }
 
-/** Sign in with DX Web (w.dx.no / app.dx.no) credentials via login proxy. */
-async function loginDxWeb(email, password) {
-  const res = await fetch(DX_LOGIN_PROXY, {
-    method: "POST",
-    cache: "no-store",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${DX_LOGIN_ANON_KEY}`,
-      apikey: DX_LOGIN_ANON_KEY,
-    },
-    body: JSON.stringify({ email, password }),
-  });
+/** Fallback sign-in through the Auth0 proxy for accounts api.dx.no rejects. */
+async function loginDxWebProxy(email, password) {
+  let res;
+  try {
+    res = await fetch(DX_LOGIN_PROXY, {
+      method: "POST",
+      cache: "no-store",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${DX_LOGIN_ANON_KEY}`,
+        apikey: DX_LOGIN_ANON_KEY,
+      },
+      body: JSON.stringify({ email, password }),
+    });
+  } catch {
+    throw dxError("DX login proxy unreachable", "network");
+  }
   let data = {};
   try {
     data = await res.json();
@@ -2541,19 +3001,12 @@ async function loginDxWeb(email, password) {
     data = {};
   }
   if (!res.ok || !data.token) {
-    const err = new Error(data.error || `DX login ${res.status}`);
-    err.code = data.code === "login" || res.status === 403 ? "login" : "auth0";
-    throw err;
+    const code =
+      data.code === "login" || res.status === 403 ? "login" : "auth0";
+    throw dxError(data.error || `DX login ${res.status}`, code);
   }
-  const type =
-    data.type === "dxweb" ||
-    data.type === "auth0" ||
-    data.type === "session" ||
-    data.type === "pat"
-      ? data.type
-      : "dxweb";
   return {
-    type,
+    type: DX_AUTH_TYPES.includes(data.type) ? data.type : "dxweb",
     token: String(data.token),
     refreshToken: data.refreshToken ? String(data.refreshToken) : undefined,
     email: data.email || email,
@@ -2576,14 +3029,13 @@ async function fetchScannedViaProxy(promoterId, eventId) {
       action: "scanned",
       type: dxAuth?.type,
       token: dxAuth?.token,
+      scheme: dxAuth?.scheme,
       partnerId: promoterId,
       eventId,
     }),
   });
   if (res.status === 401 || res.status === 403) {
-    const err = new Error("DX auth expired");
-    err.code = "auth";
-    throw err;
+    throw dxError("DX auth expired", "auth");
   }
   if (!res.ok) return null;
   let data = {};
@@ -2592,7 +3044,9 @@ async function fetchScannedViaProxy(promoterId, eventId) {
   } catch {
     return null;
   }
-  return typeof data.scanned === "number" ? data.scanned : null;
+  if (typeof data.scanned !== "number") return null;
+  dxScanStatus.source = data.source || "proxy";
+  return data.scanned;
 }
 
 function segSelect(btn) {
@@ -2603,7 +3057,7 @@ function segSelect(btn) {
   liquidMove(group.querySelector(".seg-indicator"), btn);
 }
 
-async function enrichVisibleDay() {
+async function enrichVisibleDay({ force = false } = {}) {
   if (!state?.shows || !selectedDay) return;
   const dayShows = state.shows.filter(
     (s) => s.dayKey === selectedDay && s.eventId
@@ -2611,18 +3065,24 @@ async function enrichVisibleDay() {
   if (!dayShows.length) return;
 
   const token = ++enrichToken;
-  els.refreshBtn.classList.add("spinning");
-  await Promise.all(
-    dayShows.map((show) => enrichOne(show, { forceScanned: isDxConnected() }))
-  );
-  if (token !== enrichToken) return;
+  setBusy(true);
+  try {
+    await Promise.all(dayShows.map((show) => enrichOne(show)));
+    if (token !== enrichToken) return;
 
-  persistHistory(dayShows);
-  lastLiveAt = Date.now();
-  applyPreviewScanned();
-  if (activeTab === "day") renderDay();
-  els.statusText.textContent = t("liveAt", { time: formatClock(new Date()) });
-  els.refreshBtn.classList.remove("spinning");
+    persistHistory(dayShows);
+    lastLiveAt = Date.now();
+    applyPreviewScanned();
+    if (activeTab === "day") renderDay();
+    els.statusText.textContent = t("liveAt", { time: formatClock(new Date()) });
+  } finally {
+    setBusy(false);
+  }
+
+  // Check-in numbers are their own pass: the visible day first so it
+  // updates immediately, then everything else in the background.
+  await syncScanned({ shows: dayShows, force });
+  syncScanned().catch((err) => console.warn("Scan sync failed", err));
 }
 
 async function ensureAllEnriched() {
@@ -2632,43 +3092,40 @@ async function ensureAllEnriched() {
 
 async function enrichAllShows({ force = false } = {}) {
   if (!state?.shows) return;
-  const wantScanned = isDxConnected();
   const targets = state.shows.filter(
     (s) =>
-      s.eventId &&
-      (force ||
-        s.sold == null ||
-        s.eventStatus === "pending" ||
-        (wantScanned && s.scanned == null))
+      s.eventId && (force || s.sold == null || s.eventStatus === "pending")
   );
   if (!targets.length) {
     enrichedAll = true;
+    await syncScanned();
     return;
   }
 
   const token = ++enrichToken;
-  els.refreshBtn.classList.add("spinning");
+  setBusy(true);
 
-  const batchSize = 8;
-  for (let i = 0; i < targets.length; i += batchSize) {
+  try {
+    const batchSize = 8;
+    for (let i = 0; i < targets.length; i += batchSize) {
+      if (token !== enrichToken) return;
+      await Promise.all(targets.slice(i, i + batchSize).map(enrichOne));
+    }
+
     if (token !== enrichToken) return;
-    await Promise.all(
-      targets
-        .slice(i, i + batchSize)
-        .map((s) => enrichOne(s, { forceScanned: force && wantScanned }))
-    );
+    persistHistory(targets);
+    enrichedAll = true;
+    lastLiveAt = Date.now();
+    applyPreviewScanned();
+    els.statusText.textContent = t("liveAt", { time: formatClock(new Date()) });
+  } finally {
+    setBusy(false);
   }
 
-  if (token !== enrichToken) return;
-  persistHistory(targets);
-  enrichedAll = true;
-  lastLiveAt = Date.now();
-  applyPreviewScanned();
-  els.statusText.textContent = t("liveAt", { time: formatClock(new Date()) });
-  els.refreshBtn.classList.remove("spinning");
+  await syncScanned({ force });
 }
 
-async function enrichOne(show, { forceScanned = false } = {}) {
+async function enrichOne(show) {
   try {
     const event = await fetchDxEvent(show);
     const end = parseLocalDateTime(event.end);
@@ -2680,8 +3137,9 @@ async function enrichOne(show, { forceScanned = false } = {}) {
     show.reserved = Number(sale.reserved) || 0;
     show.capacity = Number(sale.capacity) || null;
     show.available = sale.available != null ? Number(sale.available) : null;
+    // Some DX tenants surface check-in counts on the sale block itself.
     const scannedFromSale = extractScannedCount(sale);
-    if (scannedFromSale != null) show.scanned = scannedFromSale;
+    if (scannedFromSale != null && scanVisible()) show.scanned = scannedFromSale;
     if (event.locationName) {
       show.screen = String(event.locationName)
         .replace(/\s*-\s*Kino$/i, "")
@@ -2692,23 +3150,110 @@ async function enrichOne(show, { forceScanned = false } = {}) {
     console.warn("Live event fetch failed", show.eventId, err);
     if (show.sold == null) show.eventStatus = "error";
   }
+}
 
-  if (
-    isDxConnected() &&
-    show.eventId &&
-    (forceScanned || show.scanned == null)
-  ) {
-    try {
-      const scanned = await fetchDxScanned(show);
-      if (scanned != null) show.scanned = scanned;
-    } catch (err) {
-      console.warn("Scanned fetch failed", show.eventId, err);
-      if (err?.code === "auth") {
-        // Token no longer valid — drop the connection quietly.
-        saveDxAuth(null);
-      }
-    }
+/**
+ * Should this show's check-in count be fetched right now?
+ *
+ * Past days matter as much as today — a worker looks back to see whether
+ * everyone got in — so a show whose count was never fetched always
+ * qualifies, however old it is. Once it has been fetched and the show is
+ * well and truly over the number can no longer change, and the show is
+ * marked done so later syncs skip it.
+ */
+function shouldFetchScan(show, now, force) {
+  if (!show.eventId || !show.start) return false;
+  // Nothing can be scanned long before the doors open.
+  if (show.start.getTime() - now > SCAN_LEAD_MS) return false;
+  // Nor when the show sold nothing — there is no one to let in.
+  if (show.eventStatus === "ok" && show.sold === 0) return false;
+  if (force) return true;
+  if (show.scanDone) return false;
+  if (!show.scannedAt) return true;
+  if (now - showEndOf(show).getTime() > SCAN_FINAL_AFTER_MS) {
+    return show.scanned == null;
   }
+  return now - show.scannedAt >= SCAN_FRESH_MS;
+}
+
+/**
+ * Fetch check-in counts for every show that needs one, across all days.
+ * Resolves to true when a number actually changed, so callers know
+ * whether a re-render is worth it.
+ */
+async function syncScanned({ shows, force = false } = {}) {
+  if (!isDxConnected() || !state?.shows) return false;
+  if (scanSyncRunning && !force) return false;
+
+  const now = Date.now();
+  const targets = (shows || state.shows).filter((s) =>
+    shouldFetchScan(s, now, force)
+  );
+  if (!targets.length) return false;
+
+  scanSyncRunning = true;
+  setBusy(true);
+  let changed = false;
+  let fetched = 0;
+  let lastError = "";
+  let expired = false;
+
+  try {
+    const batchSize = 6;
+    for (let i = 0; i < targets.length && !expired; i += batchSize) {
+      await Promise.all(
+        targets.slice(i, i + batchSize).map(async (show) => {
+          if (expired) return;
+          try {
+            const scanned = await fetchDxScanned(show);
+            show.scannedAt = Date.now();
+            if (scanned != null) {
+              fetched += 1;
+              if (show.scanned !== scanned) {
+                show.scanned = scanned;
+                changed = true;
+              }
+            }
+            // Nothing more can happen to a show that ended hours ago.
+            if (Date.now() - showEndOf(show).getTime() > SCAN_FINAL_AFTER_MS) {
+              show.scanDone = true;
+            }
+          } catch (err) {
+            if (err?.code === "auth") {
+              expired = true;
+              lastError = "auth";
+            } else {
+              lastError = String(err?.message || err);
+            }
+          }
+        })
+      );
+    }
+
+    if (expired) {
+      console.warn("DX credentials expired — disconnecting");
+      disconnectDx();
+    } else {
+      dxScanStatus = {
+        at: fetched ? Date.now() : dxScanStatus.at,
+        source: dxScanStatus.source,
+        error: fetched ? "" : lastError,
+      };
+    }
+    persistHistory(targets);
+  } finally {
+    scanSyncRunning = false;
+    setBusy(false);
+  }
+
+  // Losing the account changes the settings screen too; short of that,
+  // leave it alone — re-rendering wipes the message a test just wrote.
+  if (expired) {
+    renderActiveView();
+    return true;
+  }
+  if (changed && activeTab !== "settings") renderActiveView();
+  return changed;
 }
 
 async function fetchDxEvent(show) {
@@ -2718,91 +3263,169 @@ async function fetchDxEvent(show) {
     Accept: "application/json",
     Referer: show.ticketUrl || "https://checkout.ebillett.no/",
   };
-  // Authenticated session may unlock extra ticketSale fields (e.g. scanned).
-  if (dxAuth?.type === "session" && dxAuth.token) {
+  // An authenticated session can unlock extra ticketSale fields. Only the
+  // authToken header survives api.dx.no's CORS policy, so Bearer tokens
+  // (PAT / Auth0) are deliberately left off this call.
+  if ((dxAuth?.type === "dxapi" || dxAuth?.type === "session") && dxAuth.token) {
     headers.authToken = dxAuth.token;
-  }
-  if (
-    (dxAuth?.type === "auth0" || dxAuth?.type === "pat") &&
-    dxAuth.token
-  ) {
-    headers.Authorization = `Bearer ${dxAuth.token}`;
   }
   const res = await fetch(url, { cache: "no-store", headers });
   if (!res.ok) throw new Error(`DX ${res.status}`);
   return res.json();
 }
 
+/**
+ * One request for an event's ticket list — the DX endpoint that carries
+ * per-ticket scan state. Returns a plain result rather than throwing so
+ * callers can compare the schemes and report what DX answered.
+ */
+async function requestDxTickets(partnerId, eventId, token, scheme, page = 0) {
+  const base = `${DX_API}/partners/${partnerId}/events/${eventId}/tickets`;
+  const query = new URLSearchParams();
+  if (scheme === "query") query.set("authToken", token);
+  if (page > 1) query.set("page", String(page));
+  const search = query.toString();
+  const url = search ? `${base}?${search}` : base;
+  const label =
+    (scheme === "query" ? `${base}?authToken=…` : base) +
+    (page > 1 ? `&page=${page}` : "");
+  const headers = { Accept: "application/json" };
+  if (scheme === "authToken") headers.authToken = token;
+
+  try {
+    const res = await fetch(url, { cache: "no-store", headers });
+    if (!res.ok) return { scheme, label, status: res.status, ok: false };
+    const data = await res.json();
+    return { scheme, label, status: res.status, ok: true, data };
+  } catch (err) {
+    // A CORS rejection lands here with no status to report.
+    return { scheme, label, status: 0, ok: false, error: String(err?.message || err) };
+  }
+}
+
+/** Work out which of the allowed token schemes this DX tenant accepts. */
+async function probeDxTokenScheme(token, partnerId) {
+  const eventId = sampleEventId();
+  if (!eventId) return { scheme: DX_TOKEN_SCHEMES[0], verified: false, attempts: [] };
+
+  const attempts = [];
+  for (const scheme of DX_TOKEN_SCHEMES) {
+    const res = await requestDxTickets(
+      partnerId || DX_PARTNER_ID,
+      eventId,
+      token,
+      scheme
+    );
+    attempts.push(res);
+    if (res.ok) return { scheme, verified: true, attempts };
+  }
+  return { scheme: DX_TOKEN_SCHEMES[0], verified: false, attempts };
+}
+
+/** An event id worth probing: the most recent show that has sold tickets. */
+function sampleEventId() {
+  const shows = (state?.shows || []).filter((s) => s.eventId);
+  if (!shows.length) return "";
+  const now = Date.now();
+  const past = shows
+    .filter((s) => s.start.getTime() <= now && (s.sold ?? 0) > 0)
+    .sort((a, b) => b.start - a.start);
+  return String((past[0] || shows[shows.length - 1]).eventId);
+}
+
 /** Fetch scanned/checked-in count using connected DX credentials. */
 async function fetchDxScanned(show) {
   if (!dxAuth?.token || !show.eventId) return null;
-  const promoterId = show.promoterId || dxAuth.partnerId || DX_PARTNER_ID;
+  const partnerId = show.promoterId || dxAuth.partnerId || DX_PARTNER_ID;
 
-  // DX Web / api.dx.no session cookies cannot be sent cross-origin from the
-  // browser — resolve scanned counts through the login proxy.
-  if (dxAuth.type === "dxweb" || dxAuth.type === "session") {
-    const viaProxy = await fetchScannedViaProxy(promoterId, show.eventId);
-    if (viaProxy != null) return viaProxy;
+  if (dxAuth.type === "dxapi") {
+    return fetchScannedFromDxApi(partnerId, show.eventId);
   }
-
-  if (dxAuth.type === "auth0") {
-    const fromTickets = await fetchScannedFromTickets(promoterId, show.eventId, {
-      authorization: `Bearer ${dxAuth.token}`,
-      authToken: dxAuth.token,
-    });
-    if (fromTickets != null) return fromTickets;
-
-    const fromApp = await fetchScannedFromDxWeb(promoterId, show.eventId);
-    if (fromApp != null) return fromApp;
-  }
-
   if (dxAuth.type === "pat") {
-    // Public API event detail (Bearer PAT).
-    const publicCount = await fetchScannedFromPublic(promoterId, show.eventId);
-    if (publicCount != null) return publicCount;
-
-    // Some PATs also work as api.dx.no authToken for /tickets.
-    const fromTickets = await fetchScannedFromTickets(promoterId, show.eventId, {
-      authToken: dxAuth.token,
-      authorization: `Bearer ${dxAuth.token}`,
-    });
-    if (fromTickets != null) return fromTickets;
+    return fetchScannedFromPublic(partnerId, show.eventId);
   }
-
-  return null;
+  // DX Web / legacy session cookies cannot be sent cross-origin from the
+  // browser — those credentials have to go through the login proxy.
+  return fetchScannedViaProxy(partnerId, show.eventId);
 }
 
-async function fetchScannedFromDxWeb(promoterId, eventId) {
-  // DX Web sales API (same auth audience as app.dx.no).
-  const urls = [
-    `${DX_WEB_URL}/api/v1/sales/tickets/?partnerId=${promoterId}&eventId=${eventId}`,
-    `${DX_WEB_URL}/api/v1/sales/tickets?partner_id=${promoterId}&event_id=${eventId}`,
-    `${DX_API}/partners/${promoterId}/events/${eventId}/tickets`,
-  ];
-  for (const url of urls) {
-    try {
-      const res = await fetch(url, {
-        cache: "no-store",
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${dxAuth.token}`,
-        },
-      });
-      if (res.status === 401 || res.status === 403) continue;
-      if (!res.ok) continue;
-      const data = await res.json();
-      const n = extractScannedCount(data);
-      if (n != null) return n;
-    } catch {
-      /* try next */
+/**
+ * Read the event's ticket list from the DX Check-in API and count the
+ * tickets that have been scanned. Sticks to the scheme that worked at
+ * connect time, falling back to the other one if DX changes its mind.
+ */
+async function fetchScannedFromDxApi(partnerId, eventId) {
+  const preferred = dxAuth.scheme;
+  const order = DX_TOKEN_SCHEMES.includes(preferred)
+    ? [preferred, ...DX_TOKEN_SCHEMES.filter((s) => s !== preferred)]
+    : DX_TOKEN_SCHEMES;
+
+  let rejected = false;
+  for (const scheme of order) {
+    const res = await requestDxTickets(partnerId, eventId, dxAuth.token, scheme);
+    if (res.status === 401 || res.status === 403) {
+      rejected = true;
+      continue;
     }
+    if (!res.ok) continue;
+    if (scheme !== dxAuth.scheme) saveDxAuth({ ...dxAuth, scheme });
+    dxScanStatus.source = `api.dx.no/v3 (${scheme})`;
+    const paged = await countScannedAcrossPages(
+      partnerId,
+      eventId,
+      scheme,
+      res.data
+    );
+    return paged != null ? paged : extractScannedCount(res.data);
   }
+  if (rejected) throw dxError("DX token rejected", "auth");
   return null;
 }
 
-async function fetchScannedFromPublic(promoterId, eventId) {
+/**
+ * The v3 list endpoints answer Laravel-style pagination, and a full house
+ * spills over one page. Counting only the first would quietly report that
+ * people are missing when they are all inside, so walk the rest.
+ * Returns null when the payload isn't paginated or can't be counted.
+ */
+async function countScannedAcrossPages(partnerId, eventId, scheme, first) {
+  const rows = Array.isArray(first?.data) ? first.data : null;
+  const total = Number(first?.total);
+  if (!rows?.length || !Number.isFinite(total) || total <= rows.length) {
+    return null;
+  }
+
+  const firstCount = countScannedTickets(rows);
+  if (firstCount == null) return null;
+
+  let scanned = firstCount;
+  let seen = rows.length;
+  const lastPage = Number(first.lastPage) || Math.ceil(total / rows.length);
+  for (let page = 2; page <= Math.min(lastPage, 25) && seen < total; page++) {
+    const res = await requestDxTickets(
+      partnerId,
+      eventId,
+      dxAuth.token,
+      scheme,
+      page
+    );
+    // A half-read list would understate the count — better to say nothing.
+    if (!res.ok) return null;
+    const next = Array.isArray(res.data?.data)
+      ? res.data.data
+      : Array.isArray(res.data)
+        ? res.data
+        : [];
+    if (!next.length) break;
+    scanned += countScannedTickets(next) || 0;
+    seen += next.length;
+  }
+  return scanned;
+}
+
+async function fetchScannedFromPublic(partnerId, eventId) {
   const res = await fetch(
-    `${DX_PUBLIC_API}/partners/${promoterId}/events/${eventId}`,
+    `${DX_PUBLIC_API}/partners/${partnerId}/events/${eventId}`,
     {
       cache: "no-store",
       headers: {
@@ -2812,35 +3435,94 @@ async function fetchScannedFromPublic(promoterId, eventId) {
     }
   );
   if (res.status === 401 || res.status === 403) {
-    const err = new Error("DX auth expired");
-    err.code = "auth";
-    throw err;
+    throw dxError("DX auth expired", "auth");
   }
   if (!res.ok) return null;
   const data = await res.json();
-  return (
+  const scanned =
     extractScannedCount(data?.ticketSale) ??
     extractScannedCount(data) ??
-    extractScannedCount(data?.data)
-  );
+    extractScannedCount(data?.data);
+  if (scanned != null) dxScanStatus.source = "public.dx.no/v1";
+  return scanned;
 }
 
-async function fetchScannedFromTickets(promoterId, eventId, auth = {}) {
-  const headers = { Accept: "application/json" };
-  if (auth.authToken) headers.authToken = auth.authToken;
-  if (auth.authorization) headers.Authorization = auth.authorization;
+/**
+ * Ask DX for one event's tickets and describe exactly what came back.
+ * Feeds the "test admissions" button in settings so a failure can be
+ * reported with real status codes instead of a silent empty column.
+ */
+async function runDxScanDiagnostics() {
+  if (!dxAuth?.token) return { code: "auth" };
+  const show = diagnosticShow();
+  if (!show) return { code: "noShows" };
 
-  const res = await fetch(
-    `${DX_API}/partners/${promoterId}/events/${eventId}/tickets`,
-    { cache: "no-store", headers }
-  );
-  if (res.status === 401 || res.status === 403) {
-    // Wrong auth scheme for this credential — not necessarily expired.
-    return null;
+  const partnerId = show.promoterId || dxAuth?.partnerId || DX_PARTNER_ID;
+  const lines = [];
+  let scanned = null;
+  let authRejected = false;
+
+  if (dxAuth?.type === "dxapi") {
+    for (const scheme of DX_TOKEN_SCHEMES) {
+      const res = await requestDxTickets(
+        partnerId,
+        show.eventId,
+        dxAuth.token,
+        scheme
+      );
+      const count = res.ok ? extractScannedCount(res.data) : null;
+      lines.push(describeDxAttempt(res, count));
+      if (res.status === 401 || res.status === 403) authRejected = true;
+      if (count != null && scanned == null) {
+        scanned = count;
+        saveDxAuth({ ...dxAuth, scheme });
+      }
+      if (res.ok) break;
+    }
+  } else {
+    try {
+      scanned = await fetchDxScanned(show);
+      lines.push(`${dxAuth?.type || "?"} → ${scanned == null ? "no count" : scanned}`);
+    } catch (err) {
+      if (err?.code === "auth") authRejected = true;
+      lines.push(`${dxAuth?.type || "?"} → ${String(err?.message || err)}`);
+    }
   }
-  if (!res.ok) return null;
-  const data = await res.json();
-  return extractScannedCount(data);
+
+  if (scanned != null) {
+    show.scanned = scanned;
+    show.scannedAt = Date.now();
+    persistHistory([show]);
+    dxScanStatus = { at: Date.now(), source: dxScanStatus.source, error: "" };
+  }
+
+  return {
+    code: scanned != null ? "ok" : authRejected ? "auth" : "empty",
+    scanned,
+    show,
+    details: lines.join("\n"),
+  };
+}
+
+/** One line per attempt: status, and the payload shape when DX said yes. */
+function describeDxAttempt(res, count) {
+  const status = res.status || (res.error ? `blocked (${res.error})` : "no response");
+  if (!res.ok) return `${res.label} → ${status}`;
+  const shape = Array.isArray(res.data)
+    ? `array[${res.data.length}] keys: ${Object.keys(res.data[0] || {}).join(", ") || "—"}`
+    : `object keys: ${Object.keys(res.data || {}).join(", ") || "—"}`;
+  return `${res.label} → ${status}, ${count == null ? "no scan field" : `${count} scanned`}, ${shape}`;
+}
+
+/** Prefer a show that has actually been let in: yesterday's, or the newest. */
+function diagnosticShow() {
+  const shows = (state?.shows || []).filter((s) => s.eventId && (s.sold ?? 0) > 0);
+  if (!shows.length) return null;
+  const now = Date.now();
+  const past = shows
+    .filter((s) => s.start.getTime() <= now)
+    .sort((a, b) => b.start - a.start);
+  return past[0] || shows[0];
 }
 
 /**
@@ -2999,9 +3681,19 @@ function formatDuration(minutes) {
   return `${m}m`;
 }
 
+/**
+ * Reference-counted spinner: the day enrich and the check-in sync overlap
+ * constantly, and whichever finished first used to stop the animation
+ * while the other was still fetching.
+ */
+function setBusy(on) {
+  busyCount = Math.max(0, busyCount + (on ? 1 : -1));
+  els.refreshBtn.classList.toggle("spinning", busyCount > 0);
+}
+
 function setLoading(isLoading) {
   els.refreshBtn.disabled = isLoading;
-  els.refreshBtn.classList.toggle("spinning", isLoading);
+  setBusy(isLoading);
   if (isLoading && !state) {
     els.content.innerHTML = `
       <div class="state loading">

@@ -67,7 +67,11 @@ async function fetchManual(
   return res;
 }
 
-/** Legacy api.dx.no email/password — returns profile + session cookie (no authToken). */
+/**
+ * api.dx.no/v3 email/password — the API behind the DX Check-in scanner.
+ * A header token ("dxapi") is worth much more than the session cookie:
+ * the browser can use it directly, while cookies must be replayed here.
+ */
 async function loginLegacy(email: string, password: string) {
   const jar = new Map<string, string>();
   const res = await fetchManual(`${DX_API}/auth/login`, {
@@ -88,26 +92,31 @@ async function loginLegacy(email: string, password: string) {
   } catch {
     data = {};
   }
+  if (res.status === 401 || res.status === 403) {
+    const err = new Error("Wrong email or password.");
+    (err as { code?: string }).code = "login";
+    throw err;
+  }
   if (!res.ok) return null;
 
   const session = jar.get("dx_api_session");
   const nested = (data.data || {}) as Record<string, unknown>;
   const user = (data.user || {}) as Record<string, unknown>;
-  const token =
+  const headerToken =
     data.authToken ||
     data.token ||
     data.access_token ||
     data.accessToken ||
     nested.authToken ||
-    nested.token ||
-    session;
+    nested.token;
+  const token = headerToken || session;
   if (!token) return null;
 
   const roles = (data.partnerRoles || []) as Array<Record<string, unknown>>;
   const partner = (roles[0]?.partner || {}) as Record<string, unknown>;
 
   return {
-    type: session && token === session ? ("session" as const) : ("session" as const),
+    type: headerToken ? ("dxapi" as const) : ("session" as const),
     token: String(token),
     email: String(data.email || user.email || email),
     partnerId: String(
@@ -351,6 +360,26 @@ async function fetchScanned(body: {
   if (!eventId) return json({ error: "eventId required" }, 400);
   if (!body.token) return json({ error: "token required" }, 400);
 
+  // A DX Check-in header token reads the ticket list straight away.
+  if (body.type === "dxapi") {
+    const url = `${DX_API}/partners/${partnerId}/events/${eventId}/tickets`;
+    const res = await fetch(url, {
+      headers: {
+        Accept: "application/json",
+        "User-Agent": UA,
+        authToken: body.token,
+      },
+    });
+    if (res.status === 401 || res.status === 403) {
+      return json({ error: "DX token rejected", code: "auth" }, 401);
+    }
+    if (res.ok) {
+      const n = extractScannedCount(await res.json());
+      if (n != null) return json({ scanned: n, source: "api.dx.no/v3" });
+    }
+    return json({ scanned: null });
+  }
+
   const dxweb = parseDxwebToken(body.token);
   if (dxweb) {
     const cookie = [
@@ -442,17 +471,23 @@ Deno.serve(async (req) => {
   }
 
   try {
-    // Prefer official DX Web (Auth0 via app.dx.no) — this is what w.dx.no users have.
+    // api.dx.no first: only that login yields a token the browser can use
+    // to read per-ticket scan state. DX Web (Auth0) sessions can list
+    // sales but never expose check-ins, so they are the fallback.
+    let legacy: Awaited<ReturnType<typeof loginLegacy>> = null;
     try {
-      const dxweb = await loginDxWeb(email, password);
-      return json(dxweb);
+      legacy = await loginLegacy(email, password);
+      if (legacy?.type === "dxapi") return json(legacy);
     } catch (e) {
       const err = e as Error & { code?: string };
       if (err.code === "login") throw err;
-      // Fall through to legacy api.dx.no for accounts that still work there.
-      const legacy = await loginLegacy(email, password);
+    }
+
+    try {
+      return json(await loginDxWeb(email, password));
+    } catch (e) {
       if (legacy) return json(legacy);
-      throw err;
+      throw e;
     }
   } catch (e) {
     const err = e as Error & { code?: string };
