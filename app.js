@@ -2051,6 +2051,15 @@ function doneTag(shows, { allLabel, className = "done-tag", now = new Date() } =
   }${escapeHtml(label)}</span>`;
 }
 
+/** Thin left rail with vertical NOW / DONE — replaces the old colour stripe. */
+function renderShowStatusRail(status) {
+  if (status !== "live" && status !== "done") return "";
+  const label = status === "live" ? t("now") : t("done");
+  return `<div class="show-status" aria-label="${escapeHtml(label)}"><span>${escapeHtml(
+    label
+  )}</span></div>`;
+}
+
 function statusOf(show, now) {
   if (show.end && now >= show.start && now < show.end) return "live";
   if (!show.end && now >= show.start && now - show.start < 3 * 60 * 60_000) {
@@ -2726,16 +2735,12 @@ function previewSeatChart(show) {
 
 function renderShowCard(show, now, index = 0, opts = {}) {
   const status = statusOf(show, now);
+  // Soon keeps a small pill in the meta line; live/done read from the
+  // left rail instead of another badge next to the runtime.
   const badge =
-    status === "live"
-      ? `<span class="badge live">${escapeHtml(t("now"))}</span>`
-      : status === "soon"
-        ? `<span class="badge soon">${escapeHtml(t("soon"))}</span>`
-        : status === "done"
-          ? `<span class="badge done">${doneGlyph("badge-check")}${escapeHtml(
-              t("done")
-            )}</span>`
-          : "";
+    status === "soon"
+      ? `<span class="badge soon">${escapeHtml(t("soon"))}</span>`
+      : "";
 
   const endLabel = show.end ? formatClock(show.end) : "…";
   const duration = show.runningLabel
@@ -2778,15 +2783,18 @@ function renderShowCard(show, now, index = 0, opts = {}) {
 
   const admissionRow = renderAdmission(show, now, opts);
   const admissionState = admissionOf(show, now, opts)?.state || "";
+  const statusRail = renderShowStatusRail(status);
   const cardClass = [
     "show-card",
     status,
+    statusRail ? "has-status" : "",
     admissionState ? `has-admit admit-${admissionState}` : "",
   ]
     .filter(Boolean)
     .join(" ");
 
   const inner = `
+      ${statusRail}
       ${renderPoster(show, 52, 74)}
       <div class="show-main">
         <div class="time-range">${formatClock(show.start)}<span class="sep">–</span>${endLabel}</div>
