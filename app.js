@@ -24,6 +24,19 @@ const SCAN_FRESH_MS = 60 * 1000;
 
 /** An open seat chart re-reads the hall no more often than this. */
 const SEAT_FRESH_MS = 45 * 1000;
+
+/**
+ * Doors are busiest right around showtime. From this long before a
+ * show's start until this long after it, its check-in count and any
+ * open seat chart are polled every few seconds instead of riding the
+ * slow two-minute live cycle.
+ */
+const HOT_BEFORE_START_MS = 15 * 60 * 1000;
+const HOT_AFTER_START_MS = 15 * 60 * 1000;
+/** How often the fast poll fires while a show is inside that window. */
+const HOT_POLL_MS = 5 * 1000;
+/** Freshness inside the window — just under the poll, so every tick fetches. */
+const HOT_FRESH_MS = 4 * 1000;
 /** Hall geometry only changes when someone rebuilds an auditorium. */
 const SEAT_LAYOUT_TTL_MS = 30 * 24 * 60 * 60 * 1000;
 
@@ -455,6 +468,21 @@ async function init() {
       refreshOpenSeatCharts();
     }
   }, 120_000);
+
+  // Around showtime the door picture changes with every scan. While any
+  // show is within 15 minutes of its start, poll its check-in count and
+  // any open seat chart every few seconds instead of every two minutes.
+  setInterval(() => {
+    if (document.visibilityState !== "visible") return;
+    if (!isDxConnected() || !state?.shows) return;
+    const now = Date.now();
+    const hot = state.shows.filter((s) => !s.scanDone && inHotWindow(s, now));
+    if (!hot.length) return;
+    syncScanned({ shows: hot, quiet: true }).catch((err) =>
+      console.warn("Hot scan sync failed", err)
+    );
+    refreshOpenSeatCharts({ hotOnly: true, quiet: true });
+  }, HOT_POLL_MS);
 
   // Nudge the timeline "now" marker and chip countdowns every minute.
   setInterval(() => {
@@ -2239,14 +2267,20 @@ function seatPhaseOf(show, chart, now = new Date()) {
  * device has never seen that auditorium; after that a refresh is just
  * the occupied seat ids.
  */
-async function loadSeatChart(show, { force = false, retry = true } = {}) {
+async function loadSeatChart(
+  show,
+  { force = false, retry = true, quiet = false } = {}
+) {
   const key = String(show.eventId);
   const previous = seatCharts.get(key);
   if (previous?.status === "loading") return;
+  // Around showtime every scan moves a seat from amber to green, so the
+  // chart is allowed to go stale for seconds rather than most of a minute.
+  const freshMs = inHotWindow(show) ? HOT_FRESH_MS : SEAT_FRESH_MS;
   if (
     !force &&
     previous?.status === "ready" &&
-    Date.now() - previous.at < SEAT_FRESH_MS
+    Date.now() - previous.at < freshMs
   ) {
     return;
   }
@@ -2257,12 +2291,16 @@ async function loadSeatChart(show, { force = false, retry = true } = {}) {
     return;
   }
 
-  seatCharts.set(key, { ...previous, status: "loading" });
-  paintSeatChart(show);
+  const wasReady = previous?.status === "ready";
+  seatCharts.set(key, { ...previous, status: "loading", wasReady });
+  // A chart that already has seats keeps showing them while the refresh
+  // runs; flashing a spinner every few seconds would make it unreadable.
+  if (!wasReady) paintSeatChart(show);
 
   const partnerId = seatPartnerOf(show);
   let cardChanged = false;
-  setBusy(true);
+  let skipPaint = false;
+  if (!quiet) setBusy(true);
   try {
     const { status, ok, data } = await callDxProxy({
       action: "seats",
@@ -2275,7 +2313,7 @@ async function loadSeatChart(show, { force = false, retry = true } = {}) {
     if (status === 401 || status === 403) {
       if (retry && (await reauthenticateDx())) {
         seatCharts.delete(key);
-        return loadSeatChart(show, { force: true, retry: false });
+        return loadSeatChart(show, { force: true, retry: false, quiet });
       }
       throw dxError(data.error || "DX session expired", "auth");
     }
@@ -2290,7 +2328,7 @@ async function loadSeatChart(show, { force = false, retry = true } = {}) {
     const layout = seatLayoutOf(show, data.locationId);
     const empty = Boolean(data.freeSeating) || !layout;
     const capacity = Number(data.capacity) || 0;
-    seatCharts.set(key, {
+    const fresh = {
       status: empty ? "empty" : "ready",
       reason: data.freeSeating ? "free" : layout ? "" : "noMap",
       at: Date.now(),
@@ -2304,7 +2342,18 @@ async function loadSeatChart(show, { force = false, retry = true } = {}) {
       scanned: Number(data.scanned) || 0,
       unseated: Number(data.unseated) || 0,
       seats: data.seats || {},
-    });
+    };
+    seatCharts.set(key, fresh);
+
+    // A refresh that brought back the same picture has nothing to redraw.
+    skipPaint =
+      previous?.status === "ready" &&
+      fresh.status === "ready" &&
+      previous.sold === fresh.sold &&
+      previous.scanned === fresh.scanned &&
+      previous.capacity === fresh.capacity &&
+      previous.reserved === fresh.reserved &&
+      JSON.stringify(previous.seats) === JSON.stringify(fresh.seats);
 
     // The same call DX answers with seats also carries the freshest
     // sold/scanned pair, so the card above the chart stays in step.
@@ -2325,19 +2374,26 @@ async function loadSeatChart(show, { force = false, retry = true } = {}) {
       renderActiveView();
       return;
     }
-    seatCharts.set(key, {
-      status: "error",
-      at: Date.now(),
-      error: String(err?.message || err),
-    });
+    if (previous?.status === "ready") {
+      // A background refresh that hiccuped must not wipe a chart that
+      // was fine seconds ago; keep the old picture and retry next pass.
+      seatCharts.set(key, previous);
+      skipPaint = true;
+    } else {
+      seatCharts.set(key, {
+        status: "error",
+        at: Date.now(),
+        error: String(err?.message || err),
+      });
+    }
   } finally {
-    setBusy(false);
+    if (!quiet) setBusy(false);
   }
 
   // Fresher numbers redraw the card and, with it, every chart below one;
   // otherwise only this chart needs repainting.
   if (cardChanged) renderActiveView();
-  paintSeatChart(show);
+  else if (!skipPaint) paintSeatChart(show);
 }
 
 /** Replace just this show's chart, so opening one never reflows the day. */
@@ -2432,8 +2488,10 @@ function seatChartsOnScreen() {
   return ids;
 }
 
-/** Keep unfolded charts current alongside the two-minute live refresh. */
-async function refreshOpenSeatCharts() {
+/** Keep unfolded charts current alongside the two-minute live refresh.
+ * With `hotOnly` the pass narrows to shows inside the around-showtime
+ * window, so the fast poll never drags every open chart along with it. */
+async function refreshOpenSeatCharts({ hotOnly = false, quiet = false } = {}) {
   if (!state?.shows) return;
   if (!openSeatCharts.size && !seatsAlwaysOpen()) return;
   // Charts nobody asked for are only worth refreshing while on screen.
@@ -2443,8 +2501,9 @@ async function refreshOpenSeatCharts() {
     if (!seatChartExpanded(show)) continue;
     // A show that ended hours ago cannot gain another guest.
     if (show.scanDone) continue;
+    if (hotOnly && !inHotWindow(show)) continue;
     if (!openSeatCharts.has(show.id) && !visible?.has(show.id)) continue;
-    await loadSeatChart(show).catch((err) =>
+    await loadSeatChart(show, { quiet }).catch((err) =>
       console.warn("Seat chart refresh failed", err)
     );
   }
@@ -2508,7 +2567,9 @@ function renderSeatChart(show) {
   if (!seatChartExpanded(show)) return "";
   const chart = seatCharts.get(String(show.eventId));
 
-  if (!chart || chart.status === "loading") {
+  // A chart being refreshed still carries its previous seats; keep
+  // drawing those and only fall back to the spinner on the first load.
+  if (!chart || (chart.status === "loading" && !chart.wasReady)) {
     return `<div class="seat-note">
       <span class="seat-spinner" aria-hidden="true"></span>${escapeHtml(t("seatMapLoading"))}
     </div>`;
@@ -3743,6 +3804,15 @@ async function enrichOne(show) {
   }
 }
 
+/** Is `now` inside the busy door window around this show's start time? */
+function inHotWindow(show, now = Date.now()) {
+  if (!show?.start) return false;
+  const start = show.start.getTime();
+  return (
+    now >= start - HOT_BEFORE_START_MS && now <= start + HOT_AFTER_START_MS
+  );
+}
+
 /**
  * Should this show's check-in count be fetched right now?
  *
@@ -3764,7 +3834,9 @@ function shouldFetchScan(show, now, force) {
   if (now - showEndOf(show).getTime() > SCAN_FINAL_AFTER_MS) {
     return show.scanned == null;
   }
-  return now - show.scannedAt >= SCAN_FRESH_MS;
+  // Around showtime the count changes with every scan; keep up with it.
+  const freshMs = inHotWindow(show, now) ? HOT_FRESH_MS : SCAN_FRESH_MS;
+  return now - show.scannedAt >= freshMs;
 }
 
 /**
@@ -3772,7 +3844,7 @@ function shouldFetchScan(show, now, force) {
  * Resolves to true when a number actually changed, so callers know
  * whether a re-render is worth it.
  */
-async function syncScanned({ shows, force = false } = {}) {
+async function syncScanned({ shows, force = false, quiet = false } = {}) {
   if (!isDxConnected() || !state?.shows) return false;
   if (scanSyncRunning && !force) return false;
 
@@ -3783,7 +3855,9 @@ async function syncScanned({ shows, force = false } = {}) {
   if (!targets.length) return false;
 
   scanSyncRunning = true;
-  setBusy(true);
+  // The fast around-showtime poll runs quietly; spinning the refresh
+  // button once every five seconds would just read as stuck.
+  if (!quiet) setBusy(true);
   let changed = false;
   let fetched = 0;
   let lastError = "";
@@ -3847,7 +3921,7 @@ async function syncScanned({ shows, force = false } = {}) {
     persistHistory(targets);
   } finally {
     scanSyncRunning = false;
-    setBusy(false);
+    if (!quiet) setBusy(false);
   }
 
   // Losing the account changes the settings screen too; short of that,
