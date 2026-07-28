@@ -11,6 +11,7 @@ Mobile-friendly schedule for **Buen kino** — same info as the KinoProgram Chro
 - Auto-refreshes live numbers every 2 minutes while open
 - Norwegian/English + light/dark theme
 - Optional DX account connection for **admissions** — how many of the sold tickets have been scanned
+- …and a **seat map** per showing: which seats are sold, and which of those are already inside
 
 ## Admissions (scanned tickets)
 
@@ -31,6 +32,34 @@ background however old it is, and once a show is well over its count is
 final and cached, so reopening the app shows yesterday's numbers without
 asking DX again.
 
+## Seat map
+
+Every showing that has sold something gets a **Salkart** button under
+its card. It folds out the auditorium as DX draws it — screen at the
+top, row 1 nearest it, row numbers down both sides — with one square
+per seat:
+
+| Square | Meaning |
+| --- | --- |
+| Outline | free |
+| Red — *Solgt* | sold; the show has not opened its doors yet |
+| Amber — *Ikke skannet* | sold, and that guest has not arrived |
+| Green — *Inne* | sold and scanned at the door |
+
+Red turns into amber/green the moment scanning becomes relevant, so
+before the doors open the chart answers "how is it selling?" and after
+they open it answers "who is still missing?". Tap or hover a seat to
+read its row and number.
+
+Seats are matched by DX's own `seatId`, so a square is exactly the seat
+printed on the ticket. Two things DX gives no coordinates for are said
+in words under the chart instead of guessed at: reservations, and seats
+closed off for that one showing.
+
+The hall geometry is fetched once per auditorium and kept on the device
+for a month; opening a chart after that costs one purchase-list lookup,
+the same call the admission counts already use.
+
 ### Connecting
 
 Connect under **Settings → DX-konto** with the same email and password
@@ -38,17 +67,22 @@ you use in **DX Check-in** / on [app.dx.no](https://app.dx.no).
 
 Check-in state lives in one place: `app.dx.no`'s purchase list, where
 each ticket carries `used` / `usedDateTime` once it has been scanned at
-the door. `app.dx.no` sends no CORS headers, so a browser on GitHub
-Pages cannot read it directly. A small Supabase Edge Function
-(`supabase/functions/dx-web-login`) holds the DX session and returns
-just the counts:
+the door, next to the `seatId` it was sold for. `app.dx.no` sends no
+CORS headers, so a browser on GitHub Pages cannot read it directly. A
+small Supabase Edge Function (`supabase/functions/dx-web-login`) holds
+the DX session and returns just what the app draws:
 
 - **Login** completes the official `app.dx.no` → Auth0 (`login.dx.no`) →
   `apiweb/callback` flow and stores the resulting session cookies as an
   opaque token on this device only.
-- **Counts** are fetched in batches — one call covers a dozen events and
-  returns `{ eventId: { scanned, sold } }`, counting `used` tickets and
-  leaving refunds out of both totals.
+- **Counts** (`action: "scanned"`) are fetched in batches — one call
+  covers a dozen events and returns `{ eventId: { scanned, sold } }`,
+  counting `used` tickets and leaving refunds out of both totals.
+- **Seats** (`action: "seats"`) answers for one event with
+  `{ seatId: 1 | 2 }` (sold / scanned) plus, the first time a device
+  meets an auditorium, its geometry from `/seatMaps/{locationId}`:
+  rows of seats at x/y, blocked seats dropped, and seat numbers shifted
+  to the ones printed on the tickets.
 
 DX signs a session out after about three days, but the Auth0 SSO cookie
 behind it lasts longer; the function renews the session from that cookie
@@ -64,8 +98,9 @@ innslipp** runs one lookup against a real show and prints the bridge
 status plus a per-event line (e.g. `92703 → 5/9 used`), so a blank
 column can always be explained.
 
-To preview how admissions look without a DX account, open the site with
-`?previewScanned=1` (example numbers derived from sold).
+To preview how admissions and the seat map look without a DX account,
+open the site with `?previewScanned=1` (example numbers derived from
+sold, in a hall generated from the show's capacity).
 
 ## Live site
 
