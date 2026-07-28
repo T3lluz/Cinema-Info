@@ -58,14 +58,12 @@ const I18N = {
     soldOut: "Utsolgt",
     fewLeft: "{n} igjen",
     reservedShort: "{n} res.",
-    admittedLabel: "inne",
     admitAllIn: "Alle inne",
     admitMissing: "{n} mangler",
     admitNoShow: "{n} møtte ikke",
     admitNone: "Ingen inne ennå",
     admitNobodyCame: "Ingen skannet",
     admitUnknown: "Ingen skann-data",
-    admitDayAllIn: "Alle inne",
     admitAria: "Innslipp: {n} av {total} billetter skannet",
     seatMapLabel: "Salkart",
     seatMapOpen: "Vis salkart for {title} {time}",
@@ -213,14 +211,12 @@ const I18N = {
     soldOut: "Sold out",
     fewLeft: "{n} left",
     reservedShort: "{n} res.",
-    admittedLabel: "in",
     admitAllIn: "All in",
     admitMissing: "{n} to go",
     admitNoShow: "{n} no-shows",
     admitNone: "None in yet",
     admitNobodyCame: "None scanned",
     admitUnknown: "No scan data",
-    admitDayAllIn: "All in",
     admitAria: "Admission: {n} of {total} tickets scanned",
     seatMapLabel: "Seat map",
     seatMapOpen: "Show the seat map for {title} {time}",
@@ -1947,23 +1943,9 @@ function renderSummary() {
         ? `<span class="chip"><strong>${soldSum}</strong> ${escapeHtml(t("soldLabel"))}</span>`
         : ""
     }
-    ${admissionChip(shows)}
     ${nextChip(shows, now)}
     ${endsChip(shows, now)}
   `;
-}
-
-/** Day total for the header: how much of the day's audience is inside. */
-function admissionChip(shows) {
-  const admission = dayAdmission(shows);
-  if (!admission) return "";
-  const body =
-    admission.state === "complete"
-      ? `${admissionIcon("complete")}<strong>${escapeHtml(t("admitDayAllIn"))}</strong>`
-      : `<strong>${admission.scanned}/${admission.sold}</strong> ${escapeHtml(
-          t("admittedLabel")
-        )}`;
-  return `<span class="chip admit ${admission.state}">${body}</span>`;
 }
 
 function nextChip(shows, now) {
@@ -2045,25 +2027,6 @@ function admissionOf(show, now = new Date(), { gaps = false } = {}) {
   const state = scanned >= sold ? "complete" : scanned > 0 ? "partial" : "none";
   if (state === "none" && !open) return null;
   return { state, scanned, sold, missing, pct, over };
-}
-
-/** The same picture for a whole day, summed over the shows DX answered for. */
-function dayAdmission(shows) {
-  if (!scanVisible()) return null;
-  const counted = shows.filter((s) => s.scanned != null && s.sold != null);
-  if (!counted.length) return null;
-
-  const sold = counted.reduce((n, s) => n + (Number(s.sold) || 0), 0);
-  const scanned = counted.reduce(
-    (n, s) => n + Math.max(0, Number(s.scanned) || 0),
-    0
-  );
-  if (!sold && !scanned) return null;
-
-  const missing = Math.max(sold - scanned, 0);
-  const pct = sold ? Math.min(Math.round((scanned / sold) * 100), 100) : 100;
-  const state = scanned >= sold ? "complete" : scanned > 0 ? "partial" : "none";
-  return { state, scanned, sold, missing, pct };
 }
 
 function admissionLabel(admission) {
