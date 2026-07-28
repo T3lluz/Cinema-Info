@@ -8,6 +8,8 @@ Mobile-friendly schedule for **Buen kino** — same info as the KinoProgram Chro
 - Progress bar + minutes left for shows playing right now
 - Sales statistics (per day, per week, top movies)
 - Filter by day — past days stay scrollable as history accumulates
+- Finished showings are ticked off and struck through, so a day, a film,
+  or a whole week can be read at a glance
 - Auto-refreshes live numbers every 2 minutes while open
 - Norwegian/English + light/dark theme
 - Optional DX account connection for **admissions** — how many of the sold tickets have been scanned
@@ -32,12 +34,24 @@ background however old it is, and once a show is well over its count is
 final and cached, so reopening the app shows yesterday's numbers without
 asking DX again.
 
+## What is done
+
+A showing that is over is not just faded: its time and title are struck
+through, it carries a **Ferdig ✓** badge, and its poster goes grey. The
+same line runs through the finished bars in the header timeline, through
+past showings in the Movies tab, and through the day strip, where a day
+whose last film has ended is ticked off. Day headers and movie tiles
+count it up — *3/5 ferdig*, or *Dagen er ferdig* once nothing is left.
+
 ## Seat map
 
-Every showing with numbered seats gets a **Salkart** button under its
-card, including when nothing has sold yet. It folds out the auditorium
-as DX draws it — screen at the top, row 1 nearest it, row numbers down
-both sides — with one square per seat:
+Every showing with numbered seats gets a seat chart, including when
+nothing has sold yet. On phones it folds out from a **Salkart** button
+under the card; on tablets and desktops (from 700px) there is room for
+it, so it is already open — each hall drawn on a stage of one shape, so
+neighbouring showings line up however many rows their auditorium has.
+The hall is drawn as DX draws it — screen at the top, row 1 nearest it,
+row numbers down both sides — with one square per seat:
 
 | Square | Meaning |
 | --- | --- |
@@ -58,7 +72,9 @@ closed off for that one showing.
 
 The hall geometry is fetched once per auditorium and kept on the device
 for a month; opening a chart after that costs one purchase-list lookup,
-the same call the admission counts already use.
+the same call the admission counts already use. The charts that are open
+by screen width are fetched as they scroll into view, so a wide day list
+never asks for more halls than you actually reach.
 
 ### Connecting
 
