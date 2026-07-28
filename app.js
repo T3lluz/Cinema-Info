@@ -3173,6 +3173,8 @@ function shouldFetchScan(show, now, force) {
   if (!show.eventId || !show.start) return false;
   // Nothing can be scanned long before the doors open.
   if (show.start.getTime() - now > SCAN_LEAD_MS) return false;
+  // Nor when the show sold nothing — there is no one to let in.
+  if (show.eventStatus === "ok" && show.sold === 0) return false;
   if (force) return true;
   if (show.scanDone) return false;
   if (!show.scannedAt) return true;
@@ -3239,22 +3241,25 @@ async function syncScanned({ shows, force = false } = {}) {
     if (expired) {
       console.warn("DX credentials expired — disconnecting");
       disconnectDx();
-      changed = true;
+    } else {
+      dxScanStatus = {
+        at: fetched ? Date.now() : dxScanStatus.at,
+        source: dxScanStatus.source,
+        error: fetched ? "" : lastError,
+      };
     }
-
-    dxScanStatus = {
-      at: fetched ? Date.now() : dxScanStatus.at,
-      source: dxScanStatus.source,
-      error: fetched ? "" : lastError,
-    };
     persistHistory(targets);
   } finally {
     scanSyncRunning = false;
     setBusy(false);
   }
 
-  // The settings view owns its own refresh — re-rendering it here would
-  // wipe the message a running test or reconnect is writing into it.
+  // Losing the account changes the settings screen too; short of that,
+  // leave it alone — re-rendering wipes the message a test just wrote.
+  if (expired) {
+    renderActiveView();
+    return true;
+  }
   if (changed && activeTab !== "settings") renderActiveView();
   return changed;
 }
@@ -3403,6 +3408,7 @@ async function fetchScannedFromPublic(partnerId, eventId) {
  * reported with real status codes instead of a silent empty column.
  */
 async function runDxScanDiagnostics() {
+  if (!dxAuth?.token) return { code: "auth" };
   const show = diagnosticShow();
   if (!show) return { code: "noShows" };
 
