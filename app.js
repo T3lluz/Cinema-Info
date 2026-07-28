@@ -2215,6 +2215,7 @@ async function loadSeatChart(show, { force = false, retry = true } = {}) {
   paintSeatChart(show);
 
   const partnerId = seatPartnerOf(show);
+  let cardChanged = false;
   setBusy(true);
   try {
     const { status, ok, data } = await callDxProxy({
@@ -2242,36 +2243,35 @@ async function loadSeatChart(show, { force = false, retry = true } = {}) {
 
     const layout = seatLayoutOf(show, data.locationId);
     const empty = Boolean(data.freeSeating) || !layout;
+    const capacity = Number(data.capacity) || 0;
     seatCharts.set(key, {
       status: empty ? "empty" : "ready",
       reason: data.freeSeating ? "free" : layout ? "" : "noMap",
       at: Date.now(),
       locationId: data.locationId,
-      capacity: Number(data.capacity) || show.capacity || 0,
+      // DX counts held seats inside the hall's capacity; the show card
+      // counts against what is left to sell. Without a capacity from DX
+      // the card's own figure is already the second kind.
+      capacity: capacity || show.capacity || 0,
+      reserved: capacity ? Number(data.reserved) || 0 : 0,
       sold: Number(data.sold) || 0,
       scanned: Number(data.scanned) || 0,
-      reserved: Number(data.reserved) || 0,
       unseated: Number(data.unseated) || 0,
       seats: data.seats || {},
     });
 
     // The same call DX answers with seats also carries the freshest
     // sold/scanned pair, so the card above the chart stays in step.
-    let changed = false;
     if (typeof data.sold === "number" && show.sold !== data.sold) {
       show.sold = data.sold;
-      changed = true;
+      cardChanged = true;
     }
     if (typeof data.scanned === "number" && show.scanned !== data.scanned) {
       show.scanned = data.scanned;
       show.scannedAt = Date.now();
-      changed = true;
+      cardChanged = true;
     }
-    if (changed) {
-      persistHistory([show]);
-      renderActiveView();
-      return;
-    }
+    if (cardChanged) persistHistory([show]);
   } catch (err) {
     if (err?.code === "auth") {
       console.warn("DX credentials expired — disconnecting");
@@ -2287,6 +2287,10 @@ async function loadSeatChart(show, { force = false, retry = true } = {}) {
   } finally {
     setBusy(false);
   }
+
+  // Fresher numbers redraw the card and, with it, every chart below one;
+  // otherwise only this chart needs repainting.
+  if (cardChanged) renderActiveView();
   paintSeatChart(show);
 }
 
@@ -2476,29 +2480,31 @@ function seatChartSvg(layout, seats, show) {
   const left = box.x - pitch.x / 2 - gutter / 2;
   const right = box.x + box.w + pitch.x / 2 + gutter / 2;
 
+  // A row's number is repeated at both ends, the way it is painted on
+  // the walls of a cinema, so a seat is easy to find from either aisle.
+  const rowLabel = (row, x) =>
+    `<text class="seat-row-label" x="${x.toFixed(1)}" y="${row.y}" dy="0.34em"
+       font-size="${(pitch.y * 0.62).toFixed(1)}">${escapeHtml(row.name)}</text>`;
+
   const rows = layout.rows
     .map((row) => {
       const seatEls = row.seats
         .map((seat) => {
           const state = seats[seat.i] || 0;
           const cls = state === 2 ? "in" : state === 1 ? "sold" : "free";
-          return `<rect class="seat ${cls}" x="${(seat.x - w / 2).toFixed(1)}" y="${(
-            row.y -
-            h / 2
-          ).toFixed(1)}" width="${w.toFixed(1)}" height="${h.toFixed(
+          return `<rect class="seat ${cls}" x="${(seat.x - w / 2).toFixed(
             1
-          )}" rx="${(w * 0.22).toFixed(1)}" data-row="${escapeHtml(
-            row.name
-          )}" data-seat="${seat.n}" data-state="${state}" />`;
+          )}" y="${(row.y - h / 2).toFixed(1)}" width="${w.toFixed(
+            1
+          )}" height="${h.toFixed(1)}" rx="${(w * 0.22).toFixed(
+            1
+          )}" data-row="${escapeHtml(row.name)}" data-seat="${
+            seat.n
+          }" data-state="${state}" />`;
         })
         .join("");
-      const label = `<text class="seat-row-label" y="${row.y}" dy="0.34em" font-size="${(
-        pitch.y * 0.62
-      ).toFixed(1)}">${escapeHtml(row.name)}</text>`;
       return `<g class="seat-row">
-        ${label.replace("<text", `<text x="${left.toFixed(1)}"`)}
-        ${seatEls}
-        ${label.replace("<text", `<text x="${right.toFixed(1)}"`)}
+        ${rowLabel(row, left)}${seatEls}${rowLabel(row, right)}
       </g>`;
     })
     .join("");

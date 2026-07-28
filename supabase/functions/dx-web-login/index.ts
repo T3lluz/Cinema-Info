@@ -41,8 +41,7 @@ const MAX_EVENTS = 24;
 
 /**
  * Seat maps are hall geometry: they change when someone rebuilds an
- * auditorium, not between showings. The whole partner's set arrives as
- * one ~2 MB payload, so keep it in the isolate for a while.
+ * auditorium, not between showings, so an isolate can hold on to one.
  */
 const SEATMAP_TTL_MS = 6 * 60 * 60 * 1000;
 
