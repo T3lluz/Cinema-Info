@@ -2,6 +2,7 @@ const DATA_URL = "./data/program.json";
 const PREFS_KEY = "cinemaInfoPrefs";
 const HISTORY_KEY = "cinemaInfoHistory";
 const DX_AUTH_KEY = "cinemaInfoDxAuth";
+const SEAT_MAP_KEY = "cinemaInfoSeatMaps";
 const HISTORY_KEEP_DAYS = 120;
 const DX_PARTNER_ID = "202";
 const DX_API = "https://api.dx.no/v3";
@@ -20,6 +21,11 @@ const SCAN_LEAD_MS = 4 * 60 * 60 * 1000;
 const SCAN_FINAL_AFTER_MS = 6 * 60 * 60 * 1000;
 /** How long a fetched count stays fresh for a show that is still relevant. */
 const SCAN_FRESH_MS = 60 * 1000;
+
+/** An open seat chart re-reads the hall no more often than this. */
+const SEAT_FRESH_MS = 45 * 1000;
+/** Hall geometry only changes when someone rebuilds an auditorium. */
+const SEAT_LAYOUT_TTL_MS = 30 * 24 * 60 * 60 * 1000;
 
 /** Example scanned counts for UI preview (`?previewScanned=1`). */
 const PREVIEW_SCANNED = new URLSearchParams(location.search).has(
@@ -61,6 +67,25 @@ const I18N = {
     admitUnknown: "Ingen skann-data",
     admitDayAllIn: "Alle inne",
     admitAria: "Innslipp: {n} av {total} billetter skannet",
+    seatMapLabel: "Salkart",
+    seatMapOpen: "Vis salkart for {title} {time}",
+    seatMapHint: "{sold} av {capacity} plasser",
+    seatMapLoading: "Henter salkart…",
+    seatMapError: "Kunne ikke hente salkartet.",
+    seatMapNone: "Ingen salkart for denne salen.",
+    seatMapFree: "Fri plassering — ingen nummererte plasser.",
+    seatMapRetry: "Prøv igjen",
+    seatScreen: "Lerret",
+    seatFree: "Ledig",
+    seatSold: "Solgt",
+    seatWaiting: "Ikke skannet",
+    seatIn: "Inne",
+    seatUnseated: "{n} uten fast plass",
+    seatReservedNote: "{n} reservert vises ikke",
+    seatBlockedNote: "{n} plasser er stengt for denne forestillingen",
+    seatPicked: "Rad {row} · Plass {seat} — {state}",
+    seatAria:
+      "Salkart for {screen}: {sold} av {capacity} plasser solgt, {scanned} skannet inn.",
     nextShow: "Neste {time}",
     endsShow: "Slutt {time}",
     inMinutes: "om {n} min",
@@ -197,6 +222,25 @@ const I18N = {
     admitUnknown: "No scan data",
     admitDayAllIn: "All in",
     admitAria: "Admission: {n} of {total} tickets scanned",
+    seatMapLabel: "Seat map",
+    seatMapOpen: "Show the seat map for {title} {time}",
+    seatMapHint: "{sold} of {capacity} seats",
+    seatMapLoading: "Loading seat map…",
+    seatMapError: "Could not load the seat map.",
+    seatMapNone: "No seat map for this auditorium.",
+    seatMapFree: "Free seating — no numbered seats.",
+    seatMapRetry: "Try again",
+    seatScreen: "Screen",
+    seatFree: "Free",
+    seatSold: "Sold",
+    seatWaiting: "Not scanned",
+    seatIn: "Inside",
+    seatUnseated: "{n} without a seat",
+    seatReservedNote: "{n} reserved not shown",
+    seatBlockedNote: "{n} seats are closed for this showing",
+    seatPicked: "Row {row} · Seat {seat} — {state}",
+    seatAria:
+      "Seat map for {screen}: {sold} of {capacity} seats sold, {scanned} scanned in.",
     nextShow: "Next {time}",
     endsShow: "Ends {time}",
     inMinutes: "in {n} min",
@@ -351,6 +395,14 @@ let dxAuth = loadDxAuth();
 let dxScanStatus = { at: 0, source: "", error: "" };
 /** Guards against two check-in syncs racing over the same shows. */
 let scanSyncRunning = false;
+/** Hall geometry by `partnerId:locationId`, kept between visits. */
+let seatLayouts = loadSeatLayouts();
+/** Which hall a screen name turned out to be, so repeat looks skip the layout. */
+const seatHalls = new Map();
+/** Per-event seat state: `{ status, at, error, ...bridge payload }`. */
+const seatCharts = new Map();
+/** Shows whose seat chart is currently unfolded. */
+const openSeatCharts = new Set();
 /** How many fetches are in flight; the refresh button spins while any are. */
 let busyCount = 0;
 
@@ -377,6 +429,8 @@ async function init() {
     btn.addEventListener("click", () => setActiveTab(btn.dataset.tab));
   });
 
+  setupSeatCharts();
+
   // Let mouse users scroll the day strip with the wheel.
   els.dayTabs.addEventListener(
     "wheel",
@@ -391,7 +445,10 @@ async function init() {
 
   // Keep numbers live while the tab is open (e.g. box-office screen).
   setInterval(() => {
-    if (document.visibilityState === "visible") refreshLive();
+    if (document.visibilityState === "visible") {
+      refreshLive();
+      refreshOpenSeatCharts();
+    }
   }, 120_000);
 
   // Nudge the timeline "now" marker and chip countdowns every minute.
@@ -466,6 +523,52 @@ function setupPullToRefresh() {
 
   document.addEventListener("touchend", () => {
     pulling = false;
+  });
+}
+
+/**
+ * One set of listeners for every seat chart: the day list is rebuilt
+ * wholesale on each refresh, so nothing can hold onto its own elements.
+ */
+function setupSeatCharts() {
+  document.addEventListener("click", (e) => {
+    const toggle = e.target.closest?.("[data-seat-toggle]");
+    if (toggle) {
+      toggleSeatChart(toggle.dataset.seatToggle);
+      return;
+    }
+
+    const retry = e.target.closest?.("[data-seat-retry]");
+    if (retry) {
+      const show = state?.shows?.find((s) => s.id === retry.dataset.seatRetry);
+      if (show) loadSeatChart(show, { force: true });
+      return;
+    }
+
+    const seat = e.target.closest?.(".seat");
+    if (seat) describeSeat(seat);
+  });
+
+  // Hovering reads out seats too, for anyone on a desktop box-office screen.
+  document.addEventListener("pointerover", (e) => {
+    if (e.pointerType === "touch") return;
+    const seat = e.target.closest?.(".seat");
+    if (seat) describeSeat(seat);
+  });
+}
+
+/** Name the seat under the pointer in its chart's legend row. */
+function describeSeat(seat) {
+  const caption = seat.closest(".seat-chart")?.querySelector(".seat-picked");
+  if (!caption) return;
+  const state = seat.dataset.state;
+  const phase = seat.closest(".seat-chart")?.classList.contains("phase-sales");
+  const label =
+    state === "2" ? t("seatIn") : state === "1" ? t(phase ? "seatSold" : "seatWaiting") : t("seatFree");
+  caption.textContent = t("seatPicked", {
+    row: seat.dataset.row,
+    seat: seat.dataset.seat,
+    state: label,
   });
 }
 
@@ -916,6 +1019,8 @@ function scanVisible() {
 function disconnectDx() {
   saveDxAuth(null);
   dxScanStatus = { at: 0, source: "", error: "" };
+  seatCharts.clear();
+  openSeatCharts.clear();
   for (const show of state?.shows || []) {
     show.scanned = null;
     show.scannedAt = null;
@@ -2005,6 +2110,502 @@ function renderAdmission(show, now, opts) {
   `;
 }
 
+/* —— Seat chart ——————————————————————————————————————————————
+ *
+ * The admission strip answers "how many are in?"; the seat chart
+ * answers "where are they sitting?". It stays folded away behind one
+ * button per show so the day list keeps its shape, and the hall is only
+ * fetched when someone actually asks to see it.
+ */
+
+function loadSeatLayouts() {
+  try {
+    const raw = JSON.parse(localStorage.getItem(SEAT_MAP_KEY) || "{}");
+    if (!raw || typeof raw !== "object") return {};
+    const fresh = {};
+    for (const [key, entry] of Object.entries(raw)) {
+      if (entry?.layout && Date.now() - (entry.at || 0) < SEAT_LAYOUT_TTL_MS) {
+        fresh[key] = entry;
+      }
+    }
+    return fresh;
+  } catch {
+    return {};
+  }
+}
+
+function seatLayoutKey(partnerId, locationId) {
+  return `${partnerId}:${locationId}`;
+}
+
+function rememberSeatLayout(partnerId, locationId, layout) {
+  if (!layout || locationId == null) return;
+  seatLayouts[seatLayoutKey(partnerId, locationId)] = { at: Date.now(), layout };
+  try {
+    localStorage.setItem(SEAT_MAP_KEY, JSON.stringify(seatLayouts));
+  } catch (err) {
+    console.warn("Could not store seat layout", err);
+  }
+}
+
+function seatPartnerOf(show) {
+  return String(show.promoterId || dxAuth?.partnerId || DX_PARTNER_ID);
+}
+
+/** The hall drawing for a show, from whichever cache already knows it. */
+function seatLayoutOf(show, locationId) {
+  const id = locationId ?? seatHalls.get(show.screen);
+  if (id == null) return null;
+  return seatLayouts[seatLayoutKey(seatPartnerOf(show), id)]?.layout || null;
+}
+
+/**
+ * Is a seat chart worth offering for this show? Only once something is
+ * known to be sold — an empty hall is the ticket column's job — and
+ * never for halls DX has already said have no numbered seats.
+ */
+function seatChartOffered(show) {
+  if (!show.eventId || show.eventStatus === "unavailable") return false;
+  if (!scanVisible()) return false;
+  if (!(Number(show.sold) > 0)) return false;
+  const chart = seatCharts.get(String(show.eventId));
+  if (chart?.status === "empty") return false;
+  return true;
+}
+
+/**
+ * Seats a guest could still buy: the hall DX opened for this show, less
+ * the ones held by reservations. That is the capacity the show card
+ * already counts against, so both places agree.
+ */
+function seatsOnSale(chart) {
+  return Math.max((chart.capacity || 0) - (chart.reserved || 0), 0);
+}
+
+/** Sold seats read as plain sales until the doors open and scanning starts. */
+function seatPhaseOf(show, chart, now = new Date()) {
+  if (chart?.scanned > 0) return "door";
+  return statusOf(show, now) === "upcoming" ? "sales" : "door";
+}
+
+/**
+ * Pull one hall from the bridge. The layout only travels when this
+ * device has never seen that auditorium; after that a refresh is just
+ * the occupied seat ids.
+ */
+async function loadSeatChart(show, { force = false, retry = true } = {}) {
+  const key = String(show.eventId);
+  const previous = seatCharts.get(key);
+  if (previous?.status === "loading") return;
+  if (
+    !force &&
+    previous?.status === "ready" &&
+    Date.now() - previous.at < SEAT_FRESH_MS
+  ) {
+    return;
+  }
+
+  if (PREVIEW_SCANNED && !isDxConnected()) {
+    seatCharts.set(key, previewSeatChart(show));
+    paintSeatChart(show);
+    return;
+  }
+
+  seatCharts.set(key, { ...previous, status: "loading" });
+  paintSeatChart(show);
+
+  const partnerId = seatPartnerOf(show);
+  let cardChanged = false;
+  setBusy(true);
+  try {
+    const { status, ok, data } = await callDxProxy({
+      action: "seats",
+      token: dxAuth.token,
+      partnerId,
+      eventId: key,
+      withLayout: !seatLayoutOf(show),
+    });
+
+    if (status === 401 || status === 403) {
+      if (retry && (await reauthenticateDx())) {
+        seatCharts.delete(key);
+        return loadSeatChart(show, { force: true, retry: false });
+      }
+      throw dxError(data.error || "DX session expired", "auth");
+    }
+    if (!ok) throw new Error(data.error || `bridge ${status}`);
+
+    if (data.token) saveDxAuth({ ...dxAuth, token: String(data.token) });
+    if (data.locationId != null) seatHalls.set(show.screen, data.locationId);
+    if (data.layout) {
+      rememberSeatLayout(partnerId, data.locationId, data.layout);
+    }
+
+    const layout = seatLayoutOf(show, data.locationId);
+    const empty = Boolean(data.freeSeating) || !layout;
+    const capacity = Number(data.capacity) || 0;
+    seatCharts.set(key, {
+      status: empty ? "empty" : "ready",
+      reason: data.freeSeating ? "free" : layout ? "" : "noMap",
+      at: Date.now(),
+      locationId: data.locationId,
+      // DX counts held seats inside the hall's capacity; the show card
+      // counts against what is left to sell. Without a capacity from DX
+      // the card's own figure is already the second kind.
+      capacity: capacity || show.capacity || 0,
+      reserved: capacity ? Number(data.reserved) || 0 : 0,
+      sold: Number(data.sold) || 0,
+      scanned: Number(data.scanned) || 0,
+      unseated: Number(data.unseated) || 0,
+      seats: data.seats || {},
+    });
+
+    // The same call DX answers with seats also carries the freshest
+    // sold/scanned pair, so the card above the chart stays in step.
+    if (typeof data.sold === "number" && show.sold !== data.sold) {
+      show.sold = data.sold;
+      cardChanged = true;
+    }
+    if (typeof data.scanned === "number" && show.scanned !== data.scanned) {
+      show.scanned = data.scanned;
+      show.scannedAt = Date.now();
+      cardChanged = true;
+    }
+    if (cardChanged) persistHistory([show]);
+  } catch (err) {
+    if (err?.code === "auth") {
+      console.warn("DX credentials expired — disconnecting");
+      disconnectDx();
+      renderActiveView();
+      return;
+    }
+    seatCharts.set(key, {
+      status: "error",
+      at: Date.now(),
+      error: String(err?.message || err),
+    });
+  } finally {
+    setBusy(false);
+  }
+
+  // Fresher numbers redraw the card and, with it, every chart below one;
+  // otherwise only this chart needs repainting.
+  if (cardChanged) renderActiveView();
+  paintSeatChart(show);
+}
+
+/** Replace just this show's chart, so opening one never reflows the day. */
+function paintSeatChart(show) {
+  const selector = `[data-seat-show="${cssEscape(show.id)}"]`;
+  for (const host of document.querySelectorAll(selector)) {
+    host.innerHTML = renderSeatChart(show);
+  }
+  const open = openSeatCharts.has(show.id);
+  for (const btn of document.querySelectorAll(
+    `[data-seat-toggle="${cssEscape(show.id)}"]`
+  )) {
+    btn.setAttribute("aria-expanded", String(open));
+    btn.closest(".show-row")?.classList.toggle("seats-open", open);
+  }
+}
+
+function cssEscape(value) {
+  return String(value).replace(/["\\]/g, "\\$&");
+}
+
+async function toggleSeatChart(showId) {
+  const show = state?.shows?.find((s) => s.id === showId);
+  if (!show) return;
+
+  if (openSeatCharts.has(showId)) {
+    openSeatCharts.delete(showId);
+    paintSeatChart(show);
+    return;
+  }
+  openSeatCharts.add(showId);
+  paintSeatChart(show);
+  await loadSeatChart(show);
+}
+
+/** Keep open charts current alongside the two-minute live refresh. */
+async function refreshOpenSeatCharts() {
+  if (!openSeatCharts.size || !state?.shows) return;
+  for (const show of state.shows) {
+    if (!openSeatCharts.has(show.id)) continue;
+    // A show that ended hours ago cannot gain another guest.
+    if (show.scanDone) continue;
+    await loadSeatChart(show).catch((err) =>
+      console.warn("Seat chart refresh failed", err)
+    );
+  }
+}
+
+/** The fold-out button under a show card. */
+function renderSeatToggle(show) {
+  const open = openSeatCharts.has(show.id);
+  const chart = seatCharts.get(String(show.eventId));
+  const capacity = show.capacity || (chart ? seatsOnSale(chart) : 0);
+  const hint = capacity
+    ? t("seatMapHint", { sold: show.sold ?? 0, capacity })
+    : "";
+
+  return `
+    <button class="seat-strip" type="button" data-seat-toggle="${escapeHtml(show.id)}"
+            aria-expanded="${open}" aria-controls="seatchart-${escapeHtml(show.id)}"
+            aria-label="${escapeHtml(
+              t("seatMapOpen", {
+                title: show.title,
+                time: formatClock(show.start),
+              })
+            )}">
+      <svg class="seat-strip-glyph" viewBox="0 0 16 16" aria-hidden="true">
+        <path d="M3.2 7.2V4.1a1.1 1.1 0 0 1 1.1-1.1h7.4a1.1 1.1 0 0 1 1.1 1.1v3.1" />
+        <rect x="2" y="7.2" width="12" height="4.2" rx="1.1" />
+        <path d="M4.4 11.4v1.6M11.6 11.4v1.6" />
+      </svg>
+      <span class="seat-strip-label">${escapeHtml(t("seatMapLabel"))}</span>
+      ${hint ? `<span class="seat-strip-hint">${escapeHtml(hint)}</span>` : ""}
+      <svg class="seat-chevron" viewBox="0 0 16 16" aria-hidden="true">
+        <path d="m4.4 6.2 3.6 3.6 3.6-3.6" />
+      </svg>
+    </button>
+    <div class="seat-panel" id="seatchart-${escapeHtml(show.id)}">
+      <div class="seat-wrap" data-seat-show="${escapeHtml(show.id)}">${
+        open ? renderSeatChart(show) : ""
+      }</div>
+    </div>
+  `;
+}
+
+function renderSeatChart(show) {
+  if (!openSeatCharts.has(show.id)) return "";
+  const chart = seatCharts.get(String(show.eventId));
+
+  if (!chart || chart.status === "loading") {
+    return `<div class="seat-note">
+      <span class="seat-spinner" aria-hidden="true"></span>${escapeHtml(t("seatMapLoading"))}
+    </div>`;
+  }
+  if (chart.status === "error") {
+    return `<div class="seat-note error">
+      <span>${escapeHtml(t("seatMapError"))}</span>
+      <button class="seat-retry" type="button" data-seat-retry="${escapeHtml(show.id)}">${escapeHtml(
+        t("seatMapRetry")
+      )}</button>
+    </div>`;
+  }
+  if (chart.status === "empty") {
+    return `<div class="seat-note">${escapeHtml(
+      t(chart.reason === "free" ? "seatMapFree" : "seatMapNone")
+    )}</div>`;
+  }
+
+  const layout = seatLayoutOf(show, chart.locationId);
+  if (!layout) return `<div class="seat-note">${escapeHtml(t("seatMapNone"))}</div>`;
+
+  const phase = seatPhaseOf(show, chart);
+  const taken = Object.keys(chart.seats).length;
+  const scannedSeats = Object.values(chart.seats).filter((s) => s === 2).length;
+  const free = Math.max(seatsOnSale(chart) - taken, 0);
+
+  // Held and closed-off seats have no coordinates DX will tell us about,
+  // so they are said in words rather than drawn in the wrong place.
+  const blocked = Math.max(layout.seats - (chart.capacity || layout.seats), 0);
+  const notes = [
+    chart.unseated ? t("seatUnseated", { n: chart.unseated }) : "",
+    chart.reserved ? t("seatReservedNote", { n: chart.reserved }) : "",
+    blocked ? t("seatBlockedNote", { n: blocked }) : "",
+  ].filter(Boolean);
+
+  const legend =
+    phase === "sales"
+      ? [
+          ["free", t("seatFree"), free],
+          ["sold", t("seatSold"), taken],
+        ]
+      : [
+          ["free", t("seatFree"), free],
+          ["sold", t("seatWaiting"), taken - scannedSeats],
+          ["in", t("seatIn"), scannedSeats],
+        ];
+
+  return `
+    <div class="seat-chart phase-${phase}">
+      ${seatChartSvg(layout, chart.seats, show)}
+      <div class="seat-legend">
+        ${legend
+          .map(
+            ([key, label, n]) => `<span class="seat-key ${key}">
+              <span class="seat-swatch" aria-hidden="true"></span>${escapeHtml(label)}
+              <strong>${n}</strong>
+            </span>`
+          )
+          .join("")}
+        <span class="seat-picked" data-seat-picked="${escapeHtml(show.id)}"></span>
+      </div>
+      ${
+        notes.length
+          ? `<p class="seat-notes">${escapeHtml(notes.join(" · "))}</p>`
+          : ""
+      }
+    </div>
+  `;
+}
+
+/**
+ * The hall itself, drawn in DX's own coordinates so it matches the chart
+ * staff see in DX: screen at the top, row 1 nearest it.
+ */
+function seatChartSvg(layout, seats, show) {
+  const { box, pitch } = layout;
+  const w = pitch.x * 0.78;
+  const h = pitch.y * 0.72;
+  const gutter = pitch.x * 1.7;
+  const pad = pitch.x * 0.5;
+
+  // The screen sits above row 1: an arc, with its caption clear of the apex.
+  const arcY = box.y - pitch.y / 2 - pitch.y * 0.9;
+  const arcRise = pitch.y * 0.55;
+  const labelSize = pitch.y * 0.58;
+  const labelY = arcY - arcRise - pitch.y * 0.4;
+
+  const top = labelY - labelSize;
+  const bottom = box.y + box.h + pitch.y / 2 + pad;
+  const vb = {
+    x: box.x - pitch.x / 2 - gutter - pad,
+    y: top,
+    w: box.w + pitch.x + (gutter + pad) * 2,
+    h: bottom - top,
+  };
+  const left = box.x - pitch.x / 2 - gutter / 2;
+  const right = box.x + box.w + pitch.x / 2 + gutter / 2;
+
+  // A row's number is repeated at both ends, the way it is painted on
+  // the walls of a cinema, so a seat is easy to find from either aisle.
+  const rowLabel = (row, x) =>
+    `<text class="seat-row-label" x="${x.toFixed(1)}" y="${row.y}" dy="0.34em"
+       font-size="${(pitch.y * 0.62).toFixed(1)}">${escapeHtml(row.name)}</text>`;
+
+  const rows = layout.rows
+    .map((row) => {
+      const seatEls = row.seats
+        .map((seat) => {
+          const state = seats[seat.i] || 0;
+          const cls = state === 2 ? "in" : state === 1 ? "sold" : "free";
+          return `<rect class="seat ${cls}" x="${(seat.x - w / 2).toFixed(
+            1
+          )}" y="${(row.y - h / 2).toFixed(1)}" width="${w.toFixed(
+            1
+          )}" height="${h.toFixed(1)}" rx="${(w * 0.22).toFixed(
+            1
+          )}" data-row="${escapeHtml(row.name)}" data-seat="${
+            seat.n
+          }" data-state="${state}" />`;
+        })
+        .join("");
+      return `<g class="seat-row">
+        ${rowLabel(row, left)}${seatEls}${rowLabel(row, right)}
+      </g>`;
+    })
+    .join("");
+
+  const screenX1 = box.x - pitch.x / 2;
+  const screenX2 = box.x + box.w + pitch.x / 2;
+  const screenMid = (screenX1 + screenX2) / 2;
+
+  return `
+    <svg class="seat-svg" viewBox="${vb.x.toFixed(1)} ${vb.y.toFixed(1)} ${vb.w.toFixed(
+      1
+    )} ${vb.h.toFixed(1)}" role="img" aria-label="${escapeHtml(
+      t("seatAria", {
+        screen: show.screen,
+        sold: Object.keys(seats).length,
+        capacity: layout.seats,
+        scanned: Object.values(seats).filter((s) => s === 2).length,
+      })
+    )}">
+      <path class="seat-screen" d="M${screenX1.toFixed(1)} ${arcY.toFixed(
+        1
+      )} Q ${screenMid.toFixed(1)} ${(arcY - arcRise * 2).toFixed(
+        1
+      )} ${screenX2.toFixed(1)} ${arcY.toFixed(1)}" />
+      <text class="seat-screen-label" x="${screenMid.toFixed(1)}" y="${labelY.toFixed(
+        1
+      )}" font-size="${labelSize.toFixed(1)}" letter-spacing="${(
+        pitch.y * 0.08
+      ).toFixed(2)}">${escapeHtml(t("seatScreen")).toUpperCase()}</text>
+      ${rows}
+    </svg>
+  `;
+}
+
+/** A believable hall for `?previewScanned=1`, so the chart can be reviewed. */
+function previewSeatChart(show) {
+  const capacity = Number(show.capacity) || 110;
+  const perRow = Math.max(8, Math.min(26, Math.round(Math.sqrt(capacity * 2.2))));
+  const rowCount = Math.ceil(capacity / perRow);
+  const pitch = { x: 20, y: 20 };
+
+  const rows = [];
+  let id = 1;
+  let placed = 0;
+  for (let r = 0; r < rowCount; r++) {
+    const n = Math.min(perRow, capacity - placed);
+    placed += n;
+    const inset = ((perRow - n) / 2) * pitch.x;
+    rows.push({
+      name: String(r + 1),
+      y: pitch.y * (r + 1),
+      seats: Array.from({ length: n }, (_, i) => ({
+        i: id++,
+        n: i + 1,
+        x: pitch.x * (i + 1) + inset,
+      })),
+    });
+  }
+
+  // Fill from the middle outwards, the way a hall actually fills up.
+  const all = rows.flatMap((row) =>
+    row.seats.map((seat) => ({
+      id: seat.i,
+      weight:
+        Math.abs(seat.x - pitch.x * (perRow / 2 + 1)) / pitch.x +
+        Math.abs(Number(row.name) - rowCount * 0.62) * 1.4 +
+        (hashStr(`${show.id}:${seat.i}`) % 100) / 42,
+    }))
+  );
+  all.sort((a, b) => a.weight - b.weight);
+
+  const sold = Math.min(Number(show.sold) || 0, all.length);
+  const scanned = Math.min(Number(show.scanned) || 0, sold);
+  const seats = {};
+  all.slice(0, sold).forEach((seat, i) => {
+    seats[seat.id] = i < scanned ? 2 : 1;
+  });
+
+  const locationId = `preview-${show.screen}`;
+  rememberSeatLayout(seatPartnerOf(show), locationId, {
+    locationId,
+    rows,
+    seats: placed,
+    box: { x: pitch.x, y: pitch.y, w: pitch.x * (perRow - 1), h: pitch.y * (rowCount - 1) },
+    pitch,
+  });
+  seatHalls.set(show.screen, locationId);
+
+  return {
+    status: "ready",
+    at: Date.now(),
+    locationId,
+    capacity,
+    sold,
+    scanned,
+    reserved: Number(show.reserved) || 0,
+    unseated: 0,
+    seats,
+  };
+}
+
 function renderShowCard(show, now, index = 0, opts = {}) {
   const status = statusOf(show, now);
   const badge =
@@ -2078,14 +2679,25 @@ function renderShowCard(show, now, index = 0, opts = {}) {
       ${admissionRow}
   `;
 
-  // Link to the eBillett page so staff can jump straight to the seat map.
-  if (show.ticketUrl) {
-    return `
-      <a class="${cardClass} linked" style="--i:${index}" href="${escapeHtml(show.ticketUrl)}"
-         target="_blank" rel="noopener">${inner}</a>
-    `;
-  }
-  return `<article class="${cardClass}" style="--i:${index}">${inner}</article>`;
+  // Link to the eBillett page so staff can jump straight to ticket sales.
+  const card = show.ticketUrl
+    ? `<a class="${cardClass} linked" style="--i:${index}" href="${escapeHtml(
+        show.ticketUrl
+      )}" target="_blank" rel="noopener">${inner}</a>`
+    : `<article class="${cardClass}" style="--i:${index}">${inner}</article>`;
+
+  // The seat chart button has to sit outside that link, so the card and
+  // its fold-out share one wrapper instead of being one element.
+  if (!seatChartOffered(show)) return card;
+  const rowClass = [
+    "show-row",
+    openSeatCharts.has(show.id) ? "seats-open" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+  return `<div class="${rowClass}" style="--i:${index}">${card}${renderSeatToggle(
+    show
+  )}</div>`;
 }
 
 function renderPoster(show, w, h, className = "poster") {

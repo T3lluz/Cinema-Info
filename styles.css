@@ -1972,6 +1972,263 @@ a.tile-show:focus-visible {
   color: var(--muted);
 }
 
+/* —— Seat chart ——
+   Folded away under the card until asked for, then the hall exactly as
+   DX draws it: screen at the top, row 1 nearest it. Colour says who is
+   sitting where — filled means a ticket, green means already inside. */
+.show-row {
+  display: flex;
+  flex-direction: column;
+}
+
+.show-row > .show-card {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.seat-strip {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  width: 100%;
+  padding: 6px 11px 7px;
+  border: 1px solid var(--line);
+  border-top: 0;
+  border-radius: 0 0 12px 12px;
+  background: var(--surface);
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.show-row.seats-open > .seat-strip {
+  border-radius: 0;
+  color: color-mix(in srgb, var(--accent) 70%, var(--ink));
+  background: color-mix(in srgb, var(--accent-soft) 55%, var(--surface));
+}
+
+@media (hover: hover) {
+  .seat-strip:hover {
+    color: var(--ink);
+  }
+}
+
+.seat-strip:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.seat-strip-glyph {
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.seat-strip-hint {
+  margin-left: auto;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.8;
+}
+
+.seat-chevron {
+  width: 13px;
+  height: 13px;
+  flex: 0 0 auto;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform 0.28s cubic-bezier(0.3, 1.2, 0.4, 1);
+}
+
+.show-row.seats-open .seat-chevron {
+  transform: rotate(180deg);
+}
+
+.seat-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s cubic-bezier(0.3, 1, 0.4, 1);
+}
+
+.show-row.seats-open .seat-panel {
+  grid-template-rows: 1fr;
+}
+
+.seat-wrap {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.seat-chart,
+.seat-note {
+  padding: 12px 11px 11px;
+  border: 1px solid var(--line);
+  border-top: 0;
+  border-radius: 0 0 12px 12px;
+  background: color-mix(in srgb, var(--bg) 45%, var(--surface));
+}
+
+.seat-note {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.74rem;
+  color: var(--muted);
+}
+
+.seat-note.error {
+  color: color-mix(in srgb, var(--accent) 75%, var(--ink));
+}
+
+.seat-retry {
+  margin-left: auto;
+  padding: 4px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  color: inherit;
+  font: inherit;
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.seat-spinner {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  border: 2px solid color-mix(in srgb, var(--line) 90%, transparent);
+  border-top-color: var(--accent);
+  animation: spin 0.8s linear infinite;
+}
+
+.seat-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.seat-screen {
+  fill: none;
+  stroke: color-mix(in srgb, var(--ink) 45%, var(--line));
+  stroke-width: 2;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.seat-screen-label {
+  fill: var(--muted);
+  font-family: var(--font);
+  font-weight: 800;
+  text-anchor: middle;
+}
+
+.seat-row-label {
+  fill: color-mix(in srgb, var(--muted) 80%, transparent);
+  font-family: var(--mono);
+  font-weight: 700;
+  text-anchor: middle;
+}
+
+.seat {
+  fill: color-mix(in srgb, var(--line) 45%, var(--surface));
+  stroke: color-mix(in srgb, var(--line) 90%, transparent);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.seat.sold {
+  fill: var(--accent);
+  stroke: none;
+}
+
+.phase-door .seat.sold {
+  fill: var(--warn);
+}
+
+.seat.in {
+  fill: var(--ok);
+  stroke: none;
+}
+
+@media (hover: hover) {
+  .seat:hover {
+    stroke: var(--ink);
+    stroke-width: 1.5;
+  }
+}
+
+.seat-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 3px 12px;
+  min-height: 18px;
+  margin-top: 10px;
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+
+.seat-key {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.seat-key strong {
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.seat-swatch {
+  width: 11px;
+  height: 9px;
+  border-radius: 2px;
+  background: color-mix(in srgb, var(--line) 45%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--line) 90%, transparent);
+}
+
+.seat-key.sold .seat-swatch {
+  background: var(--accent);
+  border-color: transparent;
+}
+
+.phase-door .seat-key.sold .seat-swatch {
+  background: var(--warn);
+}
+
+.seat-key.in .seat-swatch {
+  background: var(--ok);
+  border-color: transparent;
+}
+
+.seat-picked {
+  margin-left: auto;
+  font-weight: 700;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.seat-notes {
+  margin: 6px 0 0;
+  font-size: 0.68rem;
+  color: var(--muted);
+}
+
 .preview-banner {
   margin: 0 0 10px;
   padding: 8px 12px;
