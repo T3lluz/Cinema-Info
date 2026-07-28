@@ -2408,31 +2408,33 @@ function observeAutoSeatCharts() {
   }
 }
 
-/** Is this show's chart somewhere the visitor can actually see it? */
-function seatChartOnScreen(show) {
-  const host = document.querySelector(
-    `[data-seat-show="${cssEscape(show.id)}"]`
-  );
-  if (!host) return false;
-  const box = host.getBoundingClientRect();
-  if (!box.width && !box.height) return false;
-  return (
-    box.bottom > 0 &&
-    box.top < (window.innerHeight || 0) &&
-    box.right > 0 &&
-    box.left < (window.innerWidth || 0)
-  );
+/** The shows whose chart is somewhere the visitor can actually see it. */
+function seatChartsOnScreen() {
+  const ids = new Set();
+  const vh = window.innerHeight || 0;
+  const vw = window.innerWidth || 0;
+  for (const host of document.querySelectorAll("[data-seat-show]")) {
+    const box = host.getBoundingClientRect();
+    if (!box.width && !box.height) continue;
+    if (box.bottom > 0 && box.top < vh && box.right > 0 && box.left < vw) {
+      ids.add(host.dataset.seatShow);
+    }
+  }
+  return ids;
 }
 
 /** Keep unfolded charts current alongside the two-minute live refresh. */
 async function refreshOpenSeatCharts() {
   if (!state?.shows) return;
+  if (!openSeatCharts.size && !seatsAlwaysOpen()) return;
+  // Charts nobody asked for are only worth refreshing while on screen.
+  const visible = seatsAlwaysOpen() ? seatChartsOnScreen() : null;
+
   for (const show of state.shows) {
     if (!seatChartExpanded(show)) continue;
     // A show that ended hours ago cannot gain another guest.
     if (show.scanDone) continue;
-    // Charts nobody asked for are only worth refreshing while on screen.
-    if (!openSeatCharts.has(show.id) && !seatChartOnScreen(show)) continue;
+    if (!openSeatCharts.has(show.id) && !visible?.has(show.id)) continue;
     await loadSeatChart(show).catch((err) =>
       console.warn("Seat chart refresh failed", err)
     );
