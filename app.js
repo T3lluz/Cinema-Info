@@ -2160,14 +2160,13 @@ function seatLayoutOf(show, locationId) {
 }
 
 /**
- * Is a seat chart worth offering for this show? Only once something is
- * known to be sold — an empty hall is the ticket column's job — and
- * never for halls DX has already said have no numbered seats.
+ * Is a seat chart worth offering for this show? Any numbered hall with
+ * a DX event — including when nothing has sold yet — and never for
+ * halls DX has already said have no numbered seats.
  */
 function seatChartOffered(show) {
   if (!show.eventId || show.eventStatus === "unavailable") return false;
   if (!scanVisible()) return false;
-  if (!(Number(show.sold) > 0)) return false;
   const chart = seatCharts.get(String(show.eventId));
   if (chart?.status === "empty") return false;
   return true;

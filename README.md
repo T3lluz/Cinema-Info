@@ -34,10 +34,10 @@ asking DX again.
 
 ## Seat map
 
-Every showing that has sold something gets a **Salkart** button under
-its card. It folds out the auditorium as DX draws it — screen at the
-top, row 1 nearest it, row numbers down both sides — with one square
-per seat:
+Every showing with numbered seats gets a **Salkart** button under its
+card, including when nothing has sold yet. It folds out the auditorium
+as DX draws it — screen at the top, row 1 nearest it, row numbers down
+both sides — with one square per seat:
 
 | Square | Meaning |
 | --- | --- |
