@@ -817,6 +817,53 @@ h1 {
   animation-delay: calc(var(--i, 0) * 35ms);
 }
 
+/* Live/done cards keep a thin left rail with the word written vertically
+   so status is readable without a coloured edge stripe. */
+.show-card.has-status {
+  grid-template-columns: 16px 52px minmax(0, 1fr) 56px;
+  padding-left: 0;
+  column-gap: 8px;
+  row-gap: 0;
+}
+
+.show-status {
+  grid-row: 1 / -1;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: -1px 0 -1px -1px;
+  padding: 8px 0;
+  border-radius: 12px 0 0 12px;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  line-height: 1;
+  user-select: none;
+}
+
+.show-status span {
+  display: block;
+}
+
+.show-card.live .show-status {
+  background: var(--ok-soft);
+  color: color-mix(in srgb, var(--ok) 88%, var(--ink));
+}
+
+.show-card.done .show-status {
+  background: var(--done-soft);
+  color: color-mix(in srgb, var(--done) 88%, var(--ink));
+}
+
+.show-card.has-status .admit {
+  grid-column: 2 / -1;
+  margin-left: 2px;
+}
+
 .no-anim .show-card,
 .no-anim .movie-tile,
 .no-anim .chip {
@@ -856,20 +903,9 @@ a.tile-show:focus-visible {
   transform: scale(0.99);
 }
 
-/* Status reads off the card edge before anything is read on it: green for
-   playing, amber for next up, grey and crossed out for finished. */
-.show-card.live {
-  box-shadow: inset 4px 0 0 var(--ok);
-}
-
-.show-card.soon {
-  box-shadow: inset 4px 0 0 var(--warn);
-}
-
 .show-card.done {
   opacity: 0.92;
   background: color-mix(in srgb, var(--bg) 60%, var(--surface));
-  box-shadow: inset 4px 0 0 color-mix(in srgb, var(--done) 85%, transparent);
 }
 
 .show-card.done .time-range,
@@ -2082,14 +2118,6 @@ a.tile-show:focus-visible {
   }
 }
 
-.show-card.admit-complete {
-  border-color: color-mix(in srgb, var(--ok) 26%, var(--line));
-}
-
-.show-card.admit-partial {
-  border-color: color-mix(in srgb, var(--warn) 26%, var(--line));
-}
-
 /* Finished shows are dimmed, but their admission result stays readable. */
 .show-card.done.has-admit {
   opacity: 0.88;
@@ -2629,6 +2657,12 @@ a.tile-show:focus-visible {
     grid-template-columns: 56px minmax(0, 1fr) 84px;
     gap: 12px;
     padding: 12px;
+  }
+
+  .show-card.has-status {
+    grid-template-columns: 18px 56px minmax(0, 1fr) 84px;
+    padding-left: 0;
+    column-gap: 10px;
   }
 
   .poster,

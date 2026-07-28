@@ -37,11 +37,13 @@ asking DX again.
 ## What is done
 
 A showing that is over is not just faded: its time and title are struck
-through, it carries a **Ferdig ✓** badge, and its poster goes grey. The
-same line runs through the finished bars in the header timeline, through
-past showings in the Movies tab, and through the day strip, where a day
-whose last film has ended is ticked off. Day headers and movie tiles
-count it up — *3/5 ferdig*, or *Dagen er ferdig* once nothing is left.
+through, a thin **Ferdig** rail runs down the card's left edge, and its
+poster goes grey. The same line runs through the finished bars in the
+header timeline, through past showings in the Movies tab, and through
+the day strip, where a day whose last film has ended is ticked off. Day
+headers and movie tiles count it up — *3/5 ferdig*, or *Dagen er ferdig*
+once nothing is left. A film that is playing gets the same left rail
+with **Nå**.
 
 ## Seat map
 
