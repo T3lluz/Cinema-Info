@@ -5,24 +5,14 @@ const DX_AUTH_KEY = "cinemaInfoDxAuth";
 const HISTORY_KEEP_DAYS = 120;
 const DX_PARTNER_ID = "202";
 const DX_API = "https://api.dx.no/v3";
-const DX_PUBLIC_API = "https://public.dx.no/v1";
 const DX_WEB_URL = "https://app.dx.no";
 const DX_LOGIN_PROXY =
   "https://kypeegsbfaivyqeidnqp.supabase.co/functions/v1/dx-web-login";
 const DX_LOGIN_ANON_KEY =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt5cGVlZ3NiZmFpdnlxZWlkbnFwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUxODczMzQsImV4cCI6MjEwMDc2MzMzNH0.xUuL6dC8u_Nm6DqxS0y4KyjpMNlVn6IrxcvivSHeaaM";
 
-/**
- * api.dx.no answers CORS preflights with `Access-Control-Allow-Headers:
- * authToken, Content-Type`, so a browser may only pass the DX Check-in
- * token as that header or as a query parameter — `Authorization` is
- * rejected before the request is even sent. The working variant is probed
- * once when the account is connected and then remembered.
- */
-const DX_TOKEN_SCHEMES = ["authToken", "query"];
-
-/** Credential kinds we know how to read check-in counts with. */
-const DX_AUTH_TYPES = ["dxapi", "pat", "session", "auth0", "dxweb"];
+/** How many events one check-in lookup asks the bridge about at a time. */
+const SCAN_BATCH = 12;
 
 /** Nothing is scanned long before the doors open; don't poll those shows. */
 const SCAN_LEAD_MS = 4 * 60 * 60 * 1000;
@@ -113,10 +103,12 @@ const I18N = {
     dxConnectedPat: "Tilkoblet med tilgangstoken",
     dxConnectedHint:
       "Innslipp hentes for i dag og tidligere dager når du åpner appen.",
-    dxPatLabel: "Personal Access Token (valgfritt)",
-    dxPatHint:
-      "Kun hvis du har token fra id.dx.no. De fleste bruker innlogging over.",
-    dxPatPlaceholder: "Lim inn token…",
+    dxKeepLabel: "Hold meg innlogget",
+    dxKeepHint:
+      "DX logger ut etter noen dager. Passordet lagres kun på denne enheten så appen kan fornye økten selv.",
+    dxRenewLabel: "Automatisk fornying",
+    dxRenewOn: "På",
+    dxRenewOff: "Av — logg inn på nytt hver 3. dag",
     dxEmailLabel: "E-post",
     dxPasswordLabel: "Passord",
     dxLoginHint:
@@ -127,11 +119,9 @@ const I18N = {
     dxConnecting: "Kobler til…",
     dxConnectOk: "Tilkoblet",
     dxConnectFail: "Kunne ikke koble til. Sjekk e-post og passord.",
-    dxNeedCreds: "Fyll inn e-post og passord, eller lim inn et token under Avansert.",
-    dxInvalidToken: "Ugyldig eller utløpt token.",
+    dxNeedCreds: "Fyll inn e-post og passord.",
     dxInvalidLogin: "Feil e-post eller passord.",
     dxNetworkFail: "Fikk ikke kontakt med DX. Sjekk nettforbindelsen.",
-    dxAdvanced: "Avansert",
     dxSourceLabel: "Kilde",
     dxSyncedLabel: "Sist oppdatert",
     dxCoverageLabel: "Skann-data",
@@ -249,10 +239,12 @@ const I18N = {
     dxConnectedPat: "Connected with access token",
     dxConnectedHint:
       "Admissions are fetched for today and earlier days when you open the app.",
-    dxPatLabel: "Personal Access Token (optional)",
-    dxPatHint:
-      "Only if you have a token from id.dx.no. Most people use the login above.",
-    dxPatPlaceholder: "Paste token…",
+    dxKeepLabel: "Keep me signed in",
+    dxKeepHint:
+      "DX signs you out after a few days. The password is kept on this device only, so the app can renew the session itself.",
+    dxRenewLabel: "Auto renew",
+    dxRenewOn: "On",
+    dxRenewOff: "Off — sign in again every 3 days",
     dxEmailLabel: "Email",
     dxPasswordLabel: "Password",
     dxLoginHint:
@@ -263,11 +255,9 @@ const I18N = {
     dxConnecting: "Connecting…",
     dxConnectOk: "Connected",
     dxConnectFail: "Could not connect. Check email and password.",
-    dxNeedCreds: "Enter email and password, or paste a token under Advanced.",
-    dxInvalidToken: "Invalid or expired token.",
+    dxNeedCreds: "Enter email and password.",
     dxInvalidLogin: "Wrong email or password.",
     dxNetworkFail: "Could not reach DX. Check your connection.",
-    dxAdvanced: "Advanced",
     dxSourceLabel: "Source",
     dxSyncedLabel: "Last updated",
     dxCoverageLabel: "Scan data",
@@ -895,7 +885,9 @@ function loadDxAuth() {
   try {
     const raw = JSON.parse(localStorage.getItem(DX_AUTH_KEY) || "null");
     if (!raw || typeof raw !== "object") return null;
-    if (!raw.token || !DX_AUTH_TYPES.includes(raw.type)) return null;
+    // Older builds stored credentials for DX surfaces that turned out not
+    // to carry check-in state; those cannot work, so ask for a fresh login.
+    if (!raw.token || raw.type !== "dxweb") return null;
     return raw;
   } catch {
     return null;
@@ -2586,16 +2578,15 @@ function renderSettings() {
                 <span>${escapeHtml(t("dxPasswordLabel"))}</span>
                 <input id="dxPasswordInput" name="dx-password" type="password" autocomplete="current-password" />
               </label>
+              <label class="dx-check">
+                <input id="dxKeepInput" type="checkbox" checked />
+                <span>
+                  <strong>${escapeHtml(t("dxKeepLabel"))}</strong>
+                  ${escapeHtml(t("dxKeepHint"))}
+                </span>
+              </label>
               <p class="dx-msg" id="dxConnectMsg" hidden></p>
               <button type="submit" class="dx-btn primary" id="dxConnectBtn">${escapeHtml(t("dxConnect"))}</button>
-              <details class="dx-advanced">
-                <summary>${escapeHtml(t("dxAdvanced"))}</summary>
-                <label class="dx-field">
-                  <span>${escapeHtml(t("dxPatLabel"))}</span>
-                  <input id="dxPatInput" name="dx-token" type="password" autocomplete="off" spellcheck="false" placeholder="${escapeHtml(t("dxPatPlaceholder"))}" />
-                </label>
-                <p class="dx-hint">${escapeHtml(t("dxPatHint"))}</p>
-              </details>
             </form>`
       }
     </section>
@@ -2688,6 +2679,7 @@ function renderDxFacts() {
       t("dxCoverageLabel"),
       t("dxCoverageValue", { n: withScan, total: shows.length }),
     ],
+    [t("dxRenewLabel"), dxAuth?.keepSignedIn ? t("dxRenewOn") : t("dxRenewOff")],
   ];
 
   return `<ul class="dx-facts">${facts
@@ -2742,9 +2734,9 @@ async function runDxTest(btn) {
 }
 
 async function connectDxAccount() {
-  const pat = els.settingsContent.querySelector("#dxPatInput")?.value?.trim() || "";
   const email = els.settingsContent.querySelector("#dxEmailInput")?.value?.trim() || "";
   const password = els.settingsContent.querySelector("#dxPasswordInput")?.value || "";
+  const keep = els.settingsContent.querySelector("#dxKeepInput")?.checked ?? true;
   const msg = els.settingsContent.querySelector("#dxConnectMsg");
   const btn = els.settingsContent.querySelector("#dxConnectBtn");
 
@@ -2756,7 +2748,7 @@ async function connectDxAccount() {
     msg.classList.toggle("err", Boolean(text) && !ok);
   };
 
-  if (!pat && !(email && password)) {
+  if (!email || !password) {
     setMsg(t("dxNeedCreds"));
     return;
   }
@@ -2768,11 +2760,7 @@ async function connectDxAccount() {
   setMsg("");
 
   try {
-    const next =
-      pat && !(email && password)
-        ? await connectWithPat(pat)
-        : await connectWithPassword(email, password);
-    saveDxAuth(next);
+    saveDxAuth(await connectWithPassword(email, password, keep));
     dxScanStatus = { at: 0, source: "", error: "" };
     // A new credential deserves a clean sweep over every day again.
     for (const show of state?.shows || []) {
@@ -2787,13 +2775,11 @@ async function connectDxAccount() {
     console.warn("DX connect failed", err);
     const code = err?.code;
     setMsg(
-      code === "token"
-        ? t("dxInvalidToken")
-        : code === "login"
-          ? t("dxInvalidLogin")
-          : code === "network"
-            ? t("dxNetworkFail")
-            : t("dxConnectFail")
+      code === "login"
+        ? t("dxInvalidLogin")
+        : code === "network"
+          ? t("dxNetworkFail")
+          : t("dxConnectFail")
     );
     if (btn) {
       btn.disabled = false;
@@ -2802,94 +2788,23 @@ async function connectDxAccount() {
   }
 }
 
-async function connectWithPat(token) {
-  await validateDxPat(token);
+/**
+ * Email + password from the settings screen. Check-in state lives in
+ * app.dx.no's purchase list, and app.dx.no sends no CORS headers at all,
+ * so the sign-in and every later lookup go through the login proxy.
+ */
+async function connectWithPassword(email, password, keepSignedIn) {
+  const session = await loginDxWebProxy(email, password);
   return {
-    type: "pat",
-    token,
-    partnerId: DX_PARTNER_ID,
+    type: "dxweb",
+    token: session.token,
+    email: session.email || email,
+    partnerId: session.partnerId || DX_PARTNER_ID,
     connectedAt: new Date().toISOString(),
-  };
-}
-
-/**
- * Email + password from the settings screen. The DX Check-in API
- * (api.dx.no/v3) is reachable straight from the browser and is the only
- * DX surface that exposes per-ticket scan state, so it is tried first;
- * the Auth0 proxy only comes into play when that login is unavailable.
- */
-async function connectWithPassword(email, password) {
-  let apiError = null;
-  try {
-    const session = await loginDxApi(email, password);
-    const probe = await probeDxTokenScheme(session.token, session.partnerId);
-    return {
-      type: "dxapi",
-      token: session.token,
-      scheme: probe.scheme,
-      email: session.email || email,
-      partnerId: session.partnerId || DX_PARTNER_ID,
-      connectedAt: new Date().toISOString(),
-    };
-  } catch (err) {
-    // Wrong password is final — no other DX login is going to accept it.
-    if (err?.code === "login") throw err;
-    apiError = err;
-  }
-
-  try {
-    const session = await loginDxWebProxy(email, password);
-    return {
-      type: session.type,
-      token: session.token,
-      refreshToken: session.refreshToken,
-      email: session.email || email,
-      partnerId: session.partnerId || DX_PARTNER_ID,
-      connectedAt: new Date().toISOString(),
-    };
-  } catch (err) {
-    throw err?.code === "login" ? err : apiError || err;
-  }
-}
-
-/**
- * Sign in against api.dx.no/v3 — the API behind the DX Check-in scanner.
- * Its CORS policy allows this call from the browser, so no proxy is
- * involved and the resulting token can read ticket scan state directly.
- */
-async function loginDxApi(email, password) {
-  let res;
-  try {
-    res = await fetch(`${DX_API}/auth/login`, {
-      method: "POST",
-      cache: "no-store",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password }),
-    });
-  } catch (err) {
-    throw dxError("DX API unreachable", "network");
-  }
-
-  if (res.status === 401 || res.status === 403 || res.status === 422) {
-    throw dxError("Invalid DX credentials", "login");
-  }
-  let data = {};
-  try {
-    data = await res.json();
-  } catch {
-    data = {};
-  }
-  if (!res.ok) throw dxError(`DX login ${res.status}`, "api");
-
-  const token = pickDxToken(data);
-  if (!token) throw dxError("DX login returned no token", "api");
-  return {
-    token,
-    email: pickString(data, ["email"]) || email,
-    partnerId: pickDxPartnerId(data) || DX_PARTNER_ID,
+    keepSignedIn: Boolean(keepSignedIn),
+    // DX signs you out after about three days. Kept on this device only,
+    // so the app can renew quietly instead of stopping mid-week.
+    password: keepSignedIn ? password : undefined,
   };
 }
 
@@ -2899,85 +2814,8 @@ function dxError(message, code) {
   return err;
 }
 
-/** Pull a bearer-ish token out of the many shapes DX login can answer with. */
-function pickDxToken(payload) {
-  const keys = [
-    "authToken",
-    "auth_token",
-    "token",
-    "accessToken",
-    "access_token",
-    "apiToken",
-    "sessionToken",
-  ];
-  const nests = [null, "data", "user", "auth", "session", "result"];
-  for (const nest of nests) {
-    const scope = nest ? payload?.[nest] : payload;
-    if (!scope || typeof scope !== "object") continue;
-    for (const key of keys) {
-      const value = scope[key];
-      if (typeof value === "string" && value.length >= 8) return value;
-    }
-  }
-  return "";
-}
-
-function pickDxPartnerId(payload) {
-  const direct = pickString(payload, ["partnerId", "partner_id", "partnerID"]);
-  if (direct) return direct;
-  const roles = payload?.partnerRoles;
-  if (Array.isArray(roles) && roles[0]?.partner?.id != null) {
-    return String(roles[0].partner.id);
-  }
-  const partners = payload?.partners;
-  if (Array.isArray(partners) && partners.length) {
-    const first = partners[0];
-    const id = first?.partnerID ?? first?.partnerId ?? first?.id;
-    if (id != null) return String(id);
-  }
-  return "";
-}
-
-function pickString(payload, keys) {
-  if (!payload || typeof payload !== "object") return "";
-  for (const key of keys) {
-    const value = payload[key];
-    if (typeof value === "string" && value) return value;
-    if (typeof value === "number") return String(value);
-  }
-  return "";
-}
-
-async function validateDxPat(token) {
-  const res = await fetch(`${DX_PUBLIC_API}/partners/${DX_PARTNER_ID}`, {
-    cache: "no-store",
-    headers: {
-      Accept: "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  if (res.status === 401 || res.status === 403) {
-    throw dxError("Invalid PAT", "token");
-  }
-  // Some tenants return 404 for partner root but accept event routes.
-  if (!res.ok && res.status !== 404) {
-    // Fall back: try listing events — proves the token works.
-    const ev = await fetch(
-      `${DX_PUBLIC_API}/partners/${DX_PARTNER_ID}/events`,
-      {
-        cache: "no-store",
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    if (!ev.ok) throw dxError(`DX public ${ev.status}`, "token");
-  }
-}
-
-/** Fallback sign-in through the Auth0 proxy for accounts api.dx.no rejects. */
-async function loginDxWebProxy(email, password) {
+/** POST to the DX bridge. Never throws on HTTP status — callers decide. */
+async function callDxProxy(body) {
   let res;
   try {
     res = await fetch(DX_LOGIN_PROXY, {
@@ -2989,10 +2827,10 @@ async function loginDxWebProxy(email, password) {
         Authorization: `Bearer ${DX_LOGIN_ANON_KEY}`,
         apikey: DX_LOGIN_ANON_KEY,
       },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify(body),
     });
   } catch {
-    throw dxError("DX login proxy unreachable", "network");
+    throw dxError("DX bridge unreachable", "network");
   }
   let data = {};
   try {
@@ -3000,53 +2838,67 @@ async function loginDxWebProxy(email, password) {
   } catch {
     data = {};
   }
-  if (!res.ok || !data.token) {
-    const code =
-      data.code === "login" || res.status === 403 ? "login" : "auth0";
-    throw dxError(data.error || `DX login ${res.status}`, code);
+  return { status: res.status, ok: res.ok, data };
+}
+
+async function loginDxWebProxy(email, password) {
+  const { status, ok, data } = await callDxProxy({ email, password });
+  if (!ok || !data.token) {
+    const code = data.code === "login" || status === 403 ? "login" : "auth0";
+    throw dxError(data.error || `DX login ${status}`, code);
   }
   return {
-    type: DX_AUTH_TYPES.includes(data.type) ? data.type : "dxweb",
     token: String(data.token),
-    refreshToken: data.refreshToken ? String(data.refreshToken) : undefined,
     email: data.email || email,
     partnerId: data.partnerId || DX_PARTNER_ID,
   };
 }
 
-/** Ask the login proxy to resolve scanned counts with stored DX Web cookies. */
-async function fetchScannedViaProxy(promoterId, eventId) {
-  const res = await fetch(DX_LOGIN_PROXY, {
-    method: "POST",
-    cache: "no-store",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${DX_LOGIN_ANON_KEY}`,
-      apikey: DX_LOGIN_ANON_KEY,
-    },
-    body: JSON.stringify({
-      action: "scanned",
-      type: dxAuth?.type,
-      token: dxAuth?.token,
-      scheme: dxAuth?.scheme,
-      partnerId: promoterId,
-      eventId,
-    }),
+/**
+ * Check-in counts for a batch of events, as `{ eventId: {scanned, sold} }`.
+ *
+ * The DX session behind the token is short-lived. The bridge renews it
+ * from the Auth0 cookie by itself and hands back a fresh token; once
+ * even that has aged out, sign in again with the stored password if the
+ * user asked us to keep them signed in.
+ */
+async function fetchScannedCounts(partnerId, eventIds, { retry = true } = {}) {
+  if (!dxAuth?.token || !eventIds.length) return null;
+
+  const { status, ok, data } = await callDxProxy({
+    action: "scanned",
+    token: dxAuth.token,
+    partnerId,
+    eventIds,
   });
-  if (res.status === 401 || res.status === 403) {
-    throw dxError("DX auth expired", "auth");
+
+  if (status === 401 || status === 403) {
+    if (retry && (await reauthenticateDx())) {
+      return fetchScannedCounts(partnerId, eventIds, { retry: false });
+    }
+    throw dxError(data.error || "DX session expired", "auth");
   }
-  if (!res.ok) return null;
-  let data = {};
-  try {
-    data = await res.json();
-  } catch {
+  if (!ok) {
+    dxScanStatus.error = data.error || `bridge ${status}`;
     return null;
   }
-  if (typeof data.scanned !== "number") return null;
-  dxScanStatus.source = data.source || "proxy";
-  return data.scanned;
+
+  if (data.token) saveDxAuth({ ...dxAuth, token: String(data.token) });
+  if (data.source) dxScanStatus.source = data.source;
+  return data.counts || {};
+}
+
+/** Sign in again in the background, when we were asked to remember how. */
+async function reauthenticateDx() {
+  if (!dxAuth?.keepSignedIn || !dxAuth.email || !dxAuth.password) return false;
+  try {
+    const session = await loginDxWebProxy(dxAuth.email, dxAuth.password);
+    saveDxAuth({ ...dxAuth, token: session.token });
+    return true;
+  } catch (err) {
+    console.warn("DX re-authentication failed", err);
+    return false;
+  }
 }
 
 function segSelect(btn) {
@@ -3137,9 +2989,6 @@ async function enrichOne(show) {
     show.reserved = Number(sale.reserved) || 0;
     show.capacity = Number(sale.capacity) || null;
     show.available = sale.available != null ? Number(sale.available) : null;
-    // Some DX tenants surface check-in counts on the sale block itself.
-    const scannedFromSale = extractScannedCount(sale);
-    if (scannedFromSale != null && scanVisible()) show.scanned = scannedFromSale;
     if (event.locationName) {
       show.screen = String(event.locationName)
         .replace(/\s*-\s*Kino$/i, "")
@@ -3199,35 +3048,48 @@ async function syncScanned({ shows, force = false } = {}) {
   let expired = false;
 
   try {
-    const batchSize = 6;
-    for (let i = 0; i < targets.length && !expired; i += batchSize) {
-      await Promise.all(
-        targets.slice(i, i + batchSize).map(async (show) => {
-          if (expired) return;
-          try {
-            const scanned = await fetchDxScanned(show);
-            show.scannedAt = Date.now();
-            if (scanned != null) {
-              fetched += 1;
-              if (show.scanned !== scanned) {
-                show.scanned = scanned;
-                changed = true;
-              }
+    // One bridge call covers a batch of events; each DX purchase list is
+    // a heavy payload, so asking per show would be needlessly slow.
+    for (const [partnerId, list] of groupByPartner(targets)) {
+      for (let i = 0; i < list.length && !expired; i += SCAN_BATCH) {
+        const chunk = list.slice(i, i + SCAN_BATCH);
+        let counts = null;
+        try {
+          counts = await fetchScannedCounts(
+            partnerId,
+            chunk.map((s) => String(s.eventId))
+          );
+        } catch (err) {
+          if (err?.code === "auth") {
+            expired = true;
+            lastError = "auth";
+            break;
+          }
+          lastError = String(err?.message || err);
+          continue;
+        }
+
+        for (const show of chunk) {
+          show.scannedAt = Date.now();
+          const count = counts?.[String(show.eventId)];
+          if (count && typeof count.scanned === "number") {
+            fetched += 1;
+            if (show.scanned !== count.scanned) {
+              show.scanned = count.scanned;
+              changed = true;
             }
-            // Nothing more can happen to a show that ended hours ago.
-            if (Date.now() - showEndOf(show).getTime() > SCAN_FINAL_AFTER_MS) {
-              show.scanDone = true;
-            }
-          } catch (err) {
-            if (err?.code === "auth") {
-              expired = true;
-              lastError = "auth";
-            } else {
-              lastError = String(err?.message || err);
+            // DX counts tickets net of refunds; trust it over a stale sold.
+            if (typeof count.sold === "number" && show.sold !== count.sold) {
+              show.sold = count.sold;
+              changed = true;
             }
           }
-        })
-      );
+          // Nothing more can happen to a show that ended hours ago.
+          if (Date.now() - showEndOf(show).getTime() > SCAN_FINAL_AFTER_MS) {
+            show.scanDone = true;
+          }
+        }
+      }
     }
 
     if (expired) {
@@ -3256,265 +3118,83 @@ async function syncScanned({ shows, force = false } = {}) {
   return changed;
 }
 
+/** Shows keyed by the DX partner that owns them (Buen is the only one today). */
+function groupByPartner(shows) {
+  const byPartner = new Map();
+  for (const show of shows) {
+    const id = String(show.promoterId || dxAuth?.partnerId || DX_PARTNER_ID);
+    if (!byPartner.has(id)) byPartner.set(id, []);
+    byPartner.get(id).push(show);
+  }
+  return byPartner;
+}
+
 async function fetchDxEvent(show) {
   const promoterId = show.promoterId || DX_PARTNER_ID;
   const url = `${DX_API}/partners/${promoterId}/events/${show.eventId}`;
-  const headers = {
-    Accept: "application/json",
-    Referer: show.ticketUrl || "https://checkout.ebillett.no/",
-  };
-  // An authenticated session can unlock extra ticketSale fields. Only the
-  // authToken header survives api.dx.no's CORS policy, so Bearer tokens
-  // (PAT / Auth0) are deliberately left off this call.
-  if ((dxAuth?.type === "dxapi" || dxAuth?.type === "session") && dxAuth.token) {
-    headers.authToken = dxAuth.token;
-  }
-  const res = await fetch(url, { cache: "no-store", headers });
+  const res = await fetch(url, {
+    cache: "no-store",
+    headers: {
+      Accept: "application/json",
+      Referer: show.ticketUrl || "https://checkout.ebillett.no/",
+    },
+  });
   if (!res.ok) throw new Error(`DX ${res.status}`);
   return res.json();
 }
 
 /**
- * One request for an event's ticket list — the DX endpoint that carries
- * per-ticket scan state. Returns a plain result rather than throwing so
- * callers can compare the schemes and report what DX answered.
- */
-async function requestDxTickets(partnerId, eventId, token, scheme, page = 0) {
-  const base = `${DX_API}/partners/${partnerId}/events/${eventId}/tickets`;
-  const query = new URLSearchParams();
-  if (scheme === "query") query.set("authToken", token);
-  if (page > 1) query.set("page", String(page));
-  const search = query.toString();
-  const url = search ? `${base}?${search}` : base;
-  const label =
-    (scheme === "query" ? `${base}?authToken=…` : base) +
-    (page > 1 ? `&page=${page}` : "");
-  const headers = { Accept: "application/json" };
-  if (scheme === "authToken") headers.authToken = token;
-
-  try {
-    const res = await fetch(url, { cache: "no-store", headers });
-    if (!res.ok) return { scheme, label, status: res.status, ok: false };
-    const data = await res.json();
-    return { scheme, label, status: res.status, ok: true, data };
-  } catch (err) {
-    // A CORS rejection lands here with no status to report.
-    return { scheme, label, status: 0, ok: false, error: String(err?.message || err) };
-  }
-}
-
-/** Work out which of the allowed token schemes this DX tenant accepts. */
-async function probeDxTokenScheme(token, partnerId) {
-  const eventId = sampleEventId();
-  if (!eventId) return { scheme: DX_TOKEN_SCHEMES[0], verified: false, attempts: [] };
-
-  const attempts = [];
-  for (const scheme of DX_TOKEN_SCHEMES) {
-    const res = await requestDxTickets(
-      partnerId || DX_PARTNER_ID,
-      eventId,
-      token,
-      scheme
-    );
-    attempts.push(res);
-    if (res.ok) return { scheme, verified: true, attempts };
-  }
-  return { scheme: DX_TOKEN_SCHEMES[0], verified: false, attempts };
-}
-
-/** An event id worth probing: the most recent show that has sold tickets. */
-function sampleEventId() {
-  const shows = (state?.shows || []).filter((s) => s.eventId);
-  if (!shows.length) return "";
-  const now = Date.now();
-  const past = shows
-    .filter((s) => s.start.getTime() <= now && (s.sold ?? 0) > 0)
-    .sort((a, b) => b.start - a.start);
-  return String((past[0] || shows[shows.length - 1]).eventId);
-}
-
-/** Fetch scanned/checked-in count using connected DX credentials. */
-async function fetchDxScanned(show) {
-  if (!dxAuth?.token || !show.eventId) return null;
-  const partnerId = show.promoterId || dxAuth.partnerId || DX_PARTNER_ID;
-
-  if (dxAuth.type === "dxapi") {
-    return fetchScannedFromDxApi(partnerId, show.eventId);
-  }
-  if (dxAuth.type === "pat") {
-    return fetchScannedFromPublic(partnerId, show.eventId);
-  }
-  // DX Web / legacy session cookies cannot be sent cross-origin from the
-  // browser — those credentials have to go through the login proxy.
-  return fetchScannedViaProxy(partnerId, show.eventId);
-}
-
-/**
- * Read the event's ticket list from the DX Check-in API and count the
- * tickets that have been scanned. Sticks to the scheme that worked at
- * connect time, falling back to the other one if DX changes its mind.
- */
-async function fetchScannedFromDxApi(partnerId, eventId) {
-  const preferred = dxAuth.scheme;
-  const order = DX_TOKEN_SCHEMES.includes(preferred)
-    ? [preferred, ...DX_TOKEN_SCHEMES.filter((s) => s !== preferred)]
-    : DX_TOKEN_SCHEMES;
-
-  let rejected = false;
-  for (const scheme of order) {
-    const res = await requestDxTickets(partnerId, eventId, dxAuth.token, scheme);
-    if (res.status === 401 || res.status === 403) {
-      rejected = true;
-      continue;
-    }
-    if (!res.ok) continue;
-    if (scheme !== dxAuth.scheme) saveDxAuth({ ...dxAuth, scheme });
-    dxScanStatus.source = `api.dx.no/v3 (${scheme})`;
-    const paged = await countScannedAcrossPages(
-      partnerId,
-      eventId,
-      scheme,
-      res.data
-    );
-    return paged != null ? paged : extractScannedCount(res.data);
-  }
-  if (rejected) throw dxError("DX token rejected", "auth");
-  return null;
-}
-
-/**
- * The v3 list endpoints answer Laravel-style pagination, and a full house
- * spills over one page. Counting only the first would quietly report that
- * people are missing when they are all inside, so walk the rest.
- * Returns null when the payload isn't paginated or can't be counted.
- */
-async function countScannedAcrossPages(partnerId, eventId, scheme, first) {
-  const rows = Array.isArray(first?.data) ? first.data : null;
-  const total = Number(first?.total);
-  if (!rows?.length || !Number.isFinite(total) || total <= rows.length) {
-    return null;
-  }
-
-  const firstCount = countScannedTickets(rows);
-  if (firstCount == null) return null;
-
-  let scanned = firstCount;
-  let seen = rows.length;
-  const lastPage = Number(first.lastPage) || Math.ceil(total / rows.length);
-  for (let page = 2; page <= Math.min(lastPage, 25) && seen < total; page++) {
-    const res = await requestDxTickets(
-      partnerId,
-      eventId,
-      dxAuth.token,
-      scheme,
-      page
-    );
-    // A half-read list would understate the count — better to say nothing.
-    if (!res.ok) return null;
-    const next = Array.isArray(res.data?.data)
-      ? res.data.data
-      : Array.isArray(res.data)
-        ? res.data
-        : [];
-    if (!next.length) break;
-    scanned += countScannedTickets(next) || 0;
-    seen += next.length;
-  }
-  return scanned;
-}
-
-async function fetchScannedFromPublic(partnerId, eventId) {
-  const res = await fetch(
-    `${DX_PUBLIC_API}/partners/${partnerId}/events/${eventId}`,
-    {
-      cache: "no-store",
-      headers: {
-        Accept: "application/json",
-        Authorization: `Bearer ${dxAuth.token}`,
-      },
-    }
-  );
-  if (res.status === 401 || res.status === 403) {
-    throw dxError("DX auth expired", "auth");
-  }
-  if (!res.ok) return null;
-  const data = await res.json();
-  const scanned =
-    extractScannedCount(data?.ticketSale) ??
-    extractScannedCount(data) ??
-    extractScannedCount(data?.data);
-  if (scanned != null) dxScanStatus.source = "public.dx.no/v1";
-  return scanned;
-}
-
-/**
- * Ask DX for one event's tickets and describe exactly what came back.
- * Feeds the "test admissions" button in settings so a failure can be
- * reported with real status codes instead of a silent empty column.
+ * Ask the bridge about one event and report exactly what DX said, so a
+ * blank admission column can be explained instead of guessed at.
  */
 async function runDxScanDiagnostics() {
   if (!dxAuth?.token) return { code: "auth" };
   const show = diagnosticShow();
   if (!show) return { code: "noShows" };
 
-  const partnerId = show.promoterId || dxAuth?.partnerId || DX_PARTNER_ID;
-  const lines = [];
-  let scanned = null;
-  let authRejected = false;
-
-  if (dxAuth?.type === "dxapi") {
-    for (const scheme of DX_TOKEN_SCHEMES) {
-      const res = await requestDxTickets(
-        partnerId,
-        show.eventId,
-        dxAuth.token,
-        scheme
-      );
-      const count = res.ok ? extractScannedCount(res.data) : null;
-      lines.push(describeDxAttempt(res, count));
-      if (res.status === 401 || res.status === 403) authRejected = true;
-      if (count != null && scanned == null) {
-        scanned = count;
-        saveDxAuth({ ...dxAuth, scheme });
-      }
-      if (res.ok) break;
-    }
-  } else {
-    try {
-      scanned = await fetchDxScanned(show);
-      lines.push(`${dxAuth?.type || "?"} → ${scanned == null ? "no count" : scanned}`);
-    } catch (err) {
-      if (err?.code === "auth") authRejected = true;
-      lines.push(`${dxAuth?.type || "?"} → ${String(err?.message || err)}`);
-    }
+  const partnerId = show.promoterId || dxAuth.partnerId || DX_PARTNER_ID;
+  let result;
+  try {
+    result = await callDxProxy({
+      action: "scanned",
+      token: dxAuth.token,
+      partnerId,
+      eventIds: [String(show.eventId)],
+      debug: true,
+    });
+  } catch (err) {
+    return { code: "empty", show, details: String(err?.message || err) };
   }
 
-  if (scanned != null) {
-    show.scanned = scanned;
+  const { status, ok, data } = result;
+  const lines = [
+    `bridge → HTTP ${status}`,
+    ...(Array.isArray(data.log) ? data.log : []),
+    ...(data.error ? [`error: ${data.error}`] : []),
+  ];
+
+  if (status === 401 || status === 403) {
+    return { code: "auth", show, details: lines.join("\n") };
+  }
+  if (data.token) saveDxAuth({ ...dxAuth, token: String(data.token) });
+
+  const count = ok && data.counts ? data.counts[String(show.eventId)] : null;
+  if (count && typeof count.scanned === "number") {
+    show.scanned = count.scanned;
     show.scannedAt = Date.now();
+    if (typeof count.sold === "number" && show.sold == null) show.sold = count.sold;
     persistHistory([show]);
-    dxScanStatus = { at: Date.now(), source: dxScanStatus.source, error: "" };
+    dxScanStatus = {
+      at: Date.now(),
+      source: data.source || dxScanStatus.source,
+      error: "",
+    };
+    return { code: "ok", scanned: count.scanned, show, details: lines.join("\n") };
   }
-
-  return {
-    code: scanned != null ? "ok" : authRejected ? "auth" : "empty",
-    scanned,
-    show,
-    details: lines.join("\n"),
-  };
+  return { code: "empty", show, details: lines.join("\n") };
 }
 
-/** One line per attempt: status, and the payload shape when DX said yes. */
-function describeDxAttempt(res, count) {
-  const status = res.status || (res.error ? `blocked (${res.error})` : "no response");
-  if (!res.ok) return `${res.label} → ${status}`;
-  const shape = Array.isArray(res.data)
-    ? `array[${res.data.length}] keys: ${Object.keys(res.data[0] || {}).join(", ") || "—"}`
-    : `object keys: ${Object.keys(res.data || {}).join(", ") || "—"}`;
-  return `${res.label} → ${status}, ${count == null ? "no scan field" : `${count} scanned`}, ${shape}`;
-}
-
-/** Prefer a show that has actually been let in: yesterday's, or the newest. */
+/** Prefer a show that has actually been let in: the most recent past one. */
 function diagnosticShow() {
   const shows = (state?.shows || []).filter((s) => s.eventId && (s.sold ?? 0) > 0);
   if (!shows.length) return null;
@@ -3523,108 +3203,6 @@ function diagnosticShow() {
     .filter((s) => s.start.getTime() <= now)
     .sort((a, b) => b.start - a.start);
   return past[0] || shows[0];
-}
-
-/**
- * Best-effort extraction of checked-in / scanned ticket counts from
- * heterogeneous DX payloads (ticketSale, tickets list, meta, etc.).
- */
-function extractScannedCount(payload) {
-  if (payload == null) return null;
-
-  if (typeof payload === "number" && Number.isFinite(payload)) {
-    return payload;
-  }
-
-  if (Array.isArray(payload)) {
-    return countScannedTickets(payload);
-  }
-
-  if (typeof payload !== "object") return null;
-
-  const directKeys = [
-    "scanned",
-    "scannedCount",
-    "scannedTickets",
-    "checkedIn",
-    "checked_in",
-    "checkedInCount",
-    "checked_in_count",
-    "verified",
-    "verifiedCount",
-    "verifiedTickets",
-    "admitted",
-    "admittedCount",
-    "used",
-    "usedCount",
-    "checkIns",
-    "checkins",
-    "checkInCount",
-    "innsjekket",
-    "innsjekk",
-  ];
-  for (const key of directKeys) {
-    if (payload[key] != null && typeof payload[key] !== "object") {
-      const n = Number(payload[key]);
-      if (Number.isFinite(n)) return n;
-    }
-  }
-
-  for (const nest of ["ticketSale", "ticket_sale", "sale", "stats", "statistics", "meta", "summary"]) {
-    if (payload[nest] && typeof payload[nest] === "object") {
-      const nested = extractScannedCount(payload[nest]);
-      if (nested != null) return nested;
-    }
-  }
-
-  for (const listKey of ["tickets", "data", "items", "results", "seats"]) {
-    if (Array.isArray(payload[listKey])) {
-      const n = countScannedTickets(payload[listKey]);
-      if (n != null) return n;
-    }
-  }
-
-  return null;
-}
-
-function countScannedTickets(tickets) {
-  if (!Array.isArray(tickets) || !tickets.length) return tickets?.length === 0 ? 0 : null;
-  let scanned = 0;
-  let sawFlag = false;
-  for (const ticket of tickets) {
-    if (!ticket || typeof ticket !== "object") continue;
-    const flag =
-      ticket.scanned ??
-      ticket.checkedIn ??
-      ticket.checked_in ??
-      ticket.verified ??
-      ticket.isVerified ??
-      ticket.isScanned ??
-      ticket.admitted ??
-      ticket.used ??
-      ticket.innsjekket;
-    if (flag != null) {
-      sawFlag = true;
-      if (flag === true || flag === 1 || flag === "1" || flag === "true") scanned += 1;
-      else if (typeof flag === "string" && flag && flag !== "0" && flag !== "false") {
-        // Timestamp-like verifiedAt stored under a boolean-ish key.
-        scanned += 1;
-      }
-    } else if (
-      ticket.scannedAt ||
-      ticket.checkedInAt ||
-      ticket.checked_in_at ||
-      ticket.verifiedAt ||
-      ticket.verified_at ||
-      ticket.usedAt ||
-      ticket.used_at ||
-      ticket.admittedAt
-    ) {
-      sawFlag = true;
-      scanned += 1;
-    }
-  }
-  return sawFlag ? scanned : null;
 }
 
 function parseLocalDateTime(value) {
