@@ -62,11 +62,7 @@ const I18N = {
     soldOut: "Utsolgt",
     fewLeft: "{n} igjen",
     reservedShort: "{n} res.",
-    scanned: "skannet",
-    scannedLabel: "skannet",
-    scannedShort: "{n} skannet",
     admittedLabel: "inne",
-    admittedOf: "{n} av {total} inne",
     admitAllIn: "Alle inne",
     admitMissing: "{n} mangler",
     admitNoShow: "{n} møtte ikke",
@@ -202,11 +198,7 @@ const I18N = {
     soldOut: "Sold out",
     fewLeft: "{n} left",
     reservedShort: "{n} res.",
-    scanned: "scanned",
-    scannedLabel: "scanned",
-    scannedShort: "{n} scanned",
     admittedLabel: "in",
-    admittedOf: "{n} of {total} in",
     admitAllIn: "All in",
     admitMissing: "{n} to go",
     admitNoShow: "{n} no-shows",
@@ -3287,10 +3279,16 @@ async function fetchDxEvent(show) {
  * per-ticket scan state. Returns a plain result rather than throwing so
  * callers can compare the schemes and report what DX answered.
  */
-async function requestDxTickets(partnerId, eventId, token, scheme) {
+async function requestDxTickets(partnerId, eventId, token, scheme, page = 0) {
   const base = `${DX_API}/partners/${partnerId}/events/${eventId}/tickets`;
-  const url = scheme === "query" ? `${base}?authToken=${encodeURIComponent(token)}` : base;
-  const label = scheme === "query" ? `${base}?authToken=…` : base;
+  const query = new URLSearchParams();
+  if (scheme === "query") query.set("authToken", token);
+  if (page > 1) query.set("page", String(page));
+  const search = query.toString();
+  const url = search ? `${base}?${search}` : base;
+  const label =
+    (scheme === "query" ? `${base}?authToken=…` : base) +
+    (page > 1 ? `&page=${page}` : "");
   const headers = { Accept: "application/json" };
   if (scheme === "authToken") headers.authToken = token;
 
@@ -3372,10 +3370,57 @@ async function fetchScannedFromDxApi(partnerId, eventId) {
     if (!res.ok) continue;
     if (scheme !== dxAuth.scheme) saveDxAuth({ ...dxAuth, scheme });
     dxScanStatus.source = `api.dx.no/v3 (${scheme})`;
-    return extractScannedCount(res.data);
+    const paged = await countScannedAcrossPages(
+      partnerId,
+      eventId,
+      scheme,
+      res.data
+    );
+    return paged != null ? paged : extractScannedCount(res.data);
   }
   if (rejected) throw dxError("DX token rejected", "auth");
   return null;
+}
+
+/**
+ * The v3 list endpoints answer Laravel-style pagination, and a full house
+ * spills over one page. Counting only the first would quietly report that
+ * people are missing when they are all inside, so walk the rest.
+ * Returns null when the payload isn't paginated or can't be counted.
+ */
+async function countScannedAcrossPages(partnerId, eventId, scheme, first) {
+  const rows = Array.isArray(first?.data) ? first.data : null;
+  const total = Number(first?.total);
+  if (!rows?.length || !Number.isFinite(total) || total <= rows.length) {
+    return null;
+  }
+
+  const firstCount = countScannedTickets(rows);
+  if (firstCount == null) return null;
+
+  let scanned = firstCount;
+  let seen = rows.length;
+  const lastPage = Number(first.lastPage) || Math.ceil(total / rows.length);
+  for (let page = 2; page <= Math.min(lastPage, 25) && seen < total; page++) {
+    const res = await requestDxTickets(
+      partnerId,
+      eventId,
+      dxAuth.token,
+      scheme,
+      page
+    );
+    // A half-read list would understate the count — better to say nothing.
+    if (!res.ok) return null;
+    const next = Array.isArray(res.data?.data)
+      ? res.data.data
+      : Array.isArray(res.data)
+        ? res.data
+        : [];
+    if (!next.length) break;
+    scanned += countScannedTickets(next) || 0;
+    seen += next.length;
+  }
+  return scanned;
 }
 
 async function fetchScannedFromPublic(partnerId, eventId) {
