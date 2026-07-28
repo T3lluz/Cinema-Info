@@ -2608,8 +2608,8 @@ a.tile-show:focus-visible {
    Phones stay identical. From ~700px (iPad portrait and up) the day list
    stops sitting narrower than the timeline above it, cards get the room
    their numbers need, and every seat map is unfolded from the start —
-   drawn on a stage of one fixed size, so a 110-seat hall and a 286-seat
-   hall line up instead of each ending wherever its rows happen to. */
+   each hall on a stage of one shape, so a 110-seat hall and a 286-seat
+   hall take the same room instead of each ending wherever its rows do. */
 @media (min-width: 700px) {
   :root {
     /* Use the width a tablet actually has: the phone-sized column left
@@ -2694,14 +2694,6 @@ a.tile-show:focus-visible {
 
   .tile-show {
     padding: 6px 9px;
-  }
-
-  .movie-grid {
-    align-items: stretch;
-  }
-
-  .movie-tile {
-    height: 100%;
   }
 }
 
