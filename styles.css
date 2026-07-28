@@ -1415,7 +1415,6 @@ a.tile-show:focus-visible {
 
 .tile-show.done {
   background: color-mix(in srgb, var(--done-soft) 75%, var(--surface));
-  box-shadow: inset 3px 0 0 color-mix(in srgb, var(--done) 70%, transparent);
   color: color-mix(in srgb, var(--ink) 60%, var(--muted));
 }
 
