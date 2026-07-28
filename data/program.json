@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-28T00:33:25.268Z",
+  "updatedAt": "2026-07-28T23:32:46.660Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -789,11 +789,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92682/purchase?kanal=dxf",
       "eventId": "92682",
       "promoterId": "202",
-      "sold": 23,
+      "sold": 66,
       "eventStatus": "ok",
       "reserved": 0,
-      "capacity": 109,
-      "available": 86
+      "capacity": 110,
+      "available": 44
     },
     {
       "id": "EDI20260556-2026-07-28T17:30:00-Storsal",
@@ -813,11 +813,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92754/purchase?kanal=dxf",
       "eventId": "92754",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 6,
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 246,
-      "available": 246
+      "available": 240
     },
     {
       "id": "UIP20241680-2026-07-28T19:30:00-Kinosal",
@@ -836,11 +836,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92715/purchase?kanal=dxf",
       "eventId": "92715",
       "promoterId": "202",
-      "sold": 30,
+      "sold": 86,
       "eventStatus": "ok",
       "reserved": 0,
-      "capacity": 105,
-      "available": 75
+      "capacity": 110,
+      "available": 24
     },
     {
       "id": "EDI20260626-2026-07-28T20:15:00-Storsal",
@@ -859,11 +859,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92693/purchase?kanal=dxf",
       "eventId": "92693",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 10,
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 246,
-      "available": 246
+      "available": 236
     },
     {
       "id": "EDI20260819-2026-07-29T16:50:00-Kinosal",
@@ -883,11 +883,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92753/purchase?kanal=dxf",
       "eventId": "92753",
       "promoterId": "202",
-      "sold": 3,
+      "sold": 15,
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 110,
-      "available": 107
+      "available": 95
     },
     {
       "id": "UIP20241749-2026-07-29T17:30:00-Storsal",
@@ -907,11 +907,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92335/purchase?kanal=dxf",
       "eventId": "92335",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 5,
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 246,
-      "available": 246
+      "available": 241
     },
     {
       "id": "EDI20240688-2026-07-29T19:30:00-Kinosal",
@@ -930,11 +930,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92334/purchase?kanal=dxf",
       "eventId": "92334",
       "promoterId": "202",
-      "sold": 97,
+      "sold": 104,
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 110,
-      "available": 13
+      "available": 6
     },
     {
       "id": "EDI20240688-2026-07-29T20:00:00-Storsal",
@@ -953,11 +953,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92779/purchase?kanal=dxf",
       "eventId": "92779",
       "promoterId": "202",
-      "sold": 9,
+      "sold": 66,
       "eventStatus": "ok",
       "reserved": 0,
-      "capacity": 246,
-      "available": 237
+      "capacity": 245,
+      "available": 179
     },
     {
       "id": "EDI20260626-2026-07-29T20:15:00-Storsal",
@@ -1047,11 +1047,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92337/purchase?kanal=dxf",
       "eventId": "92337",
       "promoterId": "202",
-      "sold": 47,
+      "sold": 61,
       "eventStatus": "ok",
-      "reserved": 0,
-      "capacity": 110,
-      "available": 63
+      "reserved": 2,
+      "capacity": 107,
+      "available": 44
     },
     {
       "id": "EDI20260535-2026-07-30T20:15:00-Storsal",
@@ -1117,11 +1117,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92338/purchase?kanal=dxf",
       "eventId": "92338",
       "promoterId": "202",
-      "sold": 25,
+      "sold": 34,
       "eventStatus": "ok",
       "reserved": 0,
-      "capacity": 110,
-      "available": 85
+      "capacity": 108,
+      "available": 74
     },
     {
       "id": "EDI20260535-2026-07-31T19:00:00-Storsal",
@@ -1163,11 +1163,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92524/purchase?kanal=dxf",
       "eventId": "92524",
       "promoterId": "202",
-      "sold": 8,
+      "sold": 13,
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 110,
-      "available": 102
+      "available": 97
     },
     {
       "id": "EDI20260626-2026-07-31T21:15:00-Storsal",
@@ -1303,11 +1303,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92775/purchase?kanal=dxf",
       "eventId": "92775",
       "promoterId": "202",
-      "sold": 3,
+      "sold": 5,
       "eventStatus": "ok",
       "reserved": 0,
-      "capacity": 107,
-      "available": 104
+      "capacity": 110,
+      "available": 105
     },
     {
       "id": "UIP20241749-2026-08-02T14:50:00-Storsal",
@@ -1350,11 +1350,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92769/purchase?kanal=dxf",
       "eventId": "92769",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 6,
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 110,
-      "available": 110
+      "available": 104
     },
     {
       "id": "EDI20260819-2026-08-02T17:10:00-Storsal",
@@ -1491,11 +1491,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92781/purchase?kanal=dxf",
       "eventId": "92781",
       "promoterId": "202",
-      "sold": 2,
+      "sold": 3,
       "eventStatus": "ok",
       "reserved": 0,
-      "capacity": 108,
-      "available": 106
+      "capacity": 110,
+      "available": 107
     },
     {
       "id": "EDI20240688-2026-08-03T20:00:00-Storsal",
@@ -1827,6 +1827,30 @@
       "available": 108
     },
     {
+      "id": "EDI20260556-2026-08-07T17:30:00-Storsal",
+      "title": "Superhunden Charlie",
+      "screen": "Storsal",
+      "start": "2026-08-07T17:30:00",
+      "end": "2026-08-07T19:12:00",
+      "dayKey": "2026-08-07",
+      "runningMinutes": 95,
+      "runningLabel": "1 t. 35 min.",
+      "age": "6 år",
+      "tags": [
+        "Norsk tale",
+        "Norsk tekst"
+      ],
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/eb6e013b74dca3128a5e20492a01d569fd5b4c13-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/92496/purchase?kanal=dxf",
+      "eventId": "92496",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
+    },
+    {
       "id": "UIP20241680-2026-08-07T19:15:00-Kinosal",
       "title": "The Odyssey",
       "screen": "Kinosal",
@@ -1843,11 +1867,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92750/purchase?kanal=dxf",
       "eventId": "92750",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 110,
-      "available": 110
+      "available": 108
     },
     {
       "id": "EDI20240688-2026-08-07T19:50:00-Storsal",
@@ -1871,6 +1895,30 @@
       "reserved": 0,
       "capacity": 286,
       "available": 286
+    },
+    {
+      "id": "EDI20260556-2026-08-08T14:50:00-Kinosal",
+      "title": "Superhunden Charlie",
+      "screen": "Kinosal",
+      "start": "2026-08-08T14:50:00",
+      "end": "2026-08-08T16:31:45",
+      "dayKey": "2026-08-08",
+      "runningMinutes": 95,
+      "runningLabel": "1 t. 35 min.",
+      "age": "6 år",
+      "tags": [
+        "Norsk tale",
+        "Norsk tekst"
+      ],
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/eb6e013b74dca3128a5e20492a01d569fd5b4c13-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/92744/purchase?kanal=dxf",
+      "eventId": "92744",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
     },
     {
       "id": "UIP20241680-2026-08-11T12:30:00-Kinosal",
