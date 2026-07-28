@@ -45,6 +45,8 @@ const I18N = {
     now: "Nå",
     soon: "Snart",
     done: "Ferdig",
+    doneCount: "{n}/{total} ferdig",
+    dayAllDone: "Dagen er ferdig",
     sold: "solgt",
     error: "Feil",
     retry: "Prøv igjen",
@@ -198,6 +200,8 @@ const I18N = {
     now: "Now",
     soon: "Soon",
     done: "Done",
+    doneCount: "{n}/{total} done",
+    dayAllDone: "Day is done",
     sold: "sold",
     error: "Error",
     retry: "Try again",
@@ -397,8 +401,13 @@ let seatLayouts = loadSeatLayouts();
 const seatHalls = new Map();
 /** Per-event seat state: `{ status, at, error, ...bridge payload }`. */
 const seatCharts = new Map();
-/** Shows whose seat chart is currently unfolded. */
+/** Shows whose seat chart the visitor unfolded by hand. */
 const openSeatCharts = new Set();
+/** Tablet and desktop have room for every hall at once, so charts there
+ * are unfolded from the start instead of hiding behind a button. */
+const SEATS_OPEN_MQ = window.matchMedia("(min-width: 700px)");
+/** Loads auto-unfolded halls as they scroll into view. */
+let seatAutoObserver = null;
 /** How many fetches are in flight; the refresh button spins while any are. */
 let busyCount = 0;
 
@@ -452,6 +461,7 @@ async function init() {
     if (document.visibilityState === "visible" && state?.shows) {
       renderTimeline();
       renderSummary();
+      markDoneDays();
     }
   }, 60_000);
   document.addEventListener("visibilitychange", () => {
@@ -467,6 +477,12 @@ async function init() {
   window.addEventListener("resize", () => {
     movePillIndicator(activeTab, { instant: true });
     moveDayIndicator({ instant: true });
+  });
+
+  // Crossing the tablet threshold changes whether seat charts are folded
+  // away. Only the day list draws them, so only it needs redrawing.
+  SEATS_OPEN_MQ.addEventListener("change", () => {
+    if (activeTab === "day") renderDay();
   });
 
   if ("serviceWorker" in navigator) {
@@ -1452,15 +1468,19 @@ function populateFilters() {
       .map((day) => {
         const past = day < today;
         const selected = day === selectedDay;
-        return `<button type="button" class="day-tab${past ? " past" : ""}" role="tab" data-day="${day}" aria-selected="${selected}">${escapeHtml(
+        return `<button type="button" class="day-tab${past ? " past" : ""}" role="tab" data-day="${day}" aria-selected="${selected}">${doneGlyph(
+          "day-tab-check"
+        )}<span class="day-tab-label">${escapeHtml(
           shortDayLabel(day)
-        )}</button>`;
+        )}</span></button>`;
       })
       .join("");
 
   els.dayTabs.querySelectorAll(".day-tab").forEach((btn) => {
     btn.addEventListener("click", () => selectDay(btn.dataset.day));
   });
+
+  markDoneDays();
 
   els.dayTabs
     .querySelector('.day-tab[aria-selected="true"]')
@@ -1505,6 +1525,25 @@ function moveDayIndicator(opts = {}) {
   const indicator = els.dayTabs.querySelector(".day-indicator");
   const btn = els.dayTabs.querySelector('.day-tab[aria-selected="true"]');
   liquidMove(indicator, btn, opts);
+}
+
+/**
+ * Tick off the days whose last showing has finished. Re-run on the minute
+ * tick as well as after a render, because a day turns done with the clock
+ * rather than with new data.
+ */
+function markDoneDays() {
+  if (!state?.shows) return;
+  const now = new Date();
+  let changed = false;
+  for (const btn of els.dayTabs.querySelectorAll(".day-tab")) {
+    const done = doneProgress(dayShows(btn.dataset.day), now).all;
+    if (btn.classList.contains("done") === done) continue;
+    btn.classList.toggle("done", done);
+    changed = true;
+  }
+  // The checkmark widens the pill; keep the indicator sitting on it.
+  if (changed) moveDayIndicator({ instant: true });
 }
 
 function shortDayLabel(dayKey) {
@@ -1575,7 +1614,10 @@ function buildDayListHTML(day) {
         : ""
     }
     <div class="day-block">
-      <div class="section-label">${escapeHtml(formatDayLabel(day))}</div>
+      <div class="section-label${doneProgress(shows, now).all ? " all-done" : ""}">
+        <span class="section-label-text">${escapeHtml(formatDayLabel(day))}</span>
+        ${doneTag(shows, { allLabel: "dayAllDone", now })}
+      </div>
       ${parts.join("")}
     </div>
   `;
@@ -1600,8 +1642,10 @@ function renderDay() {
 
   renderSummary();
   renderTimeline();
+  markDoneDays();
 
   els.content.innerHTML = buildDayListHTML(selectedDay);
+  observeAutoSeatCharts();
 }
 
 function showEndOf(show) {
@@ -1976,6 +2020,37 @@ function endsChip(shows, now) {
   )}</strong></span>`;
 }
 
+/**
+ * Finished showings are struck through everywhere they appear — the
+ * timeline, the day list, the day strip, the movie tiles — so "done" is
+ * something you see rather than something you infer from a faint card.
+ * These helpers keep that judgement in one place.
+ */
+function isDone(show, now = new Date()) {
+  return statusOf(show, now) === "done";
+}
+
+/** How much of a set of showings is behind us. */
+function doneProgress(shows, now = new Date()) {
+  const total = shows.length;
+  const done = shows.reduce((n, s) => n + (isDone(s, now) ? 1 : 0), 0);
+  return { done, total, all: total > 0 && done === total };
+}
+
+function doneGlyph(className = "done-glyph") {
+  return `<svg class="${className}" viewBox="0 0 16 16" aria-hidden="true"><path d="M2.6 8.5l3.6 3.6 7.2-8" /></svg>`;
+}
+
+/** The "3/5 ferdig" / "Dagen er ferdig" tag used by day and movie headers. */
+function doneTag(shows, { allLabel, className = "done-tag", now = new Date() } = {}) {
+  const { done, total, all } = doneProgress(shows, now);
+  if (!total || !done) return "";
+  const label = all ? t(allLabel) : t("doneCount", { n: done, total });
+  return `<span class="${className}${all ? " all" : ""}">${
+    all ? doneGlyph() : ""
+  }${escapeHtml(label)}</span>`;
+}
+
 function statusOf(show, now) {
   if (show.end && now >= show.start && now < show.end) return "live";
   if (!show.end && now >= show.start && now - show.start < 3 * 60 * 60_000) {
@@ -2258,16 +2333,17 @@ async function loadSeatChart(show, { force = false, retry = true } = {}) {
 
 /** Replace just this show's chart, so opening one never reflows the day. */
 function paintSeatChart(show) {
-  const selector = `[data-seat-show="${cssEscape(show.id)}"]`;
-  for (const host of document.querySelectorAll(selector)) {
+  const open = seatChartExpanded(show);
+  for (const host of document.querySelectorAll(
+    `[data-seat-show="${cssEscape(show.id)}"]`
+  )) {
     host.innerHTML = renderSeatChart(show);
+    host.closest(".show-row")?.classList.toggle("seats-open", open);
   }
-  const open = openSeatCharts.has(show.id);
   for (const btn of document.querySelectorAll(
     `[data-seat-toggle="${cssEscape(show.id)}"]`
   )) {
     btn.setAttribute("aria-expanded", String(open));
-    btn.closest(".show-row")?.classList.toggle("seats-open", open);
   }
 }
 
@@ -2277,7 +2353,7 @@ function cssEscape(value) {
 
 async function toggleSeatChart(showId) {
   const show = state?.shows?.find((s) => s.id === showId);
-  if (!show) return;
+  if (!show || seatsAlwaysOpen()) return;
 
   if (openSeatCharts.has(showId)) {
     openSeatCharts.delete(showId);
@@ -2289,30 +2365,113 @@ async function toggleSeatChart(showId) {
   await loadSeatChart(show);
 }
 
-/** Keep open charts current alongside the two-minute live refresh. */
+/**
+ * Fetch the halls that are unfolded by width as they come into view, so a
+ * wide day list costs one lookup per chart the visitor actually reaches
+ * instead of one per show the moment the day opens.
+ */
+function observeAutoSeatCharts() {
+  if (!seatsAlwaysOpen() || typeof IntersectionObserver !== "function") {
+    seatAutoObserver?.disconnect();
+    return;
+  }
+
+  if (!seatAutoObserver) {
+    seatAutoObserver = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          seatAutoObserver.unobserve(entry.target);
+          const show = state?.shows?.find(
+            (s) => s.id === entry.target.dataset.seatShow
+          );
+          if (!show) continue;
+          loadSeatChart(show).catch((err) =>
+            console.warn("Seat chart load failed", err)
+          );
+        }
+      },
+      { rootMargin: "300px 0px" }
+    );
+  } else {
+    seatAutoObserver.disconnect();
+  }
+
+  for (const host of document.querySelectorAll("[data-seat-show]")) {
+    const show = state?.shows?.find((s) => s.id === host.dataset.seatShow);
+    if (!show) continue;
+    // Halls this device already knows are kept current by the live
+    // refresh; only the ones with nothing to draw need fetching here.
+    const chart = seatCharts.get(String(show.eventId));
+    if (chart && chart.status !== "error") continue;
+    seatAutoObserver.observe(host);
+  }
+}
+
+/** The shows whose chart is somewhere the visitor can actually see it. */
+function seatChartsOnScreen() {
+  const ids = new Set();
+  const vh = window.innerHeight || 0;
+  const vw = window.innerWidth || 0;
+  for (const host of document.querySelectorAll("[data-seat-show]")) {
+    const box = host.getBoundingClientRect();
+    if (!box.width && !box.height) continue;
+    if (box.bottom > 0 && box.top < vh && box.right > 0 && box.left < vw) {
+      ids.add(host.dataset.seatShow);
+    }
+  }
+  return ids;
+}
+
+/** Keep unfolded charts current alongside the two-minute live refresh. */
 async function refreshOpenSeatCharts() {
-  if (!openSeatCharts.size || !state?.shows) return;
+  if (!state?.shows) return;
+  if (!openSeatCharts.size && !seatsAlwaysOpen()) return;
+  // Charts nobody asked for are only worth refreshing while on screen.
+  const visible = seatsAlwaysOpen() ? seatChartsOnScreen() : null;
+
   for (const show of state.shows) {
-    if (!openSeatCharts.has(show.id)) continue;
+    if (!seatChartExpanded(show)) continue;
     // A show that ended hours ago cannot gain another guest.
     if (show.scanDone) continue;
+    if (!openSeatCharts.has(show.id) && !visible?.has(show.id)) continue;
     await loadSeatChart(show).catch((err) =>
       console.warn("Seat chart refresh failed", err)
     );
   }
 }
 
-/** The fold-out button under a show card. */
+function seatsAlwaysOpen() {
+  return SEATS_OPEN_MQ.matches;
+}
+
+/** Is this show's hall on screen right now — unfolded by hand, or by width? */
+function seatChartExpanded(show) {
+  return seatsAlwaysOpen() || openSeatCharts.has(show.id);
+}
+
+/** The strip under a show card: a fold-out button on phones, a plain
+ * heading for the chart that is already open on wider screens. */
 function renderSeatToggle(show) {
-  const open = openSeatCharts.has(show.id);
+  const open = seatChartExpanded(show);
   const chart = seatCharts.get(String(show.eventId));
   const capacity = show.capacity || (chart ? seatsOnSale(chart) : 0);
   const hint = capacity
     ? t("seatMapHint", { sold: show.sold ?? 0, capacity })
     : "";
 
-  return `
-    <button class="seat-strip" type="button" data-seat-toggle="${escapeHtml(show.id)}"
+  const head = `
+      <svg class="seat-strip-glyph" viewBox="0 0 16 16" aria-hidden="true">
+        <path d="M3.2 7.2V4.1a1.1 1.1 0 0 1 1.1-1.1h7.4a1.1 1.1 0 0 1 1.1 1.1v3.1" />
+        <rect x="2" y="7.2" width="12" height="4.2" rx="1.1" />
+        <path d="M4.4 11.4v1.6M11.6 11.4v1.6" />
+      </svg>
+      <span class="seat-strip-label">${escapeHtml(t("seatMapLabel"))}</span>
+      ${hint ? `<span class="seat-strip-hint">${escapeHtml(hint)}</span>` : ""}`;
+
+  const strip = seatsAlwaysOpen()
+    ? `<div class="seat-strip static">${head}</div>`
+    : `<button class="seat-strip" type="button" data-seat-toggle="${escapeHtml(show.id)}"
             aria-expanded="${open}" aria-controls="seatchart-${escapeHtml(show.id)}"
             aria-label="${escapeHtml(
               t("seatMapOpen", {
@@ -2320,17 +2479,14 @@ function renderSeatToggle(show) {
                 time: formatClock(show.start),
               })
             )}">
-      <svg class="seat-strip-glyph" viewBox="0 0 16 16" aria-hidden="true">
-        <path d="M3.2 7.2V4.1a1.1 1.1 0 0 1 1.1-1.1h7.4a1.1 1.1 0 0 1 1.1 1.1v3.1" />
-        <rect x="2" y="7.2" width="12" height="4.2" rx="1.1" />
-        <path d="M4.4 11.4v1.6M11.6 11.4v1.6" />
-      </svg>
-      <span class="seat-strip-label">${escapeHtml(t("seatMapLabel"))}</span>
-      ${hint ? `<span class="seat-strip-hint">${escapeHtml(hint)}</span>` : ""}
+      ${head}
       <svg class="seat-chevron" viewBox="0 0 16 16" aria-hidden="true">
         <path d="m4.4 6.2 3.6 3.6 3.6-3.6" />
       </svg>
-    </button>
+    </button>`;
+
+  return `
+    ${strip}
     <div class="seat-panel" id="seatchart-${escapeHtml(show.id)}">
       <div class="seat-wrap" data-seat-show="${escapeHtml(show.id)}">${
         open ? renderSeatChart(show) : ""
@@ -2340,7 +2496,7 @@ function renderSeatToggle(show) {
 }
 
 function renderSeatChart(show) {
-  if (!openSeatCharts.has(show.id)) return "";
+  if (!seatChartExpanded(show)) return "";
   const chart = seatCharts.get(String(show.eventId));
 
   if (!chart || chart.status === "loading") {
@@ -2576,7 +2732,9 @@ function renderShowCard(show, now, index = 0, opts = {}) {
       : status === "soon"
         ? `<span class="badge soon">${escapeHtml(t("soon"))}</span>`
         : status === "done"
-          ? `<span class="badge done">${escapeHtml(t("done"))}</span>`
+          ? `<span class="badge done">${doneGlyph("badge-check")}${escapeHtml(
+              t("done")
+            )}</span>`
           : "";
 
   const endLabel = show.end ? formatClock(show.end) : "…";
@@ -2651,10 +2809,7 @@ function renderShowCard(show, now, index = 0, opts = {}) {
   // The seat chart button has to sit outside that link, so the card and
   // its fold-out share one wrapper instead of being one element.
   if (!seatChartOffered(show)) return card;
-  const rowClass = [
-    "show-row",
-    openSeatCharts.has(show.id) ? "seats-open" : "",
-  ]
+  const rowClass = ["show-row", status, seatChartExpanded(show) ? "seats-open" : ""]
     .filter(Boolean)
     .join(" ");
   return `<div class="${rowClass}" style="--i:${index}">${card}${renderSeatToggle(
@@ -2787,6 +2942,8 @@ function renderMovieTile(movie, now, index = 0) {
     .map((x) => escapeHtml(String(x)))
     .join(" · ");
 
+  const progress = doneProgress(movie.shows, now);
+
   const times = movie.shows
     .map((show) => {
       const status = statusOf(show, now);
@@ -2822,10 +2979,13 @@ function renderMovieTile(movie, now, index = 0) {
     .join("");
 
   return `
-    <article class="movie-tile" style="--i:${index}">
+    <article class="movie-tile${progress.all ? " all-done" : ""}" style="--i:${index}">
       ${renderPoster(movie, 72, 104, "movie-poster")}
       <div class="movie-tile-body">
-        <h3 class="movie-tile-title">${escapeHtml(movie.title)}</h3>
+        <div class="movie-tile-head">
+          <h3 class="movie-tile-title">${escapeHtml(movie.title)}</h3>
+          ${doneTag(movie.shows, { allLabel: "done", now })}
+        </div>
         <p class="movie-tile-meta">${meta}</p>
         <div class="tile-shows">${times}</div>
       </div>

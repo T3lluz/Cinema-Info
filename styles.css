@@ -251,6 +251,9 @@ h1 {
   position: relative;
   z-index: 1;
   flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
   scroll-snap-align: center;
   border: 1px solid var(--line);
   background: var(--surface);
@@ -272,7 +275,38 @@ h1 {
 }
 
 .day-tab.past {
-  opacity: 0.72;
+  opacity: 0.9;
+}
+
+/* A day whose last showing has finished is ticked off and crossed out,
+   so the strip reads like a week you can see the end of. */
+.day-tab-check {
+  display: none;
+  width: 11px;
+  height: 11px;
+  flex: 0 0 auto;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.day-tab.done {
+  background: var(--done-soft);
+  border-color: color-mix(in srgb, var(--done) 32%, var(--line));
+  color: color-mix(in srgb, var(--done) 88%, var(--ink));
+  opacity: 1;
+}
+
+.day-tab.done .day-tab-check {
+  display: block;
+}
+
+.day-tab.done .day-tab-label {
+  text-decoration: line-through;
+  text-decoration-thickness: 1.5px;
+  text-decoration-color: color-mix(in srgb, currentColor 55%, transparent);
 }
 
 .day-tab[aria-selected="true"] {
@@ -484,7 +518,24 @@ h1 {
 
 .tl-block.done {
   background: var(--done-soft);
-  color: var(--done);
+  color: color-mix(in srgb, var(--done) 90%, var(--ink));
+  border: 1px solid color-mix(in srgb, var(--done) 30%, transparent);
+}
+
+/* Struck out end to end: a finished showing is something the eye skips
+   rather than something it has to decode from a paler bar. */
+.tl-block.done::after {
+  content: "";
+  position: absolute;
+  left: 3px;
+  right: 3px;
+  top: 50%;
+  height: 1.5px;
+  border-radius: 2px;
+  background: currentColor;
+  opacity: 0.7;
+  transform: translateY(-50%);
+  pointer-events: none;
 }
 
 .tl-block.live {
@@ -682,11 +733,64 @@ h1 {
 }
 
 .section-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   padding: 0 0 6px;
   text-align: left;
   font-size: 0.85rem;
   font-weight: 700;
   color: var(--ink);
+}
+
+.section-label .done-tag {
+  margin-left: auto;
+}
+
+.section-label.all-done .section-label-text {
+  color: var(--muted);
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+  text-decoration-color: color-mix(in srgb, var(--done) 55%, transparent);
+}
+
+/* —— Done markers ——
+   The same tick and the same crossed-out line, wherever something has
+   finished: the day strip, the day header, a card, a movie tile. */
+.done-glyph {
+  width: 11px;
+  height: 11px;
+  flex: 0 0 auto;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.done-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  flex: 0 0 auto;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--line) 20%, var(--surface));
+  color: var(--muted);
+  font-size: 0.64rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.done-tag.all {
+  border-color: color-mix(in srgb, var(--done) 40%, var(--line));
+  background: var(--done-soft);
+  color: color-mix(in srgb, var(--done) 88%, var(--ink));
 }
 
 .day-block {
@@ -752,8 +856,33 @@ a.tile-show:focus-visible {
   transform: scale(0.99);
 }
 
+/* Status reads off the card edge before anything is read on it: green for
+   playing, amber for next up, grey and crossed out for finished. */
+.show-card.live {
+  box-shadow: inset 4px 0 0 var(--ok);
+}
+
+.show-card.soon {
+  box-shadow: inset 4px 0 0 var(--warn);
+}
+
 .show-card.done {
-  opacity: 0.72;
+  opacity: 0.92;
+  background: color-mix(in srgb, var(--bg) 60%, var(--surface));
+  box-shadow: inset 4px 0 0 color-mix(in srgb, var(--done) 85%, transparent);
+}
+
+.show-card.done .time-range,
+.show-card.done .show-title {
+  color: color-mix(in srgb, var(--ink) 55%, var(--muted));
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+  text-decoration-color: color-mix(in srgb, var(--done) 60%, transparent);
+}
+
+.show-card.done .poster,
+.show-card.done .poster-fallback {
+  filter: grayscale(0.7);
 }
 
 .poster {
@@ -898,8 +1027,20 @@ a.tile-show:focus-visible {
 }
 
 .badge.done {
+  gap: 3px;
   background: var(--done-soft);
-  color: var(--done);
+  color: color-mix(in srgb, var(--done) 90%, var(--ink));
+}
+
+.badge-check {
+  width: 9px;
+  height: 9px;
+  flex: 0 0 auto;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .ticket-col {
@@ -1086,23 +1227,14 @@ a.tile-show:focus-visible {
   color: var(--muted);
 }
 
-/* —— Movies grid —— */
+/* —— Movies grid ——
+   Tiles pair up only when each one can still fit a showing's day, time,
+   hall, and numbers on one line — so the column count follows the room
+   the page actually has rather than a guess at the device. */
 .movie-grid {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 350px), 1fr));
   gap: 10px;
-}
-
-@media (min-width: 560px) {
-  .movie-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-@media (min-width: 1100px) {
-  .movie-grid {
-    grid-template-columns: 1fr 1fr 1fr;
-  }
 }
 
 .movie-tile {
@@ -1150,12 +1282,42 @@ a.tile-show:focus-visible {
   gap: 4px;
 }
 
+.movie-tile-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.movie-tile-head .done-tag {
+  margin-top: 1px;
+}
+
 .movie-tile-title {
   margin: 0;
+  min-width: 0;
   font-size: 0.98rem;
   font-weight: 800;
   line-height: 1.2;
   letter-spacing: -0.01em;
+}
+
+/* A film with nothing left to play is crossed out and greyed, poster
+   included, so a long program can be read from the top down. */
+.movie-tile.all-done {
+  background: color-mix(in srgb, var(--bg) 50%, var(--surface));
+}
+
+.movie-tile.all-done .movie-tile-title {
+  color: color-mix(in srgb, var(--ink) 55%, var(--muted));
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+  text-decoration-color: color-mix(in srgb, var(--done) 55%, transparent);
+}
+
+.movie-tile.all-done .movie-poster,
+.movie-tile.all-done .movie-poster-fallback {
+  filter: grayscale(0.75);
 }
 
 .movie-tile-meta {
@@ -1185,6 +1347,22 @@ a.tile-show:focus-visible {
   text-decoration: none;
 }
 
+/* Size the day, time, and number columns to the widest row in the tile, so
+   every showing's fields sit on the same vertical lines without reserving
+   room for labels this film never uses. */
+@supports (grid-template-columns: subgrid) {
+  .tile-shows {
+    display: grid;
+    grid-template-columns: auto auto minmax(0, 1fr) auto;
+    column-gap: 8px;
+  }
+
+  .tile-show {
+    grid-column: 1 / -1;
+    grid-template-columns: subgrid;
+  }
+}
+
 @media (hover: hover) {
   a.tile-show:hover {
     outline: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
@@ -1200,7 +1378,24 @@ a.tile-show:focus-visible {
 }
 
 .tile-show.done {
-  opacity: 0.55;
+  background: color-mix(in srgb, var(--done-soft) 75%, var(--surface));
+  box-shadow: inset 3px 0 0 color-mix(in srgb, var(--done) 70%, transparent);
+  color: color-mix(in srgb, var(--ink) 60%, var(--muted));
+}
+
+.tile-show.done .tile-day,
+.tile-show.done .tile-time {
+  text-decoration: line-through;
+  text-decoration-thickness: 1.5px;
+  text-decoration-color: color-mix(in srgb, var(--done) 65%, transparent);
+}
+
+.tile-show.done .tile-screen {
+  color: color-mix(in srgb, var(--accent) 55%, var(--muted));
+}
+
+.tile-show.done .tile-sold {
+  color: inherit;
 }
 
 .tile-day {
@@ -2011,8 +2206,22 @@ a.tile-show:focus-visible {
   background: color-mix(in srgb, var(--accent-soft) 55%, var(--surface));
 }
 
+/* Where the chart is unfolded by width, its strip is a heading rather
+   than a control: no chevron, no "open me" accent. */
+.show-row > .seat-strip.static {
+  cursor: default;
+  color: var(--muted);
+  background: color-mix(in srgb, var(--bg) 28%, var(--surface));
+}
+
+.show-row.done > .seat-strip,
+.show-row.done .seat-chart,
+.show-row.done .seat-note {
+  background: color-mix(in srgb, var(--bg) 58%, var(--surface));
+}
+
 @media (hover: hover) {
-  .seat-strip:hover {
+  .seat-strip:not(.static):hover {
     color: var(--ink);
   }
 }
@@ -2395,15 +2604,107 @@ a.tile-show:focus-visible {
   transition: left 0.5s cubic-bezier(0.25, 0.9, 0.35, 1);
 }
 
-/* —— Responsive: tablet & desktop ——
-   Mobile stays identical. From ~860px the shared column widens so header,
-   lists, and stats share one aligned stage; day cards stop being narrower
-   than the timeline above them and flow into two columns. */
+/* —— Responsive: tablet ——
+   Phones stay identical. From ~700px (iPad portrait and up) the day list
+   stops sitting narrower than the timeline above it, cards get the room
+   their numbers need, and every seat map is unfolded from the start —
+   each hall on a stage of one shape, so a 110-seat hall and a 286-seat
+   hall take the same room instead of each ending wherever its rows do. */
+@media (min-width: 700px) {
+  :root {
+    /* Use the width a tablet actually has: the phone-sized column left
+       both the day list and the movie tiles fighting for room. */
+    --page-max: 860px;
+    --page-pad-x: 20px;
+    --day-max: none;
+    /* One stage shape for every hall: its height follows the column, not
+       the number of rows DX happens to have put in that auditorium. The
+       ratio suits a typical wide auditorium, so most halls fill the stage
+       and the rest sit centred in it rather than shrinking the card. */
+    --seat-stage-ratio: 2 / 1;
+    --seat-stage-max: 320px;
+  }
+
+  .show-card {
+    grid-template-columns: 56px minmax(0, 1fr) 84px;
+    gap: 12px;
+    padding: 12px;
+  }
+
+  .poster,
+  .poster-fallback {
+    width: 56px;
+    height: 80px;
+  }
+
+  /* Ratio, bar, and flags all end on the column's right edge. */
+  .ticket-col {
+    min-width: 0;
+  }
+
+  .occ-track {
+    width: 100%;
+  }
+
+  .seat-panel {
+    grid-template-rows: 1fr;
+  }
+
+  /* The chart is one surface filling whatever room the row gives it. Hall
+     and legend stay pinned under the strip so neighbouring shows read off
+     the same two lines; a note about held or closed seats goes last. */
+  .seat-wrap {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .seat-wrap > .seat-chart,
+  .seat-wrap > .seat-note {
+    flex: 1 1 auto;
+  }
+
+  .seat-chart {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .seat-notes {
+    margin-top: auto;
+    padding-top: 6px;
+  }
+
+  .seat-svg {
+    width: 100%;
+    height: auto;
+    aspect-ratio: var(--seat-stage-ratio);
+    max-height: var(--seat-stage-max);
+  }
+
+  /* Loading and error strips hold some of the chart's place so the page
+     settles instead of jumping as halls arrive. */
+  .seat-note {
+    min-height: 104px;
+    justify-content: center;
+  }
+
+  .tile-shows {
+    gap: 5px;
+    column-gap: 9px;
+  }
+
+  .tile-show {
+    padding: 6px 9px;
+  }
+}
+
+/* —— Responsive: desktop ——
+   From ~860px the shared column widens so header, lists, and stats share
+   one aligned stage, and the day list flows into two columns whose cards
+   and halls line up row by row. */
 @media (min-width: 860px) {
   :root {
     --page-max: 900px;
     --page-pad-x: 20px;
-    --day-max: none;
     --nav-max: 460px;
   }
 
@@ -2422,7 +2723,7 @@ a.tile-show:focus-visible {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px 14px;
-    align-items: start;
+    align-items: stretch;
     max-width: none;
   }
 
@@ -2436,16 +2737,44 @@ a.tile-show:focus-visible {
     margin: 2px 0;
   }
 
-  .show-card {
-    grid-template-columns: 56px minmax(0, 1fr) 64px;
-    gap: 12px;
-    padding: 12px;
+  /* Fallback without subgrid: neighbouring shows are as tall as the taller
+     one and the card takes the slack, so rows still end level. */
+  .day-block > .show-row {
+    height: 100%;
   }
 
-  .poster,
-  .poster-fallback {
-    width: 56px;
-    height: 80px;
+  .day-block > .show-row > .show-card {
+    flex: 1 1 auto;
+    align-content: start;
+  }
+
+  .day-block > .show-card {
+    height: 100%;
+    align-content: start;
+  }
+
+  /* With subgrid the card, its strip, and its hall each get a track shared
+     with the show beside it: all three line up across the row however the
+     titles wrap, whether an admission strip is showing, and whichever
+     auditorium each one is playing in. */
+  @supports (grid-template-rows: subgrid) {
+    .day-block > .show-row,
+    .day-block > .show-card {
+      grid-row: span 3;
+    }
+
+    .day-block > .show-row {
+      display: grid;
+      grid-template-rows: subgrid;
+      /* The card, strip, and chart are one stacked surface — the day's row
+         gap belongs between shows, not inside one. */
+      row-gap: 0;
+      height: auto;
+    }
+
+    .day-block > .show-row > .show-card {
+      flex: none;
+    }
   }
 
   .content {
