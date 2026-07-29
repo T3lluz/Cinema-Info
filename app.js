@@ -3965,7 +3965,10 @@ function dropRemovedShows() {
   if (!state?.shows) return empty;
   const now = Date.now();
   const removed = state.shows.filter(
-    (s) => s.eventStatus === "gone" && s.start.getTime() > now
+    (s) =>
+      s.eventStatus === "gone" &&
+      s.start instanceof Date &&
+      s.start.getTime() > now
   );
   if (!removed.length) return empty;
 
