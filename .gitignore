@@ -1,0 +1,7 @@
+# Credentials belong in the environment, never in the repo.
+.env
+.env.*
+!.env.example
+
+node_modules/
+.DS_Store
