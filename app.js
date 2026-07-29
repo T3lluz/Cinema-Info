@@ -25,6 +25,9 @@ const SCAN_FRESH_MS = 60 * 1000;
 /** An open seat chart re-reads the hall no more often than this. */
 const SEAT_FRESH_MS = 45 * 1000;
 
+/** How long the program snapshot is trusted before it is read again. */
+const PROGRAM_RECHECK_MS = 10 * 60 * 1000;
+
 /**
  * Doors are busiest right around showtime. From this long before a
  * show's start until this long after it, its check-in count and any
@@ -407,6 +410,8 @@ let lang = "nb";
 let theme = "light";
 let enrichedAll = false;
 let lastLiveAt = 0;
+/** When the program snapshot was last read, so a long-open tab re-reads it. */
+let lastProgramAt = 0;
 /** @type {null | { type: 'dxapi'|'pat'|'session'|'auth0'|'dxweb', token: string, scheme?: string, email?: string, partnerId?: string, connectedAt?: string, refreshToken?: string }} */
 let dxAuth = loadDxAuth();
 /** Last outcome of syncing check-in counts, surfaced under Settings → DX. */
@@ -467,11 +472,14 @@ async function init() {
   );
 
   // Keep numbers live while the tab is open (e.g. box-office screen).
-  setInterval(() => {
-    if (document.visibilityState === "visible") {
-      refreshLive();
-      refreshOpenSeatCharts();
-    }
+  // The programme itself is re-read on the slower cycle: a screen left
+  // on for days should still notice a film that was added, moved or
+  // taken off, not just the counts of the films it already knows.
+  setInterval(async () => {
+    if (document.visibilityState !== "visible") return;
+    if (await reloadProgramIfChanged()) return;
+    refreshLive();
+    refreshOpenSeatCharts();
   }, 120_000);
 
   // Around showtime the door picture changes with every scan. While any
@@ -497,9 +505,12 @@ async function init() {
       markDoneDays();
     }
   }, 60_000);
-  document.addEventListener("visibilitychange", () => {
+  document.addEventListener("visibilitychange", async () => {
     if (document.visibilityState !== "visible") return;
     rollToTodayIfStale();
+    if (Date.now() - lastProgramAt > PROGRAM_RECHECK_MS) {
+      if (await reloadProgramIfChanged()) return;
+    }
     if (Date.now() - lastLiveAt > 120_000) refreshLive();
   });
 
@@ -1175,13 +1186,54 @@ function persistHistory(shows) {
   }
 }
 
+/** Forget showings for good, so a removed film cannot come back on reload. */
+function forgetShows(ids) {
+  const gone = ids instanceof Set ? ids : new Set(ids);
+  if (!gone.size) return;
+  try {
+    const hist = loadHistory();
+    for (const id of gone) delete hist[id];
+    localStorage.setItem(HISTORY_KEY, JSON.stringify(hist));
+  } catch (err) {
+    console.warn("Could not forget removed shows", err);
+  }
+}
+
+/**
+ * Has this cached showing been taken off the programme?
+ *
+ * The snapshot carries every showing Buen has programmed, history
+ * included, so anything cached but missing from it is gone — as long as
+ * the snapshot actually speaks for that date. A day it says nothing
+ * about (older than its window, or a snapshot that came up short) is
+ * left alone rather than quietly emptied.
+ */
+function isOffProgram(show, snapshotDays, now) {
+  if (show.start instanceof Date && show.start.getTime() > now) return true;
+  return snapshotDays.has(show.dayKey);
+}
+
 function mergeShows(snapshotShows) {
   const byId = new Map();
+  const snapshotIds = new Set(snapshotShows.map((s) => s.id));
+  const snapshotDays = new Set(snapshotShows.map((s) => s.dayKey));
+  const now = Date.now();
+  const removed = new Set();
 
   for (const raw of Object.values(loadHistory())) {
     if (!raw?.id) continue;
-    byId.set(raw.id, normalizeCachedShow(raw));
+    const cached = normalizeCachedShow(raw);
+    if (
+      snapshotIds.size &&
+      !snapshotIds.has(cached.id) &&
+      isOffProgram(cached, snapshotDays, now)
+    ) {
+      removed.add(cached.id);
+      continue;
+    }
+    byId.set(cached.id, cached);
   }
+  forgetShows(removed);
 
   for (const show of snapshotShows) {
     const next = normalizeCachedShow(show);
@@ -1398,11 +1450,16 @@ async function setActiveTab(tab, { skipRender = false } = {}) {
   } else if (tab === "settings") renderSettings();
 }
 
-async function load({ forceLive = false } = {}) {
-  setLoading(true);
-  enrichedAll = false;
+async function load({ forceLive = false, silent = false, ifChanged = false } = {}) {
+  if (!silent) setLoading(true);
   try {
     const data = await loadProgramSnapshot();
+    lastProgramAt = Date.now();
+    if (ifChanged && state && data.updatedAt && data.updatedAt === state.updatedAt) {
+      return false;
+    }
+
+    enrichedAll = false;
     const shows = mergeShows(data.shows || []);
     persistHistory(shows);
 
@@ -1427,12 +1484,27 @@ async function load({ forceLive = false } = {}) {
 
     applyPreviewScanned();
     renderActiveView();
+    return true;
   } catch (err) {
     console.error(err);
-    showError(err?.message || t("loadError"));
+    // A silent re-read failing changes nothing: the programme on screen
+    // is still the last good one, so leave it be.
+    if (!silent) showError(err?.message || t("loadError"));
+    else console.warn("Program re-check failed", err);
+    return false;
   } finally {
-    setLoading(false);
+    if (!silent) setLoading(false);
   }
+}
+
+/**
+ * Re-read the snapshot in the background and rebuild the programme when
+ * it has changed since the copy on screen. Returns true when it did, so
+ * the caller can skip the live pass that came with it.
+ */
+async function reloadProgramIfChanged() {
+  if (!state) return false;
+  return load({ forceLive: true, silent: true, ifChanged: true });
 }
 
 function renderActiveView() {
@@ -2258,10 +2330,12 @@ function seatLayoutOf(show, locationId) {
 /**
  * Is a seat chart worth offering for this show? Any numbered hall with
  * a DX event — including when nothing has sold yet — and never for
- * halls DX has already said have no numbered seats.
+ * halls DX has already said have no numbered seats, nor for a showing
+ * whose event DX has deleted.
  */
 function seatChartOffered(show) {
   if (!show.eventId || show.eventStatus === "unavailable") return false;
+  if (show.eventStatus === "gone") return false;
   if (!scanVisible()) return false;
   const chart = seatCharts.get(String(show.eventId));
   if (chart?.status === "empty") return false;
@@ -2961,7 +3035,12 @@ function renderTicketCol(show) {
   if (show.eventStatus === "unavailable") {
     return `<div class="ticket-col"><span class="ticket-missing">—</span></div>`;
   }
-  if (show.eventStatus === "error") {
+  // A deleted event with numbers behind it is a show that played and was
+  // tidied away in DX; with nothing behind it there is nothing to show.
+  if (
+    show.eventStatus === "error" ||
+    (show.eventStatus === "gone" && show.sold == null)
+  ) {
     return `<div class="ticket-col"><span class="ticket-missing">${escapeHtml(
       t("error")
     )}</span></div>`;
@@ -3774,7 +3853,7 @@ function segSelect(btn) {
 
 async function enrichVisibleDay({ force = false } = {}) {
   if (!state?.shows || !selectedDay) return;
-  const dayShows = state.shows.filter(
+  let dayShows = state.shows.filter(
     (s) => s.dayKey === selectedDay && s.eventId
   );
   if (!dayShows.length) return;
@@ -3785,10 +3864,13 @@ async function enrichVisibleDay({ force = false } = {}) {
     await Promise.all(dayShows.map((show) => enrichOne(show)));
     if (token !== enrichToken) return;
 
+    const removed = dropRemovedShows();
+    if (removed.size) dayShows = dayShows.filter((s) => !removed.has(s.id));
     persistHistory(dayShows);
     lastLiveAt = Date.now();
     applyPreviewScanned();
-    if (activeTab === "day") renderDay();
+    if (removed.size) renderActiveView();
+    else if (activeTab === "day") renderDay();
     els.statusText.textContent = t("liveAt", { time: formatClock(new Date()) });
   } finally {
     setBusy(false);
@@ -3828,10 +3910,12 @@ async function enrichAllShows({ force = false } = {}) {
     }
 
     if (token !== enrichToken) return;
-    persistHistory(targets);
+    const removed = dropRemovedShows();
+    persistHistory(targets.filter((s) => !removed.has(s.id)));
     enrichedAll = true;
     lastLiveAt = Date.now();
     applyPreviewScanned();
+    if (removed.size) renderActiveView();
     els.statusText.textContent = t("liveAt", { time: formatClock(new Date()) });
   } finally {
     setBusy(false);
@@ -3859,9 +3943,45 @@ async function enrichOne(show) {
     }
     show.eventStatus = "ok";
   } catch (err) {
+    // A deleted event means the showing has left the programme; a
+    // network hiccup means nothing, so only DX's own 404 counts.
+    if (err.status === 404 || err.status === 410) {
+      show.eventStatus = "gone";
+      return;
+    }
     console.warn("Live event fetch failed", show.eventId, err);
     if (show.sold == null) show.eventStatus = "error";
   }
+}
+
+/**
+ * Take showings DX has deleted out of the app. A show that has already
+ * started stays — it played, and its numbers are history — but one still
+ * to come is simply not happening, so it should not sit in the list
+ * until the next nightly snapshot says so.
+ */
+function dropRemovedShows() {
+  const empty = new Set();
+  if (!state?.shows) return empty;
+  const now = Date.now();
+  const removed = state.shows.filter(
+    (s) => s.eventStatus === "gone" && s.start.getTime() > now
+  );
+  if (!removed.length) return empty;
+
+  const ids = new Set(removed.map((s) => s.id));
+  const daysBefore = new Set(state.shows.map((s) => s.dayKey));
+  state.shows = state.shows.filter((s) => !ids.has(s.id));
+  forgetShows(ids);
+  for (const show of removed) {
+    seatCharts.delete(String(show.eventId));
+    openSeatCharts.delete(show.id);
+  }
+
+  // A day can lose its last showing, which changes the day strip.
+  const daysAfter = new Set(state.shows.map((s) => s.dayKey));
+  if (daysBefore.size !== daysAfter.size) populateFilters();
+  return ids;
 }
 
 /** Is `now` inside the busy door window around this show's start time? */
@@ -4015,7 +4135,11 @@ async function fetchDxEvent(show) {
       Referer: show.ticketUrl || "https://checkout.ebillett.no/",
     },
   });
-  if (!res.ok) throw new Error(`DX ${res.status}`);
+  if (!res.ok) {
+    const err = new Error(`DX ${res.status}`);
+    err.status = res.status;
+    throw err;
+  }
   return res.json();
 }
 

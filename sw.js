@@ -1,12 +1,12 @@
 /* Cinema Info service worker: network-first with cache fallback,
    so the app opens instantly and still works offline with the
    last-seen program. Live DX calls are never cached. */
-const CACHE = "cinema-info-v29";
+const CACHE = "cinema-info-v30";
 const PRECACHE = [
   "./",
   "./index.html",
   "./styles.css?v=31",
-  "./app.js?v=27",
+  "./app.js?v=28",
   "./favicon.svg",
   "./apple-touch-icon.png",
   "./icons/icon-192.png",
@@ -52,14 +52,26 @@ self.addEventListener("fetch", (event) => {
 
   // Same-origin app files + data: network first, fall back to cache.
   if (url.origin === self.location.origin) {
+    // The app cache-busts the program snapshot on every read, so it is
+    // stored under its plain path — otherwise a tab left open all day
+    // would file away a copy per request and never hit any of them.
+    const isProgram = url.pathname.endsWith("program.json");
+    const key = isProgram ? url.origin + url.pathname : event.request;
     event.respondWith(
       fetch(event.request)
-        .then((res) => {
-          const copy = res.clone();
-          caches.open(CACHE).then((cache) => cache.put(event.request, copy));
-          return res;
+        .then(async (res) => {
+          // Never let an error page overwrite the last good copy, and
+          // answer with that copy instead when the server is unhappy —
+          // a 500 from Pages should read like being offline, not like an
+          // empty programme.
+          if (res.ok) {
+            const copy = res.clone();
+            caches.open(CACHE).then((cache) => cache.put(key, copy));
+            return res;
+          }
+          return (await caches.match(key, { ignoreSearch: isProgram })) || res;
         })
-        .catch(() => caches.match(event.request, { ignoreSearch: url.pathname.endsWith("program.json") }))
+        .catch(() => caches.match(key, { ignoreSearch: isProgram }))
     );
     return;
   }
