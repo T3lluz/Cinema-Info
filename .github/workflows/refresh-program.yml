@@ -1,15 +1,23 @@
 name: Refresh program snapshot
 
 # Buen's program API drops a show as soon as it starts, and the fetch
-# script only rescues the last two days from the previous snapshot. If
-# nobody runs it for a week, those days are gone for good — and with them
-# the DX event ids the app needs to look up who scanned their ticket.
-# Running nightly keeps the 120-day history accumulating on its own.
+# script re-checks only the last two weeks of those against DX. If nobody
+# runs it for longer than that, those days are gone for good — and with
+# them the DX event ids the app needs to look up who scanned their
+# ticket. Running nightly keeps the 120-day history accumulating on its
+# own.
+#
+# The midday run is about the programme rather than history: a film added
+# or moved during office hours should be in the app the same afternoon,
+# not the next morning. Films *removed* need no waiting — the app asks DX
+# about each showing and drops one whose event is gone.
 
 on:
   schedule:
     # 01:10 Europe/Oslo (after the last show of the evening has ended).
     - cron: "10 23 * * *"
+    # 13:10 Europe/Oslo, before the first showing of the afternoon.
+    - cron: "10 11 * * *"
   workflow_dispatch:
 
 permissions:
