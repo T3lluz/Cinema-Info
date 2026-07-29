@@ -39,6 +39,9 @@ const HOT_POLL_MS = 5 * 1000;
 const HOT_FRESH_MS = 4 * 1000;
 /** Hall geometry only changes when someone rebuilds an auditorium. */
 const SEAT_LAYOUT_TTL_MS = 30 * 24 * 60 * 60 * 1000;
+/** Bumped when the layout shape changes, so cached halls are refetched
+ * (v2: blocked seats are included and flagged instead of dropped). */
+const SEAT_LAYOUT_VERSION = 2;
 
 /** Example scanned counts for UI preview (`?previewScanned=1`). */
 const PREVIEW_SCANNED = new URLSearchParams(location.search).has(
@@ -93,9 +96,10 @@ const I18N = {
     seatSold: "Solgt",
     seatWaiting: "Ikke skannet",
     seatIn: "Inne",
+    seatReserved: "Reservert",
+    seatBlocked: "Stengt",
     seatUnseated: "{n} uten fast plass",
     seatReservedNote: "{n} reservert vises ikke",
-    seatBlockedNote: "{n} plasser er stengt for denne forestillingen",
     seatPicked: "Rad {row} · Plass {seat} — {state}",
     seatAria:
       "Salkart for {screen}: {sold} av {capacity} plasser solgt, {scanned} skannet inn.",
@@ -248,9 +252,10 @@ const I18N = {
     seatSold: "Sold",
     seatWaiting: "Not scanned",
     seatIn: "Inside",
+    seatReserved: "Reserved",
+    seatBlocked: "Blocked",
     seatUnseated: "{n} without a seat",
     seatReservedNote: "{n} reserved not shown",
-    seatBlockedNote: "{n} seats are closed for this showing",
     seatPicked: "Row {row} · Seat {seat} — {state}",
     seatAria:
       "Seat map for {screen}: {sold} of {capacity} seats sold, {scanned} scanned in.",
@@ -604,7 +609,15 @@ function describeSeat(seat) {
   const state = seat.dataset.state;
   const phase = seat.closest(".seat-chart")?.classList.contains("phase-sales");
   const label =
-    state === "2" ? t("seatIn") : state === "1" ? t(phase ? "seatSold" : "seatWaiting") : t("seatFree");
+    state === "2"
+      ? t("seatIn")
+      : state === "1"
+        ? t(phase ? "seatSold" : "seatWaiting")
+        : state === "3"
+          ? t("seatReserved")
+          : state === "4"
+            ? t("seatBlocked")
+            : t("seatFree");
   caption.textContent = t("seatPicked", {
     row: seat.dataset.row,
     seat: seat.dataset.seat,
@@ -2199,7 +2212,11 @@ function loadSeatLayouts() {
     if (!raw || typeof raw !== "object") return {};
     const fresh = {};
     for (const [key, entry] of Object.entries(raw)) {
-      if (entry?.layout && Date.now() - (entry.at || 0) < SEAT_LAYOUT_TTL_MS) {
+      if (
+        entry?.layout &&
+        entry.v === SEAT_LAYOUT_VERSION &&
+        Date.now() - (entry.at || 0) < SEAT_LAYOUT_TTL_MS
+      ) {
         fresh[key] = entry;
       }
     }
@@ -2215,7 +2232,11 @@ function seatLayoutKey(partnerId, locationId) {
 
 function rememberSeatLayout(partnerId, locationId, layout) {
   if (!layout || locationId == null) return;
-  seatLayouts[seatLayoutKey(partnerId, locationId)] = { at: Date.now(), layout };
+  seatLayouts[seatLayoutKey(partnerId, locationId)] = {
+    at: Date.now(),
+    v: SEAT_LAYOUT_VERSION,
+    layout,
+  };
   try {
     localStorage.setItem(SEAT_MAP_KEY, JSON.stringify(seatLayouts));
   } catch (err) {
@@ -2592,17 +2613,28 @@ function renderSeatChart(show) {
   if (!layout) return `<div class="seat-note">${escapeHtml(t("seatMapNone"))}</div>`;
 
   const phase = seatPhaseOf(show, chart);
-  const taken = Object.keys(chart.seats).length;
-  const scannedSeats = Object.values(chart.seats).filter((s) => s === 2).length;
+  const states = Object.values(chart.seats);
+  const taken = states.filter((s) => s === 1 || s === 2).length;
+  const scannedSeats = states.filter((s) => s === 2).length;
+  const reservedSeats = states.filter((s) => s === 3).length;
   const free = Math.max(seatsOnSale(chart) - taken, 0);
 
-  // Held and closed-off seats have no coordinates DX will tell us about,
-  // so they are said in words rather than drawn in the wrong place.
-  const blocked = Math.max(layout.seats - (chart.capacity || layout.seats), 0);
+  // Closed-off seats: struck by this showing's statuses, or closed in
+  // the hall map itself — each seat counted once, however DX says it.
+  let blockedSeats = 0;
+  for (const row of layout.rows) {
+    for (const seat of row.seats) {
+      const state = chart.seats[seat.i];
+      if (state === 4 || (seat.b && !state)) blockedSeats++;
+    }
+  }
+
+  // A reservation without a seat on the map (or a hall drawn before the
+  // hold was placed) is still said in words, so no seat goes missing.
+  const hiddenReserved = Math.max((chart.reserved || 0) - reservedSeats, 0);
   const notes = [
     chart.unseated ? t("seatUnseated", { n: chart.unseated }) : "",
-    chart.reserved ? t("seatReservedNote", { n: chart.reserved }) : "",
-    blocked ? t("seatBlockedNote", { n: blocked }) : "",
+    hiddenReserved ? t("seatReservedNote", { n: hiddenReserved }) : "",
   ].filter(Boolean);
 
   const legend =
@@ -2616,6 +2648,8 @@ function renderSeatChart(show) {
           ["sold", t("seatWaiting"), taken - scannedSeats],
           ["in", t("seatIn"), scannedSeats],
         ];
+  if (reservedSeats) legend.push(["reserved", t("seatReserved"), reservedSeats]);
+  if (blockedSeats) legend.push(["blocked", t("seatBlocked"), blockedSeats]);
 
   return `
     <div class="seat-chart phase-${phase}">
@@ -2674,21 +2708,34 @@ function seatChartSvg(layout, seats, show) {
     `<text class="seat-row-label" x="${x.toFixed(1)}" y="${row.y}" dy="0.34em"
        font-size="${(pitch.y * 0.62).toFixed(1)}">${escapeHtml(row.name)}</text>`;
 
+  const classOf = { 1: "sold", 2: "in", 3: "reserved", 4: "blocked" };
   const rows = layout.rows
     .map((row) => {
       const seatEls = row.seats
         .map((seat) => {
-          const state = seats[seat.i] || 0;
-          const cls = state === 2 ? "in" : state === 1 ? "sold" : "free";
-          return `<rect class="seat ${cls}" x="${(seat.x - w / 2).toFixed(
+          // A seat the hall map itself closes off is blocked even when
+          // this showing's statuses never mention it.
+          const state = seats[seat.i] || (seat.b ? 4 : 0);
+          const cls = classOf[state] || "free";
+          const x = seat.x - w / 2;
+          const y = row.y - h / 2;
+          // Closed seats carry a strike through the square, so colour is
+          // not the only thing separating them from sold ones.
+          const strike =
+            state === 4
+              ? `<line class="seat-strike" x1="${(x + w * 0.18).toFixed(
+                  1
+                )}" y1="${(y + h * 0.82).toFixed(1)}" x2="${(
+                  x + w * 0.82
+                ).toFixed(1)}" y2="${(y + h * 0.18).toFixed(1)}" />`
+              : "";
+          return `<rect class="seat ${cls}" x="${x.toFixed(1)}" y="${y.toFixed(
             1
-          )}" y="${(row.y - h / 2).toFixed(1)}" width="${w.toFixed(
-            1
-          )}" height="${h.toFixed(1)}" rx="${(w * 0.22).toFixed(
-            1
-          )}" data-row="${escapeHtml(row.name)}" data-seat="${
+          )}" width="${w.toFixed(1)}" height="${h.toFixed(1)}" rx="${(
+            w * 0.22
+          ).toFixed(1)}" data-row="${escapeHtml(row.name)}" data-seat="${
             seat.n
-          }" data-state="${state}" />`;
+          }" data-state="${state}" />${strike}`;
         })
         .join("");
       return `<g class="seat-row">
@@ -2707,7 +2754,7 @@ function seatChartSvg(layout, seats, show) {
     )} ${vb.h.toFixed(1)}" role="img" aria-label="${escapeHtml(
       t("seatAria", {
         screen: show.screen,
-        sold: Object.keys(seats).length,
+        sold: Object.values(seats).filter((s) => s === 1 || s === 2).length,
         capacity: layout.seats,
         scanned: Object.values(seats).filter((s) => s === 2).length,
       })
@@ -2764,11 +2811,24 @@ function previewSeatChart(show) {
   );
   all.sort((a, b) => a.weight - b.weight);
 
-  const sold = Math.min(Number(show.sold) || 0, all.length);
-  const scanned = Math.min(Number(show.scanned) || 0, sold);
+  // The back row's corner seats are closed off, so the preview also
+  // shows how blocked seats read; holds go in after the sold block.
   const seats = {};
-  all.slice(0, sold).forEach((seat, i) => {
+  const backRow = rows[rows.length - 1];
+  if (backRow && backRow.seats.length > 6) {
+    seats[backRow.seats[0].i] = 4;
+    seats[backRow.seats[backRow.seats.length - 1].i] = 4;
+  }
+
+  const open = all.filter((seat) => !seats[seat.id]);
+  const sold = Math.min(Number(show.sold) || 0, open.length);
+  const scanned = Math.min(Number(show.scanned) || 0, sold);
+  const reserved = Math.min(Number(show.reserved) || 0, open.length - sold);
+  open.slice(0, sold).forEach((seat, i) => {
     seats[seat.id] = i < scanned ? 2 : 1;
+  });
+  open.slice(sold, sold + reserved).forEach((seat) => {
+    seats[seat.id] = 3;
   });
 
   const locationId = `preview-${show.screen}`;

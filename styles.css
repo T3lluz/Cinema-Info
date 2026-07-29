@@ -11,6 +11,9 @@
   --ok-soft: #e5f5ec;
   --warn: #9a6700;
   --warn-soft: #fff4d6;
+  /* Reserved (held) seats — orange, clearly apart from sold red and
+     door-phase amber. */
+  --hold: #e07b12;
   --done: #6f6964;
   --done-soft: #ebe7e2;
   --nav-bg: #ffffff;
@@ -39,6 +42,7 @@
   --ok-soft: #203c2d;
   --warn: #e8ba55;
   --warn-soft: #3b3118;
+  --hold: #f0913c;
   --done: #a79d92;
   --done-soft: #363029;
   --nav-bg: #2a2522;
@@ -2400,6 +2404,26 @@ a.tile-show:focus-visible {
   stroke: none;
 }
 
+.seat.reserved {
+  fill: var(--hold);
+  stroke: none;
+}
+
+/* A closed-off seat: greyed out with a strike through it, so it cannot
+   be read as merely unsold. */
+.seat.blocked {
+  fill: color-mix(in srgb, var(--muted) 22%, var(--surface));
+  stroke: color-mix(in srgb, var(--muted) 55%, transparent);
+}
+
+.seat-strike {
+  stroke: color-mix(in srgb, var(--muted) 85%, var(--ink));
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+  pointer-events: none;
+}
+
 @media (hover: hover) {
   .seat:hover {
     stroke: var(--ink);
@@ -2449,6 +2473,22 @@ a.tile-show:focus-visible {
 .seat-key.in .seat-swatch {
   background: var(--ok);
   border-color: transparent;
+}
+
+.seat-key.reserved .seat-swatch {
+  background: var(--hold);
+  border-color: transparent;
+}
+
+.seat-key.blocked .seat-swatch {
+  background: linear-gradient(
+      to top right,
+      transparent 42%,
+      color-mix(in srgb, var(--muted) 85%, var(--ink)) 42% 58%,
+      transparent 58%
+    ),
+    color-mix(in srgb, var(--muted) 22%, var(--surface));
+  border-color: color-mix(in srgb, var(--muted) 55%, transparent);
 }
 
 .seat-picked {
