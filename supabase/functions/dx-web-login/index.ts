@@ -420,8 +420,9 @@ async function fetchScanned(body: {
 /* —— Seat maps ——————————————————————————————————————————————
  *
  * A hall is `/seatMaps` (geometry: rows of seats at x/y, some blocked)
- * crossed with the event's purchase list (which of those seat ids were
- * sold, and which of those were scanned at the door).
+ * crossed with `/seatStatuses` for the showing's ticket sale (which of
+ * those seat ids are reserved or closed off) and the event's purchase
+ * list (which were sold, and which of those were scanned at the door).
  *
  * DX numbers a seat one higher in the map than on the printed ticket —
  * every row starts at 2 — so the offset is derived from the map itself
@@ -535,19 +536,23 @@ function cacheHall(partnerId: string, hall: HallMap) {
 }
 
 /**
- * The hall as the client should draw it: printed seat numbers, blocked
- * seats left out unless somebody is sitting in one anyway, and the
- * bounding box plus seat pitch so the drawing scales without measuring.
+ * The hall as the client should draw it: printed seat numbers, seats the
+ * map itself closes off flagged with `b` so they can be struck through,
+ * and the bounding box plus seat pitch so the drawing scales without
+ * measuring.
  */
-function buildLayout(hall: HallMap, occupied: Set<number>) {
+function buildLayout(hall: HallMap) {
   const rows = [];
   const xs: number[] = [];
   const ys: number[] = [];
 
   for (const row of hall.rows) {
-    const seats = row.seats
-      .filter((seat) => !seat.blocked || occupied.has(seat.i))
-      .map((seat) => ({ i: seat.i, n: seat.n - hall.offset, x: seat.x }));
+    const seats = row.seats.map((seat) => ({
+      i: seat.i,
+      n: seat.n - hall.offset,
+      x: seat.x,
+      ...(seat.blocked ? { b: 1 as const } : {}),
+    }));
     if (!seats.length) continue;
     const y = row.seats[0].y;
     for (const seat of seats) xs.push(seat.x);
@@ -580,8 +585,43 @@ function pitchOf(values: number[]) {
   return Number.isFinite(pitch) && pitch > 0 ? pitch : 20;
 }
 
-/** Seat states the client paints: 1 sold, 2 sold and scanned in. */
-type SeatState = 1 | 2;
+/** Seat states the client paints: 1 sold, 2 sold and scanned in,
+ * 3 held by a reservation, 4 closed off for this showing. */
+type SeatState = 1 | 2 | 3 | 4;
+
+/**
+ * Per-seat state for one showing, from the same endpoint the DX admin's
+ * own seat map reads. Every seat of the hall has a row; only the ones a
+ * ticket cannot be sold for — reserved or blocked — are worth carrying.
+ * A missing or failing endpoint degrades to sold/scanned only.
+ */
+async function loadSeatStatuses(
+  session: Session,
+  partnerId: string,
+  ticketSaleId: number,
+) {
+  const held: Record<string, SeatState> = {};
+  const res = await session.get(
+    `/api/v1/partners/${partnerId}/seatStatuses?ticketSaleIds=${ticketSaleId}`,
+  );
+  if (!res.ok) {
+    session.log.push(`seatStatuses ${ticketSaleId} → HTTP ${res.status}`);
+    return held;
+  }
+  const rows = ((await res.json()) as { data?: unknown[] })?.data;
+  if (!Array.isArray(rows)) {
+    session.log.push(`seatStatuses ${ticketSaleId} → no data in response`);
+    return held;
+  }
+  for (const raw of rows) {
+    const row = raw as Record<string, unknown>;
+    const seatId = Number(row.seatId);
+    if (!seatId) continue;
+    if (row.status === "reserved") held[seatId] = 3;
+    else if (row.status === "blocked") held[seatId] = 4;
+  }
+  return held;
+}
 
 async function fetchSeats(body: {
   token?: string;
@@ -624,7 +664,15 @@ async function fetchSeats(body: {
         throw new Error(`DX purchases ${purchaseRes.status}`);
       }
 
-      const seats: Record<string, SeatState> = {};
+      // Reserved and blocked seats first, then tickets on top: a seat
+      // with a ticket on it is sold whatever hold DX still lists for it.
+      const ticketSaleId = Number(sale.id) || 0;
+      const seats: Record<string, SeatState> =
+        ticketSaleId && !freeSeating
+          ? await loadSeatStatuses(session, partnerId, ticketSaleId)
+          : {};
+      const holds = Object.keys(seats).length;
+
       let sold = 0;
       let scanned = 0;
       let unseated = 0;
@@ -640,10 +688,14 @@ async function fetchSeats(body: {
         // Two tickets can share a seat when one is a companion pass;
         // a scanned one always wins over an unscanned one.
         const state: SeatState = ticket.used ? 2 : 1;
-        if ((seats[seatId] || 0) < state) seats[seatId] = state;
+        const current = seats[seatId] as SeatState | undefined;
+        if (!current || current > 2 || state > current) {
+          seats[seatId] = state;
+        }
       });
       log.push(
-        `${eventId} → ${scanned}/${sold} used, ${Object.keys(seats).length} seats`,
+        `${eventId} → ${scanned}/${sold} used, ${holds} held/blocked, ` +
+          `${Object.keys(seats).length} seats`,
       );
 
       const result: Record<string, unknown> = {
@@ -671,7 +723,7 @@ async function fetchSeats(body: {
         log.push(`no seat map for location ${locationId}`);
         return result;
       }
-      result.layout = buildLayout(hall, new Set(Object.keys(seats).map(Number)));
+      result.layout = buildLayout(hall);
       return result;
     },
     Boolean(body.debug),

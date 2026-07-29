@@ -61,6 +61,8 @@ row numbers down both sides — with one square per seat:
 | Red — *Solgt* | sold; the show has not opened its doors yet |
 | Amber — *Ikke skannet* | sold, and that guest has not arrived |
 | Green — *Inne* | sold and scanned at the door |
+| Orange — *Reservert* | held by a reservation, not yet paid or collected |
+| Struck through — *Stengt* | closed off, in the hall map or for this one showing |
 
 Red turns into amber/green the moment scanning becomes relevant, so
 before the doors open the chart answers "how is it selling?" and after
@@ -68,9 +70,10 @@ they open it answers "who is still missing?". Tap or hover a seat to
 read its row and number.
 
 Seats are matched by DX's own `seatId`, so a square is exactly the seat
-printed on the ticket. Two things DX gives no coordinates for are said
-in words under the chart instead of guessed at: reservations, and seats
-closed off for that one showing.
+printed on the ticket. Reserved and blocked seats come from the same
+`seatStatuses` DX's own seat map paints, so the chart here matches the
+one staff see in DX; only a hold DX lists without a seat on the map is
+said in words under the chart instead of guessed at.
 
 The hall geometry is fetched once per auditorium and kept on the device
 for a month; opening a chart after that costs one purchase-list lookup,
@@ -97,10 +100,12 @@ the DX session and returns just what the app draws:
   covers a dozen events and returns `{ eventId: { scanned, sold } }`,
   counting `used` tickets and leaving refunds out of both totals.
 - **Seats** (`action: "seats"`) answers for one event with
-  `{ seatId: 1 | 2 }` (sold / scanned) plus, the first time a device
-  meets an auditorium, its geometry from `/seatMaps/{locationId}`:
-  rows of seats at x/y, blocked seats dropped, and seat numbers shifted
-  to the ones printed on the tickets.
+  `{ seatId: 1 | 2 | 3 | 4 }` (sold / scanned / reserved / blocked —
+  holds and closed seats read from `/seatStatuses` for the showing's
+  ticket sale, tickets from the purchase list on top) plus, the first
+  time a device meets an auditorium, its geometry from
+  `/seatMaps/{locationId}`: rows of seats at x/y, map-blocked seats
+  flagged, and seat numbers shifted to the ones printed on the tickets.
 
 DX signs a session out after about three days, but the Auth0 SSO cookie
 behind it lasts longer; the function renews the session from that cookie
