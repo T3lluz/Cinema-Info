@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-30T11:47:41.805Z",
+  "updatedAt": "2026-07-30T23:33:59.413Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -977,11 +977,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92549/purchase?kanal=dxf",
       "eventId": "92549",
       "promoterId": "202",
-      "sold": 4,
+      "sold": 6,
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 110,
-      "available": 106
+      "available": 104
     },
     {
       "id": "UIP20241749-2026-07-30T17:30:00-Storsal",
@@ -1001,11 +1001,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92550/purchase?kanal=dxf",
       "eventId": "92550",
       "promoterId": "202",
-      "sold": 10,
+      "sold": 19,
       "eventStatus": "ok",
-      "reserved": 8,
+      "reserved": 0,
       "capacity": 246,
-      "available": 228
+      "available": 227
     },
     {
       "id": "EDI20240688-2026-07-30T19:30:00-Kinosal",
@@ -1024,11 +1024,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92337/purchase?kanal=dxf",
       "eventId": "92337",
       "promoterId": "202",
-      "sold": 93,
+      "sold": 105,
       "eventStatus": "ok",
-      "reserved": 2,
-      "capacity": 107,
-      "available": 12
+      "reserved": 0,
+      "capacity": 110,
+      "available": 5
     },
     {
       "id": "EDI20240688-2026-07-30T20:00:00-Storsal",
@@ -1047,11 +1047,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92785/purchase?kanal=dxf",
       "eventId": "92785",
       "promoterId": "202",
-      "sold": 20,
+      "sold": 73,
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 246,
-      "available": 226
+      "available": 173
     },
     {
       "id": "UIP20241749-2026-07-31T16:50:00-Storsal",
@@ -1071,11 +1071,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92551/purchase?kanal=dxf",
       "eventId": "92551",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 10,
       "eventStatus": "ok",
       "reserved": 0,
-      "capacity": 286,
-      "available": 286
+      "capacity": 281,
+      "available": 271
     },
     {
       "id": "EDI20240688-2026-07-31T17:20:00-Kinosal",
@@ -1090,15 +1090,15 @@
       "tags": [
         "Norsk tekst"
       ],
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/6515f0f0c2f646f691da2071fe5a091451c966ff-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/13bdf9c085531b0bb6c3b7506e847f46643782b6-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92338/purchase?kanal=dxf",
       "eventId": "92338",
       "promoterId": "202",
-      "sold": 48,
+      "sold": 70,
       "eventStatus": "ok",
-      "reserved": 4,
-      "capacity": 110,
-      "available": 58
+      "reserved": 0,
+      "capacity": 108,
+      "available": 38
     },
     {
       "id": "EDI20240688-2026-07-31T19:45:00-Storsal",
@@ -1113,15 +1113,15 @@
       "tags": [
         "Norsk tekst"
       ],
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/6515f0f0c2f646f691da2071fe5a091451c966ff-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/13bdf9c085531b0bb6c3b7506e847f46643782b6-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92786/purchase?kanal=dxf",
       "eventId": "92786",
       "promoterId": "202",
-      "sold": 4,
+      "sold": 19,
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 246,
-      "available": 242
+      "available": 227
     },
     {
       "id": "UIP20241680-2026-07-31T20:30:00-Kinosal",
@@ -1140,11 +1140,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92524/purchase?kanal=dxf",
       "eventId": "92524",
       "promoterId": "202",
-      "sold": 26,
+      "sold": 39,
       "eventStatus": "ok",
       "reserved": 0,
-      "capacity": 110,
-      "available": 84
+      "capacity": 109,
+      "available": 70
     },
     {
       "id": "UIP20241749-2026-08-01T14:50:00-Kinosal",
@@ -1207,15 +1207,15 @@
       "tags": [
         "Norsk tekst"
       ],
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/6515f0f0c2f646f691da2071fe5a091451c966ff-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/13bdf9c085531b0bb6c3b7506e847f46643782b6-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92548/purchase?kanal=dxf",
       "eventId": "92548",
       "promoterId": "202",
-      "sold": 2,
+      "sold": 4,
       "eventStatus": "ok",
       "reserved": 0,
-      "capacity": 110,
-      "available": 108
+      "capacity": 108,
+      "available": 104
     },
     {
       "id": "UIP20241680-2026-08-01T19:30:00-Storsal",
@@ -1253,15 +1253,15 @@
       "tags": [
         "Norsk tekst"
       ],
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/6515f0f0c2f646f691da2071fe5a091451c966ff-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/13bdf9c085531b0bb6c3b7506e847f46643782b6-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92775/purchase?kanal=dxf",
       "eventId": "92775",
       "promoterId": "202",
-      "sold": 8,
+      "sold": 13,
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 107,
-      "available": 99
+      "available": 94
     },
     {
       "id": "UIP20241749-2026-08-02T14:50:00-Storsal",
@@ -1300,15 +1300,15 @@
       "tags": [
         "Norsk tekst"
       ],
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/6515f0f0c2f646f691da2071fe5a091451c966ff-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/13bdf9c085531b0bb6c3b7506e847f46643782b6-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92769/purchase?kanal=dxf",
       "eventId": "92769",
       "promoterId": "202",
-      "sold": 8,
+      "sold": 12,
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 110,
-      "available": 102
+      "available": 98
     },
     {
       "id": "EDI20260819-2026-08-02T17:10:00-Storsal",
@@ -1351,11 +1351,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92756/purchase?kanal=dxf",
       "eventId": "92756",
       "promoterId": "202",
-      "sold": 8,
+      "sold": 10,
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 108,
-      "available": 100
+      "available": 98
     },
     {
       "id": "EDI20240688-2026-08-02T20:00:00-Storsal",
@@ -1370,15 +1370,15 @@
       "tags": [
         "Norsk tekst"
       ],
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/6515f0f0c2f646f691da2071fe5a091451c966ff-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/13bdf9c085531b0bb6c3b7506e847f46643782b6-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92729/purchase?kanal=dxf",
       "eventId": "92729",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "reserved": 0,
-      "capacity": 246,
-      "available": 246
+      "capacity": 244,
+      "available": 242
     },
     {
       "id": "UIP20241749-2026-08-03T16:50:00-Kinosal",
@@ -1445,11 +1445,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92781/purchase?kanal=dxf",
       "eventId": "92781",
       "promoterId": "202",
-      "sold": 3,
+      "sold": 7,
       "eventStatus": "ok",
       "reserved": 0,
-      "capacity": 110,
-      "available": 107
+      "capacity": 107,
+      "available": 100
     },
     {
       "id": "EDI20240688-2026-08-03T20:00:00-Storsal",
@@ -1464,7 +1464,7 @@
       "tags": [
         "Norsk tekst"
       ],
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/6515f0f0c2f646f691da2071fe5a091451c966ff-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/13bdf9c085531b0bb6c3b7506e847f46643782b6-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92544/purchase?kanal=dxf",
       "eventId": "92544",
       "promoterId": "202",
@@ -1535,7 +1535,7 @@
       "tags": [
         "Norsk tekst"
       ],
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/6515f0f0c2f646f691da2071fe5a091451c966ff-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/13bdf9c085531b0bb6c3b7506e847f46643782b6-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92699/purchase?kanal=dxf",
       "eventId": "92699",
       "promoterId": "202",
@@ -1652,7 +1652,7 @@
       "tags": [
         "Norsk tekst"
       ],
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/6515f0f0c2f646f691da2071fe5a091451c966ff-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/13bdf9c085531b0bb6c3b7506e847f46643782b6-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92782/purchase?kanal=dxf",
       "eventId": "92782",
       "promoterId": "202",
@@ -1723,7 +1723,7 @@
       "tags": [
         "Norsk tekst"
       ],
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/6515f0f0c2f646f691da2071fe5a091451c966ff-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/13bdf9c085531b0bb6c3b7506e847f46643782b6-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92491/purchase?kanal=dxf",
       "eventId": "92491",
       "promoterId": "202",
@@ -1840,7 +1840,7 @@
       "tags": [
         "Norsk tekst"
       ],
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/6515f0f0c2f646f691da2071fe5a091451c966ff-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/13bdf9c085531b0bb6c3b7506e847f46643782b6-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92783/purchase?kanal=dxf",
       "eventId": "92783",
       "promoterId": "202",
@@ -1935,7 +1935,7 @@
       "tags": [
         "Norsk tekst"
       ],
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/6515f0f0c2f646f691da2071fe5a091451c966ff-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/13bdf9c085531b0bb6c3b7506e847f46643782b6-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92811/purchase?kanal=dxf",
       "eventId": "92811",
       "promoterId": "202",
