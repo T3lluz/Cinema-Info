@@ -8,6 +8,20 @@
   "background_color": "#efece8",
   "theme_color": "#c41e2a",
   "lang": "nb",
+  "shortcuts": [
+    {
+      "name": "Filmer",
+      "short_name": "Filmer",
+      "url": "./?tab=movies",
+      "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Statistikk",
+      "short_name": "Statistikk",
+      "url": "./?tab=stats",
+      "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }]
+    }
+  ],
   "icons": [
     {
       "src": "favicon.svg",

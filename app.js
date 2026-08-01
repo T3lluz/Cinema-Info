@@ -497,7 +497,10 @@ init();
 async function init() {
   const prefs = loadPrefs();
   selectedDay = prefs.selectedDay || "";
-  activeTab = prefs.activeTab || "day";
+  // A home-screen shortcut names the tab it wants; otherwise the app
+  // reopens wherever it was left.
+  const wanted = new URLSearchParams(location.search).get("tab");
+  activeTab = TAB_ORDER.includes(wanted) ? wanted : prefs.activeTab || "day";
   lang = prefs.lang === "en" ? "en" : "nb";
   theme = prefs.theme === "dark" ? "dark" : "light";
 
@@ -1361,6 +1364,7 @@ function applyLanguage() {
     if (key) el.textContent = t(key);
   });
   els.refreshBtn.setAttribute("aria-label", t("refresh"));
+  els.refreshBtn.title = t("refresh");
   els.dayTabs.setAttribute(
     "aria-label",
     lang === "en" ? "Choose day" : "Velg dag"
