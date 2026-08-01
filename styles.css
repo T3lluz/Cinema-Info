@@ -329,93 +329,6 @@ h1 {
   max-width: 7.5rem;
 }
 
-/* Single non-wrapping line with a stable height, so the sticky header
-   doesn't jump when the chip set changes between days or tabs. Extra
-   chips scroll horizontally like the day strip. */
-.summary {
-  display: flex;
-  flex-wrap: nowrap;
-  align-items: center;
-  gap: 6px;
-  /* Only set vertical margin — horizontal auto centering comes from .top > *. */
-  margin-top: 12px;
-  min-height: 30px;
-  overflow-x: auto;
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
-}
-
-.summary::-webkit-scrollbar {
-  display: none;
-}
-
-.summary .chip {
-  animation: chipIn 0.3s ease both;
-}
-
-@keyframes chipIn {
-  from {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-.summary[hidden] {
-  display: none;
-}
-
-.chip {
-  display: inline-flex;
-  flex: 0 0 auto;
-  align-items: center;
-  gap: 4px;
-  padding: 6px 10px;
-  border-radius: 999px;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  font-size: 0.74rem;
-  color: var(--muted);
-  white-space: nowrap;
-}
-
-.chip strong {
-  color: var(--ink);
-  font-weight: 800;
-  font-variant-numeric: tabular-nums;
-}
-
-.chip.live {
-  background: var(--ok-soft);
-  border-color: color-mix(in srgb, var(--ok) 22%, var(--surface));
-  color: var(--ok);
-}
-
-.chip.next {
-  background: var(--accent-soft);
-  border-color: color-mix(in srgb, var(--accent) 20%, var(--surface));
-  color: var(--accent);
-}
-
-.chip.next strong {
-  color: inherit;
-  font-weight: 750;
-}
-
-.chip.ends {
-  background: var(--warn-soft);
-  border-color: color-mix(in srgb, var(--warn) 22%, var(--surface));
-  color: var(--warn);
-}
-
-.chip.ends strong {
-  color: inherit;
-  font-weight: 750;
-}
-
 /* —— Header timeline —— */
 .timeline {
   display: grid;
@@ -869,8 +782,7 @@ h1 {
 }
 
 .no-anim .show-card,
-.no-anim .movie-tile,
-.no-anim .chip {
+.no-anim .movie-tile {
   animation: none;
 }
 
@@ -2124,35 +2036,6 @@ a.tile-show:focus-visible {
 /* Finished shows are dimmed, but their admission result stays readable. */
 .show-card.done.has-admit {
   opacity: 0.88;
-}
-
-.chip.admit {
-  gap: 5px;
-}
-
-.chip.admit strong {
-  color: inherit;
-}
-
-.chip.admit .admit-glyph {
-  width: 12px;
-  height: 12px;
-}
-
-.chip.admit.complete {
-  background: var(--ok-soft);
-  border-color: color-mix(in srgb, var(--ok) 26%, var(--surface));
-  color: color-mix(in srgb, var(--ok) 85%, var(--ink));
-}
-
-.chip.admit.partial {
-  background: var(--warn-soft);
-  border-color: color-mix(in srgb, var(--warn) 26%, var(--surface));
-  color: color-mix(in srgb, var(--warn) 85%, var(--ink));
-}
-
-.chip.admit.none {
-  color: var(--muted);
 }
 
 .tile-nums {
