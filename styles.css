@@ -11,9 +11,9 @@
   --ok-soft: #e5f5ec;
   --warn: #9a6700;
   --warn-soft: #fff4d6;
-  /* Reserved (held) seats — orange, clearly apart from sold red and
-     door-phase amber. */
-  --hold: #e07b12;
+  /* Reserved (held) seats — blue, clearly apart from sold red,
+     door-phase amber, and scanned green. */
+  --hold: #1d6fd4;
   --done: #6f6964;
   --done-soft: #ebe7e2;
   --nav-bg: #ffffff;
@@ -42,7 +42,7 @@
   --ok-soft: #203c2d;
   --warn: #e8ba55;
   --warn-soft: #3b3118;
-  --hold: #f0913c;
+  --hold: #5b9cf5;
   --done: #a79d92;
   --done-soft: #363029;
   --nav-bg: #2a2522;
