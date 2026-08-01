@@ -2380,7 +2380,9 @@ async function loadSeatChart(
       JSON.stringify(previous.seats) === JSON.stringify(fresh.seats);
 
     // The same call DX answers with seats also carries the freshest
-    // sold/scanned pair, so the card above the chart stays in step.
+    // sold/scanned/reserved figures, so the card above the chart stays
+    // in step — "6 res." under the ticket count and six blue squares
+    // below it come from the same response.
     if (typeof data.sold === "number" && show.sold !== data.sold) {
       show.sold = data.sold;
       cardChanged = true;
@@ -2388,6 +2390,10 @@ async function loadSeatChart(
     if (typeof data.scanned === "number" && show.scanned !== data.scanned) {
       show.scanned = data.scanned;
       show.scannedAt = Date.now();
+      cardChanged = true;
+    }
+    if (typeof data.reserved === "number" && show.reserved !== data.reserved) {
+      show.reserved = data.reserved;
       cardChanged = true;
     }
     if (cardChanged) persistHistory([show]);
@@ -2633,7 +2639,8 @@ function renderSeatChart(show) {
   }
 
   // Tickets without a seatId (free seating leftovers, companion passes)
-  // have nowhere to draw — say so under the chart. Reserved holds are
+  // have nowhere to draw — say so under the chart. Holds — staff
+  // reservations and seats sitting in a customer's checkout — are
   // painted as blue squares from seatStatuses + /reservations.
   const notes = [
     chart.unseated ? t("seatUnseated", { n: chart.unseated }) : "",

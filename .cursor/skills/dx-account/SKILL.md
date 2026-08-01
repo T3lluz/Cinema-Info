@@ -79,7 +79,7 @@ const list = await dx.get("/api/v1/partners/202/purchases?eventId=92703");
 | `/api/v1/auth/` | who is signed in, and which partners they may read |
 | `/api/v1/partners/202/purchases?eventId=…` | every ticket: `used` / `usedDateTime` (scanned), `seatId`, `annulled` (refund) |
 | `/api/v1/partners/202/events/{id}` | one event with its `ticketSales` (ids, capacity, `freeSeating`) |
-| `/api/v1/partners/202/seatStatuses?ticketSaleIds=…` | per-seat `reserved` / `blocked` for one showing |
+| `/api/v1/partners/202/seatStatuses?ticketSaleIds=…` | per-seat status for one showing: `free`, `sold`, `reserved`, `blocked`, plus `sale…` statuses for seats sitting in a customer's checkout right now — only `free` means buyable |
 | `/api/v1/partners/202/seatMaps/{locationId}` | hall geometry: rows, seat ids, x/y, blocked seats |
 | `/api/v1/partners/202/events?cinema=1&search=…&perPage=…&page=…` | the programme list — paged, `search` and `cinema` filter, but **no date filter**, so don't try to walk it by day |
 
@@ -87,6 +87,9 @@ Notes that cost time to rediscover:
 
 - Seat numbers in `seatMaps` are one higher than the number printed on the
   ticket; the offset is derived per hall (lowest number − 1).
+- The public `ticketSale.reserved` counts every hold — staff reservations
+  *and* live checkout carts — so it moves by the minute while people are
+  buying. `sold + reserved + available = capacity` at any instant.
 - `annulled` tickets are refunds and must not count as sold or hold a seat.
 - The `app.dx.no` session cookie lasts about a day, the Auth0 SSO cookie
   behind it about three; the session can be reminted from the SSO cookie
