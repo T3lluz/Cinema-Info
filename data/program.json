@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-31T23:33:00.549Z",
+  "updatedAt": "2026-08-01T11:36:35.696Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -1164,11 +1164,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92780/purchase?kanal=dxf",
       "eventId": "92780",
       "promoterId": "202",
-      "sold": 3,
+      "sold": 5,
       "eventStatus": "ok",
       "reserved": 0,
-      "capacity": 107,
-      "available": 104
+      "capacity": 110,
+      "available": 105
     },
     {
       "id": "EDI20260819-2026-08-01T16:00:00-Storsal",
@@ -1188,11 +1188,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92685/purchase?kanal=dxf",
       "eventId": "92685",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 7,
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 286,
-      "available": 286
+      "available": 279
     },
     {
       "id": "EDI20240688-2026-08-01T17:15:00-Kinosal",
@@ -1211,11 +1211,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92548/purchase?kanal=dxf",
       "eventId": "92548",
       "promoterId": "202",
-      "sold": 19,
+      "sold": 23,
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 110,
-      "available": 91
+      "available": 87
     },
     {
       "id": "UIP20241680-2026-08-01T19:30:00-Storsal",
@@ -1234,11 +1234,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92761/purchase?kanal=dxf",
       "eventId": "92761",
       "promoterId": "202",
-      "sold": 3,
+      "sold": 13,
       "eventStatus": "ok",
       "reserved": 0,
-      "capacity": 246,
-      "available": 243
+      "capacity": 244,
+      "available": 231
     },
     {
       "id": "EDI20240688-2026-08-01T20:30:00-Kinosal",
@@ -1257,11 +1257,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92775/purchase?kanal=dxf",
       "eventId": "92775",
       "promoterId": "202",
-      "sold": 35,
+      "sold": 39,
       "eventStatus": "ok",
       "reserved": 0,
-      "capacity": 110,
-      "available": 75
+      "capacity": 108,
+      "available": 69
     },
     {
       "id": "UIP20241749-2026-08-02T14:50:00-Storsal",
@@ -1307,8 +1307,8 @@
       "sold": 17,
       "eventStatus": "ok",
       "reserved": 0,
-      "capacity": 107,
-      "available": 90
+      "capacity": 110,
+      "available": 93
     },
     {
       "id": "EDI20260819-2026-08-02T17:10:00-Storsal",
@@ -1377,8 +1377,8 @@
       "sold": 11,
       "eventStatus": "ok",
       "reserved": 0,
-      "capacity": 245,
-      "available": 234
+      "capacity": 246,
+      "available": 235
     },
     {
       "id": "UIP20241749-2026-08-03T16:50:00-Kinosal",
@@ -1448,8 +1448,8 @@
       "sold": 11,
       "eventStatus": "ok",
       "reserved": 0,
-      "capacity": 108,
-      "available": 97
+      "capacity": 110,
+      "available": 99
     },
     {
       "id": "EDI20240688-2026-08-03T20:00:00-Storsal",
@@ -1471,8 +1471,8 @@
       "sold": 10,
       "eventStatus": "ok",
       "reserved": 0,
-      "capacity": 244,
-      "available": 234
+      "capacity": 246,
+      "available": 236
     },
     {
       "id": "EDI20260819-2026-08-04T16:50:00-Kinosal",
@@ -1851,11 +1851,11 @@
       "available": 246
     },
     {
-      "id": "EDI20251106-2026-08-08T14:50:00-Kinosal",
+      "id": "EDI20251106-2026-08-08T15:00:00-Kinosal",
       "title": "Paw Patrol: Dinofilmen",
       "screen": "Kinosal",
-      "start": "2026-08-08T14:50:00",
-      "end": "2026-08-08T16:28:00",
+      "start": "2026-08-08T15:00:00",
+      "end": "2026-08-08T16:38:00",
       "dayKey": "2026-08-08",
       "runningMinutes": 88,
       "runningLabel": "1 t. 28 min.",
@@ -1875,11 +1875,11 @@
       "available": 110
     },
     {
-      "id": "EDI20260819-2026-08-08T15:20:00-Storsal",
+      "id": "EDI20260819-2026-08-08T15:30:00-Storsal",
       "title": "Vaiana",
       "screen": "Storsal",
-      "start": "2026-08-08T15:20:00",
-      "end": "2026-08-08T17:25:51",
+      "start": "2026-08-08T15:30:00",
+      "end": "2026-08-08T17:35:51",
       "dayKey": "2026-08-08",
       "runningMinutes": 115,
       "runningLabel": "1 t. 55 min.",
@@ -1899,11 +1899,11 @@
       "available": 286
     },
     {
-      "id": "UIP20241749-2026-08-08T17:10:00-Kinosal",
+      "id": "UIP20241749-2026-08-08T17:15:00-Kinosal",
       "title": "Minions & monstre",
       "screen": "Kinosal",
-      "start": "2026-08-08T17:10:00",
-      "end": "2026-08-08T18:50:00",
+      "start": "2026-08-08T17:15:00",
+      "end": "2026-08-08T18:55:00",
       "dayKey": "2026-08-08",
       "runningMinutes": 85,
       "runningLabel": "1 t. 25 min.",
@@ -1923,11 +1923,34 @@
       "available": 110
     },
     {
-      "id": "EDI20240688-2026-08-08T19:30:00-Kinosal",
+      "id": "UIP20241680-2026-08-08T18:45:00-Storsal",
+      "title": "The Odyssey",
+      "screen": "Storsal",
+      "start": "2026-08-08T18:45:00",
+      "end": "2026-08-08T21:47:23",
+      "dayKey": "2026-08-08",
+      "runningMinutes": 172,
+      "runningLabel": "2 t. 52 min.",
+      "age": "12 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/714c2df548403065609d371f42c15d648ba1c429-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/92836/purchase?kanal=dxf",
+      "eventId": "92836",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
+    },
+    {
+      "id": "EDI20240688-2026-08-08T19:45:00-Kinosal",
       "title": "Spider-Man: Brand New Day",
       "screen": "Kinosal",
-      "start": "2026-08-08T19:30:00",
-      "end": "2026-08-08T22:04:49",
+      "start": "2026-08-08T19:45:00",
+      "end": "2026-08-08T22:19:49",
       "dayKey": "2026-08-08",
       "runningMinutes": 145,
       "runningLabel": "2 t. 25 min.",
@@ -1938,6 +1961,54 @@
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/13bdf9c085531b0bb6c3b7506e847f46643782b6-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92811/purchase?kanal=dxf",
       "eventId": "92811",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20251106-2026-08-09T15:00:00-Storsal",
+      "title": "Paw Patrol: Dinofilmen",
+      "screen": "Storsal",
+      "start": "2026-08-09T15:00:00",
+      "end": "2026-08-09T16:38:00",
+      "dayKey": "2026-08-09",
+      "runningMinutes": 88,
+      "runningLabel": "1 t. 28 min.",
+      "age": "6 år",
+      "tags": [
+        "Norsk tale",
+        "Norsk tekst"
+      ],
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/b0c96c74829fac249da479447cb08a07a4ebf7ef-1500x2123.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/92691/purchase?kanal=dxf",
+      "eventId": "92691",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
+    },
+    {
+      "id": "EDI20260819-2026-08-09T16:00:00-Kinosal",
+      "title": "Vaiana",
+      "screen": "Kinosal",
+      "start": "2026-08-09T16:00:00",
+      "end": "2026-08-09T18:05:51",
+      "dayKey": "2026-08-09",
+      "runningMinutes": 115,
+      "runningLabel": "1 t. 55 min.",
+      "age": "6 år",
+      "tags": [
+        "Norsk tale",
+        "Norsk tekst"
+      ],
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/00979151e340722952a4e453830b15b8bb625663-1440x2057.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/92747/purchase?kanal=dxf",
+      "eventId": "92747",
       "promoterId": "202",
       "sold": 0,
       "eventStatus": "ok",
