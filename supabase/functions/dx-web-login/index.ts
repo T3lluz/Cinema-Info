@@ -420,9 +420,10 @@ async function fetchScanned(body: {
 /* —— Seat maps ——————————————————————————————————————————————
  *
  * A hall is `/seatMaps` (geometry: rows of seats at x/y, some blocked)
- * crossed with `/seatStatuses` for the showing's ticket sale (which of
- * those seat ids are reserved or closed off) and the event's purchase
- * list (which were sold, and which of those were scanned at the door).
+ * crossed with `/seatStatuses` and `/reservations` for the showing's
+ * ticket sale (which seat ids are reserved or closed off) and the
+ * event's purchase list (which were sold, and which of those were
+ * scanned at the door). Reservations fill any hold seatStatuses omits.
  *
  * DX numbers a seat one higher in the map than on the printed ticket —
  * every row starts at 2 — so the offset is derived from the map itself
@@ -590,6 +591,46 @@ function pitchOf(values: number[]) {
 type SeatState = 1 | 2 | 3 | 4;
 
 /**
+ * Mark held seats from a reservation list. DX stores a hold either as a
+ * contiguous seatId range (`seatId` .. `seatId+count-1`) or as nested
+ * rows each with their own seatId. Collected, deleted and expired holds
+ * no longer occupy a square.
+ */
+function applyReservationSeats(
+  seats: Record<string, SeatState>,
+  reservations: unknown[],
+) {
+  let added = 0;
+  for (const raw of reservations) {
+    const row = raw as Record<string, unknown>;
+    if (row.deleted || row.isDue) continue;
+    if (row.remaining != null && Number(row.remaining) === 0) continue;
+
+    const nested = Array.isArray(row.reservations) ? row.reservations : null;
+    if (nested?.length) {
+      for (const item of nested) {
+        const seatId = Number((item as Record<string, unknown>).seatId);
+        if (!seatId || seats[seatId]) continue;
+        seats[seatId] = 3;
+        added++;
+      }
+      continue;
+    }
+
+    const seatId = Number(row.seatId);
+    const count = Math.max(Number(row.count) || 0, seatId ? 1 : 0);
+    if (!seatId || count <= 0) continue;
+    for (let i = 0; i < count; i++) {
+      const id = seatId + i;
+      if (seats[id]) continue;
+      seats[id] = 3;
+      added++;
+    }
+  }
+  return added;
+}
+
+/**
  * Per-seat state for one showing, from the same endpoint the DX admin's
  * own seat map reads. Every seat of the hall has a row; only the ones a
  * ticket cannot be sold for — reserved or blocked — are worth carrying.
@@ -613,14 +654,62 @@ async function loadSeatStatuses(
     session.log.push(`seatStatuses ${ticketSaleId} → no data in response`);
     return held;
   }
+  let reserved = 0;
+  let blocked = 0;
   for (const raw of rows) {
     const row = raw as Record<string, unknown>;
     const seatId = Number(row.seatId);
     if (!seatId) continue;
-    if (row.status === "reserved") held[seatId] = 3;
-    else if (row.status === "blocked") held[seatId] = 4;
+    // A row for another sale can ride along; keep this showing only.
+    if (
+      row.ticketSaleId != null &&
+      Number(row.ticketSaleId) !== ticketSaleId
+    ) {
+      continue;
+    }
+    const status = String(row.status || "").toLowerCase();
+    if (status === "reserved") {
+      held[seatId] = 3;
+      reserved++;
+    } else if (status === "blocked") {
+      held[seatId] = 4;
+      blocked++;
+    }
   }
+  session.log.push(
+    `seatStatuses ${ticketSaleId} → ${reserved} reserved, ${blocked} blocked`,
+  );
   return held;
+}
+
+/**
+ * Active reservations for one ticket sale — the list DX's own seat map
+ * crosses with seatStatuses when painting holds. Used to fill any
+ * reserved seat seatStatuses left out, so every hold with a seatId
+ * lands on the chart.
+ */
+async function loadReservations(
+  session: Session,
+  partnerId: string,
+  ticketSaleId: number,
+) {
+  const res = await session.get(
+    `/api/v1/partners/${partnerId}/reservations?ticketSaleIds[]=${ticketSaleId}&perPage=5000`,
+  );
+  if (!res.ok) {
+    session.log.push(`reservations ${ticketSaleId} → HTTP ${res.status}`);
+    return [] as unknown[];
+  }
+  const payload = await res.json();
+  const rows = Array.isArray(payload)
+    ? payload
+    : ((payload as { data?: unknown[] })?.data ?? []);
+  if (!Array.isArray(rows)) {
+    session.log.push(`reservations ${ticketSaleId} → no data in response`);
+    return [];
+  }
+  session.log.push(`reservations ${ticketSaleId} → ${rows.length} rows`);
+  return rows;
 }
 
 async function fetchSeats(body: {
@@ -667,11 +756,32 @@ async function fetchSeats(body: {
       // Reserved and blocked seats first, then tickets on top: a seat
       // with a ticket on it is sold whatever hold DX still lists for it.
       const ticketSaleId = Number(sale.id) || 0;
-      const seats: Record<string, SeatState> =
-        ticketSaleId && !freeSeating
-          ? await loadSeatStatuses(session, partnerId, ticketSaleId)
-          : {};
-      const holds = Object.keys(seats).length;
+      const seats: Record<string, SeatState> = {};
+      if (ticketSaleId && !freeSeating) {
+        Object.assign(
+          seats,
+          await loadSeatStatuses(session, partnerId, ticketSaleId),
+        );
+        // seatStatuses sometimes omits holds that /reservations still
+        // lists with a seatId (or a contiguous range). Paint those too.
+        const embedded = Array.isArray(sale.reservations)
+          ? sale.reservations
+          : [];
+        const fromApi = await loadReservations(
+          session,
+          partnerId,
+          ticketSaleId,
+        );
+        const fromEmbed = applyReservationSeats(seats, embedded);
+        const fromList = applyReservationSeats(seats, fromApi);
+        if (fromEmbed || fromList) {
+          log.push(
+            `reservations filled ${fromEmbed + fromList} reserved seats`,
+          );
+        }
+      }
+      const holds = Object.values(seats).filter((s) => s === 3 || s === 4)
+        .length;
 
       let sold = 0;
       let scanned = 0;
@@ -693,9 +803,10 @@ async function fetchSeats(body: {
           seats[seatId] = state;
         }
       });
+      const reservedSeats = Object.values(seats).filter((s) => s === 3).length;
       log.push(
-        `${eventId} → ${scanned}/${sold} used, ${holds} held/blocked, ` +
-          `${Object.keys(seats).length} seats`,
+        `${eventId} → ${scanned}/${sold} used, ${reservedSeats} reserved, ` +
+          `${holds} held/blocked, ${Object.keys(seats).length} seats`,
       );
 
       const result: Record<string, unknown> = {

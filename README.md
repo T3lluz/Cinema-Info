@@ -71,9 +71,9 @@ read its row and number.
 
 Seats are matched by DX's own `seatId`, so a square is exactly the seat
 printed on the ticket. Reserved and blocked seats come from the same
-`seatStatuses` DX's own seat map paints, so the chart here matches the
-one staff see in DX; only a hold DX lists without a seat on the map is
-said in words under the chart instead of guessed at.
+`seatStatuses` DX's own seat map paints, with `/reservations` filling
+any hold that statuses omit, so every reserved seat shows as a blue
+square on the chart.
 
 The hall geometry is fetched once per auditorium and kept on the device
 for a month; opening a chart after that costs one purchase-list lookup,
@@ -101,9 +101,9 @@ the DX session and returns just what the app draws:
   counting `used` tickets and leaving refunds out of both totals.
 - **Seats** (`action: "seats"`) answers for one event with
   `{ seatId: 1 | 2 | 3 | 4 }` (sold / scanned / reserved / blocked —
-  holds and closed seats read from `/seatStatuses` for the showing's
-  ticket sale, tickets from the purchase list on top) plus, the first
-  time a device meets an auditorium, its geometry from
+  holds and closed seats from `/seatStatuses` plus `/reservations` for
+  the showing's ticket sale, tickets from the purchase list on top)
+  plus, the first time a device meets an auditorium, its geometry from
   `/seatMaps/{locationId}`: rows of seats at x/y, map-blocked seats
   flagged, and seat numbers shifted to the ones printed on the tickets.
 

@@ -101,7 +101,6 @@ const I18N = {
     seatReserved: "Reservert",
     seatBlocked: "Stengt",
     seatUnseated: "{n} uten fast plass",
-    seatReservedNote: "{n} reservert vises ikke",
     seatPicked: "Rad {row} · Plass {seat} — {state}",
     seatAria:
       "Salkart for {screen}: {sold} av {capacity} plasser solgt, {scanned} skannet inn.",
@@ -253,7 +252,6 @@ const I18N = {
     seatReserved: "Reserved",
     seatBlocked: "Blocked",
     seatUnseated: "{n} without a seat",
-    seatReservedNote: "{n} reserved not shown",
     seatPicked: "Row {row} · Seat {seat} — {state}",
     seatAria:
       "Seat map for {screen}: {sold} of {capacity} seats sold, {scanned} scanned in.",
@@ -2634,12 +2632,11 @@ function renderSeatChart(show) {
     }
   }
 
-  // A reservation without a seat on the map (or a hall drawn before the
-  // hold was placed) is still said in words, so no seat goes missing.
-  const hiddenReserved = Math.max((chart.reserved || 0) - reservedSeats, 0);
+  // Tickets without a seatId (free seating leftovers, companion passes)
+  // have nowhere to draw — say so under the chart. Reserved holds are
+  // painted as blue squares from seatStatuses + /reservations.
   const notes = [
     chart.unseated ? t("seatUnseated", { n: chart.unseated }) : "",
-    hiddenReserved ? t("seatReservedNote", { n: hiddenReserved }) : "",
   ].filter(Boolean);
 
   const legend =
