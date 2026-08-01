@@ -6,15 +6,19 @@
       name="viewport"
       content="width=device-width, initial-scale=1, viewport-fit=cover"
     />
-    <!-- Matches the page background rather than the brand red, so the
-         status bar reads as more of the app instead of a band above it.
-         theme-color drives the top status bar; color-scheme drives the
-         bottom Android navigation bar in the installed app. Both follow
-         the in-app theme (see the pre-paint script and applyTheme). -->
-    <meta name="theme-color" content="#efece8" />
+    <!-- Brand red, and deliberately the same in both themes: the installed
+         Android app bakes the manifest's theme_color in at install time and
+         ignores changes made here later, so a theme-following status bar
+         drifts out of step with the browser. Keep this and the manifest on
+         the one colour. color-scheme drives the bottom Android navigation
+         bar and follows the theme (pre-paint script and applyTheme). -->
+    <meta name="theme-color" content="#c41e2a" />
     <meta name="color-scheme" content="light" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <!-- iOS reads this once at launch, so it cannot follow the theme either:
+         run the page under a translucent bar and paint that strip red in CSS
+         (--statusbar), which is also what edge-to-edge Android gets. -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="description" content="Buen kino – program, tider og solgte billetter" />
     <link rel="manifest" href="manifest.webmanifest" />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
@@ -27,14 +31,12 @@
     <meta property="og:image" content="https://t3lluz.github.io/Cinema-Info/icons/icon-512.png" />
     <meta name="twitter:card" content="summary" />
     <title>Cinema Info · Buen kino</title>
-    <link rel="stylesheet" href="styles.css?v=37" />
+    <link rel="stylesheet" href="styles.css?v=38" />
     <script>
       try {
         var p = JSON.parse(localStorage.getItem("cinemaInfoPrefs") || "{}");
         if (p.theme === "dark") {
           document.documentElement.dataset.theme = "dark";
-          var tc = document.querySelector('meta[name="theme-color"]');
-          if (tc) tc.content = "#131110";
           var cs = document.querySelector('meta[name="color-scheme"]');
           if (cs) cs.content = "dark";
         }
@@ -129,6 +131,6 @@
       </div>
     </nav>
 
-    <script src="app.js?v=34" type="module"></script>
+    <script src="app.js?v=35" type="module"></script>
   </body>
 </html>
