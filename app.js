@@ -1105,9 +1105,10 @@ function disconnectDx() {
 }
 
 /**
- * Fill example scanned counts so the UI can be reviewed without live DX
- * check-in data (`?previewScanned=1`). Skips shows that already have a
- * real scanned value.
+ * Fill example scanned / reserved counts so the UI can be reviewed
+ * without live DX check-in data (`?previewScanned=1`). Skips shows that
+ * already have a real scanned value; reserved is only filled when DX
+ * left it at zero so the blue hold squares still show up in preview.
  */
 function applyPreviewScanned() {
   if (!PREVIEW_SCANNED || !state?.shows) return false;
@@ -1126,6 +1127,17 @@ function applyPreviewScanned() {
     if (show.scanned !== next) {
       show.scanned = next;
       changed = true;
+    }
+    // A handful of holds after the sold block, so reserved seats appear
+    // on the preview chart even when the program snapshot has none.
+    if (!(Number(show.reserved) > 0) && sold > 0) {
+      const capacity = Number(show.capacity) || 0;
+      const room = Math.max(capacity - sold, 0);
+      const holds = Math.min(room, 2 + (hashStr(show.id) % 4));
+      if (holds > 0) {
+        show.reserved = holds;
+        changed = true;
+      }
     }
   }
   return changed;
