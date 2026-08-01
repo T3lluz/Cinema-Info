@@ -1,6 +1,5 @@
 :root,
 [data-theme="light"] {
-  color-scheme: light;
   --bg: #efece8;
   --surface: #ffffff;
   --ink: #161412;
@@ -48,7 +47,6 @@
 }
 
 [data-theme="dark"] {
-  color-scheme: dark;
   --bg: #131110;
   --surface: #262120;
   --ink: #f6f1ea;
