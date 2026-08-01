@@ -100,9 +100,10 @@ the DX session and returns just what the app draws:
   covers a dozen events and returns `{ eventId: { scanned, sold } }`,
   counting `used` tickets and leaving refunds out of both totals.
 - **Seats** (`action: "seats"`) answers for one event with
-  `{ seatId: 1 | 2 | 3 | 4 }` (sold / scanned / reserved / blocked —
-  holds and closed seats from `/seatStatuses` plus `/reservations` for
-  the showing's ticket sale, tickets from the purchase list on top)
+  `{ seatId: 1 | 2 | 3 | 4 }` (sold / scanned / held / blocked — holds
+  are staff reservations *and* seats sitting in a customer's checkout,
+  read from `/seatStatuses` plus `/reservations` for the showing's
+  ticket sale, tickets from the purchase list on top)
   plus, the first time a device meets an auditorium, its geometry from
   `/seatMaps/{locationId}`: rows of seats at x/y, map-blocked seats
   flagged, and seat numbers shifted to the ones printed on the tickets.
