@@ -61,7 +61,7 @@ row numbers down both sides — with one square per seat:
 | Red — *Solgt* | sold; the show has not opened its doors yet |
 | Amber — *Ikke skannet* | sold, and that guest has not arrived |
 | Green — *Inne* | sold and scanned at the door |
-| Orange — *Reservert* | held by a reservation, not yet paid or collected |
+| Blue — *Reservert* | held by a reservation, not yet paid or collected |
 | Struck through — *Stengt* | closed off, in the hall map or for this one showing |
 
 Red turns into amber/green the moment scanning becomes relevant, so
