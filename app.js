@@ -75,7 +75,6 @@ const I18N = {
     showsOne: "1 forestilling",
     showsMany: "{n} forestillinger",
     ongoing: "pågår",
-    soldLabel: "solgt",
     soldOut: "Utsolgt",
     fewLeft: "{n} igjen",
     reservedShort: "{n} res.",
@@ -106,9 +105,6 @@ const I18N = {
     seatPicked: "Rad {row} · Plass {seat} — {state}",
     seatAria:
       "Salkart for {screen}: {sold} av {capacity} plasser solgt, {scanned} skannet inn.",
-    nextShow: "Neste {time}",
-    endsShow: "Slutt {time}",
-    inMinutes: "om {n} min",
     today: "I dag",
     yesterday: "I går",
     tomorrow: "I morgen",
@@ -231,7 +227,6 @@ const I18N = {
     showsOne: "1 showing",
     showsMany: "{n} showings",
     ongoing: "playing",
-    soldLabel: "sold",
     soldOut: "Sold out",
     fewLeft: "{n} left",
     reservedShort: "{n} res.",
@@ -262,9 +257,6 @@ const I18N = {
     seatPicked: "Row {row} · Seat {seat} — {state}",
     seatAria:
       "Seat map for {screen}: {sold} of {capacity} seats sold, {scanned} scanned in.",
-    nextShow: "Next {time}",
-    endsShow: "Ends {time}",
-    inMinutes: "in {n} min",
     today: "Today",
     yesterday: "Yesterday",
     tomorrow: "Tomorrow",
@@ -378,7 +370,6 @@ const els = {
   dayControls: document.getElementById("dayControls"),
   refreshBtn: document.getElementById("refreshBtn"),
   statusText: document.getElementById("statusText"),
-  summary: document.getElementById("summary"),
   timeline: document.getElementById("timeline"),
   views: {
     day: document.getElementById("view-day"),
@@ -497,11 +488,10 @@ async function init() {
     refreshOpenSeatCharts({ hotOnly: true, quiet: true });
   }, HOT_POLL_MS);
 
-  // Nudge the timeline "now" marker and chip countdowns every minute.
+  // Nudge the timeline "now" marker every minute.
   setInterval(() => {
     if (document.visibilityState === "visible" && state?.shows) {
       renderTimeline();
-      renderSummary();
       markDoneDays();
     }
   }, 60_000);
@@ -1431,7 +1421,6 @@ async function setActiveTab(tab, { skipRender = false } = {}) {
   movePillIndicator(tab, { instant: skipRender });
   if (state?.shows) {
     renderTimeline();
-    renderSummary();
   }
 
   els.dayControls.hidden = tab !== "day";
@@ -1526,7 +1515,6 @@ function renderActiveView() {
   else if (activeTab === "settings") renderSettings();
   if (activeTab !== "day") {
     renderTimeline();
-    renderSummary();
   }
 }
 
@@ -1631,7 +1619,6 @@ function setSelectedDay(day) {
   els.dayTabs
     .querySelector('.day-tab[aria-selected="true"]')
     ?.scrollIntoView({ inline: "center", block: "nearest", behavior: "smooth" });
-  renderSummary();
   renderTimeline();
   return true;
 }
@@ -1765,7 +1752,6 @@ function renderDay() {
   els.content.classList.toggle("no-anim", isRefresh);
   els.content.dataset.key = renderKey;
 
-  renderSummary();
   renderTimeline();
   markDoneDays();
 
@@ -2076,73 +2062,6 @@ function morphTimeline(layout) {
     void area.offsetWidth;
     for (const fn of entered) fn();
   }
-}
-
-/** Header stat chips. Shown on every tab: the day tab follows the
- * selected day, other tabs always show today. */
-function renderSummary() {
-  if (!state?.shows) return;
-  const now = new Date();
-  const day = activeTab === "day" ? selectedDay : toDayKey(now);
-  const shows = state.shows
-    .filter((s) => s.dayKey === day)
-    .sort((a, b) => a.start - b.start);
-
-  // Replay chip entrance only when the day context changes,
-  // not on periodic live refreshes.
-  const renderKey = day;
-  els.summary.classList.toggle("no-anim", els.summary.dataset.key === renderKey);
-  els.summary.dataset.key = renderKey;
-
-  // Keep the row mounted even for empty days so the header height is
-  // stable and the layout doesn't jump when flipping between days.
-  els.summary.hidden = false;
-
-  if (!shows.length) {
-    els.summary.innerHTML = "";
-    return;
-  }
-
-  const soldSum = shows.reduce((n, s) => n + soldOf(s), 0);
-  const hasSold = shows.some((s) => s.sold != null);
-
-  els.summary.innerHTML = `
-    ${
-      hasSold
-        ? `<span class="chip"><strong>${soldSum}</strong> ${escapeHtml(t("soldLabel"))}</span>`
-        : ""
-    }
-    ${nextChip(shows, now)}
-    ${endsChip(shows, now)}
-  `;
-}
-
-function nextChip(shows, now) {
-  const next = shows.find((s) => s.start > now);
-  if (!next) return "";
-  const mins = Math.round((next.start - now) / 60_000);
-  if (mins > 12 * 60) return "";
-  const when =
-    mins < 60
-      ? t("inMinutes", { n: mins })
-      : formatClock(next.start);
-  return `<span class="chip next"><strong>${escapeHtml(
-    t("nextShow", { time: when })
-  )}</strong></span>`;
-}
-
-/** Chip for when the movie that finishes soonest is ending. */
-function endsChip(shows, now) {
-  const ending = shows
-    .filter((s) => s.start <= now && showEndOf(s) > now)
-    .sort((a, b) => showEndOf(a) - showEndOf(b))[0];
-  if (!ending) return "";
-  const end = showEndOf(ending);
-  const mins = Math.round((end - now) / 60_000);
-  const when = mins < 60 ? t("inMinutes", { n: mins }) : formatClock(end);
-  return `<span class="chip ends"><strong>${escapeHtml(
-    t("endsShow", { time: when })
-  )}</strong></span>`;
 }
 
 /**
@@ -4298,7 +4217,6 @@ function setLoading(isLoading) {
 }
 
 function showError(message) {
-  els.summary.hidden = true;
   els.statusText.textContent = t("error");
   els.content.innerHTML = `
     <div class="state error">
