@@ -21,7 +21,7 @@
     <meta property="og:image" content="https://t3lluz.github.io/Cinema-Info/icons/icon-512.png" />
     <meta name="twitter:card" content="summary" />
     <title>Cinema Info · Buen</title>
-    <link rel="stylesheet" href="styles.css?v=34" />
+    <link rel="stylesheet" href="styles.css?v=35" />
     <script>
       try {
         var p = JSON.parse(localStorage.getItem("cinemaInfoPrefs") || "{}");
@@ -38,8 +38,11 @@
     <header class="top">
       <div class="top-row">
         <div class="brand">
-          <h1>Cinema Info</h1>
-          <p class="subtitle">Buen kino</p>
+          <img class="brand-mark" src="favicon.svg" alt="" width="38" height="38" />
+          <div class="brand-text">
+            <h1>Cinema Info</h1>
+            <p class="subtitle">Buen kino</p>
+          </div>
         </div>
         <div class="top-actions">
           <p id="statusText" class="status">—</p>
@@ -99,7 +102,7 @@
         </button>
         <button type="button" class="pill-tab" data-tab="movies" role="tab" aria-selected="false" aria-controls="view-movies">
           <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
-            <path fill="currentColor" d="M18 4v1h-2V4H8v1H6V4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2ZM8 18H6v-2h2v2Zm0-4H6v-2h2v2Zm0-4H6V8h2v2Zm10 8h-8v-2h8v2Zm0-4h-8v-2h8v2Zm0-4h-8V8h8v2Z" />
+            <path fill="currentColor" d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4Z" />
           </svg>
           <span data-i18n="nav.movies">Filmer</span>
         </button>
@@ -118,6 +121,6 @@
       </div>
     </nav>
 
-    <script src="app.js?v=31" type="module"></script>
+    <script src="app.js?v=32" type="module"></script>
   </body>
 </html>

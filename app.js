@@ -110,10 +110,11 @@ const I18N = {
     dayTab: "{weekday} {d}.{m}",
     dayFull: "{weekday} {d}. {month}",
     moviesTitle: "Filmer",
-    moviesSubtitle: "Alle tider gruppert per film",
+    moviesSubtitle: "Alle tider, neste visning først",
+    moviesCount: "{n} filmer",
     noMovies: "Ingen filmer i programmet.",
-    statsTitle: "Solgte billetter",
-    statsSubtitle: "Ukens salgstall, live",
+    statsTitle: "Statistikk",
+    statsSubtitle: "Solgte billetter, live",
     soldWeekLabel: "Solgt denne uken",
     periodTotal: "{n} totalt i perioden",
     soldAvgDay: "Snitt per dag",
@@ -139,6 +140,8 @@ const I18N = {
     dxTitle: "DX-konto",
     dxSubtitle:
       "Logg inn med DX-kontoen din for å se hvor mange som har skannet billetten.",
+    dxChipOn: "Tilkoblet",
+    dxChipOff: "Ikke tilkoblet",
     dxConnectedAs: "Tilkoblet som {email}",
     dxConnectedPat: "Tilkoblet med tilgangstoken",
     dxConnectedHint:
@@ -261,10 +264,11 @@ const I18N = {
     dayTab: "{weekday} {d}.{m}",
     dayFull: "{weekday} {d} {month}",
     moviesTitle: "Movies",
-    moviesSubtitle: "All times grouped by movie",
+    moviesSubtitle: "All times, next showing first",
+    moviesCount: "{n} movies",
     noMovies: "No movies in the program.",
-    statsTitle: "Tickets sold",
-    statsSubtitle: "This week's sales, live",
+    statsTitle: "Stats",
+    statsSubtitle: "Tickets sold, live",
     soldWeekLabel: "Sold this week",
     periodTotal: "{n} total for the period",
     soldAvgDay: "Avg per day",
@@ -290,6 +294,8 @@ const I18N = {
     dxTitle: "DX account",
     dxSubtitle:
       "Sign in with your DX account to see how many guests have scanned their ticket.",
+    dxChipOn: "Connected",
+    dxChipOff: "Not connected",
     dxConnectedAs: "Connected as {email}",
     dxConnectedPat: "Connected with access token",
     dxConnectedHint:
@@ -355,6 +361,62 @@ const I18N = {
     ],
   },
 };
+
+/**
+ * The app's glyph set, in one place so the same idea is always drawn the
+ * same way: a film is a clapperboard wherever it appears, a hall is a
+ * seat plan, a week is a date range. Paths are 24×24 and filled with
+ * `currentColor`, matching the tab bar in index.html.
+ */
+const ICONS = {
+  day: "M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2Zm0 16H5V10h14v10Zm0-12H5V6h14v2ZM7 12h5v5H7v-5Z",
+  movie:
+    "M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4Z",
+  stats: "M5 9.2h3V19H5V9.2ZM10.6 5h2.8v14h-2.8V5Zm5.6 8H19v6h-2.8v-6Z",
+  settings:
+    "M19.14 12.94c.04-.31.06-.63.06-.94s-.02-.63-.06-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.49.49 0 0 0-.59-.22l-2.39.96a7.1 7.1 0 0 0-1.63-.94l-.36-2.54A.49.49 0 0 0 13.9 2h-3.8a.49.49 0 0 0-.48.41l-.36 2.54c-.6.24-1.14.55-1.63.94l-2.39-.96a.49.49 0 0 0-.59.22L2.73 8.87a.48.48 0 0 0 .12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.39 1.04.71 1.63.94l.36 2.54c.05.24.24.41.48.41h3.8c.24 0 .44-.17.49-.41l.36-2.54c.6-.24 1.14-.55 1.63-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32a.49.49 0 0 0-.12-.61l-2.01-1.58ZM12 15.6A3.6 3.6 0 1 1 12 8.4a3.6 3.6 0 0 1 0 7.2Z",
+  week: "M9 11H7v2h2v-2Zm4 0h-2v2h2v-2Zm4 0h-2v2h2v-2Zm2-7h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2Zm0 16H5V9h14v11Z",
+  trophy:
+    "M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1a5 5 0 0 0 4.39 4.94A5.01 5.01 0 0 0 11 15.9V19H7v2h10v-2h-4v-3.1a5.01 5.01 0 0 0 3.61-3.96A5 5 0 0 0 21 8V7c0-1.1-.9-2-2-2ZM5 8V7h2v3.82C5.84 10.4 5 9.3 5 8Zm14 0c0 1.3-.84 2.4-2 2.82V7h2v1Z",
+  language:
+    "m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v1.99h11.17A15.4 15.4 0 0 1 9 11.35 15.6 15.6 0 0 1 6.69 8h-2a17.6 17.6 0 0 0 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04ZM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12Zm-2.62 7 1.62-4.33L19.12 17h-3.24Z",
+  theme:
+    "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2Zm0 18V4a8 8 0 0 1 0 16Z",
+  account:
+    "M12.65 10A5.99 5.99 0 0 0 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6a5.99 5.99 0 0 0 5.65-4H17v4h4v-4h2v-4H12.65ZM7 14a2 2 0 1 1 0-4 2 2 0 0 1 0 4Z",
+  // A hall seen from above: the screen, then rows of seats.
+  seats:
+    "M4 3.6h16a1.1 1.1 0 0 1 0 2.2H4a1.1 1.1 0 0 1 0-2.2ZM3.4 8.6h3.8a.9.9 0 0 1 .9.9v2.2a.9.9 0 0 1-.9.9H3.4a.9.9 0 0 1-.9-.9V9.5a.9.9 0 0 1 .9-.9Zm6.7 0h3.8a.9.9 0 0 1 .9.9v2.2a.9.9 0 0 1-.9.9h-3.8a.9.9 0 0 1-.9-.9V9.5a.9.9 0 0 1 .9-.9Zm6.7 0h3.8a.9.9 0 0 1 .9.9v2.2a.9.9 0 0 1-.9.9h-3.8a.9.9 0 0 1-.9-.9V9.5a.9.9 0 0 1 .9-.9ZM3.4 15h3.8a.9.9 0 0 1 .9.9v2.2a.9.9 0 0 1-.9.9H3.4a.9.9 0 0 1-.9-.9v-2.2a.9.9 0 0 1 .9-.9Zm6.7 0h3.8a.9.9 0 0 1 .9.9v2.2a.9.9 0 0 1-.9.9h-3.8a.9.9 0 0 1-.9-.9v-2.2a.9.9 0 0 1 .9-.9Zm6.7 0h3.8a.9.9 0 0 1 .9.9v2.2a.9.9 0 0 1-.9.9h-3.8a.9.9 0 0 1-.9-.9v-2.2a.9.9 0 0 1 .9-.9Z",
+};
+
+/** "Nothing here" said the same way everywhere: a faded glyph and a line. */
+function emptyNote(iconName, key, className = "empty-note") {
+  return `<div class="${className}">${icon(
+    iconName,
+    "empty-icon"
+  )}<p>${escapeHtml(t(key))}</p></div>`;
+}
+
+function icon(name, className = "ui-icon") {
+  const path = ICONS[name];
+  if (!path) return "";
+  return `<svg class="${className}" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="${path}" /></svg>`;
+}
+
+/** The heading every non-day view opens with: the tab's own icon, the
+ * tab's own word, and a line saying what the page holds. */
+function viewIntro(iconName, titleKey, subtitleKey, meta = "") {
+  return `
+    <div class="view-intro">
+      <span class="view-intro-icon" aria-hidden="true">${icon(iconName)}</span>
+      <div class="view-intro-text">
+        <h2>${escapeHtml(t(titleKey))}</h2>
+        <p>${escapeHtml(t(subtitleKey))}</p>
+      </div>
+      ${meta ? `<span class="view-intro-meta">${escapeHtml(meta)}</span>` : ""}
+    </div>
+  `;
+}
 
 const els = {
   content: document.getElementById("content"),
@@ -1355,6 +1417,17 @@ function liquidMove(indicator, target, { instant = false } = {}) {
   }, LIQUID_SETTLE_MS);
 }
 
+/**
+ * The header's one-line "how fresh is this" note. Numbers that just came
+ * back from DX get a pulsing dot, so a glance says whether the page is
+ * live or reading off the nightly snapshot.
+ */
+function setStatus(text, { live = false, error = false } = {}) {
+  els.statusText.textContent = text;
+  els.statusText.classList.toggle("live", live && !error);
+  els.statusText.classList.toggle("bad", error);
+}
+
 function movePillIndicator(tab, opts = {}) {
   const indicator = document.querySelector(".pill-indicator");
   const btn = document.querySelector(`.pill-tab[data-tab="${tab}"]`);
@@ -1468,9 +1541,13 @@ async function load({ forceLive = false, silent = false, ifChanged = false } = {
     };
 
     populateFilters();
-    els.statusText.textContent = state.updatedAt
-      ? t("updated", { time: formatClock(new Date(state.updatedAt)) })
-      : t("updated", { time: formatClock(new Date()) });
+    setStatus(
+      t("updated", {
+        time: formatClock(
+          state.updatedAt ? new Date(state.updatedAt) : new Date()
+        ),
+      })
+    );
 
     if (forceLive) {
       if (activeTab === "day") await enrichVisibleDay({ force: true });
@@ -1577,11 +1654,17 @@ function populateFilters() {
     `<span class="day-indicator" aria-hidden="true"></span>` +
     days
       .map((day) => {
-        const past = day < today;
+        const classes = [
+          "day-tab",
+          day < today ? "past" : "",
+          day === today ? "today" : "",
+        ]
+          .filter(Boolean)
+          .join(" ");
         const selected = day === selectedDay;
-        return `<button type="button" class="day-tab${past ? " past" : ""}" role="tab" data-day="${day}" aria-selected="${selected}">${doneGlyph(
-          "day-tab-check"
-        )}<span class="day-tab-label">${escapeHtml(
+        return `<button type="button" class="${classes}" role="tab" data-day="${day}" aria-selected="${selected}" title="${escapeHtml(
+          formatDayLabel(day)
+        )}">${doneGlyph("day-tab-check")}<span class="day-tab-label">${escapeHtml(
           shortDayLabel(day)
         )}</span></button>`;
       })
@@ -1656,18 +1739,24 @@ function markDoneDays() {
   if (changed) moveDayIndicator({ instant: true });
 }
 
+/**
+ * The short name for a day, used by the day strip, the movie tiles, and
+ * the sales charts alike. Yesterday, today, and tomorrow go by name —
+ * their date is spelled out in the heading under the strip — and every
+ * other day is a weekday plus its date.
+ */
 function shortDayLabel(dayKey) {
   const [y, m, d] = dayKey.split("-").map(Number);
-  const date = new Date(y, m - 1, d);
-  const weekday = capitalize(weekdays()[date.getDay()]).slice(0, 3);
   const today = toDayKey(new Date());
-  if (dayKey === today) return `${t("today")} ${d}.${m}`;
+  if (dayKey === today) return t("today");
   const yesterday = new Date();
   yesterday.setDate(yesterday.getDate() - 1);
-  if (dayKey === toDayKey(yesterday)) return `${t("yesterday")} ${d}.${m}`;
+  if (dayKey === toDayKey(yesterday)) return t("yesterday");
   const tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);
-  if (dayKey === toDayKey(tomorrow)) return `${t("tomorrow")} ${d}.${m}`;
+  if (dayKey === toDayKey(tomorrow)) return t("tomorrow");
+  const date = new Date(y, m - 1, d);
+  const weekday = capitalize(weekdays()[date.getDay()]).slice(0, 3);
   return t("dayTab", { weekday, d, m });
 }
 
@@ -1693,9 +1782,7 @@ function buildDayListHTML(day) {
   const shows = dayShows(day);
   const now = new Date();
 
-  if (!shows.length) {
-    return `<div class="empty-note">${escapeHtml(t("emptyDay"))}</div>`;
-  }
+  if (!shows.length) return emptyNote("day", "emptyDay");
 
   // If DX answered for some of the day's shows, the ones it skipped are
   // worth flagging; if it answered for none, stay quiet about it.
@@ -1827,6 +1914,15 @@ function computeTimelineLayout() {
 
 function renderTimeline() {
   if (!state?.shows) return;
+
+  // Settings is about the app, not about tonight's programme; the strip
+  // has nothing to say there and only crowds the header.
+  if (activeTab === "settings") {
+    els.timeline.hidden = true;
+    els.timeline.innerHTML = "";
+    return;
+  }
+
   const layout = computeTimelineLayout();
 
   if (!layout.lanes.length) {
@@ -2559,11 +2655,7 @@ function renderSeatToggle(show) {
     : "";
 
   const head = `
-      <svg class="seat-strip-glyph" viewBox="0 0 16 16" aria-hidden="true">
-        <path d="M3.2 7.2V4.1a1.1 1.1 0 0 1 1.1-1.1h7.4a1.1 1.1 0 0 1 1.1 1.1v3.1" />
-        <rect x="2" y="7.2" width="12" height="4.2" rx="1.1" />
-        <path d="M4.4 11.4v1.6M11.6 11.4v1.6" />
-      </svg>
+      ${icon("seats", "seat-strip-glyph")}
       <span class="seat-strip-label">${escapeHtml(t("seatMapLabel"))}</span>
       ${hint ? `<span class="seat-strip-hint">${escapeHtml(hint)}</span>` : ""}`;
 
@@ -3017,6 +3109,17 @@ function renderTicketCol(show) {
   `;
 }
 
+/**
+ * Thousands grouped for reading. nb-NO separates them with a full
+ * non-breaking space, which at hero size reads as two numbers side by
+ * side; a narrow one keeps "1 274" a single figure.
+ */
+function formatCount(n) {
+  return Number(n)
+    .toLocaleString(lang === "en" ? "en-GB" : "nb-NO")
+    .replaceAll("\u00A0", "\u202F");
+}
+
 function groupMovies() {
   const map = new Map();
   for (const show of state.shows) {
@@ -3037,13 +3140,25 @@ function groupMovies() {
     if (!movie.posterUrl && show.posterUrl) movie.posterUrl = show.posterUrl;
   }
 
+  const now = new Date();
   return [...map.values()]
     .map((m) => {
       m.shows.sort((a, b) => a.start - b.start);
       m.soldSum = m.shows.reduce((n, s) => n + soldOf(s), 0);
+      const next = m.shows.find((s) => !isDone(s, now));
+      m.allDone = !next;
+      m.anchor = (next || m.shows[m.shows.length - 1])?.start?.getTime() ?? 0;
       return m;
     })
-    .sort((a, b) => a.title.localeCompare(b.title, lang === "en" ? "en" : "nb"));
+    .sort((a, b) => {
+      // Films with something left to play come first, soonest showing at
+      // the top; finished runs settle underneath, most recent first.
+      if (a.allDone !== b.allDone) return a.allDone ? 1 : -1;
+      if (a.anchor !== b.anchor) {
+        return a.allDone ? b.anchor - a.anchor : a.anchor - b.anchor;
+      }
+      return a.title.localeCompare(b.title, lang === "en" ? "en" : "nb");
+    });
 }
 
 function renderMovies() {
@@ -3058,17 +3173,17 @@ function renderMovies() {
   els.moviesContent.dataset.rendered = "1";
 
   if (!movies.length) {
-    els.moviesContent.innerHTML = `<div class="empty-note">${escapeHtml(
-      t("noMovies")
-    )}</div>`;
+    els.moviesContent.innerHTML = emptyNote("movie", "noMovies");
     return;
   }
 
   els.moviesContent.innerHTML = `
-    <div class="view-intro">
-      <h2>${escapeHtml(t("moviesTitle"))}</h2>
-      <p>${escapeHtml(t("moviesSubtitle"))}</p>
-    </div>
+    ${viewIntro(
+      "movie",
+      "moviesTitle",
+      "moviesSubtitle",
+      t("moviesCount", { n: movies.length })
+    )}
     <div class="movie-grid">
       ${movies.map((m, i) => renderMovieTile(m, now, i)).join("")}
     </div>
@@ -3107,7 +3222,7 @@ function renderMovieTile(movie, now, index = 0) {
             )}">${admissionIcon(admission.state)}${admission.scanned}</span>`
           : "";
       const inner = `
-          <span class="tile-day">${escapeHtml(shortShowDay(show.dayKey))}</span>
+          <span class="tile-day">${escapeHtml(shortDayLabel(show.dayKey))}</span>
           <span class="tile-time">${formatClock(show.start)}</span>
           <span class="tile-screen">${escapeHtml(show.screen)}</span>
           <span class="tile-nums">${sold}${admitted}</span>
@@ -3134,21 +3249,6 @@ function renderMovieTile(movie, now, index = 0) {
       </div>
     </article>
   `;
-}
-
-function shortShowDay(dayKey) {
-  const [y, m, d] = dayKey.split("-").map(Number);
-  const today = toDayKey(new Date());
-  if (dayKey === today) return t("today");
-  const yesterday = new Date();
-  yesterday.setDate(yesterday.getDate() - 1);
-  if (dayKey === toDayKey(yesterday)) return t("yesterday");
-  const tomorrow = new Date();
-  tomorrow.setDate(tomorrow.getDate() + 1);
-  if (dayKey === toDayKey(tomorrow)) return t("tomorrow");
-  const date = new Date(y, m - 1, d);
-  const wd = capitalize(weekdays()[date.getDay()]).slice(0, 3);
-  return `${wd} ${d}.${m}`;
 }
 
 function soldOf(show) {
@@ -3263,12 +3363,7 @@ function renderStats() {
     .slice(0, 10);
 
   if (!hasSold && totalSold === 0) {
-    els.statsContent.innerHTML = `
-      <div class="view-intro">
-        <h2>${escapeHtml(t("statsTitle"))}</h2>
-        <p>${escapeHtml(t("noSoldData"))}</p>
-      </div>
-    `;
+    els.statsContent.innerHTML = viewIntro("stats", "statsTitle", "noSoldData");
     return;
   }
 
@@ -3279,12 +3374,12 @@ function renderStats() {
     : t("weekLabel", { n: weekInfo.week });
 
   els.statsContent.innerHTML = `
+    ${viewIntro("stats", "statsTitle", "statsSubtitle")}
+
     <div class="stats-hero">
       <div class="stats-hero-main">
         <p class="stats-hero-label">${escapeHtml(t("soldWeekLabel"))}</p>
-        <p class="stats-hero-value">${weekSold.toLocaleString(
-          lang === "en" ? "en-GB" : "nb-NO"
-        )}</p>
+        <p class="stats-hero-value">${formatCount(weekSold)}</p>
         <p class="stats-hero-sub">${escapeHtml(weekMeta)}</p>
       </div>
       <div class="stats-hero-side">
@@ -3295,7 +3390,7 @@ function renderStats() {
         <div class="stats-mini">
           <span class="stats-mini-value">${bestDay?.sold ?? 0}</span>
           <span class="stats-mini-label">${escapeHtml(t("soldBestDay"))}${
-            bestDay ? ` · ${escapeHtml(shortShowDay(bestDay.day))}` : ""
+            bestDay ? ` · ${escapeHtml(shortDayLabel(bestDay.day))}` : ""
           }</span>
         </div>
       </div>
@@ -3303,7 +3398,7 @@ function renderStats() {
 
     <section class="stats-panel">
       <div class="stats-panel-head">
-        <h3>${escapeHtml(t("soldByDay"))}</h3>
+        <h3>${icon("day", "panel-icon")}${escapeHtml(t("soldByDay"))}</h3>
         <span class="stats-panel-meta">${escapeHtml(weekMeta)}</span>
       </div>
       <div class="bar-list">
@@ -3312,7 +3407,7 @@ function renderStats() {
             const pct = Math.max((row.sold / maxDaySold) * 100, row.sold ? 4 : 0);
             return `
               <div class="bar-row" style="--i:${i}">
-                <span class="bar-label">${escapeHtml(shortShowDay(row.day))}</span>
+                <span class="bar-label">${escapeHtml(shortDayLabel(row.day))}</span>
                 <div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div>
                 <span class="bar-value">${row.sold}</span>
               </div>`;
@@ -3323,11 +3418,9 @@ function renderStats() {
 
     <section class="stats-panel">
       <div class="stats-panel-head">
-        <h3>${escapeHtml(t("soldByWeek"))}</h3>
+        <h3>${icon("week", "panel-icon")}${escapeHtml(t("soldByWeek"))}</h3>
         <span class="stats-panel-meta">${escapeHtml(
-          t("periodTotal", {
-            n: totalSold.toLocaleString(lang === "en" ? "en-GB" : "nb-NO"),
-          })
+          t("periodTotal", { n: formatCount(totalSold) })
         )}</span>
       </div>
       <div class="bar-list">
@@ -3357,7 +3450,7 @@ function renderStats() {
 
     <section class="stats-panel">
       <div class="stats-panel-head">
-        <h3>${escapeHtml(t("topSold"))}</h3>
+        <h3>${icon("trophy", "panel-icon")}${escapeHtml(t("topSold"))}</h3>
       </div>
       ${
         topSold.length
@@ -3365,7 +3458,7 @@ function renderStats() {
               ${topSold
                 .map(
                   (m, i) => `
-                <div class="rank-row" style="--i:${i}">
+                <div class="rank-row${i < 3 ? ` medal medal-${i + 1}` : ""}" style="--i:${i}">
                   <span class="top-rank">${i + 1}</span>
                   ${renderPoster(m, 36, 52, "stats-poster")}
                   <div class="top-body">
@@ -3377,7 +3470,7 @@ function renderStats() {
                 )
                 .join("")}
             </div>`
-          : `<p class="empty-note soft">${escapeHtml(t("noSoldData"))}</p>`
+          : emptyNote("trophy", "noSoldData", "empty-note soft")
       }
     </section>
   `;
@@ -3392,14 +3485,11 @@ function renderSettings() {
     : "";
 
   els.settingsContent.innerHTML = `
-    <div class="view-intro">
-      <h2>${escapeHtml(t("settingsTitle"))}</h2>
-      <p>${escapeHtml(t("settingsSubtitle"))}</p>
-    </div>
+    ${viewIntro("settings", "settingsTitle", "settingsSubtitle")}
 
     <section class="settings-section">
       <div class="settings-head">
-        <h3>${escapeHtml(t("language"))}</h3>
+        <h3>${icon("language", "panel-icon")}${escapeHtml(t("language"))}</h3>
         <p>${escapeHtml(t("languageHint"))}</p>
       </div>
       <div class="segmented" role="group" aria-label="${escapeHtml(t("language"))}">
@@ -3411,7 +3501,7 @@ function renderSettings() {
 
     <section class="settings-section">
       <div class="settings-head">
-        <h3>${escapeHtml(t("theme"))}</h3>
+        <h3>${icon("theme", "panel-icon")}${escapeHtml(t("theme"))}</h3>
         <p>${escapeHtml(t("themeHint"))}</p>
       </div>
       <div class="segmented" role="group" aria-label="${escapeHtml(t("theme"))}">
@@ -3423,7 +3513,11 @@ function renderSettings() {
 
     <section class="settings-section dx-section">
       <div class="settings-head">
-        <h3>${escapeHtml(t("dxTitle"))}</h3>
+        <h3>${icon("account", "panel-icon")}${escapeHtml(t("dxTitle"))}${
+          connected
+            ? `<span class="dx-chip on">${escapeHtml(t("dxChipOn"))}</span>`
+            : `<span class="dx-chip off">${escapeHtml(t("dxChipOff"))}</span>`
+        }</h3>
         <p>${escapeHtml(t("dxSubtitle"))}</p>
       </div>
       ${
@@ -3806,7 +3900,7 @@ async function enrichVisibleDay({ force = false } = {}) {
     applyPreviewScanned();
     if (removed.size) renderActiveView();
     else if (activeTab === "day") renderDay();
-    els.statusText.textContent = t("liveAt", { time: formatClock(new Date()) });
+    setStatus(t("liveAt", { time: formatClock(new Date()) }), { live: true });
   } finally {
     setBusy(false);
   }
@@ -3851,7 +3945,7 @@ async function enrichAllShows({ force = false } = {}) {
     lastLiveAt = Date.now();
     applyPreviewScanned();
     if (removed.size) renderActiveView();
-    els.statusText.textContent = t("liveAt", { time: formatClock(new Date()) });
+    setStatus(t("liveAt", { time: formatClock(new Date()) }), { live: true });
   } finally {
     setBusy(false);
   }
@@ -4221,7 +4315,7 @@ function setLoading(isLoading) {
 }
 
 function showError(message) {
-  els.statusText.textContent = t("error");
+  setStatus(t("error"), { error: true });
   els.content.innerHTML = `
     <div class="state error">
       <p>${escapeHtml(message)}</p>
