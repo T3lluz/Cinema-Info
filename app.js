@@ -1350,7 +1350,7 @@ function applyTheme(next) {
   applyTheme._t = setTimeout(() => root.classList.remove("theme-anim"), 400);
   document.documentElement.dataset.theme = theme;
   const meta = document.querySelector('meta[name="theme-color"]');
-  if (meta) meta.content = theme === "dark" ? "#151312" : "#c41e2a";
+  if (meta) meta.content = theme === "dark" ? "#131110" : "#efece8";
   const bar = document.querySelector(
     'meta[name="apple-mobile-web-app-status-bar-style"]'
   );

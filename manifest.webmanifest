@@ -6,7 +6,7 @@
   "start_url": "./",
   "display": "standalone",
   "background_color": "#efece8",
-  "theme_color": "#c41e2a",
+  "theme_color": "#efece8",
   "lang": "nb",
   "shortcuts": [
     {

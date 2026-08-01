@@ -6,7 +6,9 @@
       name="viewport"
       content="width=device-width, initial-scale=1, viewport-fit=cover"
     />
-    <meta name="theme-color" content="#c41e2a" />
+    <!-- Matches the page background rather than the brand red, so the
+         status bar reads as more of the app instead of a band above it. -->
+    <meta name="theme-color" content="#efece8" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="description" content="Buen kino – program, tider og solgte billetter" />
@@ -21,14 +23,14 @@
     <meta property="og:image" content="https://t3lluz.github.io/Cinema-Info/icons/icon-512.png" />
     <meta name="twitter:card" content="summary" />
     <title>Cinema Info · Buen kino</title>
-    <link rel="stylesheet" href="styles.css?v=35" />
+    <link rel="stylesheet" href="styles.css?v=36" />
     <script>
       try {
         var p = JSON.parse(localStorage.getItem("cinemaInfoPrefs") || "{}");
         if (p.theme === "dark") {
           document.documentElement.dataset.theme = "dark";
           var tc = document.querySelector('meta[name="theme-color"]');
-          if (tc) tc.content = "#151312";
+          if (tc) tc.content = "#131110";
         }
         if (p.lang === "en") document.documentElement.lang = "en";
       } catch (e) {}
@@ -121,6 +123,6 @@
       </div>
     </nav>
 
-    <script src="app.js?v=32" type="module"></script>
+    <script src="app.js?v=33" type="module"></script>
   </body>
 </html>

@@ -21,8 +21,24 @@
   --font: "Segoe UI", system-ui, -apple-system, sans-serif;
   --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   --safe-top: env(safe-area-inset-top, 0px);
+  /* Android's chin slides away as you scroll, so `safe-area-inset-bottom`
+     changes while it moves. Reserving room with the `max` variant and
+     shifting with the live one keeps the tab bar pinned the same distance
+     above the gesture bar without relaying the page out mid-scroll.
+     Browsers without the `max` variant (Safari) fall back to the live
+     inset, which is static there anyway. */
   --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-bottom-max: env(
+    safe-area-max-inset-bottom,
+    env(safe-area-inset-bottom, 0px)
+  );
   --nav-h: 56px;
+  /* Frosted bars: the page slides under them rather than stopping at
+     their edge. */
+  --nav-glass: color-mix(in srgb, var(--nav-bg) 66%, transparent);
+  --top-glass: color-mix(in srgb, var(--bg) 68%, transparent);
+  --glass-blur: saturate(1.6) blur(20px);
+  --glass-edge: rgba(255, 255, 255, 0.5);
   /* Shared content column — stays phone-sized on mobile, widens on larger screens. */
   --page-max: 720px;
   --page-pad-x: 16px;
@@ -47,6 +63,22 @@
   --done-soft: #363029;
   --nav-bg: #2a2522;
   --nav-shadow: 0 8px 28px rgba(0, 0, 0, 0.55);
+  --nav-glass: color-mix(in srgb, var(--nav-bg) 72%, transparent);
+  --top-glass: color-mix(in srgb, var(--bg) 72%, transparent);
+  --glass-edge: rgba(255, 255, 255, 0.09);
+}
+
+/* Without a backdrop filter a see-through bar is just unreadable text on
+   top of the page, so those browsers keep the solid bars. */
+@supports not (
+  (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
+) {
+  :root,
+  [data-theme="light"],
+  [data-theme="dark"] {
+    --nav-glass: var(--nav-bg);
+    --top-glass: color-mix(in srgb, var(--bg) 92%, var(--surface));
+  }
 }
 
 * {
@@ -98,9 +130,10 @@ body {
   z-index: 10;
   /* Horizontal inset lives on the inner column so header + main share one center. */
   padding: calc(16px + var(--safe-top)) 0 14px;
-  background: color-mix(in srgb, var(--bg) 92%, var(--surface));
+  background: var(--top-glass);
   border-bottom: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
-  backdrop-filter: blur(10px);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
 }
 
 /* Same centered column as .content: max width, then shared side padding. */
@@ -607,7 +640,7 @@ h1 {
   flex-direction: column;
   min-height: 0;
   position: relative;
-  padding-bottom: calc(var(--nav-h) + 28px + var(--safe-bottom));
+  padding-bottom: calc(var(--nav-h) + 28px + var(--safe-bottom-max));
 }
 
 .view[hidden] {
@@ -2658,16 +2691,20 @@ a.tile-show:focus-visible {
   color: #fff;
 }
 
-/* —— Pill navbar —— */
+/* —— Pill navbar ——
+   The bar reserves the gesture bar's full height and is then pulled down
+   by however much of it the browser is currently covering, so the page
+   below it runs to the bottom edge of the screen while the pill itself
+   never moves. */
 .pill-nav {
   position: fixed;
   left: 0;
   right: 0;
-  bottom: 0;
+  bottom: calc(var(--safe-bottom) - var(--safe-bottom-max));
   z-index: 20;
   display: flex;
   justify-content: center;
-  padding: 0 var(--page-pad-x) calc(10px + var(--safe-bottom));
+  padding: 0 var(--page-pad-x) calc(10px + var(--safe-bottom-max));
   pointer-events: none;
 }
 
@@ -2680,11 +2717,13 @@ a.tile-show:focus-visible {
   width: min(var(--nav-max), 100%);
   padding: 4px;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--nav-bg) 88%, transparent);
-  backdrop-filter: blur(14px) saturate(1.3);
-  -webkit-backdrop-filter: blur(14px) saturate(1.3);
-  border: 1px solid var(--line);
-  box-shadow: var(--nav-shadow);
+  background: var(--nav-glass);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
+  /* A lit top edge is what sells the glass: the bar catches light the way
+     a pane sitting above the page would. */
+  box-shadow: var(--nav-shadow), inset 0 1px 0 var(--glass-edge);
 }
 
 .pill-indicator {
