@@ -1351,6 +1351,11 @@ function applyTheme(next) {
   document.documentElement.dataset.theme = theme;
   const meta = document.querySelector('meta[name="theme-color"]');
   if (meta) meta.content = theme === "dark" ? "#131110" : "#efece8";
+  // The Android navigation bar in the installed app follows the
+  // color-scheme meta, not theme-color: keep it in step so the bottom
+  // bar goes dark with the app instead of staying white.
+  const scheme = document.querySelector('meta[name="color-scheme"]');
+  if (scheme) scheme.content = theme === "dark" ? "dark" : "light";
   const bar = document.querySelector(
     'meta[name="apple-mobile-web-app-status-bar-style"]'
   );
