@@ -1,6 +1,5 @@
 :root,
 [data-theme="light"] {
-  color-scheme: light;
   --bg: #efece8;
   --surface: #ffffff;
   --ink: #161412;
@@ -22,29 +21,8 @@
   --font: "Segoe UI", system-ui, -apple-system, sans-serif;
   --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   --safe-top: env(safe-area-inset-top, 0px);
-  /* The status bar strip. Brand red and the same in both themes, matching
-     the theme-color meta and the manifest so the installed app, the browser
-     and the page itself all show one colour up there. Deep enough that the
-     system draws its clock and icons in white on top. */
-  --statusbar: #c41e2a;
-  /* Android's chin slides away as you scroll, so `safe-area-inset-bottom`
-     changes while it moves. Reserving room with the `max` variant and
-     shifting with the live one keeps the tab bar pinned the same distance
-     above the gesture bar without relaying the page out mid-scroll.
-     Browsers without the `max` variant (Safari) fall back to the live
-     inset, which is static there anyway. */
   --safe-bottom: env(safe-area-inset-bottom, 0px);
-  --safe-bottom-max: env(
-    safe-area-max-inset-bottom,
-    env(safe-area-inset-bottom, 0px)
-  );
   --nav-h: 56px;
-  /* Frosted bars: the page slides under them rather than stopping at
-     their edge. */
-  --nav-glass: color-mix(in srgb, var(--nav-bg) 66%, transparent);
-  --top-glass: color-mix(in srgb, var(--bg) 68%, transparent);
-  --glass-blur: saturate(1.6) blur(20px);
-  --glass-edge: rgba(255, 255, 255, 0.5);
   /* Shared content column — stays phone-sized on mobile, widens on larger screens. */
   --page-max: 720px;
   --page-pad-x: 16px;
@@ -53,7 +31,6 @@
 }
 
 [data-theme="dark"] {
-  color-scheme: dark;
   --bg: #131110;
   --surface: #262120;
   --ink: #f6f1ea;
@@ -70,22 +47,6 @@
   --done-soft: #363029;
   --nav-bg: #2a2522;
   --nav-shadow: 0 8px 28px rgba(0, 0, 0, 0.55);
-  --nav-glass: color-mix(in srgb, var(--nav-bg) 72%, transparent);
-  --top-glass: color-mix(in srgb, var(--bg) 72%, transparent);
-  --glass-edge: rgba(255, 255, 255, 0.09);
-}
-
-/* Without a backdrop filter a see-through bar is just unreadable text on
-   top of the page, so those browsers keep the solid bars. */
-@supports not (
-  (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
-) {
-  :root,
-  [data-theme="light"],
-  [data-theme="dark"] {
-    --nav-glass: var(--nav-bg);
-    --top-glass: color-mix(in srgb, var(--bg) 92%, var(--surface));
-  }
 }
 
 * {
@@ -137,26 +98,9 @@ body {
   z-index: 10;
   /* Horizontal inset lives on the inner column so header + main share one center. */
   padding: calc(16px + var(--safe-top)) 0 14px;
-  background: var(--top-glass);
+  background: color-mix(in srgb, var(--bg) 92%, var(--surface));
   border-bottom: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-}
-
-/* Where the page runs under the system status bar — the installed app on
-   edge-to-edge Android, iOS behind the translucent bar — the header's glass
-   is all that sits behind the clock, so the page shows through up there.
-   The header is pinned to the top of the viewport, so its own top padding
-   is that strip: fill it with the red the system paints elsewhere. Nothing
-   to cover when there is no inset, and the strip collapses to nothing. */
-.top::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: var(--safe-top);
-  background: var(--statusbar);
+  backdrop-filter: blur(10px);
 }
 
 /* Same centered column as .content: max width, then shared side padding. */
@@ -663,7 +607,7 @@ h1 {
   flex-direction: column;
   min-height: 0;
   position: relative;
-  padding-bottom: calc(var(--nav-h) + 28px + var(--safe-bottom-max));
+  padding-bottom: calc(var(--nav-h) + 28px + var(--safe-bottom));
 }
 
 .view[hidden] {
@@ -2714,20 +2658,16 @@ a.tile-show:focus-visible {
   color: #fff;
 }
 
-/* —— Pill navbar ——
-   The bar reserves the gesture bar's full height and is then pulled down
-   by however much of it the browser is currently covering, so the page
-   below it runs to the bottom edge of the screen while the pill itself
-   never moves. */
+/* —— Pill navbar —— */
 .pill-nav {
   position: fixed;
   left: 0;
   right: 0;
-  bottom: calc(var(--safe-bottom) - var(--safe-bottom-max));
+  bottom: 0;
   z-index: 20;
   display: flex;
   justify-content: center;
-  padding: 0 var(--page-pad-x) calc(10px + var(--safe-bottom-max));
+  padding: 0 var(--page-pad-x) calc(10px + var(--safe-bottom));
   pointer-events: none;
 }
 
@@ -2740,13 +2680,11 @@ a.tile-show:focus-visible {
   width: min(var(--nav-max), 100%);
   padding: 4px;
   border-radius: 999px;
-  background: var(--nav-glass);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-  border: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
-  /* A lit top edge is what sells the glass: the bar catches light the way
-     a pane sitting above the page would. */
-  box-shadow: var(--nav-shadow), inset 0 1px 0 var(--glass-edge);
+  background: color-mix(in srgb, var(--nav-bg) 88%, transparent);
+  backdrop-filter: blur(14px) saturate(1.3);
+  -webkit-backdrop-filter: blur(14px) saturate(1.3);
+  border: 1px solid var(--line);
+  box-shadow: var(--nav-shadow);
 }
 
 .pill-indicator {

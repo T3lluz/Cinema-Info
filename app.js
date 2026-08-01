@@ -1349,13 +1349,12 @@ function applyTheme(next) {
   clearTimeout(applyTheme._t);
   applyTheme._t = setTimeout(() => root.classList.remove("theme-anim"), 400);
   document.documentElement.dataset.theme = theme;
-  // theme-color stays on the brand red whatever the theme is: the installed
-  // Android app takes it from the manifest at install time and never sees
-  // changes made here, so anything theme-dependent only makes the installed
-  // app and the browser disagree. The Android navigation bar follows the
-  // color-scheme meta instead, and that one can move with the theme.
-  const scheme = document.querySelector('meta[name="color-scheme"]');
-  if (scheme) scheme.content = theme === "dark" ? "dark" : "light";
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if (meta) meta.content = theme === "dark" ? "#151312" : "#c41e2a";
+  const bar = document.querySelector(
+    'meta[name="apple-mobile-web-app-status-bar-style"]'
+  );
+  if (bar) bar.content = theme === "dark" ? "black-translucent" : "default";
 }
 
 function applyLanguage() {
