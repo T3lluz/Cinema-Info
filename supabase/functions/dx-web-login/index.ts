@@ -421,9 +421,10 @@ async function fetchScanned(body: {
  *
  * A hall is `/seatMaps` (geometry: rows of seats at x/y, some blocked)
  * crossed with `/seatStatuses` and `/reservations` for the showing's
- * ticket sale (which seat ids are reserved or closed off) and the
- * event's purchase list (which were sold, and which of those were
- * scanned at the door). Reservations fill any hold seatStatuses omits.
+ * ticket sale (which seat ids are held — reserved, mid-checkout — or
+ * closed off) and the event's purchase list (which were sold, and which
+ * of those were scanned at the door). Reservations fill any hold
+ * seatStatuses omits.
  *
  * DX numbers a seat one higher in the map than on the printed ticket —
  * every row starts at 2 — so the offset is derived from the map itself
@@ -587,7 +588,8 @@ function pitchOf(values: number[]) {
 }
 
 /** Seat states the client paints: 1 sold, 2 sold and scanned in,
- * 3 held by a reservation, 4 closed off for this showing. */
+ * 3 held — by a reservation or by a checkout in progress — and
+ * 4 closed off for this showing. */
 type SeatState = 1 | 2 | 3 | 4;
 
 /**
@@ -632,9 +634,13 @@ function applyReservationSeats(
 
 /**
  * Per-seat state for one showing, from the same endpoint the DX admin's
- * own seat map reads. Every seat of the hall has a row; only the ones a
- * ticket cannot be sold for — reserved or blocked — are worth carrying.
- * A missing or failing endpoint degrades to sold/scanned only.
+ * own seat map reads. Every seat of the hall has a row; "free" is the
+ * only status a ticket can still be bought for, so everything else is
+ * worth carrying: "blocked" strikes the seat, "sold" is left to the
+ * purchase list (which knows about refunds), and the rest — "reserved"
+ * holds and the "sale…" statuses DX gives seats sitting in someone's
+ * checkout right now — paint as held, exactly as DX's own chart shows
+ * them. A missing or failing endpoint degrades to sold/scanned only.
  */
 async function loadSeatStatuses(
   session: Session,
@@ -656,6 +662,7 @@ async function loadSeatStatuses(
   }
   let reserved = 0;
   let blocked = 0;
+  const strange = new Map<string, number>();
   for (const raw of rows) {
     const row = raw as Record<string, unknown>;
     const seatId = Number(row.seatId);
@@ -668,17 +675,28 @@ async function loadSeatStatuses(
       continue;
     }
     const status = String(row.status || "").toLowerCase();
-    if (status === "reserved") {
-      held[seatId] = 3;
-      reserved++;
-    } else if (status === "blocked") {
+    if (!status || status === "free" || status === "available") continue;
+    if (status.includes("sold")) continue;
+    if (status === "blocked") {
       held[seatId] = 4;
       blocked++;
+      continue;
     }
+    // A status this function has never seen still means the seat is
+    // not for sale; hold it, and leave a trace so it gets noticed.
+    if (status !== "reserved" && !status.includes("sale")) {
+      strange.set(status, (strange.get(status) || 0) + 1);
+    }
+    held[seatId] = 3;
+    reserved++;
   }
   session.log.push(
-    `seatStatuses ${ticketSaleId} → ${reserved} reserved, ${blocked} blocked`,
+    `seatStatuses ${ticketSaleId} → ${reserved} held, ${blocked} blocked`,
   );
+  if (strange.size) {
+    const list = [...strange].map(([name, n]) => `${name}×${n}`).join(", ");
+    session.log.push(`seatStatuses ${ticketSaleId} → odd statuses: ${list}`);
+  }
   return held;
 }
 
