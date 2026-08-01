@@ -22,11 +22,6 @@
   --font: "Segoe UI", system-ui, -apple-system, sans-serif;
   --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   --safe-top: env(safe-area-inset-top, 0px);
-  /* The status bar strip. Brand red and the same in both themes, matching
-     the theme-color meta and the manifest so the installed app, the browser
-     and the page itself all show one colour up there. Deep enough that the
-     system draws its clock and icons in white on top. */
-  --statusbar: #c41e2a;
   /* Android's chin slides away as you scroll, so `safe-area-inset-bottom`
      changes while it moves. Reserving room with the `max` variant and
      shifting with the live one keeps the tab bar pinned the same distance
@@ -141,22 +136,6 @@ body {
   border-bottom: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
-}
-
-/* Where the page runs under the system status bar — the installed app on
-   edge-to-edge Android, iOS behind the translucent bar — the header's glass
-   is all that sits behind the clock, so the page shows through up there.
-   The header is pinned to the top of the viewport, so its own top padding
-   is that strip: fill it with the red the system paints elsewhere. Nothing
-   to cover when there is no inset, and the strip collapses to nothing. */
-.top::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: var(--safe-top);
-  background: var(--statusbar);
 }
 
 /* Same centered column as .content: max width, then shared side padding. */
