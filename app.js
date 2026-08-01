@@ -137,6 +137,7 @@ const I18N = {
     langEn: "English",
     spokenNorwegian: "Norsk tale",
     spokenEnglish: "Engelsk tale",
+    ageAll: "Tillatt for alle",
     dxTitle: "DX-konto",
     dxSubtitle:
       "Logg inn med DX-kontoen din for å se hvor mange som har skannet billetten.",
@@ -291,6 +292,7 @@ const I18N = {
     langEn: "English",
     spokenNorwegian: "Norwegian",
     spokenEnglish: "English",
+    ageAll: "All ages",
     dxTitle: "DX account",
     dxSubtitle:
       "Sign in with your DX account to see how many guests have scanned their ticket.",
@@ -1623,6 +1625,18 @@ function spokenLanguage(tags) {
     return "en";
   }
   return "";
+}
+
+/**
+ * Buen states age limits in Norwegian — "12 år", "Tillatt for alle".
+ * In English the same limit reads as "12+" / "All ages".
+ */
+function formatAge(age) {
+  if (!age) return "";
+  if (lang !== "en") return age;
+  const years = String(age).match(/\d+/)?.[0];
+  if (years) return `${years}+`;
+  return /alle/i.test(age) ? t("ageAll") : age;
 }
 
 function normalizeCachedShow(show) {
@@ -2965,13 +2979,11 @@ function renderShowCard(show, now, index = 0, opts = {}) {
       : "";
 
   const endLabel = show.end ? formatClock(show.end) : "…";
-  const duration = show.runningLabel
-    ? show.runningLabel.replace(" t. ", "t ").replace(" min.", "m")
-    : formatDuration(show.runningMinutes);
+  const duration = formatRunning(show.runningLabel, show.runningMinutes);
 
   const metaBits = [
     `<span class="screen">${escapeHtml(show.screen)}</span>`,
-    show.age ? `<span class="dot">${escapeHtml(show.age)}</span>` : "",
+    show.age ? `<span class="dot">${escapeHtml(formatAge(show.age))}</span>` : "",
     `<span class="dot">${escapeHtml(duration)}</span>`,
     badge,
   ]
@@ -3191,11 +3203,15 @@ function renderMovies() {
 }
 
 function renderMovieTile(movie, now, index = 0) {
-  const duration = movie.runningLabel
-    ? movie.runningLabel.replace(" t. ", "t ").replace(" min.", "m")
-    : formatDuration(movie.runningMinutes);
+  const duration = formatRunning(movie.runningLabel, movie.runningMinutes);
 
-  const meta = [movie.age, duration, movie.tags?.[0], showsLabel(movie.shows.length)]
+  const spoken = spokenLanguage(movie.tags);
+  const meta = [
+    formatAge(movie.age),
+    duration,
+    spoken ? t(spoken === "nb" ? "spokenNorwegian" : "spokenEnglish") : "",
+    showsLabel(movie.shows.length),
+  ]
     .filter(Boolean)
     .map((x) => escapeHtml(String(x)))
     .join(" · ");
@@ -4286,9 +4302,21 @@ function formatDuration(minutes) {
   if (minutes == null) return "?";
   const h = Math.floor(minutes / 60);
   const m = minutes % 60;
-  if (h && m) return `${h}t ${m}m`;
-  if (h) return `${h}t`;
+  const hour = lang === "en" ? "h" : "t";
+  if (h && m) return `${h}${hour} ${m}m`;
+  if (h) return `${h}${hour}`;
   return `${m}m`;
+}
+
+/**
+ * Running time in the short form the cards use. Buen sends it spelled
+ * out ("2 t. 25 min."); trim it down, and say hours the way the chosen
+ * language does.
+ */
+function formatRunning(label, minutes) {
+  if (!label) return formatDuration(minutes);
+  const short = String(label).replace(" t. ", "t ").replace(" min.", "m");
+  return lang === "en" ? short.replace(/(\d)t(\s|$)/, "$1h$2") : short;
 }
 
 /**
