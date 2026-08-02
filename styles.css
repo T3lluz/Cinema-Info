@@ -28,7 +28,7 @@
   --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
-  --nav-h: 54px;
+  --nav-h: 58px;
   /* Shared content column — stays phone-sized on mobile, widens on larger screens. */
   --page-max: 720px;
   --page-pad-x: 16px;
@@ -2810,7 +2810,7 @@ a.tile-show:focus-visible {
   z-index: 20;
   display: flex;
   justify-content: center;
-  padding: 0 var(--page-pad-x) calc(8px + var(--safe-bottom));
+  padding: 0 var(--page-pad-x) calc(14px + var(--safe-bottom));
   pointer-events: none;
 }
 
@@ -2872,8 +2872,8 @@ a.tile-show:focus-visible {
   align-items: center;
   justify-content: center;
   gap: 0;
-  /* Slim shell; icon/label sizes stay put — only vertical air shrinks. */
-  min-height: 44px;
+  /* A touch thicker than the slimmed shell — still compact. */
+  min-height: 48px;
   border: 0;
   border-radius: 999px;
   background: transparent;
@@ -2883,7 +2883,7 @@ a.tile-show:focus-visible {
   font-weight: 700;
   letter-spacing: 0.01em;
   cursor: pointer;
-  padding: 4px 6px;
+  padding: 5px 6px;
   overflow: hidden;
   transition: color 0.22s ease;
 }
@@ -3220,9 +3220,9 @@ a.tile-show:focus-visible {
   }
 
   .pill-tab {
-    min-height: 46px;
+    min-height: 50px;
     font-size: 0.68rem;
-    padding: 4px 8px;
+    padding: 5px 8px;
   }
 
   .pill-tab svg {
@@ -3415,9 +3415,9 @@ a.tile-show:focus-visible {
   }
 
   .pill-tab {
-    min-height: 48px;
+    min-height: 52px;
     font-size: 0.7rem;
-    padding: 5px 10px;
+    padding: 6px 10px;
   }
 
   .pill-tab svg {
