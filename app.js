@@ -15,31 +15,68 @@ const DX_LOGIN_ANON_KEY =
 /** How many events one check-in lookup asks the bridge about at a time. */
 const SCAN_BATCH = 12;
 
-/** Nothing is scanned long before the doors open; don't poll those shows. */
-const SCAN_LEAD_MS = 4 * 60 * 60 * 1000;
-/** After this long past the end time a show's check-in count is final. */
-const SCAN_FINAL_AFTER_MS = 6 * 60 * 60 * 1000;
-/** How long a fetched count stays fresh for a show that is still relevant. */
-const SCAN_FRESH_MS = 60 * 1000;
-
-/** An open seat chart re-reads the hall no more often than this. */
-const SEAT_FRESH_MS = 45 * 1000;
-
-/** How long the program snapshot is trusted before it is read again. */
-const PROGRAM_RECHECK_MS = 10 * 60 * 1000;
+/**
+ * The app's heartbeat. Every few seconds it redraws whatever the clock
+ * has moved and re-reads every figure that has come due, so a screen
+ * left open at the box office is never more than a beat behind the till
+ * and nobody has to reach for the refresh button.
+ */
+const BEAT_MS = 5 * 1000;
+/**
+ * Freshness for anything that rides the beat — a shade under it, so a
+ * timer firing a millisecond early does not make a figure sit out a
+ * whole beat waiting to be a full five seconds old.
+ */
+const BEAT_FRESH_MS = 4 * 1000;
+/**
+ * At most this many event lookups leave on one beat, which puts a hard
+ * ceiling on what the app asks of DX however much is on screen: a
+ * Movies tab listing every showtime in the programme must not turn into
+ * a request a second forever. It comfortably covers a day — Buen rarely
+ * programmes more than six showings — and beyond that the urgent ones
+ * go first and the rest come round on the following beats.
+ */
+const BEAT_MAX_EVENTS = 8;
 
 /**
- * Doors are busiest right around showtime. From this long before a
- * show's start until this long after it, its check-in count and any
- * open seat chart are polled every few seconds instead of riding the
- * slow two-minute live cycle.
+ * Doors are busiest around the showing itself: from this long before it
+ * starts until this long after it ends, guests are arriving and tickets
+ * are being scanned, so check-in counts and seat charts ride the beat.
  */
-const HOT_BEFORE_START_MS = 15 * 60 * 1000;
-const HOT_AFTER_START_MS = 15 * 60 * 1000;
-/** How often the fast poll fires while a show is inside that window. */
-const HOT_POLL_MS = 5 * 1000;
-/** Freshness inside the window — just under the poll, so every tick fetches. */
-const HOT_FRESH_MS = 4 * 1000;
+const DOOR_BEFORE_MS = 15 * 60 * 1000;
+const DOOR_AFTER_MS = 15 * 60 * 1000;
+
+/**
+ * A showing further off than this has nothing moving worth a beat: no
+ * one is at its door, and its sold count creeps rather than runs.
+ * Inside it, both ride the beat whether or not it is on screen — the
+ * day totals and the statistics are built from those numbers too.
+ */
+const ACTIVE_LEAD_MS = 4 * 60 * 60 * 1000;
+
+/** After this long past the end time a showing's numbers are final. */
+const FINAL_AFTER_MS = 6 * 60 * 60 * 1000;
+
+/**
+ * A sold count off screen and hours from its doors is still live, just
+ * on a calmer cycle: a showing next week gains a ticket every few
+ * hours, not every few seconds, and there are a lot of them.
+ */
+const LIVE_CALM_MS = 2 * 60 * 1000;
+
+/**
+ * Check-in counts and seat charts once the doors are shut. Nobody is
+ * being scanned, but seats do keep selling, so a chart left open on a
+ * showing later in the week still keeps up — just not beat by beat.
+ */
+const DOOR_CALM_MS = 45 * 1000;
+
+/**
+ * How long the program snapshot is trusted before it is read again. It
+ * is the whole schedule in one file and a twice-daily job writes it, so
+ * it is worth a look now and then rather than every beat.
+ */
+const PROGRAM_RECHECK_MS = 2 * 60 * 1000;
 /** Hall geometry only changes when someone rebuilds an auditorium. */
 const SEAT_LAYOUT_TTL_MS = 30 * 24 * 60 * 60 * 1000;
 /** Bumped when the layout shape changes, so cached halls are refetched
@@ -492,6 +529,60 @@ let busyCount = 0;
  * should switch day without animating. */
 let slideToDay = null;
 
+/**
+ * The markup last written into each view.
+ *
+ * The whole app redraws on every beat, and almost every one of those
+ * redraws produces exactly what is already on screen. Writing it anyway
+ * would tear the list down and build it again twelve times a minute,
+ * taking the visitor's focus, whatever they were hovering and the seat
+ * caption with it. So the markup is compared first, and the DOM is only
+ * touched when it really has something new to say.
+ */
+const painted = new WeakMap();
+
+/**
+ * Write `html` into `host` if it differs; true when the DOM changed.
+ *
+ * Rebuilding a view takes the keyboard's place in it along with it, and
+ * a redraw arriving every few seconds would make the page impossible to
+ * tab through. So whatever was focused is looked up again afterwards, by
+ * the attribute that names it.
+ */
+function paint(host, html) {
+  if (painted.get(host) === html) return false;
+  painted.set(host, html);
+  const focused = focusSelectorWithin(host);
+  host.innerHTML = html;
+  if (focused) host.querySelector(focused)?.focus({ preventScroll: true });
+  return true;
+}
+
+/** A selector for the focused element inside `host`, if it names itself. */
+function focusSelectorWithin(host) {
+  const el = document.activeElement;
+  if (!el || el === document.body || !host.contains(el)) return "";
+  if (el.id) return `[id="${cssEscape(el.id)}"]`;
+  for (const [key, attr] of [
+    ["seatToggle", "data-seat-toggle"],
+    ["seatRetry", "data-seat-retry"],
+    ["show", "data-show"],
+  ]) {
+    const value = el.dataset?.[key];
+    if (value) return `[${attr}="${cssEscape(value)}"]`;
+  }
+  return "";
+}
+
+/** Forget what a host holds, for the places that write inside it by
+ * hand — a seat chart repaints on its own, within the day list. */
+function repaintNext(host) {
+  painted.delete(host);
+}
+
+/** Beat jobs already in flight, by name. */
+const beatJobs = new Set();
+
 init();
 
 async function init() {
@@ -527,46 +618,14 @@ async function init() {
     { passive: false }
   );
 
-  // Keep numbers live while the tab is open (e.g. box-office screen).
-  // The programme itself is re-read on the slower cycle: a screen left
-  // on for days should still notice a film that was added, moved or
-  // taken off, not just the counts of the films it already knows.
-  setInterval(async () => {
-    if (document.visibilityState !== "visible") return;
-    if (await reloadProgramIfChanged()) return;
-    refreshLive();
-    refreshOpenSeatCharts();
-  }, 120_000);
+  setInterval(liveBeat, BEAT_MS);
 
-  // Around showtime the door picture changes with every scan. While any
-  // show is within 15 minutes of its start, poll its check-in count and
-  // any open seat chart every few seconds instead of every two minutes.
-  setInterval(() => {
-    if (document.visibilityState !== "visible") return;
-    if (!isDxConnected() || !state?.shows) return;
-    const now = Date.now();
-    const hot = state.shows.filter((s) => !s.scanDone && inHotWindow(s, now));
-    if (!hot.length) return;
-    syncScanned({ shows: hot, quiet: true }).catch((err) =>
-      console.warn("Hot scan sync failed", err)
-    );
-    refreshOpenSeatCharts({ hotOnly: true, quiet: true });
-  }, HOT_POLL_MS);
-
-  // Nudge the timeline "now" marker every minute.
-  setInterval(() => {
-    if (document.visibilityState === "visible" && state?.shows) {
-      renderTimeline();
-      markDoneDays();
-    }
-  }, 60_000);
-  document.addEventListener("visibilitychange", async () => {
+  document.addEventListener("visibilitychange", () => {
     if (document.visibilityState !== "visible") return;
     rollToTodayIfStale();
-    if (Date.now() - lastProgramAt > PROGRAM_RECHECK_MS) {
-      if (await reloadProgramIfChanged()) return;
-    }
-    if (Date.now() - lastLiveAt > 120_000) refreshLive();
+    // A phone in a pocket runs no beats. Pick straight up again rather
+    // than showing however old the last one left the screen.
+    liveBeat();
   });
 
   setupPullToRefresh();
@@ -595,7 +654,7 @@ async function init() {
   if (isDxConnected()) {
     syncScanned().catch((err) => console.warn("Scan backfill failed", err));
   } else if (PREVIEW_SCANNED) {
-    enrichAllShows()
+    ensureAllEnriched()
       .then(() => {
         applyPreviewScanned();
         renderActiveView();
@@ -1061,17 +1120,49 @@ function rollToTodayIfStale() {
   }
 }
 
-async function refreshLive() {
-  if (!state?.shows) return;
-  lastLiveAt = Date.now();
-  if (activeTab === "day") {
-    await enrichVisibleDay();
-  } else if (activeTab === "movies" || activeTab === "stats") {
-    await enrichAllShows({ force: true });
-    renderActiveView();
-  } else {
-    await syncScanned();
-  }
+/**
+ * Start one of the beat's jobs unless the previous beat's copy of it is
+ * still going. A lookup that takes longer than a beat then delays only
+ * itself: the cheap sold counts keep arriving while a heavy purchase
+ * list is still being read.
+ */
+function beatJob(name, run) {
+  if (beatJobs.has(name)) return;
+  beatJobs.add(name);
+  Promise.resolve()
+    .then(run)
+    .catch((err) => console.warn(`Live beat (${name}) failed`, err))
+    .finally(() => beatJobs.delete(name));
+}
+
+/**
+ * One beat of the app.
+ *
+ * First redraw: a minute passing moves progress bars, the timeline's
+ * now-marker and the line through a showing that has just finished, all
+ * without a single fetch. Then send off whatever has come due — sold
+ * counts, check-in counts, open seat charts — and, on its own calmer
+ * gate, the programme itself, so a screen left on for days notices a
+ * film that was added, moved or taken off.
+ *
+ * Each render skips the DOM when the markup it built is the markup
+ * already on screen, so a beat where nothing moved costs nothing.
+ */
+function liveBeat() {
+  if (document.visibilityState !== "visible" || !state?.shows) return;
+
+  // Settings is a form. Redrawing it under the visitor would eat a
+  // half-typed password, and nothing on it moves by itself anyway.
+  if (activeTab !== "settings") renderActiveView();
+  markDoneDays();
+
+  beatJob("program", async () => {
+    if (Date.now() - lastProgramAt < PROGRAM_RECHECK_MS) return;
+    await reloadProgramIfChanged();
+  });
+  beatJob("live", () => refreshLive({ quiet: true }));
+  beatJob("scan", () => syncScanned({ quiet: true }));
+  beatJob("seats", () => refreshOpenSeatCharts({ quiet: true }));
 }
 
 function t(key, vars = {}) {
@@ -1558,7 +1649,11 @@ async function load({ forceLive = false, silent = false, ifChanged = false } = {
     if (forceLive) {
       if (activeTab === "day") await enrichVisibleDay({ force: true });
       else if (activeTab === "movies" || activeTab === "stats") {
-        await enrichAllShows({ force: true });
+        // Both tabs read the whole programme, so a refresh by hand
+        // means all of it, cap and freshness set aside.
+        await refreshLive({ force: true });
+        enrichedAll = true;
+        await syncScanned({ force: true });
       } else {
         await syncScanned();
       }
@@ -1858,7 +1953,7 @@ function renderDay() {
   renderTimeline();
   markDoneDays();
 
-  els.content.innerHTML = buildDayListHTML(selectedDay);
+  if (!paint(els.content, buildDayListHTML(selectedDay))) return;
   observeAutoSeatCharts();
 }
 
@@ -2412,13 +2507,13 @@ async function loadSeatChart(
   const key = String(show.eventId);
   const previous = seatCharts.get(key);
   if (previous?.status === "loading") return;
-  // Around showtime every scan moves a seat from amber to green, so the
-  // chart is allowed to go stale for seconds rather than most of a minute.
-  const freshMs = inHotWindow(show) ? HOT_FRESH_MS : SEAT_FRESH_MS;
+  // While the doors are open every scan moves a seat from amber to
+  // green, so the chart is allowed to go stale for a beat rather than
+  // most of a minute.
   if (
     !force &&
     previous?.status === "ready" &&
-    Date.now() - previous.at < freshMs
+    Date.now() - previous.at < doorFreshMs(show)
   ) {
     return;
   }
@@ -2543,6 +2638,8 @@ async function loadSeatChart(
 /** Replace just this show's chart, so opening one never reflows the day. */
 function paintSeatChart(show) {
   const open = seatChartExpanded(show);
+  // The day list now holds markup the last full render did not write.
+  repaintNext(els.content);
   for (const host of document.querySelectorAll(
     `[data-seat-show="${cssEscape(show.id)}"]`
   )) {
@@ -2617,25 +2714,41 @@ function observeAutoSeatCharts() {
   }
 }
 
-/** The shows whose chart is somewhere the visitor can actually see it. */
-function seatChartsOnScreen() {
+/**
+ * Which of the elements carrying `data-<key>` are inside the viewport
+ * right now. A hidden tab measures as nothing, so only the view the
+ * visitor is actually on counts.
+ */
+function idsOnScreen(selector, key) {
   const ids = new Set();
   const vh = window.innerHeight || 0;
   const vw = window.innerWidth || 0;
-  for (const host of document.querySelectorAll("[data-seat-show]")) {
-    const box = host.getBoundingClientRect();
+  for (const el of document.querySelectorAll(selector)) {
+    const box = el.getBoundingClientRect();
     if (!box.width && !box.height) continue;
     if (box.bottom > 0 && box.top < vh && box.right > 0 && box.left < vw) {
-      ids.add(host.dataset.seatShow);
+      ids.add(el.dataset[key]);
     }
   }
   return ids;
 }
 
-/** Keep unfolded charts current alongside the two-minute live refresh.
- * With `hotOnly` the pass narrows to shows inside the around-showtime
- * window, so the fast poll never drags every open chart along with it. */
-async function refreshOpenSeatCharts({ hotOnly = false, quiet = false } = {}) {
+/** The shows whose chart is somewhere the visitor can actually see it. */
+function seatChartsOnScreen() {
+  return idsOnScreen("[data-seat-show]", "seatShow");
+}
+
+/**
+ * The shows drawn where the visitor can read them right now — cards in
+ * the day list, showtimes inside a movie tile. Their figures ride the
+ * beat; the rest of the programme keeps to the calm cycle.
+ */
+function showsOnScreen() {
+  return idsOnScreen("[data-show]", "show");
+}
+
+/** Keep unfolded charts current with the beat. */
+async function refreshOpenSeatCharts({ quiet = false } = {}) {
   if (!state?.shows) return;
   if (!openSeatCharts.size && !seatsAlwaysOpen()) return;
   // Charts nobody asked for are only worth refreshing while on screen.
@@ -2645,7 +2758,6 @@ async function refreshOpenSeatCharts({ hotOnly = false, quiet = false } = {}) {
     if (!seatChartExpanded(show)) continue;
     // A show that ended hours ago cannot gain another guest.
     if (show.scanDone) continue;
-    if (hotOnly && !inHotWindow(show)) continue;
     if (!openSeatCharts.has(show.id) && !visible?.has(show.id)) continue;
     await loadSeatChart(show, { quiet }).catch((err) =>
       console.warn("Seat chart refresh failed", err)
@@ -3045,12 +3157,16 @@ function renderShowCard(show, now, index = 0, opts = {}) {
       ${admissionRow}
   `;
 
+  // Named so the beat can tell which showings are actually on screen and
+  // read their figures more eagerly than the rest of the programme.
+  const tag = `data-show="${escapeHtml(show.id)}"`;
+
   // Link to the eBillett page so staff can jump straight to ticket sales.
   const card = show.ticketUrl
-    ? `<a class="${cardClass} linked" style="--i:${index}" href="${escapeHtml(
+    ? `<a class="${cardClass} linked" ${tag} style="--i:${index}" href="${escapeHtml(
         show.ticketUrl
       )}" target="_blank" rel="noopener">${inner}</a>`
-    : `<article class="${cardClass}" style="--i:${index}">${inner}</article>`;
+    : `<article class="${cardClass}" ${tag} style="--i:${index}">${inner}</article>`;
 
   // The seat chart button has to sit outside that link, so the card and
   // its fold-out share one wrapper instead of being one element.
@@ -3189,11 +3305,13 @@ function renderMovies() {
   els.moviesContent.dataset.rendered = "1";
 
   if (!movies.length) {
-    els.moviesContent.innerHTML = emptyNote("movie", "noMovies");
+    paint(els.moviesContent, emptyNote("movie", "noMovies"));
     return;
   }
 
-  els.moviesContent.innerHTML = `
+  paint(
+    els.moviesContent,
+    `
     ${viewIntro(
       "movie",
       "moviesTitle",
@@ -3203,7 +3321,8 @@ function renderMovies() {
     <div class="movie-grid">
       ${movies.map((m, i) => renderMovieTile(m, now, i)).join("")}
     </div>
-  `;
+  `
+  );
 }
 
 function renderMovieTile(movie, now, index = 0) {
@@ -3247,12 +3366,13 @@ function renderMovieTile(movie, now, index = 0) {
           <span class="tile-screen">${escapeHtml(show.screen)}</span>
           <span class="tile-nums">${sold}${admitted}</span>
       `;
+      const tag = `data-show="${escapeHtml(show.id)}"`;
       if (show.ticketUrl) {
-        return `<a class="tile-show ${status}" href="${escapeHtml(
+        return `<a class="tile-show ${status}" ${tag} href="${escapeHtml(
           show.ticketUrl
         )}" target="_blank" rel="noopener">${inner}</a>`;
       }
-      return `<div class="tile-show ${status}">${inner}</div>`;
+      return `<div class="tile-show ${status}" ${tag}>${inner}</div>`;
     })
     .join("");
 
@@ -3382,8 +3502,16 @@ function renderStats() {
     .sort((a, b) => b.soldSum - a.soldSum)
     .slice(0, 10);
 
+  // Panels and bars rise into place the first time the tab is opened;
+  // a beat that moved a number should just move it, not replay that.
+  els.statsContent.classList.toggle(
+    "no-anim",
+    els.statsContent.dataset.rendered === "1"
+  );
+  els.statsContent.dataset.rendered = "1";
+
   if (!hasSold && totalSold === 0) {
-    els.statsContent.innerHTML = viewIntro("stats", "statsTitle", "noSoldData");
+    paint(els.statsContent, viewIntro("stats", "statsTitle", "noSoldData"));
     return;
   }
 
@@ -3393,7 +3521,9 @@ function renderStats() {
       )}`
     : t("weekLabel", { n: weekInfo.week });
 
-  els.statsContent.innerHTML = `
+  paint(
+    els.statsContent,
+    `
     ${viewIntro("stats", "statsTitle", "statsSubtitle")}
 
     <div class="stats-hero">
@@ -3493,7 +3623,8 @@ function renderStats() {
           : emptyNote("trophy", "noSoldData", "empty-note soft")
       }
     </section>
-  `;
+  `
+  );
 }
 
 function renderSettings() {
@@ -3900,30 +4031,19 @@ function segSelect(btn) {
   liquidMove(group.querySelector(".seg-indicator"), btn);
 }
 
+/**
+ * Every showing on the day the visitor just opened, at once and without
+ * the beat's cap — switching day should land on real numbers rather
+ * than fill them in over the next few seconds.
+ */
 async function enrichVisibleDay({ force = false } = {}) {
   if (!state?.shows || !selectedDay) return;
-  let dayShows = state.shows.filter(
+  const dayShows = state.shows.filter(
     (s) => s.dayKey === selectedDay && s.eventId
   );
   if (!dayShows.length) return;
 
-  const token = ++enrichToken;
-  setBusy(true);
-  try {
-    await Promise.all(dayShows.map((show) => enrichOne(show)));
-    if (token !== enrichToken) return;
-
-    const removed = dropRemovedShows();
-    if (removed.size) dayShows = dayShows.filter((s) => !removed.has(s.id));
-    persistHistory(dayShows);
-    lastLiveAt = Date.now();
-    applyPreviewScanned();
-    if (removed.size) renderActiveView();
-    else if (activeTab === "day") renderDay();
-    setStatus(t("liveAt", { time: formatClock(new Date()) }), { live: true });
-  } finally {
-    setBusy(false);
-  }
+  await refreshLive({ shows: dayShows, all: true, force });
 
   // Check-in numbers are their own pass: the visible day first so it
   // updates immediately, then everything else in the background.
@@ -3931,49 +4051,124 @@ async function enrichVisibleDay({ force = false } = {}) {
   syncScanned().catch((err) => console.warn("Scan sync failed", err));
 }
 
+/**
+ * The Movies and Statistics tabs read from the whole programme, so the
+ * first visit fills in every showing the beat has not reached yet.
+ * After that the beat keeps them current.
+ */
 async function ensureAllEnriched() {
   if (enrichedAll || !state?.shows) return;
-  await enrichAllShows();
+  await refreshLive({ all: true });
+  enrichedAll = true;
+  await syncScanned();
 }
 
-async function enrichAllShows({ force = false } = {}) {
-  if (!state?.shows) return;
-  const targets = state.shows.filter(
-    (s) =>
-      s.eventId && (force || s.sold == null || s.eventStatus === "pending")
-  );
-  if (!targets.length) {
-    enrichedAll = true;
-    await syncScanned();
-    return;
+/**
+ * Should this showing's sold count be read again?
+ *
+ * A showing that is long over is history and cannot move, so it is left
+ * alone; everything else is measured against how fast it can plausibly
+ * change — see `liveFreshMs`.
+ */
+function shouldFetchLive(show, now, onScreen, force) {
+  if (!show.eventId) return false;
+  // DX has deleted the event; the programme pass takes the showing out.
+  if (show.eventStatus === "gone") return false;
+  if (force) return true;
+
+  if (show.start && now - showEndOf(show).getTime() > FINAL_AFTER_MS) {
+    // Long over: the numbers are history and cannot move again. Only a
+    // showing DX never answered for is worth another look, and even
+    // that one can wait for the calm cycle.
+    if (show.sold != null) return false;
+    return !show.liveAt || now - show.liveAt >= LIVE_CALM_MS;
   }
 
+  if (!show.liveAt) return true;
+  return now - show.liveAt >= liveFreshMs(show, now, onScreen);
+}
+
+/**
+ * How stale a sold count may get before the beat reads it again.
+ *
+ * One small public lookup covers a showing, so anything the visitor can
+ * see gets its own beat however far off it is. Off screen, that goes to
+ * whatever is near its door time — those numbers feed the day totals
+ * and the statistics even when the showing itself is scrolled away.
+ */
+function liveFreshMs(show, now, onScreen) {
+  if (onScreen?.has(show.id)) return BEAT_FRESH_MS;
+  if (inActiveWindow(show, now)) return BEAT_FRESH_MS;
+  return LIVE_CALM_MS;
+}
+
+/**
+ * Read the showings whose sold counts have come due, the ones that have
+ * waited longest first. A plain beat takes at most `BEAT_MAX_EVENTS` of
+ * them; `all` lifts that cap for the passes a visitor is waiting on.
+ *
+ * Resolves to true when a figure actually moved.
+ */
+async function refreshLive({
+  shows,
+  force = false,
+  all = false,
+  quiet = false,
+} = {}) {
+  if (!state?.shows) return false;
+
+  const now = Date.now();
+  const onScreen = showsOnScreen();
+  // The cap goes to what the visitor is watching first. Ordering by
+  // staleness alone would let the backlog of a programme still being
+  // read for the first time push the showing on screen off the beat.
+  const due = (shows || state.shows)
+    .filter((s) => shouldFetchLive(s, now, onScreen, force))
+    .map((show) => ({ show, freshMs: liveFreshMs(show, now, onScreen) }))
+    .sort(
+      (a, b) =>
+        a.freshMs - b.freshMs || (a.show.liveAt || 0) - (b.show.liveAt || 0)
+    )
+    .map((row) => row.show);
+  if (!due.length) return false;
+
+  const targets = all || force ? due : due.slice(0, BEAT_MAX_EVENTS);
   const token = ++enrichToken;
-  setBusy(true);
+  if (!quiet) setBusy(true);
+  let changed = false;
 
   try {
     const batchSize = 8;
     for (let i = 0; i < targets.length; i += batchSize) {
-      if (token !== enrichToken) return;
-      await Promise.all(targets.slice(i, i + batchSize).map(enrichOne));
+      if (token !== enrichToken) return changed;
+      const moved = await Promise.all(
+        targets.slice(i, i + batchSize).map(enrichOne)
+      );
+      if (moved.some(Boolean)) changed = true;
     }
+    if (token !== enrichToken) return changed;
 
-    if (token !== enrichToken) return;
     const removed = dropRemovedShows();
-    persistHistory(targets.filter((s) => !removed.has(s.id)));
-    enrichedAll = true;
+    if (removed.size) changed = true;
+    // Storing the history means reading, parsing and rewriting the lot.
+    // On a beat that brought back the same numbers there is nothing in
+    // it to write, and doing it anyway would stall the page every few
+    // seconds once a few months of showings have piled up.
+    if (changed) persistHistory(targets.filter((s) => !removed.has(s.id)));
     lastLiveAt = Date.now();
     applyPreviewScanned();
-    if (removed.size) renderActiveView();
     setStatus(t("liveAt", { time: formatClock(new Date()) }), { live: true });
   } finally {
-    setBusy(false);
+    if (!quiet) setBusy(false);
   }
 
-  await syncScanned({ force });
+  if (changed && activeTab !== "settings") renderActiveView();
+  return changed;
 }
 
+/** Read one showing from DX. Resolves to true when a figure moved. */
 async function enrichOne(show) {
+  const before = liveFigures(show);
   try {
     const event = await fetchDxEvent(show);
     const end = parseLocalDateTime(event.end);
@@ -3991,16 +4186,37 @@ async function enrichOne(show) {
         .trim();
     }
     show.eventStatus = "ok";
+    return liveFigures(show) !== before;
   } catch (err) {
     // A deleted event means the showing has left the programme; a
     // network hiccup means nothing, so only DX's own 404 counts.
     if (err.status === 404 || err.status === 410) {
+      const gone = show.eventStatus !== "gone";
       show.eventStatus = "gone";
-      return;
+      return gone;
     }
     console.warn("Live event fetch failed", show.eventId, err);
     if (show.sold == null) show.eventStatus = "error";
+    return false;
+  } finally {
+    // Stamped whatever DX answered, so an event it cannot answer for
+    // backs off with the rest instead of being retried every beat.
+    show.liveAt = Date.now();
   }
+}
+
+/** Everything about a showing that a re-read could move, as one string. */
+function liveFigures(show) {
+  return [
+    show.sold,
+    show.reserved,
+    show.capacity,
+    show.available,
+    show.screen,
+    show.eventStatus,
+    show.start?.getTime(),
+    show.end?.getTime(),
+  ].join("|");
 }
 
 /**
@@ -4036,13 +4252,38 @@ function dropRemovedShows() {
   return ids;
 }
 
-/** Is `now` inside the busy door window around this show's start time? */
-function inHotWindow(show, now = Date.now()) {
+/**
+ * Is this showing's door open — guests arriving, tickets being scanned?
+ * It stays open until a little after the credits: latecomers are
+ * scanned in throughout, and every one of them moves a seat on the
+ * chart from amber to green.
+ */
+function inDoorWindow(show, now = Date.now()) {
   if (!show?.start) return false;
-  const start = show.start.getTime();
   return (
-    now >= start - HOT_BEFORE_START_MS && now <= start + HOT_AFTER_START_MS
+    now >= show.start.getTime() - DOOR_BEFORE_MS &&
+    now <= showEndOf(show).getTime() + DOOR_AFTER_MS
   );
+}
+
+/** Is anything about this showing still moving — sales, or the door? */
+function inActiveWindow(show, now = Date.now()) {
+  if (!show?.start) return false;
+  return (
+    now >= show.start.getTime() - ACTIVE_LEAD_MS &&
+    now <= showEndOf(show).getTime() + DOOR_AFTER_MS
+  );
+}
+
+/**
+ * How stale a check-in count or a seat chart may get before the beat
+ * reads it again. Both come off DX's purchase list for the showing — a
+ * heavy lookup, and one that can only tell a new story while the doors
+ * are open — so those ride the beat around the showing itself and idle
+ * the rest of the time, on screen or not.
+ */
+function doorFreshMs(show, now = Date.now()) {
+  return inDoorWindow(show, now) ? BEAT_FRESH_MS : DOOR_CALM_MS;
 }
 
 /**
@@ -4057,18 +4298,22 @@ function inHotWindow(show, now = Date.now()) {
 function shouldFetchScan(show, now, force) {
   if (!show.eventId || !show.start) return false;
   // Nothing can be scanned long before the doors open.
-  if (show.start.getTime() - now > SCAN_LEAD_MS) return false;
+  if (show.start.getTime() - now > ACTIVE_LEAD_MS) return false;
   // Nor when the show sold nothing — there is no one to let in.
   if (show.eventStatus === "ok" && show.sold === 0) return false;
   if (force) return true;
   if (show.scanDone) return false;
-  if (!show.scannedAt) return true;
-  if (now - showEndOf(show).getTime() > SCAN_FINAL_AFTER_MS) {
+  if (!show.scannedAt) {
+    // A lookup the bridge could not answer waits its turn like the rest
+    // rather than going out again on every beat while DX is down.
+    return (
+      !show.scanTriedAt || now - show.scanTriedAt >= doorFreshMs(show, now)
+    );
+  }
+  if (now - showEndOf(show).getTime() > FINAL_AFTER_MS) {
     return show.scanned == null;
   }
-  // Around showtime the count changes with every scan; keep up with it.
-  const freshMs = inHotWindow(show, now) ? HOT_FRESH_MS : SCAN_FRESH_MS;
-  return now - show.scannedAt >= freshMs;
+  return now - show.scannedAt >= doorFreshMs(show, now);
 }
 
 /**
@@ -4091,6 +4336,8 @@ async function syncScanned({ shows, force = false, quiet = false } = {}) {
   // button once every five seconds would just read as stuck.
   if (!quiet) setBusy(true);
   let changed = false;
+  /** A show whose count has just gone final, worth remembering. */
+  let settled = false;
   let fetched = 0;
   let lastError = "";
   let expired = false;
@@ -4114,6 +4361,7 @@ async function syncScanned({ shows, force = false, quiet = false } = {}) {
             break;
           }
           lastError = String(err?.message || err);
+          for (const show of chunk) show.scanTriedAt = Date.now();
           continue;
         }
 
@@ -4133,8 +4381,12 @@ async function syncScanned({ shows, force = false, quiet = false } = {}) {
             }
           }
           // Nothing more can happen to a show that ended hours ago.
-          if (Date.now() - showEndOf(show).getTime() > SCAN_FINAL_AFTER_MS) {
+          if (
+            !show.scanDone &&
+            Date.now() - showEndOf(show).getTime() > FINAL_AFTER_MS
+          ) {
             show.scanDone = true;
+            settled = true;
           }
         }
       }
@@ -4150,7 +4402,9 @@ async function syncScanned({ shows, force = false, quiet = false } = {}) {
         error: fetched ? "" : lastError,
       };
     }
-    persistHistory(targets);
+    // Only a count that moved, or one that has just gone final, is
+    // worth rewriting the stored history for — see refreshLive.
+    if (changed || settled) persistHistory(targets);
   } finally {
     scanSyncRunning = false;
     if (!quiet) setBusy(false);
@@ -4337,23 +4591,29 @@ function setLoading(isLoading) {
   els.refreshBtn.disabled = isLoading;
   setBusy(isLoading);
   if (isLoading && !state) {
-    els.content.innerHTML = `
+    paint(
+      els.content,
+      `
       <div class="state loading">
         <div class="spinner" aria-hidden="true"></div>
         <p>${escapeHtml(t("loading"))}</p>
       </div>
-    `;
+    `
+    );
   }
 }
 
 function showError(message) {
   setStatus(t("error"), { error: true });
-  els.content.innerHTML = `
+  paint(
+    els.content,
+    `
     <div class="state error">
       <p>${escapeHtml(message)}</p>
       <button type="button" id="retryBtn">${escapeHtml(t("retry"))}</button>
     </div>
-  `;
+  `
+  );
   document.getElementById("retryBtn")?.addEventListener("click", () =>
     load({ forceLive: true })
   );

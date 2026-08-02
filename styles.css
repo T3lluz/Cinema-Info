@@ -860,8 +860,16 @@ h1 {
   margin-left: 2px;
 }
 
+/* A view redraws whenever a number moves — several times a minute while
+   tickets are selling. Only the first draw of a view rises into place;
+   after that the figures change where they stand. */
 .no-anim .show-card,
-.no-anim .movie-tile {
+.no-anim .movie-tile,
+.no-anim .view-intro,
+.no-anim .stats-hero,
+.no-anim .stats-panel,
+.no-anim .bar-row,
+.no-anim .rank-row {
   animation: none;
 }
 
