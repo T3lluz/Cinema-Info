@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-01T23:32:01.501Z",
+  "updatedAt": "2026-08-02T11:36:36.442Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -1304,11 +1304,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92769/purchase?kanal=dxf",
       "eventId": "92769",
       "promoterId": "202",
-      "sold": 25,
+      "sold": 47,
       "eventStatus": "ok",
       "reserved": 0,
-      "capacity": 110,
-      "available": 85
+      "capacity": 109,
+      "available": 62
     },
     {
       "id": "EDI20260819-2026-08-02T17:10:00-Storsal",
@@ -1328,11 +1328,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92758/purchase?kanal=dxf",
       "eventId": "92758",
       "promoterId": "202",
-      "sold": 8,
+      "sold": 10,
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 286,
-      "available": 278
+      "available": 276
     },
     {
       "id": "UIP20241680-2026-08-02T19:15:00-Kinosal",
@@ -1351,11 +1351,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92756/purchase?kanal=dxf",
       "eventId": "92756",
       "promoterId": "202",
-      "sold": 28,
+      "sold": 38,
       "eventStatus": "ok",
       "reserved": 0,
-      "capacity": 110,
-      "available": 82
+      "capacity": 108,
+      "available": 70
     },
     {
       "id": "EDI20240688-2026-08-02T20:00:00-Storsal",
@@ -1374,11 +1374,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92729/purchase?kanal=dxf",
       "eventId": "92729",
       "promoterId": "202",
-      "sold": 14,
+      "sold": 22,
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 246,
-      "available": 232
+      "available": 224
     },
     {
       "id": "UIP20241749-2026-08-03T16:50:00-Kinosal",
@@ -1468,11 +1468,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92544/purchase?kanal=dxf",
       "eventId": "92544",
       "promoterId": "202",
-      "sold": 13,
+      "sold": 15,
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 246,
-      "available": 233
+      "available": 231
     },
     {
       "id": "EDI20260819-2026-08-04T16:50:00-Kinosal",
@@ -1539,11 +1539,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92699/purchase?kanal=dxf",
       "eventId": "92699",
       "promoterId": "202",
-      "sold": 4,
+      "sold": 8,
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 110,
-      "available": 106
+      "available": 102
     },
     {
       "id": "EDI20260626-2026-08-04T20:15:00-Storsal",
