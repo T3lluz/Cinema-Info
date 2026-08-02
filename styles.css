@@ -2811,7 +2811,9 @@ a.tile-show:focus-visible {
   grid-template-columns: repeat(4, 1fr);
   gap: 2px;
   width: min(var(--nav-max), 100%);
-  padding: 4px;
+  /* Extra inset so the liquid bubble's spring overshoot + scaleX stay
+     inside the pill when landing on the far-left / far-right tabs. */
+  padding: 8px;
   border-radius: 999px;
   background: color-mix(in srgb, var(--nav-bg) 55%, transparent);
   backdrop-filter: blur(20px) saturate(1.2);
@@ -2822,8 +2824,8 @@ a.tile-show:focus-visible {
 
 .pill-indicator {
   position: absolute;
-  top: 4px;
-  bottom: 4px;
+  top: 8px;
+  bottom: 8px;
   border-radius: 999px;
   background: var(--accent-soft);
   transition:
