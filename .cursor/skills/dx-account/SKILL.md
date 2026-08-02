@@ -55,6 +55,12 @@ of the repo. If they are missing, ask for them to be added there rather than
 hardcoding them. On a personal machine, keep them in the shell/`.env.local`
 (git-ignored) and export them per command as above.
 
+The product bridge (`supabase/functions/dx-web-login`) signs in with the
+same shared account so visitors never type a password. Credentials for
+that path live in Supabase Vault (`dx_email` / `dx_password`), readable
+only via the service-role RPC `dx_bridge_credentials`, and may also be
+set as Edge Function secrets `DX_EMAIL` / `DX_PASSWORD`.
+
 A login mints a session token (opaque cookie bundle). Reuse it to avoid
 logging in repeatedly while debugging — it survives a few days:
 

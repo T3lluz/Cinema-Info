@@ -113,21 +113,23 @@ the same call the admission counts already use. The charts that are open
 by screen width are fetched as they scroll into view, so a wide day list
 never asks for more halls than you actually reach.
 
-### Connecting
+### Admissions (always on)
 
-Connect under **Settings → DX-konto** with the same email and password
-you use in **DX Check-in** / on [app.dx.no](https://app.dx.no).
+Anyone who opens the app sees live admissions and seat maps. Workers do
+**not** sign in to DX in the browser.
 
 Check-in state lives in one place: `app.dx.no`'s purchase list, where
 each ticket carries `used` / `usedDateTime` once it has been scanned at
 the door, next to the `seatId` it was sold for. `app.dx.no` sends no
 CORS headers, so a browser on GitHub Pages cannot read it directly. A
-small Supabase Edge Function (`supabase/functions/dx-web-login`) holds
-the DX session and returns just what the app draws:
+small Supabase Edge Function (`supabase/functions/dx-web-login`) holds a
+shared read-only DX session and returns just what the app draws:
 
-- **Login** completes the official `app.dx.no` → Auth0 (`login.dx.no`) →
-  `apiweb/callback` flow and stores the resulting session cookies as an
-  opaque token on this device only.
+- **Shared login** — the Edge Function signs in with the cinema's
+  read-only DX account. Credentials live in Supabase Vault
+  (`dx_email` / `dx_password`), optionally overridden by
+  `DX_EMAIL` / `DX_PASSWORD` function secrets. They never ship in the
+  static site or in `localStorage`.
 - **Counts** (`action: "scanned"`) are fetched in batches — one call
   covers a dozen events and returns `{ eventId: { scanned, sold } }`,
   counting `used` tickets and leaving refunds out of both totals.
@@ -140,23 +142,20 @@ the DX session and returns just what the app draws:
   `/seatMaps/{locationId}`: rows of seats at x/y, map-blocked seats
   flagged, and seat numbers shifted to the ones printed on the tickets.
 
-DX signs a session out after about three days, but the Auth0 SSO cookie
-behind it lasts longer; the function renews the session from that cookie
-by itself and hands back a fresh token. If you tick **Keep me signed
-in**, your password is stored on this device (only) so the app can also
-sign in again on its own once even the SSO cookie expires.
+DX signs a session out after about a day, but the Auth0 SSO cookie
+behind it lasts longer; the function renews from that cookie when it
+can, and mints a fresh session from Vault when even that has aged out.
+Visitors never see a login form.
 
 ### When numbers don't show up
 
-The connected settings panel lists the source, the last sync time, how
-many showings have scan data, and whether auto-renew is on. **Test
-innslipp** runs one lookup against a real show and prints the bridge
-status plus a per-event line (e.g. `92703 → 5/9 used`), so a blank
-column can always be explained.
+**Settings → Innslipp fra DX** lists the source, the last sync time, and
+how many showings have scan data. **Test innslipp** runs one lookup
+against a real show and prints the bridge status plus a per-event line
+(e.g. `92703 → 5/9 used`), so a blank column can always be explained.
 
-To preview how admissions and the seat map look without a DX account,
-open the site with `?previewScanned=1` (example numbers derived from
-sold, in a hall generated from the show's capacity).
+To preview how admissions and the seat map look with sample numbers
+instead of live DX data, open the site with `?previewScanned=1`.
 
 ## Live site
 
