@@ -2830,7 +2830,7 @@ function seatChartSvg(layout, seats, show) {
   const classOf = { 1: "sold", 2: "in", 3: "reserved", 4: "blocked" };
   // One small size for every seat — single and double digits alike —
   // so the chart stays even and the numbers stay subordinate.
-  const numSize = h * 0.34;
+  const numSize = h * 0.3;
   const rows = layout.rows
     .map((row) => {
       const seatEls = row.seats
