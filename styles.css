@@ -22,7 +22,7 @@
   --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
-  --nav-h: 64px;
+  --nav-h: 52px;
   /* Shared content column — stays phone-sized on mobile, widens on larger screens. */
   --page-max: 720px;
   --page-pad-x: 16px;
@@ -2810,7 +2810,7 @@ a.tile-show:focus-visible {
   z-index: 20;
   display: flex;
   justify-content: center;
-  padding: 0 var(--page-pad-x) calc(10px + var(--safe-bottom));
+  padding: 0 var(--page-pad-x) calc(8px + var(--safe-bottom));
   pointer-events: none;
 }
 
@@ -2865,20 +2865,19 @@ a.tile-show:focus-visible {
   align-items: center;
   justify-content: center;
   gap: 0;
-  /* Tall enough for icon + label + descenders at every breakpoint.
-     overflow:hidden masks the label rising in; selected tabs drop it
-     so settled glyphs are never shaved by the clip. */
-  min-height: 58px;
+  /* Compact but tall enough for icon + label; selected tabs use
+     overflow:visible so descenders are never shaved by the clip. */
+  min-height: 46px;
   border: 0;
   border-radius: 999px;
   background: transparent;
   color: var(--muted);
   font: inherit;
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   font-weight: 700;
   letter-spacing: 0.01em;
   cursor: pointer;
-  padding: 5px 3px 6px;
+  padding: 3px 2px 4px;
   overflow: hidden;
   transition: color 0.22s ease;
 }
@@ -2887,9 +2886,9 @@ a.tile-show:focus-visible {
    label rises from under it. */
 .pill-tab svg {
   flex-shrink: 0;
-  width: 22px;
-  height: 22px;
-  transform: scale(1.22);
+  width: 20px;
+  height: 20px;
+  transform: scale(1.18);
   transform-origin: center center;
   transition: transform 0.34s cubic-bezier(0.3, 1.2, 0.4, 1);
 }
@@ -2936,7 +2935,7 @@ a.tile-show:focus-visible {
   /* Generous ceiling so the max-height reveal still animates, while
      overflow:visible (and the selected tab's) keeps descenders intact. */
   max-height: 2.5em;
-  margin-top: 3px;
+  margin-top: 2px;
   opacity: 1;
   overflow: visible;
   transform: translateY(0);
@@ -3216,13 +3215,13 @@ a.tile-show:focus-visible {
   }
 
   .pill-tab {
-    min-height: 60px;
-    font-size: 0.74rem;
+    min-height: 48px;
+    font-size: 0.68rem;
   }
 
   .pill-tab svg {
-    width: 24px;
-    height: 24px;
+    width: 22px;
+    height: 22px;
   }
 }
 
@@ -3410,13 +3409,13 @@ a.tile-show:focus-visible {
   }
 
   .pill-tab {
-    min-height: 62px;
-    font-size: 0.78rem;
+    min-height: 50px;
+    font-size: 0.72rem;
   }
 
   .pill-tab svg {
-    width: 26px;
-    height: 26px;
+    width: 24px;
+    height: 24px;
   }
 }
 
