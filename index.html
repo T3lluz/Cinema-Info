@@ -21,7 +21,7 @@
     <meta property="og:image" content="https://t3lluz.github.io/Cinema-Info/icons/icon-512.png" />
     <meta name="twitter:card" content="summary" />
     <title>Cinema Info · Buen kino</title>
-    <link rel="stylesheet" href="styles.css?v=57" />
+    <link rel="stylesheet" href="styles.css?v=58" />
     <script>
       try {
         var p = JSON.parse(localStorage.getItem("cinemaInfoPrefs") || "{}");
@@ -105,7 +105,9 @@
 
     <nav class="pill-nav" aria-label="Hovedmeny">
       <div class="pill-nav-inner" role="tablist">
-        <span class="pill-indicator" aria-hidden="true"></span>
+        <div class="pill-indicator-track" aria-hidden="true">
+          <span class="pill-indicator"></span>
+        </div>
         <button type="button" class="pill-tab" data-tab="day" role="tab" aria-selected="true" aria-controls="view-day">
           <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
             <path fill="currentColor" d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2Zm0 16H5V10h14v10Zm0-12H5V6h14v2ZM7 12h5v5H7v-5Z" />
@@ -133,6 +135,6 @@
       </div>
     </nav>
 
-    <script src="app.js?v=44" type="module"></script>
+    <script src="app.js?v=45" type="module"></script>
   </body>
 </html>

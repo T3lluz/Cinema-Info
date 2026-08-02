@@ -1465,9 +1465,13 @@ function applyLanguage() {
  */
 const LIQUID_SETTLE_MS = 170;
 
-function liquidMove(indicator, target, { instant = false, inset = 0 } = {}) {
+function liquidMove(
+  indicator,
+  target,
+  { instant = false, inset = 0, originLeft = 0 } = {}
+) {
   if (!indicator || !target) return;
-  const newL = target.offsetLeft + inset;
+  const newL = target.offsetLeft - originLeft + inset;
   const newW = Math.max(0, target.offsetWidth - inset * 2);
 
   // Hidden targets measure 0×0; bail so we don't park the indicator at
@@ -1519,10 +1523,15 @@ function setStatus(text, { live = false, error = false } = {}) {
 
 function movePillIndicator(tab, opts = {}) {
   const indicator = document.querySelector(".pill-indicator");
+  const track = indicator?.parentElement;
   const btn = document.querySelector(`.pill-tab[data-tab="${tab}"]`);
-  // Keep a little air from the rounded track so spring landings on the
-  // far-left / far-right tabs don't kiss (or clear) the pill edge.
-  liquidMove(indicator, btn, { ...opts, inset: 2 });
+  // Position inside the clipped track (content box). A small inset keeps
+  // resting air from the track edge on the far-left / far-right tabs.
+  liquidMove(indicator, btn, {
+    ...opts,
+    inset: 3,
+    originLeft: track?.offsetLeft ?? 0,
+  });
 }
 
 async function setActiveTab(tab, { skipRender = false } = {}) {
