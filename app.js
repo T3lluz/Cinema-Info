@@ -1525,11 +1525,11 @@ function movePillIndicator(tab, opts = {}) {
   const indicator = document.querySelector(".pill-indicator");
   const track = indicator?.parentElement;
   const btn = document.querySelector(`.pill-tab[data-tab="${tab}"]`);
-  // Position inside the clipped track (content box). A light inset keeps
-  // a little air from the track edge without the old spacious rim gap.
+  // Fill the tab cell inside the clipped track so the selection bubble
+  // has the same rim gap on every side (set by --pill-pad).
   liquidMove(indicator, btn, {
     ...opts,
-    inset: 2,
+    inset: 0,
     originLeft: track?.offsetLeft ?? 0,
   });
 }
