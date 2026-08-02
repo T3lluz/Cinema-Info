@@ -1,11 +1,11 @@
 /* Cinema Info service worker: network-first with cache fallback,
    so the app opens instantly and still works offline with the
    last-seen program. Live DX calls are never cached. */
-const CACHE = "cinema-info-v60";
+const CACHE = "cinema-info-v61";
 const PRECACHE = [
   "./",
   "./index.html",
-  "./styles.css?v=75",
+  "./styles.css?v=76",
   "./app.js?v=51",
   "./favicon.svg",
   "./apple-touch-icon.png",
