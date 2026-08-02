@@ -21,7 +21,7 @@
     <meta property="og:image" content="https://t3lluz.github.io/Cinema-Info/icons/icon-512.png" />
     <meta name="twitter:card" content="summary" />
     <title>Cinema Info · Buen kino</title>
-    <link rel="stylesheet" href="styles.css?v=50" />
+    <link rel="stylesheet" href="styles.css?v=51" />
     <script>
       try {
         var p = JSON.parse(localStorage.getItem("cinemaInfoPrefs") || "{}");
@@ -60,7 +60,18 @@
       <div id="timeline" class="timeline" hidden></div>
 
       <div id="dayControls" class="day-controls">
-        <div id="dayTabs" class="day-tabs" role="tablist" aria-label="Velg dag"></div>
+        <div class="day-controls-body">
+          <button
+            id="jumpTodayBtn"
+            class="jump-today"
+            type="button"
+            hidden
+            aria-label="Gå til i dag"
+          >
+            <span data-i18n="today">I dag</span>
+          </button>
+          <div id="dayTabs" class="day-tabs" role="tablist" aria-label="Velg dag"></div>
+        </div>
       </div>
     </header>
 
@@ -121,6 +132,6 @@
       </div>
     </nav>
 
-    <script src="app.js?v=38" type="module"></script>
+    <script src="app.js?v=39" type="module"></script>
   </body>
 </html>

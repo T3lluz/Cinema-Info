@@ -239,27 +239,61 @@ h1 {
   padding-bottom: 0;
 }
 
+.day-controls-body {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+}
+
+/* One-tap return when browsing another day — sits outside the scroll
+   strip so today is always reachable without hunting for its pill. */
+.jump-today {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 5px 10px;
+  border: 1px solid color-mix(in srgb, var(--accent) 45%, var(--line));
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 10%, var(--surface));
+  color: color-mix(in srgb, var(--accent) 88%, var(--ink));
+  font: inherit;
+  font-size: 0.745rem;
+  font-weight: 700;
+  letter-spacing: -0.005em;
+  line-height: 1.25;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.jump-today:active {
+  transform: scale(0.95);
+}
+
+.jump-today[hidden] {
+  display: none;
+}
+
 .day-tabs {
   position: relative;
   display: flex;
   gap: 5px;
+  flex: 1 1 auto;
   min-height: 0;
+  min-width: 0;
   overflow-x: auto;
-  margin: 0 -4px;
-  padding: 0 4px 2px;
+  margin: 0;
+  padding: 0 0 2px;
   transition: padding-bottom 0.25s ease;
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
   scroll-snap-type: x proximity;
   overscroll-behavior-x: contain;
-}
-
-/* Trailing slack so a mid/late day can sit flush left — without this,
-   max scrollLeft stops short once remaining pills no longer fill the strip. */
-.day-tabs::after {
-  content: "";
-  flex: 0 0 calc(100% - 4.75rem);
-  pointer-events: none;
 }
 
 .day-indicator {
@@ -303,7 +337,7 @@ h1 {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  scroll-snap-align: start;
+  scroll-snap-align: center;
   border: 1px solid var(--line);
   background: var(--surface);
   color: var(--ink);
