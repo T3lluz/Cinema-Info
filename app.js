@@ -1844,8 +1844,10 @@ function updateJumpTodayBtn() {
   const away = hasToday && selectedDay && selectedDay !== today;
   btn.hidden = !away;
   btn.setAttribute("aria-label", t("jumpTodayAria"));
+  const back = selectedDay > today;
+  btn.dataset.dir = back ? "back" : "forward";
   const arrow = btn.querySelector(".jump-today-arrow");
-  if (arrow) arrow.textContent = selectedDay > today ? "‹" : "›";
+  if (arrow) arrow.textContent = back ? "‹" : "›";
 }
 
 /** Day change from a tap: slides the page like a swipe would, so the list

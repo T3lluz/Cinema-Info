@@ -282,6 +282,11 @@ h1 {
   opacity: 0.85;
 }
 
+.jump-today[data-dir="forward"] {
+  flex-direction: row-reverse;
+  padding: 5px 8px 5px 10px;
+}
+
 .jump-today:active {
   transform: scale(0.95);
 }
@@ -2933,42 +2938,137 @@ a.tile-show:focus-visible {
 }
 
 /* —— Responsive: tablet ——
-   Phones stay identical. From ~700px (iPad portrait and up) the day list
-   stops sitting narrower than the timeline above it, cards get the room
-   their numbers need, and every seat map is unfolded from the start —
-   each hall on a stage of one shape, so a 110-seat hall and a 286-seat
-   hall take the same room instead of each ending wherever its rows do. */
+   Phones stay identical. From ~700px (iPad portrait and up) the shared
+   column widens, type and posters step up so lists stay readable at arm's
+   length, and every seat map is unfolded from the start — each hall on a
+   stage of one shape, so a 110-seat hall and a 286-seat hall take the same
+   room instead of each ending wherever its rows do. */
 @media (min-width: 700px) {
   :root {
     /* Use the width a tablet actually has: the phone-sized column left
        both the day list and the movie tiles fighting for room. */
-    --page-max: 860px;
-    --page-pad-x: 20px;
+    --page-max: min(100% - 32px, 1040px);
+    --page-pad-x: 28px;
     --day-max: none;
     /* One stage shape for every hall: its height follows the column, not
        the number of rows DX happens to have put in that auditorium. The
        ratio suits a typical wide auditorium, so most halls fill the stage
        and the rest sit centred in it rather than shrinking the card. */
     --seat-stage-ratio: 2 / 1;
-    --seat-stage-max: 320px;
+    --seat-stage-max: 360px;
+  }
+
+  /* Bump the rem base so type, gaps, and pill chrome scale together
+     without rewriting every rule. Pixel-sized posters are set below. */
+  html {
+    font-size: 110%;
+  }
+
+  .brand-mark {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+  }
+
+  h1 {
+    font-size: clamp(1.55rem, 3.2vw, 1.9rem);
+  }
+
+  .subtitle {
+    font-size: 0.95rem;
+  }
+
+  .icon-btn {
+    width: 44px;
+    height: 44px;
+  }
+
+  .day-tab {
+    padding: 7px 14px;
+    font-size: 0.82rem;
+    gap: 5px;
+  }
+
+  .day-tab-check {
+    width: 11px;
+    height: 11px;
+  }
+
+  .status {
+    font-size: 0.78rem;
+    max-width: 10rem;
+  }
+
+  .tl-lane-name {
+    height: 24px;
+    font-size: 0.7rem;
+  }
+
+  .tl-track {
+    height: 24px;
+  }
+
+  .tl-block-label {
+    font-size: 0.66rem;
+  }
+
+  .tl-hour {
+    font-size: 0.66rem;
+  }
+
+  .section-label {
+    font-size: 0.95rem;
+    padding-bottom: 8px;
   }
 
   .show-card {
-    grid-template-columns: 56px minmax(0, 1fr) 84px;
-    gap: 12px;
-    padding: 12px;
+    grid-template-columns: 72px minmax(0, 1fr) 96px;
+    gap: 14px;
+    padding: 14px;
+    border-radius: 14px;
   }
 
   .show-card.has-status {
-    grid-template-columns: 18px 56px minmax(0, 1fr) 84px;
+    grid-template-columns: 20px 72px minmax(0, 1fr) 96px;
     padding-left: 0;
-    column-gap: 10px;
+    column-gap: 12px;
+  }
+
+  .show-status {
+    font-size: 0.64rem;
+    border-radius: 14px 0 0 14px;
   }
 
   .poster,
   .poster-fallback {
-    width: 56px;
-    height: 80px;
+    width: 72px;
+    height: 102px;
+    border-radius: 9px;
+  }
+
+  .time-range {
+    font-size: 0.98rem;
+  }
+
+  .show-title {
+    font-size: 1.05rem;
+  }
+
+  .meta-line {
+    font-size: 0.82rem;
+  }
+
+  .ticket-ratio {
+    font-size: 1.3rem;
+  }
+
+  .ticket-sub,
+  .ticket-cap {
+    font-size: 0.78rem;
+  }
+
+  .ticket-flag {
+    font-size: 0.66rem;
   }
 
   /* Ratio, bar, and flags all end on the column's right edge. */
@@ -2978,6 +3078,7 @@ a.tile-show:focus-visible {
 
   .occ-track {
     width: 100%;
+    height: 6px;
   }
 
   .seat-panel {
@@ -3017,30 +3118,79 @@ a.tile-show:focus-visible {
   /* Loading and error strips hold some of the chart's place so the page
      settles instead of jumping as halls arrive. */
   .seat-note {
-    min-height: 104px;
+    min-height: 112px;
     justify-content: center;
   }
 
+  .view-intro h2 {
+    font-size: 1.3rem;
+  }
+
+  .view-intro p {
+    font-size: 0.92rem;
+  }
+
+  .view-intro-icon {
+    width: 44px;
+    height: 44px;
+  }
+
+  .view-intro-icon svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .movie-grid {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 400px), 1fr));
+    gap: 14px;
+  }
+
   .movie-tile {
-    grid-template-columns: 72px minmax(0, 1fr);
-    gap: 12px;
-    padding: 12px;
+    grid-template-columns: 84px minmax(0, 1fr);
+    gap: 14px;
+    padding: 14px;
+    border-radius: 16px;
   }
 
   .movie-poster,
   .movie-poster-fallback {
-    width: 72px;
-    height: 104px;
+    width: 84px;
+    height: 122px;
+    border-radius: 10px;
+  }
+
+  .movie-tile-title {
+    font-size: 1.1rem;
+  }
+
+  .movie-tile-meta {
+    font-size: 0.8rem;
   }
 
   .tile-shows {
-    gap: 5px;
-    column-gap: 9px;
+    gap: 6px;
+    column-gap: 10px;
+    margin-top: 8px;
   }
 
   .tile-show {
-    padding: 6px 9px;
-    font-size: 0.72rem;
+    padding: 7px 10px;
+    font-size: 0.78rem;
+    border-radius: 9px;
+  }
+
+  .gap-row {
+    font-size: 0.8rem;
+  }
+
+  .pill-tab {
+    min-height: 52px;
+    font-size: 0.68rem;
+  }
+
+  .pill-tab svg {
+    width: 22px;
+    height: 22px;
   }
 }
 
@@ -3050,18 +3200,33 @@ a.tile-show:focus-visible {
    and halls line up row by row. */
 @media (min-width: 860px) {
   :root {
-    --page-max: 900px;
-    --page-pad-x: 20px;
-    --nav-max: 460px;
+    --page-max: min(100% - 48px, 1240px);
+    --page-pad-x: 32px;
+    --nav-max: 520px;
+    --seat-stage-max: 380px;
+  }
+
+  html {
+    font-size: 115%;
   }
 
   .top {
-    padding-top: calc(18px + var(--safe-top));
-    padding-bottom: 16px;
+    padding-top: calc(20px + var(--safe-top));
+    padding-bottom: 18px;
   }
 
   h1 {
-    font-size: 1.85rem;
+    font-size: 2rem;
+  }
+
+  .brand-mark {
+    width: 46px;
+    height: 46px;
+  }
+
+  .day-tab {
+    padding: 8px 16px;
+    font-size: 0.86rem;
   }
 
   /* Chronological day list flows into two columns; gap markers span full
@@ -3069,7 +3234,7 @@ a.tile-show:focus-visible {
   .day-block {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 10px 14px;
+    gap: 12px 18px;
     align-items: stretch;
     max-width: none;
   }
@@ -3124,50 +3289,205 @@ a.tile-show:focus-visible {
     }
   }
 
+  .show-card {
+    grid-template-columns: 80px minmax(0, 1fr) 104px;
+    gap: 16px;
+    padding: 16px;
+  }
+
+  .show-card.has-status {
+    grid-template-columns: 22px 80px minmax(0, 1fr) 104px;
+    column-gap: 14px;
+  }
+
+  .poster,
+  .poster-fallback {
+    width: 80px;
+    height: 114px;
+  }
+
+  .time-range {
+    font-size: 1.05rem;
+  }
+
+  .show-title {
+    font-size: 1.12rem;
+  }
+
+  .meta-line {
+    font-size: 0.88rem;
+  }
+
+  .ticket-ratio {
+    font-size: 1.4rem;
+  }
+
   .content {
-    padding-top: 16px;
-    padding-bottom: 24px;
+    padding-top: 18px;
+    padding-bottom: 28px;
+  }
+
+  .movie-grid {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 440px), 1fr));
+    gap: 16px;
+  }
+
+  .movie-tile {
+    grid-template-columns: 92px minmax(0, 1fr);
+    gap: 16px;
+    padding: 16px;
+  }
+
+  .movie-poster,
+  .movie-poster-fallback {
+    width: 92px;
+    height: 134px;
+  }
+
+  .movie-tile-title {
+    font-size: 1.18rem;
+  }
+
+  .tile-show {
+    padding: 8px 11px;
+    font-size: 0.82rem;
   }
 
   .stats-hero {
     grid-template-columns: 1.35fr 1fr;
-    gap: 12px;
+    gap: 14px;
+  }
+
+  .stats-hero-main {
+    padding: 22px 20px;
+  }
+
+  .stats-mini {
+    padding: 16px;
   }
 
   .pill-tab {
-    min-height: 50px;
-    font-size: 0.68rem;
+    min-height: 54px;
+    font-size: 0.72rem;
+  }
+
+  .pill-tab svg {
+    width: 24px;
+    height: 24px;
   }
 }
 
 @media (min-width: 1100px) {
   :root {
-    --page-max: 1100px;
-    --page-pad-x: 24px;
-    --nav-max: 500px;
+    --page-max: min(100% - 56px, 1480px);
+    --page-pad-x: 36px;
+    --nav-max: 560px;
+    --seat-stage-max: 420px;
+  }
+
+  html {
+    font-size: 118.75%;
   }
 
   .day-block {
-    gap: 10px 16px;
+    gap: 14px 22px;
+  }
+
+  .show-card {
+    grid-template-columns: 96px minmax(0, 1fr) 120px;
+    padding: 18px;
+  }
+
+  .show-card.has-status {
+    grid-template-columns: 24px 96px minmax(0, 1fr) 120px;
+  }
+
+  .poster,
+  .poster-fallback {
+    width: 96px;
+    height: 138px;
   }
 
   .movie-tile {
-    padding: 14px;
+    grid-template-columns: 108px minmax(0, 1fr);
+    padding: 18px;
+  }
+
+  .movie-poster,
+  .movie-poster-fallback {
+    width: 108px;
+    height: 158px;
+  }
+
+  .movie-tile-title {
+    font-size: 1.22rem;
   }
 
   .stats-hero-value {
-    font-size: clamp(2.2rem, 4vw, 2.8rem);
+    font-size: clamp(2.4rem, 4vw, 3rem);
   }
 
   .settings-section {
-    padding: 18px 20px;
+    padding: 20px 22px;
   }
 }
 
 @media (min-width: 1400px) {
   :root {
-    --page-max: 1240px;
-    --page-pad-x: 28px;
+    /* Nearly full-bleed on a wide monitor — only a thin outer margin. */
+    --page-max: min(100% - 64px, 1720px);
+    --page-pad-x: 40px;
+    --nav-max: 600px;
+    --seat-stage-max: 460px;
+  }
+
+  html {
+    font-size: 125%;
+  }
+
+  .show-card {
+    grid-template-columns: 104px minmax(0, 1fr) 128px;
+    gap: 18px;
+    padding: 20px;
+  }
+
+  .show-card.has-status {
+    grid-template-columns: 26px 104px minmax(0, 1fr) 128px;
+  }
+
+  .poster,
+  .poster-fallback {
+    width: 104px;
+    height: 150px;
+  }
+
+  .time-range {
+    font-size: 1.12rem;
+  }
+
+  .show-title {
+    font-size: 1.2rem;
+  }
+
+  .ticket-ratio {
+    font-size: 1.5rem;
+  }
+
+  .movie-grid {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 480px), 1fr));
+    gap: 18px;
+  }
+
+  .movie-tile {
+    grid-template-columns: 116px minmax(0, 1fr);
+    gap: 18px;
+    padding: 20px;
+  }
+
+  .movie-poster,
+  .movie-poster-fallback {
+    width: 116px;
+    height: 170px;
   }
 }
 
