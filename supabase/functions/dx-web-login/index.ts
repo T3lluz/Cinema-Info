@@ -10,11 +10,11 @@ import "jsr:@supabase/functions-js/edge-runtime.d.ts";
  * it — this function holds the session and returns counts (`scanned`)
  * or a whole hall (`seats`).
  *
- * Sessions are short (the app.dx.no cookie lasts about a day) but the
- * Auth0 SSO cookie behind it lasts about three, and replaying the
- * authorize step with it mints a fresh session without a password. When
- * that happens the refreshed token is handed back so the caller can
- * store it.
+ * Workers never type a password. The shared read-only DX account lives
+ * in Supabase Vault (`dx_email` / `dx_password`, also overridable via
+ * `DX_EMAIL` / `DX_PASSWORD` secrets). This isolate mints and caches a
+ * session, renews it from the Auth0 SSO cookie when it can, and falls
+ * back to a fresh password login when even that has aged out.
  */
 
 const AUTH0 = "https://login.dx.no";
@@ -243,6 +243,71 @@ async function login(email: string, password: string) {
   };
 }
 
+type SharedCreds = { email: string; password: string };
+
+/** Isolate-local session so cold paths do not re-login on every request. */
+let cachedToken: string | null = null;
+let loginLock: Promise<string> | null = null;
+
+/**
+ * Shared read-only DX account. Prefer Edge Function secrets; fall back
+ * to Vault via a service_role-only RPC so the password never ships in
+ * the browser bundle or the git tree.
+ */
+async function sharedCredentials(): Promise<SharedCreds | null> {
+  const email = Deno.env.get("DX_EMAIL")?.trim() || "";
+  const password = Deno.env.get("DX_PASSWORD") || "";
+  if (email && password) return { email, password };
+
+  const url = Deno.env.get("SUPABASE_URL");
+  const key = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+  if (!url || !key) return null;
+
+  const res = await fetch(`${url}/rest/v1/rpc/dx_bridge_credentials`, {
+    method: "POST",
+    headers: {
+      apikey: key,
+      Authorization: `Bearer ${key}`,
+      "Content-Type": "application/json",
+    },
+    body: "{}",
+  });
+  if (!res.ok) return null;
+  let data: unknown = null;
+  try {
+    data = await res.json();
+  } catch {
+    return null;
+  }
+  if (!data || typeof data !== "object") return null;
+  const row = data as { email?: unknown; password?: unknown };
+  const e = String(row.email || "").trim();
+  const p = String(row.password || "");
+  return e && p ? { email: e, password: p } : null;
+}
+
+async function mintSharedToken(log: string[]): Promise<string> {
+  if (loginLock) return loginLock;
+  loginLock = (async () => {
+    const creds = await sharedCredentials();
+    if (!creds) throw dxError("DX bridge credentials not configured", "auth");
+    log.push("signing in with shared DX account");
+    const session = await login(creds.email, creds.password);
+    cachedToken = session.token;
+    return session.token;
+  })();
+  try {
+    return await loginLock;
+  } finally {
+    loginLock = null;
+  }
+}
+
+function replaceJar(jar: Jar, next: Jar) {
+  jar.clear();
+  for (const [name, value] of next) jar.set(name, value);
+}
+
 /** GET as the signed-in user, returning 401 verbatim so callers can renew. */
 async function apiGet(jar: Jar, path: string) {
   const res = await fetch(APP + path, {
@@ -264,10 +329,9 @@ type Session = {
 };
 
 /**
- * A signed-in DX session that heals itself once. The first request to
- * come back 401 mints a new session off the SSO cookie and retries; if
- * that fails too the token is genuinely dead and the caller must ask
- * for a password again.
+ * A signed-in DX session that heals itself once. Prefer the Auth0 SSO
+ * cookie; if that is gone too, mint a fresh session from the shared
+ * vault credentials so visitors never see a login form.
  */
 function openSession(token: string, log: string[]): Session | null {
   const jar = unpackToken(token);
@@ -286,9 +350,19 @@ function openSession(token: string, log: string[]): Session | null {
         try {
           await authorize(jar);
           log.push("session renewed from SSO cookie");
+          cachedToken = packToken(jar);
         } catch (e) {
-          log.push(`renew failed: ${(e as Error).message}`);
-          throw dxError("DX session expired", "auth");
+          log.push(`SSO renew failed: ${(e as Error).message}`);
+          try {
+            const fresh = await mintSharedToken(log);
+            const next = unpackToken(fresh);
+            if (!next) throw dxError("DX session expired", "auth");
+            replaceJar(jar, next);
+            cachedToken = packToken(jar);
+          } catch (renewErr) {
+            log.push(`password renew failed: ${(renewErr as Error).message}`);
+            throw dxError("DX session expired", "auth");
+          }
         }
       }
       res = await apiGet(jar, path);
@@ -301,6 +375,22 @@ function openSession(token: string, log: string[]): Session | null {
   return session;
 }
 
+/** Pick a usable session: caller token, isolate cache, or a fresh login. */
+async function ensureSession(
+  token: string | undefined,
+  log: string[],
+): Promise<Session> {
+  for (const candidate of [token, cachedToken]) {
+    if (!candidate) continue;
+    const session = openSession(candidate, log);
+    if (session) return session;
+  }
+  const fresh = await mintSharedToken(log);
+  const session = openSession(fresh, log);
+  if (!session) throw dxError("DX login produced unreadable token", "auth");
+  return session;
+}
+
 /** Wrap a handler so an expired session always reads the same to callers. */
 async function respond(
   session: Session,
@@ -309,6 +399,7 @@ async function respond(
 ) {
   try {
     const body = await build();
+    if (session.renewed) cachedToken = packToken(session.jar);
     return json({
       ...body,
       ...(session.renewed ? { token: packToken(session.jar) } : {}),
@@ -317,6 +408,7 @@ async function respond(
   } catch (e) {
     const err = e as Error & { code?: string };
     if (err.code === "auth") {
+      cachedToken = null;
       return json({ error: err.message, code: "auth", log: session.log }, 401);
     }
     return json({ error: err.message, log: session.log }, 502);
@@ -372,7 +464,6 @@ async function fetchScanned(body: {
   eventIds?: unknown;
   debug?: boolean;
 }) {
-  if (!body.token) return json({ error: "token required" }, 400);
   const partnerId = String(body.partnerId || PARTNER_ID);
   const eventIds = (Array.isArray(body.eventIds) ? body.eventIds : [])
     .map((id) => String(id))
@@ -381,8 +472,16 @@ async function fetchScanned(body: {
   if (!eventIds.length) return json({ error: "eventIds required" }, 400);
 
   const log: string[] = [];
-  const session = openSession(body.token, log);
-  if (!session) return json({ error: "Unreadable token", code: "auth" }, 401);
+  let session: Session;
+  try {
+    session = await ensureSession(body.token, log);
+  } catch (e) {
+    const err = e as Error & { code?: string };
+    return json(
+      { error: err.message || "DX login failed", code: err.code || "auth", log },
+      401,
+    );
+  }
 
   const load = async (eventId: string): Promise<Count | null> => {
     const res = await session.get(purchasesPath(partnerId, eventId));
@@ -737,14 +836,21 @@ async function fetchSeats(body: {
   withLayout?: boolean;
   debug?: boolean;
 }) {
-  if (!body.token) return json({ error: "token required" }, 400);
   const partnerId = String(body.partnerId || PARTNER_ID);
   const eventId = String(body.eventId ?? "");
   if (!/^\d+$/.test(eventId)) return json({ error: "eventId required" }, 400);
 
   const log: string[] = [];
-  const session = openSession(body.token, log);
-  if (!session) return json({ error: "Unreadable token", code: "auth" }, 401);
+  let session: Session;
+  try {
+    session = await ensureSession(body.token, log);
+  } catch (e) {
+    const err = e as Error & { code?: string };
+    return json(
+      { error: err.message || "DX login failed", code: err.code || "auth", log },
+      401,
+    );
+  }
 
   return await respond(
     session,
@@ -889,20 +995,61 @@ Deno.serve(async (req) => {
     });
   }
 
-  const email = String(body.email || "").trim();
-  const password = String(body.password || "");
-  if (!email || !password) {
-    return json({ error: "Email and password required", code: "login" }, 400);
+  if (body.action === "status" || body.action === "session") {
+    const log: string[] = [];
+    try {
+      const session = await ensureSession(
+        body.token ? String(body.token) : undefined,
+        log,
+      );
+      const meRes = await session.get("/api/v1/auth/");
+      if (!meRes.ok) {
+        return json(
+          { error: `DX auth ${meRes.status}`, code: "auth", log },
+          401,
+        );
+      }
+      const me = (await meRes.json()) as Record<string, unknown>;
+      const partners = (me.partners || []) as Array<Record<string, unknown>>;
+      if (session.renewed) cachedToken = packToken(session.jar);
+      // Never echo the shared account email back to browsers.
+      return json({
+        ok: true,
+        connected: Boolean(me.authenticated),
+        type: "dxweb",
+        partnerId: String(partners[0]?.partnerID || PARTNER_ID),
+        source: "app.dx.no",
+        ...(session.renewed ? { token: packToken(session.jar) } : {}),
+        ...(body.debug ? { log } : {}),
+      });
+    } catch (e) {
+      const err = e as Error & { code?: string };
+      return json(
+        {
+          ok: false,
+          connected: false,
+          error: err.message || "DX login failed",
+          code: err.code || "auth",
+          log,
+        },
+        401,
+      );
+    }
   }
 
-  try {
-    return json(await login(email, password));
-  } catch (e) {
-    const err = e as Error & { code?: string };
-    const code = err.code || "login";
+  // Passwords stay on the server. Older clients that still POST email /
+  // password are told to upgrade rather than having credentials echoed
+  // through the browser again.
+  if (body.email || body.password) {
     return json(
-      { error: err.message || "Login failed", code },
-      code === "login" ? 403 : 502,
+      {
+        error:
+          "DX login is handled by the bridge. Update Cinema Info — no password needed.",
+        code: "login",
+      },
+      400,
     );
   }
+
+  return json({ error: "Unknown action" }, 400);
 });
