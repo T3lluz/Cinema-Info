@@ -538,12 +538,37 @@ let slideToDay = null;
  */
 const painted = new WeakMap();
 
-/** Write `html` into `host` if it differs; true when the DOM changed. */
+/**
+ * Write `html` into `host` if it differs; true when the DOM changed.
+ *
+ * Rebuilding a view takes the keyboard's place in it along with it, and
+ * a redraw arriving every few seconds would make the page impossible to
+ * tab through. So whatever was focused is looked up again afterwards, by
+ * the attribute that names it.
+ */
 function paint(host, html) {
   if (painted.get(host) === html) return false;
   painted.set(host, html);
+  const focused = focusSelectorWithin(host);
   host.innerHTML = html;
+  if (focused) host.querySelector(focused)?.focus({ preventScroll: true });
   return true;
+}
+
+/** A selector for the focused element inside `host`, if it names itself. */
+function focusSelectorWithin(host) {
+  const el = document.activeElement;
+  if (!el || el === document.body || !host.contains(el)) return "";
+  if (el.id) return `[id="${cssEscape(el.id)}"]`;
+  for (const [key, attr] of [
+    ["seatToggle", "data-seat-toggle"],
+    ["seatRetry", "data-seat-retry"],
+    ["show", "data-show"],
+  ]) {
+    const value = el.dataset?.[key];
+    if (value) return `[${attr}="${cssEscape(value)}"]`;
+  }
+  return "";
 }
 
 /** Forget what a host holds, for the places that write inside it by
@@ -4120,7 +4145,11 @@ async function refreshLive({
 
     const removed = dropRemovedShows();
     if (removed.size) changed = true;
-    persistHistory(targets.filter((s) => !removed.has(s.id)));
+    // Storing the history means reading, parsing and rewriting the lot.
+    // On a beat that brought back the same numbers there is nothing in
+    // it to write, and doing it anyway would stall the page every few
+    // seconds once a few months of showings have piled up.
+    if (changed) persistHistory(targets.filter((s) => !removed.has(s.id)));
     lastLiveAt = Date.now();
     applyPreviewScanned();
     setStatus(t("liveAt", { time: formatClock(new Date()) }), { live: true });
@@ -4302,6 +4331,8 @@ async function syncScanned({ shows, force = false, quiet = false } = {}) {
   // button once every five seconds would just read as stuck.
   if (!quiet) setBusy(true);
   let changed = false;
+  /** A show whose count has just gone final, worth remembering. */
+  let settled = false;
   let fetched = 0;
   let lastError = "";
   let expired = false;
@@ -4345,8 +4376,12 @@ async function syncScanned({ shows, force = false, quiet = false } = {}) {
             }
           }
           // Nothing more can happen to a show that ended hours ago.
-          if (Date.now() - showEndOf(show).getTime() > FINAL_AFTER_MS) {
+          if (
+            !show.scanDone &&
+            Date.now() - showEndOf(show).getTime() > FINAL_AFTER_MS
+          ) {
             show.scanDone = true;
+            settled = true;
           }
         }
       }
@@ -4362,7 +4397,9 @@ async function syncScanned({ shows, force = false, quiet = false } = {}) {
         error: fetched ? "" : lastError,
       };
     }
-    persistHistory(targets);
+    // Only a count that moved, or one that has just gone final, is
+    // worth rewriting the stored history for — see refreshLive.
+    if (changed || settled) persistHistory(targets);
   } finally {
     scanSyncRunning = false;
     if (!quiet) setBusy(false);
