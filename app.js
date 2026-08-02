@@ -1465,10 +1465,10 @@ function applyLanguage() {
  */
 const LIQUID_SETTLE_MS = 170;
 
-function liquidMove(indicator, target, { instant = false } = {}) {
+function liquidMove(indicator, target, { instant = false, inset = 0 } = {}) {
   if (!indicator || !target) return;
-  const newL = target.offsetLeft;
-  const newW = target.offsetWidth;
+  const newL = target.offsetLeft + inset;
+  const newW = Math.max(0, target.offsetWidth - inset * 2);
 
   // Hidden targets measure 0×0; bail so we don't park the indicator at
   // width 0 and leave the selected pill unstyled when it shows again.
@@ -1520,7 +1520,9 @@ function setStatus(text, { live = false, error = false } = {}) {
 function movePillIndicator(tab, opts = {}) {
   const indicator = document.querySelector(".pill-indicator");
   const btn = document.querySelector(`.pill-tab[data-tab="${tab}"]`);
-  liquidMove(indicator, btn, opts);
+  // Keep a little air from the rounded track so spring landings on the
+  // far-left / far-right tabs don't kiss (or clear) the pill edge.
+  liquidMove(indicator, btn, { ...opts, inset: 2 });
 }
 
 async function setActiveTab(tab, { skipRender = false } = {}) {
