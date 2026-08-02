@@ -36,9 +36,9 @@ whether it can actually move:
 So the numbers you are looking at are never more than five seconds old,
 while a showing three weeks out — which gains a ticket every few hours,
 and there are dozens of them — is not worth a lookup twelve times a
-minute. At most a dozen showings are read per beat, oldest first behind
-whatever is on screen, so a long programme spreads over a few beats
-instead of leaving as one burst of requests.
+minute. At most **eight** showings are read per beat, urgent ones first,
+which comfortably covers a day and puts a ceiling on what the app asks
+of DX however much a tab happens to be listing.
 
 A redraw only touches the page when the markup it built differs from
 what is already there. Twelve times a minute, almost all of them change

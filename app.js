@@ -29,11 +29,14 @@ const BEAT_MS = 5 * 1000;
  */
 const BEAT_FRESH_MS = 4 * 1000;
 /**
- * At most this many event lookups leave on one beat. A long programme
- * then spreads over a few beats instead of going out as one burst, and
- * the showings that have waited longest go first.
+ * At most this many event lookups leave on one beat, which puts a hard
+ * ceiling on what the app asks of DX however much is on screen: a
+ * Movies tab listing every showtime in the programme must not turn into
+ * a request a second forever. It comfortably covers a day — Buen rarely
+ * programmes more than six showings — and beyond that the urgent ones
+ * go first and the rest come round on the following beats.
  */
-const BEAT_MAX_EVENTS = 12;
+const BEAT_MAX_EVENTS = 8;
 
 /**
  * Doors are busiest around the showing itself: from this long before it
@@ -1646,9 +1649,11 @@ async function load({ forceLive = false, silent = false, ifChanged = false } = {
     if (forceLive) {
       if (activeTab === "day") await enrichVisibleDay({ force: true });
       else if (activeTab === "movies" || activeTab === "stats") {
+        // Both tabs read the whole programme, so a refresh by hand
+        // means all of it, cap and freshness set aside.
         await refreshLive({ force: true });
         enrichedAll = true;
-        await syncScanned();
+        await syncScanned({ force: true });
       } else {
         await syncScanned();
       }
