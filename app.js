@@ -1799,10 +1799,7 @@ function populateFilters() {
 
   markDoneDays();
   updateJumpTodayBtn();
-
-  els.dayTabs
-    .querySelector('.day-tab[aria-selected="true"]')
-    ?.scrollIntoView({ inline: "center", block: "nearest" });
+  scrollSelectedDayTabIntoView();
   moveDayIndicator({ instant: true });
 }
 
@@ -1823,11 +1820,19 @@ function setSelectedDay(day) {
   // Show/hide the today chip before scrolling so the strip width is final.
   updateJumpTodayBtn();
   moveDayIndicator();
-  els.dayTabs
-    .querySelector('.day-tab[aria-selected="true"]')
-    ?.scrollIntoView({ inline: "center", block: "nearest", behavior: "smooth" });
+  scrollSelectedDayTabIntoView({ behavior: "smooth" });
   renderTimeline();
   return true;
+}
+
+/** Center the active day in the strip without scrolling page ancestors
+ * (scrollIntoView was dragging the jump-today chip off-screen). */
+function scrollSelectedDayTabIntoView({ behavior = "auto" } = {}) {
+  const tabs = els.dayTabs;
+  const btn = tabs?.querySelector('.day-tab[aria-selected="true"]');
+  if (!tabs || !btn) return;
+  const left = btn.offsetLeft - (tabs.clientWidth - btn.offsetWidth) / 2;
+  tabs.scrollTo({ left: Math.max(0, left), behavior });
 }
 
 /** Show a one-tap "I dag" chip when the selected day is not today. */

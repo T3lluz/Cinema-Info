@@ -242,10 +242,9 @@ h1 {
 .day-controls-body {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   min-height: 0;
   min-width: 0;
-  overflow: hidden;
 }
 
 /* One-tap return when browsing another day — sits outside the scroll
@@ -288,12 +287,21 @@ h1 {
   min-width: 0;
   overflow-x: auto;
   margin: 0;
-  padding: 0 0 2px;
+  padding: 0 2px 2px;
+  scroll-padding-inline: 2px;
   transition: padding-bottom 0.25s ease;
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
   scroll-snap-type: x proximity;
   overscroll-behavior-x: contain;
+  /* Soften the hard clip as pills scroll off either edge. */
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 10px,
+    #000 calc(100% - 10px),
+    transparent
+  );
 }
 
 .day-indicator {
