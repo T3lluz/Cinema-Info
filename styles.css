@@ -2815,7 +2815,7 @@ a.tile-show:focus-visible {
 }
 
 .pill-nav-inner {
-  --pill-pad: 8px;
+  --pill-pad: 10px;
   pointer-events: auto;
   position: relative;
   display: grid;

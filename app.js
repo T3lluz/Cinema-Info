@@ -1529,7 +1529,7 @@ function movePillIndicator(tab, opts = {}) {
   // resting air from the track edge on the far-left / far-right tabs.
   liquidMove(indicator, btn, {
     ...opts,
-    inset: 2,
+    inset: 3,
     originLeft: track?.offsetLeft ?? 0,
   });
 }
