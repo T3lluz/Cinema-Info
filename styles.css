@@ -27,7 +27,7 @@
   --page-max: 720px;
   --page-pad-x: 16px;
   --day-max: 560px;
-  --nav-max: 420px;
+  --nav-max: 360px;
 }
 
 [data-theme="dark"] {
@@ -3231,7 +3231,7 @@ a.tile-show:focus-visible {
   :root {
     --page-max: min(100% - 48px, 1240px);
     --page-pad-x: 32px;
-    --nav-max: 520px;
+    --nav-max: 440px;
     --seat-stage-max: 380px;
   }
 
@@ -3422,7 +3422,7 @@ a.tile-show:focus-visible {
   :root {
     --page-max: min(100% - 56px, 1480px);
     --page-pad-x: 36px;
-    --nav-max: 560px;
+    --nav-max: 480px;
     --seat-stage-max: 420px;
   }
 
@@ -3478,7 +3478,7 @@ a.tile-show:focus-visible {
     /* Nearly full-bleed on a wide monitor — only a thin outer margin. */
     --page-max: min(100% - 64px, 1720px);
     --page-pad-x: 40px;
-    --nav-max: 600px;
+    --nav-max: 520px;
     --seat-stage-max: 460px;
   }
 
