@@ -1525,11 +1525,11 @@ function movePillIndicator(tab, opts = {}) {
   const indicator = document.querySelector(".pill-indicator");
   const track = indicator?.parentElement;
   const btn = document.querySelector(`.pill-tab[data-tab="${tab}"]`);
-  // Position inside the clipped track (content box). Minimal inset so the
-  // bubble sits tight to the pill rim while the track still clips travel.
+  // Position inside the clipped track (content box). No resting inset —
+  // the track already provides the rim gap via --pill-pad.
   liquidMove(indicator, btn, {
     ...opts,
-    inset: 1,
+    inset: 0,
     originLeft: track?.offsetLeft ?? 0,
   });
 }

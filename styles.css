@@ -2815,9 +2815,9 @@ a.tile-show:focus-visible {
 }
 
 .pill-nav-inner {
-  /* Tight rim gap: the clipped track + non-overshoot easing keep the
-     bubble inside the pill, so we can sit close to the outer wall. */
-  --pill-pad: 5px;
+  /* Minimal rim gap: clip-track + no-overshoot easing keep the bubble
+     inside the pill, so content can sit flush to the outer wall. */
+  --pill-pad: 3px;
   pointer-events: auto;
   position: relative;
   display: grid;
@@ -2869,17 +2869,17 @@ a.tile-show:focus-visible {
   /* Tall enough for icon + label + descenders at every breakpoint.
      overflow:hidden masks the label rising in; selected tabs drop it
      so settled glyphs are never shaved by the clip. */
-  min-height: 60px;
+  min-height: 58px;
   border: 0;
   border-radius: 999px;
   background: transparent;
   color: var(--muted);
   font: inherit;
-  font-size: 0.7rem;
+  font-size: 0.76rem;
   font-weight: 700;
   letter-spacing: 0.01em;
   cursor: pointer;
-  padding: 6px 4px 7px;
+  padding: 4px 2px 5px;
   overflow: hidden;
   transition: color 0.22s ease;
 }
@@ -2888,8 +2888,8 @@ a.tile-show:focus-visible {
    label rises from under it. */
 .pill-tab svg {
   flex-shrink: 0;
-  width: 22px;
-  height: 22px;
+  width: 24px;
+  height: 24px;
   transform: scale(1.22);
   transform-origin: center center;
   transition: transform 0.34s cubic-bezier(0.3, 1.2, 0.4, 1);
@@ -2937,7 +2937,7 @@ a.tile-show:focus-visible {
   /* Generous ceiling so the max-height reveal still animates, while
      overflow:visible (and the selected tab's) keeps descenders intact. */
   max-height: 2.5em;
-  margin-top: 3px;
+  margin-top: 2px;
   opacity: 1;
   overflow: visible;
   transform: translateY(0);
@@ -3216,13 +3216,13 @@ a.tile-show:focus-visible {
   }
 
   .pill-tab {
-    min-height: 64px;
-    font-size: 0.74rem;
+    min-height: 62px;
+    font-size: 0.8rem;
   }
 
   .pill-tab svg {
-    width: 24px;
-    height: 24px;
+    width: 26px;
+    height: 26px;
   }
 }
 
@@ -3399,13 +3399,13 @@ a.tile-show:focus-visible {
   }
 
   .pill-tab {
-    min-height: 66px;
-    font-size: 0.78rem;
+    min-height: 64px;
+    font-size: 0.84rem;
   }
 
   .pill-tab svg {
-    width: 26px;
-    height: 26px;
+    width: 28px;
+    height: 28px;
   }
 }
 
