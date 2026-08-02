@@ -22,7 +22,7 @@
   --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
-  --nav-h: 56px;
+  --nav-h: 60px;
   /* Shared content column — stays phone-sized on mobile, widens on larger screens. */
   --page-max: 720px;
   --page-pad-x: 16px;
@@ -2841,7 +2841,9 @@ a.tile-show:focus-visible {
   align-items: center;
   justify-content: center;
   gap: 0;
-  min-height: 48px;
+  /* Tall enough for icon + label + descenders at every breakpoint;
+     overflow clips the rise-in animation, not the settled text. */
+  min-height: 52px;
   border: 0;
   border-radius: 999px;
   background: transparent;
@@ -2851,7 +2853,7 @@ a.tile-show:focus-visible {
   font-weight: 700;
   letter-spacing: 0.01em;
   cursor: pointer;
-  padding: 5px 4px;
+  padding: 6px 4px 7px;
   overflow: hidden;
   transition: color 0.22s ease;
 }
@@ -2873,7 +2875,7 @@ a.tile-show:focus-visible {
   margin-top: 0;
   opacity: 0;
   overflow: hidden;
-  line-height: 1.15;
+  line-height: 1.25;
   white-space: nowrap;
   transform: translateY(110%);
   transition:
@@ -2905,7 +2907,8 @@ a.tile-show:focus-visible {
 }
 
 .pill-tab[aria-selected="true"] .pill-tab-label {
-  max-height: 1.35em;
+  /* Room for a full line + descenders; 1.35em was clipping "Dager"/etc. */
+  max-height: 2em;
   margin-top: 2px;
   opacity: 1;
   transform: translateY(0);
@@ -3184,7 +3187,7 @@ a.tile-show:focus-visible {
   }
 
   .pill-tab {
-    min-height: 52px;
+    min-height: 56px;
     font-size: 0.68rem;
   }
 
@@ -3367,7 +3370,7 @@ a.tile-show:focus-visible {
   }
 
   .pill-tab {
-    min-height: 54px;
+    min-height: 58px;
     font-size: 0.72rem;
   }
 
