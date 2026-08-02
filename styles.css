@@ -2482,7 +2482,7 @@ a.tile-show:focus-visible {
    muted ink; filled ones flip to a soft light so the square colour still
    dominates. Clicks pass through to the rect underneath. */
 .seat-num {
-  fill: color-mix(in srgb, var(--ink) 32%, transparent);
+  fill: color-mix(in srgb, var(--muted) 78%, transparent);
   font-family: var(--mono);
   font-weight: 700;
   text-anchor: middle;
@@ -2493,11 +2493,11 @@ a.tile-show:focus-visible {
 .seat-num.sold,
 .seat-num.in,
 .seat-num.reserved {
-  fill: color-mix(in srgb, #fff 62%, transparent);
+  fill: color-mix(in srgb, #fff 68%, transparent);
 }
 
 .seat-num.blocked {
-  fill: color-mix(in srgb, var(--muted) 42%, transparent);
+  fill: color-mix(in srgb, var(--muted) 55%, transparent);
 }
 
 .seat {
