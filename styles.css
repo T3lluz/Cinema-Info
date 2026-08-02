@@ -254,6 +254,14 @@ h1 {
   overscroll-behavior-x: contain;
 }
 
+/* Trailing slack so a mid/late day can sit flush left — without this,
+   max scrollLeft stops short once remaining pills no longer fill the strip. */
+.day-tabs::after {
+  content: "";
+  flex: 0 0 calc(100% - 4.75rem);
+  pointer-events: none;
+}
+
 .day-indicator {
   position: absolute;
   top: 0;
@@ -295,7 +303,7 @@ h1 {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  scroll-snap-align: center;
+  scroll-snap-align: start;
   border: 1px solid var(--line);
   background: var(--surface);
   color: var(--ink);
@@ -828,11 +836,11 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: -1px 0 -1px -1px;
+  /* Cancel card padding so the rail fills the left edge end-to-end;
+     otherwise its top radius sits mid-edge and looks mirrored. */
+  margin: -10px 0 -10px -1px;
   padding: 8px 0;
   border-radius: 12px 0 0 12px;
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
   font-size: 0.58rem;
   font-weight: 800;
   letter-spacing: 0.14em;
@@ -841,8 +849,11 @@ h1 {
   user-select: none;
 }
 
+/* Rotate the label only so the rail's left corners stay on the left. */
 .show-status span {
   display: block;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
 }
 
 .show-card.live .show-status {
@@ -2319,6 +2330,10 @@ a.tile-show:focus-visible {
   border-bottom-right-radius: 0;
 }
 
+.show-row > .show-card > .show-status {
+  border-bottom-left-radius: 0;
+}
+
 .seat-strip {
   display: flex;
   align-items: center;
@@ -2749,7 +2764,7 @@ a.tile-show:focus-visible {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2px;
+  gap: 0;
   min-height: 48px;
   border: 0;
   border-radius: 999px;
@@ -2761,14 +2776,35 @@ a.tile-show:focus-visible {
   letter-spacing: 0.01em;
   cursor: pointer;
   padding: 5px 4px;
-  transition: color 0.2s ease;
+  overflow: hidden;
+  transition: color 0.22s ease;
 }
 
+/* Idle tabs: icon-only and a touch larger. Active: icon settles as the
+   label rises from under it. */
 .pill-tab svg {
   flex-shrink: 0;
   width: 20px;
   height: 20px;
-  transition: transform 0.25s cubic-bezier(0.3, 1.5, 0.5, 1);
+  transform: scale(1.22);
+  transform-origin: center center;
+  transition: transform 0.34s cubic-bezier(0.3, 1.2, 0.4, 1);
+}
+
+.pill-tab-label {
+  display: block;
+  max-height: 0;
+  margin-top: 0;
+  opacity: 0;
+  overflow: hidden;
+  line-height: 1.15;
+  white-space: nowrap;
+  transform: translateY(110%);
+  transition:
+    max-height 0.34s cubic-bezier(0.3, 1, 0.4, 1),
+    margin-top 0.34s cubic-bezier(0.3, 1, 0.4, 1),
+    opacity 0.24s ease,
+    transform 0.34s cubic-bezier(0.22, 1.15, 0.4, 1);
 }
 
 .pill-tab:focus-visible {
@@ -2777,7 +2813,7 @@ a.tile-show:focus-visible {
 }
 
 .pill-tab:active svg {
-  transform: scale(0.85);
+  transform: scale(1.08);
 }
 
 .pill-tab[aria-selected="true"] {
@@ -2785,7 +2821,18 @@ a.tile-show:focus-visible {
 }
 
 .pill-tab[aria-selected="true"] svg {
-  transform: translateY(-1px) scale(1.06);
+  transform: scale(1);
+}
+
+.pill-tab[aria-selected="true"]:active svg {
+  transform: scale(0.9);
+}
+
+.pill-tab[aria-selected="true"] .pill-tab-label {
+  max-height: 1.35em;
+  margin-top: 2px;
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .stats-hero,
@@ -2845,6 +2892,11 @@ a.tile-show:focus-visible {
     grid-template-columns: 18px 56px minmax(0, 1fr) 84px;
     padding-left: 0;
     column-gap: 10px;
+  }
+
+  .show-status {
+    margin-top: -12px;
+    margin-bottom: -12px;
   }
 
   .poster,

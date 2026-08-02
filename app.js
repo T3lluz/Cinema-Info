@@ -1789,10 +1789,12 @@ function populateFilters() {
 
   markDoneDays();
 
-  els.dayTabs
-    .querySelector('.day-tab[aria-selected="true"]')
-    ?.scrollIntoView({ inline: "center", block: "nearest" });
-  moveDayIndicator({ instant: true });
+  // Pin after layout so checkmarks/widths are settled — scrollIntoView
+  // was landing short of the leading edge on this strip.
+  requestAnimationFrame(() => {
+    scrollSelectedDayTabToStart();
+    moveDayIndicator({ instant: true });
+  });
 }
 
 /**
@@ -1810,11 +1812,18 @@ function setSelectedDay(day) {
     b.setAttribute("aria-selected", String(b.dataset.day === day));
   });
   moveDayIndicator();
-  els.dayTabs
-    .querySelector('.day-tab[aria-selected="true"]')
-    ?.scrollIntoView({ inline: "center", block: "nearest", behavior: "smooth" });
+  scrollSelectedDayTabToStart({ behavior: "smooth" });
   renderTimeline();
   return true;
+}
+
+/** Keep the active day pill flush with the left of the day strip. */
+function scrollSelectedDayTabToStart({ behavior = "auto" } = {}) {
+  const tabs = els.dayTabs;
+  const btn = tabs?.querySelector('.day-tab[aria-selected="true"]');
+  if (!tabs || !btn) return;
+  const pad = parseFloat(getComputedStyle(tabs).paddingLeft) || 0;
+  tabs.scrollTo({ left: Math.max(0, btn.offsetLeft - pad), behavior });
 }
 
 /** Day change from a tap: slides the page like a swipe would, so the list
