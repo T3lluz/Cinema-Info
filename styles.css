@@ -2529,22 +2529,22 @@ a.tile-show:focus-visible {
   fill: color-mix(in srgb, var(--muted) 55%, transparent);
 }
 
-/* Dark seats are pastel — white numbers wash out. Ink-dark tints keep
-   the seat hue while staying readable on green/red/amber/blue. */
+/* Dark seats are pastel — white numbers wash out. A heavy ink-dark
+   tint keeps the seat hue while clearing ~4.5:1 on red/green/amber/blue. */
 [data-theme="dark"] .seat-num.sold {
-  fill: color-mix(in srgb, #12100e 72%, var(--accent));
+  fill: color-mix(in srgb, #12100e 90%, var(--accent));
 }
 
 [data-theme="dark"] .phase-door .seat-num.sold {
-  fill: color-mix(in srgb, #12100e 72%, var(--warn));
+  fill: color-mix(in srgb, #12100e 90%, var(--warn));
 }
 
 [data-theme="dark"] .seat-num.in {
-  fill: color-mix(in srgb, #12100e 72%, var(--ok));
+  fill: color-mix(in srgb, #12100e 90%, var(--ok));
 }
 
 [data-theme="dark"] .seat-num.reserved {
-  fill: color-mix(in srgb, #12100e 72%, var(--hold));
+  fill: color-mix(in srgb, #12100e 90%, var(--hold));
 }
 
 [data-theme="dark"] .seat-num.blocked {
