@@ -2815,9 +2815,8 @@ a.tile-show:focus-visible {
 }
 
 .pill-nav-inner {
-  /* Minimal rim gap: clip-track + no-overshoot easing keep the bubble
-     inside the pill, so content can sit flush to the outer wall. */
-  --pill-pad: 3px;
+  /* Mid rim gap: tighter than the old 10px air, looser than a flush 3px. */
+  --pill-pad: 6px;
   pointer-events: auto;
   position: relative;
   display: grid;
@@ -2875,11 +2874,11 @@ a.tile-show:focus-visible {
   background: transparent;
   color: var(--muted);
   font: inherit;
-  font-size: 0.76rem;
+  font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.01em;
   cursor: pointer;
-  padding: 4px 2px 5px;
+  padding: 5px 3px 6px;
   overflow: hidden;
   transition: color 0.22s ease;
 }
@@ -2888,8 +2887,8 @@ a.tile-show:focus-visible {
    label rises from under it. */
 .pill-tab svg {
   flex-shrink: 0;
-  width: 24px;
-  height: 24px;
+  width: 22px;
+  height: 22px;
   transform: scale(1.22);
   transform-origin: center center;
   transition: transform 0.34s cubic-bezier(0.3, 1.2, 0.4, 1);
@@ -2937,7 +2936,7 @@ a.tile-show:focus-visible {
   /* Generous ceiling so the max-height reveal still animates, while
      overflow:visible (and the selected tab's) keeps descenders intact. */
   max-height: 2.5em;
-  margin-top: 2px;
+  margin-top: 3px;
   opacity: 1;
   overflow: visible;
   transform: translateY(0);
@@ -3216,13 +3215,13 @@ a.tile-show:focus-visible {
   }
 
   .pill-tab {
-    min-height: 62px;
-    font-size: 0.8rem;
+    min-height: 60px;
+    font-size: 0.74rem;
   }
 
   .pill-tab svg {
-    width: 26px;
-    height: 26px;
+    width: 24px;
+    height: 24px;
   }
 }
 
@@ -3399,13 +3398,13 @@ a.tile-show:focus-visible {
   }
 
   .pill-tab {
-    min-height: 64px;
-    font-size: 0.84rem;
+    min-height: 62px;
+    font-size: 0.78rem;
   }
 
   .pill-tab svg {
-    width: 28px;
-    height: 28px;
+    width: 26px;
+    height: 26px;
   }
 }
 

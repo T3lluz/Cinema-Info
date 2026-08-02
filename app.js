@@ -1525,11 +1525,11 @@ function movePillIndicator(tab, opts = {}) {
   const indicator = document.querySelector(".pill-indicator");
   const track = indicator?.parentElement;
   const btn = document.querySelector(`.pill-tab[data-tab="${tab}"]`);
-  // Position inside the clipped track (content box). No resting inset —
-  // the track already provides the rim gap via --pill-pad.
+  // Position inside the clipped track (content box). A light inset keeps
+  // a little air from the track edge without the old spacious rim gap.
   liquidMove(indicator, btn, {
     ...opts,
-    inset: 0,
+    inset: 2,
     originLeft: track?.offsetLeft ?? 0,
   });
 }
