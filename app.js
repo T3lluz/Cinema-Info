@@ -163,13 +163,17 @@ const I18N = {
     tickets: "billetter",
     noSoldData: "Ingen salgsdata ennå — trykk oppdater.",
     settingsTitle: "Innstillinger",
-    settingsSubtitle: "Språk, utseende og innslipp",
+    settingsSubtitle: "Språk, utseende, setenumre og innslipp",
     language: "Språk",
     languageHint: "Velg språk for appen",
     theme: "Tema",
     themeHint: "Lys eller mørk modus",
     themeLight: "Lys",
     themeDark: "Mørk",
+    seatNumbers: "Setenumre",
+    seatNumbersHint: "Vis plassnummeret inne i hvert sete på salkartet",
+    seatNumbersOn: "Vis",
+    seatNumbersOff: "Skjul",
     langNb: "Norsk",
     langEn: "English",
     spokenNorwegian: "Norsk tale",
@@ -301,13 +305,17 @@ const I18N = {
     tickets: "tickets",
     noSoldData: "No sales data yet — tap refresh.",
     settingsTitle: "Settings",
-    settingsSubtitle: "Language, appearance, and admissions",
+    settingsSubtitle: "Language, appearance, seat numbers, and admissions",
     language: "Language",
     languageHint: "Choose app language",
     theme: "Theme",
     themeHint: "Light or dark mode",
     themeLight: "Light",
     themeDark: "Dark",
+    seatNumbers: "Seat numbers",
+    seatNumbersHint: "Show the seat number inside each square on the seat map",
+    seatNumbersOn: "Show",
+    seatNumbersOff: "Hide",
     langNb: "Norsk",
     langEn: "English",
     spokenNorwegian: "Norwegian",
@@ -464,6 +472,8 @@ let enrichToken = 0;
 let activeTab = "day";
 let lang = "nb";
 let theme = "light";
+/** Digits painted on each seat square in the hall chart. */
+let showSeatNumbers = true;
 let enrichedAll = false;
 let lastLiveAt = 0;
 /** When the program snapshot was last read, so a long-open tab re-reads it. */
@@ -560,6 +570,7 @@ async function init() {
   activeTab = TAB_ORDER.includes(wanted) ? wanted : prefs.activeTab || "day";
   lang = prefs.lang === "en" ? "en" : "nb";
   theme = prefs.theme === "dark" ? "dark" : "light";
+  showSeatNumbers = prefs.showSeatNumbers !== false;
 
   applyTheme(theme);
   applyLanguage();
@@ -1282,6 +1293,7 @@ function savePrefs() {
       activeTab,
       lang,
       theme,
+      showSeatNumbers,
     })
   );
 }
@@ -2955,7 +2967,7 @@ function seatChartSvg(layout, seats, show) {
   const classOf = { 1: "sold", 2: "in", 3: "reserved", 4: "blocked" };
   // One bold size for every seat — sized to fill most of the square,
   // capped so two-digit numbers still fit the same as single digits.
-  const numSize = Math.min(h * 0.72, w * 0.55);
+  const numSize = showSeatNumbers ? Math.min(h * 0.72, w * 0.55) : 0;
   const rows = layout.rows
     .map((row) => {
       const seatEls = row.seats
@@ -2979,11 +2991,16 @@ function seatChartSvg(layout, seats, show) {
           // Printed ticket number (DX map number minus the hall offset
           // applied in dx-web-login). One shared bold size for every
           // seat; colour comes from CSS so it matches the square.
-          const num = `<text class="seat-num ${cls}" x="${seat.x.toFixed(
-            1
-          )}" y="${row.y.toFixed(1)}" dy="0.35em" font-size="${numSize.toFixed(
-            1
-          )}">${escapeHtml(String(seat.n))}</text>`;
+          // Off by preference: the square still carries data-seat for
+          // hover/pick, just without the digit painted on top.
+          const num =
+            showSeatNumbers && numSize
+              ? `<text class="seat-num ${cls}" x="${seat.x.toFixed(
+                  1
+                )}" y="${row.y.toFixed(1)}" dy="0.35em" font-size="${numSize.toFixed(
+                  1
+                )}">${escapeHtml(String(seat.n))}</text>`
+              : "";
           return `<rect class="seat ${cls}" x="${x.toFixed(1)}" y="${y.toFixed(
             1
           )}" width="${w.toFixed(1)}" height="${h.toFixed(1)}" rx="${(
@@ -3682,6 +3699,18 @@ function renderSettings() {
       </div>
     </section>
 
+    <section class="settings-section">
+      <div class="settings-head">
+        <h3>${icon("seats", "panel-icon")}${escapeHtml(t("seatNumbers"))}</h3>
+        <p>${escapeHtml(t("seatNumbersHint"))}</p>
+      </div>
+      <div class="segmented" role="group" aria-label="${escapeHtml(t("seatNumbers"))}">
+        <span class="seg-indicator" aria-hidden="true"></span>
+        <button type="button" class="seg-btn" data-seat-numbers="on" aria-pressed="${showSeatNumbers}">${escapeHtml(t("seatNumbersOn"))}</button>
+        <button type="button" class="seg-btn" data-seat-numbers="off" aria-pressed="${!showSeatNumbers}">${escapeHtml(t("seatNumbersOff"))}</button>
+      </div>
+    </section>
+
     <section class="settings-section dx-section">
       <div class="settings-head">
         <h3>${icon("account", "panel-icon")}${escapeHtml(t("dxTitle"))}${
@@ -3738,6 +3767,21 @@ function renderSettings() {
       applyTheme(next);
       savePrefs();
       segSelect(btn);
+    });
+  });
+
+  els.settingsContent.querySelectorAll("[data-seat-numbers]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const next = btn.dataset.seatNumbers !== "off";
+      if (next === showSeatNumbers) return;
+      showSeatNumbers = next;
+      savePrefs();
+      segSelect(btn);
+      // Charts already drawn keep the old digits until the day/movies
+      // view rebuilds; refresh any that are still in the DOM now.
+      for (const show of state?.shows || []) {
+        if (seatChartExpanded(show)) paintSeatChart(show);
+      }
     });
   });
 
