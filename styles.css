@@ -344,10 +344,14 @@ h1 {
     transform 0.14s cubic-bezier(0.3, 0.7, 0.4, 1);
 }
 
-/* Navbar bubble: skip the horizontal squash. Edge tabs sit against the
-   pill inset, and scaleX would push the blob past the rounded track. */
+/* Navbar bubble: no horizontal squash, and no spring overshoot on
+   left/width — edge tabs must keep their gap from the pill rim. */
 .pill-indicator.liquid-travel {
   transform: scaleY(0.75);
+  transition:
+    left 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+    width 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.14s cubic-bezier(0.3, 0.7, 0.4, 1);
 }
 
 .day-tabs::-webkit-scrollbar {
@@ -2811,33 +2815,43 @@ a.tile-show:focus-visible {
 }
 
 .pill-nav-inner {
+  --pill-pad: 10px;
   pointer-events: auto;
   position: relative;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 2px;
   width: min(var(--nav-max), 100%);
-  /* Inset + clip: spring overshoot on far-left/right landings stays
-     inside the rounded pill instead of peeking past the track. */
-  padding: 8px;
+  padding: var(--pill-pad);
   border-radius: 999px;
   background: color-mix(in srgb, var(--nav-bg) 55%, transparent);
   backdrop-filter: blur(20px) saturate(1.2);
   -webkit-backdrop-filter: blur(20px) saturate(1.2);
   border: 1px solid var(--line);
   box-shadow: var(--nav-shadow);
+}
+
+/* Clips the selection bubble to the content box so landings cannot
+   eat the padding gap between the bubble and the rounded pill rim. */
+.pill-indicator-track {
+  position: absolute;
+  inset: var(--pill-pad);
+  border-radius: 999px;
   overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
 }
 
 .pill-indicator {
   position: absolute;
-  top: 8px;
-  bottom: 8px;
+  top: 0;
+  bottom: 0;
   border-radius: 999px;
   background: var(--accent-soft);
+  /* Ease-out without y > 1: no overshoot into the track edge. */
   transition:
-    left 0.32s cubic-bezier(0.3, 1.25, 0.4, 1),
-    width 0.32s cubic-bezier(0.3, 1.25, 0.4, 1),
+    left 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+    width 0.32s cubic-bezier(0.22, 1, 0.36, 1),
     transform 0.28s cubic-bezier(0.34, 1.56, 0.5, 1);
   pointer-events: none;
 }
@@ -3228,17 +3242,28 @@ a.tile-show:focus-visible {
   }
 
   .top {
-    padding-top: calc(20px + var(--safe-top));
-    padding-bottom: 18px;
+    padding-top: calc(14px + var(--safe-top));
+    padding-bottom: 12px;
   }
 
   h1 {
-    font-size: 2rem;
+    font-size: 1.75rem;
   }
 
   .brand-mark {
-    width: 46px;
-    height: 46px;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+  }
+
+  .icon-btn {
+    width: 32px;
+    height: 32px;
+  }
+
+  .icon-btn svg {
+    width: 18px;
+    height: 18px;
   }
 
   .day-tab {
