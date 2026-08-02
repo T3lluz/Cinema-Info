@@ -2848,13 +2848,23 @@ function seatChartSvg(layout, seats, show) {
                   x + w * 0.82
                 ).toFixed(1)}" y2="${(y + h * 0.18).toFixed(1)}" />`
               : "";
+          // Printed ticket number (DX map number minus the hall offset
+          // applied in dx-web-login). Kept faint so colour still reads
+          // first; pointer-events stay on the square underneath.
+          const digits = String(seat.n).length;
+          const numSize = Math.min(h * 0.56, (w * 0.82) / digits);
+          const num = `<text class="seat-num ${cls}" x="${seat.x.toFixed(
+            1
+          )}" y="${row.y.toFixed(1)}" dy="0.35em" font-size="${numSize.toFixed(
+            1
+          )}">${escapeHtml(String(seat.n))}</text>`;
           return `<rect class="seat ${cls}" x="${x.toFixed(1)}" y="${y.toFixed(
             1
           )}" width="${w.toFixed(1)}" height="${h.toFixed(1)}" rx="${(
             w * 0.22
           ).toFixed(1)}" data-row="${escapeHtml(row.name)}" data-seat="${
             seat.n
-          }" data-state="${state}" />${strike}`;
+          }" data-state="${state}" />${num}${strike}`;
         })
         .join("");
       return `<g class="seat-row">

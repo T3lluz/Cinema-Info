@@ -2478,6 +2478,28 @@ a.tile-show:focus-visible {
   text-anchor: middle;
 }
 
+/* Faint printed seat number centred on each square. Free seats use the
+   muted ink; filled ones flip to a soft light so the square colour still
+   dominates. Clicks pass through to the rect underneath. */
+.seat-num {
+  fill: color-mix(in srgb, var(--muted) 48%, transparent);
+  font-family: var(--mono);
+  font-weight: 700;
+  text-anchor: middle;
+  pointer-events: none;
+  user-select: none;
+}
+
+.seat-num.sold,
+.seat-num.in,
+.seat-num.reserved {
+  fill: color-mix(in srgb, #fff 52%, transparent);
+}
+
+.seat-num.blocked {
+  fill: color-mix(in srgb, var(--muted) 35%, transparent);
+}
+
 .seat {
   fill: color-mix(in srgb, var(--line) 45%, var(--surface));
   stroke: color-mix(in srgb, var(--line) 90%, transparent);
