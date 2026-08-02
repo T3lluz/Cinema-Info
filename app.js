@@ -6,7 +6,6 @@ const SEAT_MAP_KEY = "cinemaInfoSeatMaps";
 const HISTORY_KEEP_DAYS = 120;
 const DX_PARTNER_ID = "202";
 const DX_API = "https://api.dx.no/v3";
-const DX_WEB_URL = "https://app.dx.no";
 const DX_LOGIN_PROXY =
   "https://kypeegsbfaivyqeidnqp.supabase.co/functions/v1/dx-web-login";
 const DX_LOGIN_ANON_KEY =
@@ -164,7 +163,7 @@ const I18N = {
     tickets: "billetter",
     noSoldData: "Ingen salgsdata ennå — trykk oppdater.",
     settingsTitle: "Innstillinger",
-    settingsSubtitle: "Språk, utseende og DX-konto",
+    settingsSubtitle: "Språk, utseende og innslipp",
     language: "Språk",
     languageHint: "Velg språk for appen",
     theme: "Tema",
@@ -176,33 +175,15 @@ const I18N = {
     spokenNorwegian: "Norsk tale",
     spokenEnglish: "Engelsk tale",
     ageAll: "Tillatt for alle",
-    dxTitle: "DX-konto",
+    dxTitle: "Innslipp fra DX",
     dxSubtitle:
-      "Logg inn med DX-kontoen din for å se hvor mange som har skannet billetten.",
-    dxChipOn: "Tilkoblet",
-    dxChipOff: "Ikke tilkoblet",
-    dxConnectedAs: "Tilkoblet som {email}",
-    dxConnectedPat: "Tilkoblet med tilgangstoken",
+      "Skannede billetter og setekart hentes automatisk via kinoens felles DX-konto.",
+    dxChipOn: "Aktiv",
+    dxChipOff: "Utilgjengelig",
+    dxConnectedAs: "Koblet via felles konto",
+    dxConnectedPat: "Koblet via felles konto",
     dxConnectedHint:
-      "Innslipp hentes for i dag og tidligere dager når du åpner appen.",
-    dxKeepLabel: "Hold meg innlogget",
-    dxKeepHint:
-      "DX logger ut etter noen dager. Passordet lagres kun på denne enheten så appen kan fornye økten selv.",
-    dxRenewLabel: "Automatisk fornying",
-    dxRenewOn: "På",
-    dxRenewOff: "Av — logg inn på nytt hver 3. dag",
-    dxEmailLabel: "E-post",
-    dxPasswordLabel: "Passord",
-    dxLoginHint:
-      "Samme e-post og passord som i DX Check-in / på app.dx.no.",
-    dxConnect: "Koble til",
-    dxDisconnect: "Koble fra",
-    dxOpenWeb: "Åpne DX Web",
-    dxConnecting: "Kobler til…",
-    dxConnectOk: "Tilkoblet",
-    dxConnectFail: "Kunne ikke koble til. Sjekk e-post og passord.",
-    dxNeedCreds: "Fyll inn e-post og passord.",
-    dxInvalidLogin: "Feil e-post eller passord.",
+      "Innslipp hentes for i dag og tidligere dager når du åpner appen. Ingen egen innlogging trengs.",
     dxNetworkFail: "Fikk ikke kontakt med DX. Sjekk nettforbindelsen.",
     dxSourceLabel: "Kilde",
     dxSyncedLabel: "Sist oppdatert",
@@ -215,9 +196,9 @@ const I18N = {
     dxRefreshing: "Henter…",
     dxTestOk: "OK — DX svarte med {n} skannede billetter for {show}.",
     dxTestEmpty:
-      "Innlogget, men DX ga ingen skann-tall for {show}. Detaljene under kan sendes videre.",
+      "DX er tilkoblet, men ga ingen skann-tall for {show}. Detaljene under kan sendes videre.",
     dxTestNoShows: "Ingen forestillinger med DX-ID å teste mot ennå.",
-    dxTestAuth: "DX avviste pålogging. Koble til på nytt.",
+    dxTestAuth: "DX-broen klarte ikke å hente økt. Prøv igjen om litt.",
     dxDetails: "Detaljer",
     previewScannedBanner:
       "Forhåndsvisning: skannet-tall er eksempeldata (ikke live fra DX).",
@@ -320,7 +301,7 @@ const I18N = {
     tickets: "tickets",
     noSoldData: "No sales data yet — tap refresh.",
     settingsTitle: "Settings",
-    settingsSubtitle: "Language, appearance, and DX account",
+    settingsSubtitle: "Language, appearance, and admissions",
     language: "Language",
     languageHint: "Choose app language",
     theme: "Theme",
@@ -332,33 +313,15 @@ const I18N = {
     spokenNorwegian: "Norwegian",
     spokenEnglish: "English",
     ageAll: "All ages",
-    dxTitle: "DX account",
+    dxTitle: "Admissions from DX",
     dxSubtitle:
-      "Sign in with your DX account to see how many guests have scanned their ticket.",
-    dxChipOn: "Connected",
-    dxChipOff: "Not connected",
-    dxConnectedAs: "Connected as {email}",
-    dxConnectedPat: "Connected with access token",
+      "Scanned tickets and seat maps are fetched automatically through the cinema’s shared DX account.",
+    dxChipOn: "Active",
+    dxChipOff: "Unavailable",
+    dxConnectedAs: "Connected via shared account",
+    dxConnectedPat: "Connected via shared account",
     dxConnectedHint:
-      "Admissions are fetched for today and earlier days when you open the app.",
-    dxKeepLabel: "Keep me signed in",
-    dxKeepHint:
-      "DX signs you out after a few days. The password is kept on this device only, so the app can renew the session itself.",
-    dxRenewLabel: "Auto renew",
-    dxRenewOn: "On",
-    dxRenewOff: "Off — sign in again every 3 days",
-    dxEmailLabel: "Email",
-    dxPasswordLabel: "Password",
-    dxLoginHint:
-      "Same email and password you use in DX Check-in / on app.dx.no.",
-    dxConnect: "Connect",
-    dxDisconnect: "Disconnect",
-    dxOpenWeb: "Open DX Web",
-    dxConnecting: "Connecting…",
-    dxConnectOk: "Connected",
-    dxConnectFail: "Could not connect. Check email and password.",
-    dxNeedCreds: "Enter email and password.",
-    dxInvalidLogin: "Wrong email or password.",
+      "Admissions are fetched for today and earlier days when you open the app. No personal sign-in is needed.",
     dxNetworkFail: "Could not reach DX. Check your connection.",
     dxSourceLabel: "Source",
     dxSyncedLabel: "Last updated",
@@ -371,9 +334,9 @@ const I18N = {
     dxRefreshing: "Fetching…",
     dxTestOk: "OK — DX returned {n} scanned tickets for {show}.",
     dxTestEmpty:
-      "Signed in, but DX returned no scan numbers for {show}. The details below can be passed on.",
+      "DX is connected, but returned no scan numbers for {show}. The details below can be passed on.",
     dxTestNoShows: "No showings with a DX id to test against yet.",
-    dxTestAuth: "DX rejected the sign-in. Please connect again.",
+    dxTestAuth: "The DX bridge could not open a session. Try again in a moment.",
     dxDetails: "Details",
     previewScannedBanner:
       "Preview: scanned counts are sample data (not live from DX).",
@@ -1203,27 +1166,49 @@ function loadPrefs() {
   }
 }
 
+/**
+ * Optional opaque session token cached on this device. The bridge can
+ * mint sessions on its own from the shared vault credentials, so a
+ * missing token is fine — and passwords are never stored in the browser.
+ */
 function loadDxAuth() {
   try {
+    // Drop legacy payloads that kept a password on the device.
     const raw = JSON.parse(localStorage.getItem(DX_AUTH_KEY) || "null");
-    if (!raw || typeof raw !== "object") return null;
-    // Older builds stored credentials for DX surfaces that turned out not
-    // to carry check-in state; those cannot work, so ask for a fresh login.
-    if (!raw.token || raw.type !== "dxweb") return null;
-    return raw;
+    if (!raw || typeof raw !== "object") return { type: "dxweb" };
+    if (raw.password || raw.email) {
+      localStorage.removeItem(DX_AUTH_KEY);
+      return { type: "dxweb" };
+    }
+    if (raw.token && raw.type === "dxweb") {
+      return { type: "dxweb", token: String(raw.token), partnerId: raw.partnerId };
+    }
+    return { type: "dxweb" };
   } catch {
-    return null;
+    return { type: "dxweb" };
   }
 }
 
 function saveDxAuth(next) {
-  dxAuth = next;
-  if (!next) localStorage.removeItem(DX_AUTH_KEY);
-  else localStorage.setItem(DX_AUTH_KEY, JSON.stringify(next));
+  dxAuth = next && typeof next === "object" ? next : { type: "dxweb" };
+  // Only persist a short-lived opaque token — never credentials.
+  if (dxAuth.token) {
+    localStorage.setItem(
+      DX_AUTH_KEY,
+      JSON.stringify({
+        type: "dxweb",
+        token: dxAuth.token,
+        partnerId: dxAuth.partnerId || DX_PARTNER_ID,
+      })
+    );
+  } else {
+    localStorage.removeItem(DX_AUTH_KEY);
+  }
 }
 
+/** Admissions are always on; the bridge signs in with the shared account. */
 function isDxConnected() {
-  return Boolean(dxAuth?.token);
+  return true;
 }
 
 /** True when the UI should make room for check-in numbers at all. */
@@ -1231,32 +1216,17 @@ function scanVisible() {
   return isDxConnected() || PREVIEW_SCANNED;
 }
 
-/**
- * Forget the DX account and every check-in number that came with it, in
- * memory and in the stored history, so disconnecting really clears the UI.
- */
-function disconnectDx() {
-  saveDxAuth(null);
-  dxScanStatus = { at: 0, source: "", error: "" };
-  seatCharts.clear();
-  openSeatCharts.clear();
-  for (const show of state?.shows || []) {
-    show.scanned = null;
-    show.scannedAt = null;
-    show.scanDone = false;
-  }
-  try {
-    const hist = loadHistory();
-    for (const show of Object.values(hist)) {
-      if (!show || typeof show !== "object") continue;
-      show.scanned = null;
-      show.scannedAt = null;
-      show.scanDone = false;
-    }
-    localStorage.setItem(HISTORY_KEY, JSON.stringify(hist));
-  } catch (err) {
-    console.warn("Could not clear scanned history", err);
-  }
+function rememberDxToken(token) {
+  if (!token) return;
+  saveDxAuth({
+    type: "dxweb",
+    token: String(token),
+    partnerId: dxAuth?.partnerId || DX_PARTNER_ID,
+  });
+}
+
+function clearDxToken() {
+  saveDxAuth({ type: "dxweb" });
 }
 
 /**
@@ -2551,7 +2521,9 @@ async function loadSeatChart(
     return;
   }
 
-  if (PREVIEW_SCANNED && !isDxConnected()) {
+  // `?previewScanned=1` still paints sample halls so the UI can be
+  // reviewed without waiting on the bridge.
+  if (PREVIEW_SCANNED) {
     seatCharts.set(key, previewSeatChart(show));
     paintSeatChart(show);
     return;
@@ -2568,16 +2540,18 @@ async function loadSeatChart(
   let skipPaint = false;
   if (!quiet) setBusy(true);
   try {
-    const { status, ok, data } = await callDxProxy({
+    const seatPayload = {
       action: "seats",
-      token: dxAuth.token,
       partnerId,
       eventId: key,
       withLayout: !seatLayoutOf(show),
-    });
+    };
+    if (dxAuth?.token) seatPayload.token = dxAuth.token;
+    const { status, ok, data } = await callDxProxy(seatPayload);
 
     if (status === 401 || status === 403) {
-      if (retry && (await reauthenticateDx())) {
+      if (retry) {
+        clearDxToken();
         seatCharts.delete(key);
         return loadSeatChart(show, { force: true, retry: false, quiet });
       }
@@ -2585,7 +2559,7 @@ async function loadSeatChart(
     }
     if (!ok) throw new Error(data.error || `bridge ${status}`);
 
-    if (data.token) saveDxAuth({ ...dxAuth, token: String(data.token) });
+    if (data.token) rememberDxToken(data.token);
     if (data.locationId != null) seatHalls.set(show.screen, data.locationId);
     if (data.layout) {
       rememberSeatLayout(partnerId, data.locationId, data.layout);
@@ -2641,9 +2615,15 @@ async function loadSeatChart(
     if (cardChanged) persistHistory([show]);
   } catch (err) {
     if (err?.code === "auth") {
-      console.warn("DX credentials expired — disconnecting");
-      disconnectDx();
-      renderActiveView();
+      console.warn("DX bridge session failed", err);
+      clearDxToken();
+      dxScanStatus.error = String(err?.message || "auth");
+      seatCharts.set(key, {
+        status: "error",
+        at: Date.now(),
+        error: String(err?.message || err),
+      });
+      paintSeatChart(show);
       return;
     }
     if (previous?.status === "ready") {
@@ -3672,12 +3652,8 @@ function renderStats() {
 }
 
 function renderSettings() {
-  const connected = isDxConnected();
-  const statusLabel = connected
-    ? dxAuth.email
-      ? t("dxConnectedAs", { email: dxAuth.email })
-      : t("dxConnectedPat")
-    : "";
+  const bridgeError = Boolean(dxScanStatus.error);
+  const statusLabel = t("dxConnectedAs");
 
   els.settingsContent.innerHTML = `
     ${viewIntro("settings", "settingsTitle", "settingsSubtitle")}
@@ -3709,52 +3685,26 @@ function renderSettings() {
     <section class="settings-section dx-section">
       <div class="settings-head">
         <h3>${icon("account", "panel-icon")}${escapeHtml(t("dxTitle"))}${
-          connected
-            ? `<span class="dx-chip on">${escapeHtml(t("dxChipOn"))}</span>`
-            : `<span class="dx-chip off">${escapeHtml(t("dxChipOff"))}</span>`
+          bridgeError
+            ? `<span class="dx-chip off">${escapeHtml(t("dxChipOff"))}</span>`
+            : `<span class="dx-chip on">${escapeHtml(t("dxChipOn"))}</span>`
         }</h3>
         <p>${escapeHtml(t("dxSubtitle"))}</p>
       </div>
-      ${
-        connected
-          ? `<div class="dx-status connected">
-              <p class="dx-status-title">${escapeHtml(statusLabel)}</p>
-              <p class="dx-status-hint">${escapeHtml(t("dxConnectedHint"))}</p>
-              ${renderDxFacts()}
-              <p class="dx-msg" id="dxTestMsg" hidden></p>
-              <details class="dx-advanced" id="dxDetails" hidden>
-                <summary>${escapeHtml(t("dxDetails"))}</summary>
-                <pre class="dx-log" id="dxLog"></pre>
-              </details>
-              <div class="dx-actions">
-                <button type="button" class="dx-btn ghost" id="dxRefreshBtn">${escapeHtml(t("dxRefreshScans"))}</button>
-                <button type="button" class="dx-btn ghost" id="dxTestBtn">${escapeHtml(t("dxTest"))}</button>
-              </div>
-              <button type="button" class="dx-btn ghost danger" id="dxDisconnectBtn">${escapeHtml(t("dxDisconnect"))}</button>
-            </div>`
-          : `<form class="dx-form" id="dxConnectForm" autocomplete="on">
-              <p class="dx-hint">${escapeHtml(t("dxLoginHint"))}
-                <a href="${DX_WEB_URL}" target="_blank" rel="noopener noreferrer">${escapeHtml(t("dxOpenWeb"))}</a>
-              </p>
-              <label class="dx-field">
-                <span>${escapeHtml(t("dxEmailLabel"))}</span>
-                <input id="dxEmailInput" name="dx-email" type="email" autocomplete="username" />
-              </label>
-              <label class="dx-field">
-                <span>${escapeHtml(t("dxPasswordLabel"))}</span>
-                <input id="dxPasswordInput" name="dx-password" type="password" autocomplete="current-password" />
-              </label>
-              <label class="dx-check">
-                <input id="dxKeepInput" type="checkbox" checked />
-                <span>
-                  <strong>${escapeHtml(t("dxKeepLabel"))}</strong>
-                  ${escapeHtml(t("dxKeepHint"))}
-                </span>
-              </label>
-              <p class="dx-msg" id="dxConnectMsg" hidden></p>
-              <button type="submit" class="dx-btn primary" id="dxConnectBtn">${escapeHtml(t("dxConnect"))}</button>
-            </form>`
-      }
+      <div class="dx-status connected">
+        <p class="dx-status-title">${escapeHtml(statusLabel)}</p>
+        <p class="dx-status-hint">${escapeHtml(t("dxConnectedHint"))}</p>
+        ${renderDxFacts()}
+        <p class="dx-msg" id="dxTestMsg" hidden></p>
+        <details class="dx-advanced" id="dxDetails" hidden>
+          <summary>${escapeHtml(t("dxDetails"))}</summary>
+          <pre class="dx-log" id="dxLog"></pre>
+        </details>
+        <div class="dx-actions">
+          <button type="button" class="dx-btn ghost" id="dxRefreshBtn">${escapeHtml(t("dxRefreshScans"))}</button>
+          <button type="button" class="dx-btn ghost" id="dxTestBtn">${escapeHtml(t("dxTest"))}</button>
+        </div>
+      </div>
     </section>
   `;
 
@@ -3791,15 +3741,6 @@ function renderSettings() {
     });
   });
 
-  const disconnectBtn = els.settingsContent.querySelector("#dxDisconnectBtn");
-  if (disconnectBtn) {
-    disconnectBtn.addEventListener("click", () => {
-      disconnectDx();
-      renderSettings();
-      renderActiveView();
-    });
-  }
-
   const refreshBtn = els.settingsContent.querySelector("#dxRefreshBtn");
   if (refreshBtn) {
     refreshBtn.addEventListener("click", async () => {
@@ -3819,21 +3760,13 @@ function renderSettings() {
   if (testBtn) {
     testBtn.addEventListener("click", () => runDxTest(testBtn));
   }
-
-  const form = els.settingsContent.querySelector("#dxConnectForm");
-  if (form) {
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      await connectDxAccount();
-    });
-  }
 }
 
 /** Connection facts, so a blank admission column is never a mystery. */
 function renderDxFacts() {
   const shows = (state?.shows || []).filter((s) => s.eventId);
   const withScan = shows.filter((s) => s.scanned != null).length;
-  const source = dxScanStatus.source || dxAuth?.type || "—";
+  const source = dxScanStatus.source || "app.dx.no";
   const synced = dxScanStatus.at
     ? formatClock(new Date(dxScanStatus.at))
     : t("dxNeverSynced");
@@ -3845,7 +3778,6 @@ function renderDxFacts() {
       t("dxCoverageLabel"),
       t("dxCoverageValue", { n: withScan, total: shows.length }),
     ],
-    [t("dxRenewLabel"), dxAuth?.keepSignedIn ? t("dxRenewOn") : t("dxRenewOff")],
   ];
 
   return `<ul class="dx-facts">${facts
@@ -3899,81 +3831,6 @@ async function runDxTest(btn) {
   }
 }
 
-async function connectDxAccount() {
-  const email = els.settingsContent.querySelector("#dxEmailInput")?.value?.trim() || "";
-  const password = els.settingsContent.querySelector("#dxPasswordInput")?.value || "";
-  const keep = els.settingsContent.querySelector("#dxKeepInput")?.checked ?? true;
-  const msg = els.settingsContent.querySelector("#dxConnectMsg");
-  const btn = els.settingsContent.querySelector("#dxConnectBtn");
-
-  const setMsg = (text, ok = false) => {
-    if (!msg) return;
-    msg.hidden = !text;
-    msg.textContent = text || "";
-    msg.classList.toggle("ok", ok);
-    msg.classList.toggle("err", Boolean(text) && !ok);
-  };
-
-  if (!email || !password) {
-    setMsg(t("dxNeedCreds"));
-    return;
-  }
-
-  if (btn) {
-    btn.disabled = true;
-    btn.textContent = t("dxConnecting");
-  }
-  setMsg("");
-
-  try {
-    saveDxAuth(await connectWithPassword(email, password, keep));
-    dxScanStatus = { at: 0, source: "", error: "" };
-    // A new credential deserves a clean sweep over every day again.
-    for (const show of state?.shows || []) {
-      show.scannedAt = null;
-      show.scanDone = false;
-    }
-    setMsg(t("dxConnectOk"), true);
-    renderSettings();
-    await syncScanned({ force: true });
-    renderActiveView();
-  } catch (err) {
-    console.warn("DX connect failed", err);
-    const code = err?.code;
-    setMsg(
-      code === "login"
-        ? t("dxInvalidLogin")
-        : code === "network"
-          ? t("dxNetworkFail")
-          : t("dxConnectFail")
-    );
-    if (btn) {
-      btn.disabled = false;
-      btn.textContent = t("dxConnect");
-    }
-  }
-}
-
-/**
- * Email + password from the settings screen. Check-in state lives in
- * app.dx.no's purchase list, and app.dx.no sends no CORS headers at all,
- * so the sign-in and every later lookup go through the login proxy.
- */
-async function connectWithPassword(email, password, keepSignedIn) {
-  const session = await loginDxWebProxy(email, password);
-  return {
-    type: "dxweb",
-    token: session.token,
-    email: session.email || email,
-    partnerId: session.partnerId || DX_PARTNER_ID,
-    connectedAt: new Date().toISOString(),
-    keepSignedIn: Boolean(keepSignedIn),
-    // DX signs you out after about three days. Kept on this device only,
-    // so the app can renew quietly instead of stopping mid-week.
-    password: keepSignedIn ? password : undefined,
-  };
-}
-
 function dxError(message, code) {
   const err = new Error(message);
   err.code = code;
@@ -4007,39 +3864,28 @@ async function callDxProxy(body) {
   return { status: res.status, ok: res.ok, data };
 }
 
-async function loginDxWebProxy(email, password) {
-  const { status, ok, data } = await callDxProxy({ email, password });
-  if (!ok || !data.token) {
-    const code = data.code === "login" || status === 403 ? "login" : "auth0";
-    throw dxError(data.error || `DX login ${status}`, code);
-  }
-  return {
-    token: String(data.token),
-    email: data.email || email,
-    partnerId: data.partnerId || DX_PARTNER_ID,
-  };
-}
-
 /**
  * Check-in counts for a batch of events, as `{ eventId: {scanned, sold} }`.
  *
- * The DX session behind the token is short-lived. The bridge renews it
- * from the Auth0 cookie by itself and hands back a fresh token; once
- * even that has aged out, sign in again with the stored password if the
- * user asked us to keep them signed in.
+ * The bridge holds the shared DX session. An optional opaque token may be
+ * sent to reuse a warm isolate session; if it is gone the bridge signs
+ * in again from Vault without the browser ever seeing a password.
  */
 async function fetchScannedCounts(partnerId, eventIds, { retry = true } = {}) {
-  if (!dxAuth?.token || !eventIds.length) return null;
+  if (!eventIds.length) return null;
 
-  const { status, ok, data } = await callDxProxy({
+  const payload = {
     action: "scanned",
-    token: dxAuth.token,
     partnerId,
     eventIds,
-  });
+  };
+  if (dxAuth?.token) payload.token = dxAuth.token;
+
+  const { status, ok, data } = await callDxProxy(payload);
 
   if (status === 401 || status === 403) {
-    if (retry && (await reauthenticateDx())) {
+    if (retry) {
+      clearDxToken();
       return fetchScannedCounts(partnerId, eventIds, { retry: false });
     }
     throw dxError(data.error || "DX session expired", "auth");
@@ -4049,22 +3895,10 @@ async function fetchScannedCounts(partnerId, eventIds, { retry = true } = {}) {
     return null;
   }
 
-  if (data.token) saveDxAuth({ ...dxAuth, token: String(data.token) });
+  if (data.token) rememberDxToken(data.token);
   if (data.source) dxScanStatus.source = data.source;
+  dxScanStatus.error = "";
   return data.counts || {};
-}
-
-/** Sign in again in the background, when we were asked to remember how. */
-async function reauthenticateDx() {
-  if (!dxAuth?.keepSignedIn || !dxAuth.email || !dxAuth.password) return false;
-  try {
-    const session = await loginDxWebProxy(dxAuth.email, dxAuth.password);
-    saveDxAuth({ ...dxAuth, token: session.token });
-    return true;
-  } catch (err) {
-    console.warn("DX re-authentication failed", err);
-    return false;
-  }
 }
 
 function segSelect(btn) {
@@ -4437,15 +4271,14 @@ async function syncScanned({ shows, force = false, quiet = false } = {}) {
     }
 
     if (expired) {
-      console.warn("DX credentials expired — disconnecting");
-      disconnectDx();
-    } else {
-      dxScanStatus = {
-        at: fetched ? Date.now() : dxScanStatus.at,
-        source: dxScanStatus.source,
-        error: fetched ? "" : lastError,
-      };
+      console.warn("DX bridge session failed — will retry on next beat");
+      clearDxToken();
     }
+    dxScanStatus = {
+      at: fetched ? Date.now() : dxScanStatus.at,
+      source: dxScanStatus.source,
+      error: expired ? lastError || "auth" : fetched ? "" : lastError,
+    };
     // Only a count that moved, or one that has just gone final, is
     // worth rewriting the stored history for — see refreshLive.
     if (changed || settled) persistHistory(targets);
@@ -4454,12 +4287,6 @@ async function syncScanned({ shows, force = false, quiet = false } = {}) {
     if (!quiet) setBusy(false);
   }
 
-  // Losing the account changes the settings screen too; short of that,
-  // leave it alone — re-rendering wipes the message a test just wrote.
-  if (expired) {
-    renderActiveView();
-    return true;
-  }
   if (changed && activeTab !== "settings") renderActiveView();
   return changed;
 }
@@ -4498,20 +4325,21 @@ async function fetchDxEvent(show) {
  * blank admission column can be explained instead of guessed at.
  */
 async function runDxScanDiagnostics() {
-  if (!dxAuth?.token) return { code: "auth" };
   const show = diagnosticShow();
   if (!show) return { code: "noShows" };
 
-  const partnerId = show.promoterId || dxAuth.partnerId || DX_PARTNER_ID;
+  const partnerId = show.promoterId || dxAuth?.partnerId || DX_PARTNER_ID;
+  const payload = {
+    action: "scanned",
+    partnerId,
+    eventIds: [String(show.eventId)],
+    debug: true,
+  };
+  if (dxAuth?.token) payload.token = dxAuth.token;
+
   let result;
   try {
-    result = await callDxProxy({
-      action: "scanned",
-      token: dxAuth.token,
-      partnerId,
-      eventIds: [String(show.eventId)],
-      debug: true,
-    });
+    result = await callDxProxy(payload);
   } catch (err) {
     return { code: "empty", show, details: String(err?.message || err) };
   }
@@ -4524,9 +4352,10 @@ async function runDxScanDiagnostics() {
   ];
 
   if (status === 401 || status === 403) {
+    clearDxToken();
     return { code: "auth", show, details: lines.join("\n") };
   }
-  if (data.token) saveDxAuth({ ...dxAuth, token: String(data.token) });
+  if (data.token) rememberDxToken(data.token);
 
   const count = ok && data.counts ? data.counts[String(show.eventId)] : null;
   if (count && typeof count.scanned === "number") {

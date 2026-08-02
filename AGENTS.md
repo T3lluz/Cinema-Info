@@ -14,8 +14,9 @@ full product description and data model.
 - Node scripts in `scripts/` use only Node built-ins (`node:fs`, global
   `fetch`), except `build-icons.mjs` which needs `sharp` (only for regenerating
   the committed PWA icons — not needed to run the app).
-- `supabase/functions/dx-web-login/index.ts` is a Deno Edge Function used only
-  for the optional DX admissions/seat-map feature.
+- `supabase/functions/dx-web-login/index.ts` is a Deno Edge Function that
+  holds the shared DX session for always-on admissions/seat maps (credentials
+  in Supabase Vault, never in the static site).
 
 ### Running the app (primary dev workflow)
 
@@ -33,6 +34,6 @@ full product description and data model.
   DX/eBillett. It needs outbound network to `buenkino.no` and `api.dx.no`
   (both reachable from the cloud VM). Restore the committed snapshot afterward
   (`git checkout -- data/program.json`) if you only ran it to test.
-- `DX_EMAIL=… DX_PASSWORD=… node scripts/dx-session.mjs <path>` and the DX
-  admissions/seat features require real DX credentials (not in the repo).
-  See `.cursor/skills/dx-account/SKILL.md`.
+- `DX_EMAIL=… DX_PASSWORD=… node scripts/dx-session.mjs <path>` is for
+  shell debugging against `app.dx.no`. The PWA itself needs no per-user
+  DX login — see `.cursor/skills/dx-account/SKILL.md`.
