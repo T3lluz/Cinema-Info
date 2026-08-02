@@ -239,6 +239,10 @@ h1 {
   padding-bottom: 0;
 }
 
+.day-controls[hidden] .day-controls-body {
+  overflow: hidden;
+}
+
 .day-controls-body {
   display: flex;
   align-items: center;
@@ -254,8 +258,9 @@ h1 {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 3px;
   margin: 0;
-  padding: 5px 10px;
+  padding: 5px 10px 5px 8px;
   border: 1px solid color-mix(in srgb, var(--accent) 45%, var(--line));
   border-radius: 999px;
   background: color-mix(in srgb, var(--accent) 10%, var(--surface));
@@ -268,6 +273,13 @@ h1 {
   white-space: nowrap;
   cursor: pointer;
   transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.jump-today-arrow {
+  font-size: 1.05em;
+  font-weight: 800;
+  line-height: 1;
+  opacity: 0.85;
 }
 
 .jump-today:active {
