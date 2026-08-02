@@ -18,10 +18,10 @@
   --done-soft: #ebe7e2;
   --nav-bg: #ffffff;
   --nav-shadow: 0 8px 28px rgba(22, 20, 18, 0.14);
-  /* Frosted chip that floats above the glass pill — ~25% more solid
-     than the panel's 28% mix so it lifts without looking opaque. */
-  --nav-selected-fill: color-mix(in srgb, var(--nav-bg) 35%, transparent);
-  --nav-selected-stroke: color-mix(in srgb, var(--nav-bg) 28%, transparent);
+  /* Same frosted mix as the glass pill — layering (blur + shadow)
+     does the lift, so the chip shouldn't be denser. */
+  --nav-selected-fill: color-mix(in srgb, var(--nav-bg) 28%, transparent);
+  --nav-selected-stroke: color-mix(in srgb, var(--nav-bg) 22%, transparent);
   --nav-selected-shadow:
     0 4px 14px rgba(22, 20, 18, 0.14),
     0 1.5px 3px rgba(22, 20, 18, 0.08);
@@ -54,8 +54,8 @@
   --done-soft: #363029;
   --nav-bg: #2a2522;
   --nav-shadow: 0 8px 28px rgba(0, 0, 0, 0.55);
-  --nav-selected-fill: color-mix(in srgb, var(--nav-bg) 35%, transparent);
-  --nav-selected-stroke: color-mix(in srgb, #ffffff 10%, transparent);
+  --nav-selected-fill: color-mix(in srgb, var(--nav-bg) 28%, transparent);
+  --nav-selected-stroke: color-mix(in srgb, #ffffff 8%, transparent);
   --nav-selected-shadow:
     0 5px 16px rgba(0, 0, 0, 0.45),
     0 2px 4px rgba(0, 0, 0, 0.28);
