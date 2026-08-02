@@ -1473,6 +1473,7 @@ function liquidMove(
   if (!indicator || !target) return;
   const newL = target.offsetLeft - originLeft + inset;
   const newW = Math.max(0, target.offsetWidth - inset * 2);
+  const usePillX = indicator.classList.contains("pill-indicator");
 
   // Hidden targets measure 0×0; bail so we don't park the indicator at
   // width 0 and leave the selected pill unstyled when it shows again.
@@ -1481,13 +1482,27 @@ function liquidMove(
     return;
   }
 
+  const applyPos = () => {
+    if (usePillX) {
+      indicator.style.setProperty("--pill-x", `${newL}px`);
+      indicator.style.left = "0px";
+    } else {
+      indicator.style.left = `${newL}px`;
+    }
+    indicator.style.width = `${newW}px`;
+  };
+
+  const readL = () =>
+    usePillX
+      ? parseFloat(indicator.style.getPropertyValue("--pill-x")) || 0
+      : parseFloat(indicator.style.left) || 0;
+
   const hasPos = indicator.dataset.placed === "1";
   if (instant || !hasPos) {
     clearTimeout(indicator._settle);
     indicator.classList.remove("liquid-travel");
     indicator.classList.add("no-trans");
-    indicator.style.left = `${newL}px`;
-    indicator.style.width = `${newW}px`;
+    applyPos();
     indicator.dataset.placed = "1";
     requestAnimationFrame(() =>
       requestAnimationFrame(() => indicator.classList.remove("no-trans"))
@@ -1495,14 +1510,13 @@ function liquidMove(
     return;
   }
 
-  const curL = parseFloat(indicator.style.left) || newL;
+  const curL = readL();
   const curW = parseFloat(indicator.style.width) || newW;
   if (Math.abs(curL - newL) < 1 && Math.abs(curW - newW) < 1) return;
 
   clearTimeout(indicator._settle);
   indicator.classList.add("liquid-travel");
-  indicator.style.left = `${newL}px`;
-  indicator.style.width = `${newW}px`;
+  applyPos();
   // Mid-flight, release the squash so the blob springs back to full
   // height while it finishes gliding onto the target.
   indicator._settle = setTimeout(() => {

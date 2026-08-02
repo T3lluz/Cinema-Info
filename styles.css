@@ -22,7 +22,7 @@
   --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
-  --nav-h: 56px;
+  --nav-h: 58px;
   /* Shared content column — stays phone-sized on mobile, widens on larger screens. */
   --page-max: 720px;
   --page-pad-x: 16px;
@@ -344,14 +344,12 @@ h1 {
     transform 0.14s cubic-bezier(0.3, 0.7, 0.4, 1);
 }
 
-/* Navbar bubble: no horizontal squash, and no spring overshoot on
-   left/width — edge tabs must keep their gap from the pill rim. */
+/* Navbar bubble: keep --pill-x, squash only on Y while traveling. */
 .pill-indicator.liquid-travel {
-  transform: scaleY(0.75);
+  transform: translateX(var(--pill-x, 0px)) scaleY(0.75);
   transition:
-    left 0.32s cubic-bezier(0.22, 1, 0.36, 1),
     width 0.32s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.14s cubic-bezier(0.3, 0.7, 0.4, 1);
+    transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .day-tabs::-webkit-scrollbar {
@@ -2815,9 +2813,8 @@ a.tile-show:focus-visible {
 }
 
 .pill-nav-inner {
-  /* Even rim gap on every side so the selection bubble sits equally
-     inset from the pill border all the way around. */
-  --pill-pad: 4px;
+  /* Same rim gap on every side around the selection bubble. */
+  --pill-pad: 5px;
   pointer-events: auto;
   position: relative;
   display: grid;
@@ -2848,13 +2845,14 @@ a.tile-show:focus-visible {
   position: absolute;
   top: 0;
   bottom: 0;
+  left: 0;
   border-radius: 999px;
   background: var(--accent-soft);
-  /* Ease-out without y > 1: no overshoot into the track edge. */
+  /* Position with --pill-x so left/width transitions stay reliable. */
+  transform: translateX(var(--pill-x, 0px));
   transition:
-    left 0.32s cubic-bezier(0.22, 1, 0.36, 1),
     width 0.32s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.28s cubic-bezier(0.34, 1.56, 0.5, 1);
+    transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
   pointer-events: none;
 }
 
@@ -2866,19 +2864,18 @@ a.tile-show:focus-visible {
   align-items: center;
   justify-content: center;
   gap: 0;
-  /* Even padding on every side so icon + label sit inside the selection
-     bubble without hugging or clipping its edges. */
-  min-height: 48px;
+  /* Equal padding so icon + label sit evenly inside the selection. */
+  min-height: 52px;
   border: 0;
   border-radius: 999px;
   background: transparent;
   color: var(--muted);
   font: inherit;
-  font-size: 0.62rem;
+  font-size: 0.64rem;
   font-weight: 700;
   letter-spacing: 0.01em;
   cursor: pointer;
-  padding: 6px 8px;
+  padding: 8px 6px;
   overflow: hidden;
   transition: color 0.22s ease;
 }
@@ -2889,7 +2886,7 @@ a.tile-show:focus-visible {
   flex-shrink: 0;
   width: 20px;
   height: 20px;
-  transform: scale(1.15);
+  transform: scale(1.12);
   transform-origin: center center;
   transition: transform 0.34s cubic-bezier(0.3, 1.2, 0.4, 1);
 }
@@ -2900,7 +2897,7 @@ a.tile-show:focus-visible {
   margin-top: 0;
   opacity: 0;
   overflow: hidden;
-  line-height: 1.2;
+  line-height: 1.25;
   white-space: nowrap;
   transform: translateY(110%);
   transition:
@@ -2933,10 +2930,8 @@ a.tile-show:focus-visible {
 }
 
 .pill-tab[aria-selected="true"] .pill-tab-label {
-  /* Generous ceiling so the max-height reveal still animates, while
-     overflow:visible (and the selected tab's) keeps descenders intact. */
   max-height: 2.5em;
-  margin-top: 1px;
+  margin-top: 2px;
   opacity: 1;
   overflow: visible;
   transform: translateY(0);
@@ -3216,9 +3211,9 @@ a.tile-show:focus-visible {
   }
 
   .pill-tab {
-    min-height: 50px;
-    font-size: 0.66rem;
-    padding: 6px 10px;
+    min-height: 54px;
+    font-size: 0.68rem;
+    padding: 8px 8px;
   }
 
   .pill-tab svg {
@@ -3411,9 +3406,9 @@ a.tile-show:focus-visible {
   }
 
   .pill-tab {
-    min-height: 52px;
+    min-height: 56px;
     font-size: 0.7rem;
-    padding: 7px 12px;
+    padding: 9px 10px;
   }
 
   .pill-tab svg {
