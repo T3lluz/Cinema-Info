@@ -1538,7 +1538,7 @@ function movePillIndicator(tab, opts = {}) {
   const indicator = document.querySelector(".pill-indicator");
   const track = indicator?.parentElement;
   const btn = document.querySelector(`.pill-tab[data-tab="${tab}"]`);
-  // Fill the tab cell inside the clipped track so the selection bubble
+  // Fill the tab cell inside the track so the floating selection chip
   // has the same rim gap on every side (set by --pill-pad).
   liquidMove(indicator, btn, {
     ...opts,
