@@ -19,11 +19,11 @@
   --nav-bg: #ffffff;
   --nav-shadow: 0 8px 28px rgba(22, 20, 18, 0.14);
   /* Frosted chip that floats above the glass pill. */
-  --nav-selected-fill: rgba(255, 255, 255, 0.62);
-  --nav-selected-stroke: rgba(255, 255, 255, 0.55);
+  --nav-selected-fill: rgba(255, 255, 255, 0.82);
+  --nav-selected-stroke: rgba(255, 255, 255, 0.72);
   --nav-selected-shadow:
-    0 2px 8px rgba(22, 20, 18, 0.12),
-    0 1px 2px rgba(22, 20, 18, 0.08);
+    0 4px 14px rgba(22, 20, 18, 0.18),
+    0 1.5px 3px rgba(22, 20, 18, 0.12);
   --font: "Segoe UI", system-ui, -apple-system, sans-serif;
   --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   --safe-top: env(safe-area-inset-top, 0px);
@@ -53,11 +53,11 @@
   --done-soft: #363029;
   --nav-bg: #2a2522;
   --nav-shadow: 0 8px 28px rgba(0, 0, 0, 0.55);
-  --nav-selected-fill: rgba(255, 255, 255, 0.14);
-  --nav-selected-stroke: rgba(255, 255, 255, 0.12);
+  --nav-selected-fill: rgba(58, 52, 48, 0.88);
+  --nav-selected-stroke: rgba(255, 255, 255, 0.14);
   --nav-selected-shadow:
-    0 3px 10px rgba(0, 0, 0, 0.45),
-    0 1px 2px rgba(0, 0, 0, 0.3);
+    0 5px 16px rgba(0, 0, 0, 0.55),
+    0 2px 4px rgba(0, 0, 0, 0.35);
 }
 
 * {
@@ -2851,23 +2851,24 @@ a.tile-show:focus-visible {
   left: 0;
   border-radius: 999px;
   /* Frosted chip floating above the panel — more blur than the pill,
-     plus a light drop shadow so it lifts off the glass. */
+     plus a drop shadow and slight lift so it reads clearly raised. */
   background: var(--nav-selected-fill);
   border: 1px solid var(--nav-selected-stroke);
   box-shadow: var(--nav-selected-shadow);
-  backdrop-filter: blur(28px) saturate(1.35);
-  -webkit-backdrop-filter: blur(28px) saturate(1.35);
+  backdrop-filter: blur(32px) saturate(1.45);
+  -webkit-backdrop-filter: blur(32px) saturate(1.45);
   /* Position with --pill-x; ease slide only — no bounce/squash. */
-  transform: translateX(var(--pill-x, 0px));
+  transform: translateX(var(--pill-x, 0px)) translateY(-1px);
   transition:
     width 0.28s cubic-bezier(0.4, 0, 0.2, 1),
     transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
   pointer-events: none;
+  z-index: 1;
 }
 
 .pill-tab {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   display: flex;
   flex-direction: column;
   align-items: center;
