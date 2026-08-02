@@ -22,7 +22,7 @@
   --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
-  --nav-h: 56px;
+  --nav-h: 64px;
   /* Shared content column — stays phone-sized on mobile, widens on larger screens. */
   --page-max: 720px;
   --page-pad-x: 16px;
@@ -2841,7 +2841,10 @@ a.tile-show:focus-visible {
   align-items: center;
   justify-content: center;
   gap: 0;
-  min-height: 48px;
+  /* Tall enough for icon + label + descenders at every breakpoint.
+     overflow:hidden masks the label rising in; selected tabs drop it
+     so settled glyphs are never shaved by the clip. */
+  min-height: 56px;
   border: 0;
   border-radius: 999px;
   background: transparent;
@@ -2851,7 +2854,7 @@ a.tile-show:focus-visible {
   font-weight: 700;
   letter-spacing: 0.01em;
   cursor: pointer;
-  padding: 5px 4px;
+  padding: 7px 4px 8px;
   overflow: hidden;
   transition: color 0.22s ease;
 }
@@ -2873,7 +2876,7 @@ a.tile-show:focus-visible {
   margin-top: 0;
   opacity: 0;
   overflow: hidden;
-  line-height: 1.15;
+  line-height: 1.3;
   white-space: nowrap;
   transform: translateY(110%);
   transition:
@@ -2894,6 +2897,7 @@ a.tile-show:focus-visible {
 
 .pill-tab[aria-selected="true"] {
   color: var(--accent);
+  overflow: visible;
 }
 
 .pill-tab[aria-selected="true"] svg {
@@ -2905,9 +2909,12 @@ a.tile-show:focus-visible {
 }
 
 .pill-tab[aria-selected="true"] .pill-tab-label {
-  max-height: 1.35em;
-  margin-top: 2px;
+  /* Generous ceiling so the max-height reveal still animates, while
+     overflow:visible (and the selected tab's) keeps descenders intact. */
+  max-height: 2.5em;
+  margin-top: 3px;
   opacity: 1;
+  overflow: visible;
   transform: translateY(0);
 }
 
@@ -3184,7 +3191,7 @@ a.tile-show:focus-visible {
   }
 
   .pill-tab {
-    min-height: 52px;
+    min-height: 60px;
     font-size: 0.68rem;
   }
 
@@ -3367,7 +3374,7 @@ a.tile-show:focus-visible {
   }
 
   .pill-tab {
-    min-height: 54px;
+    min-height: 62px;
     font-size: 0.72rem;
   }
 
