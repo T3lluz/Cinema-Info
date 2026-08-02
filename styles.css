@@ -18,6 +18,12 @@
   --done-soft: #ebe7e2;
   --nav-bg: #ffffff;
   --nav-shadow: 0 8px 28px rgba(22, 20, 18, 0.14);
+  /* Pressed-in well on the frosted pill, not a flat accent fill. */
+  --nav-indent-fill: rgba(22, 20, 18, 0.06);
+  --nav-indent-stroke: rgba(22, 20, 18, 0.08);
+  --nav-indent-shadow:
+    inset 0 1.5px 3px rgba(22, 20, 18, 0.14),
+    inset 0 -1px 1.5px rgba(255, 255, 255, 0.55);
   --font: "Segoe UI", system-ui, -apple-system, sans-serif;
   --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   --safe-top: env(safe-area-inset-top, 0px);
@@ -47,6 +53,11 @@
   --done-soft: #363029;
   --nav-bg: #2a2522;
   --nav-shadow: 0 8px 28px rgba(0, 0, 0, 0.55);
+  --nav-indent-fill: rgba(0, 0, 0, 0.28);
+  --nav-indent-stroke: rgba(0, 0, 0, 0.35);
+  --nav-indent-shadow:
+    inset 0 1.5px 3px rgba(0, 0, 0, 0.5),
+    inset 0 -1px 1.5px rgba(255, 255, 255, 0.06);
 }
 
 * {
@@ -2848,7 +2859,10 @@ a.tile-show:focus-visible {
   bottom: 0;
   left: 0;
   border-radius: 999px;
-  background: var(--accent-soft);
+  /* Glass indent: recessed well in the frosted pill, not a color chip. */
+  background: var(--nav-indent-fill);
+  border: 1px solid var(--nav-indent-stroke);
+  box-shadow: var(--nav-indent-shadow);
   /* Position with --pill-x so left/width transitions stay reliable. */
   transform: translateX(var(--pill-x, 0px));
   transition:
