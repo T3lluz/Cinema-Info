@@ -2814,7 +2814,8 @@ a.tile-show:focus-visible {
 
 .pill-nav-inner {
   /* Same rim gap on every side around the selection bubble. */
-  --pill-pad: 3px;
+  /* A touch more air between the selection bubble and the pill rim. */
+  --pill-pad: 5px;
   pointer-events: auto;
   position: relative;
   display: grid;
