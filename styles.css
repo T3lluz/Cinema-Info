@@ -22,7 +22,7 @@
   --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
-  --nav-h: 58px;
+  --nav-h: 50px;
   /* Shared content column — stays phone-sized on mobile, widens on larger screens. */
   --page-max: 720px;
   --page-pad-x: 16px;
@@ -2814,7 +2814,7 @@ a.tile-show:focus-visible {
 
 .pill-nav-inner {
   /* Same rim gap on every side around the selection bubble. */
-  --pill-pad: 5px;
+  --pill-pad: 3px;
   pointer-events: auto;
   position: relative;
   display: grid;
@@ -2864,8 +2864,8 @@ a.tile-show:focus-visible {
   align-items: center;
   justify-content: center;
   gap: 0;
-  /* Equal padding so icon + label sit evenly inside the selection. */
-  min-height: 52px;
+  /* Slim shell; icon/label sizes stay put — only vertical air shrinks. */
+  min-height: 44px;
   border: 0;
   border-radius: 999px;
   background: transparent;
@@ -2875,7 +2875,7 @@ a.tile-show:focus-visible {
   font-weight: 700;
   letter-spacing: 0.01em;
   cursor: pointer;
-  padding: 8px 6px;
+  padding: 4px 6px;
   overflow: hidden;
   transition: color 0.22s ease;
 }
@@ -2932,7 +2932,7 @@ a.tile-show:focus-visible {
 
 .pill-tab[aria-selected="true"] .pill-tab-label {
   max-height: 2.5em;
-  margin-top: 2px;
+  margin-top: 1px;
   opacity: 1;
   overflow: visible;
   transform: translateY(0);
@@ -3212,9 +3212,9 @@ a.tile-show:focus-visible {
   }
 
   .pill-tab {
-    min-height: 54px;
+    min-height: 46px;
     font-size: 0.68rem;
-    padding: 8px 8px;
+    padding: 4px 8px;
   }
 
   .pill-tab svg {
@@ -3407,9 +3407,9 @@ a.tile-show:focus-visible {
   }
 
   .pill-tab {
-    min-height: 56px;
+    min-height: 48px;
     font-size: 0.7rem;
-    padding: 9px 10px;
+    padding: 5px 10px;
   }
 
   .pill-tab svg {
