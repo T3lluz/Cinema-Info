@@ -836,11 +836,12 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: center;
-  /* Cancel card padding so the rail fills the left edge end-to-end;
-     otherwise its top radius sits mid-edge and looks mirrored. */
-  margin: -10px 0 -10px -1px;
+  margin: -1px 0 -1px -1px;
   padding: 8px 0;
+  /* Left radii + 180° rotate → rounded right corners on the card edge. */
   border-radius: 12px 0 0 12px;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
   font-size: 0.58rem;
   font-weight: 800;
   letter-spacing: 0.14em;
@@ -849,11 +850,8 @@ h1 {
   user-select: none;
 }
 
-/* Rotate the label only so the rail's left corners stay on the left. */
 .show-status span {
   display: block;
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
 }
 
 .show-card.live .show-status {
@@ -2330,10 +2328,6 @@ a.tile-show:focus-visible {
   border-bottom-right-radius: 0;
 }
 
-.show-row > .show-card > .show-status {
-  border-bottom-left-radius: 0;
-}
-
 .seat-strip {
   display: flex;
   align-items: center;
@@ -2503,8 +2497,9 @@ a.tile-show:focus-visible {
 
 /* Printed seat number centred on each square — large, bold, filling
    most of the seat so it stays readable at a glance. Colour is a
-   stronger wash of the seat's own hue. Clicks pass through to the
-   rect underneath. */
+   stronger wash of the seat's own hue. Light mode uses a near-white
+   tint on dark fills; dark mode flips to a near-black tint on the
+   lighter fills. Clicks pass through to the rect underneath. */
 .seat-num {
   fill: color-mix(in srgb, var(--ink) 72%, var(--muted));
   font-family: var(--mono);
@@ -2532,6 +2527,28 @@ a.tile-show:focus-visible {
 
 .seat-num.blocked {
   fill: color-mix(in srgb, var(--muted) 55%, transparent);
+}
+
+/* Dark seats are pastel — white numbers wash out. A heavy ink-dark
+   tint keeps the seat hue while clearing ~4.5:1 on red/green/amber/blue. */
+[data-theme="dark"] .seat-num.sold {
+  fill: color-mix(in srgb, #12100e 90%, var(--accent));
+}
+
+[data-theme="dark"] .phase-door .seat-num.sold {
+  fill: color-mix(in srgb, #12100e 90%, var(--warn));
+}
+
+[data-theme="dark"] .seat-num.in {
+  fill: color-mix(in srgb, #12100e 90%, var(--ok));
+}
+
+[data-theme="dark"] .seat-num.reserved {
+  fill: color-mix(in srgb, #12100e 90%, var(--hold));
+}
+
+[data-theme="dark"] .seat-num.blocked {
+  fill: color-mix(in srgb, var(--muted) 70%, var(--ink));
 }
 
 .seat {
@@ -2892,11 +2909,6 @@ a.tile-show:focus-visible {
     grid-template-columns: 18px 56px minmax(0, 1fr) 84px;
     padding-left: 0;
     column-gap: 10px;
-  }
-
-  .show-status {
-    margin-top: -12px;
-    margin-bottom: -12px;
   }
 
   .poster,
