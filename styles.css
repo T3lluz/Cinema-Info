@@ -2486,6 +2486,39 @@ a.tile-show:focus-visible {
   text-anchor: middle;
 }
 
+/* Faint printed seat number centred on each square — small, bold, and
+   a light wash of the seat's own colour (same hue, softer) so free stays
+   muted-grey, sold/warn/in/reserved keep their family. Clicks pass
+   through to the rect underneath. */
+.seat-num {
+  fill: color-mix(in srgb, var(--muted) 42%, transparent);
+  font-family: var(--mono);
+  font-weight: 700;
+  text-anchor: middle;
+  pointer-events: none;
+  user-select: none;
+}
+
+.seat-num.sold {
+  fill: color-mix(in srgb, #fff 40%, var(--accent));
+}
+
+.phase-door .seat-num.sold {
+  fill: color-mix(in srgb, #fff 40%, var(--warn));
+}
+
+.seat-num.in {
+  fill: color-mix(in srgb, #fff 40%, var(--ok));
+}
+
+.seat-num.reserved {
+  fill: color-mix(in srgb, #fff 40%, var(--hold));
+}
+
+.seat-num.blocked {
+  fill: color-mix(in srgb, var(--muted) 34%, transparent);
+}
+
 .seat {
   fill: color-mix(in srgb, var(--line) 45%, var(--surface));
   stroke: color-mix(in srgb, var(--line) 90%, transparent);
