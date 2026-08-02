@@ -2940,9 +2940,9 @@ function seatChartSvg(layout, seats, show) {
        font-size="${(pitch.y * 0.62).toFixed(1)}">${escapeHtml(row.name)}</text>`;
 
   const classOf = { 1: "sold", 2: "in", 3: "reserved", 4: "blocked" };
-  // One small size for every seat — single and double digits alike —
-  // so the chart stays even and the numbers stay subordinate.
-  const numSize = h * 0.3;
+  // One bold size for every seat — sized to fill most of the square,
+  // capped so two-digit numbers still fit the same as single digits.
+  const numSize = Math.min(h * 0.72, w * 0.55);
   const rows = layout.rows
     .map((row) => {
       const seatEls = row.seats
@@ -2964,7 +2964,7 @@ function seatChartSvg(layout, seats, show) {
                 ).toFixed(1)}" y2="${(y + h * 0.18).toFixed(1)}" />`
               : "";
           // Printed ticket number (DX map number minus the hall offset
-          // applied in dx-web-login). One small bold size for every
+          // applied in dx-web-login). One shared bold size for every
           // seat; colour comes from CSS so it matches the square.
           const num = `<text class="seat-num ${cls}" x="${seat.x.toFixed(
             1
