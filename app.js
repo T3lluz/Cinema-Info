@@ -1515,10 +1515,9 @@ function liquidMove(
   if (Math.abs(curL - newL) < 1 && Math.abs(curW - newW) < 1) return;
 
   clearTimeout(indicator._settle);
-  indicator.classList.add("liquid-travel");
+  // Navbar selection just slides; day/seg keep the liquid squash.
+  if (!usePillX) indicator.classList.add("liquid-travel");
   applyPos();
-  // Mid-flight, release the squash so the blob springs back to full
-  // height while it finishes gliding onto the target.
   indicator._settle = setTimeout(() => {
     indicator.classList.remove("liquid-travel");
   }, LIQUID_SETTLE_MS);
