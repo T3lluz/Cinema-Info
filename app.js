@@ -142,6 +142,7 @@ const I18N = {
     seatAria:
       "Salkart for {screen}: {sold} av {capacity} plasser solgt, {scanned} skannet inn.",
     today: "I dag",
+    jumpTodayAria: "Gå til i dag",
     yesterday: "I går",
     tomorrow: "I morgen",
     dayTab: "{weekday} {d}.{m}",
@@ -297,6 +298,7 @@ const I18N = {
     seatAria:
       "Seat map for {screen}: {sold} of {capacity} seats sold, {scanned} scanned in.",
     today: "Today",
+    jumpTodayAria: "Go to today",
     yesterday: "Yesterday",
     tomorrow: "Tomorrow",
     dayTab: "{weekday} {d}.{m}",
@@ -467,6 +469,7 @@ const els = {
   settingsContent: document.getElementById("settingsContent"),
   dayTabs: document.getElementById("dayTabs"),
   dayControls: document.getElementById("dayControls"),
+  jumpTodayBtn: document.getElementById("jumpTodayBtn"),
   refreshBtn: document.getElementById("refreshBtn"),
   statusText: document.getElementById("statusText"),
   timeline: document.getElementById("timeline"),
@@ -617,6 +620,12 @@ async function init() {
     },
     { passive: false }
   );
+
+  els.jumpTodayBtn?.addEventListener("click", () => {
+    const today = toDayKey(new Date());
+    if (!state?.shows?.some((s) => s.dayKey === today)) return;
+    selectDay(today);
+  });
 
   setInterval(liveBeat, BEAT_MS);
 
@@ -1456,6 +1465,7 @@ function applyLanguage() {
   });
   els.refreshBtn.setAttribute("aria-label", t("refresh"));
   els.refreshBtn.title = t("refresh");
+  els.jumpTodayBtn?.setAttribute("aria-label", t("jumpTodayAria"));
   els.dayTabs.setAttribute(
     "aria-label",
     lang === "en" ? "Choose day" : "Velg dag"
@@ -1788,13 +1798,9 @@ function populateFilters() {
   });
 
   markDoneDays();
-
-  // Pin after layout so checkmarks/widths are settled — scrollIntoView
-  // was landing short of the leading edge on this strip.
-  requestAnimationFrame(() => {
-    scrollSelectedDayTabToStart();
-    moveDayIndicator({ instant: true });
-  });
+  updateJumpTodayBtn();
+  scrollSelectedDayTabIntoView();
+  moveDayIndicator({ instant: true });
 }
 
 /**
@@ -1811,19 +1817,37 @@ function setSelectedDay(day) {
   els.dayTabs.querySelectorAll(".day-tab").forEach((b) => {
     b.setAttribute("aria-selected", String(b.dataset.day === day));
   });
+  // Show/hide the today chip before scrolling so the strip width is final.
+  updateJumpTodayBtn();
   moveDayIndicator();
-  scrollSelectedDayTabToStart({ behavior: "smooth" });
+  scrollSelectedDayTabIntoView({ behavior: "smooth" });
   renderTimeline();
   return true;
 }
 
-/** Keep the active day pill flush with the left of the day strip. */
-function scrollSelectedDayTabToStart({ behavior = "auto" } = {}) {
+/** Center the active day in the strip without scrolling page ancestors
+ * (scrollIntoView was dragging the jump-today chip off-screen). */
+function scrollSelectedDayTabIntoView({ behavior = "auto" } = {}) {
   const tabs = els.dayTabs;
   const btn = tabs?.querySelector('.day-tab[aria-selected="true"]');
   if (!tabs || !btn) return;
-  const pad = parseFloat(getComputedStyle(tabs).paddingLeft) || 0;
-  tabs.scrollTo({ left: Math.max(0, btn.offsetLeft - pad), behavior });
+  const left = btn.offsetLeft - (tabs.clientWidth - btn.offsetWidth) / 2;
+  tabs.scrollTo({ left: Math.max(0, left), behavior });
+}
+
+/** Show a one-tap "I dag" chip when the selected day is not today. */
+function updateJumpTodayBtn() {
+  const btn = els.jumpTodayBtn;
+  if (!btn) return;
+  const today = toDayKey(new Date());
+  const hasToday = !!state?.shows?.some((s) => s.dayKey === today);
+  const away = hasToday && selectedDay && selectedDay !== today;
+  btn.hidden = !away;
+  btn.setAttribute("aria-label", t("jumpTodayAria"));
+  const back = selectedDay > today;
+  btn.dataset.dir = back ? "back" : "forward";
+  const arrow = btn.querySelector(".jump-today-arrow");
+  if (arrow) arrow.textContent = back ? "‹" : "›";
 }
 
 /** Day change from a tap: slides the page like a swipe would, so the list
