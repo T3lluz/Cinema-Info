@@ -2479,10 +2479,11 @@ a.tile-show:focus-visible {
 }
 
 /* Faint printed seat number centred on each square — small, bold, and
-   a soft tint of the seat's own colour so hue matches without shouting.
-   Clicks pass through to the rect underneath. */
+   a light wash of the seat's own colour (same hue, softer) so free stays
+   muted-grey, sold/warn/in/reserved keep their family. Clicks pass
+   through to the rect underneath. */
 .seat-num {
-  fill: color-mix(in srgb, var(--muted) 48%, transparent);
+  fill: color-mix(in srgb, var(--muted) 42%, transparent);
   font-family: var(--mono);
   font-weight: 700;
   text-anchor: middle;
@@ -2491,23 +2492,23 @@ a.tile-show:focus-visible {
 }
 
 .seat-num.sold {
-  fill: color-mix(in srgb, #fff 58%, var(--accent));
+  fill: color-mix(in srgb, #fff 40%, var(--accent));
 }
 
 .phase-door .seat-num.sold {
-  fill: color-mix(in srgb, #fff 58%, var(--warn));
+  fill: color-mix(in srgb, #fff 40%, var(--warn));
 }
 
 .seat-num.in {
-  fill: color-mix(in srgb, #fff 58%, var(--ok));
+  fill: color-mix(in srgb, #fff 40%, var(--ok));
 }
 
 .seat-num.reserved {
-  fill: color-mix(in srgb, #fff 58%, var(--hold));
+  fill: color-mix(in srgb, #fff 40%, var(--hold));
 }
 
 .seat-num.blocked {
-  fill: color-mix(in srgb, var(--muted) 38%, transparent);
+  fill: color-mix(in srgb, var(--muted) 34%, transparent);
 }
 
 .seat {
