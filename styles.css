@@ -97,7 +97,7 @@ body {
   top: 0;
   z-index: 10;
   /* Horizontal inset lives on the inner column so header + main share one center. */
-  padding: calc(16px + var(--safe-top)) 0 14px;
+  padding: calc(12px + var(--safe-top)) 0 10px;
   background: color-mix(in srgb, var(--bg) 55%, transparent);
   border-bottom: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
   backdrop-filter: blur(20px);
@@ -119,67 +119,58 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  gap: 10px;
   margin-bottom: 0;
+  min-width: 0;
+  flex-wrap: nowrap;
   transition: margin-bottom 0.25s ease;
 }
 
 body[data-tab="day"] .top-row {
-  margin-bottom: 14px;
+  margin-bottom: 12px;
 }
 
 .brand {
   display: flex;
   align-items: center;
-  gap: 11px;
+  gap: 8px;
   min-width: 0;
   flex: 1 1 auto;
 }
 
 /* The same mark as the installed app icon, so the page and the home
-   screen shortcut read as one thing. */
+   screen shortcut read as one thing. Sized to the title line height. */
 .brand-mark {
-  width: 38px;
-  height: 38px;
+  width: 28px;
+  height: 28px;
   flex: 0 0 auto;
-  border-radius: 11px;
-  box-shadow: 0 3px 10px color-mix(in srgb, var(--accent) 30%, transparent);
-}
-
-.brand-text {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 2px;
-  min-width: 0;
+  border-radius: 7px;
+  box-shadow: 0 2px 7px color-mix(in srgb, var(--accent) 28%, transparent);
 }
 
 h1 {
   margin: 0;
-  font-size: clamp(1.45rem, 5vw, 1.75rem);
+  min-width: 0;
+  font-size: clamp(1.2rem, 4.5vw, 1.55rem);
   font-weight: 800;
   letter-spacing: -0.03em;
-  line-height: 1.2;
-}
-
-.subtitle {
-  margin: 0;
-  font-size: 0.9rem;
-  color: var(--muted);
-  font-weight: 600;
-  line-height: 1.3;
+  line-height: 1.15;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .top-actions {
   display: flex;
   align-items: center;
-  gap: 10px;
-  flex: 0 0 auto;
+  gap: 6px;
+  flex: 0 1 auto;
+  min-width: 0;
 }
 
 .icon-btn {
-  width: 40px;
-  height: 40px;
+  width: 28px;
+  height: 28px;
   border: 1px solid var(--line);
   border-radius: 50%;
   background: var(--surface);
@@ -190,6 +181,11 @@ h1 {
   cursor: pointer;
   flex-shrink: 0;
   transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.icon-btn svg {
+  width: 16px;
+  height: 16px;
 }
 
 .icon-btn:active {
@@ -457,11 +453,15 @@ h1 {
   justify-content: flex-end;
   gap: 6px;
   margin: 0;
+  min-width: 0;
+  max-width: min(9.5rem, 34vw);
   font-size: 0.72rem;
   color: var(--muted);
   text-align: right;
-  line-height: 1.25;
-  max-width: 8.5rem;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .status::before {
@@ -2996,22 +2996,23 @@ a.tile-show:focus-visible {
   }
 
   .brand-mark {
-    width: 42px;
-    height: 42px;
-    border-radius: 12px;
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
   }
 
   h1 {
-    font-size: clamp(1.55rem, 3.2vw, 1.9rem);
-  }
-
-  .subtitle {
-    font-size: 0.95rem;
+    font-size: clamp(1.35rem, 2.8vw, 1.7rem);
   }
 
   .icon-btn {
-    width: 44px;
-    height: 44px;
+    width: 30px;
+    height: 30px;
+  }
+
+  .icon-btn svg {
+    width: 17px;
+    height: 17px;
   }
 
   .day-tab {
@@ -3027,7 +3028,7 @@ a.tile-show:focus-visible {
 
   .status {
     font-size: 0.78rem;
-    max-width: 10rem;
+    max-width: min(11rem, 28vw);
   }
 
   .tl-lane-name {
@@ -3242,17 +3243,28 @@ a.tile-show:focus-visible {
   }
 
   .top {
-    padding-top: calc(20px + var(--safe-top));
-    padding-bottom: 18px;
+    padding-top: calc(14px + var(--safe-top));
+    padding-bottom: 12px;
   }
 
   h1 {
-    font-size: 2rem;
+    font-size: 1.75rem;
   }
 
   .brand-mark {
-    width: 46px;
-    height: 46px;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+  }
+
+  .icon-btn {
+    width: 32px;
+    height: 32px;
+  }
+
+  .icon-btn svg {
+    width: 18px;
+    height: 18px;
   }
 
   .day-tab {
