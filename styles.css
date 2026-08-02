@@ -2886,7 +2886,8 @@ a.tile-show:focus-visible {
   flex-shrink: 0;
   width: 20px;
   height: 20px;
-  transform: scale(1.12);
+  /* Idle: larger icon-only. Selected: shrinks to make room for the label. */
+  transform: scale(1.32);
   transform-origin: center center;
   transition: transform 0.34s cubic-bezier(0.3, 1.2, 0.4, 1);
 }
@@ -2913,7 +2914,7 @@ a.tile-show:focus-visible {
 }
 
 .pill-tab:active svg {
-  transform: scale(1.08);
+  transform: scale(1.18);
 }
 
 .pill-tab[aria-selected="true"] {
@@ -2922,11 +2923,11 @@ a.tile-show:focus-visible {
 }
 
 .pill-tab[aria-selected="true"] svg {
-  transform: scale(1);
+  transform: scale(0.92);
 }
 
 .pill-tab[aria-selected="true"]:active svg {
-  transform: scale(0.9);
+  transform: scale(0.84);
 }
 
 .pill-tab[aria-selected="true"] .pill-tab-label {
