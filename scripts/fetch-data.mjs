@@ -104,6 +104,27 @@ function cleanTags(tags) {
   });
 }
 
+function pickGenres(movie) {
+  const names = (Array.isArray(movie?.genres) ? movie.genres : [])
+    .map((g) => String(g?.name || "").trim())
+    .filter(Boolean);
+  return names.length ? names.slice(0, 3) : null;
+}
+
+/**
+ * Press reviews come with Norwegian dice ratings (terningkast, 1–6).
+ * Keep who said what — the app shows the average and names the papers.
+ */
+function pickReviews(movie) {
+  const reviews = (Array.isArray(movie?.reviews) ? movie.reviews : [])
+    .map((r) => ({
+      who: String(r?.who || "").trim(),
+      dice: Number(r?.diceValue) || 0,
+    }))
+    .filter((r) => r.who && r.dice >= 1 && r.dice <= 6);
+  return reviews.length ? reviews : null;
+}
+
 function dayKeyFromShowStart(value) {
   return String(value).slice(0, 10);
 }
@@ -312,6 +333,14 @@ async function main() {
         runningLabel: movie?.runningTime || null,
         age: movie?.ageRating?.age || null,
         tags: cleanTags((show.versionTags || []).map((t) => t.tag)),
+        // Special programming worth a badge: "Norgespremiere",
+        // "Dagkino", "Seniorkino" — and Kinoklubb screenings.
+        showType: String(show.showType || "").trim() || null,
+        kinoklubb: Boolean(show.isKinoklubb),
+        genres: pickGenres(movie),
+        director: String(movie?.directorV2 || "").trim() || null,
+        premiere: movie?.premiere?.premiereDate || null,
+        reviews: pickReviews(movie),
         posterUrl: pickPosterUrl(movie),
         ticketUrl: ticket?.url || "",
         eventId: ticket?.eventId || null,

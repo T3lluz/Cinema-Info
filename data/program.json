@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-04T11:51:20.066Z",
+  "updatedAt": "2026-08-04T21:36:17.380Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -1488,15 +1488,21 @@
         "Norsk tale",
         "Norsk tekst"
       ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": null,
+      "director": "Thomas Kail",
+      "premiere": "2026-07-10",
+      "reviews": null,
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/00979151e340722952a4e453830b15b8bb625663-1440x2057.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92700/purchase?kanal=dxf",
       "eventId": "92700",
       "promoterId": "202",
-      "sold": 15,
+      "sold": 29,
       "eventStatus": "ok",
-      "reserved": 6,
+      "reserved": 0,
       "capacity": 110,
-      "available": 89
+      "available": 81
     },
     {
       "id": "EDI20260556-2026-08-04T17:30:00-Storsal",
@@ -1512,15 +1518,24 @@
         "Norsk tale",
         "Norsk tekst"
       ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Barnefilm",
+        "Animasjon"
+      ],
+      "director": "Shea Wageman",
+      "premiere": "2026-07-17",
+      "reviews": null,
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/eb6e013b74dca3128a5e20492a01d569fd5b4c13-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92701/purchase?kanal=dxf",
       "eventId": "92701",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 8,
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 286,
-      "available": 286
+      "available": 278
     },
     {
       "id": "EDI20240688-2026-08-04T19:30:00-Kinosal",
@@ -1535,15 +1550,49 @@
       "tags": [
         "Norsk tekst"
       ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Eventyr",
+        "Superheltfilm"
+      ],
+      "director": "Destin Daniel Cretton",
+      "premiere": "2026-07-29",
+      "reviews": [
+        {
+          "who": "Aftenposten",
+          "dice": 5
+        },
+        {
+          "who": "VG",
+          "dice": 5
+        },
+        {
+          "who": "Stavanger Aftenblad",
+          "dice": 5
+        },
+        {
+          "who": "Moviezine",
+          "dice": 5
+        },
+        {
+          "who": "730.no",
+          "dice": 5
+        },
+        {
+          "who": "Filmkikk",
+          "dice": 5
+        }
+      ],
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/13bdf9c085531b0bb6c3b7506e847f46643782b6-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92699/purchase?kanal=dxf",
       "eventId": "92699",
       "promoterId": "202",
-      "sold": 66,
+      "sold": 102,
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 110,
-      "available": 44
+      "available": 8
     },
     {
       "id": "EDI20260626-2026-08-04T20:15:00-Storsal",
@@ -1558,15 +1607,28 @@
       "tags": [
         "Norsk tekst"
       ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Skrekkfilm"
+      ],
+      "director": "Sébastien Vanicek",
+      "premiere": "2026-07-10",
+      "reviews": [
+        {
+          "who": "NRK",
+          "dice": 5
+        }
+      ],
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/e55446677a8ed02cd0cfa40238c2230e94ba00df-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92731/purchase?kanal=dxf",
       "eventId": "92731",
       "promoterId": "202",
-      "sold": 5,
+      "sold": 12,
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 286,
-      "available": 281
+      "available": 274
     },
     {
       "id": "EDI20260556-2026-08-05T16:50:00-Kinosal",
@@ -1582,6 +1644,15 @@
         "Norsk tale",
         "Norsk tekst"
       ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Barnefilm",
+        "Animasjon"
+      ],
+      "director": "Shea Wageman",
+      "premiere": "2026-07-17",
+      "reviews": null,
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/eb6e013b74dca3128a5e20492a01d569fd5b4c13-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92752/purchase?kanal=dxf",
       "eventId": "92752",
@@ -1606,15 +1677,24 @@
         "Norsk tale",
         "Norsk tekst"
       ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Barnefilm",
+        "Animasjon"
+      ],
+      "director": "Pierre Coffin",
+      "premiere": "2026-07-01",
+      "reviews": null,
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/f639a9cb4e51005f32fc6e6864e40753f9066914-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92743/purchase?kanal=dxf",
       "eventId": "92743",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 6,
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 286,
-      "available": 286
+      "available": 280
     },
     {
       "id": "UIP20241680-2026-08-05T19:15:00-Kinosal",
@@ -1629,15 +1709,62 @@
       "tags": [
         "Norsk tekst"
       ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": null,
+      "director": "Christopher Nolan",
+      "premiere": "2026-07-17",
+      "reviews": [
+        {
+          "who": "Aftenposten",
+          "dice": 5
+        },
+        {
+          "who": "NRK Filmpolitiet",
+          "dice": 5
+        },
+        {
+          "who": "Innherred",
+          "dice": 6
+        },
+        {
+          "who": "Dagsavisen",
+          "dice": 5
+        },
+        {
+          "who": "Klassekampen",
+          "dice": 5
+        },
+        {
+          "who": "Kinomagasinet",
+          "dice": 5
+        },
+        {
+          "who": "Adresseavisa",
+          "dice": 5
+        },
+        {
+          "who": "VG",
+          "dice": 5
+        },
+        {
+          "who": "Cinema",
+          "dice": 5
+        },
+        {
+          "who": "Filmklikk",
+          "dice": 6
+        }
+      ],
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/714c2df548403065609d371f42c15d648ba1c429-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92739/purchase?kanal=dxf",
       "eventId": "92739",
       "promoterId": "202",
-      "sold": 10,
+      "sold": 14,
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 110,
-      "available": 100
+      "available": 96
     },
     {
       "id": "EDI20240688-2026-08-05T20:00:00-Storsal",
@@ -1652,15 +1779,49 @@
       "tags": [
         "Norsk tekst"
       ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Eventyr",
+        "Superheltfilm"
+      ],
+      "director": "Destin Daniel Cretton",
+      "premiere": "2026-07-29",
+      "reviews": [
+        {
+          "who": "Aftenposten",
+          "dice": 5
+        },
+        {
+          "who": "VG",
+          "dice": 5
+        },
+        {
+          "who": "Stavanger Aftenblad",
+          "dice": 5
+        },
+        {
+          "who": "Moviezine",
+          "dice": 5
+        },
+        {
+          "who": "730.no",
+          "dice": 5
+        },
+        {
+          "who": "Filmkikk",
+          "dice": 5
+        }
+      ],
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/13bdf9c085531b0bb6c3b7506e847f46643782b6-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92782/purchase?kanal=dxf",
       "eventId": "92782",
       "promoterId": "202",
-      "sold": 2,
+      "sold": 12,
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 246,
-      "available": 244
+      "available": 234
     },
     {
       "id": "UIP20241749-2026-08-06T17:00:00-Kinosal",
@@ -1676,6 +1837,15 @@
         "Norsk tale",
         "Norsk tekst"
       ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Barnefilm",
+        "Animasjon"
+      ],
+      "director": "Pierre Coffin",
+      "premiere": "2026-07-01",
+      "reviews": null,
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/f639a9cb4e51005f32fc6e6864e40753f9066914-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92492/purchase?kanal=dxf",
       "eventId": "92492",
@@ -1700,6 +1870,12 @@
         "Norsk tale",
         "Norsk tekst"
       ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": null,
+      "director": "Thomas Kail",
+      "premiere": "2026-07-10",
+      "reviews": null,
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/00979151e340722952a4e453830b15b8bb625663-1440x2057.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92772/purchase?kanal=dxf",
       "eventId": "92772",
@@ -1723,15 +1899,49 @@
       "tags": [
         "Norsk tekst"
       ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Eventyr",
+        "Superheltfilm"
+      ],
+      "director": "Destin Daniel Cretton",
+      "premiere": "2026-07-29",
+      "reviews": [
+        {
+          "who": "Aftenposten",
+          "dice": 5
+        },
+        {
+          "who": "VG",
+          "dice": 5
+        },
+        {
+          "who": "Stavanger Aftenblad",
+          "dice": 5
+        },
+        {
+          "who": "Moviezine",
+          "dice": 5
+        },
+        {
+          "who": "730.no",
+          "dice": 5
+        },
+        {
+          "who": "Filmkikk",
+          "dice": 5
+        }
+      ],
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/13bdf9c085531b0bb6c3b7506e847f46643782b6-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92491/purchase?kanal=dxf",
       "eventId": "92491",
       "promoterId": "202",
-      "sold": 2,
+      "sold": 4,
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 110,
-      "available": 108
+      "available": 106
     },
     {
       "id": "EDI20260626-2026-08-06T20:15:00-Storsal",
@@ -1745,6 +1955,19 @@
       "age": "15 år",
       "tags": [
         "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Skrekkfilm"
+      ],
+      "director": "Sébastien Vanicek",
+      "premiere": "2026-07-10",
+      "reviews": [
+        {
+          "who": "NRK",
+          "dice": 5
+        }
       ],
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/e55446677a8ed02cd0cfa40238c2230e94ba00df-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92751/purchase?kanal=dxf",
@@ -1770,6 +1993,15 @@
         "Norsk tale",
         "Norsk tekst"
       ],
+      "showType": "Norgespremiere",
+      "kinoklubb": false,
+      "genres": [
+        "Barnefilm",
+        "Animasjon"
+      ],
+      "director": "Cal Brunker",
+      "premiere": "2026-08-07",
+      "reviews": null,
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/b0c96c74829fac249da479447cb08a07a4ebf7ef-1500x2123.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92494/purchase?kanal=dxf",
       "eventId": "92494",
@@ -1794,6 +2026,15 @@
         "Norsk tale",
         "Norsk tekst"
       ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Barnefilm",
+        "Animasjon"
+      ],
+      "director": "Shea Wageman",
+      "premiere": "2026-07-17",
+      "reviews": null,
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/eb6e013b74dca3128a5e20492a01d569fd5b4c13-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92496/purchase?kanal=dxf",
       "eventId": "92496",
@@ -1817,6 +2058,53 @@
       "tags": [
         "Norsk tekst"
       ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": null,
+      "director": "Christopher Nolan",
+      "premiere": "2026-07-17",
+      "reviews": [
+        {
+          "who": "Aftenposten",
+          "dice": 5
+        },
+        {
+          "who": "NRK Filmpolitiet",
+          "dice": 5
+        },
+        {
+          "who": "Innherred",
+          "dice": 6
+        },
+        {
+          "who": "Dagsavisen",
+          "dice": 5
+        },
+        {
+          "who": "Klassekampen",
+          "dice": 5
+        },
+        {
+          "who": "Kinomagasinet",
+          "dice": 5
+        },
+        {
+          "who": "Adresseavisa",
+          "dice": 5
+        },
+        {
+          "who": "VG",
+          "dice": 5
+        },
+        {
+          "who": "Cinema",
+          "dice": 5
+        },
+        {
+          "who": "Filmklikk",
+          "dice": 6
+        }
+      ],
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/714c2df548403065609d371f42c15d648ba1c429-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92750/purchase?kanal=dxf",
       "eventId": "92750",
@@ -1839,6 +2127,40 @@
       "age": "12 år",
       "tags": [
         "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Eventyr",
+        "Superheltfilm"
+      ],
+      "director": "Destin Daniel Cretton",
+      "premiere": "2026-07-29",
+      "reviews": [
+        {
+          "who": "Aftenposten",
+          "dice": 5
+        },
+        {
+          "who": "VG",
+          "dice": 5
+        },
+        {
+          "who": "Stavanger Aftenblad",
+          "dice": 5
+        },
+        {
+          "who": "Moviezine",
+          "dice": 5
+        },
+        {
+          "who": "730.no",
+          "dice": 5
+        },
+        {
+          "who": "Filmkikk",
+          "dice": 5
+        }
       ],
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/13bdf9c085531b0bb6c3b7506e847f46643782b6-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92783/purchase?kanal=dxf",
@@ -1864,6 +2186,15 @@
         "Norsk tale",
         "Norsk tekst"
       ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Barnefilm",
+        "Animasjon"
+      ],
+      "director": "Cal Brunker",
+      "premiere": "2026-08-07",
+      "reviews": null,
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/b0c96c74829fac249da479447cb08a07a4ebf7ef-1500x2123.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92580/purchase?kanal=dxf",
       "eventId": "92580",
@@ -1871,8 +2202,8 @@
       "sold": 4,
       "eventStatus": "ok",
       "reserved": 0,
-      "capacity": 106,
-      "available": 102
+      "capacity": 110,
+      "available": 106
     },
     {
       "id": "EDI20260819-2026-08-08T15:30:00-Storsal",
@@ -1888,6 +2219,12 @@
         "Norsk tale",
         "Norsk tekst"
       ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": null,
+      "director": "Thomas Kail",
+      "premiere": "2026-07-10",
+      "reviews": null,
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/00979151e340722952a4e453830b15b8bb625663-1440x2057.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92813/purchase?kanal=dxf",
       "eventId": "92813",
@@ -1912,6 +2249,15 @@
         "Norsk tale",
         "Norsk tekst"
       ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Barnefilm",
+        "Animasjon"
+      ],
+      "director": "Pierre Coffin",
+      "premiere": "2026-07-01",
+      "reviews": null,
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/f639a9cb4e51005f32fc6e6864e40753f9066914-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92581/purchase?kanal=dxf",
       "eventId": "92581",
@@ -1934,6 +2280,53 @@
       "age": "12 år",
       "tags": [
         "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": null,
+      "director": "Christopher Nolan",
+      "premiere": "2026-07-17",
+      "reviews": [
+        {
+          "who": "Aftenposten",
+          "dice": 5
+        },
+        {
+          "who": "NRK Filmpolitiet",
+          "dice": 5
+        },
+        {
+          "who": "Innherred",
+          "dice": 6
+        },
+        {
+          "who": "Dagsavisen",
+          "dice": 5
+        },
+        {
+          "who": "Klassekampen",
+          "dice": 5
+        },
+        {
+          "who": "Kinomagasinet",
+          "dice": 5
+        },
+        {
+          "who": "Adresseavisa",
+          "dice": 5
+        },
+        {
+          "who": "VG",
+          "dice": 5
+        },
+        {
+          "who": "Cinema",
+          "dice": 5
+        },
+        {
+          "who": "Filmklikk",
+          "dice": 6
+        }
       ],
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/714c2df548403065609d371f42c15d648ba1c429-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92836/purchase?kanal=dxf",
@@ -1958,15 +2351,49 @@
       "tags": [
         "Norsk tekst"
       ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Eventyr",
+        "Superheltfilm"
+      ],
+      "director": "Destin Daniel Cretton",
+      "premiere": "2026-07-29",
+      "reviews": [
+        {
+          "who": "Aftenposten",
+          "dice": 5
+        },
+        {
+          "who": "VG",
+          "dice": 5
+        },
+        {
+          "who": "Stavanger Aftenblad",
+          "dice": 5
+        },
+        {
+          "who": "Moviezine",
+          "dice": 5
+        },
+        {
+          "who": "730.no",
+          "dice": 5
+        },
+        {
+          "who": "Filmkikk",
+          "dice": 5
+        }
+      ],
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/13bdf9c085531b0bb6c3b7506e847f46643782b6-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92811/purchase?kanal=dxf",
       "eventId": "92811",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 110,
-      "available": 110
+      "available": 108
     },
     {
       "id": "EDI20251106-2026-08-09T15:00:00-Storsal",
@@ -1982,6 +2409,15 @@
         "Norsk tale",
         "Norsk tekst"
       ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Barnefilm",
+        "Animasjon"
+      ],
+      "director": "Cal Brunker",
+      "premiere": "2026-08-07",
+      "reviews": null,
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/b0c96c74829fac249da479447cb08a07a4ebf7ef-1500x2123.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92691/purchase?kanal=dxf",
       "eventId": "92691",
@@ -2006,6 +2442,12 @@
         "Norsk tale",
         "Norsk tekst"
       ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": null,
+      "director": "Thomas Kail",
+      "premiere": "2026-07-10",
+      "reviews": null,
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/00979151e340722952a4e453830b15b8bb625663-1440x2057.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92747/purchase?kanal=dxf",
       "eventId": "92747",
@@ -2030,6 +2472,15 @@
         "Norsk tale",
         "Norsk tekst"
       ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Barnefilm",
+        "Animasjon"
+      ],
+      "director": "Pierre Coffin",
+      "premiere": "2026-07-01",
+      "reviews": null,
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/f639a9cb4e51005f32fc6e6864e40753f9066914-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92748/purchase?kanal=dxf",
       "eventId": "92748",
@@ -2052,6 +2503,53 @@
       "age": "12 år",
       "tags": [
         "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": null,
+      "director": "Christopher Nolan",
+      "premiere": "2026-07-17",
+      "reviews": [
+        {
+          "who": "Aftenposten",
+          "dice": 5
+        },
+        {
+          "who": "NRK Filmpolitiet",
+          "dice": 5
+        },
+        {
+          "who": "Innherred",
+          "dice": 6
+        },
+        {
+          "who": "Dagsavisen",
+          "dice": 5
+        },
+        {
+          "who": "Klassekampen",
+          "dice": 5
+        },
+        {
+          "who": "Kinomagasinet",
+          "dice": 5
+        },
+        {
+          "who": "Adresseavisa",
+          "dice": 5
+        },
+        {
+          "who": "VG",
+          "dice": 5
+        },
+        {
+          "who": "Cinema",
+          "dice": 5
+        },
+        {
+          "who": "Filmklikk",
+          "dice": 6
+        }
       ],
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/714c2df548403065609d371f42c15d648ba1c429-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92745/purchase?kanal=dxf",
@@ -2076,15 +2574,49 @@
       "tags": [
         "Norsk tekst"
       ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Eventyr",
+        "Superheltfilm"
+      ],
+      "director": "Destin Daniel Cretton",
+      "premiere": "2026-07-29",
+      "reviews": [
+        {
+          "who": "Aftenposten",
+          "dice": 5
+        },
+        {
+          "who": "VG",
+          "dice": 5
+        },
+        {
+          "who": "Stavanger Aftenblad",
+          "dice": 5
+        },
+        {
+          "who": "Moviezine",
+          "dice": 5
+        },
+        {
+          "who": "730.no",
+          "dice": 5
+        },
+        {
+          "who": "Filmkikk",
+          "dice": 5
+        }
+      ],
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/13bdf9c085531b0bb6c3b7506e847f46643782b6-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92690/purchase?kanal=dxf",
       "eventId": "92690",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 3,
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 286,
-      "available": 286
+      "available": 283
     },
     {
       "id": "UIP20241749-2026-08-10T16:50:00-Storsal",
@@ -2100,6 +2632,15 @@
         "Norsk tale",
         "Norsk tekst"
       ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Barnefilm",
+        "Animasjon"
+      ],
+      "director": "Pierre Coffin",
+      "premiere": "2026-07-01",
+      "reviews": null,
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/f639a9cb4e51005f32fc6e6864e40753f9066914-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92834/purchase?kanal=dxf",
       "eventId": "92834",
@@ -2124,15 +2665,24 @@
         "Norsk tale",
         "Norsk tekst"
       ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Barnefilm",
+        "Animasjon"
+      ],
+      "director": "Cal Brunker",
+      "premiere": "2026-08-07",
+      "reviews": null,
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/b0c96c74829fac249da479447cb08a07a4ebf7ef-1500x2123.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92787/purchase?kanal=dxf",
       "eventId": "92787",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 11,
       "eventStatus": "ok",
       "reserved": 0,
-      "capacity": 110,
-      "available": 110
+      "capacity": 108,
+      "available": 97
     },
     {
       "id": "UIP20241680-2026-08-10T19:10:00-Storsal",
@@ -2146,6 +2696,53 @@
       "age": "12 år",
       "tags": [
         "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": null,
+      "director": "Christopher Nolan",
+      "premiere": "2026-07-17",
+      "reviews": [
+        {
+          "who": "Aftenposten",
+          "dice": 5
+        },
+        {
+          "who": "NRK Filmpolitiet",
+          "dice": 5
+        },
+        {
+          "who": "Innherred",
+          "dice": 6
+        },
+        {
+          "who": "Dagsavisen",
+          "dice": 5
+        },
+        {
+          "who": "Klassekampen",
+          "dice": 5
+        },
+        {
+          "who": "Kinomagasinet",
+          "dice": 5
+        },
+        {
+          "who": "Adresseavisa",
+          "dice": 5
+        },
+        {
+          "who": "VG",
+          "dice": 5
+        },
+        {
+          "who": "Cinema",
+          "dice": 5
+        },
+        {
+          "who": "Filmklikk",
+          "dice": 6
+        }
       ],
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/714c2df548403065609d371f42c15d648ba1c429-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92831/purchase?kanal=dxf",
@@ -2170,6 +2767,40 @@
       "tags": [
         "Norsk tekst"
       ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Eventyr",
+        "Superheltfilm"
+      ],
+      "director": "Destin Daniel Cretton",
+      "premiere": "2026-07-29",
+      "reviews": [
+        {
+          "who": "Aftenposten",
+          "dice": 5
+        },
+        {
+          "who": "VG",
+          "dice": 5
+        },
+        {
+          "who": "Stavanger Aftenblad",
+          "dice": 5
+        },
+        {
+          "who": "Moviezine",
+          "dice": 5
+        },
+        {
+          "who": "730.no",
+          "dice": 5
+        },
+        {
+          "who": "Filmkikk",
+          "dice": 5
+        }
+      ],
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/13bdf9c085531b0bb6c3b7506e847f46643782b6-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92720/purchase?kanal=dxf",
       "eventId": "92720",
@@ -2192,6 +2823,53 @@
       "age": "12 år",
       "tags": [
         "Norsk tekst"
+      ],
+      "showType": "Dagkino",
+      "kinoklubb": false,
+      "genres": null,
+      "director": "Christopher Nolan",
+      "premiere": "2026-07-17",
+      "reviews": [
+        {
+          "who": "Aftenposten",
+          "dice": 5
+        },
+        {
+          "who": "NRK Filmpolitiet",
+          "dice": 5
+        },
+        {
+          "who": "Innherred",
+          "dice": 6
+        },
+        {
+          "who": "Dagsavisen",
+          "dice": 5
+        },
+        {
+          "who": "Klassekampen",
+          "dice": 5
+        },
+        {
+          "who": "Kinomagasinet",
+          "dice": 5
+        },
+        {
+          "who": "Adresseavisa",
+          "dice": 5
+        },
+        {
+          "who": "VG",
+          "dice": 5
+        },
+        {
+          "who": "Cinema",
+          "dice": 5
+        },
+        {
+          "who": "Filmklikk",
+          "dice": 6
+        }
       ],
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/714c2df548403065609d371f42c15d648ba1c429-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92716/purchase?kanal=dxf",
@@ -2217,6 +2895,15 @@
         "Norsk tale",
         "Norsk tekst"
       ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Barnefilm",
+        "Animasjon"
+      ],
+      "director": "Cal Brunker",
+      "premiere": "2026-08-07",
+      "reviews": null,
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/b0c96c74829fac249da479447cb08a07a4ebf7ef-1500x2123.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92721/purchase?kanal=dxf",
       "eventId": "92721",
@@ -2241,6 +2928,12 @@
         "Norsk tale",
         "Norsk tekst"
       ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": null,
+      "director": "Thomas Kail",
+      "premiere": "2026-07-10",
+      "reviews": null,
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/00979151e340722952a4e453830b15b8bb625663-1440x2057.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92837/purchase?kanal=dxf",
       "eventId": "92837",
@@ -2264,6 +2957,53 @@
       "tags": [
         "Norsk tekst"
       ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": null,
+      "director": "Christopher Nolan",
+      "premiere": "2026-07-17",
+      "reviews": [
+        {
+          "who": "Aftenposten",
+          "dice": 5
+        },
+        {
+          "who": "NRK Filmpolitiet",
+          "dice": 5
+        },
+        {
+          "who": "Innherred",
+          "dice": 6
+        },
+        {
+          "who": "Dagsavisen",
+          "dice": 5
+        },
+        {
+          "who": "Klassekampen",
+          "dice": 5
+        },
+        {
+          "who": "Kinomagasinet",
+          "dice": 5
+        },
+        {
+          "who": "Adresseavisa",
+          "dice": 5
+        },
+        {
+          "who": "VG",
+          "dice": 5
+        },
+        {
+          "who": "Cinema",
+          "dice": 5
+        },
+        {
+          "who": "Filmklikk",
+          "dice": 6
+        }
+      ],
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/714c2df548403065609d371f42c15d648ba1c429-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92718/purchase?kanal=dxf",
       "eventId": "92718",
@@ -2286,6 +3026,40 @@
       "age": "12 år",
       "tags": [
         "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Eventyr",
+        "Superheltfilm"
+      ],
+      "director": "Destin Daniel Cretton",
+      "premiere": "2026-07-29",
+      "reviews": [
+        {
+          "who": "Aftenposten",
+          "dice": 5
+        },
+        {
+          "who": "VG",
+          "dice": 5
+        },
+        {
+          "who": "Stavanger Aftenblad",
+          "dice": 5
+        },
+        {
+          "who": "Moviezine",
+          "dice": 5
+        },
+        {
+          "who": "730.no",
+          "dice": 5
+        },
+        {
+          "who": "Filmkikk",
+          "dice": 5
+        }
       ],
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/13bdf9c085531b0bb6c3b7506e847f46643782b6-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92717/purchase?kanal=dxf",
@@ -2311,6 +3085,15 @@
         "Norsk tale",
         "Norsk tekst"
       ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Barnefilm",
+        "Animasjon"
+      ],
+      "director": "Pierre Coffin",
+      "premiere": "2026-07-01",
+      "reviews": null,
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/f639a9cb4e51005f32fc6e6864e40753f9066914-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92790/purchase?kanal=dxf",
       "eventId": "92790",
@@ -2335,6 +3118,15 @@
         "Norsk tale",
         "Norsk tekst"
       ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Barnefilm",
+        "Animasjon"
+      ],
+      "director": "Cal Brunker",
+      "premiere": "2026-08-07",
+      "reviews": null,
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/b0c96c74829fac249da479447cb08a07a4ebf7ef-1500x2123.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92789/purchase?kanal=dxf",
       "eventId": "92789",
@@ -2358,6 +3150,53 @@
       "tags": [
         "Norsk tekst"
       ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": null,
+      "director": "Christopher Nolan",
+      "premiere": "2026-07-17",
+      "reviews": [
+        {
+          "who": "Aftenposten",
+          "dice": 5
+        },
+        {
+          "who": "NRK Filmpolitiet",
+          "dice": 5
+        },
+        {
+          "who": "Innherred",
+          "dice": 6
+        },
+        {
+          "who": "Dagsavisen",
+          "dice": 5
+        },
+        {
+          "who": "Klassekampen",
+          "dice": 5
+        },
+        {
+          "who": "Kinomagasinet",
+          "dice": 5
+        },
+        {
+          "who": "Adresseavisa",
+          "dice": 5
+        },
+        {
+          "who": "VG",
+          "dice": 5
+        },
+        {
+          "who": "Cinema",
+          "dice": 5
+        },
+        {
+          "who": "Filmklikk",
+          "dice": 6
+        }
+      ],
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/714c2df548403065609d371f42c15d648ba1c429-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92791/purchase?kanal=dxf",
       "eventId": "92791",
@@ -2380,6 +3219,40 @@
       "age": "12 år",
       "tags": [
         "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Eventyr",
+        "Superheltfilm"
+      ],
+      "director": "Destin Daniel Cretton",
+      "premiere": "2026-07-29",
+      "reviews": [
+        {
+          "who": "Aftenposten",
+          "dice": 5
+        },
+        {
+          "who": "VG",
+          "dice": 5
+        },
+        {
+          "who": "Stavanger Aftenblad",
+          "dice": 5
+        },
+        {
+          "who": "Moviezine",
+          "dice": 5
+        },
+        {
+          "who": "730.no",
+          "dice": 5
+        },
+        {
+          "who": "Filmkikk",
+          "dice": 5
+        }
       ],
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/13bdf9c085531b0bb6c3b7506e847f46643782b6-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92788/purchase?kanal=dxf",
@@ -2405,6 +3278,15 @@
         "Norsk tale",
         "Norsk tekst"
       ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Barnefilm",
+        "Animasjon"
+      ],
+      "director": "Cal Brunker",
+      "premiere": "2026-08-07",
+      "reviews": null,
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/b0c96c74829fac249da479447cb08a07a4ebf7ef-1500x2123.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92794/purchase?kanal=dxf",
       "eventId": "92794",
@@ -2428,6 +3310,14 @@
       "tags": [
         "Norsk tekst"
       ],
+      "showType": "Seniorkino",
+      "kinoklubb": true,
+      "genres": [
+        "Komedie"
+      ],
+      "director": "Olivia Wilde",
+      "premiere": "2026-08-14",
+      "reviews": null,
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/59ddb42978a630c065866367e38b465118602c08-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92500/purchase?kanal=dxf",
       "eventId": "92500",
@@ -2451,6 +3341,14 @@
       "tags": [
         "Norsk tekst"
       ],
+      "showType": null,
+      "kinoklubb": true,
+      "genres": [
+        "Komedie"
+      ],
+      "director": "Olivia Wilde",
+      "premiere": "2026-08-14",
+      "reviews": null,
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/59ddb42978a630c065866367e38b465118602c08-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92640/purchase?kanal=dxf",
       "eventId": "92640",
@@ -2474,6 +3372,14 @@
       "tags": [
         "Norsk tekst"
       ],
+      "showType": "Seniorkino",
+      "kinoklubb": true,
+      "genres": [
+        "Drama"
+      ],
+      "director": "Cristian Mungiu",
+      "premiere": "2026-09-04",
+      "reviews": null,
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/c10d96b80399813584d65ea185087e216c6bd5ed-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92498/purchase?kanal=dxf",
       "eventId": "92498",
