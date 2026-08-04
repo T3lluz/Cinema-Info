@@ -92,27 +92,38 @@
    layout; only the material changes. */
 [data-material="glass"] {
   --bg: #e9e8ee;
-  --surface: rgba(255, 255, 255, 0.52);
-  --line: rgba(94, 82, 76, 0.17);
+  /* Real glass is clear, not frosted white: keep the fill thin and let
+     the rim + refraction do the work. */
+  --surface: rgba(255, 255, 255, 0.26);
+  --line: rgba(94, 82, 76, 0.15);
+  /* The rim of a pane: a bright specular edge instead of a grey line. */
+  --pane-stroke: rgba(255, 255, 255, 0.6);
   --accent-soft: rgba(196, 30, 42, 0.11);
   --ok-soft: rgba(27, 107, 69, 0.12);
   --warn-soft: rgba(154, 103, 0, 0.13);
   --done-soft: rgba(111, 105, 100, 0.13);
-  --glass-fill: rgba(255, 255, 255, 0.38);
-  --glass-shadow: rgba(45, 36, 32, 0.1);
+  --glass-fill: rgba(255, 255, 255, 0.16);
+  --glass-sheen: rgba(255, 255, 255, 0.2);
+  --glass-shadow: rgba(45, 36, 32, 0.14);
+  --refract-glow: rgba(255, 255, 255, 0.14);
+  --nav-chip-fill: rgba(255, 255, 255, 0.42);
 }
 
 [data-theme="dark"][data-material="glass"] {
   --bg: #101014;
-  --surface: rgba(255, 255, 255, 0.07);
-  --line: rgba(255, 255, 255, 0.12);
+  --surface: rgba(255, 255, 255, 0.045);
+  --line: rgba(255, 255, 255, 0.11);
   --muted: #aca6a9;
+  --pane-stroke: rgba(255, 255, 255, 0.15);
   --accent-soft: rgba(240, 71, 81, 0.15);
   --ok-soft: rgba(98, 210, 150, 0.13);
   --warn-soft: rgba(232, 186, 85, 0.13);
   --done-soft: rgba(255, 255, 255, 0.08);
-  --glass-fill: rgba(28, 27, 32, 0.42);
+  --glass-fill: rgba(20, 19, 25, 0.28);
+  --glass-sheen: rgba(255, 255, 255, 0.05);
   --glass-shadow: rgba(0, 0, 0, 0.45);
+  --refract-glow: rgba(255, 255, 255, 0.04);
+  --nav-chip-fill: rgba(255, 255, 255, 0.1);
 }
 
 * {
@@ -162,8 +173,17 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Liquid glass needs something behind it worth refracting: a fixed,
-   soft colour field that translucent panes pick up as they scroll. */
+/* The SVG holding the lens filter must never take part in layout. */
+.liquid-defs {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+/* Liquid glass needs something behind it worth refracting: a fixed
+   colour field with enough structure that a pane's rim visibly bends
+   the gradients passing under it. */
 [data-material="glass"] body {
   background: transparent;
 }
@@ -176,24 +196,35 @@ body {
   pointer-events: none;
   background:
     radial-gradient(
-      46% 34% at 12% 4%,
-      color-mix(in srgb, var(--accent) 18%, transparent),
-      transparent 72%
+      36% 28% at 12% 4%,
+      color-mix(in srgb, var(--accent) 26%, transparent),
+      transparent 70%
     ),
     radial-gradient(
-      40% 30% at 90% 14%,
-      color-mix(in srgb, var(--hold) 14%, transparent),
-      transparent 72%
+      32% 24% at 88% 10%,
+      color-mix(in srgb, var(--hold) 20%, transparent),
+      transparent 70%
     ),
     radial-gradient(
-      52% 38% at 46% 102%,
-      color-mix(in srgb, #d2a017 15%, transparent),
+      24% 18% at 72% 58%,
+      color-mix(in srgb, var(--accent) 12%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      28% 22% at 16% 74%,
+      color-mix(in srgb, var(--hold) 12%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      46% 34% at 52% 104%,
+      color-mix(in srgb, #d2a017 20%, transparent),
       transparent 74%
     );
 }
 
-/* Every major pane becomes a glass sheet: translucent fill (from the
-   theme vars), a real backdrop blur, and a specular top edge. */
+/* Every major pane becomes a sheet of clear glass: a thin translucent
+   fill, a bright specular rim, refraction at the edges (the lens filter
+   in Chromium; frost elsewhere), and light bending along the arcs. */
 [data-material="glass"] .show-card,
 [data-material="glass"] .movie-tile,
 [data-material="glass"] .stats-panel,
@@ -203,13 +234,37 @@ body {
 [data-material="glass"] .seat-strip,
 [data-material="glass"] .seat-chart,
 [data-material="glass"] .seat-note {
-  backdrop-filter: blur(14px) saturate(1.4);
-  -webkit-backdrop-filter: blur(14px) saturate(1.4);
+  border-color: var(--pane-stroke);
+  backdrop-filter: blur(3px) saturate(1.7);
+  -webkit-backdrop-filter: blur(3px) saturate(1.7);
   box-shadow:
-    inset 1.2px 1.2px 1px -1px var(--refract-hi),
-    inset -1.2px -1.2px 1px -1px var(--refract-lo),
-    inset 0 0 10px 1px var(--refract-glow),
-    0 10px 28px var(--glass-shadow, transparent);
+    inset 1.4px 1.4px 1px -1px var(--refract-hi),
+    inset -1.4px -1.4px 1px -1px var(--refract-lo),
+    inset 0 0 8px 0 var(--refract-glow),
+    0 12px 30px var(--glass-shadow, transparent);
+}
+
+/* Glass panes are rounder — closer to the pebble shapes iOS cuts. */
+[data-material="glass"] .show-card {
+  border-radius: 18px;
+}
+
+[data-material="glass"] .show-status {
+  border-radius: 18px 0 0 18px;
+}
+
+[data-material="glass"] .movie-tile,
+[data-material="glass"] .stats-panel,
+[data-material="glass"] .stats-hero-main,
+[data-material="glass"] .stats-mini,
+[data-material="glass"] .settings-section {
+  border-radius: 18px;
+}
+
+[data-material="glass"] .seat-strip,
+[data-material="glass"] .seat-chart,
+[data-material="glass"] .seat-note {
+  border-radius: 0 0 18px 18px;
 }
 
 .top {
@@ -225,10 +280,10 @@ body {
 }
 
 [data-material="glass"] .top {
-  background: color-mix(in srgb, var(--bg) 26%, transparent);
+  background: color-mix(in srgb, var(--bg) 14%, transparent);
   border-bottom-color: var(--glass-stroke);
-  backdrop-filter: blur(26px) saturate(1.7);
-  -webkit-backdrop-filter: blur(26px) saturate(1.7);
+  backdrop-filter: blur(12px) saturate(1.8);
+  -webkit-backdrop-filter: blur(12px) saturate(1.8);
 }
 
 /* Same centered column as .content: max width, then shared side padding. */
@@ -3001,8 +3056,11 @@ a.tile-show:focus-visible {
   background:
     linear-gradient(to bottom, var(--glass-sheen), transparent 55%),
     var(--glass-fill);
-  backdrop-filter: blur(24px) saturate(1.8);
-  -webkit-backdrop-filter: blur(24px) saturate(1.8);
+  backdrop-filter: blur(20px) saturate(1.8);
+  -webkit-backdrop-filter: blur(20px) saturate(1.8);
+  /* Chromium: clear glass with real refraction — content scrolling
+     under the bar bends at the rim like it does on iOS. */
+  backdrop-filter: blur(2px) url(#lens-nav) saturate(1.9);
   border: 1px solid var(--glass-stroke);
   box-shadow:
     inset 1.4px 1.4px 1px -1px var(--refract-hi),
@@ -3023,9 +3081,9 @@ a.tile-show:focus-visible {
   z-index: 0;
 }
 
-/* The selection lens: a raised drop of the same glass. No nested
-   backdrop blur — a translucent fill + specular edge reads cleaner
-   and never fights the pane's own blur. */
+/* The selection lens: a raised drop of the same glass. Chromium gets
+   true magnification through the droplet; elsewhere a translucent fill
+   + specular edge carries the shape. */
 .pill-indicator {
   position: absolute;
   top: 0;
@@ -3036,6 +3094,9 @@ a.tile-show:focus-visible {
     linear-gradient(to bottom, var(--glass-sheen), transparent 60%),
     var(--nav-chip-fill);
   border: 1px solid var(--nav-chip-stroke);
+  backdrop-filter: saturate(1.3);
+  -webkit-backdrop-filter: saturate(1.3);
+  backdrop-filter: url(#lens-chip) saturate(1.3);
   box-shadow:
     inset 1.2px 1.2px 1px -1px var(--refract-hi),
     inset -1.2px -1.2px 1px -1px var(--refract-lo),

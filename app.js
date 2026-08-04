@@ -657,7 +657,11 @@ async function init() {
   window.addEventListener("resize", () => {
     movePillIndicator(activeTab, { instant: true });
     moveDayIndicator({ instant: true });
+    updateLiquidLenses();
   });
+
+  // Draw the refraction lenses once the navbar has its real size.
+  requestAnimationFrame(updateLiquidLenses);
 
   // Crossing the tablet threshold changes whether seat charts are folded
   // away. Only the day list draws them, so only it needs redrawing.
@@ -1489,6 +1493,100 @@ function applyMaterial(next) {
   applyTheme._t = setTimeout(() => root.classList.remove("theme-anim"), 400);
   root.dataset.material = material;
   syncThemeChrome();
+}
+
+/**
+ * Liquid-glass refraction. Chromium can refract an element's backdrop
+ * through an SVG displacement map (backdrop-filter: url(#…)); for the
+ * bend to hug the rim like real curved glass, the map must match the
+ * element's exact size and corner radius. It is drawn on a canvas from
+ * the rounded-rect's signed distance field: neutral in the middle, and
+ * within `bend` px of the rim the backdrop is sampled inward along the
+ * edge normal — the magnifying bend iOS glass has. Safari and Firefox
+ * ignore the url() declaration and keep the plain frosted fallback.
+ */
+function liquidLensMap(w, h, r, bend, disp) {
+  const canvas = document.createElement("canvas");
+  canvas.width = w;
+  canvas.height = h;
+  const ctx = canvas.getContext("2d");
+  const img = ctx.createImageData(w, h);
+  const data = img.data;
+  const hw = w / 2;
+  const hh = h / 2;
+  for (let y = 0; y < h; y++) {
+    for (let x = 0; x < w; x++) {
+      const px = x + 0.5 - hw;
+      const py = y + 0.5 - hh;
+      // Signed distance to the rounded rect (negative inside).
+      const qx = Math.abs(px) - (hw - r);
+      const qy = Math.abs(py) - (hh - r);
+      const ax = Math.max(qx, 0);
+      const ay = Math.max(qy, 0);
+      const corner = Math.hypot(ax, ay);
+      const d = corner + Math.min(Math.max(qx, qy), 0) - r;
+      // 0 deep inside → 1 at the rim.
+      const t = Math.min(Math.max(1 + d / bend, 0), 1);
+      let ox = 0;
+      let oy = 0;
+      if (t > 0) {
+        let nx = 0;
+        let ny = 0;
+        if (qx > 0 && qy > 0) {
+          const len = corner || 1;
+          nx = (ax / len) * Math.sign(px);
+          ny = (ay / len) * Math.sign(py);
+        } else if (qx > qy) {
+          nx = Math.sign(px);
+        } else {
+          ny = Math.sign(py);
+        }
+        const e = t * t * (3 - 2 * t);
+        // Sample inward from the rim → the pane magnifies like a lens.
+        ox = -nx * e;
+        oy = -ny * e;
+      }
+      const i = (y * w + x) * 4;
+      data[i] = Math.round(128 + ox * 127);
+      data[i + 1] = Math.round(128 + oy * 127);
+      data[i + 2] = 128;
+      data[i + 3] = 255;
+    }
+  }
+  ctx.putImageData(img, 0, 0);
+  return canvas.toDataURL();
+}
+
+/** filter id → [element, bend width px, max displacement px]. */
+const LENS_TARGETS = [
+  ["lens-nav", ".pill-nav-inner", 20, 22],
+  ["lens-chip", ".pill-indicator", 12, 14],
+];
+
+function updateLiquidLenses() {
+  for (const [id, selector, bend, disp] of LENS_TARGETS) {
+    const filter = document.getElementById(id);
+    const el = document.querySelector(selector);
+    if (!filter || !el) continue;
+    const w = Math.round(el.offsetWidth);
+    const h = Math.round(el.offsetHeight);
+    if (!w || !h) continue;
+    const size = `${w}x${h}`;
+    if (filter.dataset.size === size) continue;
+    filter.dataset.size = size;
+    const r = Math.min(w, h) / 2; // capsule
+    filter.setAttribute("x", "0");
+    filter.setAttribute("y", "0");
+    filter.setAttribute("width", String(w));
+    filter.setAttribute("height", String(h));
+    const image = filter.querySelector("feImage");
+    image.setAttribute("href", liquidLensMap(w, h, r, Math.min(bend, r), disp));
+    image.setAttribute("x", "0");
+    image.setAttribute("y", "0");
+    image.setAttribute("width", String(w));
+    image.setAttribute("height", String(h));
+    filter.querySelector("feDisplacementMap").setAttribute("scale", String(disp * 2));
+  }
 }
 
 /** Keep the browser/PWA chrome the same colour as the page behind it. */
