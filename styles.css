@@ -16,20 +16,35 @@
   --hold: #1d6fd4;
   --done: #6f6964;
   --done-soft: #ebe7e2;
-  --nav-bg: #ffffff;
-  --nav-shadow: 0 8px 28px rgba(22, 20, 18, 0.14);
-  /* Same frosted mix as the glass pill — layering (blur + shadow)
-     does the lift, so the chip shouldn't be denser. */
-  --nav-selected-fill: color-mix(in srgb, var(--nav-bg) 28%, transparent);
-  --nav-selected-stroke: color-mix(in srgb, var(--nav-bg) 22%, transparent);
-  --nav-selected-shadow:
-    0 4px 14px rgba(22, 20, 18, 0.14),
-    0 1.5px 3px rgba(22, 20, 18, 0.08);
+  /* —— Glass tokens ——
+     The chrome (navbar, header, chips) is frosted glass in every theme;
+     the "glass" material extends the same recipe to the whole page.
+     Highlight = the specular top edge; stroke = the pane's rim. */
+  --glass-fill: rgba(255, 255, 255, 0.52);
+  --glass-stroke: rgba(255, 255, 255, 0.62);
+  --glass-highlight: rgba(255, 255, 255, 0.75);
+  --glass-ring: rgba(22, 20, 18, 0.08);
+  /* Refraction: light bends at the rim of a pane — a bright arc where
+     it enters (top-left), a softer arc where it leaves (bottom-right),
+     a faint glow through the glass, and a vertical sheen. */
+  --refract-hi: rgba(255, 255, 255, 0.95);
+  --refract-lo: rgba(255, 255, 255, 0.5);
+  --refract-glow: rgba(255, 255, 255, 0.26);
+  --glass-sheen: rgba(255, 255, 255, 0.3);
+  --nav-shadow:
+    0 12px 32px rgba(22, 20, 18, 0.16),
+    0 2px 8px rgba(22, 20, 18, 0.08);
+  /* The floating selection lens inside the navbar. */
+  --nav-chip-fill: rgba(255, 255, 255, 0.78);
+  --nav-chip-stroke: rgba(255, 255, 255, 0.85);
+  --nav-chip-shadow:
+    0 4px 12px rgba(22, 20, 18, 0.16),
+    0 1px 3px rgba(22, 20, 18, 0.1);
   --font: "Segoe UI", system-ui, -apple-system, sans-serif;
   --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
-  --nav-h: 58px;
+  --nav-h: 62px;
   /* Shared content column — stays phone-sized on mobile, widens on larger screens. */
   --page-max: 720px;
   --page-pad-x: 16px;
@@ -52,13 +67,52 @@
   --hold: #5b9cf5;
   --done: #a79d92;
   --done-soft: #363029;
-  --nav-bg: #2a2522;
-  --nav-shadow: 0 8px 28px rgba(0, 0, 0, 0.55);
-  --nav-selected-fill: color-mix(in srgb, var(--nav-bg) 28%, transparent);
-  --nav-selected-stroke: color-mix(in srgb, #ffffff 8%, transparent);
-  --nav-selected-shadow:
-    0 5px 16px rgba(0, 0, 0, 0.45),
-    0 2px 4px rgba(0, 0, 0, 0.28);
+  --glass-fill: rgba(44, 39, 36, 0.55);
+  --glass-stroke: rgba(255, 255, 255, 0.12);
+  --glass-highlight: rgba(255, 255, 255, 0.12);
+  --glass-ring: rgba(0, 0, 0, 0.35);
+  --refract-hi: rgba(255, 255, 255, 0.3);
+  --refract-lo: rgba(255, 255, 255, 0.1);
+  --refract-glow: rgba(255, 255, 255, 0.05);
+  --glass-sheen: rgba(255, 255, 255, 0.07);
+  --nav-shadow:
+    0 12px 32px rgba(0, 0, 0, 0.5),
+    0 2px 8px rgba(0, 0, 0, 0.3);
+  --nav-chip-fill: rgba(255, 255, 255, 0.13);
+  --nav-chip-stroke: rgba(255, 255, 255, 0.16);
+  --nav-chip-shadow:
+    0 5px 16px rgba(0, 0, 0, 0.4),
+    0 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+/* —— Materials ——
+   "subtle" (default): solid surfaces under lightly frosted chrome.
+   "glass": full liquid glass — every panel is a translucent pane over
+   a soft colour field, with a specular top edge. Same accents, same
+   layout; only the material changes. */
+[data-material="glass"] {
+  --bg: #e9e8ee;
+  --surface: rgba(255, 255, 255, 0.58);
+  --line: rgba(94, 82, 76, 0.17);
+  --accent-soft: rgba(196, 30, 42, 0.11);
+  --ok-soft: rgba(27, 107, 69, 0.12);
+  --warn-soft: rgba(154, 103, 0, 0.13);
+  --done-soft: rgba(111, 105, 100, 0.13);
+  --glass-fill: rgba(255, 255, 255, 0.38);
+  --glass-shadow: rgba(45, 36, 32, 0.1);
+}
+
+[data-theme="dark"][data-material="glass"] {
+  --bg: #101014;
+  --surface: rgba(255, 255, 255, 0.07);
+  --line: rgba(255, 255, 255, 0.12);
+  --muted: #aca6a9;
+  --accent-soft: rgba(240, 71, 81, 0.15);
+  --ok-soft: rgba(98, 210, 150, 0.13);
+  --warn-soft: rgba(232, 186, 85, 0.13);
+  --done-soft: rgba(255, 255, 255, 0.08);
+  --glass-fill: rgba(28, 27, 32, 0.42);
+  --glass-shadow: rgba(0, 0, 0, 0.45);
 }
 
 * {
@@ -94,6 +148,10 @@ input:focus-visible {
   outline-offset: 2px;
 }
 
+html {
+  background: var(--bg);
+}
+
 body {
   min-height: 100dvh;
   font-family: var(--font);
@@ -104,6 +162,56 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
+/* Liquid glass needs something behind it worth refracting: a fixed,
+   soft colour field that translucent panes pick up as they scroll. */
+[data-material="glass"] body {
+  background: transparent;
+}
+
+[data-material="glass"] body::before {
+  content: "";
+  position: fixed;
+  inset: -12%;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      46% 34% at 12% 4%,
+      color-mix(in srgb, var(--accent) 15%, transparent),
+      transparent 72%
+    ),
+    radial-gradient(
+      40% 30% at 90% 14%,
+      color-mix(in srgb, var(--hold) 12%, transparent),
+      transparent 72%
+    ),
+    radial-gradient(
+      52% 38% at 46% 102%,
+      color-mix(in srgb, #d2a017 13%, transparent),
+      transparent 74%
+    );
+}
+
+/* Every major pane becomes a glass sheet: translucent fill (from the
+   theme vars), a real backdrop blur, and a specular top edge. */
+[data-material="glass"] .show-card,
+[data-material="glass"] .movie-tile,
+[data-material="glass"] .stats-panel,
+[data-material="glass"] .stats-hero-main,
+[data-material="glass"] .stats-mini,
+[data-material="glass"] .settings-section,
+[data-material="glass"] .seat-strip,
+[data-material="glass"] .seat-chart,
+[data-material="glass"] .seat-note {
+  backdrop-filter: blur(14px) saturate(1.4);
+  -webkit-backdrop-filter: blur(14px) saturate(1.4);
+  box-shadow:
+    inset 1.2px 1.2px 1px -1px var(--refract-hi),
+    inset -1.2px -1.2px 1px -1px var(--refract-lo),
+    inset 0 0 10px 1px var(--refract-glow),
+    0 10px 28px var(--glass-shadow, transparent);
+}
+
 .top {
   position: sticky;
   top: 0;
@@ -112,8 +220,15 @@ body {
   padding: calc(12px + var(--safe-top)) 0 10px;
   background: color-mix(in srgb, var(--bg) 55%, transparent);
   border-bottom: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px) saturate(1.5);
+  -webkit-backdrop-filter: blur(20px) saturate(1.5);
+}
+
+[data-material="glass"] .top {
+  background: color-mix(in srgb, var(--bg) 26%, transparent);
+  border-bottom-color: var(--glass-stroke);
+  backdrop-filter: blur(26px) saturate(1.7);
+  -webkit-backdrop-filter: blur(26px) saturate(1.7);
 }
 
 /* Same centered column as .content: max width, then shared side padding. */
@@ -1150,6 +1265,46 @@ a.tile-show:focus-visible {
   color: color-mix(in srgb, var(--done) 90%, var(--ink));
 }
 
+/* Special programming from Buen's feed: a premiere night pops in the
+   accent, Dagkino/Seniorkino/Kinoklubb get a calm blue tag. */
+.badge.premiere {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent);
+}
+
+.badge.special {
+  background: color-mix(in srgb, var(--hold) 12%, transparent);
+  color: color-mix(in srgb, var(--hold) 78%, var(--ink));
+  border: 1px solid color-mix(in srgb, var(--hold) 30%, transparent);
+}
+
+/* Press dice rating (terningkast): the average with a die face drawn
+   with the right number of pips; hover names who rolled what. */
+.dice-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  flex: 0 0 auto;
+  margin-top: 1px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--warn-soft);
+  color: color-mix(in srgb, var(--warn) 85%, var(--ink));
+  border: 1px solid color-mix(in srgb, var(--warn) 30%, transparent);
+  font-size: 0.7rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  cursor: help;
+}
+
+.dice-glyph {
+  width: 13px;
+  height: 13px;
+  flex: 0 0 auto;
+}
+
 .badge-check {
   width: 9px;
   height: 9px;
@@ -1489,6 +1644,7 @@ a.tile-show:focus-visible {
 .movie-tile-title {
   margin: 0;
   min-width: 0;
+  flex: 1 1 auto;
   font-size: 0.98rem;
   font-weight: 800;
   line-height: 1.2;
@@ -1517,6 +1673,16 @@ a.tile-show:focus-visible {
   margin: 0;
   font-size: 0.72rem;
   color: var(--muted);
+}
+
+/* Genres and director under the vitals — one quiet line. */
+.movie-tile-credits {
+  margin: 0;
+  font-size: 0.7rem;
+  color: var(--muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .tile-shows {
@@ -2754,10 +2920,12 @@ a.tile-show:focus-visible {
   border: 1px solid color-mix(in srgb, var(--accent) 18%, var(--surface));
 }
 
+/* Equal cells for however many options the group holds (2 or 3). */
 .segmented {
   position: relative;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
   gap: 6px;
   padding: 4px;
   border-radius: 999px;
@@ -2815,9 +2983,11 @@ a.tile-show:focus-visible {
   pointer-events: none;
 }
 
+/* The shell: one frosted pane, floating clear of the page. A hairline
+   contrast ring under the specular rim keeps the pane readable on any
+   background, light or dark. */
 .pill-nav-inner {
-  /* Same rim gap on every side around the selection bubble. */
-  /* A touch more air between the selection bubble and the pill rim. */
+  /* Same rim gap on every side around the selection lens. */
   --pill-pad: 5px;
   pointer-events: auto;
   position: relative;
@@ -2827,15 +2997,23 @@ a.tile-show:focus-visible {
   width: min(var(--nav-max), 100%);
   padding: var(--pill-pad);
   border-radius: 999px;
-  background: color-mix(in srgb, var(--nav-bg) 28%, transparent);
-  backdrop-filter: blur(16px) saturate(1.85);
-  -webkit-backdrop-filter: blur(16px) saturate(1.85);
-  border: 1px solid var(--line);
-  box-shadow: var(--nav-shadow);
+  /* Sheen over fill: light entering from above passes through the pane. */
+  background:
+    linear-gradient(to bottom, var(--glass-sheen), transparent 55%),
+    var(--glass-fill);
+  backdrop-filter: blur(24px) saturate(1.8);
+  -webkit-backdrop-filter: blur(24px) saturate(1.8);
+  border: 1px solid var(--glass-stroke);
+  box-shadow:
+    inset 1.4px 1.4px 1px -1px var(--refract-hi),
+    inset -1.4px -1.4px 1px -1px var(--refract-lo),
+    inset 0 0 12px 1px var(--refract-glow),
+    0 0 0 1px var(--glass-ring),
+    var(--nav-shadow);
 }
 
-/* Selection track — overflow stays visible so the floating chip's
-   drop shadow can cast onto the glass pill around it. */
+/* Selection track — overflow stays visible so the floating lens's
+   drop shadow can cast onto the glass pane around it. */
 .pill-indicator-track {
   position: absolute;
   inset: var(--pill-pad);
@@ -2845,21 +3023,25 @@ a.tile-show:focus-visible {
   z-index: 0;
 }
 
+/* The selection lens: a raised drop of the same glass. No nested
+   backdrop blur — a translucent fill + specular edge reads cleaner
+   and never fights the pane's own blur. */
 .pill-indicator {
   position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
   border-radius: 999px;
-  /* Frosted chip floating above the panel — more blur than the pill,
-     plus a drop shadow and slight lift so it reads clearly raised. */
-  background: var(--nav-selected-fill);
-  border: 1px solid var(--nav-selected-stroke);
-  box-shadow: var(--nav-selected-shadow);
-  backdrop-filter: blur(32px) saturate(1.45);
-  -webkit-backdrop-filter: blur(32px) saturate(1.45);
+  background:
+    linear-gradient(to bottom, var(--glass-sheen), transparent 60%),
+    var(--nav-chip-fill);
+  border: 1px solid var(--nav-chip-stroke);
+  box-shadow:
+    inset 1.2px 1.2px 1px -1px var(--refract-hi),
+    inset -1.2px -1.2px 1px -1px var(--refract-lo),
+    var(--nav-chip-shadow);
   /* Position with --pill-x; ease slide only — no bounce/squash. */
-  transform: translateX(var(--pill-x, 0px)) translateY(-1px);
+  transform: translateX(var(--pill-x, 0px));
   transition:
     width 0.28s cubic-bezier(0.4, 0, 0.2, 1),
     transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
@@ -2867,6 +3049,8 @@ a.tile-show:focus-visible {
   z-index: 1;
 }
 
+/* Tabs: icon over label, always both — nothing shifts or unfolds when
+   the selection moves, only colour and the lens underneath. */
 .pill-tab {
   position: relative;
   z-index: 2;
@@ -2874,49 +3058,32 @@ a.tile-show:focus-visible {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0;
-  /* A touch thicker than the slimmed shell — still compact. */
-  min-height: 48px;
+  gap: 3px;
+  min-height: 52px;
   border: 0;
   border-radius: 999px;
   background: transparent;
   color: var(--muted);
   font: inherit;
-  font-size: 0.64rem;
+  font-size: 0.6rem;
   font-weight: 700;
   letter-spacing: 0.01em;
   cursor: pointer;
-  padding: 5px 6px;
-  overflow: hidden;
+  padding: 7px 4px 6px;
   transition: color 0.22s ease;
 }
 
-/* Idle tabs: icon-only and a touch larger. Active: icon settles as the
-   label rises from under it. */
 .pill-tab svg {
   flex-shrink: 0;
-  width: 20px;
-  height: 20px;
-  /* Idle: larger icon-only. Selected: shrinks to make room for the label. */
-  transform: scale(1.32);
-  transform-origin: center center;
-  transition: transform 0.34s cubic-bezier(0.3, 1.2, 0.4, 1);
+  width: 21px;
+  height: 21px;
+  transition: transform 0.3s cubic-bezier(0.3, 1.2, 0.4, 1);
 }
 
 .pill-tab-label {
   display: block;
-  max-height: 0;
-  margin-top: 0;
-  opacity: 0;
-  overflow: hidden;
-  line-height: 1.25;
+  line-height: 1.2;
   white-space: nowrap;
-  transform: translateY(110%);
-  transition:
-    max-height 0.34s cubic-bezier(0.3, 1, 0.4, 1),
-    margin-top 0.34s cubic-bezier(0.3, 1, 0.4, 1),
-    opacity 0.24s ease,
-    transform 0.34s cubic-bezier(0.22, 1.15, 0.4, 1);
 }
 
 .pill-tab:focus-visible {
@@ -2925,28 +3092,11 @@ a.tile-show:focus-visible {
 }
 
 .pill-tab:active svg {
-  transform: scale(1.18);
+  transform: scale(1.12);
 }
 
 .pill-tab[aria-selected="true"] {
   color: var(--accent);
-  overflow: visible;
-}
-
-.pill-tab[aria-selected="true"] svg {
-  transform: scale(0.92);
-}
-
-.pill-tab[aria-selected="true"]:active svg {
-  transform: scale(0.84);
-}
-
-.pill-tab[aria-selected="true"] .pill-tab-label {
-  max-height: 2.5em;
-  margin-top: 1px;
-  opacity: 1;
-  overflow: visible;
-  transform: translateY(0);
 }
 
 .stats-hero,
@@ -3223,9 +3373,9 @@ a.tile-show:focus-visible {
   }
 
   .pill-tab {
-    min-height: 50px;
-    font-size: 0.68rem;
-    padding: 5px 8px;
+    min-height: 54px;
+    font-size: 0.62rem;
+    padding: 7px 8px 6px;
   }
 
   .pill-tab svg {
@@ -3418,14 +3568,14 @@ a.tile-show:focus-visible {
   }
 
   .pill-tab {
-    min-height: 52px;
-    font-size: 0.7rem;
-    padding: 6px 10px;
+    min-height: 56px;
+    font-size: 0.64rem;
+    padding: 7px 10px 6px;
   }
 
   .pill-tab svg {
-    width: 24px;
-    height: 24px;
+    width: 23px;
+    height: 23px;
   }
 }
 
