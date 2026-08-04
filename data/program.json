@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-03T23:34:52.782Z",
+  "updatedAt": "2026-08-04T11:51:20.066Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -1492,11 +1492,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92700/purchase?kanal=dxf",
       "eventId": "92700",
       "promoterId": "202",
-      "sold": 4,
+      "sold": 15,
       "eventStatus": "ok",
-      "reserved": 0,
+      "reserved": 6,
       "capacity": 110,
-      "available": 106
+      "available": 89
     },
     {
       "id": "EDI20260556-2026-08-04T17:30:00-Storsal",
@@ -1539,11 +1539,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92699/purchase?kanal=dxf",
       "eventId": "92699",
       "promoterId": "202",
-      "sold": 55,
+      "sold": 66,
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 110,
-      "available": 55
+      "available": 44
     },
     {
       "id": "EDI20260626-2026-08-04T20:15:00-Storsal",
@@ -1562,11 +1562,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92731/purchase?kanal=dxf",
       "eventId": "92731",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 5,
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 286,
-      "available": 286
+      "available": 281
     },
     {
       "id": "EDI20260556-2026-08-05T16:50:00-Kinosal",
@@ -1633,10 +1633,10 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92739/purchase?kanal=dxf",
       "eventId": "92739",
       "promoterId": "202",
-      "sold": 8,
+      "sold": 10,
       "eventStatus": "ok",
       "reserved": 0,
-      "capacity": 108,
+      "capacity": 110,
       "available": 100
     },
     {
@@ -1656,11 +1656,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92782/purchase?kanal=dxf",
       "eventId": "92782",
       "promoterId": "202",
-      "sold": 4,
+      "sold": 2,
       "eventStatus": "ok",
       "reserved": 0,
-      "capacity": 244,
-      "available": 240
+      "capacity": 246,
+      "available": 244
     },
     {
       "id": "UIP20241749-2026-08-06T17:00:00-Kinosal",
@@ -1730,8 +1730,8 @@
       "sold": 2,
       "eventStatus": "ok",
       "reserved": 0,
-      "capacity": 108,
-      "available": 106
+      "capacity": 110,
+      "available": 108
     },
     {
       "id": "EDI20260626-2026-08-06T20:15:00-Storsal",
