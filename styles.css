@@ -106,7 +106,8 @@
   --glass-sheen: rgba(255, 255, 255, 0.2);
   --glass-shadow: rgba(45, 36, 32, 0.14);
   --refract-glow: rgba(255, 255, 255, 0.14);
-  --nav-chip-fill: rgba(255, 255, 255, 0.42);
+  --nav-chip-fill: rgba(255, 255, 255, 0.26);
+  --nav-chip-stroke: rgba(255, 255, 255, 0.8);
 }
 
 [data-theme="dark"][data-material="glass"] {
@@ -194,30 +195,16 @@ body {
   inset: -12%;
   z-index: -1;
   pointer-events: none;
+  /* Two broad, quiet orange glows: one high left, one low right. */
   background:
     radial-gradient(
-      36% 28% at 12% 4%,
-      color-mix(in srgb, var(--accent) 26%, transparent),
-      transparent 70%
+      58% 44% at 6% 2%,
+      color-mix(in srgb, #e78a3a 13%, transparent),
+      transparent 72%
     ),
     radial-gradient(
-      32% 24% at 88% 10%,
-      color-mix(in srgb, var(--hold) 20%, transparent),
-      transparent 70%
-    ),
-    radial-gradient(
-      24% 18% at 72% 58%,
-      color-mix(in srgb, var(--accent) 12%, transparent),
-      transparent 70%
-    ),
-    radial-gradient(
-      28% 22% at 16% 74%,
-      color-mix(in srgb, var(--hold) 12%, transparent),
-      transparent 70%
-    ),
-    radial-gradient(
-      46% 34% at 52% 104%,
-      color-mix(in srgb, #d2a017 20%, transparent),
+      62% 48% at 96% 100%,
+      color-mix(in srgb, #e78a3a 11%, transparent),
       transparent 74%
     );
 }
@@ -284,6 +271,8 @@ body {
   border-bottom-color: var(--glass-stroke);
   backdrop-filter: blur(12px) saturate(1.8);
   -webkit-backdrop-filter: blur(12px) saturate(1.8);
+  /* Same glass as the navbar: clear, refracting at its bottom rim. */
+  backdrop-filter: blur(2px) url(#lens-header) saturate(1.8);
 }
 
 /* Same centered column as .content: max width, then shared side padding. */
@@ -3058,9 +3047,6 @@ a.tile-show:focus-visible {
     var(--glass-fill);
   backdrop-filter: blur(20px) saturate(1.8);
   -webkit-backdrop-filter: blur(20px) saturate(1.8);
-  /* Chromium: clear glass with real refraction — content scrolling
-     under the bar bends at the rim like it does on iOS. */
-  backdrop-filter: blur(2px) url(#lens-nav) saturate(1.9);
   border: 1px solid var(--glass-stroke);
   box-shadow:
     inset 1.4px 1.4px 1px -1px var(--refract-hi),
@@ -3096,7 +3082,6 @@ a.tile-show:focus-visible {
   border: 1px solid var(--nav-chip-stroke);
   backdrop-filter: saturate(1.3);
   -webkit-backdrop-filter: saturate(1.3);
-  backdrop-filter: url(#lens-chip) saturate(1.3);
   box-shadow:
     inset 1.2px 1.2px 1px -1px var(--refract-hi),
     inset -1.2px -1.2px 1px -1px var(--refract-lo),
@@ -3158,6 +3143,28 @@ a.tile-show:focus-visible {
 
 .pill-tab[aria-selected="true"] {
   color: var(--accent);
+}
+
+/* Tabs flip to a light face when dark content slides in beneath their
+   patch of glass — sampled per tab in app.js, like iOS adaptive glass. */
+.pill-tab.on-dark {
+  color: rgba(255, 255, 255, 0.92);
+  text-shadow: 0 1px 5px rgba(0, 0, 0, 0.35);
+}
+
+.pill-tab.on-dark[aria-selected="true"] {
+  color: color-mix(in srgb, var(--accent) 45%, #fff);
+}
+
+/* —— Real refraction (glass material, Chromium) ——
+   The chrome bends what scrolls beneath it at the rim; browsers
+   without SVG backdrop filters keep the frost declared above. */
+[data-material="glass"] .pill-nav-inner {
+  backdrop-filter: blur(2px) url(#lens-nav) saturate(1.9);
+}
+
+[data-material="glass"] .pill-indicator {
+  backdrop-filter: url(#lens-chip) saturate(1.4);
 }
 
 .stats-hero,

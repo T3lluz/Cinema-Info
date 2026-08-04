@@ -660,8 +660,22 @@ async function init() {
     updateLiquidLenses();
   });
 
-  // Draw the refraction lenses once the navbar has its real size.
-  requestAnimationFrame(updateLiquidLenses);
+  // Draw the refraction lenses once the chrome has its real size, and
+  // redraw when it changes — the header grows and shrinks with the tab.
+  requestAnimationFrame(() => {
+    updateLiquidLenses();
+    updateNavContrast();
+    if ("ResizeObserver" in window) {
+      const ro = new ResizeObserver(() => updateLiquidLenses());
+      for (const [, selector] of LENS_TARGETS) {
+        const el = document.querySelector(selector);
+        if (el) ro.observe(el);
+      }
+    }
+  });
+
+  // What sits under the navbar changes as the page scrolls.
+  window.addEventListener("scroll", scheduleNavContrast, { passive: true });
 
   // Crossing the tablet threshold changes whether seat charts are folded
   // away. Only the day list draws them, so only it needs redrawing.
@@ -1181,6 +1195,7 @@ function liveBeat() {
   // half-typed password, and nothing on it moves by itself anyway.
   if (activeTab !== "settings") renderActiveView();
   markDoneDays();
+  scheduleNavContrast();
 
   beatJob("program", async () => {
     if (Date.now() - lastProgramAt < PROGRAM_RECHECK_MS) return;
@@ -1483,6 +1498,7 @@ function applyTheme(next) {
   root.dataset.theme = resolvedTheme();
   root.dataset.material = material;
   syncThemeChrome();
+  scheduleNavContrast();
 }
 
 function applyMaterial(next) {
@@ -1493,6 +1509,7 @@ function applyMaterial(next) {
   applyTheme._t = setTimeout(() => root.classList.remove("theme-anim"), 400);
   root.dataset.material = material;
   syncThemeChrome();
+  scheduleNavContrast();
 }
 
 /**
@@ -1557,14 +1574,17 @@ function liquidLensMap(w, h, r, bend, disp) {
   return canvas.toDataURL();
 }
 
-/** filter id → [element, bend width px, max displacement px]. */
+/** filter id → [element, bend width px, max displacement px, corner
+ * radius (undefined = capsule)]. The bend hugs the rim; displacement
+ * stays gentle so the glass reads curved rather than warped. */
 const LENS_TARGETS = [
-  ["lens-nav", ".pill-nav-inner", 20, 22],
-  ["lens-chip", ".pill-indicator", 12, 14],
+  ["lens-nav", ".pill-nav-inner", 12, 15],
+  ["lens-chip", ".pill-indicator", 9, 11],
+  ["lens-header", ".top", 12, 12, 0],
 ];
 
 function updateLiquidLenses() {
-  for (const [id, selector, bend, disp] of LENS_TARGETS) {
+  for (const [id, selector, bend, disp, radius] of LENS_TARGETS) {
     const filter = document.getElementById(id);
     const el = document.querySelector(selector);
     if (!filter || !el) continue;
@@ -1574,19 +1594,126 @@ function updateLiquidLenses() {
     const size = `${w}x${h}`;
     if (filter.dataset.size === size) continue;
     filter.dataset.size = size;
-    const r = Math.min(w, h) / 2; // capsule
+    const r = radius != null ? radius : Math.min(w, h) / 2; // capsule
     filter.setAttribute("x", "0");
     filter.setAttribute("y", "0");
     filter.setAttribute("width", String(w));
     filter.setAttribute("height", String(h));
     const image = filter.querySelector("feImage");
-    image.setAttribute("href", liquidLensMap(w, h, r, Math.min(bend, r), disp));
+    image.setAttribute("href", liquidLensMap(w, h, r, bend, disp));
     image.setAttribute("x", "0");
     image.setAttribute("y", "0");
     image.setAttribute("width", String(w));
     image.setAttribute("height", String(h));
-    filter.querySelector("feDisplacementMap").setAttribute("scale", String(disp * 2));
+    filter
+      .querySelector("feDisplacementMap")
+      .setAttribute("scale", String(disp * 2));
   }
+}
+
+/**
+ * Adaptive tab contrast, the way iOS glass does it: each navbar tab
+ * looks at what the page is showing underneath it and flips to a light
+ * face the moment its patch of backdrop turns dark — a poster, a red
+ * accent block — so the icons always read through the clear glass.
+ */
+function parseCssColor(str) {
+  if (!str) return null;
+  let m =
+    /^rgba?\(\s*([\d.]+)\s*,\s*([\d.]+)\s*,\s*([\d.]+)(?:\s*,\s*([\d.]+))?\s*\)$/.exec(
+      str
+    );
+  if (m) {
+    return { r: +m[1], g: +m[2], b: +m[3], a: m[4] == null ? 1 : +m[4] };
+  }
+  m =
+    /^color\(srgb\s+([\d.-]+)\s+([\d.-]+)\s+([\d.-]+)(?:\s*\/\s*([\d.]+%?))?\)$/.exec(
+      str
+    );
+  if (m) {
+    const a =
+      m[4] == null
+        ? 1
+        : m[4].endsWith("%")
+          ? parseFloat(m[4]) / 100
+          : +m[4];
+    return { r: +m[1] * 255, g: +m[2] * 255, b: +m[3] * 255, a };
+  }
+  return null;
+}
+
+/** Average poster: film one-sheets skew dark, so an image reads as dark. */
+const POSTER_GUESS = { r: 70, g: 64, b: 62, a: 1 };
+
+/** The colour the page shows at a point, compositing translucent layers
+ * bottom-up and skipping the navbar itself. */
+function backdropColorAt(x, y) {
+  const layers = [];
+  for (const el of document.elementsFromPoint(x, y)) {
+    if (el === document.documentElement || el.closest(".pill-nav")) continue;
+    if (el.tagName === "IMG") {
+      layers.push(POSTER_GUESS);
+      break;
+    }
+    const color = parseCssColor(getComputedStyle(el).backgroundColor);
+    if (color && color.a > 0.01) {
+      layers.push(color);
+      if (color.a >= 0.99) break;
+    }
+  }
+  let base = parseCssColor(
+    getComputedStyle(document.documentElement).backgroundColor
+  ) || { r: 239, g: 236, b: 232 };
+  let { r, g, b } = base;
+  for (let i = layers.length - 1; i >= 0; i--) {
+    const c = layers[i];
+    r = c.r * c.a + r * (1 - c.a);
+    g = c.g * c.a + g * (1 - c.a);
+    b = c.b * c.a + b * (1 - c.a);
+  }
+  return { r, g, b };
+}
+
+function luminanceOf(c) {
+  return (0.2126 * c.r + 0.7152 * c.g + 0.0722 * c.b) / 255;
+}
+
+function updateNavContrast() {
+  const shell = document.querySelector(".pill-nav-inner");
+  if (!shell) return;
+  // The shell's own translucent fill sits between the page and the
+  // icons, so it takes part in what the eye actually sees.
+  const fill = parseCssColor(getComputedStyle(shell).backgroundColor);
+  document.querySelectorAll(".pill-tab").forEach((btn) => {
+    const rect = btn.getBoundingClientRect();
+    if (!rect.width) return;
+    let c = backdropColorAt(
+      rect.left + rect.width / 2,
+      rect.top + rect.height / 2
+    );
+    if (fill && fill.a > 0) {
+      c = {
+        r: fill.r * fill.a + c.r * (1 - fill.a),
+        g: fill.g * fill.a + c.g * (1 - fill.a),
+        b: fill.b * fill.a + c.b * (1 - fill.a),
+      };
+    }
+    // Hysteresis keeps a tab from flickering on a boundary colour.
+    const wasDark = btn.classList.contains("on-dark");
+    btn.classList.toggle(
+      "on-dark",
+      luminanceOf(c) < (wasDark ? 0.5 : 0.42)
+    );
+  });
+}
+
+function scheduleNavContrast() {
+  if (scheduleNavContrast._queued) return;
+  scheduleNavContrast._queued = true;
+  requestAnimationFrame(() => {
+    scheduleNavContrast._queued = false;
+    updateNavContrast();
+  });
 }
 
 /** Keep the browser/PWA chrome the same colour as the page behind it. */
@@ -1798,6 +1925,8 @@ async function setActiveTab(tab, { skipRender = false } = {}) {
     await ensureAllEnriched();
     renderStats();
   } else if (tab === "settings") renderSettings();
+
+  scheduleNavContrast();
 }
 
 async function load({ forceLive = false, silent = false, ifChanged = false } = {}) {
