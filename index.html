@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="nb" data-theme="light">
+<html lang="nb" data-theme="light" data-material="subtle">
   <head>
     <meta charset="UTF-8" />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1, viewport-fit=cover"
     />
-    <meta name="theme-color" content="#c41e2a" />
+    <meta name="theme-color" content="#efece8" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="description" content="Buen kino – program, tider og solgte billetter" />
@@ -21,20 +21,58 @@
     <meta property="og:image" content="https://t3lluz.github.io/Cinema-Info/icons/icon-512.png" />
     <meta name="twitter:card" content="summary" />
     <title>Buen kino</title>
-    <link rel="stylesheet" href="styles.css?v=78" />
+    <link rel="stylesheet" href="styles.css?v=82" />
     <script>
+      // Paint the saved theme + material before the first frame, so a
+      // dark or glass visitor never sees a light flash. "system"/unset
+      // follows the device.
       try {
         var p = JSON.parse(localStorage.getItem("cinemaInfoPrefs") || "{}");
-        if (p.theme === "dark") {
-          document.documentElement.dataset.theme = "dark";
-          var tc = document.querySelector('meta[name="theme-color"]');
-          if (tc) tc.content = "#151312";
+        var theme =
+          p.theme === "dark" || p.theme === "light"
+            ? p.theme
+            : window.matchMedia &&
+                window.matchMedia("(prefers-color-scheme: dark)").matches
+              ? "dark"
+              : "light";
+        var material = p.material === "glass" ? "glass" : "subtle";
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.dataset.material = material;
+        var tc = document.querySelector('meta[name="theme-color"]');
+        if (tc) {
+          tc.content =
+            theme === "dark"
+              ? material === "glass"
+                ? "#101014"
+                : "#131110"
+              : material === "glass"
+                ? "#eceaf1"
+                : "#efece8";
         }
         if (p.lang === "en") document.documentElement.lang = "en";
       } catch (e) {}
     </script>
   </head>
   <body data-tab="day">
+    <!-- Liquid-glass lenses: app.js draws a displacement map matching
+         each element's exact size and corner radius onto these filters,
+         so Chromium refracts the backdrop at the rim like curved glass.
+         Safari/Firefox fall back to the plain blur declared first in
+         CSS. Scale stays 0 (no-op) until the map is drawn. -->
+    <svg class="liquid-defs" width="0" height="0" aria-hidden="true" focusable="false">
+      <filter id="lens-nav" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+        <feImage result="map" preserveAspectRatio="none" />
+        <feDisplacementMap in="SourceGraphic" in2="map" scale="0" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+      <filter id="lens-chip" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+        <feImage result="map" preserveAspectRatio="none" />
+        <feDisplacementMap in="SourceGraphic" in2="map" scale="0" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+      <filter id="lens-header" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+        <feImage result="map" preserveAspectRatio="none" />
+        <feDisplacementMap in="SourceGraphic" in2="map" scale="0" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+    </svg>
     <header class="top">
       <div class="top-row">
         <div class="brand">
@@ -132,6 +170,6 @@
       </div>
     </nav>
 
-    <script src="app.js?v=51" type="module"></script>
+    <script src="app.js?v=54" type="module"></script>
   </body>
 </html>

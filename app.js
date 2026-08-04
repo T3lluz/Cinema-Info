@@ -167,9 +167,21 @@ const I18N = {
     language: "Språk",
     languageHint: "Velg språk for appen",
     theme: "Tema",
-    themeHint: "Lys eller mørk modus",
+    themeHint: "Lys, mørk eller følg enheten",
     themeLight: "Lys",
     themeDark: "Mørk",
+    themeSystem: "Auto",
+    material: "Stil",
+    materialHint: "Subtil gjennomskinnelighet eller flytende glass",
+    materialSubtle: "Subtil",
+    materialGlass: "Glass",
+    directorLabel: "Regi",
+    diceLabel: "Terningkast {avg}",
+    diceAria: "Terningkast {avg} av 6, basert på {n} anmeldelser",
+    "showType.Norgespremiere": "Norgespremiere",
+    "showType.Dagkino": "Dagkino",
+    "showType.Seniorkino": "Seniorkino",
+    kinoklubb: "Kinoklubb",
     seatNumbers: "Setenumre",
     seatNumbersHint: "Vis plassnummeret inne i hvert sete på salkartet",
     seatNumbersOn: "Vis",
@@ -309,9 +321,21 @@ const I18N = {
     language: "Language",
     languageHint: "Choose app language",
     theme: "Theme",
-    themeHint: "Light or dark mode",
+    themeHint: "Light, dark, or follow the device",
     themeLight: "Light",
     themeDark: "Dark",
+    themeSystem: "Auto",
+    material: "Style",
+    materialHint: "Subtle translucency or full liquid glass",
+    materialSubtle: "Subtle",
+    materialGlass: "Glass",
+    directorLabel: "Director",
+    diceLabel: "Dice {avg}",
+    diceAria: "Dice rating {avg} of 6, based on {n} reviews",
+    "showType.Norgespremiere": "Norway premiere",
+    "showType.Dagkino": "Daytime cinema",
+    "showType.Seniorkino": "Senior cinema",
+    kinoklubb: "Film club",
     seatNumbers: "Seat numbers",
     seatNumbersHint: "Show the seat number inside each square on the seat map",
     seatNumbersOn: "Show",
@@ -394,6 +418,9 @@ const ICONS = {
     "m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v1.99h11.17A15.4 15.4 0 0 1 9 11.35 15.6 15.6 0 0 1 6.69 8h-2a17.6 17.6 0 0 0 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04ZM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12Zm-2.62 7 1.62-4.33L19.12 17h-3.24Z",
   theme:
     "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2Zm0 18V4a8 8 0 0 1 0 16Z",
+  // A droplet — the liquid-glass material picker.
+  material:
+    "M12 2.4c.3 0 .58.14.76.38C14.6 5.2 18.6 10.6 18.6 14a6.6 6.6 0 1 1-13.2 0c0-3.4 4-8.8 5.84-11.22.18-.24.46-.38.76-.38Zm-2.9 11.2a.9.9 0 0 0-.9.9 3.8 3.8 0 0 0 3.8 3.8.9.9 0 1 0 0-1.8 2 2 0 0 1-2-2 .9.9 0 0 0-.9-.9Z",
   account:
     "M12.65 10A5.99 5.99 0 0 0 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6a5.99 5.99 0 0 0 5.65-4H17v4h4v-4h2v-4H12.65ZM7 14a2 2 0 1 1 0-4 2 2 0 0 1 0 4Z",
   // A hall seen from above: the screen, then rows of seats.
@@ -471,7 +498,11 @@ let selectedDay = "";
 let enrichToken = 0;
 let activeTab = "day";
 let lang = "nb";
-let theme = "light";
+/** "light" | "dark" | "system" — "system" follows the device. */
+let theme = "system";
+/** "subtle" (translucent blur chrome) | "glass" (full liquid glass). */
+let material = "subtle";
+const DARK_MQ = window.matchMedia("(prefers-color-scheme: dark)");
 /** Digits painted on each seat square in the hall chart. */
 let showSeatNumbers = true;
 let enrichedAll = false;
@@ -569,10 +600,18 @@ async function init() {
   const wanted = new URLSearchParams(location.search).get("tab");
   activeTab = TAB_ORDER.includes(wanted) ? wanted : prefs.activeTab || "day";
   lang = prefs.lang === "en" ? "en" : "nb";
-  theme = prefs.theme === "dark" ? "dark" : "light";
+  theme = ["light", "dark", "system"].includes(prefs.theme)
+    ? prefs.theme
+    : "system";
+  material = prefs.material === "glass" ? "glass" : "subtle";
   showSeatNumbers = prefs.showSeatNumbers !== false;
 
   applyTheme(theme);
+  // A device flipping between light and dark mid-session should carry
+  // the app with it while the theme is on auto.
+  DARK_MQ.addEventListener?.("change", () => {
+    if (theme === "system") applyTheme(theme);
+  });
   applyLanguage();
   setActiveTab(activeTab, { skipRender: true });
 
@@ -618,7 +657,25 @@ async function init() {
   window.addEventListener("resize", () => {
     movePillIndicator(activeTab, { instant: true });
     moveDayIndicator({ instant: true });
+    updateLiquidLenses();
   });
+
+  // Draw the refraction lenses once the chrome has its real size, and
+  // redraw when it changes — the header grows and shrinks with the tab.
+  requestAnimationFrame(() => {
+    updateLiquidLenses();
+    updateNavContrast();
+    if ("ResizeObserver" in window) {
+      const ro = new ResizeObserver(() => updateLiquidLenses());
+      for (const [, selector] of LENS_TARGETS) {
+        const el = document.querySelector(selector);
+        if (el) ro.observe(el);
+      }
+    }
+  });
+
+  // What sits under the navbar changes as the page scrolls.
+  window.addEventListener("scroll", scheduleNavContrast, { passive: true });
 
   // Crossing the tablet threshold changes whether seat charts are folded
   // away. Only the day list draws them, so only it needs redrawing.
@@ -1138,6 +1195,7 @@ function liveBeat() {
   // half-typed password, and nothing on it moves by itself anyway.
   if (activeTab !== "settings") renderActiveView();
   markDoneDays();
+  scheduleNavContrast();
 
   beatJob("program", async () => {
     if (Date.now() - lastProgramAt < PROGRAM_RECHECK_MS) return;
@@ -1293,6 +1351,7 @@ function savePrefs() {
       activeTab,
       lang,
       theme,
+      material,
       showSeatNumbers,
     })
   );
@@ -1423,6 +1482,12 @@ function mergeShows(snapshotShows) {
   return [...byId.values()].sort((a, b) => a.start - b.start);
 }
 
+/** The mode actually painted — "system" resolves against the device. */
+function resolvedTheme() {
+  if (theme === "system") return DARK_MQ.matches ? "dark" : "light";
+  return theme;
+}
+
 function applyTheme(next) {
   theme = next;
   // Cross-fade colors while the theme flips, then drop the hook.
@@ -1430,13 +1495,240 @@ function applyTheme(next) {
   root.classList.add("theme-anim");
   clearTimeout(applyTheme._t);
   applyTheme._t = setTimeout(() => root.classList.remove("theme-anim"), 400);
-  document.documentElement.dataset.theme = theme;
+  root.dataset.theme = resolvedTheme();
+  root.dataset.material = material;
+  syncThemeChrome();
+  scheduleNavContrast();
+}
+
+function applyMaterial(next) {
+  material = next === "glass" ? "glass" : "subtle";
+  const root = document.documentElement;
+  root.classList.add("theme-anim");
+  clearTimeout(applyTheme._t);
+  applyTheme._t = setTimeout(() => root.classList.remove("theme-anim"), 400);
+  root.dataset.material = material;
+  syncThemeChrome();
+  scheduleNavContrast();
+}
+
+/**
+ * Liquid-glass refraction. Chromium can refract an element's backdrop
+ * through an SVG displacement map (backdrop-filter: url(#…)); for the
+ * bend to hug the rim like real curved glass, the map must match the
+ * element's exact size and corner radius. It is drawn on a canvas from
+ * the rounded-rect's signed distance field: neutral in the middle, and
+ * within `bend` px of the rim the backdrop is sampled inward along the
+ * edge normal — the magnifying bend iOS glass has. Safari and Firefox
+ * ignore the url() declaration and keep the plain frosted fallback.
+ */
+function liquidLensMap(w, h, r, bend, disp) {
+  const canvas = document.createElement("canvas");
+  canvas.width = w;
+  canvas.height = h;
+  const ctx = canvas.getContext("2d");
+  const img = ctx.createImageData(w, h);
+  const data = img.data;
+  const hw = w / 2;
+  const hh = h / 2;
+  for (let y = 0; y < h; y++) {
+    for (let x = 0; x < w; x++) {
+      const px = x + 0.5 - hw;
+      const py = y + 0.5 - hh;
+      // Signed distance to the rounded rect (negative inside).
+      const qx = Math.abs(px) - (hw - r);
+      const qy = Math.abs(py) - (hh - r);
+      const ax = Math.max(qx, 0);
+      const ay = Math.max(qy, 0);
+      const corner = Math.hypot(ax, ay);
+      const d = corner + Math.min(Math.max(qx, qy), 0) - r;
+      // 0 deep inside → 1 at the rim.
+      const t = Math.min(Math.max(1 + d / bend, 0), 1);
+      let ox = 0;
+      let oy = 0;
+      if (t > 0) {
+        let nx = 0;
+        let ny = 0;
+        if (qx > 0 && qy > 0) {
+          const len = corner || 1;
+          nx = (ax / len) * Math.sign(px);
+          ny = (ay / len) * Math.sign(py);
+        } else if (qx > qy) {
+          nx = Math.sign(px);
+        } else {
+          ny = Math.sign(py);
+        }
+        const e = t * t * (3 - 2 * t);
+        // Sample inward from the rim → the pane magnifies like a lens.
+        ox = -nx * e;
+        oy = -ny * e;
+      }
+      const i = (y * w + x) * 4;
+      data[i] = Math.round(128 + ox * 127);
+      data[i + 1] = Math.round(128 + oy * 127);
+      data[i + 2] = 128;
+      data[i + 3] = 255;
+    }
+  }
+  ctx.putImageData(img, 0, 0);
+  return canvas.toDataURL();
+}
+
+/** filter id → [element, bend width px, max displacement px, corner
+ * radius (undefined = capsule)]. The bend hugs the rim; displacement
+ * stays gentle so the glass reads curved rather than warped. */
+const LENS_TARGETS = [
+  ["lens-nav", ".pill-nav-inner", 12, 15],
+  ["lens-chip", ".pill-indicator", 9, 11],
+  ["lens-header", ".top", 12, 12, 0],
+];
+
+function updateLiquidLenses() {
+  for (const [id, selector, bend, disp, radius] of LENS_TARGETS) {
+    const filter = document.getElementById(id);
+    const el = document.querySelector(selector);
+    if (!filter || !el) continue;
+    const w = Math.round(el.offsetWidth);
+    const h = Math.round(el.offsetHeight);
+    if (!w || !h) continue;
+    const size = `${w}x${h}`;
+    if (filter.dataset.size === size) continue;
+    filter.dataset.size = size;
+    const r = radius != null ? radius : Math.min(w, h) / 2; // capsule
+    filter.setAttribute("x", "0");
+    filter.setAttribute("y", "0");
+    filter.setAttribute("width", String(w));
+    filter.setAttribute("height", String(h));
+    const image = filter.querySelector("feImage");
+    image.setAttribute("href", liquidLensMap(w, h, r, bend, disp));
+    image.setAttribute("x", "0");
+    image.setAttribute("y", "0");
+    image.setAttribute("width", String(w));
+    image.setAttribute("height", String(h));
+    filter
+      .querySelector("feDisplacementMap")
+      .setAttribute("scale", String(disp * 2));
+  }
+}
+
+/**
+ * Adaptive tab contrast, the way iOS glass does it: each navbar tab
+ * looks at what the page is showing underneath it and flips to a light
+ * face the moment its patch of backdrop turns dark — a poster, a red
+ * accent block — so the icons always read through the clear glass.
+ */
+function parseCssColor(str) {
+  if (!str) return null;
+  let m =
+    /^rgba?\(\s*([\d.]+)\s*,\s*([\d.]+)\s*,\s*([\d.]+)(?:\s*,\s*([\d.]+))?\s*\)$/.exec(
+      str
+    );
+  if (m) {
+    return { r: +m[1], g: +m[2], b: +m[3], a: m[4] == null ? 1 : +m[4] };
+  }
+  m =
+    /^color\(srgb\s+([\d.-]+)\s+([\d.-]+)\s+([\d.-]+)(?:\s*\/\s*([\d.]+%?))?\)$/.exec(
+      str
+    );
+  if (m) {
+    const a =
+      m[4] == null
+        ? 1
+        : m[4].endsWith("%")
+          ? parseFloat(m[4]) / 100
+          : +m[4];
+    return { r: +m[1] * 255, g: +m[2] * 255, b: +m[3] * 255, a };
+  }
+  return null;
+}
+
+/** Average poster: film one-sheets skew dark, so an image reads as dark. */
+const POSTER_GUESS = { r: 70, g: 64, b: 62, a: 1 };
+
+/** The colour the page shows at a point, compositing translucent layers
+ * bottom-up and skipping the navbar itself. */
+function backdropColorAt(x, y) {
+  const layers = [];
+  for (const el of document.elementsFromPoint(x, y)) {
+    if (el === document.documentElement || el.closest(".pill-nav")) continue;
+    if (el.tagName === "IMG") {
+      layers.push(POSTER_GUESS);
+      break;
+    }
+    const color = parseCssColor(getComputedStyle(el).backgroundColor);
+    if (color && color.a > 0.01) {
+      layers.push(color);
+      if (color.a >= 0.99) break;
+    }
+  }
+  let base = parseCssColor(
+    getComputedStyle(document.documentElement).backgroundColor
+  ) || { r: 239, g: 236, b: 232 };
+  let { r, g, b } = base;
+  for (let i = layers.length - 1; i >= 0; i--) {
+    const c = layers[i];
+    r = c.r * c.a + r * (1 - c.a);
+    g = c.g * c.a + g * (1 - c.a);
+    b = c.b * c.a + b * (1 - c.a);
+  }
+  return { r, g, b };
+}
+
+function luminanceOf(c) {
+  return (0.2126 * c.r + 0.7152 * c.g + 0.0722 * c.b) / 255;
+}
+
+function updateNavContrast() {
+  const shell = document.querySelector(".pill-nav-inner");
+  if (!shell) return;
+  // The shell's own translucent fill sits between the page and the
+  // icons, so it takes part in what the eye actually sees.
+  const fill = parseCssColor(getComputedStyle(shell).backgroundColor);
+  document.querySelectorAll(".pill-tab").forEach((btn) => {
+    const rect = btn.getBoundingClientRect();
+    if (!rect.width) return;
+    let c = backdropColorAt(
+      rect.left + rect.width / 2,
+      rect.top + rect.height / 2
+    );
+    if (fill && fill.a > 0) {
+      c = {
+        r: fill.r * fill.a + c.r * (1 - fill.a),
+        g: fill.g * fill.a + c.g * (1 - fill.a),
+        b: fill.b * fill.a + c.b * (1 - fill.a),
+      };
+    }
+    // Hysteresis keeps a tab from flickering on a boundary colour.
+    const wasDark = btn.classList.contains("on-dark");
+    btn.classList.toggle(
+      "on-dark",
+      luminanceOf(c) < (wasDark ? 0.5 : 0.42)
+    );
+  });
+}
+
+function scheduleNavContrast() {
+  if (scheduleNavContrast._queued) return;
+  scheduleNavContrast._queued = true;
+  requestAnimationFrame(() => {
+    scheduleNavContrast._queued = false;
+    updateNavContrast();
+  });
+}
+
+/** Keep the browser/PWA chrome the same colour as the page behind it. */
+function syncThemeChrome() {
+  const dark = resolvedTheme() === "dark";
+  const colors = {
+    light: material === "glass" ? "#eceaf1" : "#efece8",
+    dark: material === "glass" ? "#101014" : "#131110",
+  };
   const meta = document.querySelector('meta[name="theme-color"]');
-  if (meta) meta.content = theme === "dark" ? "#151312" : "#c41e2a";
+  if (meta) meta.content = dark ? colors.dark : colors.light;
   const bar = document.querySelector(
     'meta[name="apple-mobile-web-app-status-bar-style"]'
   );
-  if (bar) bar.content = theme === "dark" ? "black-translucent" : "default";
+  if (bar) bar.content = dark ? "black-translucent" : "default";
 }
 
 function applyLanguage() {
@@ -1633,6 +1925,8 @@ async function setActiveTab(tab, { skipRender = false } = {}) {
     await ensureAllEnriched();
     renderStats();
   } else if (tab === "settings") renderSettings();
+
+  scheduleNavContrast();
 }
 
 async function load({ forceLive = false, silent = false, ifChanged = false } = {}) {
@@ -3150,6 +3444,69 @@ function previewSeatChart(show) {
   };
 }
 
+/**
+ * Badges for special programming — premiere nights, daytime and senior
+ * screenings, Kinoklubb — read straight out of Buen's feed.
+ */
+function specialBadges(show) {
+  const bits = [];
+  if (show.showType) {
+    const key = `showType.${show.showType}`;
+    const label = t(key);
+    const cls = /premiere/i.test(show.showType) ? "premiere" : "special";
+    bits.push(
+      `<span class="badge ${cls}">${escapeHtml(
+        label === key ? show.showType : label
+      )}</span>`
+    );
+  }
+  if (show.kinoklubb) {
+    bits.push(
+      `<span class="badge special">${escapeHtml(t("kinoklubb"))}</span>`
+    );
+  }
+  return bits.join("");
+}
+
+/** Average press dice rating (terningkast 1–6), with who said what. */
+function diceInfo(movie) {
+  const reviews = Array.isArray(movie.reviews) ? movie.reviews : [];
+  if (!reviews.length) return null;
+  const avg = reviews.reduce((n, r) => n + (Number(r.dice) || 0), 0) / reviews.length;
+  const rounded = Math.round(avg * 10) / 10;
+  return {
+    value: Math.max(1, Math.min(6, Math.round(avg))),
+    label: rounded.toLocaleString(lang === "en" ? "en-GB" : "nb-NO"),
+    count: reviews.length,
+    detail: reviews.map((r) => `${r.who}: ${r.dice}`).join(" · "),
+  };
+}
+
+/** A die face with the right number of pips, drawn inline. */
+function diceGlyph(n, className = "dice-glyph") {
+  const P = {
+    tl: [7.6, 7.6],
+    tr: [16.4, 7.6],
+    ml: [7.6, 12],
+    mr: [16.4, 12],
+    c: [12, 12],
+    bl: [7.6, 16.4],
+    br: [16.4, 16.4],
+  };
+  const sets = {
+    1: ["c"],
+    2: ["tl", "br"],
+    3: ["tl", "c", "br"],
+    4: ["tl", "tr", "bl", "br"],
+    5: ["tl", "tr", "c", "bl", "br"],
+    6: ["tl", "tr", "ml", "mr", "bl", "br"],
+  };
+  const pips = (sets[n] || sets[6])
+    .map((k) => `<circle cx="${P[k][0]}" cy="${P[k][1]}" r="2"/>`)
+    .join("");
+  return `<svg class="${className}" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><g fill="currentColor">${pips}</g></svg>`;
+}
+
 function renderShowCard(show, now, index = 0, opts = {}) {
   const status = statusOf(show, now);
   // Soon keeps a small pill in the meta line; live/done read from the
@@ -3167,6 +3524,7 @@ function renderShowCard(show, now, index = 0, opts = {}) {
     show.age ? `<span class="dot">${escapeHtml(formatAge(show.age))}</span>` : "",
     `<span class="dot">${escapeHtml(duration)}</span>`,
     badge,
+    specialBadges(show),
   ]
     .filter(Boolean)
     .join("");
@@ -3329,12 +3687,20 @@ function groupMovies() {
         runningLabel: show.runningLabel,
         runningMinutes: show.runningMinutes,
         tags: show.tags || [],
+        genres: show.genres || null,
+        director: show.director || null,
+        reviews: show.reviews || null,
         shows: [],
       });
     }
     const movie = map.get(key);
     movie.shows.push(show);
     if (!movie.posterUrl && show.posterUrl) movie.posterUrl = show.posterUrl;
+    // Older history entries predate these fields; take them from any
+    // showing of the same film that has them.
+    if (!movie.genres && show.genres) movie.genres = show.genres;
+    if (!movie.director && show.director) movie.director = show.director;
+    if (!movie.reviews && show.reviews) movie.reviews = show.reviews;
   }
 
   const now = new Date();
@@ -3406,6 +3772,23 @@ function renderMovieTile(movie, now, index = 0) {
 
   const progress = doneProgress(movie.shows, now);
 
+  const dice = diceInfo(movie);
+  const diceBadge = dice
+    ? `<span class="dice-badge" role="img" title="${escapeHtml(
+        dice.detail
+      )}" aria-label="${escapeHtml(
+        t("diceAria", { avg: dice.label, n: dice.count })
+      )}">${diceGlyph(dice.value)}${escapeHtml(dice.label)}</span>`
+    : "";
+
+  const credits = [
+    ...(Array.isArray(movie.genres) ? movie.genres : []),
+    movie.director ? `${t("directorLabel")}: ${movie.director}` : "",
+  ]
+    .filter(Boolean)
+    .map((x) => escapeHtml(String(x)))
+    .join(" · ");
+
   const times = movie.shows
     .map((show) => {
       const status = statusOf(show, now);
@@ -3447,9 +3830,11 @@ function renderMovieTile(movie, now, index = 0) {
       <div class="movie-tile-body">
         <div class="movie-tile-head">
           <h3 class="movie-tile-title">${escapeHtml(movie.title)}</h3>
+          ${diceBadge}
           ${doneTag(movie.shows, { allLabel: "done", now })}
         </div>
         <p class="movie-tile-meta">${meta}</p>
+        ${credits ? `<p class="movie-tile-credits">${credits}</p>` : ""}
         <div class="tile-shows">${times}</div>
       </div>
     </article>
@@ -3720,6 +4105,19 @@ function renderSettings() {
         <span class="seg-indicator" aria-hidden="true"></span>
         <button type="button" class="seg-btn" data-theme-opt="light" aria-pressed="${theme === "light"}">${escapeHtml(t("themeLight"))}</button>
         <button type="button" class="seg-btn" data-theme-opt="dark" aria-pressed="${theme === "dark"}">${escapeHtml(t("themeDark"))}</button>
+        <button type="button" class="seg-btn" data-theme-opt="system" aria-pressed="${theme === "system"}">${escapeHtml(t("themeSystem"))}</button>
+      </div>
+    </section>
+
+    <section class="settings-section">
+      <div class="settings-head">
+        <h3>${icon("material", "panel-icon")}${escapeHtml(t("material"))}</h3>
+        <p>${escapeHtml(t("materialHint"))}</p>
+      </div>
+      <div class="segmented" role="group" aria-label="${escapeHtml(t("material"))}">
+        <span class="seg-indicator" aria-hidden="true"></span>
+        <button type="button" class="seg-btn" data-material-opt="subtle" aria-pressed="${material === "subtle"}">${escapeHtml(t("materialSubtle"))}</button>
+        <button type="button" class="seg-btn" data-material-opt="glass" aria-pressed="${material === "glass"}">${escapeHtml(t("materialGlass"))}</button>
       </div>
     </section>
 
@@ -3786,9 +4184,19 @@ function renderSettings() {
 
   els.settingsContent.querySelectorAll("[data-theme-opt]").forEach((btn) => {
     btn.addEventListener("click", () => {
-      const next = btn.dataset.themeOpt === "dark" ? "dark" : "light";
+      const next = btn.dataset.themeOpt;
       if (next === theme) return;
       applyTheme(next);
+      savePrefs();
+      segSelect(btn);
+    });
+  });
+
+  els.settingsContent.querySelectorAll("[data-material-opt]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const next = btn.dataset.materialOpt === "glass" ? "glass" : "subtle";
+      if (next === material) return;
+      applyMaterial(next);
       savePrefs();
       segSelect(btn);
     });
