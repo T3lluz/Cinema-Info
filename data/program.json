@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-04T21:36:17.380Z",
+  "updatedAt": "2026-08-04T23:33:47.425Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -1762,9 +1762,9 @@
       "promoterId": "202",
       "sold": 14,
       "eventStatus": "ok",
-      "reserved": 0,
+      "reserved": 1,
       "capacity": 110,
-      "available": 96
+      "available": 95
     },
     {
       "id": "EDI20240688-2026-08-05T20:00:00-Storsal",
