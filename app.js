@@ -1579,7 +1579,9 @@ function liquidLensMap(w, h, r, bend, disp) {
  * stays gentle so the glass reads curved rather than warped. */
 const LENS_TARGETS = [
   ["lens-nav", ".pill-nav-inner", 12, 15],
-  ["lens-chip", ".pill-indicator", 9, 11],
+  /* Slightly stronger bend than the nav shell — a pebble magnifies
+     more at its curved rim than a flat pane does. */
+  ["lens-chip", ".pill-indicator", 11, 14],
   ["lens-header", ".top", 12, 12, 0],
 ];
 

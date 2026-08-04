@@ -34,12 +34,13 @@
   --nav-shadow:
     0 12px 32px rgba(22, 20, 18, 0.16),
     0 2px 8px rgba(22, 20, 18, 0.08);
-  /* The floating selection lens inside the navbar. */
-  --nav-chip-fill: rgba(255, 255, 255, 0.78);
-  --nav-chip-stroke: rgba(255, 255, 255, 0.85);
+  /* The floating selection pebble inside the navbar — shape from
+     specular rim + soft lift, never a stroked outline. */
+  --nav-chip-fill: rgba(255, 255, 255, 0.42);
   --nav-chip-shadow:
-    0 4px 12px rgba(22, 20, 18, 0.16),
-    0 1px 3px rgba(22, 20, 18, 0.1);
+    0 1px 0 rgba(255, 255, 255, 0.55),
+    0 6px 18px rgba(22, 20, 18, 0.14),
+    0 2px 5px rgba(22, 20, 18, 0.08);
   --font: "Segoe UI", system-ui, -apple-system, sans-serif;
   --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   --safe-top: env(safe-area-inset-top, 0px);
@@ -78,11 +79,11 @@
   --nav-shadow:
     0 12px 32px rgba(0, 0, 0, 0.5),
     0 2px 8px rgba(0, 0, 0, 0.3);
-  --nav-chip-fill: rgba(255, 255, 255, 0.13);
-  --nav-chip-stroke: rgba(255, 255, 255, 0.16);
+  --nav-chip-fill: rgba(255, 255, 255, 0.1);
   --nav-chip-shadow:
-    0 5px 16px rgba(0, 0, 0, 0.4),
-    0 2px 4px rgba(0, 0, 0, 0.25);
+    0 1px 0 rgba(255, 255, 255, 0.14),
+    0 8px 22px rgba(0, 0, 0, 0.42),
+    0 2px 6px rgba(0, 0, 0, 0.28);
 }
 
 /* —— Materials ——
@@ -106,8 +107,7 @@
   --glass-sheen: rgba(255, 255, 255, 0.2);
   --glass-shadow: rgba(45, 36, 32, 0.14);
   --refract-glow: rgba(255, 255, 255, 0.14);
-  --nav-chip-fill: rgba(255, 255, 255, 0.26);
-  --nav-chip-stroke: rgba(255, 255, 255, 0.8);
+  --nav-chip-fill: rgba(255, 255, 255, 0.22);
 }
 
 [data-theme="dark"][data-material="glass"] {
@@ -124,7 +124,7 @@
   --glass-sheen: rgba(255, 255, 255, 0.05);
   --glass-shadow: rgba(0, 0, 0, 0.45);
   --refract-glow: rgba(255, 255, 255, 0.04);
-  --nav-chip-fill: rgba(255, 255, 255, 0.1);
+  --nav-chip-fill: rgba(255, 255, 255, 0.09);
 }
 
 * {
@@ -3067,24 +3067,32 @@ a.tile-show:focus-visible {
   z-index: 0;
 }
 
-/* The selection lens: a raised drop of the same glass. Chromium gets
-   true magnification through the droplet; elsewhere a translucent fill
-   + specular edge carries the shape. */
+/* Selection pebble: a borderless liquid-glass droplet. Shape comes from
+   the specular rim and soft lift — no stroked outline. Chromium also
+   refracts the backdrop at the rim via #lens-chip; Safari/Firefox keep
+   the frost declared on -webkit-backdrop-filter. */
 .pill-indicator {
   position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
+  border: 0;
   border-radius: 999px;
   background:
-    linear-gradient(to bottom, var(--glass-sheen), transparent 60%),
+    linear-gradient(
+      160deg,
+      var(--glass-sheen) 0%,
+      transparent 38%
+    ),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.22), transparent 58%),
     var(--nav-chip-fill);
-  border: 1px solid var(--nav-chip-stroke);
-  backdrop-filter: saturate(1.3);
-  -webkit-backdrop-filter: saturate(1.3);
+  /* Blur first = fallback; url(#lens-chip) adds rim bend in Chromium. */
+  backdrop-filter: blur(2px) url(#lens-chip) saturate(1.7);
+  -webkit-backdrop-filter: blur(10px) saturate(1.65);
   box-shadow:
-    inset 1.2px 1.2px 1px -1px var(--refract-hi),
-    inset -1.2px -1.2px 1px -1px var(--refract-lo),
+    inset 1.8px 2.2px 1.5px -1px var(--refract-hi),
+    inset -1.6px -1.8px 1.5px -1px var(--refract-lo),
+    inset 0 0 16px 1px var(--refract-glow),
     var(--nav-chip-shadow);
   /* Position with --pill-x; ease slide only — no bounce/squash. */
   transform: translateX(var(--pill-x, 0px));
@@ -3093,6 +3101,7 @@ a.tile-show:focus-visible {
     transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
   pointer-events: none;
   z-index: 1;
+  isolation: isolate;
 }
 
 /* Tabs: icon over label, always both — nothing shifts or unfolds when
@@ -3156,7 +3165,7 @@ a.tile-show:focus-visible {
   color: color-mix(in srgb, var(--accent) 45%, #fff);
 }
 
-/* —— Real refraction (glass material, Chromium) ——
+/* —— Real refraction (Chromium) ——
    The chrome bends what scrolls beneath it at the rim; browsers
    without SVG backdrop filters keep the frost declared above. */
 [data-material="glass"] .pill-nav-inner {
@@ -3164,7 +3173,15 @@ a.tile-show:focus-visible {
 }
 
 [data-material="glass"] .pill-indicator {
-  backdrop-filter: url(#lens-chip) saturate(1.4);
+  backdrop-filter: blur(1px) url(#lens-chip) saturate(1.85);
+  background:
+    linear-gradient(
+      160deg,
+      var(--glass-sheen) 0%,
+      transparent 40%
+    ),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.14), transparent 55%),
+    var(--nav-chip-fill);
 }
 
 .stats-hero,
