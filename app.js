@@ -1513,16 +1513,16 @@ function applyMaterial(next) {
 }
 
 /**
- * Liquid-glass refraction. Chromium can refract an element's backdrop
- * through an SVG displacement map (backdrop-filter: url(#…)); for the
- * bend to hug the rim like real curved glass, the map must match the
- * element's exact size and corner radius. It is drawn on a canvas from
- * the rounded-rect's signed distance field: neutral in the middle, and
- * within `bend` px of the rim the backdrop is sampled inward along the
- * edge normal — the magnifying bend iOS glass has. Safari and Firefox
- * ignore the url() declaration and keep the plain frosted fallback.
+ * Liquid-glass displacement map (restored post wrap-around rim).
+ * Soft falloff into the pane; rim layers pull neighbouring page colour
+ * around the lip. No painted specular.
+ *
+ * opts.wrap — outward bevel strength (0–1)
+ * opts.rimBias — push the active band toward the outer lip
  */
-function liquidLensMap(w, h, r, bend, disp) {
+function liquidLensMap(w, h, r, bend, _disp, opts = {}) {
+  const wrap = opts.wrap ?? 0.42;
+  const rimBias = opts.rimBias ?? 0;
   const canvas = document.createElement("canvas");
   canvas.width = w;
   canvas.height = h;
@@ -1535,15 +1535,14 @@ function liquidLensMap(w, h, r, bend, disp) {
     for (let x = 0; x < w; x++) {
       const px = x + 0.5 - hw;
       const py = y + 0.5 - hh;
-      // Signed distance to the rounded rect (negative inside).
       const qx = Math.abs(px) - (hw - r);
       const qy = Math.abs(py) - (hh - r);
       const ax = Math.max(qx, 0);
       const ay = Math.max(qy, 0);
       const corner = Math.hypot(ax, ay);
       const d = corner + Math.min(Math.max(qx, qy), 0) - r;
-      // 0 deep inside → 1 at the rim.
-      const t = Math.min(Math.max(1 + d / bend, 0), 1);
+      let t = Math.min(Math.max(1 + d / bend, 0), 1);
+      if (rimBias > 0) t = Math.pow(t, 1 + rimBias * 2.4);
       let ox = 0;
       let oy = 0;
       if (t > 0) {
@@ -1558,10 +1557,12 @@ function liquidLensMap(w, h, r, bend, disp) {
         } else {
           ny = Math.sign(py);
         }
-        const e = t * t * (3 - 2 * t);
-        // Sample inward from the rim → the pane magnifies like a lens.
-        ox = -nx * e;
-        oy = -ny * e;
+        const e = t * t * t * (t * (t * 6 - 15) + 10);
+        const fresnel = Math.pow(t, 0.5);
+        const inward = e * (0.72 + 0.28 * fresnel);
+        const outward = Math.pow(t, 2.05) * wrap;
+        ox = nx * (-inward + outward);
+        oy = ny * (-inward + outward);
       }
       const i = (y * w + x) * 4;
       data[i] = Math.round(128 + ox * 127);
@@ -1574,26 +1575,41 @@ function liquidLensMap(w, h, r, bend, disp) {
   return canvas.toDataURL();
 }
 
-/** filter id → [element, bend width px, max displacement px, corner
- * radius (undefined = capsule)]. The bend hugs the rim; displacement
- * stays gentle so the glass reads curved rather than warped. */
+/** Bump when the map recipe changes so size-cached filters can't stick. */
+const LENS_MAP_REV = 8;
+
+/** Restored: plate + wrap-around rim lip (the v86 look). */
 const LENS_TARGETS = [
-  ["lens-nav", ".pill-nav-inner", 12, 15],
-  /* Slightly stronger bend than the nav shell — a pebble magnifies
-     more at its curved rim than a flat pane does. */
-  ["lens-chip", ".pill-indicator", 11, 14],
-  ["lens-header", ".top", 12, 12, 0],
+  ["lens-nav", ".pill-nav-glass", 20, 15, undefined, { wrap: 0.38 }],
+  [
+    "lens-nav-rim",
+    ".pill-nav-rim",
+    9,
+    30,
+    undefined,
+    { wrap: 0.7, rimBias: 1.1 },
+  ],
+  ["lens-chip", ".pill-indicator", 16, 17, undefined, { wrap: 0.4 }],
+  [
+    "lens-chip-rim",
+    ".pill-indicator-rim",
+    8,
+    32,
+    undefined,
+    { wrap: 0.75, rimBias: 1.15 },
+  ],
+  ["lens-header", ".top", 12, 12, 0, { wrap: 0.25 }],
 ];
 
 function updateLiquidLenses() {
-  for (const [id, selector, bend, disp, radius] of LENS_TARGETS) {
+  for (const [id, selector, bend, disp, radius, mapOpts] of LENS_TARGETS) {
     const filter = document.getElementById(id);
     const el = document.querySelector(selector);
     if (!filter || !el) continue;
     const w = Math.round(el.offsetWidth);
     const h = Math.round(el.offsetHeight);
     if (!w || !h) continue;
-    const size = `${w}x${h}`;
+    const size = `${LENS_MAP_REV}:${w}x${h}`;
     if (filter.dataset.size === size) continue;
     filter.dataset.size = size;
     const r = radius != null ? radius : Math.min(w, h) / 2; // capsule
@@ -1602,7 +1618,7 @@ function updateLiquidLenses() {
     filter.setAttribute("width", String(w));
     filter.setAttribute("height", String(h));
     const image = filter.querySelector("feImage");
-    image.setAttribute("href", liquidLensMap(w, h, r, bend, disp));
+    image.setAttribute("href", liquidLensMap(w, h, r, bend, disp, mapOpts));
     image.setAttribute("x", "0");
     image.setAttribute("y", "0");
     image.setAttribute("width", String(w));
@@ -1681,7 +1697,7 @@ function luminanceOf(c) {
 }
 
 function updateNavContrast() {
-  const shell = document.querySelector(".pill-nav-inner");
+  const shell = document.querySelector(".pill-nav-glass");
   if (!shell) return;
   // The shell's own translucent fill sits between the page and the
   // icons, so it takes part in what the eye actually sees.
@@ -1767,7 +1783,9 @@ function liquidMove(
   if (!indicator || !target) return;
   const newL = target.offsetLeft - originLeft + inset;
   const newW = Math.max(0, target.offsetWidth - inset * 2);
-  const usePillX = indicator.classList.contains("pill-indicator");
+  const usePillX =
+    indicator.classList.contains("pill-indicator") ||
+    indicator.classList.contains("pill-lens");
 
   // Hidden targets measure 0×0; bail so we don't park the indicator at
   // width 0 and leave the selected pill unstyled when it shows again.
@@ -1829,7 +1847,7 @@ function setStatus(text, { live = false, error = false } = {}) {
 }
 
 function movePillIndicator(tab, opts = {}) {
-  const indicator = document.querySelector(".pill-indicator");
+  const indicator = document.querySelector(".pill-lens");
   const track = indicator?.parentElement;
   const btn = document.querySelector(`.pill-tab[data-tab="${tab}"]`);
   // Fill the tab cell inside the track so the floating selection chip
@@ -1839,6 +1857,8 @@ function movePillIndicator(tab, opts = {}) {
     inset: 0,
     originLeft: track?.offsetLeft ?? 0,
   });
+  // Rim map is sized to the lens; redraw after width settles.
+  requestAnimationFrame(() => updateLiquidLenses());
 }
 
 async function setActiveTab(tab, { skipRender = false } = {}) {

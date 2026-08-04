@@ -34,13 +34,11 @@
   --nav-shadow:
     0 12px 32px rgba(22, 20, 18, 0.16),
     0 2px 8px rgba(22, 20, 18, 0.08);
-  /* The floating selection pebble inside the navbar — shape from
-     specular rim + soft lift, never a stroked outline. */
-  --nav-chip-fill: rgba(255, 255, 255, 0.42);
+  /* Selection pebble: nearly clear — the rim is refraction, not paint. */
+  --nav-chip-fill: rgba(255, 255, 255, 0.06);
   --nav-chip-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.55),
-    0 6px 18px rgba(22, 20, 18, 0.14),
-    0 2px 5px rgba(22, 20, 18, 0.08);
+    0 8px 22px rgba(22, 20, 18, 0.12),
+    0 2px 6px rgba(22, 20, 18, 0.08);
   --font: "Segoe UI", system-ui, -apple-system, sans-serif;
   --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   --safe-top: env(safe-area-inset-top, 0px);
@@ -79,11 +77,10 @@
   --nav-shadow:
     0 12px 32px rgba(0, 0, 0, 0.5),
     0 2px 8px rgba(0, 0, 0, 0.3);
-  --nav-chip-fill: rgba(255, 255, 255, 0.1);
+  --nav-chip-fill: rgba(255, 255, 255, 0.04);
   --nav-chip-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.14),
-    0 8px 22px rgba(0, 0, 0, 0.42),
-    0 2px 6px rgba(0, 0, 0, 0.28);
+    0 8px 22px rgba(0, 0, 0, 0.35),
+    0 2px 6px rgba(0, 0, 0, 0.22);
 }
 
 /* —— Materials ——
@@ -107,7 +104,7 @@
   --glass-sheen: rgba(255, 255, 255, 0.2);
   --glass-shadow: rgba(45, 36, 32, 0.14);
   --refract-glow: rgba(255, 255, 255, 0.14);
-  --nav-chip-fill: rgba(255, 255, 255, 0.22);
+  --nav-chip-fill: rgba(255, 255, 255, 0.05);
 }
 
 [data-theme="dark"][data-material="glass"] {
@@ -120,11 +117,11 @@
   --ok-soft: rgba(98, 210, 150, 0.13);
   --warn-soft: rgba(232, 186, 85, 0.13);
   --done-soft: rgba(255, 255, 255, 0.08);
-  --glass-fill: rgba(20, 19, 25, 0.28);
+  --glass-fill: rgba(20, 19, 25, 0.22);
   --glass-sheen: rgba(255, 255, 255, 0.05);
   --glass-shadow: rgba(0, 0, 0, 0.45);
   --refract-glow: rgba(255, 255, 255, 0.04);
-  --nav-chip-fill: rgba(255, 255, 255, 0.09);
+  --nav-chip-fill: rgba(255, 255, 255, 0.03);
 }
 
 * {
@@ -222,8 +219,8 @@ body {
 [data-material="glass"] .seat-chart,
 [data-material="glass"] .seat-note {
   border-color: var(--pane-stroke);
-  backdrop-filter: blur(3px) saturate(1.7);
-  -webkit-backdrop-filter: blur(3px) saturate(1.7);
+  backdrop-filter: blur(3px) saturate(1);
+  -webkit-backdrop-filter: blur(3px) saturate(1);
   box-shadow:
     inset 1.4px 1.4px 1px -1px var(--refract-hi),
     inset -1.4px -1.4px 1px -1px var(--refract-lo),
@@ -262,17 +259,15 @@ body {
   padding: calc(12px + var(--safe-top)) 0 10px;
   background: color-mix(in srgb, var(--bg) 55%, transparent);
   border-bottom: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
-  backdrop-filter: blur(20px) saturate(1.5);
-  -webkit-backdrop-filter: blur(20px) saturate(1.5);
+  backdrop-filter: blur(12px) url(#lens-header) saturate(1);
+  -webkit-backdrop-filter: blur(12px) saturate(1);
 }
 
 [data-material="glass"] .top {
   background: color-mix(in srgb, var(--bg) 14%, transparent);
   border-bottom-color: var(--glass-stroke);
-  backdrop-filter: blur(12px) saturate(1.8);
-  -webkit-backdrop-filter: blur(12px) saturate(1.8);
-  /* Same glass as the navbar: clear, refracting at its bottom rim. */
-  backdrop-filter: blur(2px) url(#lens-header) saturate(1.8);
+  backdrop-filter: blur(2px) url(#lens-header) saturate(1);
+  -webkit-backdrop-filter: blur(6px) saturate(1);
 }
 
 /* Same centered column as .content: max width, then shared side padding. */
@@ -3027,81 +3022,120 @@ a.tile-show:focus-visible {
   pointer-events: none;
 }
 
-/* The shell: one frosted pane, floating clear of the page. A hairline
-   contrast ring under the specular rim keeps the pane readable on any
-   background, light or dark. */
-.pill-nav-inner {
-  /* Same rim gap on every side around the selection lens. */
+/* Stack: glass plate + selection pebble + tabs as siblings, so each
+   backdrop-filter samples the live page — not a nested dead layer. */
+.pill-nav-shell {
   --pill-pad: 5px;
   pointer-events: auto;
   position: relative;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0;
   width: min(var(--nav-max), 100%);
-  padding: var(--pill-pad);
-  border-radius: 999px;
-  /* Sheen over fill: light entering from above passes through the pane. */
-  background:
-    linear-gradient(to bottom, var(--glass-sheen), transparent 55%),
-    var(--glass-fill);
-  backdrop-filter: blur(20px) saturate(1.8);
-  -webkit-backdrop-filter: blur(20px) saturate(1.8);
-  border: 1px solid var(--glass-stroke);
-  box-shadow:
-    inset 1.4px 1.4px 1px -1px var(--refract-hi),
-    inset -1.4px -1.4px 1px -1px var(--refract-lo),
-    inset 0 0 12px 1px var(--refract-glow),
-    0 0 0 1px var(--glass-ring),
-    var(--nav-shadow);
 }
 
-/* Selection track — overflow stays visible so the floating lens's
-   drop shadow can cast onto the glass pane around it. */
+/* Outer capsule: thin frost + soft falloff refraction of the page. */
+.pill-nav-glass {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  border: 0;
+  background: var(--glass-fill);
+  backdrop-filter: blur(12px) url(#lens-nav) saturate(1);
+  -webkit-backdrop-filter: blur(12px) saturate(1);
+  box-shadow: var(--nav-shadow);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Wrap-around rim lip — samples live page colour at the perimeter. */
+.pill-nav-rim {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  border: 0;
+  padding: 3px;
+  box-sizing: border-box;
+  pointer-events: none;
+  z-index: 0;
+  background: transparent;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  backdrop-filter: url(#lens-nav-rim) saturate(1);
+  -webkit-backdrop-filter: blur(2px) saturate(1);
+}
+
+/* Selection track — sized to the padded content box of the shell. */
 .pill-indicator-track {
   position: absolute;
   inset: var(--pill-pad);
   border-radius: 999px;
   overflow: visible;
   pointer-events: none;
-  z-index: 0;
+  z-index: 1;
 }
 
-/* Selection pebble: a borderless liquid-glass droplet. Shape comes from
-   the specular rim and soft lift — no stroked outline. Chromium also
-   refracts the backdrop at the rim via #lens-chip; Safari/Firefox keep
-   the frost declared on -webkit-backdrop-filter. */
-.pill-indicator {
+/* Positioned wrapper: moves as one unit; glass + rim stay siblings. */
+.pill-lens {
   position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
-  border: 0;
   border-radius: 999px;
-  background:
-    linear-gradient(
-      160deg,
-      var(--glass-sheen) 0%,
-      transparent 38%
-    ),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.22), transparent 58%),
-    var(--nav-chip-fill);
-  /* Blur first = fallback; url(#lens-chip) adds rim bend in Chromium. */
-  backdrop-filter: blur(2px) url(#lens-chip) saturate(1.7);
-  -webkit-backdrop-filter: blur(10px) saturate(1.65);
-  box-shadow:
-    inset 1.8px 2.2px 1.5px -1px var(--refract-hi),
-    inset -1.6px -1.8px 1.5px -1px var(--refract-lo),
-    inset 0 0 16px 1px var(--refract-glow),
-    var(--nav-chip-shadow);
-  /* Position with --pill-x; ease slide only — no bounce/squash. */
   transform: translateX(var(--pill-x, 0px));
   transition:
     width 0.28s cubic-bezier(0.4, 0, 0.2, 1),
     transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
   pointer-events: none;
-  z-index: 1;
-  isolation: isolate;
+}
+
+/* Selection pebble: clear lens. Rim brightens from page content only. */
+.pill-indicator {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  border-radius: 999px;
+  background: var(--nav-chip-fill);
+  backdrop-filter: url(#lens-chip) saturate(1);
+  -webkit-backdrop-filter: blur(3px) saturate(1);
+  box-shadow: var(--nav-chip-shadow);
+}
+
+.pill-indicator-rim {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  border: 0;
+  padding: 2.5px;
+  box-sizing: border-box;
+  background: transparent;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  backdrop-filter: url(#lens-chip-rim) saturate(1);
+  -webkit-backdrop-filter: blur(1.5px) saturate(1);
+}
+
+/* Tabs sit above both glass layers; no fill of their own. */
+.pill-nav-inner {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  width: 100%;
+  padding: var(--pill-pad);
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
 }
 
 /* Tabs: icon over label, always both — nothing shifts or unfolds when
@@ -3165,23 +3199,10 @@ a.tile-show:focus-visible {
   color: color-mix(in srgb, var(--accent) 45%, #fff);
 }
 
-/* —— Real refraction (Chromium) ——
-   The chrome bends what scrolls beneath it at the rim; browsers
-   without SVG backdrop filters keep the frost declared above. */
-[data-material="glass"] .pill-nav-inner {
-  backdrop-filter: blur(2px) url(#lens-nav) saturate(1.9);
-}
-
-[data-material="glass"] .pill-indicator {
-  backdrop-filter: blur(1px) url(#lens-chip) saturate(1.85);
-  background:
-    linear-gradient(
-      160deg,
-      var(--glass-sheen) 0%,
-      transparent 40%
-    ),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.14), transparent 55%),
-    var(--nav-chip-fill);
+/* Glass material: clearer shell so the page colours drive the rim. */
+[data-material="glass"] .pill-nav-glass {
+  backdrop-filter: blur(2px) url(#lens-nav) saturate(1);
+  -webkit-backdrop-filter: blur(6px) saturate(1);
 }
 
 .stats-hero,
