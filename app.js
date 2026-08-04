@@ -329,7 +329,7 @@ const I18N = {
     materialHint: "Subtle translucency or full liquid glass",
     materialSubtle: "Subtle",
     materialGlass: "Glass",
-    directorLabel: "Dir.",
+    directorLabel: "Director",
     diceLabel: "Dice {avg}",
     diceAria: "Dice rating {avg} of 6, based on {n} reviews",
     "showType.Norgespremiere": "Norway premiere",

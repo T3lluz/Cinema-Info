@@ -92,7 +92,7 @@
    layout; only the material changes. */
 [data-material="glass"] {
   --bg: #e9e8ee;
-  --surface: rgba(255, 255, 255, 0.58);
+  --surface: rgba(255, 255, 255, 0.52);
   --line: rgba(94, 82, 76, 0.17);
   --accent-soft: rgba(196, 30, 42, 0.11);
   --ok-soft: rgba(27, 107, 69, 0.12);
@@ -177,17 +177,17 @@ body {
   background:
     radial-gradient(
       46% 34% at 12% 4%,
-      color-mix(in srgb, var(--accent) 15%, transparent),
+      color-mix(in srgb, var(--accent) 18%, transparent),
       transparent 72%
     ),
     radial-gradient(
       40% 30% at 90% 14%,
-      color-mix(in srgb, var(--hold) 12%, transparent),
+      color-mix(in srgb, var(--hold) 14%, transparent),
       transparent 72%
     ),
     radial-gradient(
       52% 38% at 46% 102%,
-      color-mix(in srgb, #d2a017 13%, transparent),
+      color-mix(in srgb, #d2a017 15%, transparent),
       transparent 74%
     );
 }
