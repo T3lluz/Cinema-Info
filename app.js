@@ -149,6 +149,12 @@ const I18N = {
     moviesTitle: "Filmer",
     moviesSubtitle: "Alle tider, neste visning først",
     moviesCount: "{n} filmer",
+    moviesMore: "+{n} flere",
+    moviesDoneMore: "{n} ferdig",
+    moviesNoDone: "Ingen tidligere visninger",
+    moviesDonePanel: "Ferdig",
+    moviesUpcomingPanel: "Kommende",
+    moviesBack: "Tilbake",
     noMovies: "Ingen filmer i programmet.",
     statsTitle: "Statistikk",
     statsSubtitle: "Solgte billetter, live",
@@ -304,6 +310,12 @@ const I18N = {
     moviesTitle: "Movies",
     moviesSubtitle: "All times, next showing first",
     moviesCount: "{n} movies",
+    moviesMore: "+{n} more",
+    moviesDoneMore: "{n} done",
+    moviesNoDone: "No previous showings",
+    moviesDonePanel: "Done",
+    moviesUpcomingPanel: "Upcoming",
+    moviesBack: "Back",
     noMovies: "No movies in the program.",
     statsTitle: "Stats",
     statsSubtitle: "Tickets sold, live",
@@ -525,6 +537,12 @@ const seatHalls = new Map();
 const seatCharts = new Map();
 /** Shows whose seat chart the visitor unfolded by hand. */
 const openSeatCharts = new Set();
+/** Movie titles with the finished-showings dropdown open. */
+const expandedMovieDone = new Set();
+/** Movie titles with the extra-upcoming dropdown open. */
+const expandedMovieUpcoming = new Set();
+/** Collapsed movie tiles show this many showings before "+N more". */
+const MOVIE_SHOWS_PREVIEW = 3;
 /** Tablet and desktop have room for every hall at once, so charts there
  * are unfolded from the start instead of hiding behind a button. */
 const SEATS_OPEN_MQ = window.matchMedia("(min-width: 700px)");
@@ -572,6 +590,14 @@ function focusSelectorWithin(host) {
   const el = document.activeElement;
   if (!el || el === document.body || !host.contains(el)) return "";
   if (el.id) return `[id="${cssEscape(el.id)}"]`;
+  if (el.dataset?.movieExpand != null && el.dataset?.expandKind != null) {
+    return `[data-movie-expand="${cssEscape(
+      el.dataset.movieExpand
+    )}"][data-expand-kind="${cssEscape(el.dataset.expandKind)}"]`;
+  }
+  if (el.dataset?.movieClose != null) {
+    return `[data-movie-close="${cssEscape(el.dataset.movieClose)}"]`;
+  }
   for (const [key, attr] of [
     ["seatToggle", "data-seat-toggle"],
     ["seatRetry", "data-seat-retry"],
@@ -754,6 +780,21 @@ function setupSeatCharts() {
     if (retry) {
       const show = state?.shows?.find((s) => s.id === retry.dataset.seatRetry);
       if (show) loadSeatChart(show, { force: true });
+      return;
+    }
+
+    const movieClose = e.target.closest?.("[data-movie-close]");
+    if (movieClose) {
+      closeMovieShows(movieClose.dataset.movieClose);
+      return;
+    }
+
+    const movieExpand = e.target.closest?.("[data-movie-expand]");
+    if (movieExpand) {
+      toggleMovieShows(
+        movieExpand.dataset.movieExpand,
+        movieExpand.dataset.expandKind
+      );
       return;
     }
 
@@ -3067,6 +3108,39 @@ async function toggleSeatChart(showId) {
 
   if (openSeatCharts.has(showId)) {
     openSeatCharts.delete(showId);
+    const row = document
+      .querySelector(`[data-seat-toggle="${cssEscape(showId)}"]`)
+      ?.closest(".show-row");
+    const panel = row?.querySelector(".seat-panel");
+    row?.classList.remove("seats-open");
+    for (const btn of document.querySelectorAll(
+      `[data-seat-toggle="${cssEscape(showId)}"]`
+    )) {
+      btn.setAttribute("aria-expanded", "false");
+    }
+    // Collapse with the same grid-rows transition as open, then sync markup.
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+    if (panel && !reduceMotion) {
+      await new Promise((resolve) => {
+        let done = false;
+        const finish = () => {
+          if (done) return;
+          done = true;
+          resolve();
+        };
+        panel.addEventListener(
+          "transitionend",
+          (e) => {
+            if (e.target === panel) finish();
+          },
+          { once: true }
+        );
+        // grid-template-rows transitionend is flaky in some engines.
+        setTimeout(finish, 340);
+      });
+    }
     paintSeatChart(show);
     return;
   }
@@ -3846,6 +3920,155 @@ function renderMovies() {
   );
 }
 
+function toggleMovieShows(title, kind) {
+  if (!title || (kind !== "done" && kind !== "upcoming")) return;
+  const set = kind === "done" ? expandedMovieDone : expandedMovieUpcoming;
+  const other = kind === "done" ? expandedMovieUpcoming : expandedMovieDone;
+  if (set.has(title)) set.delete(title);
+  else {
+    set.add(title);
+    other.delete(title);
+  }
+  repaintNext(els.moviesContent);
+  renderMovies();
+}
+
+function closeMovieShows(title) {
+  if (!title) return;
+  const panel = els.moviesContent.querySelector(
+    `.tile-expand-panel[data-movie-panel="${cssEscape(title)}"]`
+  );
+  // Don't treat .no-anim (live redraws) as reduced motion — that was
+  // skipping the slide-down entirely after the first movies paint.
+  const reduceMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+  if (panel && !reduceMotion && !panel.classList.contains("is-leaving")) {
+    // Retrigger so the out animation always starts from the open pose.
+    panel.style.animation = "none";
+    void panel.offsetWidth;
+    panel.style.animation = "";
+    panel.classList.add("is-leaving");
+    let finished = false;
+    const finish = () => {
+      if (finished) return;
+      finished = true;
+      expandedMovieDone.delete(title);
+      expandedMovieUpcoming.delete(title);
+      repaintNext(els.moviesContent);
+      renderMovies();
+    };
+    panel.addEventListener(
+      "animationend",
+      (e) => {
+        if (e.target === panel) finish();
+      },
+      { once: true }
+    );
+    setTimeout(finish, 350);
+    return;
+  }
+  expandedMovieDone.delete(title);
+  expandedMovieUpcoming.delete(title);
+  repaintNext(els.moviesContent);
+  renderMovies();
+}
+
+function movieShowSections(shows, now) {
+  const done = [];
+  const upcoming = [];
+  for (const show of shows) {
+    if (isDone(show, now)) done.push(show);
+    else upcoming.push(show);
+  }
+  return { done, upcoming };
+}
+
+function renderMovieShowRow(show, now, { index = null } = {}) {
+  const status = statusOf(show, now);
+  const soldOut = show.capacity && show.available === 0;
+  const sold =
+    show.sold != null
+      ? soldOut
+        ? `<span class="tile-sold out">${escapeHtml(t("soldOut"))}</span>`
+        : `<span class="tile-sold">${show.sold}${
+            show.capacity ? `<span class="tile-cap">/${show.capacity}</span>` : ""
+          }</span>`
+      : "";
+  const admission = admissionOf(show, now);
+  const admitted =
+    admission && admission.state !== "unknown"
+      ? `<span class="tile-admit ${admission.state}" title="${escapeHtml(
+          admissionLabel(admission)
+        )}">${admissionIcon(admission.state)}${admission.scanned}</span>`
+      : "";
+  const inner = `
+          <span class="tile-day">${escapeHtml(shortDayLabel(show.dayKey))}</span>
+          <span class="tile-time">${formatClock(show.start)}</span>
+          <span class="tile-screen">${escapeHtml(show.screen)}</span>
+          <span class="tile-nums">${sold}${admitted}</span>
+      `;
+  const tag = `data-show="${escapeHtml(show.id)}"`;
+  const delay =
+    index == null ? "" : ` style="--d:${Math.min(index, 12)}"`;
+  const cls = `tile-show ${status}`;
+  if (show.ticketUrl) {
+    return `<a class="${cls}" ${tag}${delay} href="${escapeHtml(
+      show.ticketUrl
+    )}" target="_blank" rel="noopener">${inner}</a>`;
+  }
+  return `<div class="${cls}" ${tag}${delay}>${inner}</div>`;
+}
+
+function movieExpandChevron() {
+  return `<svg class="tile-chevron" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.25L6 7.75l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+}
+
+function movieBackIcon() {
+  return `<svg class="tile-back-icon" viewBox="0 0 12 12" aria-hidden="true"><path d="M7.75 2.5L4.25 6l3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+}
+
+function renderMovieExpandToggle(title, kind, label) {
+  return `<button type="button" class="tile-shows-toggle ${kind}" data-movie-expand="${escapeHtml(
+    title
+  )}" data-expand-kind="${kind}" aria-expanded="false"><span>${escapeHtml(
+    label
+  )}</span>${movieExpandChevron()}</button>`;
+}
+
+function renderMovieScheduleIdle(kind, label) {
+  return `<div class="tile-shows-idle ${kind}"><span>${escapeHtml(
+    label
+  )}</span><span class="tile-idle-mark" aria-hidden="true">—</span></div>`;
+}
+
+function renderMovieExpandPanel(movie, kind, shows, now) {
+  const heading =
+    kind === "done" ? t("moviesDonePanel") : t("moviesUpcomingPanel");
+  return `
+    <div class="tile-expand-panel ${kind}" data-movie-panel="${escapeHtml(
+      movie.title
+    )}" role="region" aria-label="${escapeHtml(`${heading} · ${movie.title}`)}">
+      <div class="tile-expand-bar">
+        <button type="button" class="tile-expand-back" data-movie-close="${escapeHtml(
+          movie.title
+        )}">
+          ${movieBackIcon()}
+          <span>${escapeHtml(t("moviesBack"))}</span>
+        </button>
+        <div class="tile-expand-heading">
+          <span class="tile-expand-title">${escapeHtml(heading)}</span>
+          <span class="tile-expand-count">${shows.length}</span>
+        </div>
+      </div>
+      <p class="tile-expand-film">${escapeHtml(movie.title)}</p>
+      <div class="tile-expand-list tile-shows">${shows
+        .map((show, i) => renderMovieShowRow(show, now, { index: i }))
+        .join("")}</div>
+    </div>
+  `;
+}
+
 function renderMovieTile(movie, now, index = 0) {
   const duration = formatRunning(movie.runningLabel, movie.runningMinutes);
 
@@ -3866,54 +4089,72 @@ function renderMovieTile(movie, now, index = 0) {
     .map((x) => escapeHtml(String(x)))
     .join(" · ");
 
-  const times = movie.shows
-    .map((show) => {
-      const status = statusOf(show, now);
-      const soldOut = show.capacity && show.available === 0;
-      const sold =
-        show.sold != null
-          ? soldOut
-            ? `<span class="tile-sold out">${escapeHtml(t("soldOut"))}</span>`
-            : `<span class="tile-sold">${show.sold}${
-                show.capacity ? `<span class="tile-cap">/${show.capacity}</span>` : ""
-              }</span>`
-          : "";
-      const admission = admissionOf(show, now);
-      const admitted =
-        admission && admission.state !== "unknown"
-          ? `<span class="tile-admit ${admission.state}" title="${escapeHtml(
-              admissionLabel(admission)
-            )}">${admissionIcon(admission.state)}${admission.scanned}</span>`
-          : "";
-      const inner = `
-          <span class="tile-day">${escapeHtml(shortDayLabel(show.dayKey))}</span>
-          <span class="tile-time">${formatClock(show.start)}</span>
-          <span class="tile-screen">${escapeHtml(show.screen)}</span>
-          <span class="tile-nums">${sold}${admitted}</span>
-      `;
-      const tag = `data-show="${escapeHtml(show.id)}"`;
-      if (show.ticketUrl) {
-        return `<a class="tile-show ${status}" ${tag} href="${escapeHtml(
-          show.ticketUrl
-        )}" target="_blank" rel="noopener">${inner}</a>`;
-      }
-      return `<div class="tile-show ${status}" ${tag}>${inner}</div>`;
-    })
+  const { done, upcoming } = movieShowSections(movie.shows, now);
+  const doneOpen = expandedMovieDone.has(movie.title);
+  const upcomingOpen = expandedMovieUpcoming.has(movie.title);
+  const panelKind = doneOpen ? "done" : upcomingOpen ? "upcoming" : "";
+  const panelShows = doneOpen ? done : upcomingOpen ? upcoming : [];
+
+  // Preview is always three row-slots tall; empty toggle slots keep
+  // neighbours aligned. Expand replaces the body in-place (same size).
+  let preview;
+  let doneHidden = [];
+  let upcomingHidden = [];
+
+  if (upcoming.length) {
+    preview = upcoming.slice(0, MOVIE_SHOWS_PREVIEW);
+    upcomingHidden = upcoming.slice(MOVIE_SHOWS_PREVIEW);
+    doneHidden = done;
+  } else {
+    preview = done.slice(-MOVIE_SHOWS_PREVIEW);
+    doneHidden = done.slice(0, Math.max(0, done.length - MOVIE_SHOWS_PREVIEW));
+  }
+
+  const doneSlot = doneHidden.length
+    ? renderMovieExpandToggle(
+        movie.title,
+        "done",
+        t("moviesDoneMore", { n: doneHidden.length })
+      )
+    : renderMovieScheduleIdle("done", t("moviesNoDone"));
+  const upcomingSlot = upcomingHidden.length
+    ? renderMovieExpandToggle(
+        movie.title,
+        "upcoming",
+        t("moviesMore", { n: upcomingHidden.length })
+      )
+    : `<div class="tile-shows-toggle-spacer" aria-hidden="true"></div>`;
+
+  const previewRows = preview
+    .map((show) => renderMovieShowRow(show, now))
     .join("");
 
+  const openClass = panelKind ? " is-open" : "";
+
   return `
-    <article class="movie-tile${progress.all ? " all-done" : ""}" style="--i:${index}">
+    <article class="movie-tile${progress.all ? " all-done" : ""}${openClass}" style="--i:${index}">
       ${renderPoster(movie, 72, 104, "movie-poster")}
       <div class="movie-tile-body">
-        <div class="movie-tile-head">
-          <h3 class="movie-tile-title">${escapeHtml(movie.title)}</h3>
-          ${doneTag(movie.shows, { allLabel: "done", now })}
+        <div class="tile-main">
+          <div class="movie-tile-head">
+            <h3 class="movie-tile-title">${escapeHtml(movie.title)}</h3>
+            ${doneTag(movie.shows, { allLabel: "done", now })}
+          </div>
+          ${ratingBadges}
+          <p class="movie-tile-meta">${meta}</p>
+          ${credits ? `<p class="movie-tile-credits">${credits}</p>` : ""}
+          <div class="tile-schedule">
+            <div class="tile-schedule-slot">${doneSlot}</div>
+            <div class="tile-shows">${previewRows}</div>
+            <div class="tile-schedule-slot">${upcomingSlot}</div>
+          </div>
         </div>
-        ${ratingBadges}
-        <p class="movie-tile-meta">${meta}</p>
-        ${credits ? `<p class="movie-tile-credits">${credits}</p>` : ""}
-        <div class="tile-shows">${times}</div>
       </div>
+      ${
+        panelKind
+          ? renderMovieExpandPanel(movie, panelKind, panelShows, now)
+          : ""
+      }
     </article>
   `;
 }

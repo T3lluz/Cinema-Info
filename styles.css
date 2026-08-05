@@ -946,7 +946,9 @@ h1 {
   .view.tab-in-right,
   .view.tab-in-left,
   .view.tab-out-left,
-  .view.tab-out-right {
+  .view.tab-out-right,
+  .tile-expand-panel,
+  .tile-expand-panel.is-leaving {
     animation-duration: 0.01s;
   }
 }
@@ -1653,11 +1655,13 @@ a.rating-badge:hover {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 350px), 1fr));
   gap: 10px;
+  align-items: stretch;
 }
 
 /* On a phone the poster gives up a few pixels so each showing's hall
    name still fits beside its day, time, and numbers. */
 .movie-tile {
+  position: relative;
   display: grid;
   grid-template-columns: 62px minmax(0, 1fr);
   gap: 10px;
@@ -1665,8 +1669,16 @@ a.rating-badge:hover {
   border-radius: 14px;
   background: var(--surface);
   border: 1px solid var(--line);
+  height: 100%;
+  align-items: stretch;
+  overflow: hidden;
   animation: rise 0.32s ease both;
   animation-delay: calc(min(var(--i, 0), 10) * 35ms);
+}
+
+.movie-poster,
+.movie-poster-fallback {
+  align-self: start;
 }
 
 .movie-poster {
@@ -1697,9 +1709,31 @@ a.rating-badge:hover {
 
 .movie-tile-body {
   min-width: 0;
+  min-height: 100%;
   display: flex;
   flex-direction: column;
   gap: 4px;
+}
+
+.tile-main {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1 1 auto;
+  min-height: 100%;
+}
+
+.movie-tile.is-open {
+  z-index: 5;
+}
+
+.movie-tile.is-open > :not(.tile-expand-panel) {
+  visibility: hidden;
+}
+
+/* Reveal the normal tile again while the panel slides out. */
+.movie-tile.is-open:has(.tile-expand-panel.is-leaving) > :not(.tile-expand-panel) {
+  visibility: visible;
 }
 
 .movie-tile-head {
@@ -1757,11 +1791,301 @@ a.rating-badge:hover {
   white-space: nowrap;
 }
 
-.tile-shows {
+.tile-schedule {
+  --tile-toggle-h: 1.9rem;
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  margin-top: 6px;
+  gap: 6px;
+  margin-top: auto;
+  padding-top: 8px;
+  border-top: 1px solid color-mix(in srgb, var(--line) 85%, transparent);
+}
+
+.tile-schedule-slot {
+  display: flex;
+  flex-direction: column;
+  min-height: var(--tile-toggle-h);
+}
+
+.tile-shows-toggle,
+.tile-shows-idle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  height: var(--tile-toggle-h);
+  margin: 0;
+  padding: 0 10px;
+  border-radius: 8px;
+  font: inherit;
+  font-size: 0.7rem;
+  font-weight: 700;
+  box-sizing: border-box;
+}
+
+.tile-shows-toggle {
+  appearance: none;
+  justify-content: space-between;
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, var(--line));
+  background: color-mix(in srgb, var(--accent) 11%, var(--surface));
+  color: var(--accent);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease,
+    transform 0.12s ease;
+}
+
+.tile-shows-toggle.done {
+  border-color: color-mix(in srgb, var(--done) 38%, var(--line));
+  background: color-mix(in srgb, var(--done-soft) 80%, var(--surface));
+  color: color-mix(in srgb, var(--done) 88%, var(--ink));
+}
+
+.tile-shows-idle {
+  justify-content: space-between;
+  border: 1px dashed color-mix(in srgb, var(--line) 90%, var(--muted));
+  background: color-mix(in srgb, var(--bg) 55%, var(--surface));
+  color: var(--muted);
+  font-weight: 650;
+}
+
+.tile-shows-idle.done {
+  border-color: color-mix(in srgb, var(--done) 28%, var(--line));
+  background: color-mix(in srgb, var(--done-soft) 45%, var(--surface));
+}
+
+.tile-idle-mark {
+  font-weight: 700;
+  opacity: 0.55;
+  letter-spacing: 0.04em;
+}
+
+.tile-shows-toggle-spacer {
+  height: var(--tile-toggle-h);
+  pointer-events: none;
+}
+
+.tile-chevron {
+  width: 12px;
+  height: 12px;
+  flex: 0 0 auto;
+  opacity: 0.85;
+  transition: transform 0.28s cubic-bezier(0.3, 1.2, 0.4, 1);
+}
+
+@media (hover: hover) {
+  .tile-shows-toggle:hover {
+    color: var(--ink);
+    border-color: color-mix(in srgb, var(--accent) 55%, var(--line));
+    background: color-mix(in srgb, var(--accent) 16%, var(--surface));
+  }
+
+  .tile-shows-toggle.done:hover {
+    border-color: color-mix(in srgb, var(--done) 55%, var(--line));
+  }
+
+  .tile-shows-toggle:hover .tile-chevron {
+    transform: translateY(1px);
+  }
+
+  .tile-shows-toggle:active {
+    transform: scale(0.985);
+  }
+}
+
+/* Full-tile overlay: slides up from the tile bottom, slides down to close.
+   Clipped by .movie-tile overflow so nothing leaves the card. Kept out of
+   .no-anim so live redraws don't kill the transition. */
+.tile-expand-panel {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-height: 0;
+  padding: 11px;
+  background: var(--surface);
+  border-radius: inherit;
+  border: 1px solid color-mix(in srgb, var(--accent) 28%, var(--line));
+  will-change: transform;
+  animation: tilePanelIn 0.32s cubic-bezier(0.3, 0.75, 0.25, 1) both;
+}
+
+.tile-expand-panel.done {
+  border-color: color-mix(in srgb, var(--done) 32%, var(--line));
+}
+
+.tile-expand-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+  border-radius: inherit inherit 0 0;
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--accent) 75%, transparent),
+    color-mix(in srgb, var(--accent) 20%, transparent)
+  );
+  pointer-events: none;
+}
+
+.tile-expand-panel.done::before {
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--done) 70%, transparent),
+    color-mix(in srgb, var(--done) 15%, transparent)
+  );
+}
+
+@keyframes tilePanelIn {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes tilePanelOut {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(100%);
+  }
+}
+
+.tile-expand-panel.is-leaving {
+  animation: tilePanelOut 0.28s cubic-bezier(0.3, 0.75, 0.25, 1) both;
+  pointer-events: none;
+}
+
+.tile-expand-bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex: 0 0 auto;
+  padding-top: 2px;
+}
+
+.tile-expand-back {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin: 0;
+  padding: 6px 10px 6px 8px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--bg) 55%, var(--surface));
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.72rem;
+  font-weight: 750;
+  cursor: pointer;
+  transition:
+    border-color 0.16s ease,
+    color 0.16s ease,
+    background 0.16s ease,
+    transform 0.12s ease;
+}
+
+.tile-back-icon {
+  width: 12px;
+  height: 12px;
+  transition: transform 0.2s cubic-bezier(0.3, 1.2, 0.4, 1);
+}
+
+@media (hover: hover) {
+  .tile-expand-back:hover {
+    border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+    color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 8%, var(--surface));
+  }
+
+  .tile-expand-back:hover .tile-back-icon {
+    transform: translateX(-2px);
+  }
+
+  .tile-expand-back:active {
+    transform: scale(0.98);
+  }
+}
+
+.tile-expand-heading {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.tile-expand-title {
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.tile-expand-panel.done .tile-expand-title {
+  color: color-mix(in srgb, var(--done) 80%, var(--ink));
+}
+
+.tile-expand-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.35rem;
+  height: 1.2rem;
+  padding: 0 6px;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--accent) 14%, var(--bg));
+  color: var(--accent);
+  font-size: 0.65rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.tile-expand-panel.done .tile-expand-count {
+  background: color-mix(in srgb, var(--done) 16%, var(--bg));
+  color: color-mix(in srgb, var(--done) 90%, var(--ink));
+}
+
+.tile-expand-film {
+  margin: 0;
+  flex: 0 0 auto;
+  font-size: 0.9rem;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+}
+
+.tile-expand-list.tile-shows {
+  flex: 1 1 auto;
+  height: auto;
+  min-height: 0;
+  overflow: auto;
+  gap: 3px;
+  padding: 1px 2px 2px 0;
+}
+
+.tile-shows {
+  --tile-show-row: 1.85rem;
+  --tile-show-gap: 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-content: start;
+  gap: var(--tile-show-gap);
+  /* Reserve the 3-row footprint so neighbouring tiles stay level; leftover
+     space stays empty (card surface) — no fake chips or washes. */
+  min-height: calc(3 * var(--tile-show-row) + 2 * var(--tile-show-gap));
 }
 
 .tile-show {
@@ -1769,7 +2093,12 @@ a.rating-badge:hover {
   grid-template-columns: minmax(46px, auto) 42px minmax(0, 1fr) auto;
   gap: 5px;
   align-items: center;
-  padding: 5px 7px;
+  flex: 0 0 var(--tile-show-row);
+  height: var(--tile-show-row);
+  min-height: var(--tile-show-row);
+  max-height: var(--tile-show-row);
+  box-sizing: border-box;
+  padding: 0 7px;
   border-radius: 8px;
   background: color-mix(in srgb, var(--bg) 80%, var(--surface));
   font-size: 0.7rem;
@@ -1785,7 +2114,10 @@ a.rating-badge:hover {
   .tile-shows {
     display: grid;
     grid-template-columns: auto auto minmax(0, 1fr) auto;
+    grid-auto-rows: var(--tile-show-row);
+    align-content: start;
     column-gap: 7px;
+    row-gap: var(--tile-show-gap);
   }
 
   .tile-show {
@@ -3495,16 +3827,34 @@ a.rating-badge:hover {
     font-size: 0.8rem;
   }
 
+  .tile-schedule {
+    --tile-toggle-h: 2rem;
+  }
+
   .tile-shows {
-    gap: 6px;
+    --tile-show-row: 2.05rem;
+    --tile-show-gap: 6px;
+    gap: var(--tile-show-gap);
     column-gap: 10px;
-    margin-top: 8px;
   }
 
   .tile-show {
-    padding: 7px 10px;
+    padding: 0 10px;
     font-size: 0.78rem;
     border-radius: 9px;
+  }
+
+  .tile-expand-panel {
+    padding: 12px;
+    gap: 7px;
+  }
+
+  .tile-expand-film {
+    font-size: 1rem;
+  }
+
+  .tile-expand-list.tile-shows {
+    gap: 4px;
   }
 
   .gap-row {
