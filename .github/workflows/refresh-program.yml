@@ -38,6 +38,8 @@ jobs:
           node-version: "20"
 
       - name: Fetch program + live ticket data
+        env:
+          OMDB_API_KEY: ${{ secrets.OMDB_API_KEY }}
         run: node scripts/fetch-data.mjs
 
       - name: Commit when the snapshot changed

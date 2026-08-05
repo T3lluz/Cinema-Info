@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-05T11:49:00.870Z",
+  "updatedAt": "2026-08-05T22:41:06.871Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -21,7 +21,22 @@
       "eventId": null,
       "promoterId": "202",
       "sold": null,
-      "eventStatus": "unavailable"
+      "eventStatus": "unavailable",
+      "ratings": {
+        "letterboxd": {
+          "value": 2.72,
+          "url": "https://letterboxd.com/film/moana/"
+        },
+        "tomatoes": {
+          "value": 88,
+          "url": "https://www.rottentomatoes.com/m/moana_2026"
+        }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Comedy"
+      ]
     },
     {
       "id": "EDI20260556-2026-07-21T17:30:00-Storsal",
@@ -42,7 +57,27 @@
       "eventId": null,
       "promoterId": "202",
       "sold": null,
-      "eventStatus": "unavailable"
+      "eventStatus": "unavailable",
+      "ratings": {
+        "imdb": {
+          "value": 5.3,
+          "id": "tt29612071",
+          "url": "https://www.imdb.com/title/tt29612071/"
+        },
+        "letterboxd": {
+          "value": 2.34,
+          "url": "https://letterboxd.com/film/charlie-the-wonderdog/"
+        },
+        "tomatoes": {
+          "value": 74,
+          "url": "https://www.rottentomatoes.com/m/charlie_the_wonderdog"
+        }
+      },
+      "genres": [
+        "Animation",
+        "Comedy",
+        "Family"
+      ]
     },
     {
       "id": "UIP20241680-2026-07-21T19:30:00-Kinosal",
@@ -65,7 +100,27 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 110,
-      "available": 60
+      "available": 60,
+      "ratings": {
+        "imdb": {
+          "value": 8.5,
+          "id": "tt33764258",
+          "url": "https://www.imdb.com/title/tt33764258/"
+        },
+        "letterboxd": {
+          "value": 4.4,
+          "url": "https://letterboxd.com/film/the-odyssey-2026/"
+        },
+        "tomatoes": {
+          "value": 97,
+          "url": "https://www.rottentomatoes.com/m/the_odyssey_2026"
+        }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Fantasy"
+      ]
     },
     {
       "id": "EDI20260626-2026-07-21T20:15:00-Storsal",
@@ -88,7 +143,22 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 286,
-      "available": 286
+      "available": 286,
+      "ratings": {
+        "letterboxd": {
+          "value": 3.13,
+          "url": "https://letterboxd.com/film/evil-dead-burn/"
+        },
+        "tomatoes": {
+          "value": 74,
+          "url": "https://www.rottentomatoes.com/m/evil_dead_burn"
+        }
+      },
+      "genres": [
+        "Fantasy",
+        "Horror",
+        "Mystery"
+      ]
     },
     {
       "id": "UIP20241749-2026-07-22T17:00:00-Kinosal",
@@ -112,7 +182,27 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 110,
-      "available": 88
+      "available": 88,
+      "ratings": {
+        "imdb": {
+          "value": 6.6,
+          "id": "tt32890033",
+          "url": "https://www.imdb.com/title/tt32890033/"
+        },
+        "letterboxd": {
+          "value": 3.14,
+          "url": "https://letterboxd.com/film/minions-monsters/"
+        },
+        "tomatoes": {
+          "value": 75,
+          "url": "https://www.rottentomatoes.com/m/minions_and_monsters"
+        }
+      },
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ]
     },
     {
       "id": "EDI20260819-2026-07-22T17:30:00-Storsal",
@@ -136,7 +226,22 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 246,
-      "available": 222
+      "available": 222,
+      "ratings": {
+        "letterboxd": {
+          "value": 2.72,
+          "url": "https://letterboxd.com/film/moana/"
+        },
+        "tomatoes": {
+          "value": 88,
+          "url": "https://www.rottentomatoes.com/m/moana_2026"
+        }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Comedy"
+      ]
     },
     {
       "id": "UIP20241680-2026-07-22T19:30:00-Kinosal",
@@ -159,7 +264,27 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 108,
-      "available": 40
+      "available": 40,
+      "ratings": {
+        "imdb": {
+          "value": 8.5,
+          "id": "tt33764258",
+          "url": "https://www.imdb.com/title/tt33764258/"
+        },
+        "letterboxd": {
+          "value": 4.4,
+          "url": "https://letterboxd.com/film/the-odyssey-2026/"
+        },
+        "tomatoes": {
+          "value": 97,
+          "url": "https://www.rottentomatoes.com/m/the_odyssey_2026"
+        }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Fantasy"
+      ]
     },
     {
       "id": "EDI20260535-2026-07-22T20:15:00-Storsal",
@@ -182,7 +307,9 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 246,
-      "available": 243
+      "available": 243,
+      "ratings": null,
+      "genres": null
     },
     {
       "id": "EDI20260556-2026-07-23T17:00:00-Kinosal",
@@ -206,7 +333,27 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 110,
-      "available": 98
+      "available": 98,
+      "ratings": {
+        "imdb": {
+          "value": 5.3,
+          "id": "tt29612071",
+          "url": "https://www.imdb.com/title/tt29612071/"
+        },
+        "letterboxd": {
+          "value": 2.34,
+          "url": "https://letterboxd.com/film/charlie-the-wonderdog/"
+        },
+        "tomatoes": {
+          "value": 74,
+          "url": "https://www.rottentomatoes.com/m/charlie_the_wonderdog"
+        }
+      },
+      "genres": [
+        "Animation",
+        "Comedy",
+        "Family"
+      ]
     },
     {
       "id": "UIP20241749-2026-07-23T17:30:00-Storsal",
@@ -230,7 +377,27 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 286,
-      "available": 263
+      "available": 263,
+      "ratings": {
+        "imdb": {
+          "value": 6.6,
+          "id": "tt32890033",
+          "url": "https://www.imdb.com/title/tt32890033/"
+        },
+        "letterboxd": {
+          "value": 3.14,
+          "url": "https://letterboxd.com/film/minions-monsters/"
+        },
+        "tomatoes": {
+          "value": 75,
+          "url": "https://www.rottentomatoes.com/m/minions_and_monsters"
+        }
+      },
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ]
     },
     {
       "id": "UIP20241680-2026-07-23T19:30:00-Kinosal",
@@ -253,7 +420,27 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 110,
-      "available": 58
+      "available": 58,
+      "ratings": {
+        "imdb": {
+          "value": 8.5,
+          "id": "tt33764258",
+          "url": "https://www.imdb.com/title/tt33764258/"
+        },
+        "letterboxd": {
+          "value": 4.4,
+          "url": "https://letterboxd.com/film/the-odyssey-2026/"
+        },
+        "tomatoes": {
+          "value": 97,
+          "url": "https://www.rottentomatoes.com/m/the_odyssey_2026"
+        }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Fantasy"
+      ]
     },
     {
       "id": "EDI20260626-2026-07-23T20:15:00-Storsal",
@@ -276,7 +463,22 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 286,
-      "available": 280
+      "available": 280,
+      "ratings": {
+        "letterboxd": {
+          "value": 3.13,
+          "url": "https://letterboxd.com/film/evil-dead-burn/"
+        },
+        "tomatoes": {
+          "value": 74,
+          "url": "https://www.rottentomatoes.com/m/evil_dead_burn"
+        }
+      },
+      "genres": [
+        "Fantasy",
+        "Horror",
+        "Mystery"
+      ]
     },
     {
       "id": "UIP20241749-2026-07-24T16:50:00-Storsal",
@@ -300,7 +502,27 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 246,
-      "available": 191
+      "available": 191,
+      "ratings": {
+        "imdb": {
+          "value": 6.6,
+          "id": "tt32890033",
+          "url": "https://www.imdb.com/title/tt32890033/"
+        },
+        "letterboxd": {
+          "value": 3.14,
+          "url": "https://letterboxd.com/film/minions-monsters/"
+        },
+        "tomatoes": {
+          "value": 75,
+          "url": "https://www.rottentomatoes.com/m/minions_and_monsters"
+        }
+      },
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ]
     },
     {
       "id": "EDI20260819-2026-07-24T17:30:00-Kinosal",
@@ -324,7 +546,22 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 110,
-      "available": 55
+      "available": 55,
+      "ratings": {
+        "letterboxd": {
+          "value": 2.72,
+          "url": "https://letterboxd.com/film/moana/"
+        },
+        "tomatoes": {
+          "value": 88,
+          "url": "https://www.rottentomatoes.com/m/moana_2026"
+        }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Comedy"
+      ]
     },
     {
       "id": "EDI20260535-2026-07-24T19:00:00-Storsal",
@@ -347,7 +584,9 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 246,
-      "available": 241
+      "available": 241,
+      "ratings": null,
+      "genres": null
     },
     {
       "id": "UIP20241680-2026-07-24T20:15:00-Kinosal",
@@ -370,7 +609,27 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 110,
-      "available": 19
+      "available": 19,
+      "ratings": {
+        "imdb": {
+          "value": 8.5,
+          "id": "tt33764258",
+          "url": "https://www.imdb.com/title/tt33764258/"
+        },
+        "letterboxd": {
+          "value": 4.4,
+          "url": "https://letterboxd.com/film/the-odyssey-2026/"
+        },
+        "tomatoes": {
+          "value": 97,
+          "url": "https://www.rottentomatoes.com/m/the_odyssey_2026"
+        }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Fantasy"
+      ]
     },
     {
       "id": "EDI20260626-2026-07-24T21:15:00-Storsal",
@@ -393,7 +652,22 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 246,
-      "available": 237
+      "available": 237,
+      "ratings": {
+        "letterboxd": {
+          "value": 3.13,
+          "url": "https://letterboxd.com/film/evil-dead-burn/"
+        },
+        "tomatoes": {
+          "value": 74,
+          "url": "https://www.rottentomatoes.com/m/evil_dead_burn"
+        }
+      },
+      "genres": [
+        "Fantasy",
+        "Horror",
+        "Mystery"
+      ]
     },
     {
       "id": "UIP20241749-2026-07-25T15:00:00-Kinosal",
@@ -417,7 +691,27 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 110,
-      "available": 23
+      "available": 23,
+      "ratings": {
+        "imdb": {
+          "value": 6.6,
+          "id": "tt32890033",
+          "url": "https://www.imdb.com/title/tt32890033/"
+        },
+        "letterboxd": {
+          "value": 3.14,
+          "url": "https://letterboxd.com/film/minions-monsters/"
+        },
+        "tomatoes": {
+          "value": 75,
+          "url": "https://www.rottentomatoes.com/m/minions_and_monsters"
+        }
+      },
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ]
     },
     {
       "id": "EDI20260556-2026-07-25T15:30:00-Storsal",
@@ -441,7 +735,27 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 286,
-      "available": 235
+      "available": 235,
+      "ratings": {
+        "imdb": {
+          "value": 5.3,
+          "id": "tt29612071",
+          "url": "https://www.imdb.com/title/tt29612071/"
+        },
+        "letterboxd": {
+          "value": 2.34,
+          "url": "https://letterboxd.com/film/charlie-the-wonderdog/"
+        },
+        "tomatoes": {
+          "value": 74,
+          "url": "https://www.rottentomatoes.com/m/charlie_the_wonderdog"
+        }
+      },
+      "genres": [
+        "Animation",
+        "Comedy",
+        "Family"
+      ]
     },
     {
       "id": "EDI20260819-2026-07-25T17:15:00-Kinosal",
@@ -465,7 +779,22 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 110,
-      "available": 18
+      "available": 18,
+      "ratings": {
+        "letterboxd": {
+          "value": 2.72,
+          "url": "https://letterboxd.com/film/moana/"
+        },
+        "tomatoes": {
+          "value": 88,
+          "url": "https://www.rottentomatoes.com/m/moana_2026"
+        }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Comedy"
+      ]
     },
     {
       "id": "EDI20260535-2026-07-25T18:00:00-Storsal",
@@ -488,7 +817,9 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 286,
-      "available": 269
+      "available": 269,
+      "ratings": null,
+      "genres": null
     },
     {
       "id": "UIP20241680-2026-07-25T20:00:00-Kinosal",
@@ -511,7 +842,27 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 110,
-      "available": 2
+      "available": 2,
+      "ratings": {
+        "imdb": {
+          "value": 8.5,
+          "id": "tt33764258",
+          "url": "https://www.imdb.com/title/tt33764258/"
+        },
+        "letterboxd": {
+          "value": 4.4,
+          "url": "https://letterboxd.com/film/the-odyssey-2026/"
+        },
+        "tomatoes": {
+          "value": 97,
+          "url": "https://www.rottentomatoes.com/m/the_odyssey_2026"
+        }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Fantasy"
+      ]
     },
     {
       "id": "EDI20260626-2026-07-25T20:35:00-Storsal",
@@ -534,7 +885,22 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 286,
-      "available": 286
+      "available": 286,
+      "ratings": {
+        "letterboxd": {
+          "value": 3.13,
+          "url": "https://letterboxd.com/film/evil-dead-burn/"
+        },
+        "tomatoes": {
+          "value": 74,
+          "url": "https://www.rottentomatoes.com/m/evil_dead_burn"
+        }
+      },
+      "genres": [
+        "Fantasy",
+        "Horror",
+        "Mystery"
+      ]
     },
     {
       "id": "EDI20260556-2026-07-26T14:50:00-Kinosal",
@@ -558,7 +924,27 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 110,
-      "available": 110
+      "available": 110,
+      "ratings": {
+        "imdb": {
+          "value": 5.3,
+          "id": "tt29612071",
+          "url": "https://www.imdb.com/title/tt29612071/"
+        },
+        "letterboxd": {
+          "value": 2.34,
+          "url": "https://letterboxd.com/film/charlie-the-wonderdog/"
+        },
+        "tomatoes": {
+          "value": 74,
+          "url": "https://www.rottentomatoes.com/m/charlie_the_wonderdog"
+        }
+      },
+      "genres": [
+        "Animation",
+        "Comedy",
+        "Family"
+      ]
     },
     {
       "id": "EDI20260819-2026-07-26T15:20:00-Storsal",
@@ -582,7 +968,22 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 286,
-      "available": 250
+      "available": 250,
+      "ratings": {
+        "letterboxd": {
+          "value": 2.72,
+          "url": "https://letterboxd.com/film/moana/"
+        },
+        "tomatoes": {
+          "value": 88,
+          "url": "https://www.rottentomatoes.com/m/moana_2026"
+        }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Comedy"
+      ]
     },
     {
       "id": "EDI20260731-2026-07-26T17:15:00-Kinosal",
@@ -606,7 +1007,27 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 110,
-      "available": 64
+      "available": 64,
+      "ratings": {
+        "imdb": {
+          "value": 6.6,
+          "id": "tt32890033",
+          "url": "https://www.imdb.com/title/tt32890033/"
+        },
+        "letterboxd": {
+          "value": 3.14,
+          "url": "https://letterboxd.com/film/minions-monsters/"
+        },
+        "tomatoes": {
+          "value": 75,
+          "url": "https://www.rottentomatoes.com/m/minions_and_monsters"
+        }
+      },
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ]
     },
     {
       "id": "EDI20260535-2026-07-26T18:00:00-Storsal",
@@ -629,7 +1050,9 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 286,
-      "available": 278
+      "available": 278,
+      "ratings": null,
+      "genres": null
     },
     {
       "id": "UIP20241680-2026-07-26T19:30:00-Kinosal",
@@ -652,7 +1075,27 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 110,
-      "available": 20
+      "available": 20,
+      "ratings": {
+        "imdb": {
+          "value": 8.5,
+          "id": "tt33764258",
+          "url": "https://www.imdb.com/title/tt33764258/"
+        },
+        "letterboxd": {
+          "value": 4.4,
+          "url": "https://letterboxd.com/film/the-odyssey-2026/"
+        },
+        "tomatoes": {
+          "value": 97,
+          "url": "https://www.rottentomatoes.com/m/the_odyssey_2026"
+        }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Fantasy"
+      ]
     },
     {
       "id": "EDI20260626-2026-07-26T20:15:00-Storsal",
@@ -675,7 +1118,22 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 286,
-      "available": 283
+      "available": 283,
+      "ratings": {
+        "letterboxd": {
+          "value": 3.13,
+          "url": "https://letterboxd.com/film/evil-dead-burn/"
+        },
+        "tomatoes": {
+          "value": 74,
+          "url": "https://www.rottentomatoes.com/m/evil_dead_burn"
+        }
+      },
+      "genres": [
+        "Fantasy",
+        "Horror",
+        "Mystery"
+      ]
     },
     {
       "id": "EDI20260556-2026-07-27T17:00:00-Kinosal",
@@ -699,7 +1157,27 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 110,
-      "available": 108
+      "available": 108,
+      "ratings": {
+        "imdb": {
+          "value": 5.3,
+          "id": "tt29612071",
+          "url": "https://www.imdb.com/title/tt29612071/"
+        },
+        "letterboxd": {
+          "value": 2.34,
+          "url": "https://letterboxd.com/film/charlie-the-wonderdog/"
+        },
+        "tomatoes": {
+          "value": 74,
+          "url": "https://www.rottentomatoes.com/m/charlie_the_wonderdog"
+        }
+      },
+      "genres": [
+        "Animation",
+        "Comedy",
+        "Family"
+      ]
     },
     {
       "id": "EDI20260819-2026-07-27T17:30:00-Storsal",
@@ -723,7 +1201,22 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 286,
-      "available": 271
+      "available": 271,
+      "ratings": {
+        "letterboxd": {
+          "value": 2.72,
+          "url": "https://letterboxd.com/film/moana/"
+        },
+        "tomatoes": {
+          "value": 88,
+          "url": "https://www.rottentomatoes.com/m/moana_2026"
+        }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Comedy"
+      ]
     },
     {
       "id": "UIP20241680-2026-07-27T19:30:00-Kinosal",
@@ -746,7 +1239,27 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 110,
-      "available": 15
+      "available": 15,
+      "ratings": {
+        "imdb": {
+          "value": 8.5,
+          "id": "tt33764258",
+          "url": "https://www.imdb.com/title/tt33764258/"
+        },
+        "letterboxd": {
+          "value": 4.4,
+          "url": "https://letterboxd.com/film/the-odyssey-2026/"
+        },
+        "tomatoes": {
+          "value": 97,
+          "url": "https://www.rottentomatoes.com/m/the_odyssey_2026"
+        }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Fantasy"
+      ]
     },
     {
       "id": "EDI20260535-2026-07-27T20:15:00-Storsal",
@@ -769,7 +1282,9 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 286,
-      "available": 277
+      "available": 277,
+      "ratings": null,
+      "genres": null
     },
     {
       "id": "UIP20241749-2026-07-28T17:00:00-Kinosal",
@@ -793,7 +1308,27 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 110,
-      "available": 44
+      "available": 44,
+      "ratings": {
+        "imdb": {
+          "value": 6.6,
+          "id": "tt32890033",
+          "url": "https://www.imdb.com/title/tt32890033/"
+        },
+        "letterboxd": {
+          "value": 3.14,
+          "url": "https://letterboxd.com/film/minions-monsters/"
+        },
+        "tomatoes": {
+          "value": 75,
+          "url": "https://www.rottentomatoes.com/m/minions_and_monsters"
+        }
+      },
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ]
     },
     {
       "id": "EDI20260556-2026-07-28T17:30:00-Storsal",
@@ -817,7 +1352,27 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 246,
-      "available": 240
+      "available": 240,
+      "ratings": {
+        "imdb": {
+          "value": 5.3,
+          "id": "tt29612071",
+          "url": "https://www.imdb.com/title/tt29612071/"
+        },
+        "letterboxd": {
+          "value": 2.34,
+          "url": "https://letterboxd.com/film/charlie-the-wonderdog/"
+        },
+        "tomatoes": {
+          "value": 74,
+          "url": "https://www.rottentomatoes.com/m/charlie_the_wonderdog"
+        }
+      },
+      "genres": [
+        "Animation",
+        "Comedy",
+        "Family"
+      ]
     },
     {
       "id": "UIP20241680-2026-07-28T19:30:00-Kinosal",
@@ -840,7 +1395,27 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 110,
-      "available": 24
+      "available": 24,
+      "ratings": {
+        "imdb": {
+          "value": 8.5,
+          "id": "tt33764258",
+          "url": "https://www.imdb.com/title/tt33764258/"
+        },
+        "letterboxd": {
+          "value": 4.4,
+          "url": "https://letterboxd.com/film/the-odyssey-2026/"
+        },
+        "tomatoes": {
+          "value": 97,
+          "url": "https://www.rottentomatoes.com/m/the_odyssey_2026"
+        }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Fantasy"
+      ]
     },
     {
       "id": "EDI20260626-2026-07-28T20:15:00-Storsal",
@@ -863,7 +1438,22 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 246,
-      "available": 236
+      "available": 236,
+      "ratings": {
+        "letterboxd": {
+          "value": 3.13,
+          "url": "https://letterboxd.com/film/evil-dead-burn/"
+        },
+        "tomatoes": {
+          "value": 74,
+          "url": "https://www.rottentomatoes.com/m/evil_dead_burn"
+        }
+      },
+      "genres": [
+        "Fantasy",
+        "Horror",
+        "Mystery"
+      ]
     },
     {
       "id": "EDI20260819-2026-07-29T16:50:00-Kinosal",
@@ -887,7 +1477,22 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 110,
-      "available": 81
+      "available": 81,
+      "ratings": {
+        "letterboxd": {
+          "value": 2.72,
+          "url": "https://letterboxd.com/film/moana/"
+        },
+        "tomatoes": {
+          "value": 88,
+          "url": "https://www.rottentomatoes.com/m/moana_2026"
+        }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Comedy"
+      ]
     },
     {
       "id": "UIP20241749-2026-07-29T17:30:00-Storsal",
@@ -911,7 +1516,27 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 246,
-      "available": 235
+      "available": 235,
+      "ratings": {
+        "imdb": {
+          "value": 6.6,
+          "id": "tt32890033",
+          "url": "https://www.imdb.com/title/tt32890033/"
+        },
+        "letterboxd": {
+          "value": 3.14,
+          "url": "https://letterboxd.com/film/minions-monsters/"
+        },
+        "tomatoes": {
+          "value": 75,
+          "url": "https://www.rottentomatoes.com/m/minions_and_monsters"
+        }
+      },
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ]
     },
     {
       "id": "EDI20240688-2026-07-29T19:30:00-Kinosal",
@@ -934,7 +1559,27 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 110,
-      "available": 1
+      "available": 1,
+      "ratings": {
+        "imdb": {
+          "value": 8.2,
+          "id": "tt22084616",
+          "url": "https://www.imdb.com/title/tt22084616/"
+        },
+        "letterboxd": {
+          "value": 4.13,
+          "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
+        },
+        "tomatoes": {
+          "value": 98,
+          "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
+        }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Sci-Fi"
+      ]
     },
     {
       "id": "EDI20240688-2026-07-29T20:00:00-Storsal",
@@ -957,7 +1602,27 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 246,
-      "available": 93
+      "available": 93,
+      "ratings": {
+        "imdb": {
+          "value": 8.2,
+          "id": "tt22084616",
+          "url": "https://www.imdb.com/title/tt22084616/"
+        },
+        "letterboxd": {
+          "value": 4.13,
+          "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
+        },
+        "tomatoes": {
+          "value": 98,
+          "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
+        }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Sci-Fi"
+      ]
     },
     {
       "id": "EDI20260556-2026-07-30T17:00:00-Kinosal",
@@ -981,7 +1646,27 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 110,
-      "available": 104
+      "available": 104,
+      "ratings": {
+        "imdb": {
+          "value": 5.3,
+          "id": "tt29612071",
+          "url": "https://www.imdb.com/title/tt29612071/"
+        },
+        "letterboxd": {
+          "value": 2.34,
+          "url": "https://letterboxd.com/film/charlie-the-wonderdog/"
+        },
+        "tomatoes": {
+          "value": 74,
+          "url": "https://www.rottentomatoes.com/m/charlie_the_wonderdog"
+        }
+      },
+      "genres": [
+        "Animation",
+        "Comedy",
+        "Family"
+      ]
     },
     {
       "id": "UIP20241749-2026-07-30T17:30:00-Storsal",
@@ -1005,7 +1690,27 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 246,
-      "available": 227
+      "available": 227,
+      "ratings": {
+        "imdb": {
+          "value": 6.6,
+          "id": "tt32890033",
+          "url": "https://www.imdb.com/title/tt32890033/"
+        },
+        "letterboxd": {
+          "value": 3.14,
+          "url": "https://letterboxd.com/film/minions-monsters/"
+        },
+        "tomatoes": {
+          "value": 75,
+          "url": "https://www.rottentomatoes.com/m/minions_and_monsters"
+        }
+      },
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ]
     },
     {
       "id": "EDI20240688-2026-07-30T19:30:00-Kinosal",
@@ -1028,7 +1733,27 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 110,
-      "available": 5
+      "available": 5,
+      "ratings": {
+        "imdb": {
+          "value": 8.2,
+          "id": "tt22084616",
+          "url": "https://www.imdb.com/title/tt22084616/"
+        },
+        "letterboxd": {
+          "value": 4.13,
+          "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
+        },
+        "tomatoes": {
+          "value": 98,
+          "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
+        }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Sci-Fi"
+      ]
     },
     {
       "id": "EDI20240688-2026-07-30T20:00:00-Storsal",
@@ -1051,7 +1776,27 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 246,
-      "available": 173
+      "available": 173,
+      "ratings": {
+        "imdb": {
+          "value": 8.2,
+          "id": "tt22084616",
+          "url": "https://www.imdb.com/title/tt22084616/"
+        },
+        "letterboxd": {
+          "value": 4.13,
+          "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
+        },
+        "tomatoes": {
+          "value": 98,
+          "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
+        }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Sci-Fi"
+      ]
     },
     {
       "id": "UIP20241749-2026-07-31T16:50:00-Storsal",
@@ -1075,7 +1820,27 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 286,
-      "available": 276
+      "available": 276,
+      "ratings": {
+        "imdb": {
+          "value": 6.6,
+          "id": "tt32890033",
+          "url": "https://www.imdb.com/title/tt32890033/"
+        },
+        "letterboxd": {
+          "value": 3.14,
+          "url": "https://letterboxd.com/film/minions-monsters/"
+        },
+        "tomatoes": {
+          "value": 75,
+          "url": "https://www.rottentomatoes.com/m/minions_and_monsters"
+        }
+      },
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ]
     },
     {
       "id": "EDI20240688-2026-07-31T17:20:00-Kinosal",
@@ -1098,7 +1863,27 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 110,
-      "available": 31
+      "available": 31,
+      "ratings": {
+        "imdb": {
+          "value": 8.2,
+          "id": "tt22084616",
+          "url": "https://www.imdb.com/title/tt22084616/"
+        },
+        "letterboxd": {
+          "value": 4.13,
+          "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
+        },
+        "tomatoes": {
+          "value": 98,
+          "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
+        }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Sci-Fi"
+      ]
     },
     {
       "id": "EDI20240688-2026-07-31T19:45:00-Storsal",
@@ -1121,7 +1906,27 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 246,
-      "available": 166
+      "available": 166,
+      "ratings": {
+        "imdb": {
+          "value": 8.2,
+          "id": "tt22084616",
+          "url": "https://www.imdb.com/title/tt22084616/"
+        },
+        "letterboxd": {
+          "value": 4.13,
+          "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
+        },
+        "tomatoes": {
+          "value": 98,
+          "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
+        }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Sci-Fi"
+      ]
     },
     {
       "id": "UIP20241680-2026-07-31T20:30:00-Kinosal",
@@ -1144,7 +1949,27 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 108,
-      "available": 24
+      "available": 24,
+      "ratings": {
+        "imdb": {
+          "value": 8.5,
+          "id": "tt33764258",
+          "url": "https://www.imdb.com/title/tt33764258/"
+        },
+        "letterboxd": {
+          "value": 4.4,
+          "url": "https://letterboxd.com/film/the-odyssey-2026/"
+        },
+        "tomatoes": {
+          "value": 97,
+          "url": "https://www.rottentomatoes.com/m/the_odyssey_2026"
+        }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Fantasy"
+      ]
     },
     {
       "id": "UIP20241749-2026-08-01T14:50:00-Kinosal",
@@ -1168,7 +1993,27 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 110,
-      "available": 94
+      "available": 94,
+      "ratings": {
+        "imdb": {
+          "value": 6.6,
+          "id": "tt32890033",
+          "url": "https://www.imdb.com/title/tt32890033/"
+        },
+        "letterboxd": {
+          "value": 3.14,
+          "url": "https://letterboxd.com/film/minions-monsters/"
+        },
+        "tomatoes": {
+          "value": 75,
+          "url": "https://www.rottentomatoes.com/m/minions_and_monsters"
+        }
+      },
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ]
     },
     {
       "id": "EDI20260819-2026-08-01T16:00:00-Storsal",
@@ -1192,7 +2037,22 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 286,
-      "available": 264
+      "available": 264,
+      "ratings": {
+        "letterboxd": {
+          "value": 2.72,
+          "url": "https://letterboxd.com/film/moana/"
+        },
+        "tomatoes": {
+          "value": 88,
+          "url": "https://www.rottentomatoes.com/m/moana_2026"
+        }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Comedy"
+      ]
     },
     {
       "id": "EDI20240688-2026-08-01T17:15:00-Kinosal",
@@ -1215,7 +2075,27 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 110,
-      "available": 59
+      "available": 59,
+      "ratings": {
+        "imdb": {
+          "value": 8.2,
+          "id": "tt22084616",
+          "url": "https://www.imdb.com/title/tt22084616/"
+        },
+        "letterboxd": {
+          "value": 4.13,
+          "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
+        },
+        "tomatoes": {
+          "value": 98,
+          "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
+        }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Sci-Fi"
+      ]
     },
     {
       "id": "UIP20241680-2026-08-01T19:30:00-Storsal",
@@ -1238,7 +2118,27 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 246,
-      "available": 221
+      "available": 221,
+      "ratings": {
+        "imdb": {
+          "value": 8.5,
+          "id": "tt33764258",
+          "url": "https://www.imdb.com/title/tt33764258/"
+        },
+        "letterboxd": {
+          "value": 4.4,
+          "url": "https://letterboxd.com/film/the-odyssey-2026/"
+        },
+        "tomatoes": {
+          "value": 97,
+          "url": "https://www.rottentomatoes.com/m/the_odyssey_2026"
+        }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Fantasy"
+      ]
     },
     {
       "id": "EDI20240688-2026-08-01T20:30:00-Kinosal",
@@ -1261,7 +2161,27 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 110,
-      "available": 37
+      "available": 37,
+      "ratings": {
+        "imdb": {
+          "value": 8.2,
+          "id": "tt22084616",
+          "url": "https://www.imdb.com/title/tt22084616/"
+        },
+        "letterboxd": {
+          "value": 4.13,
+          "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
+        },
+        "tomatoes": {
+          "value": 98,
+          "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
+        }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Sci-Fi"
+      ]
     },
     {
       "id": "UIP20241749-2026-08-02T14:50:00-Storsal",
@@ -1285,7 +2205,27 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 286,
-      "available": 278
+      "available": 278,
+      "ratings": {
+        "imdb": {
+          "value": 6.6,
+          "id": "tt32890033",
+          "url": "https://www.imdb.com/title/tt32890033/"
+        },
+        "letterboxd": {
+          "value": 3.14,
+          "url": "https://letterboxd.com/film/minions-monsters/"
+        },
+        "tomatoes": {
+          "value": 75,
+          "url": "https://www.rottentomatoes.com/m/minions_and_monsters"
+        }
+      },
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ]
     },
     {
       "id": "EDI20240688-2026-08-02T16:00:00-Kinosal",
@@ -1308,7 +2248,27 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 110,
-      "available": 43
+      "available": 43,
+      "ratings": {
+        "imdb": {
+          "value": 8.2,
+          "id": "tt22084616",
+          "url": "https://www.imdb.com/title/tt22084616/"
+        },
+        "letterboxd": {
+          "value": 4.13,
+          "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
+        },
+        "tomatoes": {
+          "value": 98,
+          "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
+        }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Sci-Fi"
+      ]
     },
     {
       "id": "EDI20260819-2026-08-02T17:10:00-Storsal",
@@ -1332,7 +2292,22 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 286,
-      "available": 268
+      "available": 268,
+      "ratings": {
+        "letterboxd": {
+          "value": 2.72,
+          "url": "https://letterboxd.com/film/moana/"
+        },
+        "tomatoes": {
+          "value": 88,
+          "url": "https://www.rottentomatoes.com/m/moana_2026"
+        }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Comedy"
+      ]
     },
     {
       "id": "UIP20241680-2026-08-02T19:15:00-Kinosal",
@@ -1355,7 +2330,27 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 110,
-      "available": 46
+      "available": 46,
+      "ratings": {
+        "imdb": {
+          "value": 8.5,
+          "id": "tt33764258",
+          "url": "https://www.imdb.com/title/tt33764258/"
+        },
+        "letterboxd": {
+          "value": 4.4,
+          "url": "https://letterboxd.com/film/the-odyssey-2026/"
+        },
+        "tomatoes": {
+          "value": 97,
+          "url": "https://www.rottentomatoes.com/m/the_odyssey_2026"
+        }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Fantasy"
+      ]
     },
     {
       "id": "EDI20240688-2026-08-02T20:00:00-Storsal",
@@ -1378,7 +2373,27 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 243,
-      "available": 178
+      "available": 178,
+      "ratings": {
+        "imdb": {
+          "value": 8.2,
+          "id": "tt22084616",
+          "url": "https://www.imdb.com/title/tt22084616/"
+        },
+        "letterboxd": {
+          "value": 4.13,
+          "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
+        },
+        "tomatoes": {
+          "value": 98,
+          "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
+        }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Sci-Fi"
+      ]
     },
     {
       "id": "UIP20241749-2026-08-03T16:50:00-Kinosal",
@@ -1402,7 +2417,27 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 110,
-      "available": 88
+      "available": 88,
+      "ratings": {
+        "imdb": {
+          "value": 6.6,
+          "id": "tt32890033",
+          "url": "https://www.imdb.com/title/tt32890033/"
+        },
+        "letterboxd": {
+          "value": 3.14,
+          "url": "https://letterboxd.com/film/minions-monsters/"
+        },
+        "tomatoes": {
+          "value": 75,
+          "url": "https://www.rottentomatoes.com/m/minions_and_monsters"
+        }
+      },
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ]
     },
     {
       "id": "EDI20260556-2026-08-03T17:30:00-Storsal",
@@ -1426,7 +2461,27 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 286,
-      "available": 283
+      "available": 283,
+      "ratings": {
+        "imdb": {
+          "value": 5.3,
+          "id": "tt29612071",
+          "url": "https://www.imdb.com/title/tt29612071/"
+        },
+        "letterboxd": {
+          "value": 2.34,
+          "url": "https://letterboxd.com/film/charlie-the-wonderdog/"
+        },
+        "tomatoes": {
+          "value": 74,
+          "url": "https://www.rottentomatoes.com/m/charlie_the_wonderdog"
+        }
+      },
+      "genres": [
+        "Animation",
+        "Comedy",
+        "Family"
+      ]
     },
     {
       "id": "UIP20241680-2026-08-03T19:15:00-Kinosal",
@@ -1449,7 +2504,27 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 110,
-      "available": 66
+      "available": 66,
+      "ratings": {
+        "imdb": {
+          "value": 8.5,
+          "id": "tt33764258",
+          "url": "https://www.imdb.com/title/tt33764258/"
+        },
+        "letterboxd": {
+          "value": 4.4,
+          "url": "https://letterboxd.com/film/the-odyssey-2026/"
+        },
+        "tomatoes": {
+          "value": 97,
+          "url": "https://www.rottentomatoes.com/m/the_odyssey_2026"
+        }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Fantasy"
+      ]
     },
     {
       "id": "EDI20240688-2026-08-03T20:00:00-Storsal",
@@ -1472,7 +2547,27 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 246,
-      "available": 155
+      "available": 155,
+      "ratings": {
+        "imdb": {
+          "value": 8.2,
+          "id": "tt22084616",
+          "url": "https://www.imdb.com/title/tt22084616/"
+        },
+        "letterboxd": {
+          "value": 4.13,
+          "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
+        },
+        "tomatoes": {
+          "value": 98,
+          "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
+        }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Sci-Fi"
+      ]
     },
     {
       "id": "EDI20260819-2026-08-04T16:50:00-Kinosal",
@@ -1490,10 +2585,13 @@
       ],
       "showType": null,
       "kinoklubb": false,
-      "genres": null,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Comedy"
+      ],
       "director": "Thomas Kail",
       "premiere": "2026-07-10",
-      "reviews": null,
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/00979151e340722952a4e453830b15b8bb625663-1440x2057.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92700/purchase?kanal=dxf",
       "eventId": "92700",
@@ -1502,7 +2600,17 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 110,
-      "available": 81
+      "available": 81,
+      "ratings": {
+        "letterboxd": {
+          "value": 2.72,
+          "url": "https://letterboxd.com/film/moana/"
+        },
+        "tomatoes": {
+          "value": 88,
+          "url": "https://www.rottentomatoes.com/m/moana_2026"
+        }
+      }
     },
     {
       "id": "EDI20260556-2026-08-04T17:30:00-Storsal",
@@ -1521,12 +2629,12 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Barnefilm",
-        "Animasjon"
+        "Animation",
+        "Comedy",
+        "Family"
       ],
       "director": "Shea Wageman",
       "premiere": "2026-07-17",
-      "reviews": null,
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/eb6e013b74dca3128a5e20492a01d569fd5b4c13-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92701/purchase?kanal=dxf",
       "eventId": "92701",
@@ -1535,7 +2643,22 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 286,
-      "available": 278
+      "available": 278,
+      "ratings": {
+        "imdb": {
+          "value": 5.3,
+          "id": "tt29612071",
+          "url": "https://www.imdb.com/title/tt29612071/"
+        },
+        "letterboxd": {
+          "value": 2.34,
+          "url": "https://letterboxd.com/film/charlie-the-wonderdog/"
+        },
+        "tomatoes": {
+          "value": 74,
+          "url": "https://www.rottentomatoes.com/m/charlie_the_wonderdog"
+        }
+      }
     },
     {
       "id": "EDI20240688-2026-08-04T19:30:00-Kinosal",
@@ -1553,37 +2676,12 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Eventyr",
-        "Superheltfilm"
+        "Action",
+        "Adventure",
+        "Sci-Fi"
       ],
       "director": "Destin Daniel Cretton",
       "premiere": "2026-07-29",
-      "reviews": [
-        {
-          "who": "Aftenposten",
-          "dice": 5
-        },
-        {
-          "who": "VG",
-          "dice": 5
-        },
-        {
-          "who": "Stavanger Aftenblad",
-          "dice": 5
-        },
-        {
-          "who": "Moviezine",
-          "dice": 5
-        },
-        {
-          "who": "730.no",
-          "dice": 5
-        },
-        {
-          "who": "Filmkikk",
-          "dice": 5
-        }
-      ],
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/13bdf9c085531b0bb6c3b7506e847f46643782b6-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92699/purchase?kanal=dxf",
       "eventId": "92699",
@@ -1592,7 +2690,22 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 110,
-      "available": 8
+      "available": 8,
+      "ratings": {
+        "imdb": {
+          "value": 8.2,
+          "id": "tt22084616",
+          "url": "https://www.imdb.com/title/tt22084616/"
+        },
+        "letterboxd": {
+          "value": 4.13,
+          "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
+        },
+        "tomatoes": {
+          "value": 98,
+          "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
+        }
+      }
     },
     {
       "id": "EDI20260626-2026-08-04T20:15:00-Storsal",
@@ -1610,16 +2723,12 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Skrekkfilm"
+        "Fantasy",
+        "Horror",
+        "Mystery"
       ],
       "director": "Sébastien Vanicek",
       "premiere": "2026-07-10",
-      "reviews": [
-        {
-          "who": "NRK",
-          "dice": 5
-        }
-      ],
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/e55446677a8ed02cd0cfa40238c2230e94ba00df-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92731/purchase?kanal=dxf",
       "eventId": "92731",
@@ -1628,7 +2737,17 @@
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 286,
-      "available": 274
+      "available": 274,
+      "ratings": {
+        "letterboxd": {
+          "value": 3.13,
+          "url": "https://letterboxd.com/film/evil-dead-burn/"
+        },
+        "tomatoes": {
+          "value": 74,
+          "url": "https://www.rottentomatoes.com/m/evil_dead_burn"
+        }
+      }
     },
     {
       "id": "EDI20260556-2026-08-05T16:50:00-Kinosal",
@@ -1647,12 +2766,12 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Barnefilm",
-        "Animasjon"
+        "Animation",
+        "Comedy",
+        "Family"
       ],
       "director": "Shea Wageman",
       "premiere": "2026-07-17",
-      "reviews": null,
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/eb6e013b74dca3128a5e20492a01d569fd5b4c13-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92752/purchase?kanal=dxf",
       "eventId": "92752",
@@ -1660,8 +2779,23 @@
       "sold": 3,
       "eventStatus": "ok",
       "reserved": 0,
-      "capacity": 107,
-      "available": 104
+      "capacity": 110,
+      "available": 107,
+      "ratings": {
+        "imdb": {
+          "value": 5.3,
+          "id": "tt29612071",
+          "url": "https://www.imdb.com/title/tt29612071/"
+        },
+        "letterboxd": {
+          "value": 2.34,
+          "url": "https://letterboxd.com/film/charlie-the-wonderdog/"
+        },
+        "tomatoes": {
+          "value": 74,
+          "url": "https://www.rottentomatoes.com/m/charlie_the_wonderdog"
+        }
+      }
     },
     {
       "id": "UIP20241749-2026-08-05T17:30:00-Storsal",
@@ -1680,21 +2814,36 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Barnefilm",
-        "Animasjon"
+        "Animation",
+        "Adventure",
+        "Comedy"
       ],
       "director": "Pierre Coffin",
       "premiere": "2026-07-01",
-      "reviews": null,
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/f639a9cb4e51005f32fc6e6864e40753f9066914-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92743/purchase?kanal=dxf",
       "eventId": "92743",
       "promoterId": "202",
-      "sold": 15,
+      "sold": 23,
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 286,
-      "available": 271
+      "available": 263,
+      "ratings": {
+        "imdb": {
+          "value": 6.6,
+          "id": "tt32890033",
+          "url": "https://www.imdb.com/title/tt32890033/"
+        },
+        "letterboxd": {
+          "value": 3.14,
+          "url": "https://letterboxd.com/film/minions-monsters/"
+        },
+        "tomatoes": {
+          "value": 75,
+          "url": "https://www.rottentomatoes.com/m/minions_and_monsters"
+        }
+      }
     },
     {
       "id": "UIP20241680-2026-08-05T19:15:00-Kinosal",
@@ -1711,60 +2860,37 @@
       ],
       "showType": null,
       "kinoklubb": false,
-      "genres": null,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Fantasy"
+      ],
       "director": "Christopher Nolan",
       "premiere": "2026-07-17",
-      "reviews": [
-        {
-          "who": "Aftenposten",
-          "dice": 5
-        },
-        {
-          "who": "NRK Filmpolitiet",
-          "dice": 5
-        },
-        {
-          "who": "Innherred",
-          "dice": 6
-        },
-        {
-          "who": "Dagsavisen",
-          "dice": 5
-        },
-        {
-          "who": "Klassekampen",
-          "dice": 5
-        },
-        {
-          "who": "Kinomagasinet",
-          "dice": 5
-        },
-        {
-          "who": "Adresseavisa",
-          "dice": 5
-        },
-        {
-          "who": "VG",
-          "dice": 5
-        },
-        {
-          "who": "Cinema",
-          "dice": 5
-        },
-        {
-          "who": "Filmklikk",
-          "dice": 6
-        }
-      ],
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/714c2df548403065609d371f42c15d648ba1c429-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92739/purchase?kanal=dxf",
       "eventId": "92739",
       "promoterId": "202",
-      "sold": 21,
+      "sold": 56,
       "eventStatus": "ok",
       "reserved": 0,
       "capacity": 110,
-      "available": 89
+      "available": 54,
+      "ratings": {
+        "imdb": {
+          "value": 8.5,
+          "id": "tt33764258",
+          "url": "https://www.imdb.com/title/tt33764258/"
+        },
+        "letterboxd": {
+          "value": 4.4,
+          "url": "https://letterboxd.com/film/the-odyssey-2026/"
+        },
+        "tomatoes": {
+          "value": 97,
+          "url": "https://www.rottentomatoes.com/m/the_odyssey_2026"
+        }
+      }
     },
     {
       "id": "EDI20240688-2026-08-05T20:00:00-Storsal",
@@ -1782,46 +2908,36 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Eventyr",
-        "Superheltfilm"
+        "Action",
+        "Adventure",
+        "Sci-Fi"
       ],
       "director": "Destin Daniel Cretton",
       "premiere": "2026-07-29",
-      "reviews": [
-        {
-          "who": "Aftenposten",
-          "dice": 5
-        },
-        {
-          "who": "VG",
-          "dice": 5
-        },
-        {
-          "who": "Stavanger Aftenblad",
-          "dice": 5
-        },
-        {
-          "who": "Moviezine",
-          "dice": 5
-        },
-        {
-          "who": "730.no",
-          "dice": 5
-        },
-        {
-          "who": "Filmkikk",
-          "dice": 5
-        }
-      ],
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/13bdf9c085531b0bb6c3b7506e847f46643782b6-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92782/purchase?kanal=dxf",
       "eventId": "92782",
       "promoterId": "202",
-      "sold": 22,
+      "sold": 72,
       "eventStatus": "ok",
-      "reserved": 0,
+      "reserved": 2,
       "capacity": 246,
-      "available": 224
+      "available": 172,
+      "ratings": {
+        "imdb": {
+          "value": 8.2,
+          "id": "tt22084616",
+          "url": "https://www.imdb.com/title/tt22084616/"
+        },
+        "letterboxd": {
+          "value": 4.13,
+          "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
+        },
+        "tomatoes": {
+          "value": 98,
+          "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
+        }
+      }
     },
     {
       "id": "UIP20241749-2026-08-06T17:00:00-Kinosal",
@@ -1840,18 +2956,33 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Barnefilm",
-        "Animasjon"
+        "Animation",
+        "Adventure",
+        "Comedy"
       ],
       "director": "Pierre Coffin",
       "premiere": "2026-07-01",
-      "reviews": null,
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/f639a9cb4e51005f32fc6e6864e40753f9066914-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92492/purchase?kanal=dxf",
       "eventId": "92492",
       "promoterId": "202",
       "sold": 0,
       "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 6.6,
+          "id": "tt32890033",
+          "url": "https://www.imdb.com/title/tt32890033/"
+        },
+        "letterboxd": {
+          "value": 3.14,
+          "url": "https://letterboxd.com/film/minions-monsters/"
+        },
+        "tomatoes": {
+          "value": 75,
+          "url": "https://www.rottentomatoes.com/m/minions_and_monsters"
+        }
+      },
       "reserved": 0,
       "capacity": 110,
       "available": 110
@@ -1872,19 +3003,32 @@
       ],
       "showType": null,
       "kinoklubb": false,
-      "genres": null,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Comedy"
+      ],
       "director": "Thomas Kail",
       "premiere": "2026-07-10",
-      "reviews": null,
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/00979151e340722952a4e453830b15b8bb625663-1440x2057.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92772/purchase?kanal=dxf",
       "eventId": "92772",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
+      "ratings": {
+        "letterboxd": {
+          "value": 2.72,
+          "url": "https://letterboxd.com/film/moana/"
+        },
+        "tomatoes": {
+          "value": 88,
+          "url": "https://www.rottentomatoes.com/m/moana_2026"
+        }
+      },
       "reserved": 0,
-      "capacity": 286,
-      "available": 286
+      "capacity": 284,
+      "available": 282
     },
     {
       "id": "EDI20240688-2026-08-06T19:30:00-Kinosal",
@@ -1902,46 +3046,36 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Eventyr",
-        "Superheltfilm"
+        "Action",
+        "Adventure",
+        "Sci-Fi"
       ],
       "director": "Destin Daniel Cretton",
       "premiere": "2026-07-29",
-      "reviews": [
-        {
-          "who": "Aftenposten",
-          "dice": 5
-        },
-        {
-          "who": "VG",
-          "dice": 5
-        },
-        {
-          "who": "Stavanger Aftenblad",
-          "dice": 5
-        },
-        {
-          "who": "Moviezine",
-          "dice": 5
-        },
-        {
-          "who": "730.no",
-          "dice": 5
-        },
-        {
-          "who": "Filmkikk",
-          "dice": 5
-        }
-      ],
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/13bdf9c085531b0bb6c3b7506e847f46643782b6-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92491/purchase?kanal=dxf",
       "eventId": "92491",
       "promoterId": "202",
-      "sold": 4,
+      "sold": 8,
       "eventStatus": "ok",
-      "reserved": 2,
+      "ratings": {
+        "imdb": {
+          "value": 8.2,
+          "id": "tt22084616",
+          "url": "https://www.imdb.com/title/tt22084616/"
+        },
+        "letterboxd": {
+          "value": 4.13,
+          "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
+        },
+        "tomatoes": {
+          "value": 98,
+          "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
+        }
+      },
+      "reserved": 0,
       "capacity": 110,
-      "available": 104
+      "available": 102
     },
     {
       "id": "EDI20260626-2026-08-06T20:15:00-Storsal",
@@ -1959,22 +3093,28 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Skrekkfilm"
+        "Fantasy",
+        "Horror",
+        "Mystery"
       ],
       "director": "Sébastien Vanicek",
       "premiere": "2026-07-10",
-      "reviews": [
-        {
-          "who": "NRK",
-          "dice": 5
-        }
-      ],
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/e55446677a8ed02cd0cfa40238c2230e94ba00df-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92751/purchase?kanal=dxf",
       "eventId": "92751",
       "promoterId": "202",
       "sold": 0,
       "eventStatus": "ok",
+      "ratings": {
+        "letterboxd": {
+          "value": 3.13,
+          "url": "https://letterboxd.com/film/evil-dead-burn/"
+        },
+        "tomatoes": {
+          "value": 74,
+          "url": "https://www.rottentomatoes.com/m/evil_dead_burn"
+        }
+      },
       "reserved": 0,
       "capacity": 286,
       "available": 286
@@ -1996,21 +3136,27 @@
       "showType": "Norgespremiere",
       "kinoklubb": false,
       "genres": [
-        "Barnefilm",
-        "Animasjon"
+        "Animation",
+        "Action",
+        "Adventure"
       ],
       "director": "Cal Brunker",
       "premiere": "2026-08-07",
-      "reviews": null,
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/b0c96c74829fac249da479447cb08a07a4ebf7ef-1500x2123.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92494/purchase?kanal=dxf",
       "eventId": "92494",
       "promoterId": "202",
-      "sold": 4,
+      "sold": 12,
       "eventStatus": "ok",
+      "ratings": {
+        "letterboxd": {
+          "value": 3.21,
+          "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
+        }
+      },
       "reserved": 0,
       "capacity": 110,
-      "available": 106
+      "available": 98
     },
     {
       "id": "EDI20260556-2026-08-07T17:30:00-Storsal",
@@ -2029,18 +3175,33 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Barnefilm",
-        "Animasjon"
+        "Animation",
+        "Comedy",
+        "Family"
       ],
       "director": "Shea Wageman",
       "premiere": "2026-07-17",
-      "reviews": null,
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/eb6e013b74dca3128a5e20492a01d569fd5b4c13-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92496/purchase?kanal=dxf",
       "eventId": "92496",
       "promoterId": "202",
       "sold": 0,
       "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 5.3,
+          "id": "tt29612071",
+          "url": "https://www.imdb.com/title/tt29612071/"
+        },
+        "letterboxd": {
+          "value": 2.34,
+          "url": "https://letterboxd.com/film/charlie-the-wonderdog/"
+        },
+        "tomatoes": {
+          "value": 74,
+          "url": "https://www.rottentomatoes.com/m/charlie_the_wonderdog"
+        }
+      },
       "reserved": 0,
       "capacity": 286,
       "available": 286
@@ -2060,57 +3221,34 @@
       ],
       "showType": null,
       "kinoklubb": false,
-      "genres": null,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Fantasy"
+      ],
       "director": "Christopher Nolan",
       "premiere": "2026-07-17",
-      "reviews": [
-        {
-          "who": "Aftenposten",
-          "dice": 5
-        },
-        {
-          "who": "NRK Filmpolitiet",
-          "dice": 5
-        },
-        {
-          "who": "Innherred",
-          "dice": 6
-        },
-        {
-          "who": "Dagsavisen",
-          "dice": 5
-        },
-        {
-          "who": "Klassekampen",
-          "dice": 5
-        },
-        {
-          "who": "Kinomagasinet",
-          "dice": 5
-        },
-        {
-          "who": "Adresseavisa",
-          "dice": 5
-        },
-        {
-          "who": "VG",
-          "dice": 5
-        },
-        {
-          "who": "Cinema",
-          "dice": 5
-        },
-        {
-          "who": "Filmklikk",
-          "dice": 6
-        }
-      ],
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/714c2df548403065609d371f42c15d648ba1c429-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92750/purchase?kanal=dxf",
       "eventId": "92750",
       "promoterId": "202",
       "sold": 2,
       "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 8.5,
+          "id": "tt33764258",
+          "url": "https://www.imdb.com/title/tt33764258/"
+        },
+        "letterboxd": {
+          "value": 4.4,
+          "url": "https://letterboxd.com/film/the-odyssey-2026/"
+        },
+        "tomatoes": {
+          "value": 97,
+          "url": "https://www.rottentomatoes.com/m/the_odyssey_2026"
+        }
+      },
       "reserved": 0,
       "capacity": 110,
       "available": 108
@@ -2131,43 +3269,33 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Eventyr",
-        "Superheltfilm"
+        "Action",
+        "Adventure",
+        "Sci-Fi"
       ],
       "director": "Destin Daniel Cretton",
       "premiere": "2026-07-29",
-      "reviews": [
-        {
-          "who": "Aftenposten",
-          "dice": 5
-        },
-        {
-          "who": "VG",
-          "dice": 5
-        },
-        {
-          "who": "Stavanger Aftenblad",
-          "dice": 5
-        },
-        {
-          "who": "Moviezine",
-          "dice": 5
-        },
-        {
-          "who": "730.no",
-          "dice": 5
-        },
-        {
-          "who": "Filmkikk",
-          "dice": 5
-        }
-      ],
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/13bdf9c085531b0bb6c3b7506e847f46643782b6-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92783/purchase?kanal=dxf",
       "eventId": "92783",
       "promoterId": "202",
       "sold": 0,
       "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 8.2,
+          "id": "tt22084616",
+          "url": "https://www.imdb.com/title/tt22084616/"
+        },
+        "letterboxd": {
+          "value": 4.13,
+          "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
+        },
+        "tomatoes": {
+          "value": 98,
+          "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
+        }
+      },
       "reserved": 0,
       "capacity": 246,
       "available": 246
@@ -2189,21 +3317,27 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Barnefilm",
-        "Animasjon"
+        "Animation",
+        "Action",
+        "Adventure"
       ],
       "director": "Cal Brunker",
       "premiere": "2026-08-07",
-      "reviews": null,
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/b0c96c74829fac249da479447cb08a07a4ebf7ef-1500x2123.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92580/purchase?kanal=dxf",
       "eventId": "92580",
       "promoterId": "202",
-      "sold": 4,
+      "sold": 7,
       "eventStatus": "ok",
+      "ratings": {
+        "letterboxd": {
+          "value": 3.21,
+          "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
+        }
+      },
       "reserved": 0,
-      "capacity": 110,
-      "available": 106
+      "capacity": 107,
+      "available": 100
     },
     {
       "id": "EDI20260819-2026-08-08T15:30:00-Storsal",
@@ -2221,16 +3355,29 @@
       ],
       "showType": null,
       "kinoklubb": false,
-      "genres": null,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Comedy"
+      ],
       "director": "Thomas Kail",
       "premiere": "2026-07-10",
-      "reviews": null,
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/00979151e340722952a4e453830b15b8bb625663-1440x2057.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92813/purchase?kanal=dxf",
       "eventId": "92813",
       "promoterId": "202",
       "sold": 0,
       "eventStatus": "ok",
+      "ratings": {
+        "letterboxd": {
+          "value": 2.72,
+          "url": "https://letterboxd.com/film/moana/"
+        },
+        "tomatoes": {
+          "value": 88,
+          "url": "https://www.rottentomatoes.com/m/moana_2026"
+        }
+      },
       "reserved": 0,
       "capacity": 286,
       "available": 286
@@ -2252,18 +3399,33 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Barnefilm",
-        "Animasjon"
+        "Animation",
+        "Adventure",
+        "Comedy"
       ],
       "director": "Pierre Coffin",
       "premiere": "2026-07-01",
-      "reviews": null,
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/f639a9cb4e51005f32fc6e6864e40753f9066914-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92581/purchase?kanal=dxf",
       "eventId": "92581",
       "promoterId": "202",
       "sold": 0,
       "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 6.6,
+          "id": "tt32890033",
+          "url": "https://www.imdb.com/title/tt32890033/"
+        },
+        "letterboxd": {
+          "value": 3.14,
+          "url": "https://letterboxd.com/film/minions-monsters/"
+        },
+        "tomatoes": {
+          "value": 75,
+          "url": "https://www.rottentomatoes.com/m/minions_and_monsters"
+        }
+      },
       "reserved": 0,
       "capacity": 110,
       "available": 110
@@ -2283,57 +3445,34 @@
       ],
       "showType": null,
       "kinoklubb": false,
-      "genres": null,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Fantasy"
+      ],
       "director": "Christopher Nolan",
       "premiere": "2026-07-17",
-      "reviews": [
-        {
-          "who": "Aftenposten",
-          "dice": 5
-        },
-        {
-          "who": "NRK Filmpolitiet",
-          "dice": 5
-        },
-        {
-          "who": "Innherred",
-          "dice": 6
-        },
-        {
-          "who": "Dagsavisen",
-          "dice": 5
-        },
-        {
-          "who": "Klassekampen",
-          "dice": 5
-        },
-        {
-          "who": "Kinomagasinet",
-          "dice": 5
-        },
-        {
-          "who": "Adresseavisa",
-          "dice": 5
-        },
-        {
-          "who": "VG",
-          "dice": 5
-        },
-        {
-          "who": "Cinema",
-          "dice": 5
-        },
-        {
-          "who": "Filmklikk",
-          "dice": 6
-        }
-      ],
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/714c2df548403065609d371f42c15d648ba1c429-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92836/purchase?kanal=dxf",
       "eventId": "92836",
       "promoterId": "202",
       "sold": 0,
       "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 8.5,
+          "id": "tt33764258",
+          "url": "https://www.imdb.com/title/tt33764258/"
+        },
+        "letterboxd": {
+          "value": 4.4,
+          "url": "https://letterboxd.com/film/the-odyssey-2026/"
+        },
+        "tomatoes": {
+          "value": 97,
+          "url": "https://www.rottentomatoes.com/m/the_odyssey_2026"
+        }
+      },
       "reserved": 0,
       "capacity": 286,
       "available": 286
@@ -2354,46 +3493,36 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Eventyr",
-        "Superheltfilm"
+        "Action",
+        "Adventure",
+        "Sci-Fi"
       ],
       "director": "Destin Daniel Cretton",
       "premiere": "2026-07-29",
-      "reviews": [
-        {
-          "who": "Aftenposten",
-          "dice": 5
-        },
-        {
-          "who": "VG",
-          "dice": 5
-        },
-        {
-          "who": "Stavanger Aftenblad",
-          "dice": 5
-        },
-        {
-          "who": "Moviezine",
-          "dice": 5
-        },
-        {
-          "who": "730.no",
-          "dice": 5
-        },
-        {
-          "who": "Filmkikk",
-          "dice": 5
-        }
-      ],
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/13bdf9c085531b0bb6c3b7506e847f46643782b6-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92811/purchase?kanal=dxf",
       "eventId": "92811",
       "promoterId": "202",
-      "sold": 2,
+      "sold": 7,
       "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 8.2,
+          "id": "tt22084616",
+          "url": "https://www.imdb.com/title/tt22084616/"
+        },
+        "letterboxd": {
+          "value": 4.13,
+          "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
+        },
+        "tomatoes": {
+          "value": 98,
+          "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
+        }
+      },
       "reserved": 0,
       "capacity": 110,
-      "available": 108
+      "available": 103
     },
     {
       "id": "EDI20251106-2026-08-09T15:00:00-Storsal",
@@ -2412,18 +3541,24 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Barnefilm",
-        "Animasjon"
+        "Animation",
+        "Action",
+        "Adventure"
       ],
       "director": "Cal Brunker",
       "premiere": "2026-08-07",
-      "reviews": null,
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/b0c96c74829fac249da479447cb08a07a4ebf7ef-1500x2123.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92691/purchase?kanal=dxf",
       "eventId": "92691",
       "promoterId": "202",
       "sold": 0,
       "eventStatus": "ok",
+      "ratings": {
+        "letterboxd": {
+          "value": 3.21,
+          "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
+        }
+      },
       "reserved": 0,
       "capacity": 286,
       "available": 286
@@ -2444,16 +3579,29 @@
       ],
       "showType": null,
       "kinoklubb": false,
-      "genres": null,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Comedy"
+      ],
       "director": "Thomas Kail",
       "premiere": "2026-07-10",
-      "reviews": null,
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/00979151e340722952a4e453830b15b8bb625663-1440x2057.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92747/purchase?kanal=dxf",
       "eventId": "92747",
       "promoterId": "202",
       "sold": 0,
       "eventStatus": "ok",
+      "ratings": {
+        "letterboxd": {
+          "value": 2.72,
+          "url": "https://letterboxd.com/film/moana/"
+        },
+        "tomatoes": {
+          "value": 88,
+          "url": "https://www.rottentomatoes.com/m/moana_2026"
+        }
+      },
       "reserved": 0,
       "capacity": 110,
       "available": 110
@@ -2475,18 +3623,33 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Barnefilm",
-        "Animasjon"
+        "Animation",
+        "Adventure",
+        "Comedy"
       ],
       "director": "Pierre Coffin",
       "premiere": "2026-07-01",
-      "reviews": null,
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/f639a9cb4e51005f32fc6e6864e40753f9066914-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92748/purchase?kanal=dxf",
       "eventId": "92748",
       "promoterId": "202",
       "sold": 0,
       "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 6.6,
+          "id": "tt32890033",
+          "url": "https://www.imdb.com/title/tt32890033/"
+        },
+        "letterboxd": {
+          "value": 3.14,
+          "url": "https://letterboxd.com/film/minions-monsters/"
+        },
+        "tomatoes": {
+          "value": 75,
+          "url": "https://www.rottentomatoes.com/m/minions_and_monsters"
+        }
+      },
       "reserved": 0,
       "capacity": 286,
       "available": 286
@@ -2506,60 +3669,37 @@
       ],
       "showType": null,
       "kinoklubb": false,
-      "genres": null,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Fantasy"
+      ],
       "director": "Christopher Nolan",
       "premiere": "2026-07-17",
-      "reviews": [
-        {
-          "who": "Aftenposten",
-          "dice": 5
-        },
-        {
-          "who": "NRK Filmpolitiet",
-          "dice": 5
-        },
-        {
-          "who": "Innherred",
-          "dice": 6
-        },
-        {
-          "who": "Dagsavisen",
-          "dice": 5
-        },
-        {
-          "who": "Klassekampen",
-          "dice": 5
-        },
-        {
-          "who": "Kinomagasinet",
-          "dice": 5
-        },
-        {
-          "who": "Adresseavisa",
-          "dice": 5
-        },
-        {
-          "who": "VG",
-          "dice": 5
-        },
-        {
-          "who": "Cinema",
-          "dice": 5
-        },
-        {
-          "who": "Filmklikk",
-          "dice": 6
-        }
-      ],
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/714c2df548403065609d371f42c15d648ba1c429-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92745/purchase?kanal=dxf",
       "eventId": "92745",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 8.5,
+          "id": "tt33764258",
+          "url": "https://www.imdb.com/title/tt33764258/"
+        },
+        "letterboxd": {
+          "value": 4.4,
+          "url": "https://letterboxd.com/film/the-odyssey-2026/"
+        },
+        "tomatoes": {
+          "value": 97,
+          "url": "https://www.rottentomatoes.com/m/the_odyssey_2026"
+        }
+      },
       "reserved": 0,
-      "capacity": 110,
-      "available": 110
+      "capacity": 108,
+      "available": 106
     },
     {
       "id": "EDI20240688-2026-08-09T20:00:00-Storsal",
@@ -2577,43 +3717,33 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Eventyr",
-        "Superheltfilm"
+        "Action",
+        "Adventure",
+        "Sci-Fi"
       ],
       "director": "Destin Daniel Cretton",
       "premiere": "2026-07-29",
-      "reviews": [
-        {
-          "who": "Aftenposten",
-          "dice": 5
-        },
-        {
-          "who": "VG",
-          "dice": 5
-        },
-        {
-          "who": "Stavanger Aftenblad",
-          "dice": 5
-        },
-        {
-          "who": "Moviezine",
-          "dice": 5
-        },
-        {
-          "who": "730.no",
-          "dice": 5
-        },
-        {
-          "who": "Filmkikk",
-          "dice": 5
-        }
-      ],
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/13bdf9c085531b0bb6c3b7506e847f46643782b6-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92690/purchase?kanal=dxf",
       "eventId": "92690",
       "promoterId": "202",
       "sold": 3,
       "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 8.2,
+          "id": "tt22084616",
+          "url": "https://www.imdb.com/title/tt22084616/"
+        },
+        "letterboxd": {
+          "value": 4.13,
+          "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
+        },
+        "tomatoes": {
+          "value": 98,
+          "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
+        }
+      },
       "reserved": 0,
       "capacity": 286,
       "available": 283
@@ -2635,18 +3765,33 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Barnefilm",
-        "Animasjon"
+        "Animation",
+        "Adventure",
+        "Comedy"
       ],
       "director": "Pierre Coffin",
       "premiere": "2026-07-01",
-      "reviews": null,
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/f639a9cb4e51005f32fc6e6864e40753f9066914-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92834/purchase?kanal=dxf",
       "eventId": "92834",
       "promoterId": "202",
       "sold": 0,
       "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 6.6,
+          "id": "tt32890033",
+          "url": "https://www.imdb.com/title/tt32890033/"
+        },
+        "letterboxd": {
+          "value": 3.14,
+          "url": "https://letterboxd.com/film/minions-monsters/"
+        },
+        "tomatoes": {
+          "value": 75,
+          "url": "https://www.rottentomatoes.com/m/minions_and_monsters"
+        }
+      },
       "reserved": 0,
       "capacity": 286,
       "available": 286
@@ -2668,18 +3813,24 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Barnefilm",
-        "Animasjon"
+        "Animation",
+        "Action",
+        "Adventure"
       ],
       "director": "Cal Brunker",
       "premiere": "2026-08-07",
-      "reviews": null,
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/b0c96c74829fac249da479447cb08a07a4ebf7ef-1500x2123.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92787/purchase?kanal=dxf",
       "eventId": "92787",
       "promoterId": "202",
       "sold": 11,
       "eventStatus": "ok",
+      "ratings": {
+        "letterboxd": {
+          "value": 3.21,
+          "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
+        }
+      },
       "reserved": 0,
       "capacity": 108,
       "available": 97
@@ -2699,57 +3850,34 @@
       ],
       "showType": null,
       "kinoklubb": false,
-      "genres": null,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Fantasy"
+      ],
       "director": "Christopher Nolan",
       "premiere": "2026-07-17",
-      "reviews": [
-        {
-          "who": "Aftenposten",
-          "dice": 5
-        },
-        {
-          "who": "NRK Filmpolitiet",
-          "dice": 5
-        },
-        {
-          "who": "Innherred",
-          "dice": 6
-        },
-        {
-          "who": "Dagsavisen",
-          "dice": 5
-        },
-        {
-          "who": "Klassekampen",
-          "dice": 5
-        },
-        {
-          "who": "Kinomagasinet",
-          "dice": 5
-        },
-        {
-          "who": "Adresseavisa",
-          "dice": 5
-        },
-        {
-          "who": "VG",
-          "dice": 5
-        },
-        {
-          "who": "Cinema",
-          "dice": 5
-        },
-        {
-          "who": "Filmklikk",
-          "dice": 6
-        }
-      ],
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/714c2df548403065609d371f42c15d648ba1c429-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92831/purchase?kanal=dxf",
       "eventId": "92831",
       "promoterId": "202",
       "sold": 0,
       "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 8.5,
+          "id": "tt33764258",
+          "url": "https://www.imdb.com/title/tt33764258/"
+        },
+        "letterboxd": {
+          "value": 4.4,
+          "url": "https://letterboxd.com/film/the-odyssey-2026/"
+        },
+        "tomatoes": {
+          "value": 97,
+          "url": "https://www.rottentomatoes.com/m/the_odyssey_2026"
+        }
+      },
       "reserved": 0,
       "capacity": 286,
       "available": 286
@@ -2770,43 +3898,33 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Eventyr",
-        "Superheltfilm"
+        "Action",
+        "Adventure",
+        "Sci-Fi"
       ],
       "director": "Destin Daniel Cretton",
       "premiere": "2026-07-29",
-      "reviews": [
-        {
-          "who": "Aftenposten",
-          "dice": 5
-        },
-        {
-          "who": "VG",
-          "dice": 5
-        },
-        {
-          "who": "Stavanger Aftenblad",
-          "dice": 5
-        },
-        {
-          "who": "Moviezine",
-          "dice": 5
-        },
-        {
-          "who": "730.no",
-          "dice": 5
-        },
-        {
-          "who": "Filmkikk",
-          "dice": 5
-        }
-      ],
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/13bdf9c085531b0bb6c3b7506e847f46643782b6-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92720/purchase?kanal=dxf",
       "eventId": "92720",
       "promoterId": "202",
       "sold": 0,
       "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 8.2,
+          "id": "tt22084616",
+          "url": "https://www.imdb.com/title/tt22084616/"
+        },
+        "letterboxd": {
+          "value": 4.13,
+          "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
+        },
+        "tomatoes": {
+          "value": 98,
+          "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
+        }
+      },
       "reserved": 0,
       "capacity": 110,
       "available": 110
@@ -2826,57 +3944,34 @@
       ],
       "showType": "Dagkino",
       "kinoklubb": false,
-      "genres": null,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Fantasy"
+      ],
       "director": "Christopher Nolan",
       "premiere": "2026-07-17",
-      "reviews": [
-        {
-          "who": "Aftenposten",
-          "dice": 5
-        },
-        {
-          "who": "NRK Filmpolitiet",
-          "dice": 5
-        },
-        {
-          "who": "Innherred",
-          "dice": 6
-        },
-        {
-          "who": "Dagsavisen",
-          "dice": 5
-        },
-        {
-          "who": "Klassekampen",
-          "dice": 5
-        },
-        {
-          "who": "Kinomagasinet",
-          "dice": 5
-        },
-        {
-          "who": "Adresseavisa",
-          "dice": 5
-        },
-        {
-          "who": "VG",
-          "dice": 5
-        },
-        {
-          "who": "Cinema",
-          "dice": 5
-        },
-        {
-          "who": "Filmklikk",
-          "dice": 6
-        }
-      ],
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/714c2df548403065609d371f42c15d648ba1c429-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92716/purchase?kanal=dxf",
       "eventId": "92716",
       "promoterId": "202",
       "sold": 0,
       "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 8.5,
+          "id": "tt33764258",
+          "url": "https://www.imdb.com/title/tt33764258/"
+        },
+        "letterboxd": {
+          "value": 4.4,
+          "url": "https://letterboxd.com/film/the-odyssey-2026/"
+        },
+        "tomatoes": {
+          "value": 97,
+          "url": "https://www.rottentomatoes.com/m/the_odyssey_2026"
+        }
+      },
       "reserved": 0,
       "capacity": 110,
       "available": 110
@@ -2898,18 +3993,24 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Barnefilm",
-        "Animasjon"
+        "Animation",
+        "Action",
+        "Adventure"
       ],
       "director": "Cal Brunker",
       "premiere": "2026-08-07",
-      "reviews": null,
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/b0c96c74829fac249da479447cb08a07a4ebf7ef-1500x2123.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92721/purchase?kanal=dxf",
       "eventId": "92721",
       "promoterId": "202",
       "sold": 0,
       "eventStatus": "ok",
+      "ratings": {
+        "letterboxd": {
+          "value": 3.21,
+          "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
+        }
+      },
       "reserved": 0,
       "capacity": 110,
       "available": 110
@@ -2930,16 +4031,29 @@
       ],
       "showType": null,
       "kinoklubb": false,
-      "genres": null,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Comedy"
+      ],
       "director": "Thomas Kail",
       "premiere": "2026-07-10",
-      "reviews": null,
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/00979151e340722952a4e453830b15b8bb625663-1440x2057.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92837/purchase?kanal=dxf",
       "eventId": "92837",
       "promoterId": "202",
       "sold": 0,
       "eventStatus": "ok",
+      "ratings": {
+        "letterboxd": {
+          "value": 2.72,
+          "url": "https://letterboxd.com/film/moana/"
+        },
+        "tomatoes": {
+          "value": 88,
+          "url": "https://www.rottentomatoes.com/m/moana_2026"
+        }
+      },
       "reserved": 0,
       "capacity": 286,
       "available": 286
@@ -2959,60 +4073,37 @@
       ],
       "showType": null,
       "kinoklubb": false,
-      "genres": null,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Fantasy"
+      ],
       "director": "Christopher Nolan",
       "premiere": "2026-07-17",
-      "reviews": [
-        {
-          "who": "Aftenposten",
-          "dice": 5
-        },
-        {
-          "who": "NRK Filmpolitiet",
-          "dice": 5
-        },
-        {
-          "who": "Innherred",
-          "dice": 6
-        },
-        {
-          "who": "Dagsavisen",
-          "dice": 5
-        },
-        {
-          "who": "Klassekampen",
-          "dice": 5
-        },
-        {
-          "who": "Kinomagasinet",
-          "dice": 5
-        },
-        {
-          "who": "Adresseavisa",
-          "dice": 5
-        },
-        {
-          "who": "VG",
-          "dice": 5
-        },
-        {
-          "who": "Cinema",
-          "dice": 5
-        },
-        {
-          "who": "Filmklikk",
-          "dice": 6
-        }
-      ],
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/714c2df548403065609d371f42c15d648ba1c429-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92718/purchase?kanal=dxf",
       "eventId": "92718",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 8.5,
+          "id": "tt33764258",
+          "url": "https://www.imdb.com/title/tt33764258/"
+        },
+        "letterboxd": {
+          "value": 4.4,
+          "url": "https://letterboxd.com/film/the-odyssey-2026/"
+        },
+        "tomatoes": {
+          "value": 97,
+          "url": "https://www.rottentomatoes.com/m/the_odyssey_2026"
+        }
+      },
       "reserved": 0,
-      "capacity": 110,
-      "available": 110
+      "capacity": 108,
+      "available": 106
     },
     {
       "id": "EDI20240688-2026-08-11T20:00:00-Storsal",
@@ -3030,43 +4121,33 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Eventyr",
-        "Superheltfilm"
+        "Action",
+        "Adventure",
+        "Sci-Fi"
       ],
       "director": "Destin Daniel Cretton",
       "premiere": "2026-07-29",
-      "reviews": [
-        {
-          "who": "Aftenposten",
-          "dice": 5
-        },
-        {
-          "who": "VG",
-          "dice": 5
-        },
-        {
-          "who": "Stavanger Aftenblad",
-          "dice": 5
-        },
-        {
-          "who": "Moviezine",
-          "dice": 5
-        },
-        {
-          "who": "730.no",
-          "dice": 5
-        },
-        {
-          "who": "Filmkikk",
-          "dice": 5
-        }
-      ],
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/13bdf9c085531b0bb6c3b7506e847f46643782b6-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92717/purchase?kanal=dxf",
       "eventId": "92717",
       "promoterId": "202",
       "sold": 0,
       "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 8.2,
+          "id": "tt22084616",
+          "url": "https://www.imdb.com/title/tt22084616/"
+        },
+        "letterboxd": {
+          "value": 4.13,
+          "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
+        },
+        "tomatoes": {
+          "value": 98,
+          "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
+        }
+      },
       "reserved": 0,
       "capacity": 286,
       "available": 286
@@ -3088,18 +4169,33 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Barnefilm",
-        "Animasjon"
+        "Animation",
+        "Adventure",
+        "Comedy"
       ],
       "director": "Pierre Coffin",
       "premiere": "2026-07-01",
-      "reviews": null,
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/f639a9cb4e51005f32fc6e6864e40753f9066914-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92790/purchase?kanal=dxf",
       "eventId": "92790",
       "promoterId": "202",
       "sold": 0,
       "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 6.6,
+          "id": "tt32890033",
+          "url": "https://www.imdb.com/title/tt32890033/"
+        },
+        "letterboxd": {
+          "value": 3.14,
+          "url": "https://letterboxd.com/film/minions-monsters/"
+        },
+        "tomatoes": {
+          "value": 75,
+          "url": "https://www.rottentomatoes.com/m/minions_and_monsters"
+        }
+      },
       "reserved": 0,
       "capacity": 286,
       "available": 286
@@ -3121,18 +4217,24 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Barnefilm",
-        "Animasjon"
+        "Animation",
+        "Action",
+        "Adventure"
       ],
       "director": "Cal Brunker",
       "premiere": "2026-08-07",
-      "reviews": null,
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/b0c96c74829fac249da479447cb08a07a4ebf7ef-1500x2123.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92789/purchase?kanal=dxf",
       "eventId": "92789",
       "promoterId": "202",
       "sold": 0,
       "eventStatus": "ok",
+      "ratings": {
+        "letterboxd": {
+          "value": 3.21,
+          "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
+        }
+      },
       "reserved": 0,
       "capacity": 110,
       "available": 110
@@ -3152,57 +4254,34 @@
       ],
       "showType": null,
       "kinoklubb": false,
-      "genres": null,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Fantasy"
+      ],
       "director": "Christopher Nolan",
       "premiere": "2026-07-17",
-      "reviews": [
-        {
-          "who": "Aftenposten",
-          "dice": 5
-        },
-        {
-          "who": "NRK Filmpolitiet",
-          "dice": 5
-        },
-        {
-          "who": "Innherred",
-          "dice": 6
-        },
-        {
-          "who": "Dagsavisen",
-          "dice": 5
-        },
-        {
-          "who": "Klassekampen",
-          "dice": 5
-        },
-        {
-          "who": "Kinomagasinet",
-          "dice": 5
-        },
-        {
-          "who": "Adresseavisa",
-          "dice": 5
-        },
-        {
-          "who": "VG",
-          "dice": 5
-        },
-        {
-          "who": "Cinema",
-          "dice": 5
-        },
-        {
-          "who": "Filmklikk",
-          "dice": 6
-        }
-      ],
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/714c2df548403065609d371f42c15d648ba1c429-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92791/purchase?kanal=dxf",
       "eventId": "92791",
       "promoterId": "202",
       "sold": 0,
       "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 8.5,
+          "id": "tt33764258",
+          "url": "https://www.imdb.com/title/tt33764258/"
+        },
+        "letterboxd": {
+          "value": 4.4,
+          "url": "https://letterboxd.com/film/the-odyssey-2026/"
+        },
+        "tomatoes": {
+          "value": 97,
+          "url": "https://www.rottentomatoes.com/m/the_odyssey_2026"
+        }
+      },
       "reserved": 0,
       "capacity": 286,
       "available": 286
@@ -3223,43 +4302,33 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Eventyr",
-        "Superheltfilm"
+        "Action",
+        "Adventure",
+        "Sci-Fi"
       ],
       "director": "Destin Daniel Cretton",
       "premiere": "2026-07-29",
-      "reviews": [
-        {
-          "who": "Aftenposten",
-          "dice": 5
-        },
-        {
-          "who": "VG",
-          "dice": 5
-        },
-        {
-          "who": "Stavanger Aftenblad",
-          "dice": 5
-        },
-        {
-          "who": "Moviezine",
-          "dice": 5
-        },
-        {
-          "who": "730.no",
-          "dice": 5
-        },
-        {
-          "who": "Filmkikk",
-          "dice": 5
-        }
-      ],
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/13bdf9c085531b0bb6c3b7506e847f46643782b6-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92788/purchase?kanal=dxf",
       "eventId": "92788",
       "promoterId": "202",
       "sold": 0,
       "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 8.2,
+          "id": "tt22084616",
+          "url": "https://www.imdb.com/title/tt22084616/"
+        },
+        "letterboxd": {
+          "value": 4.13,
+          "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
+        },
+        "tomatoes": {
+          "value": 98,
+          "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
+        }
+      },
       "reserved": 0,
       "capacity": 110,
       "available": 110
@@ -3268,8 +4337,8 @@
       "id": "EDI20251106-2026-08-13T17:00:00-Kinosal",
       "title": "Paw Patrol: Dinofilmen",
       "screen": "Kinosal",
-      "start": "2026-08-13T17:00:00",
-      "end": "2026-08-13T18:38:00",
+      "start": "2026-08-13T16:50:00",
+      "end": "2026-08-13T18:28:00",
       "dayKey": "2026-08-13",
       "runningMinutes": 88,
       "runningLabel": "1 t. 28 min.",
@@ -3281,18 +4350,24 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Barnefilm",
-        "Animasjon"
+        "Animation",
+        "Action",
+        "Adventure"
       ],
       "director": "Cal Brunker",
       "premiere": "2026-08-07",
-      "reviews": null,
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/b0c96c74829fac249da479447cb08a07a4ebf7ef-1500x2123.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92794/purchase?kanal=dxf",
       "eventId": "92794",
       "promoterId": "202",
       "sold": 0,
       "eventStatus": "ok",
+      "ratings": {
+        "letterboxd": {
+          "value": 3.21,
+          "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
+        }
+      },
       "reserved": 0,
       "capacity": 110,
       "available": 110
@@ -3313,17 +4388,33 @@
       "showType": "Seniorkino",
       "kinoklubb": true,
       "genres": [
-        "Komedie"
+        "Comedy",
+        "Drama",
+        "Romance"
       ],
       "director": "Olivia Wilde",
       "premiere": "2026-08-14",
-      "reviews": null,
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/59ddb42978a630c065866367e38b465118602c08-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92500/purchase?kanal=dxf",
       "eventId": "92500",
       "promoterId": "202",
       "sold": 0,
       "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.8,
+          "id": "tt14173636",
+          "url": "https://www.imdb.com/title/tt14173636/"
+        },
+        "letterboxd": {
+          "value": 4.04,
+          "url": "https://letterboxd.com/film/the-invite-2026/"
+        },
+        "tomatoes": {
+          "value": 89,
+          "url": "https://www.rottentomatoes.com/m/the_invite"
+        }
+      },
       "reserved": 0,
       "capacity": 110,
       "available": 110
@@ -3344,17 +4435,33 @@
       "showType": null,
       "kinoklubb": true,
       "genres": [
-        "Komedie"
+        "Comedy",
+        "Drama",
+        "Romance"
       ],
       "director": "Olivia Wilde",
       "premiere": "2026-08-14",
-      "reviews": null,
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/59ddb42978a630c065866367e38b465118602c08-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92640/purchase?kanal=dxf",
       "eventId": "92640",
       "promoterId": "202",
       "sold": 0,
       "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.8,
+          "id": "tt14173636",
+          "url": "https://www.imdb.com/title/tt14173636/"
+        },
+        "letterboxd": {
+          "value": 4.04,
+          "url": "https://letterboxd.com/film/the-invite-2026/"
+        },
+        "tomatoes": {
+          "value": 89,
+          "url": "https://www.rottentomatoes.com/m/the_invite"
+        }
+      },
       "reserved": 0,
       "capacity": 110,
       "available": 110
@@ -3368,7 +4475,7 @@
       "dayKey": "2026-09-01",
       "runningMinutes": 139,
       "runningLabel": "2 t. 19 min.",
-      "age": null,
+      "age": "9 år",
       "tags": [
         "Norsk tekst"
       ],
@@ -3379,13 +4486,23 @@
       ],
       "director": "Cristian Mungiu",
       "premiere": "2026-09-04",
-      "reviews": null,
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/c10d96b80399813584d65ea185087e216c6bd5ed-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92498/purchase?kanal=dxf",
       "eventId": "92498",
       "promoterId": "202",
       "sold": 0,
       "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.8,
+          "id": "tt35410859",
+          "url": "https://www.imdb.com/title/tt35410859/"
+        },
+        "letterboxd": {
+          "value": 3.86,
+          "url": "https://letterboxd.com/film/fjord-2026/"
+        }
+      },
       "reserved": 0,
       "capacity": 110,
       "available": 110
