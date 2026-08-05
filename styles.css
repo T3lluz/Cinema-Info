@@ -1354,8 +1354,8 @@ a.rating-badge:hover {
 }
 
 .rating-logo.imdb {
-  width: 28px;
-  height: 14px;
+  width: 22px;
+  height: 22px;
 }
 
 .rating-logo.letterboxd {
@@ -1364,8 +1364,8 @@ a.rating-badge:hover {
 }
 
 .rating-logo.tomatoes {
-  width: 13px;
-  height: 13px;
+  width: 15px;
+  height: 15px;
   color: #fa320a;
 }
 
