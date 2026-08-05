@@ -212,8 +212,7 @@ body {
 [data-material="glass"] .show-card,
 [data-material="glass"] .movie-tile,
 [data-material="glass"] .stats-panel,
-[data-material="glass"] .stats-hero-main,
-[data-material="glass"] .stats-mini,
+[data-material="glass"] .stats-hero,
 [data-material="glass"] .settings-section,
 [data-material="glass"] .seat-strip,
 [data-material="glass"] .seat-chart,
@@ -239,8 +238,7 @@ body {
 
 [data-material="glass"] .movie-tile,
 [data-material="glass"] .stats-panel,
-[data-material="glass"] .stats-hero-main,
-[data-material="glass"] .stats-mini,
+[data-material="glass"] .stats-hero,
 [data-material="glass"] .settings-section {
   border-radius: 18px;
 }
@@ -1104,7 +1102,8 @@ h1 {
 .no-anim .stats-hero,
 .no-anim .stats-panel,
 .no-anim .bar-row,
-.no-anim .rank-row {
+.no-anim .rank-row,
+.no-anim .stats-kpi {
   animation: none;
 }
 
@@ -2198,35 +2197,31 @@ a.rating-badge:hover {
   letter-spacing: 0.03em;
 }
 
-/* —— Stats —— */
+/* —— Stats ——
+   Sold-focused week view: hero, readable day bars, top films, week history. */
 .stats-hero {
   display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 10px;
+  gap: 14px;
   margin-bottom: 12px;
-}
-
-/* On a phone the hero stacks, but its two side figures stay a pair
-   rather than becoming two more full-width cards. */
-@media (max-width: 520px) {
-  .stats-hero {
-    grid-template-columns: 1fr;
-  }
-
-  .stats-hero-side {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-.stats-hero-main {
-  padding: 18px 16px;
-  border-radius: 14px;
+  padding: 16px;
+  border-radius: 16px;
   background: linear-gradient(
     145deg,
-    color-mix(in srgb, var(--accent) 9%, var(--surface)),
-    var(--surface) 62%
+    color-mix(in srgb, var(--accent) 8%, var(--surface)),
+    var(--surface) 58%
   );
-  border: 1px solid color-mix(in srgb, var(--accent) 22%, var(--line));
+  border: 1px solid color-mix(in srgb, var(--accent) 18%, var(--line));
+}
+
+@media (min-width: 560px) {
+  .stats-hero {
+    grid-template-columns: 1.2fr 1fr;
+    align-items: end;
+  }
+}
+
+.stats-hero-primary {
+  min-width: 0;
 }
 
 .stats-hero-label {
@@ -2241,7 +2236,7 @@ a.rating-badge:hover {
 .stats-hero-value {
   margin: 6px 0 0;
   font-family: var(--mono);
-  font-size: clamp(2rem, 8vw, 2.6rem);
+  font-size: clamp(2.1rem, 8vw, 2.75rem);
   font-weight: 800;
   letter-spacing: -0.04em;
   line-height: 1;
@@ -2255,34 +2250,38 @@ a.rating-badge:hover {
   color: var(--muted);
 }
 
-.stats-hero-side {
+.stats-hero-grid {
   display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 8px;
 }
 
-.stats-mini {
-  padding: 14px;
-  border-radius: 14px;
-  background: var(--surface);
-  border: 1px solid var(--line);
+.stats-kpi {
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--bg) 55%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--line) 85%, transparent);
   display: flex;
   flex-direction: column;
   gap: 4px;
+  animation: rise 0.35s ease both;
+  animation-delay: calc(var(--i, 0) * 28ms);
 }
 
-.stats-mini-value {
+.stats-kpi-value {
   font-family: var(--mono);
-  font-size: 1.35rem;
+  font-size: 1.2rem;
   font-weight: 800;
   letter-spacing: -0.03em;
   font-variant-numeric: tabular-nums;
   line-height: 1;
 }
 
-.stats-mini-label {
-  font-size: 0.72rem;
+.stats-kpi-label {
+  font-size: 0.68rem;
   color: var(--muted);
   font-weight: 650;
+  line-height: 1.25;
 }
 
 .stats-panel {
@@ -2291,6 +2290,10 @@ a.rating-badge:hover {
   border-radius: 14px;
   background: var(--surface);
   border: 1px solid var(--line);
+}
+
+.stats-panel-muted {
+  opacity: 0.92;
 }
 
 .stats-panel-head {
@@ -2321,7 +2324,7 @@ a.rating-badge:hover {
 .top-list {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
 }
 
 /* Auto-size the label and value columns to the widest row so every
@@ -2329,12 +2332,13 @@ a.rating-badge:hover {
 @supports (grid-template-columns: subgrid) {
   .bar-list {
     display: grid;
-    grid-template-columns: minmax(72px, auto) minmax(0, 1fr) auto;
+    grid-template-columns: minmax(88px, auto) minmax(0, 1fr) auto;
   }
 }
 
 .bar-row,
-.rank-row {
+.rank-row,
+.stats-kpi {
   animation: rise 0.35s ease both;
   animation-delay: calc(var(--i, 0) * 28ms);
 }
@@ -2353,7 +2357,7 @@ a.rating-badge:hover {
 .bar-row {
   display: grid;
   /* Fallback: a fixed value column keeps rows aligned without subgrid. */
-  grid-template-columns: minmax(72px, 0.95fr) 1.6fr 44px;
+  grid-template-columns: minmax(88px, 0.95fr) 1.6fr 48px;
   gap: 10px;
   align-items: center;
 }
@@ -2363,6 +2367,59 @@ a.rating-badge:hover {
     grid-column: 1 / -1;
     grid-template-columns: subgrid;
   }
+}
+
+/* This-week day rows: same bar language as week history, but tappable. */
+button.bar-row.day-bar {
+  appearance: none;
+  font: inherit;
+  color: inherit;
+  width: 100%;
+  margin: 0;
+  padding: 8px 10px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  background: color-mix(in srgb, var(--bg) 55%, var(--surface));
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+button.bar-row.day-bar.today {
+  border-color: color-mix(in srgb, var(--accent) 40%, var(--line));
+  background: color-mix(in srgb, var(--accent-soft) 50%, var(--surface));
+}
+
+button.bar-row.day-bar.best:not(.today) .bar-value {
+  color: var(--accent);
+}
+
+button.bar-row.day-bar.empty {
+  opacity: 0.55;
+}
+
+@media (hover: hover) {
+  button.bar-row.day-bar:hover {
+    border-color: color-mix(in srgb, var(--accent) 28%, var(--line));
+  }
+}
+
+button.bar-row.day-bar:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--accent) 55%, transparent);
+  outline-offset: 2px;
+}
+
+.day-bars .bar-track {
+  height: 12px;
+}
+
+.day-bars .bar-label {
+  font-size: 0.86rem;
+}
+
+.day-bars .bar-value {
+  font-size: 0.98rem;
+  min-width: 2.5ch;
 }
 
 .bar-label-stack {
@@ -2383,14 +2440,17 @@ a.rating-badge:hover {
 }
 
 .bar-track {
+  display: block;
   height: 10px;
   border-radius: 999px;
   background: color-mix(in srgb, var(--bg) 70%, var(--line));
   border: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
   overflow: hidden;
+  min-width: 0;
 }
 
 .bar-fill {
+  display: block;
   height: 100%;
   border-radius: 999px;
   background: var(--accent);
@@ -2407,13 +2467,30 @@ a.rating-badge:hover {
 
 .rank-row {
   display: grid;
-  grid-template-columns: 24px 36px minmax(0, 1fr) auto;
+  grid-template-columns: 24px 40px minmax(0, 1fr) auto;
   gap: 10px;
   align-items: center;
-  padding: 8px 10px;
+  padding: 10px;
   border-radius: 12px;
   background: color-mix(in srgb, var(--bg) 75%, var(--surface));
   border: 1px solid var(--line);
+  cursor: pointer;
+  transition: border-color 0.15s ease, transform 0.1s ease;
+}
+
+@media (hover: hover) {
+  .rank-row:hover {
+    border-color: color-mix(in srgb, var(--accent) 30%, var(--line));
+  }
+}
+
+.rank-row:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--accent) 55%, transparent);
+  outline-offset: 2px;
+}
+
+.rank-row:active {
+  transform: scale(0.99);
 }
 
 .top-rank {
@@ -2447,18 +2524,18 @@ a.rating-badge:hover {
 }
 
 .stats-poster {
-  width: 36px;
-  height: 52px;
-  border-radius: 6px;
+  width: 40px;
+  height: 58px;
+  border-radius: 7px;
   object-fit: cover;
   background: color-mix(in srgb, var(--line) 70%, var(--surface));
   display: block;
 }
 
 .stats-poster-fallback {
-  width: 36px;
-  height: 52px;
-  border-radius: 6px;
+  width: 40px;
+  height: 58px;
+  border-radius: 7px;
   background: linear-gradient(
     145deg,
     color-mix(in srgb, var(--line) 50%, var(--surface)),
@@ -2476,7 +2553,12 @@ a.rating-badge:hover {
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 3px;
+}
+
+.rank-row .movie-ratings {
+  transform: scale(0.92);
+  transform-origin: left center;
 }
 
 .top-title {
@@ -4044,16 +4126,7 @@ a.rating-badge:hover {
   }
 
   .stats-hero {
-    grid-template-columns: 1.35fr 1fr;
-    gap: 14px;
-  }
-
-  .stats-hero-main {
-    padding: 22px 20px;
-  }
-
-  .stats-mini {
-    padding: 16px;
+    padding: 20px;
   }
 
   .pill-tab {

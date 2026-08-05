@@ -162,12 +162,14 @@ const I18N = {
     periodTotal: "{n} totalt i perioden",
     soldAvgDay: "Snitt per dag",
     soldBestDay: "Beste dag",
-    soldByDay: "Solgt per dag",
+    soldByDay: "Denne uken",
     soldByWeek: "Solgt per uke",
     topSold: "Mest solgte filmer",
     weekLabel: "Uke {n}",
     tickets: "billetter",
     noSoldData: "Ingen salgsdata ennå — trykk oppdater.",
+    statsOpenMovie: "Vis {title} under Filmer",
+    statsOpenDay: "Vis {day} under Dager",
     settingsTitle: "Innstillinger",
     settingsSubtitle: "Språk, utseende, setenumre og innslipp",
     language: "Språk",
@@ -323,12 +325,14 @@ const I18N = {
     periodTotal: "{n} total for the period",
     soldAvgDay: "Avg per day",
     soldBestDay: "Best day",
-    soldByDay: "Sold by day",
+    soldByDay: "This week",
     soldByWeek: "Sold by week",
     topSold: "Top sold movies",
     weekLabel: "Week {n}",
     tickets: "tickets",
     noSoldData: "No sales data yet — tap refresh.",
+    statsOpenMovie: "Show {title} under Movies",
+    statsOpenDay: "Show {day} under Days",
     settingsTitle: "Settings",
     settingsSubtitle: "Language, appearance, seat numbers, and admissions",
     language: "Language",
@@ -798,8 +802,28 @@ function setupSeatCharts() {
       return;
     }
 
+    const statsMovie = e.target.closest?.("[data-stats-movie]");
+    if (statsMovie) {
+      openMovieFromStats(statsMovie.dataset.statsMovie);
+      return;
+    }
+
+    const statsDay = e.target.closest?.("[data-stats-day]");
+    if (statsDay) {
+      openDayFromStats(statsDay.dataset.statsDay);
+      return;
+    }
+
     const seat = e.target.closest?.(".seat");
     if (seat) describeSeat(seat);
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key !== "Enter" && e.key !== " ") return;
+    const statsMovie = e.target.closest?.("[data-stats-movie]");
+    if (!statsMovie || e.target !== statsMovie) return;
+    e.preventDefault();
+    openMovieFromStats(statsMovie.dataset.statsMovie);
   });
 
   // Hovering reads out seats too, for anyone on a desktop box-office screen.
@@ -4188,9 +4212,12 @@ function weekRangeLabel(dayKeys) {
   return `${fd}.${fm}–${ld}.${lm}`;
 }
 
-function renderStats() {
-  if (!state?.shows) return;
-  const shows = state.shows;
+/**
+ * Sold-ticket aggregates for the Stats tab: this week's days, week history,
+ * and top films (with ratings from the Movies grouping).
+ */
+function computeStatsModel(shows) {
+  const todayKey = toDayKey(new Date());
   const hasSold = shows.some((s) => s.sold != null);
   const totalSold = shows.reduce((n, s) => n + soldOf(s), 0);
 
@@ -4200,14 +4227,12 @@ function renderStats() {
     cur.sold += soldOf(show);
     dayMap.set(show.dayKey, cur);
   }
-  const todayKey = toDayKey(new Date());
   const allDays = [...dayMap.values()].sort((a, b) =>
     a.day.localeCompare(b.day)
   );
 
   // Weekly focus: hero + day chart follow the current ISO week. If the
-  // current week has no program days (period over / not started), fall
-  // back to the closest week that does.
+  // current week has no program days, fall back to the closest that does.
   let weekInfo = isoWeekInfo(todayKey);
   let weekDays = allDays.filter(
     (d) => isoWeekInfo(d.day).key === weekInfo.key
@@ -4218,10 +4243,9 @@ function renderStats() {
     weekInfo = isoWeekInfo(anchor.day);
     weekDays = allDays.filter((d) => isoWeekInfo(d.day).key === weekInfo.key);
   }
+
   const weekSold = weekDays.reduce((n, d) => n + d.sold, 0);
 
-  // Chart the week's days up to the last one with sales, so future
-  // zero-days don't add an empty tail but mid-week gaps stay visible.
   const lastRelevant = weekDays.reduce(
     (max, d) => (d.sold > 0 && d.day > max ? d.day : max),
     todayKey
@@ -4237,8 +4261,6 @@ function renderStats() {
     ? [...daysWithSold].sort((a, b) => b.sold - a.sold)[0]
     : null;
 
-  // The week chart still covers the whole period, trimmed of the
-  // future zero-week tail.
   const lastSaleDay = allDays.reduce(
     (max, d) => (d.sold > 0 && d.day > max ? d.day : max),
     todayKey
@@ -4256,32 +4278,172 @@ function renderStats() {
     cur.days.push(row.day);
     weekMap.set(info.key, cur);
   }
-  const byWeek = [...weekMap.values()].sort((a, b) => a.key.localeCompare(b.key));
+  const byWeek = [...weekMap.values()].sort((a, b) =>
+    a.key.localeCompare(b.key)
+  );
   const maxWeekSold = Math.max(...byWeek.map((w) => w.sold), 1);
 
   const topSold = groupMovies()
     .map((m) => ({
       title: m.title,
       posterUrl: m.posterUrl,
-      soldSum: m.shows.reduce((n, s) => n + soldOf(s), 0),
+      ratings: m.ratings,
+      soldSum: m.soldSum,
       showCount: m.shows.length,
     }))
     .filter((m) => m.soldSum > 0)
     .sort((a, b) => b.soldSum - a.soldSum)
     .slice(0, 10);
 
-  // Panels and bars rise into place the first time the tab is opened;
-  // a beat that moved a number should just move it, not replay that.
+  return {
+    hasSold,
+    totalSold,
+    todayKey,
+    weekInfo,
+    weekDays,
+    weekSold,
+    byDay,
+    maxDaySold,
+    avgDay,
+    bestDay,
+    byWeek,
+    maxWeekSold,
+    topSold,
+  };
+}
+
+function openMovieFromStats(title) {
+  if (!title || !state?.shows) return;
+  const movie = groupMovies().find((m) => m.title === title);
+  expandedMovieDone.delete(title);
+  expandedMovieUpcoming.delete(title);
+  if (movie) {
+    const { done, upcoming } = movieShowSections(movie.shows, new Date());
+    if (upcoming.length) expandedMovieUpcoming.add(title);
+    else if (done.length) expandedMovieDone.add(title);
+  }
+  setActiveTab("movies");
+}
+
+function openDayFromStats(dayKey) {
+  if (!dayKey || !state?.shows?.some((s) => s.dayKey === dayKey)) return;
+  setSelectedDay(dayKey);
+  setActiveTab("day");
+}
+
+function statsKpi(valueHtml, label) {
+  return `
+    <div class="stats-kpi">
+      <span class="stats-kpi-value">${valueHtml}</span>
+      <span class="stats-kpi-label">${escapeHtml(label)}</span>
+    </div>`;
+}
+
+/** Horizontal sold-by-day rows — label, bar, count; tap opens that day. */
+function renderWeekDays(byDay, maxDaySold, todayKey) {
+  const bestSold = Math.max(...byDay.map((d) => d.sold), 0);
+  return `
+    <div class="bar-list day-bars" role="list">
+      ${byDay
+        .map((row, i) => {
+          const pct = Math.max(
+            (row.sold / maxDaySold) * 100,
+            row.sold ? 4 : 0
+          );
+          const label = shortDayLabel(row.day);
+          const isToday = row.day === todayKey;
+          const isBest = row.sold > 0 && row.sold === bestSold;
+          return `
+            <button type="button" class="bar-row day-bar${
+              isToday ? " today" : ""
+            }${isBest ? " best" : ""}${
+              row.sold ? "" : " empty"
+            }" style="--i:${i}" data-stats-day="${escapeHtml(
+              row.day
+            )}" role="listitem" aria-label="${escapeHtml(
+              t("statsOpenDay", { day: label })
+            )}">
+              <span class="bar-label">${escapeHtml(label)}</span>
+              <span class="bar-track" aria-hidden="true"><span class="bar-fill" style="width:${pct}%"></span></span>
+              <span class="bar-value">${row.sold}</span>
+            </button>`;
+        })
+        .join("")}
+    </div>`;
+}
+
+/** Rating badges without outbound links — safe inside a clickable rank row. */
+function ratingsForStats(ratings) {
+  if (!ratings || typeof ratings !== "object") return null;
+  const out = {};
+  for (const [key, value] of Object.entries(ratings)) {
+    if (value && typeof value === "object") {
+      out[key] = { ...value, url: null };
+    }
+  }
+  return out;
+}
+
+function renderTopFilmRows(topSold) {
+  if (!topSold.length) {
+    return emptyNote("trophy", "noSoldData", "empty-note soft");
+  }
+  return `<div class="top-list">
+    ${topSold
+      .map(
+        (m, i) => `
+          <div class="rank-row${
+            i < 3 ? ` medal medal-${i + 1}` : ""
+          }" style="--i:${i}" data-stats-movie="${escapeHtml(
+            m.title
+          )}" role="button" tabindex="0" aria-label="${escapeHtml(
+            t("statsOpenMovie", { title: m.title })
+          )}">
+            <span class="top-rank">${i + 1}</span>
+            ${renderPoster(m, 40, 58, "stats-poster")}
+            <div class="top-body">
+              <span class="top-title">${escapeHtml(m.title)}</span>
+              ${renderRatingBadges(ratingsForStats(m.ratings))}
+              <span class="top-sub">${escapeHtml(showsLabel(m.showCount))}</span>
+            </div>
+            <span class="top-sold">${m.soldSum}</span>
+          </div>`
+      )
+      .join("")}
+  </div>`;
+}
+
+function renderStats() {
+  if (!state?.shows) return;
+  const model = computeStatsModel(state.shows);
+
+  // Panels rise into place the first time the tab is opened; a beat that
+  // moved a number should just move it, not replay that.
   els.statsContent.classList.toggle(
     "no-anim",
     els.statsContent.dataset.rendered === "1"
   );
   els.statsContent.dataset.rendered = "1";
 
-  if (!hasSold && totalSold === 0) {
+  if (!model.hasSold && model.totalSold === 0) {
     paint(els.statsContent, viewIntro("stats", "statsTitle", "noSoldData"));
     return;
   }
+
+  const {
+    totalSold,
+    todayKey,
+    weekInfo,
+    weekDays,
+    weekSold,
+    byDay,
+    maxDaySold,
+    avgDay,
+    bestDay,
+    byWeek,
+    maxWeekSold,
+    topSold,
+  } = model;
 
   const weekMeta = weekDays.length
     ? `${t("weekLabel", { n: weekInfo.week })} · ${weekRangeLabel(
@@ -4292,25 +4454,27 @@ function renderStats() {
   paint(
     els.statsContent,
     `
-    ${viewIntro("stats", "statsTitle", "statsSubtitle")}
+    ${viewIntro(
+      "stats",
+      "statsTitle",
+      "statsSubtitle",
+      t("periodTotal", { n: formatCount(totalSold) })
+    )}
 
     <div class="stats-hero">
-      <div class="stats-hero-main">
+      <div class="stats-hero-primary">
         <p class="stats-hero-label">${escapeHtml(t("soldWeekLabel"))}</p>
         <p class="stats-hero-value">${formatCount(weekSold)}</p>
         <p class="stats-hero-sub">${escapeHtml(weekMeta)}</p>
       </div>
-      <div class="stats-hero-side">
-        <div class="stats-mini">
-          <span class="stats-mini-value">${avgDay}</span>
-          <span class="stats-mini-label">${escapeHtml(t("soldAvgDay"))}</span>
-        </div>
-        <div class="stats-mini">
-          <span class="stats-mini-value">${bestDay?.sold ?? 0}</span>
-          <span class="stats-mini-label">${escapeHtml(t("soldBestDay"))}${
-            bestDay ? ` · ${escapeHtml(shortDayLabel(bestDay.day))}` : ""
-          }</span>
-        </div>
+      <div class="stats-hero-grid">
+        ${statsKpi(String(avgDay), t("soldAvgDay"))}
+        ${statsKpi(
+          String(bestDay?.sold ?? 0),
+          bestDay
+            ? `${t("soldBestDay")} · ${shortDayLabel(bestDay.day)}`
+            : t("soldBestDay")
+        )}
       </div>
     </div>
 
@@ -4319,22 +4483,17 @@ function renderStats() {
         <h3>${icon("day", "panel-icon")}${escapeHtml(t("soldByDay"))}</h3>
         <span class="stats-panel-meta">${escapeHtml(weekMeta)}</span>
       </div>
-      <div class="bar-list">
-        ${byDay
-          .map((row, i) => {
-            const pct = Math.max((row.sold / maxDaySold) * 100, row.sold ? 4 : 0);
-            return `
-              <div class="bar-row" style="--i:${i}">
-                <span class="bar-label">${escapeHtml(shortDayLabel(row.day))}</span>
-                <div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div>
-                <span class="bar-value">${row.sold}</span>
-              </div>`;
-          })
-          .join("")}
-      </div>
+      ${renderWeekDays(byDay, maxDaySold, todayKey)}
     </section>
 
     <section class="stats-panel">
+      <div class="stats-panel-head">
+        <h3>${icon("trophy", "panel-icon")}${escapeHtml(t("topSold"))}</h3>
+      </div>
+      ${renderTopFilmRows(topSold)}
+    </section>
+
+    <section class="stats-panel stats-panel-muted">
       <div class="stats-panel-head">
         <h3>${icon("week", "panel-icon")}${escapeHtml(t("soldByWeek"))}</h3>
         <span class="stats-panel-meta">${escapeHtml(
@@ -4364,32 +4523,6 @@ function renderStats() {
           })
           .join("")}
       </div>
-    </section>
-
-    <section class="stats-panel">
-      <div class="stats-panel-head">
-        <h3>${icon("trophy", "panel-icon")}${escapeHtml(t("topSold"))}</h3>
-      </div>
-      ${
-        topSold.length
-          ? `<div class="top-list">
-              ${topSold
-                .map(
-                  (m, i) => `
-                <div class="rank-row${i < 3 ? ` medal medal-${i + 1}` : ""}" style="--i:${i}">
-                  <span class="top-rank">${i + 1}</span>
-                  ${renderPoster(m, 36, 52, "stats-poster")}
-                  <div class="top-body">
-                    <span class="top-title">${escapeHtml(m.title)}</span>
-                    <span class="top-sub">${escapeHtml(showsLabel(m.showCount))}</span>
-                  </div>
-                  <span class="top-sold">${m.soldSum}</span>
-                </div>`
-                )
-                .join("")}
-            </div>`
-          : emptyNote("trophy", "noSoldData", "empty-note soft")
-      }
     </section>
   `
   );
