@@ -3861,10 +3861,7 @@ function renderMovieTile(movie, now, index = 0) {
   const progress = doneProgress(movie.shows, now);
   const ratingBadges = renderRatingBadges(movie.ratings);
 
-  const credits = [
-    ...(Array.isArray(movie.genres) ? movie.genres.map(formatGenre) : []),
-    movie.director ? `${t("directorLabel")}: ${movie.director}` : "",
-  ]
+  const credits = (Array.isArray(movie.genres) ? movie.genres.map(formatGenre) : [])
     .filter(Boolean)
     .map((x) => escapeHtml(String(x)))
     .join(" · ");

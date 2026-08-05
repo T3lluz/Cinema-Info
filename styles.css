@@ -1747,7 +1747,7 @@ a.rating-badge:hover {
   color: var(--muted);
 }
 
-/* Genres and director under the vitals — one quiet line. */
+/* Genres under the vitals — one quiet line. */
 .movie-tile-credits {
   margin: 0;
   font-size: 0.7rem;
