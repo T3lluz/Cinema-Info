@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-05T22:36:00.807Z",
+  "updatedAt": "2026-08-05T22:41:06.871Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -31,7 +31,12 @@
           "value": 88,
           "url": "https://www.rottentomatoes.com/m/moana_2026"
         }
-      }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Comedy"
+      ]
     },
     {
       "id": "EDI20260556-2026-07-21T17:30:00-Storsal",
@@ -54,6 +59,11 @@
       "sold": null,
       "eventStatus": "unavailable",
       "ratings": {
+        "imdb": {
+          "value": 5.3,
+          "id": "tt29612071",
+          "url": "https://www.imdb.com/title/tt29612071/"
+        },
         "letterboxd": {
           "value": 2.34,
           "url": "https://letterboxd.com/film/charlie-the-wonderdog/"
@@ -62,7 +72,12 @@
           "value": 74,
           "url": "https://www.rottentomatoes.com/m/charlie_the_wonderdog"
         }
-      }
+      },
+      "genres": [
+        "Animation",
+        "Comedy",
+        "Family"
+      ]
     },
     {
       "id": "UIP20241680-2026-07-21T19:30:00-Kinosal",
@@ -100,7 +115,12 @@
           "value": 97,
           "url": "https://www.rottentomatoes.com/m/the_odyssey_2026"
         }
-      }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Fantasy"
+      ]
     },
     {
       "id": "EDI20260626-2026-07-21T20:15:00-Storsal",
@@ -133,7 +153,12 @@
           "value": 74,
           "url": "https://www.rottentomatoes.com/m/evil_dead_burn"
         }
-      }
+      },
+      "genres": [
+        "Fantasy",
+        "Horror",
+        "Mystery"
+      ]
     },
     {
       "id": "UIP20241749-2026-07-22T17:00:00-Kinosal",
@@ -172,7 +197,12 @@
           "value": 75,
           "url": "https://www.rottentomatoes.com/m/minions_and_monsters"
         }
-      }
+      },
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ]
     },
     {
       "id": "EDI20260819-2026-07-22T17:30:00-Storsal",
@@ -206,7 +236,12 @@
           "value": 88,
           "url": "https://www.rottentomatoes.com/m/moana_2026"
         }
-      }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Comedy"
+      ]
     },
     {
       "id": "UIP20241680-2026-07-22T19:30:00-Kinosal",
@@ -244,7 +279,12 @@
           "value": 97,
           "url": "https://www.rottentomatoes.com/m/the_odyssey_2026"
         }
-      }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Fantasy"
+      ]
     },
     {
       "id": "EDI20260535-2026-07-22T20:15:00-Storsal",
@@ -268,7 +308,8 @@
       "reserved": 0,
       "capacity": 246,
       "available": 243,
-      "ratings": null
+      "ratings": null,
+      "genres": null
     },
     {
       "id": "EDI20260556-2026-07-23T17:00:00-Kinosal",
@@ -294,6 +335,11 @@
       "capacity": 110,
       "available": 98,
       "ratings": {
+        "imdb": {
+          "value": 5.3,
+          "id": "tt29612071",
+          "url": "https://www.imdb.com/title/tt29612071/"
+        },
         "letterboxd": {
           "value": 2.34,
           "url": "https://letterboxd.com/film/charlie-the-wonderdog/"
@@ -302,7 +348,12 @@
           "value": 74,
           "url": "https://www.rottentomatoes.com/m/charlie_the_wonderdog"
         }
-      }
+      },
+      "genres": [
+        "Animation",
+        "Comedy",
+        "Family"
+      ]
     },
     {
       "id": "UIP20241749-2026-07-23T17:30:00-Storsal",
@@ -341,7 +392,12 @@
           "value": 75,
           "url": "https://www.rottentomatoes.com/m/minions_and_monsters"
         }
-      }
+      },
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ]
     },
     {
       "id": "UIP20241680-2026-07-23T19:30:00-Kinosal",
@@ -379,7 +435,12 @@
           "value": 97,
           "url": "https://www.rottentomatoes.com/m/the_odyssey_2026"
         }
-      }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Fantasy"
+      ]
     },
     {
       "id": "EDI20260626-2026-07-23T20:15:00-Storsal",
@@ -412,7 +473,12 @@
           "value": 74,
           "url": "https://www.rottentomatoes.com/m/evil_dead_burn"
         }
-      }
+      },
+      "genres": [
+        "Fantasy",
+        "Horror",
+        "Mystery"
+      ]
     },
     {
       "id": "UIP20241749-2026-07-24T16:50:00-Storsal",
@@ -451,7 +517,12 @@
           "value": 75,
           "url": "https://www.rottentomatoes.com/m/minions_and_monsters"
         }
-      }
+      },
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ]
     },
     {
       "id": "EDI20260819-2026-07-24T17:30:00-Kinosal",
@@ -485,7 +556,12 @@
           "value": 88,
           "url": "https://www.rottentomatoes.com/m/moana_2026"
         }
-      }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Comedy"
+      ]
     },
     {
       "id": "EDI20260535-2026-07-24T19:00:00-Storsal",
@@ -509,7 +585,8 @@
       "reserved": 0,
       "capacity": 246,
       "available": 241,
-      "ratings": null
+      "ratings": null,
+      "genres": null
     },
     {
       "id": "UIP20241680-2026-07-24T20:15:00-Kinosal",
@@ -547,7 +624,12 @@
           "value": 97,
           "url": "https://www.rottentomatoes.com/m/the_odyssey_2026"
         }
-      }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Fantasy"
+      ]
     },
     {
       "id": "EDI20260626-2026-07-24T21:15:00-Storsal",
@@ -580,7 +662,12 @@
           "value": 74,
           "url": "https://www.rottentomatoes.com/m/evil_dead_burn"
         }
-      }
+      },
+      "genres": [
+        "Fantasy",
+        "Horror",
+        "Mystery"
+      ]
     },
     {
       "id": "UIP20241749-2026-07-25T15:00:00-Kinosal",
@@ -619,7 +706,12 @@
           "value": 75,
           "url": "https://www.rottentomatoes.com/m/minions_and_monsters"
         }
-      }
+      },
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ]
     },
     {
       "id": "EDI20260556-2026-07-25T15:30:00-Storsal",
@@ -645,6 +737,11 @@
       "capacity": 286,
       "available": 235,
       "ratings": {
+        "imdb": {
+          "value": 5.3,
+          "id": "tt29612071",
+          "url": "https://www.imdb.com/title/tt29612071/"
+        },
         "letterboxd": {
           "value": 2.34,
           "url": "https://letterboxd.com/film/charlie-the-wonderdog/"
@@ -653,7 +750,12 @@
           "value": 74,
           "url": "https://www.rottentomatoes.com/m/charlie_the_wonderdog"
         }
-      }
+      },
+      "genres": [
+        "Animation",
+        "Comedy",
+        "Family"
+      ]
     },
     {
       "id": "EDI20260819-2026-07-25T17:15:00-Kinosal",
@@ -687,7 +789,12 @@
           "value": 88,
           "url": "https://www.rottentomatoes.com/m/moana_2026"
         }
-      }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Comedy"
+      ]
     },
     {
       "id": "EDI20260535-2026-07-25T18:00:00-Storsal",
@@ -711,7 +818,8 @@
       "reserved": 0,
       "capacity": 286,
       "available": 269,
-      "ratings": null
+      "ratings": null,
+      "genres": null
     },
     {
       "id": "UIP20241680-2026-07-25T20:00:00-Kinosal",
@@ -749,7 +857,12 @@
           "value": 97,
           "url": "https://www.rottentomatoes.com/m/the_odyssey_2026"
         }
-      }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Fantasy"
+      ]
     },
     {
       "id": "EDI20260626-2026-07-25T20:35:00-Storsal",
@@ -782,7 +895,12 @@
           "value": 74,
           "url": "https://www.rottentomatoes.com/m/evil_dead_burn"
         }
-      }
+      },
+      "genres": [
+        "Fantasy",
+        "Horror",
+        "Mystery"
+      ]
     },
     {
       "id": "EDI20260556-2026-07-26T14:50:00-Kinosal",
@@ -808,6 +926,11 @@
       "capacity": 110,
       "available": 110,
       "ratings": {
+        "imdb": {
+          "value": 5.3,
+          "id": "tt29612071",
+          "url": "https://www.imdb.com/title/tt29612071/"
+        },
         "letterboxd": {
           "value": 2.34,
           "url": "https://letterboxd.com/film/charlie-the-wonderdog/"
@@ -816,7 +939,12 @@
           "value": 74,
           "url": "https://www.rottentomatoes.com/m/charlie_the_wonderdog"
         }
-      }
+      },
+      "genres": [
+        "Animation",
+        "Comedy",
+        "Family"
+      ]
     },
     {
       "id": "EDI20260819-2026-07-26T15:20:00-Storsal",
@@ -850,7 +978,12 @@
           "value": 88,
           "url": "https://www.rottentomatoes.com/m/moana_2026"
         }
-      }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Comedy"
+      ]
     },
     {
       "id": "EDI20260731-2026-07-26T17:15:00-Kinosal",
@@ -889,7 +1022,12 @@
           "value": 75,
           "url": "https://www.rottentomatoes.com/m/minions_and_monsters"
         }
-      }
+      },
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ]
     },
     {
       "id": "EDI20260535-2026-07-26T18:00:00-Storsal",
@@ -913,7 +1051,8 @@
       "reserved": 0,
       "capacity": 286,
       "available": 278,
-      "ratings": null
+      "ratings": null,
+      "genres": null
     },
     {
       "id": "UIP20241680-2026-07-26T19:30:00-Kinosal",
@@ -951,7 +1090,12 @@
           "value": 97,
           "url": "https://www.rottentomatoes.com/m/the_odyssey_2026"
         }
-      }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Fantasy"
+      ]
     },
     {
       "id": "EDI20260626-2026-07-26T20:15:00-Storsal",
@@ -984,7 +1128,12 @@
           "value": 74,
           "url": "https://www.rottentomatoes.com/m/evil_dead_burn"
         }
-      }
+      },
+      "genres": [
+        "Fantasy",
+        "Horror",
+        "Mystery"
+      ]
     },
     {
       "id": "EDI20260556-2026-07-27T17:00:00-Kinosal",
@@ -1010,6 +1159,11 @@
       "capacity": 110,
       "available": 108,
       "ratings": {
+        "imdb": {
+          "value": 5.3,
+          "id": "tt29612071",
+          "url": "https://www.imdb.com/title/tt29612071/"
+        },
         "letterboxd": {
           "value": 2.34,
           "url": "https://letterboxd.com/film/charlie-the-wonderdog/"
@@ -1018,7 +1172,12 @@
           "value": 74,
           "url": "https://www.rottentomatoes.com/m/charlie_the_wonderdog"
         }
-      }
+      },
+      "genres": [
+        "Animation",
+        "Comedy",
+        "Family"
+      ]
     },
     {
       "id": "EDI20260819-2026-07-27T17:30:00-Storsal",
@@ -1052,7 +1211,12 @@
           "value": 88,
           "url": "https://www.rottentomatoes.com/m/moana_2026"
         }
-      }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Comedy"
+      ]
     },
     {
       "id": "UIP20241680-2026-07-27T19:30:00-Kinosal",
@@ -1090,7 +1254,12 @@
           "value": 97,
           "url": "https://www.rottentomatoes.com/m/the_odyssey_2026"
         }
-      }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Fantasy"
+      ]
     },
     {
       "id": "EDI20260535-2026-07-27T20:15:00-Storsal",
@@ -1114,7 +1283,8 @@
       "reserved": 0,
       "capacity": 286,
       "available": 277,
-      "ratings": null
+      "ratings": null,
+      "genres": null
     },
     {
       "id": "UIP20241749-2026-07-28T17:00:00-Kinosal",
@@ -1153,7 +1323,12 @@
           "value": 75,
           "url": "https://www.rottentomatoes.com/m/minions_and_monsters"
         }
-      }
+      },
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ]
     },
     {
       "id": "EDI20260556-2026-07-28T17:30:00-Storsal",
@@ -1179,6 +1354,11 @@
       "capacity": 246,
       "available": 240,
       "ratings": {
+        "imdb": {
+          "value": 5.3,
+          "id": "tt29612071",
+          "url": "https://www.imdb.com/title/tt29612071/"
+        },
         "letterboxd": {
           "value": 2.34,
           "url": "https://letterboxd.com/film/charlie-the-wonderdog/"
@@ -1187,7 +1367,12 @@
           "value": 74,
           "url": "https://www.rottentomatoes.com/m/charlie_the_wonderdog"
         }
-      }
+      },
+      "genres": [
+        "Animation",
+        "Comedy",
+        "Family"
+      ]
     },
     {
       "id": "UIP20241680-2026-07-28T19:30:00-Kinosal",
@@ -1225,7 +1410,12 @@
           "value": 97,
           "url": "https://www.rottentomatoes.com/m/the_odyssey_2026"
         }
-      }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Fantasy"
+      ]
     },
     {
       "id": "EDI20260626-2026-07-28T20:15:00-Storsal",
@@ -1258,7 +1448,12 @@
           "value": 74,
           "url": "https://www.rottentomatoes.com/m/evil_dead_burn"
         }
-      }
+      },
+      "genres": [
+        "Fantasy",
+        "Horror",
+        "Mystery"
+      ]
     },
     {
       "id": "EDI20260819-2026-07-29T16:50:00-Kinosal",
@@ -1292,7 +1487,12 @@
           "value": 88,
           "url": "https://www.rottentomatoes.com/m/moana_2026"
         }
-      }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Comedy"
+      ]
     },
     {
       "id": "UIP20241749-2026-07-29T17:30:00-Storsal",
@@ -1331,7 +1531,12 @@
           "value": 75,
           "url": "https://www.rottentomatoes.com/m/minions_and_monsters"
         }
-      }
+      },
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ]
     },
     {
       "id": "EDI20240688-2026-07-29T19:30:00-Kinosal",
@@ -1369,7 +1574,12 @@
           "value": 98,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
         }
-      }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Sci-Fi"
+      ]
     },
     {
       "id": "EDI20240688-2026-07-29T20:00:00-Storsal",
@@ -1407,7 +1617,12 @@
           "value": 98,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
         }
-      }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Sci-Fi"
+      ]
     },
     {
       "id": "EDI20260556-2026-07-30T17:00:00-Kinosal",
@@ -1433,6 +1648,11 @@
       "capacity": 110,
       "available": 104,
       "ratings": {
+        "imdb": {
+          "value": 5.3,
+          "id": "tt29612071",
+          "url": "https://www.imdb.com/title/tt29612071/"
+        },
         "letterboxd": {
           "value": 2.34,
           "url": "https://letterboxd.com/film/charlie-the-wonderdog/"
@@ -1441,7 +1661,12 @@
           "value": 74,
           "url": "https://www.rottentomatoes.com/m/charlie_the_wonderdog"
         }
-      }
+      },
+      "genres": [
+        "Animation",
+        "Comedy",
+        "Family"
+      ]
     },
     {
       "id": "UIP20241749-2026-07-30T17:30:00-Storsal",
@@ -1480,7 +1705,12 @@
           "value": 75,
           "url": "https://www.rottentomatoes.com/m/minions_and_monsters"
         }
-      }
+      },
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ]
     },
     {
       "id": "EDI20240688-2026-07-30T19:30:00-Kinosal",
@@ -1518,7 +1748,12 @@
           "value": 98,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
         }
-      }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Sci-Fi"
+      ]
     },
     {
       "id": "EDI20240688-2026-07-30T20:00:00-Storsal",
@@ -1556,7 +1791,12 @@
           "value": 98,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
         }
-      }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Sci-Fi"
+      ]
     },
     {
       "id": "UIP20241749-2026-07-31T16:50:00-Storsal",
@@ -1595,7 +1835,12 @@
           "value": 75,
           "url": "https://www.rottentomatoes.com/m/minions_and_monsters"
         }
-      }
+      },
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ]
     },
     {
       "id": "EDI20240688-2026-07-31T17:20:00-Kinosal",
@@ -1633,7 +1878,12 @@
           "value": 98,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
         }
-      }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Sci-Fi"
+      ]
     },
     {
       "id": "EDI20240688-2026-07-31T19:45:00-Storsal",
@@ -1671,7 +1921,12 @@
           "value": 98,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
         }
-      }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Sci-Fi"
+      ]
     },
     {
       "id": "UIP20241680-2026-07-31T20:30:00-Kinosal",
@@ -1709,7 +1964,12 @@
           "value": 97,
           "url": "https://www.rottentomatoes.com/m/the_odyssey_2026"
         }
-      }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Fantasy"
+      ]
     },
     {
       "id": "UIP20241749-2026-08-01T14:50:00-Kinosal",
@@ -1748,7 +2008,12 @@
           "value": 75,
           "url": "https://www.rottentomatoes.com/m/minions_and_monsters"
         }
-      }
+      },
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ]
     },
     {
       "id": "EDI20260819-2026-08-01T16:00:00-Storsal",
@@ -1782,7 +2047,12 @@
           "value": 88,
           "url": "https://www.rottentomatoes.com/m/moana_2026"
         }
-      }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Comedy"
+      ]
     },
     {
       "id": "EDI20240688-2026-08-01T17:15:00-Kinosal",
@@ -1820,7 +2090,12 @@
           "value": 98,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
         }
-      }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Sci-Fi"
+      ]
     },
     {
       "id": "UIP20241680-2026-08-01T19:30:00-Storsal",
@@ -1858,7 +2133,12 @@
           "value": 97,
           "url": "https://www.rottentomatoes.com/m/the_odyssey_2026"
         }
-      }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Fantasy"
+      ]
     },
     {
       "id": "EDI20240688-2026-08-01T20:30:00-Kinosal",
@@ -1896,7 +2176,12 @@
           "value": 98,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
         }
-      }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Sci-Fi"
+      ]
     },
     {
       "id": "UIP20241749-2026-08-02T14:50:00-Storsal",
@@ -1935,7 +2220,12 @@
           "value": 75,
           "url": "https://www.rottentomatoes.com/m/minions_and_monsters"
         }
-      }
+      },
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ]
     },
     {
       "id": "EDI20240688-2026-08-02T16:00:00-Kinosal",
@@ -1973,7 +2263,12 @@
           "value": 98,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
         }
-      }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Sci-Fi"
+      ]
     },
     {
       "id": "EDI20260819-2026-08-02T17:10:00-Storsal",
@@ -2007,7 +2302,12 @@
           "value": 88,
           "url": "https://www.rottentomatoes.com/m/moana_2026"
         }
-      }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Comedy"
+      ]
     },
     {
       "id": "UIP20241680-2026-08-02T19:15:00-Kinosal",
@@ -2045,7 +2345,12 @@
           "value": 97,
           "url": "https://www.rottentomatoes.com/m/the_odyssey_2026"
         }
-      }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Fantasy"
+      ]
     },
     {
       "id": "EDI20240688-2026-08-02T20:00:00-Storsal",
@@ -2083,7 +2388,12 @@
           "value": 98,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
         }
-      }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Sci-Fi"
+      ]
     },
     {
       "id": "UIP20241749-2026-08-03T16:50:00-Kinosal",
@@ -2122,7 +2432,12 @@
           "value": 75,
           "url": "https://www.rottentomatoes.com/m/minions_and_monsters"
         }
-      }
+      },
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ]
     },
     {
       "id": "EDI20260556-2026-08-03T17:30:00-Storsal",
@@ -2148,6 +2463,11 @@
       "capacity": 286,
       "available": 283,
       "ratings": {
+        "imdb": {
+          "value": 5.3,
+          "id": "tt29612071",
+          "url": "https://www.imdb.com/title/tt29612071/"
+        },
         "letterboxd": {
           "value": 2.34,
           "url": "https://letterboxd.com/film/charlie-the-wonderdog/"
@@ -2156,7 +2476,12 @@
           "value": 74,
           "url": "https://www.rottentomatoes.com/m/charlie_the_wonderdog"
         }
-      }
+      },
+      "genres": [
+        "Animation",
+        "Comedy",
+        "Family"
+      ]
     },
     {
       "id": "UIP20241680-2026-08-03T19:15:00-Kinosal",
@@ -2194,7 +2519,12 @@
           "value": 97,
           "url": "https://www.rottentomatoes.com/m/the_odyssey_2026"
         }
-      }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Fantasy"
+      ]
     },
     {
       "id": "EDI20240688-2026-08-03T20:00:00-Storsal",
@@ -2232,7 +2562,12 @@
           "value": 98,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
         }
-      }
+      },
+      "genres": [
+        "Action",
+        "Adventure",
+        "Sci-Fi"
+      ]
     },
     {
       "id": "EDI20260819-2026-08-04T16:50:00-Kinosal",
@@ -2250,7 +2585,11 @@
       ],
       "showType": null,
       "kinoklubb": false,
-      "genres": null,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Comedy"
+      ],
       "director": "Thomas Kail",
       "premiere": "2026-07-10",
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/00979151e340722952a4e453830b15b8bb625663-1440x2057.jpg?w=240&h=340&fit=crop&auto=format",
@@ -2290,8 +2629,9 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Barnefilm",
-        "Animasjon"
+        "Animation",
+        "Comedy",
+        "Family"
       ],
       "director": "Shea Wageman",
       "premiere": "2026-07-17",
@@ -2305,6 +2645,11 @@
       "capacity": 286,
       "available": 278,
       "ratings": {
+        "imdb": {
+          "value": 5.3,
+          "id": "tt29612071",
+          "url": "https://www.imdb.com/title/tt29612071/"
+        },
         "letterboxd": {
           "value": 2.34,
           "url": "https://letterboxd.com/film/charlie-the-wonderdog/"
@@ -2331,8 +2676,9 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Eventyr",
-        "Superheltfilm"
+        "Action",
+        "Adventure",
+        "Sci-Fi"
       ],
       "director": "Destin Daniel Cretton",
       "premiere": "2026-07-29",
@@ -2377,7 +2723,9 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Skrekkfilm"
+        "Fantasy",
+        "Horror",
+        "Mystery"
       ],
       "director": "Sébastien Vanicek",
       "premiere": "2026-07-10",
@@ -2418,8 +2766,9 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Barnefilm",
-        "Animasjon"
+        "Animation",
+        "Comedy",
+        "Family"
       ],
       "director": "Shea Wageman",
       "premiere": "2026-07-17",
@@ -2433,6 +2782,11 @@
       "capacity": 110,
       "available": 107,
       "ratings": {
+        "imdb": {
+          "value": 5.3,
+          "id": "tt29612071",
+          "url": "https://www.imdb.com/title/tt29612071/"
+        },
         "letterboxd": {
           "value": 2.34,
           "url": "https://letterboxd.com/film/charlie-the-wonderdog/"
@@ -2460,8 +2814,9 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Barnefilm",
-        "Animasjon"
+        "Animation",
+        "Adventure",
+        "Comedy"
       ],
       "director": "Pierre Coffin",
       "premiere": "2026-07-01",
@@ -2505,7 +2860,11 @@
       ],
       "showType": null,
       "kinoklubb": false,
-      "genres": null,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Fantasy"
+      ],
       "director": "Christopher Nolan",
       "premiere": "2026-07-17",
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/714c2df548403065609d371f42c15d648ba1c429-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
@@ -2549,8 +2908,9 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Eventyr",
-        "Superheltfilm"
+        "Action",
+        "Adventure",
+        "Sci-Fi"
       ],
       "director": "Destin Daniel Cretton",
       "premiere": "2026-07-29",
@@ -2596,8 +2956,9 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Barnefilm",
-        "Animasjon"
+        "Animation",
+        "Adventure",
+        "Comedy"
       ],
       "director": "Pierre Coffin",
       "premiere": "2026-07-01",
@@ -2642,7 +3003,11 @@
       ],
       "showType": null,
       "kinoklubb": false,
-      "genres": null,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Comedy"
+      ],
       "director": "Thomas Kail",
       "premiere": "2026-07-10",
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/00979151e340722952a4e453830b15b8bb625663-1440x2057.jpg?w=240&h=340&fit=crop&auto=format",
@@ -2681,8 +3046,9 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Eventyr",
-        "Superheltfilm"
+        "Action",
+        "Adventure",
+        "Sci-Fi"
       ],
       "director": "Destin Daniel Cretton",
       "premiere": "2026-07-29",
@@ -2727,7 +3093,9 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Skrekkfilm"
+        "Fantasy",
+        "Horror",
+        "Mystery"
       ],
       "director": "Sébastien Vanicek",
       "premiere": "2026-07-10",
@@ -2768,8 +3136,9 @@
       "showType": "Norgespremiere",
       "kinoklubb": false,
       "genres": [
-        "Barnefilm",
-        "Animasjon"
+        "Animation",
+        "Action",
+        "Adventure"
       ],
       "director": "Cal Brunker",
       "premiere": "2026-08-07",
@@ -2806,8 +3175,9 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Barnefilm",
-        "Animasjon"
+        "Animation",
+        "Comedy",
+        "Family"
       ],
       "director": "Shea Wageman",
       "premiere": "2026-07-17",
@@ -2818,6 +3188,11 @@
       "sold": 0,
       "eventStatus": "ok",
       "ratings": {
+        "imdb": {
+          "value": 5.3,
+          "id": "tt29612071",
+          "url": "https://www.imdb.com/title/tt29612071/"
+        },
         "letterboxd": {
           "value": 2.34,
           "url": "https://letterboxd.com/film/charlie-the-wonderdog/"
@@ -2846,7 +3221,11 @@
       ],
       "showType": null,
       "kinoklubb": false,
-      "genres": null,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Fantasy"
+      ],
       "director": "Christopher Nolan",
       "premiere": "2026-07-17",
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/714c2df548403065609d371f42c15d648ba1c429-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
@@ -2890,8 +3269,9 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Eventyr",
-        "Superheltfilm"
+        "Action",
+        "Adventure",
+        "Sci-Fi"
       ],
       "director": "Destin Daniel Cretton",
       "premiere": "2026-07-29",
@@ -2937,8 +3317,9 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Barnefilm",
-        "Animasjon"
+        "Animation",
+        "Action",
+        "Adventure"
       ],
       "director": "Cal Brunker",
       "premiere": "2026-08-07",
@@ -2974,7 +3355,11 @@
       ],
       "showType": null,
       "kinoklubb": false,
-      "genres": null,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Comedy"
+      ],
       "director": "Thomas Kail",
       "premiere": "2026-07-10",
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/00979151e340722952a4e453830b15b8bb625663-1440x2057.jpg?w=240&h=340&fit=crop&auto=format",
@@ -3014,8 +3399,9 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Barnefilm",
-        "Animasjon"
+        "Animation",
+        "Adventure",
+        "Comedy"
       ],
       "director": "Pierre Coffin",
       "premiere": "2026-07-01",
@@ -3059,7 +3445,11 @@
       ],
       "showType": null,
       "kinoklubb": false,
-      "genres": null,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Fantasy"
+      ],
       "director": "Christopher Nolan",
       "premiere": "2026-07-17",
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/714c2df548403065609d371f42c15d648ba1c429-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
@@ -3103,8 +3493,9 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Eventyr",
-        "Superheltfilm"
+        "Action",
+        "Adventure",
+        "Sci-Fi"
       ],
       "director": "Destin Daniel Cretton",
       "premiere": "2026-07-29",
@@ -3150,8 +3541,9 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Barnefilm",
-        "Animasjon"
+        "Animation",
+        "Action",
+        "Adventure"
       ],
       "director": "Cal Brunker",
       "premiere": "2026-08-07",
@@ -3187,7 +3579,11 @@
       ],
       "showType": null,
       "kinoklubb": false,
-      "genres": null,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Comedy"
+      ],
       "director": "Thomas Kail",
       "premiere": "2026-07-10",
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/00979151e340722952a4e453830b15b8bb625663-1440x2057.jpg?w=240&h=340&fit=crop&auto=format",
@@ -3227,8 +3623,9 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Barnefilm",
-        "Animasjon"
+        "Animation",
+        "Adventure",
+        "Comedy"
       ],
       "director": "Pierre Coffin",
       "premiere": "2026-07-01",
@@ -3272,7 +3669,11 @@
       ],
       "showType": null,
       "kinoklubb": false,
-      "genres": null,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Fantasy"
+      ],
       "director": "Christopher Nolan",
       "premiere": "2026-07-17",
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/714c2df548403065609d371f42c15d648ba1c429-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
@@ -3316,8 +3717,9 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Eventyr",
-        "Superheltfilm"
+        "Action",
+        "Adventure",
+        "Sci-Fi"
       ],
       "director": "Destin Daniel Cretton",
       "premiere": "2026-07-29",
@@ -3363,8 +3765,9 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Barnefilm",
-        "Animasjon"
+        "Animation",
+        "Adventure",
+        "Comedy"
       ],
       "director": "Pierre Coffin",
       "premiere": "2026-07-01",
@@ -3410,8 +3813,9 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Barnefilm",
-        "Animasjon"
+        "Animation",
+        "Action",
+        "Adventure"
       ],
       "director": "Cal Brunker",
       "premiere": "2026-08-07",
@@ -3446,7 +3850,11 @@
       ],
       "showType": null,
       "kinoklubb": false,
-      "genres": null,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Fantasy"
+      ],
       "director": "Christopher Nolan",
       "premiere": "2026-07-17",
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/714c2df548403065609d371f42c15d648ba1c429-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
@@ -3490,8 +3898,9 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Eventyr",
-        "Superheltfilm"
+        "Action",
+        "Adventure",
+        "Sci-Fi"
       ],
       "director": "Destin Daniel Cretton",
       "premiere": "2026-07-29",
@@ -3535,7 +3944,11 @@
       ],
       "showType": "Dagkino",
       "kinoklubb": false,
-      "genres": null,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Fantasy"
+      ],
       "director": "Christopher Nolan",
       "premiere": "2026-07-17",
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/714c2df548403065609d371f42c15d648ba1c429-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
@@ -3580,8 +3993,9 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Barnefilm",
-        "Animasjon"
+        "Animation",
+        "Action",
+        "Adventure"
       ],
       "director": "Cal Brunker",
       "premiere": "2026-08-07",
@@ -3617,7 +4031,11 @@
       ],
       "showType": null,
       "kinoklubb": false,
-      "genres": null,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Comedy"
+      ],
       "director": "Thomas Kail",
       "premiere": "2026-07-10",
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/00979151e340722952a4e453830b15b8bb625663-1440x2057.jpg?w=240&h=340&fit=crop&auto=format",
@@ -3655,7 +4073,11 @@
       ],
       "showType": null,
       "kinoklubb": false,
-      "genres": null,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Fantasy"
+      ],
       "director": "Christopher Nolan",
       "premiere": "2026-07-17",
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/714c2df548403065609d371f42c15d648ba1c429-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
@@ -3699,8 +4121,9 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Eventyr",
-        "Superheltfilm"
+        "Action",
+        "Adventure",
+        "Sci-Fi"
       ],
       "director": "Destin Daniel Cretton",
       "premiere": "2026-07-29",
@@ -3746,8 +4169,9 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Barnefilm",
-        "Animasjon"
+        "Animation",
+        "Adventure",
+        "Comedy"
       ],
       "director": "Pierre Coffin",
       "premiere": "2026-07-01",
@@ -3793,8 +4217,9 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Barnefilm",
-        "Animasjon"
+        "Animation",
+        "Action",
+        "Adventure"
       ],
       "director": "Cal Brunker",
       "premiere": "2026-08-07",
@@ -3829,7 +4254,11 @@
       ],
       "showType": null,
       "kinoklubb": false,
-      "genres": null,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Fantasy"
+      ],
       "director": "Christopher Nolan",
       "premiere": "2026-07-17",
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/714c2df548403065609d371f42c15d648ba1c429-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
@@ -3873,8 +4302,9 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Eventyr",
-        "Superheltfilm"
+        "Action",
+        "Adventure",
+        "Sci-Fi"
       ],
       "director": "Destin Daniel Cretton",
       "premiere": "2026-07-29",
@@ -3920,8 +4350,9 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Barnefilm",
-        "Animasjon"
+        "Animation",
+        "Action",
+        "Adventure"
       ],
       "director": "Cal Brunker",
       "premiere": "2026-08-07",
@@ -3957,7 +4388,9 @@
       "showType": "Seniorkino",
       "kinoklubb": true,
       "genres": [
-        "Komedie"
+        "Comedy",
+        "Drama",
+        "Romance"
       ],
       "director": "Olivia Wilde",
       "premiere": "2026-08-14",
@@ -4002,7 +4435,9 @@
       "showType": null,
       "kinoklubb": true,
       "genres": [
-        "Komedie"
+        "Comedy",
+        "Drama",
+        "Romance"
       ],
       "director": "Olivia Wilde",
       "premiere": "2026-08-14",

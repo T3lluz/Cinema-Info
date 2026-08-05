@@ -2072,6 +2072,43 @@ function formatAge(age) {
   return /alle/i.test(age) ? t("ageAll") : age;
 }
 
+/**
+ * Genres are stored in English from IMDb/OMDb. Map them to Norwegian
+ * when the app language is nb; unknown labels pass through as-is.
+ */
+const GENRE_NB = {
+  action: "Action",
+  adventure: "Eventyr",
+  animation: "Animasjon",
+  biography: "Biografi",
+  comedy: "Komedie",
+  crime: "Krim",
+  documentary: "Dokumentar",
+  drama: "Drama",
+  family: "Familie",
+  fantasy: "Fantasi",
+  "film-noir": "Film noir",
+  history: "Historie",
+  horror: "Skrekk",
+  music: "Musikk",
+  musical: "Musikal",
+  mystery: "Mysterie",
+  romance: "Romantikk",
+  "sci-fi": "Sci-fi",
+  short: "Kortfilm",
+  sport: "Sport",
+  thriller: "Thriller",
+  war: "Krig",
+  western: "Western",
+};
+
+function formatGenre(genre) {
+  const label = String(genre || "").trim();
+  if (!label) return "";
+  if (lang !== "nb") return label;
+  return GENRE_NB[label.toLowerCase()] || label;
+}
+
 function normalizeCachedShow(show) {
   return {
     ...show,
@@ -3827,7 +3864,7 @@ function renderMovieTile(movie, now, index = 0) {
   const ratingBadges = renderRatingBadges(movie.ratings);
 
   const credits = [
-    ...(Array.isArray(movie.genres) ? movie.genres : []),
+    ...(Array.isArray(movie.genres) ? movie.genres.map(formatGenre) : []),
     movie.director ? `${t("directorLabel")}: ${movie.director}` : "",
   ]
     .filter(Boolean)
