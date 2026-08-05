@@ -111,18 +111,253 @@ function pickGenres(movie) {
   return names.length ? names.slice(0, 3) : null;
 }
 
+const OMDB_API_KEY = process.env.OMDB_API_KEY || "";
+const RATING_UA =
+  "Mozilla/5.0 (compatible; CinemaInfo/1.0; +https://github.com/T3lluz/Cinema-Info)";
+
+function movieYear(movie) {
+  const direct = Number(movie?.year);
+  if (Number.isFinite(direct) && direct >= 1900) return direct;
+  const premiere = String(movie?.premiere?.premiereDate || "").slice(0, 4);
+  const fromPremiere = Number(premiere);
+  if (Number.isFinite(fromPremiere) && fromPremiere >= 1900) return fromPremiere;
+  return null;
+}
+
+/** Titles worth trying when looking a film up off Buen's Norwegian name. */
+function ratingQueryTitles(movie, showTitle) {
+  const titles = [
+    movie?.originalTitle,
+    showTitle,
+    movie?.title,
+  ]
+    .map((t) => String(t || "").trim())
+    .filter(Boolean)
+    .map((t) => t.replace(/\s*\([^)]*\)\s*$/, "").trim())
+    .filter(Boolean);
+
+  // Buen often keeps the local title; English catalogues use another.
+  const aliases = {
+    vaiana: ["Moana"],
+    "minions & monstre": ["Minions & Monsters", "Minions Monsters"],
+    "paw patrol: dinofilmen": ["PAW Patrol: The Dino Movie", "Paw Patrol Dino Movie"],
+    "superhunden charlie": ["Charlie the Wonderdog"],
+  };
+  for (const t of [...titles]) {
+    const extra = aliases[t.toLowerCase()];
+    if (extra) titles.push(...extra);
+  }
+
+  return [...new Set(titles)];
+}
+
+function slugify(title, joiner) {
+  return String(title)
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/&/g, ` ${joiner === "_" ? "and" : "and"} `)
+    .replace(/[^a-z0-9]+/g, joiner)
+    .replace(new RegExp(`^${joiner}|${joiner}$`, "g"), "");
+}
+
+function slugCandidates(title, year, joiner) {
+  const base = slugify(title, joiner);
+  if (!base) return [];
+  const noAnd = base.replaceAll(`${joiner}and${joiner}`, joiner);
+  const out = [];
+  for (const s of [base, noAnd]) {
+    if (!s) continue;
+    if (year) out.push(`${s}${joiner}${year}`);
+    out.push(s);
+  }
+  return [...new Set(out)];
+}
+
+async function fetchText(url) {
+  const res = await fetch(url, {
+    headers: { "User-Agent": RATING_UA, Accept: "text/html,application/json" },
+    redirect: "follow",
+    cache: "no-store",
+  });
+  if (!res.ok) return null;
+  return { url: res.url, text: await res.text() };
+}
+
+function parseOmdbRating(data, expectedYear) {
+  if (!data || data.Response === "False") return null;
+  if (expectedYear) {
+    const y = Number.parseInt(String(data.Year || "").slice(0, 4), 10);
+    // Remakes share a title — reject a hit from a clearly different year.
+    if (Number.isFinite(y) && Math.abs(y - expectedYear) > 1) return null;
+  }
+  const value = Number.parseFloat(data.imdbRating);
+  if (!Number.isFinite(value) || !data.imdbID) return null;
+  return {
+    value: Math.round(value * 10) / 10,
+    id: data.imdbID,
+    url: `https://www.imdb.com/title/${data.imdbID}/`,
+  };
+}
+
+async function lookupImdb(titles, year) {
+  if (!OMDB_API_KEY) return null;
+  for (const title of titles) {
+    const params = new URLSearchParams({
+      t: title,
+      apikey: OMDB_API_KEY,
+      type: "movie",
+    });
+    if (year) params.set("y", String(year));
+    try {
+      const data = await fetchJson(`https://www.omdbapi.com/?${params}`);
+      const hit = parseOmdbRating(data, year);
+      if (hit) return hit;
+    } catch {
+      /* try next title */
+    }
+  }
+  // Title search as a last resort — Norwegian names often miss exact match.
+  for (const title of titles) {
+    const params = new URLSearchParams({
+      s: title,
+      apikey: OMDB_API_KEY,
+      type: "movie",
+    });
+    if (year) params.set("y", String(year));
+    try {
+      const data = await fetchJson(`https://www.omdbapi.com/?${params}`);
+      const candidates = Array.isArray(data?.Search) ? data.Search : [];
+      const first =
+        candidates.find((c) => {
+          if (!year) return true;
+          const y = Number.parseInt(String(c.Year || "").slice(0, 4), 10);
+          return Number.isFinite(y) && Math.abs(y - year) <= 1;
+        }) || null;
+      if (!first?.imdbID) continue;
+      const detail = await fetchJson(
+        `https://www.omdbapi.com/?i=${encodeURIComponent(first.imdbID)}&apikey=${encodeURIComponent(OMDB_API_KEY)}`
+      );
+      const hit = parseOmdbRating(detail, year);
+      if (hit) return hit;
+    } catch {
+      /* try next */
+    }
+  }
+  return null;
+}
+
+function extractLbRating(html, pageUrl, expectedYear) {
+  if (expectedYear) {
+    // Letterboxd JSON-LD includes dateCreated as the release year.
+    const yearHit = html.match(
+      /"dateCreated"\s*:\s*"(\d{4})"|Release date[^<]*(\d{4})/i
+    );
+    const y = Number(yearHit?.[1] || yearHit?.[2]);
+    if (Number.isFinite(y) && Math.abs(y - expectedYear) > 1) return null;
+  }
+  const m = html.match(
+    /"aggregateRating"\s*:\s*\{[^}]*?"ratingValue"\s*:\s*([0-9.]+)[^}]*\}/
+  );
+  if (!m) return null;
+  const value = Number.parseFloat(m[1]);
+  if (!Number.isFinite(value) || value <= 0) return null;
+  return {
+    value: Math.round(value * 100) / 100,
+    url: pageUrl.split("?")[0],
+  };
+}
+
+async function lookupLetterboxd(titles, year) {
+  for (const title of titles) {
+    for (const slug of slugCandidates(title, year, "-")) {
+      try {
+        const page = await fetchText(`https://letterboxd.com/film/${slug}/`);
+        if (!page) continue;
+        const hit = extractLbRating(page.text, page.url, year);
+        if (hit) return hit;
+      } catch {
+        /* try next slug */
+      }
+    }
+  }
+  return null;
+}
+
+function extractTomatoMeter(html, pageUrl, expectedYear) {
+  if (expectedYear) {
+    const yearHit = html.match(
+      /"dateCreated"\s*:\s*"(\d{4})"|Tomatometer[\s\S]{0,200}?"(\d{4})"/i
+    );
+    // Prefer the movie name in JSON-LD when it includes (YEAR).
+    const named = html.match(/"name"\s*:\s*"([^"]*\((\d{4})\))"/);
+    const y = Number(named?.[2] || yearHit?.[1] || yearHit?.[2]);
+    if (Number.isFinite(y) && Math.abs(y - expectedYear) > 1) return null;
+  }
+  const m = html.match(
+    /"aggregateRating"\s*:\s*\{[^}]*?"name"\s*:\s*"Tomatometer"[^}]*?"ratingValue"\s*:\s*"?(\d+)"?[^}]*\}/
+  ) || html.match(
+    /"name"\s*:\s*"Tomatometer"[^}]*?"ratingValue"\s*:\s*"?(\d+)"?/
+  ) || html.match(
+    /"ratingValue"\s*:\s*"?(\d+)"?[^}]*?"name"\s*:\s*"Tomatometer"/
+  );
+  if (!m) return null;
+  const value = Number.parseInt(m[1], 10);
+  if (!Number.isFinite(value) || value < 0 || value > 100) return null;
+  return {
+    value,
+    url: pageUrl.split("?")[0],
+  };
+}
+
+async function lookupTomatoes(titles, year) {
+  for (const title of titles) {
+    for (const slug of slugCandidates(title, year, "_")) {
+      try {
+        const page = await fetchText(
+          `https://www.rottentomatoes.com/m/${slug}`
+        );
+        if (!page) continue;
+        const hit = extractTomatoMeter(page.text, page.url, year);
+        if (hit) return hit;
+      } catch {
+        /* try next slug */
+      }
+    }
+  }
+  return null;
+}
+
 /**
- * Press reviews come with Norwegian dice ratings (terningkast, 1–6).
- * Keep who said what — the app shows the average and names the papers.
+ * IMDb (OMDb), Letterboxd and Tomatometer for the Movies tab.
+ * Missing sources are omitted — not every film is listed everywhere yet.
  */
-function pickReviews(movie) {
-  const reviews = (Array.isArray(movie?.reviews) ? movie.reviews : [])
-    .map((r) => ({
-      who: String(r?.who || "").trim(),
-      dice: Number(r?.diceValue) || 0,
-    }))
-    .filter((r) => r.who && r.dice >= 1 && r.dice <= 6);
-  return reviews.length ? reviews : null;
+async function lookupRatings(movie, showTitle) {
+  const titles = ratingQueryTitles(movie, showTitle);
+  const year = movieYear(movie);
+  if (!titles.length) return null;
+
+  const [imdb, letterboxd, tomatoes] = await Promise.all([
+    lookupImdb(titles, year),
+    lookupLetterboxd(titles, year),
+    lookupTomatoes(titles, year),
+  ]);
+
+  const ratings = {};
+  if (imdb) ratings.imdb = imdb;
+  if (letterboxd) ratings.letterboxd = letterboxd;
+  if (tomatoes) ratings.tomatoes = tomatoes;
+  return Object.keys(ratings).length ? ratings : null;
+}
+
+function ratingsCacheKey(showTitle, movie) {
+  return [
+    String(showTitle || "").trim().toLowerCase(),
+    String(movie?.originalTitle || movie?.title || "")
+      .trim()
+      .toLowerCase(),
+    movie?.year || "",
+  ].join("|");
 }
 
 function dayKeyFromShowStart(value) {
@@ -314,17 +549,34 @@ async function main() {
     );
   }
 
-  const baseShows = raw
+  // One ratings lookup per distinct film — shared across every showing.
+  const ratingJobs = new Map();
+  const ratingsFor = (movie, showTitle) => {
+    const key = ratingsCacheKey(showTitle, movie);
+    if (!ratingJobs.has(key)) {
+      ratingJobs.set(
+        key,
+        lookupRatings(movie, showTitle).catch((err) => {
+          console.warn(`Ratings for ${showTitle}:`, err.message);
+          return null;
+        })
+      );
+    }
+    return ratingJobs.get(key);
+  };
+
+  const drafted = raw
     .map((show) => {
       const movie =
         movies[show.movieMainVersionId] || movies[show.movieVersionId] || null;
       const ticket = parseTicketLink(show.ticketSaleUrl);
       const start = show.showStart;
       if (!start) return null;
+      const title = show.movieTitle || movie?.title || "Ukjent film";
 
       return {
         id: `${show.movieVersionId}-${show.showStart}-${show.screenName}`,
-        title: show.movieTitle || movie?.title || "Ukjent film",
+        title,
         screen: show.screenName || "Ukjent sal",
         start,
         end: null,
@@ -340,7 +592,7 @@ async function main() {
         genres: pickGenres(movie),
         director: String(movie?.directorV2 || "").trim() || null,
         premiere: movie?.premiere?.premiereDate || null,
-        reviews: pickReviews(movie),
+        ratingsPromise: ratingsFor(movie, title),
         posterUrl: pickPosterUrl(movie),
         ticketUrl: ticket?.url || "",
         eventId: ticket?.eventId || null,
@@ -349,11 +601,42 @@ async function main() {
         eventStatus: ticket ? "pending" : "unavailable",
       };
     })
-    .filter(Boolean)
-    .sort((a, b) => a.start.localeCompare(b.start));
+    .filter(Boolean);
+
+  // Resolve every film's ratings once before enrichment batches start.
+  await Promise.all([...ratingJobs.values()]);
+  if (!OMDB_API_KEY) {
+    console.warn(
+      "OMDB_API_KEY not set — IMDb ratings skipped (Letterboxd + Tomatometer still fetched)"
+    );
+  }
+
+  const baseShows = [];
+  for (const draft of drafted) {
+    const { ratingsPromise, ...show } = draft;
+    baseShows.push({
+      ...show,
+      ratings: (await ratingsPromise) || null,
+    });
+  }
+  baseShows.sort((a, b) => a.start.localeCompare(b.start));
 
   const previousShows = loadPreviousShows();
   restoreEventIds(baseShows, previousShows);
+
+  // Keep last night's ratings when today's lookup came up empty
+  // (transient scrape miss, or a film not yet listed).
+  const prevRatingsByTitle = new Map();
+  for (const prev of previousShows) {
+    if (prev?.title && prev.ratings && !prevRatingsByTitle.has(prev.title)) {
+      prevRatingsByTitle.set(prev.title, prev.ratings);
+    }
+  }
+  for (const show of baseShows) {
+    if (!show.ratings && prevRatingsByTitle.has(show.title)) {
+      show.ratings = prevRatingsByTitle.get(show.title);
+    }
+  }
 
   const { unprogrammed, recheck } = planPreviousShows(previousShows, baseShows);
   const dropped = new Map(unprogrammed.map((s) => [s.id, "off programme"]));
@@ -387,10 +670,26 @@ async function main() {
   const kept = shows.filter((show) => !dropped.has(show.id));
   const history = previousShows.filter((show) => !dropped.has(show.id));
 
-  const merged = mergeWithHistory(kept, history).map((show) => ({
-    ...show,
-    tags: cleanTags(show.tags),
-  }));
+  const ratingsByTitle = new Map();
+  for (const show of kept) {
+    if (show.title && show.ratings && !ratingsByTitle.has(show.title)) {
+      ratingsByTitle.set(show.title, show.ratings);
+    }
+  }
+
+  const merged = mergeWithHistory(kept, history).map((show) => {
+    const { reviews: _drop, ...rest } = show;
+    const ratings =
+      rest.ratings ||
+      ratingsByTitle.get(rest.title) ||
+      prevRatingsByTitle.get(rest.title) ||
+      null;
+    return {
+      ...rest,
+      tags: cleanTags(rest.tags),
+      ratings,
+    };
+  });
   const payload = {
     updatedAt: new Date().toISOString(),
     cinema: "Buen kino",

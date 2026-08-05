@@ -1318,30 +1318,63 @@ a.tile-show:focus-visible {
   border: 1px solid color-mix(in srgb, var(--hold) 30%, transparent);
 }
 
-/* Press dice rating (terningkast): the average with a die face drawn
-   with the right number of pips; hover names who rolled what. */
-.dice-badge {
+/* IMDb / Letterboxd / Tomatometer on the Movies tab. */
+.movie-ratings {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-top: 1px;
+}
+
+.rating-badge {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  flex: 0 0 auto;
-  margin-top: 1px;
-  padding: 2px 8px;
-  border-radius: 999px;
-  background: var(--warn-soft);
-  color: color-mix(in srgb, var(--warn) 85%, var(--ink));
-  border: 1px solid color-mix(in srgb, var(--warn) 30%, transparent);
-  font-size: 0.7rem;
+  padding: 2px 7px 2px 4px;
+  border-radius: 7px;
+  background: color-mix(in srgb, var(--surface-2, var(--surface)) 88%, var(--ink));
+  border: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
+  color: var(--ink);
+  font-size: 0.72rem;
   font-weight: 800;
   font-variant-numeric: tabular-nums;
+  line-height: 1;
+  text-decoration: none;
   white-space: nowrap;
-  cursor: help;
 }
 
-.dice-glyph {
+a.rating-badge:hover {
+  border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+}
+
+.rating-logo {
+  flex: 0 0 auto;
+  display: block;
+}
+
+.rating-logo.imdb {
+  width: 28px;
+  height: 14px;
+}
+
+.rating-logo.letterboxd {
+  width: 15px;
+  height: 15px;
+}
+
+.rating-logo.tomatoes {
   width: 13px;
   height: 13px;
-  flex: 0 0 auto;
+  color: #fa320a;
+}
+
+.rating-badge.tomatoes.rotten .rating-logo.tomatoes {
+  color: #0d7c41;
+}
+
+.rating-value {
+  letter-spacing: -0.02em;
 }
 
 .badge-check {

@@ -176,8 +176,9 @@ const I18N = {
     materialSubtle: "Subtil",
     materialGlass: "Glass",
     directorLabel: "Regi",
-    diceLabel: "Terningkast {avg}",
-    diceAria: "Terningkast {avg} av 6, basert på {n} anmeldelser",
+    ratingImdbAria: "IMDb-vurdering {n} av 10",
+    ratingLetterboxdAria: "Letterboxd-vurdering {n} av 5",
+    ratingTomatoesAria: "Tomatometer {n} prosent",
     "showType.Norgespremiere": "Norgespremiere",
     "showType.Dagkino": "Dagkino",
     "showType.Seniorkino": "Seniorkino",
@@ -330,8 +331,9 @@ const I18N = {
     materialSubtle: "Subtle",
     materialGlass: "Glass",
     directorLabel: "Director",
-    diceLabel: "Dice {avg}",
-    diceAria: "Dice rating {avg} of 6, based on {n} reviews",
+    ratingImdbAria: "IMDb rating {n} out of 10",
+    ratingLetterboxdAria: "Letterboxd rating {n} out of 5",
+    ratingTomatoesAria: "Tomatometer {n} percent",
     "showType.Norgespremiere": "Norway premiere",
     "showType.Dagkino": "Daytime cinema",
     "showType.Seniorkino": "Senior cinema",
@@ -3490,43 +3492,69 @@ function specialBadges(show) {
   return bits.join("");
 }
 
-/** Average press dice rating (terningkast 1–6), with who said what. */
-function diceInfo(movie) {
-  const reviews = Array.isArray(movie.reviews) ? movie.reviews : [];
-  if (!reviews.length) return null;
-  const avg = reviews.reduce((n, r) => n + (Number(r.dice) || 0), 0) / reviews.length;
-  const rounded = Math.round(avg * 10) / 10;
-  return {
-    value: Math.max(1, Math.min(6, Math.round(avg))),
-    label: rounded.toLocaleString(lang === "en" ? "en-GB" : "nb-NO"),
-    count: reviews.length,
-    detail: reviews.map((r) => `${r.who}: ${r.dice}`).join(" · "),
-  };
+/** Compact IMDb / Letterboxd / Tomatometer marks for the Movies tab. */
+function ratingLogo(kind) {
+  if (kind === "imdb") {
+    return `<svg class="rating-logo imdb" viewBox="0 0 64 32" aria-hidden="true"><rect width="64" height="32" rx="6" fill="#f5c518"/><text x="32" y="22" text-anchor="middle" font-size="16" font-weight="800" font-family="Arial Black, Arial, sans-serif" fill="#1a1a1a">IMDb</text></svg>`;
+  }
+  if (kind === "letterboxd") {
+    return `<svg class="rating-logo letterboxd" viewBox="0 0 24 24" aria-hidden="true"><circle cx="7" cy="12" r="4.2" fill="#ff8000"/><circle cx="12" cy="12" r="4.2" fill="#00e054"/><circle cx="17" cy="12" r="4.2" fill="#40bcf4"/></svg>`;
+  }
+  // Fresh tomato by default; caller adds .rotten when under 60%.
+  return `<svg class="rating-logo tomatoes" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3.2c.7 1.4 2.2 2.3 3.9 2.3.3 0 .6 0 .9-.1-.6 1-.7 2.2-.2 3.3C15.4 8 14 7.4 12.5 7.4c-1.2 0-2.3.4-3.2 1.1.3-1.4 0-2.9-1-4 .4.1.9.1 1.3.1 1.3 0 2.5-.5 3.4-1.4z"/><path fill="currentColor" d="M12 8.2c4.3 0 7.8 3.2 7.8 7.2S16.3 22.6 12 22.6 4.2 19.4 4.2 15.4 7.7 8.2 12 8.2z"/></svg>`;
 }
 
-/** A die face with the right number of pips, drawn inline. */
-function diceGlyph(n, className = "dice-glyph") {
-  const P = {
-    tl: [7.6, 7.6],
-    tr: [16.4, 7.6],
-    ml: [7.6, 12],
-    mr: [16.4, 12],
-    c: [12, 12],
-    bl: [7.6, 16.4],
-    br: [16.4, 16.4],
-  };
-  const sets = {
-    1: ["c"],
-    2: ["tl", "br"],
-    3: ["tl", "c", "br"],
-    4: ["tl", "tr", "bl", "br"],
-    5: ["tl", "tr", "c", "bl", "br"],
-    6: ["tl", "tr", "ml", "mr", "bl", "br"],
-  };
-  const pips = (sets[n] || sets[6])
-    .map((k) => `<circle cx="${P[k][0]}" cy="${P[k][1]}" r="2"/>`)
-    .join("");
-  return `<svg class="${className}" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><g fill="currentColor">${pips}</g></svg>`;
+function formatRatingValue(value, digits = 1) {
+  const n = Number(value);
+  if (!Number.isFinite(n)) return "";
+  return n.toLocaleString(lang === "en" ? "en-GB" : "nb-NO", {
+    minimumFractionDigits: Number.isInteger(n) ? 0 : digits,
+    maximumFractionDigits: digits,
+  });
+}
+
+function renderRatingBadges(ratings) {
+  if (!ratings || typeof ratings !== "object") return "";
+  const bits = [];
+
+  if (ratings.imdb?.value != null) {
+    const label = formatRatingValue(ratings.imdb.value, 1);
+    const body = `${ratingLogo("imdb")}<span class="rating-value">${escapeHtml(label)}</span>`;
+    const aria = t("ratingImdbAria", { n: label });
+    bits.push(
+      ratings.imdb.url
+        ? `<a class="rating-badge imdb" href="${escapeHtml(ratings.imdb.url)}" target="_blank" rel="noopener" aria-label="${escapeHtml(aria)}">${body}</a>`
+        : `<span class="rating-badge imdb" role="img" aria-label="${escapeHtml(aria)}">${body}</span>`
+    );
+  }
+
+  if (ratings.letterboxd?.value != null) {
+    const label = formatRatingValue(ratings.letterboxd.value, 2);
+    const body = `${ratingLogo("letterboxd")}<span class="rating-value">${escapeHtml(label)}</span>`;
+    const aria = t("ratingLetterboxdAria", { n: label });
+    bits.push(
+      ratings.letterboxd.url
+        ? `<a class="rating-badge letterboxd" href="${escapeHtml(ratings.letterboxd.url)}" target="_blank" rel="noopener" aria-label="${escapeHtml(aria)}">${body}</a>`
+        : `<span class="rating-badge letterboxd" role="img" aria-label="${escapeHtml(aria)}">${body}</span>`
+    );
+  }
+
+  if (ratings.tomatoes?.value != null) {
+    const score = Math.round(Number(ratings.tomatoes.value));
+    if (Number.isFinite(score)) {
+      const rotten = score < 60 ? " rotten" : "";
+      const label = `${score}%`;
+      const body = `${ratingLogo("tomatoes")}<span class="rating-value">${escapeHtml(label)}</span>`;
+      const aria = t("ratingTomatoesAria", { n: String(score) });
+      bits.push(
+        ratings.tomatoes.url
+          ? `<a class="rating-badge tomatoes${rotten}" href="${escapeHtml(ratings.tomatoes.url)}" target="_blank" rel="noopener" aria-label="${escapeHtml(aria)}">${body}</a>`
+          : `<span class="rating-badge tomatoes${rotten}" role="img" aria-label="${escapeHtml(aria)}">${body}</span>`
+      );
+    }
+  }
+
+  return bits.length ? `<div class="movie-ratings">${bits.join("")}</div>` : "";
 }
 
 function renderShowCard(show, now, index = 0, opts = {}) {
@@ -3711,7 +3739,7 @@ function groupMovies() {
         tags: show.tags || [],
         genres: show.genres || null,
         director: show.director || null,
-        reviews: show.reviews || null,
+        ratings: show.ratings || null,
         shows: [],
       });
     }
@@ -3722,7 +3750,7 @@ function groupMovies() {
     // showing of the same film that has them.
     if (!movie.genres && show.genres) movie.genres = show.genres;
     if (!movie.director && show.director) movie.director = show.director;
-    if (!movie.reviews && show.reviews) movie.reviews = show.reviews;
+    if (!movie.ratings && show.ratings) movie.ratings = show.ratings;
   }
 
   const now = new Date();
@@ -3793,15 +3821,7 @@ function renderMovieTile(movie, now, index = 0) {
     .join(" · ");
 
   const progress = doneProgress(movie.shows, now);
-
-  const dice = diceInfo(movie);
-  const diceBadge = dice
-    ? `<span class="dice-badge" role="img" title="${escapeHtml(
-        dice.detail
-      )}" aria-label="${escapeHtml(
-        t("diceAria", { avg: dice.label, n: dice.count })
-      )}">${diceGlyph(dice.value)}${escapeHtml(dice.label)}</span>`
-    : "";
+  const ratingBadges = renderRatingBadges(movie.ratings);
 
   const credits = [
     ...(Array.isArray(movie.genres) ? movie.genres : []),
@@ -3852,9 +3872,9 @@ function renderMovieTile(movie, now, index = 0) {
       <div class="movie-tile-body">
         <div class="movie-tile-head">
           <h3 class="movie-tile-title">${escapeHtml(movie.title)}</h3>
-          ${diceBadge}
           ${doneTag(movie.shows, { allLabel: "done", now })}
         </div>
+        ${ratingBadges}
         <p class="movie-tile-meta">${meta}</p>
         ${credits ? `<p class="movie-tile-credits">${credits}</p>` : ""}
         <div class="tile-shows">${times}</div>
