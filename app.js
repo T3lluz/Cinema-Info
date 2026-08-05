@@ -3849,11 +3849,9 @@ function renderMovies() {
 function renderMovieTile(movie, now, index = 0) {
   const duration = formatRunning(movie.runningLabel, movie.runningMinutes);
 
-  const spoken = spokenLanguage(movie.tags);
   const meta = [
     formatAge(movie.age),
     duration,
-    spoken ? t(spoken === "nb" ? "spokenNorwegian" : "spokenEnglish") : "",
     showsLabel(movie.shows.length),
   ]
     .filter(Boolean)
