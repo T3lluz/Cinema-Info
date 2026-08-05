@@ -284,23 +284,24 @@ async function lookupLetterboxd(titles, year) {
   return null;
 }
 
-function extractTomatoMeter(html, pageUrl, expectedYear) {
+/** Rotten Tomatoes audience score (not the critics Tomatometer). */
+function extractAudienceScore(html, pageUrl, expectedYear) {
   if (expectedYear) {
-    const yearHit = html.match(
-      /"dateCreated"\s*:\s*"(\d{4})"|Tomatometer[\s\S]{0,200}?"(\d{4})"/i
-    );
+    const yearHit = html.match(/"dateCreated"\s*:\s*"(\d{4})"/i);
     // Prefer the movie name in JSON-LD when it includes (YEAR).
     const named = html.match(/"name"\s*:\s*"([^"]*\((\d{4})\))"/);
-    const y = Number(named?.[2] || yearHit?.[1] || yearHit?.[2]);
+    const y = Number(named?.[2] || yearHit?.[1]);
     if (Number.isFinite(y) && Math.abs(y - expectedYear) > 1) return null;
   }
-  const m = html.match(
-    /"aggregateRating"\s*:\s*\{[^}]*?"name"\s*:\s*"Tomatometer"[^}]*?"ratingValue"\s*:\s*"?(\d+)"?[^}]*\}/
-  ) || html.match(
-    /"name"\s*:\s*"Tomatometer"[^}]*?"ratingValue"\s*:\s*"?(\d+)"?/
-  ) || html.match(
-    /"ratingValue"\s*:\s*"?(\d+)"?[^}]*?"name"\s*:\s*"Tomatometer"/
-  );
+  // Prefer the primary audienceScore block RT embeds for the page hero
+  // (verified ratings). Avoid the critics Tomatometer JSON-LD entirely.
+  const m =
+    html.match(
+      /"audienceScore"\s*:\s*\{[^{}]*?"score"\s*:\s*"?(\d+)"?/
+    ) ||
+    html.match(
+      /"audienceScore"\s*:\s*\{[^{}]*?"scorePercent"\s*:\s*"?(\d+)%?"?/
+    );
   if (!m) return null;
   const value = Number.parseInt(m[1], 10);
   if (!Number.isFinite(value) || value < 0 || value > 100) return null;
@@ -318,7 +319,7 @@ async function lookupTomatoes(titles, year) {
           `https://www.rottentomatoes.com/m/${slug}`
         );
         if (!page) continue;
-        const hit = extractTomatoMeter(page.text, page.url, year);
+        const hit = extractAudienceScore(page.text, page.url, year);
         if (hit) return hit;
       } catch {
         /* try next slug */
@@ -329,7 +330,7 @@ async function lookupTomatoes(titles, year) {
 }
 
 /**
- * IMDb (OMDb), Letterboxd and Tomatometer for the Movies tab.
+ * IMDb (OMDb), Letterboxd and RT audience score for the Movies tab.
  * Missing sources are omitted — not every film is listed everywhere yet.
  */
 async function lookupRatings(movie, showTitle) {
@@ -607,16 +608,19 @@ async function main() {
   await Promise.all([...ratingJobs.values()]);
   if (!OMDB_API_KEY) {
     console.warn(
-      "OMDB_API_KEY not set — IMDb ratings skipped (Letterboxd + Tomatometer still fetched)"
+      "OMDB_API_KEY not set — IMDb ratings skipped (Letterboxd + RT audience still fetched)"
     );
   }
 
   const baseShows = [];
+  const freshRatingsByTitle = new Map();
   for (const draft of drafted) {
     const { ratingsPromise, ...show } = draft;
+    const ratings = (await ratingsPromise) || null;
+    if (ratings) freshRatingsByTitle.set(show.title, ratings);
     baseShows.push({
       ...show,
-      ratings: (await ratingsPromise) || null,
+      ratings,
     });
   }
   baseShows.sort((a, b) => a.start.localeCompare(b.start));
@@ -670,18 +674,22 @@ async function main() {
   const kept = shows.filter((show) => !dropped.has(show.id));
   const history = previousShows.filter((show) => !dropped.has(show.id));
 
-  const ratingsByTitle = new Map();
+  const ratingsByTitle = new Map(freshRatingsByTitle);
+  // Fill any title that only exists as history from its newest row.
   for (const show of kept) {
-    if (show.title && show.ratings && !ratingsByTitle.has(show.title)) {
-      ratingsByTitle.set(show.title, show.ratings);
-    }
+    if (show.title && show.ratings) ratingsByTitle.set(show.title, show.ratings);
+  }
+  // Fresh lookups must win — rewrite after the history pass.
+  for (const [title, ratings] of freshRatingsByTitle) {
+    ratingsByTitle.set(title, ratings);
   }
 
   const merged = mergeWithHistory(kept, history).map((show) => {
     const { reviews: _drop, ...rest } = show;
+    // Fresh lookups win over stale ratings still sitting on history rows.
     const ratings =
-      rest.ratings ||
       ratingsByTitle.get(rest.title) ||
+      rest.ratings ||
       prevRatingsByTitle.get(rest.title) ||
       null;
     return {
