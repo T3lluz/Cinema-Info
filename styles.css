@@ -1333,7 +1333,7 @@ a.tile-show:focus-visible {
   gap: 4px;
   padding: 2px 7px 2px 4px;
   border-radius: 7px;
-  background: color-mix(in srgb, var(--surface-2, var(--surface)) 88%, var(--ink));
+  background: color-mix(in srgb, var(--ink) 6%, var(--surface));
   border: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
   color: var(--ink);
   font-size: 0.72rem;

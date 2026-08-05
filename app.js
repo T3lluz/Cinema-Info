@@ -3507,8 +3507,9 @@ function ratingLogo(kind) {
 function formatRatingValue(value, digits = 1) {
   const n = Number(value);
   if (!Number.isFinite(n)) return "";
-  return n.toLocaleString(lang === "en" ? "en-GB" : "nb-NO", {
-    minimumFractionDigits: Number.isInteger(n) ? 0 : digits,
+  const rounded = Number(n.toFixed(digits));
+  return rounded.toLocaleString(lang === "en" ? "en-GB" : "nb-NO", {
+    minimumFractionDigits: Number.isInteger(rounded) ? 0 : 1,
     maximumFractionDigits: digits,
   });
 }
