@@ -37,9 +37,21 @@ jobs:
         with:
           node-version: "20"
 
+      - name: Check OMDB_API_KEY
+        env:
+          # Repository Actions secret (preferred) or Actions variable of
+          # the same name — people sometimes add the key under Variables.
+          OMDB_API_KEY: ${{ secrets.OMDB_API_KEY || vars.OMDB_API_KEY }}
+        run: |
+          if [ -n "$OMDB_API_KEY" ]; then
+            echo "OMDB_API_KEY is set (${#OMDB_API_KEY} chars)."
+          else
+            echo "::warning::OMDB_API_KEY is empty. Add it under Settings → Secrets and variables → Actions (repository secret named OMDB_API_KEY). IMDb will still be fetched via direct IMDb GraphQL until then."
+          fi
+
       - name: Fetch program + live ticket data
         env:
-          OMDB_API_KEY: ${{ secrets.OMDB_API_KEY }}
+          OMDB_API_KEY: ${{ secrets.OMDB_API_KEY || vars.OMDB_API_KEY }}
         run: node scripts/fetch-data.mjs
 
       - name: Commit when the snapshot changed
