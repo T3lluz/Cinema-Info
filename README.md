@@ -223,10 +223,14 @@ OMDB_API_KEY=… node scripts/fetch-data.mjs   # key optional; IMDb still fills 
 python3 -m http.server 8080
 ```
 
-The site is published with the **Deploy GitHub Pages** workflow. In
-Settings → Pages, set Source to **GitHub Actions** (once) so that
-workflow is what publishes — the older “Deploy from a branch” path has
-been timing out in `deployment_queued`.
+The site is published with the **Deploy GitHub Pages** workflow
+(`.github/workflows/deploy-pages.yml`). **Required once:** in
+[Settings → Pages](https://github.com/T3lluz/Cinema-Info/settings/pages),
+set Source to **GitHub Actions**. Until that switch is made, pushes
+still trigger the legacy “Deploy from a branch” job (which has been
+stuck in `deployment_queued` / failing while Actions + Pages are
+degraded) and the Actions deploy cannot publish.
+
 To read DX by hand while debugging — purchase lists, seat statuses, who
 is signed in — `scripts/dx-session.mjs` walks the same login the Edge
 Function does and prints any `app.dx.no` path as JSON:
