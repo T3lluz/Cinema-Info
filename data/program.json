@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-06T13:01:42.998Z",
+  "updatedAt": "2026-08-06T16:34:25.968Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -23,6 +23,11 @@
       "sold": null,
       "eventStatus": "unavailable",
       "ratings": {
+        "imdb": {
+          "value": 5.8,
+          "id": "tt27419466",
+          "url": "https://www.imdb.com/title/tt27419466/"
+        },
         "letterboxd": {
           "value": 2.72,
           "url": "https://letterboxd.com/film/moana/"
@@ -59,6 +64,11 @@
       "sold": null,
       "eventStatus": "unavailable",
       "ratings": {
+        "imdb": {
+          "value": 5.2,
+          "id": "tt29612071",
+          "url": "https://www.imdb.com/title/tt29612071/"
+        },
         "letterboxd": {
           "value": 2.34,
           "url": "https://letterboxd.com/film/charlie-the-wonderdog/"
@@ -66,11 +76,6 @@
         "tomatoes": {
           "value": 74,
           "url": "https://www.rottentomatoes.com/m/charlie_the_wonderdog"
-        },
-        "imdb": {
-          "value": 5.3,
-          "id": "tt29612071",
-          "url": "https://www.imdb.com/title/tt29612071/"
         }
       },
       "genres": [
@@ -102,6 +107,11 @@
       "capacity": 110,
       "available": 60,
       "ratings": {
+        "imdb": {
+          "value": 8.5,
+          "id": "tt33764258",
+          "url": "https://www.imdb.com/title/tt33764258/"
+        },
         "letterboxd": {
           "value": 4.4,
           "url": "https://letterboxd.com/film/the-odyssey-2026/"
@@ -109,11 +119,6 @@
         "tomatoes": {
           "value": 97,
           "url": "https://www.rottentomatoes.com/m/the_odyssey_2026"
-        },
-        "imdb": {
-          "value": 8.5,
-          "id": "tt33764258",
-          "url": "https://www.imdb.com/title/tt33764258/"
         }
       },
       "genres": [
@@ -145,6 +150,11 @@
       "capacity": 286,
       "available": 286,
       "ratings": {
+        "imdb": {
+          "value": 6.5,
+          "id": "tt31170389",
+          "url": "https://www.imdb.com/title/tt31170389/"
+        },
         "letterboxd": {
           "value": 3.13,
           "url": "https://letterboxd.com/film/evil-dead-burn/"
@@ -155,9 +165,7 @@
         }
       },
       "genres": [
-        "Fantasy",
-        "Horror",
-        "Mystery"
+        "Horror"
       ]
     },
     {
@@ -184,6 +192,11 @@
       "capacity": 110,
       "available": 88,
       "ratings": {
+        "imdb": {
+          "value": 6.5,
+          "id": "tt32890033",
+          "url": "https://www.imdb.com/title/tt32890033/"
+        },
         "letterboxd": {
           "value": 3.14,
           "url": "https://letterboxd.com/film/minions-monsters/"
@@ -191,11 +204,6 @@
         "tomatoes": {
           "value": 75,
           "url": "https://www.rottentomatoes.com/m/minions_and_monsters"
-        },
-        "imdb": {
-          "value": 6.6,
-          "id": "tt32890033",
-          "url": "https://www.imdb.com/title/tt32890033/"
         }
       },
       "genres": [
@@ -228,6 +236,11 @@
       "capacity": 246,
       "available": 222,
       "ratings": {
+        "imdb": {
+          "value": 5.8,
+          "id": "tt27419466",
+          "url": "https://www.imdb.com/title/tt27419466/"
+        },
         "letterboxd": {
           "value": 2.72,
           "url": "https://letterboxd.com/film/moana/"
@@ -266,6 +279,11 @@
       "capacity": 108,
       "available": 40,
       "ratings": {
+        "imdb": {
+          "value": 8.5,
+          "id": "tt33764258",
+          "url": "https://www.imdb.com/title/tt33764258/"
+        },
         "letterboxd": {
           "value": 4.4,
           "url": "https://letterboxd.com/film/the-odyssey-2026/"
@@ -273,11 +291,6 @@
         "tomatoes": {
           "value": 97,
           "url": "https://www.rottentomatoes.com/m/the_odyssey_2026"
-        },
-        "imdb": {
-          "value": 8.5,
-          "id": "tt33764258",
-          "url": "https://www.imdb.com/title/tt33764258/"
         }
       },
       "genres": [
@@ -308,8 +321,17 @@
       "reserved": 0,
       "capacity": 246,
       "available": 243,
-      "ratings": null,
-      "genres": null
+      "ratings": {
+        "imdb": {
+          "value": 6.6,
+          "id": "tt39316472",
+          "url": "https://www.imdb.com/title/tt39316472/"
+        }
+      },
+      "genres": [
+        "Documentary",
+        "Comedy"
+      ]
     },
     {
       "id": "EDI20260556-2026-07-23T17:00:00-Kinosal",
@@ -335,6 +357,11 @@
       "capacity": 110,
       "available": 98,
       "ratings": {
+        "imdb": {
+          "value": 5.2,
+          "id": "tt29612071",
+          "url": "https://www.imdb.com/title/tt29612071/"
+        },
         "letterboxd": {
           "value": 2.34,
           "url": "https://letterboxd.com/film/charlie-the-wonderdog/"
@@ -342,11 +369,6 @@
         "tomatoes": {
           "value": 74,
           "url": "https://www.rottentomatoes.com/m/charlie_the_wonderdog"
-        },
-        "imdb": {
-          "value": 5.3,
-          "id": "tt29612071",
-          "url": "https://www.imdb.com/title/tt29612071/"
         }
       },
       "genres": [
@@ -379,6 +401,11 @@
       "capacity": 286,
       "available": 263,
       "ratings": {
+        "imdb": {
+          "value": 6.5,
+          "id": "tt32890033",
+          "url": "https://www.imdb.com/title/tt32890033/"
+        },
         "letterboxd": {
           "value": 3.14,
           "url": "https://letterboxd.com/film/minions-monsters/"
@@ -386,11 +413,6 @@
         "tomatoes": {
           "value": 75,
           "url": "https://www.rottentomatoes.com/m/minions_and_monsters"
-        },
-        "imdb": {
-          "value": 6.6,
-          "id": "tt32890033",
-          "url": "https://www.imdb.com/title/tt32890033/"
         }
       },
       "genres": [
@@ -422,6 +444,11 @@
       "capacity": 110,
       "available": 58,
       "ratings": {
+        "imdb": {
+          "value": 8.5,
+          "id": "tt33764258",
+          "url": "https://www.imdb.com/title/tt33764258/"
+        },
         "letterboxd": {
           "value": 4.4,
           "url": "https://letterboxd.com/film/the-odyssey-2026/"
@@ -429,11 +456,6 @@
         "tomatoes": {
           "value": 97,
           "url": "https://www.rottentomatoes.com/m/the_odyssey_2026"
-        },
-        "imdb": {
-          "value": 8.5,
-          "id": "tt33764258",
-          "url": "https://www.imdb.com/title/tt33764258/"
         }
       },
       "genres": [
@@ -465,6 +487,11 @@
       "capacity": 286,
       "available": 280,
       "ratings": {
+        "imdb": {
+          "value": 6.5,
+          "id": "tt31170389",
+          "url": "https://www.imdb.com/title/tt31170389/"
+        },
         "letterboxd": {
           "value": 3.13,
           "url": "https://letterboxd.com/film/evil-dead-burn/"
@@ -475,9 +502,7 @@
         }
       },
       "genres": [
-        "Fantasy",
-        "Horror",
-        "Mystery"
+        "Horror"
       ]
     },
     {
@@ -504,6 +529,11 @@
       "capacity": 246,
       "available": 191,
       "ratings": {
+        "imdb": {
+          "value": 6.5,
+          "id": "tt32890033",
+          "url": "https://www.imdb.com/title/tt32890033/"
+        },
         "letterboxd": {
           "value": 3.14,
           "url": "https://letterboxd.com/film/minions-monsters/"
@@ -511,11 +541,6 @@
         "tomatoes": {
           "value": 75,
           "url": "https://www.rottentomatoes.com/m/minions_and_monsters"
-        },
-        "imdb": {
-          "value": 6.6,
-          "id": "tt32890033",
-          "url": "https://www.imdb.com/title/tt32890033/"
         }
       },
       "genres": [
@@ -548,6 +573,11 @@
       "capacity": 110,
       "available": 55,
       "ratings": {
+        "imdb": {
+          "value": 5.8,
+          "id": "tt27419466",
+          "url": "https://www.imdb.com/title/tt27419466/"
+        },
         "letterboxd": {
           "value": 2.72,
           "url": "https://letterboxd.com/film/moana/"
@@ -585,8 +615,17 @@
       "reserved": 0,
       "capacity": 246,
       "available": 241,
-      "ratings": null,
-      "genres": null
+      "ratings": {
+        "imdb": {
+          "value": 6.6,
+          "id": "tt39316472",
+          "url": "https://www.imdb.com/title/tt39316472/"
+        }
+      },
+      "genres": [
+        "Documentary",
+        "Comedy"
+      ]
     },
     {
       "id": "UIP20241680-2026-07-24T20:15:00-Kinosal",
@@ -611,6 +650,11 @@
       "capacity": 110,
       "available": 19,
       "ratings": {
+        "imdb": {
+          "value": 8.5,
+          "id": "tt33764258",
+          "url": "https://www.imdb.com/title/tt33764258/"
+        },
         "letterboxd": {
           "value": 4.4,
           "url": "https://letterboxd.com/film/the-odyssey-2026/"
@@ -618,11 +662,6 @@
         "tomatoes": {
           "value": 97,
           "url": "https://www.rottentomatoes.com/m/the_odyssey_2026"
-        },
-        "imdb": {
-          "value": 8.5,
-          "id": "tt33764258",
-          "url": "https://www.imdb.com/title/tt33764258/"
         }
       },
       "genres": [
@@ -654,6 +693,11 @@
       "capacity": 246,
       "available": 237,
       "ratings": {
+        "imdb": {
+          "value": 6.5,
+          "id": "tt31170389",
+          "url": "https://www.imdb.com/title/tt31170389/"
+        },
         "letterboxd": {
           "value": 3.13,
           "url": "https://letterboxd.com/film/evil-dead-burn/"
@@ -664,9 +708,7 @@
         }
       },
       "genres": [
-        "Fantasy",
-        "Horror",
-        "Mystery"
+        "Horror"
       ]
     },
     {
@@ -693,6 +735,11 @@
       "capacity": 110,
       "available": 23,
       "ratings": {
+        "imdb": {
+          "value": 6.5,
+          "id": "tt32890033",
+          "url": "https://www.imdb.com/title/tt32890033/"
+        },
         "letterboxd": {
           "value": 3.14,
           "url": "https://letterboxd.com/film/minions-monsters/"
@@ -700,11 +747,6 @@
         "tomatoes": {
           "value": 75,
           "url": "https://www.rottentomatoes.com/m/minions_and_monsters"
-        },
-        "imdb": {
-          "value": 6.6,
-          "id": "tt32890033",
-          "url": "https://www.imdb.com/title/tt32890033/"
         }
       },
       "genres": [
@@ -737,6 +779,11 @@
       "capacity": 286,
       "available": 235,
       "ratings": {
+        "imdb": {
+          "value": 5.2,
+          "id": "tt29612071",
+          "url": "https://www.imdb.com/title/tt29612071/"
+        },
         "letterboxd": {
           "value": 2.34,
           "url": "https://letterboxd.com/film/charlie-the-wonderdog/"
@@ -744,11 +791,6 @@
         "tomatoes": {
           "value": 74,
           "url": "https://www.rottentomatoes.com/m/charlie_the_wonderdog"
-        },
-        "imdb": {
-          "value": 5.3,
-          "id": "tt29612071",
-          "url": "https://www.imdb.com/title/tt29612071/"
         }
       },
       "genres": [
@@ -781,6 +823,11 @@
       "capacity": 110,
       "available": 18,
       "ratings": {
+        "imdb": {
+          "value": 5.8,
+          "id": "tt27419466",
+          "url": "https://www.imdb.com/title/tt27419466/"
+        },
         "letterboxd": {
           "value": 2.72,
           "url": "https://letterboxd.com/film/moana/"
@@ -818,8 +865,17 @@
       "reserved": 0,
       "capacity": 286,
       "available": 269,
-      "ratings": null,
-      "genres": null
+      "ratings": {
+        "imdb": {
+          "value": 6.6,
+          "id": "tt39316472",
+          "url": "https://www.imdb.com/title/tt39316472/"
+        }
+      },
+      "genres": [
+        "Documentary",
+        "Comedy"
+      ]
     },
     {
       "id": "UIP20241680-2026-07-25T20:00:00-Kinosal",
@@ -844,6 +900,11 @@
       "capacity": 110,
       "available": 2,
       "ratings": {
+        "imdb": {
+          "value": 8.5,
+          "id": "tt33764258",
+          "url": "https://www.imdb.com/title/tt33764258/"
+        },
         "letterboxd": {
           "value": 4.4,
           "url": "https://letterboxd.com/film/the-odyssey-2026/"
@@ -851,11 +912,6 @@
         "tomatoes": {
           "value": 97,
           "url": "https://www.rottentomatoes.com/m/the_odyssey_2026"
-        },
-        "imdb": {
-          "value": 8.5,
-          "id": "tt33764258",
-          "url": "https://www.imdb.com/title/tt33764258/"
         }
       },
       "genres": [
@@ -887,6 +943,11 @@
       "capacity": 286,
       "available": 286,
       "ratings": {
+        "imdb": {
+          "value": 6.5,
+          "id": "tt31170389",
+          "url": "https://www.imdb.com/title/tt31170389/"
+        },
         "letterboxd": {
           "value": 3.13,
           "url": "https://letterboxd.com/film/evil-dead-burn/"
@@ -897,9 +958,7 @@
         }
       },
       "genres": [
-        "Fantasy",
-        "Horror",
-        "Mystery"
+        "Horror"
       ]
     },
     {
@@ -926,6 +985,11 @@
       "capacity": 110,
       "available": 110,
       "ratings": {
+        "imdb": {
+          "value": 5.2,
+          "id": "tt29612071",
+          "url": "https://www.imdb.com/title/tt29612071/"
+        },
         "letterboxd": {
           "value": 2.34,
           "url": "https://letterboxd.com/film/charlie-the-wonderdog/"
@@ -933,11 +997,6 @@
         "tomatoes": {
           "value": 74,
           "url": "https://www.rottentomatoes.com/m/charlie_the_wonderdog"
-        },
-        "imdb": {
-          "value": 5.3,
-          "id": "tt29612071",
-          "url": "https://www.imdb.com/title/tt29612071/"
         }
       },
       "genres": [
@@ -970,6 +1029,11 @@
       "capacity": 286,
       "available": 250,
       "ratings": {
+        "imdb": {
+          "value": 5.8,
+          "id": "tt27419466",
+          "url": "https://www.imdb.com/title/tt27419466/"
+        },
         "letterboxd": {
           "value": 2.72,
           "url": "https://letterboxd.com/film/moana/"
@@ -1009,6 +1073,11 @@
       "capacity": 110,
       "available": 64,
       "ratings": {
+        "imdb": {
+          "value": 6.5,
+          "id": "tt32890033",
+          "url": "https://www.imdb.com/title/tt32890033/"
+        },
         "letterboxd": {
           "value": 3.14,
           "url": "https://letterboxd.com/film/minions-monsters/"
@@ -1016,11 +1085,6 @@
         "tomatoes": {
           "value": 75,
           "url": "https://www.rottentomatoes.com/m/minions_and_monsters"
-        },
-        "imdb": {
-          "value": 6.6,
-          "id": "tt32890033",
-          "url": "https://www.imdb.com/title/tt32890033/"
         }
       },
       "genres": [
@@ -1051,8 +1115,17 @@
       "reserved": 0,
       "capacity": 286,
       "available": 278,
-      "ratings": null,
-      "genres": null
+      "ratings": {
+        "imdb": {
+          "value": 6.6,
+          "id": "tt39316472",
+          "url": "https://www.imdb.com/title/tt39316472/"
+        }
+      },
+      "genres": [
+        "Documentary",
+        "Comedy"
+      ]
     },
     {
       "id": "UIP20241680-2026-07-26T19:30:00-Kinosal",
@@ -1077,6 +1150,11 @@
       "capacity": 110,
       "available": 20,
       "ratings": {
+        "imdb": {
+          "value": 8.5,
+          "id": "tt33764258",
+          "url": "https://www.imdb.com/title/tt33764258/"
+        },
         "letterboxd": {
           "value": 4.4,
           "url": "https://letterboxd.com/film/the-odyssey-2026/"
@@ -1084,11 +1162,6 @@
         "tomatoes": {
           "value": 97,
           "url": "https://www.rottentomatoes.com/m/the_odyssey_2026"
-        },
-        "imdb": {
-          "value": 8.5,
-          "id": "tt33764258",
-          "url": "https://www.imdb.com/title/tt33764258/"
         }
       },
       "genres": [
@@ -1120,6 +1193,11 @@
       "capacity": 286,
       "available": 283,
       "ratings": {
+        "imdb": {
+          "value": 6.5,
+          "id": "tt31170389",
+          "url": "https://www.imdb.com/title/tt31170389/"
+        },
         "letterboxd": {
           "value": 3.13,
           "url": "https://letterboxd.com/film/evil-dead-burn/"
@@ -1130,9 +1208,7 @@
         }
       },
       "genres": [
-        "Fantasy",
-        "Horror",
-        "Mystery"
+        "Horror"
       ]
     },
     {
@@ -1159,6 +1235,11 @@
       "capacity": 110,
       "available": 108,
       "ratings": {
+        "imdb": {
+          "value": 5.2,
+          "id": "tt29612071",
+          "url": "https://www.imdb.com/title/tt29612071/"
+        },
         "letterboxd": {
           "value": 2.34,
           "url": "https://letterboxd.com/film/charlie-the-wonderdog/"
@@ -1166,11 +1247,6 @@
         "tomatoes": {
           "value": 74,
           "url": "https://www.rottentomatoes.com/m/charlie_the_wonderdog"
-        },
-        "imdb": {
-          "value": 5.3,
-          "id": "tt29612071",
-          "url": "https://www.imdb.com/title/tt29612071/"
         }
       },
       "genres": [
@@ -1203,6 +1279,11 @@
       "capacity": 286,
       "available": 271,
       "ratings": {
+        "imdb": {
+          "value": 5.8,
+          "id": "tt27419466",
+          "url": "https://www.imdb.com/title/tt27419466/"
+        },
         "letterboxd": {
           "value": 2.72,
           "url": "https://letterboxd.com/film/moana/"
@@ -1241,6 +1322,11 @@
       "capacity": 110,
       "available": 15,
       "ratings": {
+        "imdb": {
+          "value": 8.5,
+          "id": "tt33764258",
+          "url": "https://www.imdb.com/title/tt33764258/"
+        },
         "letterboxd": {
           "value": 4.4,
           "url": "https://letterboxd.com/film/the-odyssey-2026/"
@@ -1248,11 +1334,6 @@
         "tomatoes": {
           "value": 97,
           "url": "https://www.rottentomatoes.com/m/the_odyssey_2026"
-        },
-        "imdb": {
-          "value": 8.5,
-          "id": "tt33764258",
-          "url": "https://www.imdb.com/title/tt33764258/"
         }
       },
       "genres": [
@@ -1283,8 +1364,17 @@
       "reserved": 0,
       "capacity": 286,
       "available": 277,
-      "ratings": null,
-      "genres": null
+      "ratings": {
+        "imdb": {
+          "value": 6.6,
+          "id": "tt39316472",
+          "url": "https://www.imdb.com/title/tt39316472/"
+        }
+      },
+      "genres": [
+        "Documentary",
+        "Comedy"
+      ]
     },
     {
       "id": "UIP20241749-2026-07-28T17:00:00-Kinosal",
@@ -1310,6 +1400,11 @@
       "capacity": 110,
       "available": 44,
       "ratings": {
+        "imdb": {
+          "value": 6.5,
+          "id": "tt32890033",
+          "url": "https://www.imdb.com/title/tt32890033/"
+        },
         "letterboxd": {
           "value": 3.14,
           "url": "https://letterboxd.com/film/minions-monsters/"
@@ -1317,11 +1412,6 @@
         "tomatoes": {
           "value": 75,
           "url": "https://www.rottentomatoes.com/m/minions_and_monsters"
-        },
-        "imdb": {
-          "value": 6.6,
-          "id": "tt32890033",
-          "url": "https://www.imdb.com/title/tt32890033/"
         }
       },
       "genres": [
@@ -1354,6 +1444,11 @@
       "capacity": 246,
       "available": 240,
       "ratings": {
+        "imdb": {
+          "value": 5.2,
+          "id": "tt29612071",
+          "url": "https://www.imdb.com/title/tt29612071/"
+        },
         "letterboxd": {
           "value": 2.34,
           "url": "https://letterboxd.com/film/charlie-the-wonderdog/"
@@ -1361,11 +1456,6 @@
         "tomatoes": {
           "value": 74,
           "url": "https://www.rottentomatoes.com/m/charlie_the_wonderdog"
-        },
-        "imdb": {
-          "value": 5.3,
-          "id": "tt29612071",
-          "url": "https://www.imdb.com/title/tt29612071/"
         }
       },
       "genres": [
@@ -1397,6 +1487,11 @@
       "capacity": 110,
       "available": 24,
       "ratings": {
+        "imdb": {
+          "value": 8.5,
+          "id": "tt33764258",
+          "url": "https://www.imdb.com/title/tt33764258/"
+        },
         "letterboxd": {
           "value": 4.4,
           "url": "https://letterboxd.com/film/the-odyssey-2026/"
@@ -1404,11 +1499,6 @@
         "tomatoes": {
           "value": 97,
           "url": "https://www.rottentomatoes.com/m/the_odyssey_2026"
-        },
-        "imdb": {
-          "value": 8.5,
-          "id": "tt33764258",
-          "url": "https://www.imdb.com/title/tt33764258/"
         }
       },
       "genres": [
@@ -1440,6 +1530,11 @@
       "capacity": 246,
       "available": 236,
       "ratings": {
+        "imdb": {
+          "value": 6.5,
+          "id": "tt31170389",
+          "url": "https://www.imdb.com/title/tt31170389/"
+        },
         "letterboxd": {
           "value": 3.13,
           "url": "https://letterboxd.com/film/evil-dead-burn/"
@@ -1450,9 +1545,7 @@
         }
       },
       "genres": [
-        "Fantasy",
-        "Horror",
-        "Mystery"
+        "Horror"
       ]
     },
     {
@@ -1479,6 +1572,11 @@
       "capacity": 110,
       "available": 81,
       "ratings": {
+        "imdb": {
+          "value": 5.8,
+          "id": "tt27419466",
+          "url": "https://www.imdb.com/title/tt27419466/"
+        },
         "letterboxd": {
           "value": 2.72,
           "url": "https://letterboxd.com/film/moana/"
@@ -1518,6 +1616,11 @@
       "capacity": 246,
       "available": 235,
       "ratings": {
+        "imdb": {
+          "value": 6.5,
+          "id": "tt32890033",
+          "url": "https://www.imdb.com/title/tt32890033/"
+        },
         "letterboxd": {
           "value": 3.14,
           "url": "https://letterboxd.com/film/minions-monsters/"
@@ -1525,11 +1628,6 @@
         "tomatoes": {
           "value": 75,
           "url": "https://www.rottentomatoes.com/m/minions_and_monsters"
-        },
-        "imdb": {
-          "value": 6.6,
-          "id": "tt32890033",
-          "url": "https://www.imdb.com/title/tt32890033/"
         }
       },
       "genres": [
@@ -1561,6 +1659,11 @@
       "capacity": 110,
       "available": 1,
       "ratings": {
+        "imdb": {
+          "value": 8.2,
+          "id": "tt22084616",
+          "url": "https://www.imdb.com/title/tt22084616/"
+        },
         "letterboxd": {
           "value": 4.12,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
@@ -1568,11 +1671,6 @@
         "tomatoes": {
           "value": 98,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
-        },
-        "imdb": {
-          "value": 8.2,
-          "id": "tt22084616",
-          "url": "https://www.imdb.com/title/tt22084616/"
         }
       },
       "genres": [
@@ -1604,6 +1702,11 @@
       "capacity": 246,
       "available": 93,
       "ratings": {
+        "imdb": {
+          "value": 8.2,
+          "id": "tt22084616",
+          "url": "https://www.imdb.com/title/tt22084616/"
+        },
         "letterboxd": {
           "value": 4.12,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
@@ -1611,11 +1714,6 @@
         "tomatoes": {
           "value": 98,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
-        },
-        "imdb": {
-          "value": 8.2,
-          "id": "tt22084616",
-          "url": "https://www.imdb.com/title/tt22084616/"
         }
       },
       "genres": [
@@ -1648,6 +1746,11 @@
       "capacity": 110,
       "available": 104,
       "ratings": {
+        "imdb": {
+          "value": 5.2,
+          "id": "tt29612071",
+          "url": "https://www.imdb.com/title/tt29612071/"
+        },
         "letterboxd": {
           "value": 2.34,
           "url": "https://letterboxd.com/film/charlie-the-wonderdog/"
@@ -1655,11 +1758,6 @@
         "tomatoes": {
           "value": 74,
           "url": "https://www.rottentomatoes.com/m/charlie_the_wonderdog"
-        },
-        "imdb": {
-          "value": 5.3,
-          "id": "tt29612071",
-          "url": "https://www.imdb.com/title/tt29612071/"
         }
       },
       "genres": [
@@ -1692,6 +1790,11 @@
       "capacity": 246,
       "available": 227,
       "ratings": {
+        "imdb": {
+          "value": 6.5,
+          "id": "tt32890033",
+          "url": "https://www.imdb.com/title/tt32890033/"
+        },
         "letterboxd": {
           "value": 3.14,
           "url": "https://letterboxd.com/film/minions-monsters/"
@@ -1699,11 +1802,6 @@
         "tomatoes": {
           "value": 75,
           "url": "https://www.rottentomatoes.com/m/minions_and_monsters"
-        },
-        "imdb": {
-          "value": 6.6,
-          "id": "tt32890033",
-          "url": "https://www.imdb.com/title/tt32890033/"
         }
       },
       "genres": [
@@ -1735,6 +1833,11 @@
       "capacity": 110,
       "available": 5,
       "ratings": {
+        "imdb": {
+          "value": 8.2,
+          "id": "tt22084616",
+          "url": "https://www.imdb.com/title/tt22084616/"
+        },
         "letterboxd": {
           "value": 4.12,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
@@ -1742,11 +1845,6 @@
         "tomatoes": {
           "value": 98,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
-        },
-        "imdb": {
-          "value": 8.2,
-          "id": "tt22084616",
-          "url": "https://www.imdb.com/title/tt22084616/"
         }
       },
       "genres": [
@@ -1778,6 +1876,11 @@
       "capacity": 246,
       "available": 173,
       "ratings": {
+        "imdb": {
+          "value": 8.2,
+          "id": "tt22084616",
+          "url": "https://www.imdb.com/title/tt22084616/"
+        },
         "letterboxd": {
           "value": 4.12,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
@@ -1785,11 +1888,6 @@
         "tomatoes": {
           "value": 98,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
-        },
-        "imdb": {
-          "value": 8.2,
-          "id": "tt22084616",
-          "url": "https://www.imdb.com/title/tt22084616/"
         }
       },
       "genres": [
@@ -1822,6 +1920,11 @@
       "capacity": 286,
       "available": 276,
       "ratings": {
+        "imdb": {
+          "value": 6.5,
+          "id": "tt32890033",
+          "url": "https://www.imdb.com/title/tt32890033/"
+        },
         "letterboxd": {
           "value": 3.14,
           "url": "https://letterboxd.com/film/minions-monsters/"
@@ -1829,11 +1932,6 @@
         "tomatoes": {
           "value": 75,
           "url": "https://www.rottentomatoes.com/m/minions_and_monsters"
-        },
-        "imdb": {
-          "value": 6.6,
-          "id": "tt32890033",
-          "url": "https://www.imdb.com/title/tt32890033/"
         }
       },
       "genres": [
@@ -1865,6 +1963,11 @@
       "capacity": 110,
       "available": 31,
       "ratings": {
+        "imdb": {
+          "value": 8.2,
+          "id": "tt22084616",
+          "url": "https://www.imdb.com/title/tt22084616/"
+        },
         "letterboxd": {
           "value": 4.12,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
@@ -1872,11 +1975,6 @@
         "tomatoes": {
           "value": 98,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
-        },
-        "imdb": {
-          "value": 8.2,
-          "id": "tt22084616",
-          "url": "https://www.imdb.com/title/tt22084616/"
         }
       },
       "genres": [
@@ -1908,6 +2006,11 @@
       "capacity": 246,
       "available": 166,
       "ratings": {
+        "imdb": {
+          "value": 8.2,
+          "id": "tt22084616",
+          "url": "https://www.imdb.com/title/tt22084616/"
+        },
         "letterboxd": {
           "value": 4.12,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
@@ -1915,11 +2018,6 @@
         "tomatoes": {
           "value": 98,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
-        },
-        "imdb": {
-          "value": 8.2,
-          "id": "tt22084616",
-          "url": "https://www.imdb.com/title/tt22084616/"
         }
       },
       "genres": [
@@ -1951,6 +2049,11 @@
       "capacity": 108,
       "available": 24,
       "ratings": {
+        "imdb": {
+          "value": 8.5,
+          "id": "tt33764258",
+          "url": "https://www.imdb.com/title/tt33764258/"
+        },
         "letterboxd": {
           "value": 4.4,
           "url": "https://letterboxd.com/film/the-odyssey-2026/"
@@ -1958,11 +2061,6 @@
         "tomatoes": {
           "value": 97,
           "url": "https://www.rottentomatoes.com/m/the_odyssey_2026"
-        },
-        "imdb": {
-          "value": 8.5,
-          "id": "tt33764258",
-          "url": "https://www.imdb.com/title/tt33764258/"
         }
       },
       "genres": [
@@ -1995,6 +2093,11 @@
       "capacity": 110,
       "available": 94,
       "ratings": {
+        "imdb": {
+          "value": 6.5,
+          "id": "tt32890033",
+          "url": "https://www.imdb.com/title/tt32890033/"
+        },
         "letterboxd": {
           "value": 3.14,
           "url": "https://letterboxd.com/film/minions-monsters/"
@@ -2002,11 +2105,6 @@
         "tomatoes": {
           "value": 75,
           "url": "https://www.rottentomatoes.com/m/minions_and_monsters"
-        },
-        "imdb": {
-          "value": 6.6,
-          "id": "tt32890033",
-          "url": "https://www.imdb.com/title/tt32890033/"
         }
       },
       "genres": [
@@ -2039,6 +2137,11 @@
       "capacity": 286,
       "available": 264,
       "ratings": {
+        "imdb": {
+          "value": 5.8,
+          "id": "tt27419466",
+          "url": "https://www.imdb.com/title/tt27419466/"
+        },
         "letterboxd": {
           "value": 2.72,
           "url": "https://letterboxd.com/film/moana/"
@@ -2077,6 +2180,11 @@
       "capacity": 110,
       "available": 59,
       "ratings": {
+        "imdb": {
+          "value": 8.2,
+          "id": "tt22084616",
+          "url": "https://www.imdb.com/title/tt22084616/"
+        },
         "letterboxd": {
           "value": 4.12,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
@@ -2084,11 +2192,6 @@
         "tomatoes": {
           "value": 98,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
-        },
-        "imdb": {
-          "value": 8.2,
-          "id": "tt22084616",
-          "url": "https://www.imdb.com/title/tt22084616/"
         }
       },
       "genres": [
@@ -2120,6 +2223,11 @@
       "capacity": 246,
       "available": 221,
       "ratings": {
+        "imdb": {
+          "value": 8.5,
+          "id": "tt33764258",
+          "url": "https://www.imdb.com/title/tt33764258/"
+        },
         "letterboxd": {
           "value": 4.4,
           "url": "https://letterboxd.com/film/the-odyssey-2026/"
@@ -2127,11 +2235,6 @@
         "tomatoes": {
           "value": 97,
           "url": "https://www.rottentomatoes.com/m/the_odyssey_2026"
-        },
-        "imdb": {
-          "value": 8.5,
-          "id": "tt33764258",
-          "url": "https://www.imdb.com/title/tt33764258/"
         }
       },
       "genres": [
@@ -2163,6 +2266,11 @@
       "capacity": 110,
       "available": 37,
       "ratings": {
+        "imdb": {
+          "value": 8.2,
+          "id": "tt22084616",
+          "url": "https://www.imdb.com/title/tt22084616/"
+        },
         "letterboxd": {
           "value": 4.12,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
@@ -2170,11 +2278,6 @@
         "tomatoes": {
           "value": 98,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
-        },
-        "imdb": {
-          "value": 8.2,
-          "id": "tt22084616",
-          "url": "https://www.imdb.com/title/tt22084616/"
         }
       },
       "genres": [
@@ -2207,6 +2310,11 @@
       "capacity": 286,
       "available": 278,
       "ratings": {
+        "imdb": {
+          "value": 6.5,
+          "id": "tt32890033",
+          "url": "https://www.imdb.com/title/tt32890033/"
+        },
         "letterboxd": {
           "value": 3.14,
           "url": "https://letterboxd.com/film/minions-monsters/"
@@ -2214,11 +2322,6 @@
         "tomatoes": {
           "value": 75,
           "url": "https://www.rottentomatoes.com/m/minions_and_monsters"
-        },
-        "imdb": {
-          "value": 6.6,
-          "id": "tt32890033",
-          "url": "https://www.imdb.com/title/tt32890033/"
         }
       },
       "genres": [
@@ -2250,6 +2353,11 @@
       "capacity": 110,
       "available": 43,
       "ratings": {
+        "imdb": {
+          "value": 8.2,
+          "id": "tt22084616",
+          "url": "https://www.imdb.com/title/tt22084616/"
+        },
         "letterboxd": {
           "value": 4.12,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
@@ -2257,11 +2365,6 @@
         "tomatoes": {
           "value": 98,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
-        },
-        "imdb": {
-          "value": 8.2,
-          "id": "tt22084616",
-          "url": "https://www.imdb.com/title/tt22084616/"
         }
       },
       "genres": [
@@ -2294,6 +2397,11 @@
       "capacity": 286,
       "available": 268,
       "ratings": {
+        "imdb": {
+          "value": 5.8,
+          "id": "tt27419466",
+          "url": "https://www.imdb.com/title/tt27419466/"
+        },
         "letterboxd": {
           "value": 2.72,
           "url": "https://letterboxd.com/film/moana/"
@@ -2332,6 +2440,11 @@
       "capacity": 110,
       "available": 46,
       "ratings": {
+        "imdb": {
+          "value": 8.5,
+          "id": "tt33764258",
+          "url": "https://www.imdb.com/title/tt33764258/"
+        },
         "letterboxd": {
           "value": 4.4,
           "url": "https://letterboxd.com/film/the-odyssey-2026/"
@@ -2339,11 +2452,6 @@
         "tomatoes": {
           "value": 97,
           "url": "https://www.rottentomatoes.com/m/the_odyssey_2026"
-        },
-        "imdb": {
-          "value": 8.5,
-          "id": "tt33764258",
-          "url": "https://www.imdb.com/title/tt33764258/"
         }
       },
       "genres": [
@@ -2375,6 +2483,11 @@
       "capacity": 243,
       "available": 178,
       "ratings": {
+        "imdb": {
+          "value": 8.2,
+          "id": "tt22084616",
+          "url": "https://www.imdb.com/title/tt22084616/"
+        },
         "letterboxd": {
           "value": 4.12,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
@@ -2382,11 +2495,6 @@
         "tomatoes": {
           "value": 98,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
-        },
-        "imdb": {
-          "value": 8.2,
-          "id": "tt22084616",
-          "url": "https://www.imdb.com/title/tt22084616/"
         }
       },
       "genres": [
@@ -2419,6 +2527,11 @@
       "capacity": 110,
       "available": 88,
       "ratings": {
+        "imdb": {
+          "value": 6.5,
+          "id": "tt32890033",
+          "url": "https://www.imdb.com/title/tt32890033/"
+        },
         "letterboxd": {
           "value": 3.14,
           "url": "https://letterboxd.com/film/minions-monsters/"
@@ -2426,11 +2539,6 @@
         "tomatoes": {
           "value": 75,
           "url": "https://www.rottentomatoes.com/m/minions_and_monsters"
-        },
-        "imdb": {
-          "value": 6.6,
-          "id": "tt32890033",
-          "url": "https://www.imdb.com/title/tt32890033/"
         }
       },
       "genres": [
@@ -2463,6 +2571,11 @@
       "capacity": 286,
       "available": 283,
       "ratings": {
+        "imdb": {
+          "value": 5.2,
+          "id": "tt29612071",
+          "url": "https://www.imdb.com/title/tt29612071/"
+        },
         "letterboxd": {
           "value": 2.34,
           "url": "https://letterboxd.com/film/charlie-the-wonderdog/"
@@ -2470,11 +2583,6 @@
         "tomatoes": {
           "value": 74,
           "url": "https://www.rottentomatoes.com/m/charlie_the_wonderdog"
-        },
-        "imdb": {
-          "value": 5.3,
-          "id": "tt29612071",
-          "url": "https://www.imdb.com/title/tt29612071/"
         }
       },
       "genres": [
@@ -2506,6 +2614,11 @@
       "capacity": 110,
       "available": 66,
       "ratings": {
+        "imdb": {
+          "value": 8.5,
+          "id": "tt33764258",
+          "url": "https://www.imdb.com/title/tt33764258/"
+        },
         "letterboxd": {
           "value": 4.4,
           "url": "https://letterboxd.com/film/the-odyssey-2026/"
@@ -2513,11 +2626,6 @@
         "tomatoes": {
           "value": 97,
           "url": "https://www.rottentomatoes.com/m/the_odyssey_2026"
-        },
-        "imdb": {
-          "value": 8.5,
-          "id": "tt33764258",
-          "url": "https://www.imdb.com/title/tt33764258/"
         }
       },
       "genres": [
@@ -2549,6 +2657,11 @@
       "capacity": 246,
       "available": 155,
       "ratings": {
+        "imdb": {
+          "value": 8.2,
+          "id": "tt22084616",
+          "url": "https://www.imdb.com/title/tt22084616/"
+        },
         "letterboxd": {
           "value": 4.12,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
@@ -2556,11 +2669,6 @@
         "tomatoes": {
           "value": 98,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
-        },
-        "imdb": {
-          "value": 8.2,
-          "id": "tt22084616",
-          "url": "https://www.imdb.com/title/tt22084616/"
         }
       },
       "genres": [
@@ -2602,6 +2710,11 @@
       "capacity": 110,
       "available": 81,
       "ratings": {
+        "imdb": {
+          "value": 5.8,
+          "id": "tt27419466",
+          "url": "https://www.imdb.com/title/tt27419466/"
+        },
         "letterboxd": {
           "value": 2.72,
           "url": "https://letterboxd.com/film/moana/"
@@ -2645,6 +2758,11 @@
       "capacity": 286,
       "available": 278,
       "ratings": {
+        "imdb": {
+          "value": 5.2,
+          "id": "tt29612071",
+          "url": "https://www.imdb.com/title/tt29612071/"
+        },
         "letterboxd": {
           "value": 2.34,
           "url": "https://letterboxd.com/film/charlie-the-wonderdog/"
@@ -2652,11 +2770,6 @@
         "tomatoes": {
           "value": 74,
           "url": "https://www.rottentomatoes.com/m/charlie_the_wonderdog"
-        },
-        "imdb": {
-          "value": 5.3,
-          "id": "tt29612071",
-          "url": "https://www.imdb.com/title/tt29612071/"
         }
       }
     },
@@ -2692,6 +2805,11 @@
       "capacity": 110,
       "available": 8,
       "ratings": {
+        "imdb": {
+          "value": 8.2,
+          "id": "tt22084616",
+          "url": "https://www.imdb.com/title/tt22084616/"
+        },
         "letterboxd": {
           "value": 4.12,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
@@ -2699,11 +2817,6 @@
         "tomatoes": {
           "value": 98,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
-        },
-        "imdb": {
-          "value": 8.2,
-          "id": "tt22084616",
-          "url": "https://www.imdb.com/title/tt22084616/"
         }
       }
     },
@@ -2723,9 +2836,7 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Fantasy",
-        "Horror",
-        "Mystery"
+        "Horror"
       ],
       "director": "Sébastien Vanicek",
       "premiere": "2026-07-10",
@@ -2739,6 +2850,11 @@
       "capacity": 286,
       "available": 274,
       "ratings": {
+        "imdb": {
+          "value": 6.5,
+          "id": "tt31170389",
+          "url": "https://www.imdb.com/title/tt31170389/"
+        },
         "letterboxd": {
           "value": 3.13,
           "url": "https://letterboxd.com/film/evil-dead-burn/"
@@ -2782,6 +2898,11 @@
       "capacity": 110,
       "available": 107,
       "ratings": {
+        "imdb": {
+          "value": 5.2,
+          "id": "tt29612071",
+          "url": "https://www.imdb.com/title/tt29612071/"
+        },
         "letterboxd": {
           "value": 2.34,
           "url": "https://letterboxd.com/film/charlie-the-wonderdog/"
@@ -2789,11 +2910,6 @@
         "tomatoes": {
           "value": 74,
           "url": "https://www.rottentomatoes.com/m/charlie_the_wonderdog"
-        },
-        "imdb": {
-          "value": 5.3,
-          "id": "tt29612071",
-          "url": "https://www.imdb.com/title/tt29612071/"
         }
       }
     },
@@ -2830,6 +2946,11 @@
       "capacity": 286,
       "available": 263,
       "ratings": {
+        "imdb": {
+          "value": 6.5,
+          "id": "tt32890033",
+          "url": "https://www.imdb.com/title/tt32890033/"
+        },
         "letterboxd": {
           "value": 3.14,
           "url": "https://letterboxd.com/film/minions-monsters/"
@@ -2837,11 +2958,6 @@
         "tomatoes": {
           "value": 75,
           "url": "https://www.rottentomatoes.com/m/minions_and_monsters"
-        },
-        "imdb": {
-          "value": 6.6,
-          "id": "tt32890033",
-          "url": "https://www.imdb.com/title/tt32890033/"
         }
       }
     },
@@ -2877,6 +2993,11 @@
       "capacity": 110,
       "available": 54,
       "ratings": {
+        "imdb": {
+          "value": 8.5,
+          "id": "tt33764258",
+          "url": "https://www.imdb.com/title/tt33764258/"
+        },
         "letterboxd": {
           "value": 4.4,
           "url": "https://letterboxd.com/film/the-odyssey-2026/"
@@ -2884,11 +3005,6 @@
         "tomatoes": {
           "value": 97,
           "url": "https://www.rottentomatoes.com/m/the_odyssey_2026"
-        },
-        "imdb": {
-          "value": 8.5,
-          "id": "tt33764258",
-          "url": "https://www.imdb.com/title/tt33764258/"
         }
       }
     },
@@ -2924,6 +3040,11 @@
       "capacity": 246,
       "available": 172,
       "ratings": {
+        "imdb": {
+          "value": 8.2,
+          "id": "tt22084616",
+          "url": "https://www.imdb.com/title/tt22084616/"
+        },
         "letterboxd": {
           "value": 4.12,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
@@ -2931,11 +3052,6 @@
         "tomatoes": {
           "value": 98,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
-        },
-        "imdb": {
-          "value": 8.2,
-          "id": "tt22084616",
-          "url": "https://www.imdb.com/title/tt22084616/"
         }
       }
     },
@@ -2966,9 +3082,14 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92492/purchase?kanal=dxf",
       "eventId": "92492",
       "promoterId": "202",
-      "sold": 4,
+      "sold": 6,
       "eventStatus": "ok",
       "ratings": {
+        "imdb": {
+          "value": 6.5,
+          "id": "tt32890033",
+          "url": "https://www.imdb.com/title/tt32890033/"
+        },
         "letterboxd": {
           "value": 3.14,
           "url": "https://letterboxd.com/film/minions-monsters/"
@@ -2976,16 +3097,11 @@
         "tomatoes": {
           "value": 75,
           "url": "https://www.rottentomatoes.com/m/minions_and_monsters"
-        },
-        "imdb": {
-          "value": 6.6,
-          "id": "tt32890033",
-          "url": "https://www.imdb.com/title/tt32890033/"
         }
       },
-      "reserved": 4,
+      "reserved": 0,
       "capacity": 110,
-      "available": 102
+      "available": 104
     },
     {
       "id": "EDI20260819-2026-08-06T17:30:00-Storsal",
@@ -3017,6 +3133,11 @@
       "sold": 2,
       "eventStatus": "ok",
       "ratings": {
+        "imdb": {
+          "value": 5.8,
+          "id": "tt27419466",
+          "url": "https://www.imdb.com/title/tt27419466/"
+        },
         "letterboxd": {
           "value": 2.72,
           "url": "https://letterboxd.com/film/moana/"
@@ -3056,9 +3177,14 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92491/purchase?kanal=dxf",
       "eventId": "92491",
       "promoterId": "202",
-      "sold": 17,
+      "sold": 22,
       "eventStatus": "ok",
       "ratings": {
+        "imdb": {
+          "value": 8.2,
+          "id": "tt22084616",
+          "url": "https://www.imdb.com/title/tt22084616/"
+        },
         "letterboxd": {
           "value": 4.12,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
@@ -3066,16 +3192,11 @@
         "tomatoes": {
           "value": 98,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
-        },
-        "imdb": {
-          "value": 8.2,
-          "id": "tt22084616",
-          "url": "https://www.imdb.com/title/tt22084616/"
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 93
+      "capacity": 108,
+      "available": 86
     },
     {
       "id": "EDI20260626-2026-08-06T20:15:00-Storsal",
@@ -3093,9 +3214,7 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Fantasy",
-        "Horror",
-        "Mystery"
+        "Horror"
       ],
       "director": "Sébastien Vanicek",
       "premiere": "2026-07-10",
@@ -3106,6 +3225,11 @@
       "sold": 0,
       "eventStatus": "ok",
       "ratings": {
+        "imdb": {
+          "value": 6.5,
+          "id": "tt31170389",
+          "url": "https://www.imdb.com/title/tt31170389/"
+        },
         "letterboxd": {
           "value": 3.13,
           "url": "https://letterboxd.com/film/evil-dead-burn/"
@@ -3128,7 +3252,7 @@
       "dayKey": "2026-08-07",
       "runningMinutes": 88,
       "runningLabel": "1 t. 28 min.",
-      "age": "6 år",
+      "age": "Tillatt for alle",
       "tags": [
         "Norsk tale",
         "Norsk tekst"
@@ -3149,8 +3273,13 @@
       "sold": 17,
       "eventStatus": "ok",
       "ratings": {
+        "imdb": {
+          "value": 6,
+          "id": "tt29356163",
+          "url": "https://www.imdb.com/title/tt29356163/"
+        },
         "letterboxd": {
-          "value": 3.21,
+          "value": 3.2,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         }
       },
@@ -3188,6 +3317,11 @@
       "sold": 0,
       "eventStatus": "ok",
       "ratings": {
+        "imdb": {
+          "value": 5.2,
+          "id": "tt29612071",
+          "url": "https://www.imdb.com/title/tt29612071/"
+        },
         "letterboxd": {
           "value": 2.34,
           "url": "https://letterboxd.com/film/charlie-the-wonderdog/"
@@ -3195,11 +3329,6 @@
         "tomatoes": {
           "value": 74,
           "url": "https://www.rottentomatoes.com/m/charlie_the_wonderdog"
-        },
-        "imdb": {
-          "value": 5.3,
-          "id": "tt29612071",
-          "url": "https://www.imdb.com/title/tt29612071/"
         }
       },
       "reserved": 0,
@@ -3235,6 +3364,11 @@
       "sold": 2,
       "eventStatus": "ok",
       "ratings": {
+        "imdb": {
+          "value": 8.5,
+          "id": "tt33764258",
+          "url": "https://www.imdb.com/title/tt33764258/"
+        },
         "letterboxd": {
           "value": 4.4,
           "url": "https://letterboxd.com/film/the-odyssey-2026/"
@@ -3242,11 +3376,6 @@
         "tomatoes": {
           "value": 97,
           "url": "https://www.rottentomatoes.com/m/the_odyssey_2026"
-        },
-        "imdb": {
-          "value": 8.5,
-          "id": "tt33764258",
-          "url": "https://www.imdb.com/title/tt33764258/"
         }
       },
       "reserved": 0,
@@ -3279,9 +3408,14 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92783/purchase?kanal=dxf",
       "eventId": "92783",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
+        "imdb": {
+          "value": 8.2,
+          "id": "tt22084616",
+          "url": "https://www.imdb.com/title/tt22084616/"
+        },
         "letterboxd": {
           "value": 4.12,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
@@ -3289,16 +3423,11 @@
         "tomatoes": {
           "value": 98,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
-        },
-        "imdb": {
-          "value": 8.2,
-          "id": "tt22084616",
-          "url": "https://www.imdb.com/title/tt22084616/"
         }
       },
       "reserved": 0,
       "capacity": 246,
-      "available": 246
+      "available": 244
     },
     {
       "id": "EDI20251106-2026-08-08T15:00:00-Kinosal",
@@ -3309,7 +3438,7 @@
       "dayKey": "2026-08-08",
       "runningMinutes": 88,
       "runningLabel": "1 t. 28 min.",
-      "age": "6 år",
+      "age": "Tillatt for alle",
       "tags": [
         "Norsk tale",
         "Norsk tekst"
@@ -3330,8 +3459,13 @@
       "sold": 7,
       "eventStatus": "ok",
       "ratings": {
+        "imdb": {
+          "value": 6,
+          "id": "tt29356163",
+          "url": "https://www.imdb.com/title/tt29356163/"
+        },
         "letterboxd": {
-          "value": 3.21,
+          "value": 3.2,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         }
       },
@@ -3369,6 +3503,11 @@
       "sold": 0,
       "eventStatus": "ok",
       "ratings": {
+        "imdb": {
+          "value": 5.8,
+          "id": "tt27419466",
+          "url": "https://www.imdb.com/title/tt27419466/"
+        },
         "letterboxd": {
           "value": 2.72,
           "url": "https://letterboxd.com/film/moana/"
@@ -3412,6 +3551,11 @@
       "sold": 0,
       "eventStatus": "ok",
       "ratings": {
+        "imdb": {
+          "value": 6.5,
+          "id": "tt32890033",
+          "url": "https://www.imdb.com/title/tt32890033/"
+        },
         "letterboxd": {
           "value": 3.14,
           "url": "https://letterboxd.com/film/minions-monsters/"
@@ -3419,11 +3563,6 @@
         "tomatoes": {
           "value": 75,
           "url": "https://www.rottentomatoes.com/m/minions_and_monsters"
-        },
-        "imdb": {
-          "value": 6.6,
-          "id": "tt32890033",
-          "url": "https://www.imdb.com/title/tt32890033/"
         }
       },
       "reserved": 0,
@@ -3459,6 +3598,11 @@
       "sold": 0,
       "eventStatus": "ok",
       "ratings": {
+        "imdb": {
+          "value": 8.5,
+          "id": "tt33764258",
+          "url": "https://www.imdb.com/title/tt33764258/"
+        },
         "letterboxd": {
           "value": 4.4,
           "url": "https://letterboxd.com/film/the-odyssey-2026/"
@@ -3466,11 +3610,6 @@
         "tomatoes": {
           "value": 97,
           "url": "https://www.rottentomatoes.com/m/the_odyssey_2026"
-        },
-        "imdb": {
-          "value": 8.5,
-          "id": "tt33764258",
-          "url": "https://www.imdb.com/title/tt33764258/"
         }
       },
       "reserved": 0,
@@ -3506,6 +3645,11 @@
       "sold": 9,
       "eventStatus": "ok",
       "ratings": {
+        "imdb": {
+          "value": 8.2,
+          "id": "tt22084616",
+          "url": "https://www.imdb.com/title/tt22084616/"
+        },
         "letterboxd": {
           "value": 4.12,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
@@ -3513,11 +3657,6 @@
         "tomatoes": {
           "value": 98,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
-        },
-        "imdb": {
-          "value": 8.2,
-          "id": "tt22084616",
-          "url": "https://www.imdb.com/title/tt22084616/"
         }
       },
       "reserved": 0,
@@ -3533,7 +3672,7 @@
       "dayKey": "2026-08-09",
       "runningMinutes": 88,
       "runningLabel": "1 t. 28 min.",
-      "age": "6 år",
+      "age": "Tillatt for alle",
       "tags": [
         "Norsk tale",
         "Norsk tekst"
@@ -3554,8 +3693,13 @@
       "sold": 0,
       "eventStatus": "ok",
       "ratings": {
+        "imdb": {
+          "value": 6,
+          "id": "tt29356163",
+          "url": "https://www.imdb.com/title/tt29356163/"
+        },
         "letterboxd": {
-          "value": 3.21,
+          "value": 3.2,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         }
       },
@@ -3593,6 +3737,11 @@
       "sold": 0,
       "eventStatus": "ok",
       "ratings": {
+        "imdb": {
+          "value": 5.8,
+          "id": "tt27419466",
+          "url": "https://www.imdb.com/title/tt27419466/"
+        },
         "letterboxd": {
           "value": 2.72,
           "url": "https://letterboxd.com/film/moana/"
@@ -3636,6 +3785,11 @@
       "sold": 0,
       "eventStatus": "ok",
       "ratings": {
+        "imdb": {
+          "value": 6.5,
+          "id": "tt32890033",
+          "url": "https://www.imdb.com/title/tt32890033/"
+        },
         "letterboxd": {
           "value": 3.14,
           "url": "https://letterboxd.com/film/minions-monsters/"
@@ -3643,11 +3797,6 @@
         "tomatoes": {
           "value": 75,
           "url": "https://www.rottentomatoes.com/m/minions_and_monsters"
-        },
-        "imdb": {
-          "value": 6.6,
-          "id": "tt32890033",
-          "url": "https://www.imdb.com/title/tt32890033/"
         }
       },
       "reserved": 0,
@@ -3683,6 +3832,11 @@
       "sold": 2,
       "eventStatus": "ok",
       "ratings": {
+        "imdb": {
+          "value": 8.5,
+          "id": "tt33764258",
+          "url": "https://www.imdb.com/title/tt33764258/"
+        },
         "letterboxd": {
           "value": 4.4,
           "url": "https://letterboxd.com/film/the-odyssey-2026/"
@@ -3690,11 +3844,6 @@
         "tomatoes": {
           "value": 97,
           "url": "https://www.rottentomatoes.com/m/the_odyssey_2026"
-        },
-        "imdb": {
-          "value": 8.5,
-          "id": "tt33764258",
-          "url": "https://www.imdb.com/title/tt33764258/"
         }
       },
       "reserved": 0,
@@ -3730,6 +3879,11 @@
       "sold": 9,
       "eventStatus": "ok",
       "ratings": {
+        "imdb": {
+          "value": 8.2,
+          "id": "tt22084616",
+          "url": "https://www.imdb.com/title/tt22084616/"
+        },
         "letterboxd": {
           "value": 4.12,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
@@ -3737,11 +3891,6 @@
         "tomatoes": {
           "value": 98,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
-        },
-        "imdb": {
-          "value": 8.2,
-          "id": "tt22084616",
-          "url": "https://www.imdb.com/title/tt22084616/"
         }
       },
       "reserved": 0,
@@ -3778,6 +3927,11 @@
       "sold": 0,
       "eventStatus": "ok",
       "ratings": {
+        "imdb": {
+          "value": 6.5,
+          "id": "tt32890033",
+          "url": "https://www.imdb.com/title/tt32890033/"
+        },
         "letterboxd": {
           "value": 3.14,
           "url": "https://letterboxd.com/film/minions-monsters/"
@@ -3785,11 +3939,6 @@
         "tomatoes": {
           "value": 75,
           "url": "https://www.rottentomatoes.com/m/minions_and_monsters"
-        },
-        "imdb": {
-          "value": 6.6,
-          "id": "tt32890033",
-          "url": "https://www.imdb.com/title/tt32890033/"
         }
       },
       "reserved": 0,
@@ -3805,7 +3954,7 @@
       "dayKey": "2026-08-10",
       "runningMinutes": 88,
       "runningLabel": "1 t. 28 min.",
-      "age": "6 år",
+      "age": "Tillatt for alle",
       "tags": [
         "Norsk tale",
         "Norsk tekst"
@@ -3823,17 +3972,22 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92787/purchase?kanal=dxf",
       "eventId": "92787",
       "promoterId": "202",
-      "sold": 11,
+      "sold": 14,
       "eventStatus": "ok",
       "ratings": {
+        "imdb": {
+          "value": 6,
+          "id": "tt29356163",
+          "url": "https://www.imdb.com/title/tt29356163/"
+        },
         "letterboxd": {
-          "value": 3.21,
+          "value": 3.2,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         }
       },
       "reserved": 0,
-      "capacity": 108,
-      "available": 97
+      "capacity": 107,
+      "available": 93
     },
     {
       "id": "UIP20241680-2026-08-10T19:10:00-Storsal",
@@ -3864,6 +4018,11 @@
       "sold": 0,
       "eventStatus": "ok",
       "ratings": {
+        "imdb": {
+          "value": 8.5,
+          "id": "tt33764258",
+          "url": "https://www.imdb.com/title/tt33764258/"
+        },
         "letterboxd": {
           "value": 4.4,
           "url": "https://letterboxd.com/film/the-odyssey-2026/"
@@ -3871,11 +4030,6 @@
         "tomatoes": {
           "value": 97,
           "url": "https://www.rottentomatoes.com/m/the_odyssey_2026"
-        },
-        "imdb": {
-          "value": 8.5,
-          "id": "tt33764258",
-          "url": "https://www.imdb.com/title/tt33764258/"
         }
       },
       "reserved": 0,
@@ -3911,6 +4065,11 @@
       "sold": 0,
       "eventStatus": "ok",
       "ratings": {
+        "imdb": {
+          "value": 8.2,
+          "id": "tt22084616",
+          "url": "https://www.imdb.com/title/tt22084616/"
+        },
         "letterboxd": {
           "value": 4.12,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
@@ -3918,11 +4077,6 @@
         "tomatoes": {
           "value": 98,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
-        },
-        "imdb": {
-          "value": 8.2,
-          "id": "tt22084616",
-          "url": "https://www.imdb.com/title/tt22084616/"
         }
       },
       "reserved": 0,
@@ -3958,6 +4112,11 @@
       "sold": 0,
       "eventStatus": "ok",
       "ratings": {
+        "imdb": {
+          "value": 8.5,
+          "id": "tt33764258",
+          "url": "https://www.imdb.com/title/tt33764258/"
+        },
         "letterboxd": {
           "value": 4.4,
           "url": "https://letterboxd.com/film/the-odyssey-2026/"
@@ -3965,11 +4124,6 @@
         "tomatoes": {
           "value": 97,
           "url": "https://www.rottentomatoes.com/m/the_odyssey_2026"
-        },
-        "imdb": {
-          "value": 8.5,
-          "id": "tt33764258",
-          "url": "https://www.imdb.com/title/tt33764258/"
         }
       },
       "reserved": 0,
@@ -3985,7 +4139,7 @@
       "dayKey": "2026-08-11",
       "runningMinutes": 88,
       "runningLabel": "1 t. 28 min.",
-      "age": "6 år",
+      "age": "Tillatt for alle",
       "tags": [
         "Norsk tale",
         "Norsk tekst"
@@ -4006,8 +4160,13 @@
       "sold": 0,
       "eventStatus": "ok",
       "ratings": {
+        "imdb": {
+          "value": 6,
+          "id": "tt29356163",
+          "url": "https://www.imdb.com/title/tt29356163/"
+        },
         "letterboxd": {
-          "value": 3.21,
+          "value": 3.2,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         }
       },
@@ -4045,6 +4204,11 @@
       "sold": 0,
       "eventStatus": "ok",
       "ratings": {
+        "imdb": {
+          "value": 5.8,
+          "id": "tt27419466",
+          "url": "https://www.imdb.com/title/tt27419466/"
+        },
         "letterboxd": {
           "value": 2.72,
           "url": "https://letterboxd.com/film/moana/"
@@ -4087,6 +4251,11 @@
       "sold": 4,
       "eventStatus": "ok",
       "ratings": {
+        "imdb": {
+          "value": 8.5,
+          "id": "tt33764258",
+          "url": "https://www.imdb.com/title/tt33764258/"
+        },
         "letterboxd": {
           "value": 4.4,
           "url": "https://letterboxd.com/film/the-odyssey-2026/"
@@ -4094,11 +4263,6 @@
         "tomatoes": {
           "value": 97,
           "url": "https://www.rottentomatoes.com/m/the_odyssey_2026"
-        },
-        "imdb": {
-          "value": 8.5,
-          "id": "tt33764258",
-          "url": "https://www.imdb.com/title/tt33764258/"
         }
       },
       "reserved": 0,
@@ -4134,6 +4298,11 @@
       "sold": 0,
       "eventStatus": "ok",
       "ratings": {
+        "imdb": {
+          "value": 8.2,
+          "id": "tt22084616",
+          "url": "https://www.imdb.com/title/tt22084616/"
+        },
         "letterboxd": {
           "value": 4.12,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
@@ -4141,11 +4310,6 @@
         "tomatoes": {
           "value": 98,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
-        },
-        "imdb": {
-          "value": 8.2,
-          "id": "tt22084616",
-          "url": "https://www.imdb.com/title/tt22084616/"
         }
       },
       "reserved": 0,
@@ -4182,6 +4346,11 @@
       "sold": 0,
       "eventStatus": "ok",
       "ratings": {
+        "imdb": {
+          "value": 6.5,
+          "id": "tt32890033",
+          "url": "https://www.imdb.com/title/tt32890033/"
+        },
         "letterboxd": {
           "value": 3.14,
           "url": "https://letterboxd.com/film/minions-monsters/"
@@ -4189,11 +4358,6 @@
         "tomatoes": {
           "value": 75,
           "url": "https://www.rottentomatoes.com/m/minions_and_monsters"
-        },
-        "imdb": {
-          "value": 6.6,
-          "id": "tt32890033",
-          "url": "https://www.imdb.com/title/tt32890033/"
         }
       },
       "reserved": 0,
@@ -4209,7 +4373,7 @@
       "dayKey": "2026-08-12",
       "runningMinutes": 88,
       "runningLabel": "1 t. 28 min.",
-      "age": "6 år",
+      "age": "Tillatt for alle",
       "tags": [
         "Norsk tale",
         "Norsk tekst"
@@ -4230,8 +4394,13 @@
       "sold": 0,
       "eventStatus": "ok",
       "ratings": {
+        "imdb": {
+          "value": 6,
+          "id": "tt29356163",
+          "url": "https://www.imdb.com/title/tt29356163/"
+        },
         "letterboxd": {
-          "value": 3.21,
+          "value": 3.2,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         }
       },
@@ -4268,6 +4437,11 @@
       "sold": 0,
       "eventStatus": "ok",
       "ratings": {
+        "imdb": {
+          "value": 8.5,
+          "id": "tt33764258",
+          "url": "https://www.imdb.com/title/tt33764258/"
+        },
         "letterboxd": {
           "value": 4.4,
           "url": "https://letterboxd.com/film/the-odyssey-2026/"
@@ -4275,11 +4449,6 @@
         "tomatoes": {
           "value": 97,
           "url": "https://www.rottentomatoes.com/m/the_odyssey_2026"
-        },
-        "imdb": {
-          "value": 8.5,
-          "id": "tt33764258",
-          "url": "https://www.imdb.com/title/tt33764258/"
         }
       },
       "reserved": 0,
@@ -4315,6 +4484,11 @@
       "sold": 0,
       "eventStatus": "ok",
       "ratings": {
+        "imdb": {
+          "value": 8.2,
+          "id": "tt22084616",
+          "url": "https://www.imdb.com/title/tt22084616/"
+        },
         "letterboxd": {
           "value": 4.12,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
@@ -4322,11 +4496,6 @@
         "tomatoes": {
           "value": 98,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
-        },
-        "imdb": {
-          "value": 8.2,
-          "id": "tt22084616",
-          "url": "https://www.imdb.com/title/tt22084616/"
         }
       },
       "reserved": 0,
@@ -4342,7 +4511,7 @@
       "dayKey": "2026-08-13",
       "runningMinutes": 88,
       "runningLabel": "1 t. 28 min.",
-      "age": "6 år",
+      "age": "Tillatt for alle",
       "tags": [
         "Norsk tale",
         "Norsk tekst"
@@ -4363,8 +4532,13 @@
       "sold": 0,
       "eventStatus": "ok",
       "ratings": {
+        "imdb": {
+          "value": 6,
+          "id": "tt29356163",
+          "url": "https://www.imdb.com/title/tt29356163/"
+        },
         "letterboxd": {
-          "value": 3.21,
+          "value": 3.2,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         }
       },
@@ -4402,6 +4576,11 @@
       "sold": 0,
       "eventStatus": "ok",
       "ratings": {
+        "imdb": {
+          "value": 5.8,
+          "id": "tt27419466",
+          "url": "https://www.imdb.com/title/tt27419466/"
+        },
         "letterboxd": {
           "value": 2.72,
           "url": "https://letterboxd.com/film/moana/"
@@ -4444,6 +4623,11 @@
       "sold": 0,
       "eventStatus": "ok",
       "ratings": {
+        "imdb": {
+          "value": 8.5,
+          "id": "tt33764258",
+          "url": "https://www.imdb.com/title/tt33764258/"
+        },
         "letterboxd": {
           "value": 4.4,
           "url": "https://letterboxd.com/film/the-odyssey-2026/"
@@ -4451,11 +4635,6 @@
         "tomatoes": {
           "value": 97,
           "url": "https://www.rottentomatoes.com/m/the_odyssey_2026"
-        },
-        "imdb": {
-          "value": 8.5,
-          "id": "tt33764258",
-          "url": "https://www.imdb.com/title/tt33764258/"
         }
       },
       "reserved": 0,
@@ -4491,6 +4670,11 @@
       "sold": 0,
       "eventStatus": "ok",
       "ratings": {
+        "imdb": {
+          "value": 8.2,
+          "id": "tt22084616",
+          "url": "https://www.imdb.com/title/tt22084616/"
+        },
         "letterboxd": {
           "value": 4.12,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
@@ -4498,11 +4682,6 @@
         "tomatoes": {
           "value": 98,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
-        },
-        "imdb": {
-          "value": 8.2,
-          "id": "tt22084616",
-          "url": "https://www.imdb.com/title/tt22084616/"
         }
       },
       "reserved": 0,
@@ -4518,7 +4697,7 @@
       "dayKey": "2026-08-14",
       "runningMinutes": 88,
       "runningLabel": "1 t. 28 min.",
-      "age": "6 år",
+      "age": "Tillatt for alle",
       "tags": [
         "Norsk tale",
         "Norsk tekst"
@@ -4539,8 +4718,13 @@
       "sold": 0,
       "eventStatus": "ok",
       "ratings": {
+        "imdb": {
+          "value": 6,
+          "id": "tt29356163",
+          "url": "https://www.imdb.com/title/tt29356163/"
+        },
         "letterboxd": {
-          "value": 3.21,
+          "value": 3.2,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         }
       },
@@ -4563,7 +4747,11 @@
       ],
       "showType": "Norgespremiere",
       "kinoklubb": false,
-      "genres": null,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Mystery"
+      ],
       "director": "David Robert Mitchell",
       "premiere": "2026-08-14",
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/06a5c5a12f39cac43d7d9abd76ae107e162c3e3b-1500x2223.webp?w=240&h=340&fit=crop&auto=format",
@@ -4606,6 +4794,11 @@
       "sold": 0,
       "eventStatus": "ok",
       "ratings": {
+        "imdb": {
+          "value": 7.9,
+          "id": "tt14173636",
+          "url": "https://www.imdb.com/title/tt14173636/"
+        },
         "letterboxd": {
           "value": 4.04,
           "url": "https://letterboxd.com/film/the-invite-2026/"
@@ -4613,11 +4806,6 @@
         "tomatoes": {
           "value": 89,
           "url": "https://www.rottentomatoes.com/m/the_invite"
-        },
-        "imdb": {
-          "value": 7.8,
-          "id": "tt14173636",
-          "url": "https://www.imdb.com/title/tt14173636/"
         }
       },
       "reserved": 0,
@@ -4653,6 +4841,11 @@
       "sold": 0,
       "eventStatus": "ok",
       "ratings": {
+        "imdb": {
+          "value": 8.2,
+          "id": "tt22084616",
+          "url": "https://www.imdb.com/title/tt22084616/"
+        },
         "letterboxd": {
           "value": 4.12,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
@@ -4660,11 +4853,6 @@
         "tomatoes": {
           "value": 98,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
-        },
-        "imdb": {
-          "value": 8.2,
-          "id": "tt22084616",
-          "url": "https://www.imdb.com/title/tt22084616/"
         }
       },
       "reserved": 0,
@@ -4687,9 +4875,7 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Fantasy",
-        "Horror",
-        "Mystery"
+        "Horror"
       ],
       "director": "Sébastien Vanicek",
       "premiere": "2026-07-10",
@@ -4700,6 +4886,11 @@
       "sold": 0,
       "eventStatus": "ok",
       "ratings": {
+        "imdb": {
+          "value": 6.5,
+          "id": "tt31170389",
+          "url": "https://www.imdb.com/title/tt31170389/"
+        },
         "letterboxd": {
           "value": 3.13,
           "url": "https://letterboxd.com/film/evil-dead-burn/"
@@ -4742,6 +4933,11 @@
       "sold": 0,
       "eventStatus": "ok",
       "ratings": {
+        "imdb": {
+          "value": 7.9,
+          "id": "tt14173636",
+          "url": "https://www.imdb.com/title/tt14173636/"
+        },
         "letterboxd": {
           "value": 4.04,
           "url": "https://letterboxd.com/film/the-invite-2026/"
@@ -4749,11 +4945,6 @@
         "tomatoes": {
           "value": 89,
           "url": "https://www.rottentomatoes.com/m/the_invite"
-        },
-        "imdb": {
-          "value": 7.8,
-          "id": "tt14173636",
-          "url": "https://www.imdb.com/title/tt14173636/"
         }
       },
       "reserved": 0,
@@ -4789,6 +4980,11 @@
       "sold": 0,
       "eventStatus": "ok",
       "ratings": {
+        "imdb": {
+          "value": 7.9,
+          "id": "tt14173636",
+          "url": "https://www.imdb.com/title/tt14173636/"
+        },
         "letterboxd": {
           "value": 4.04,
           "url": "https://letterboxd.com/film/the-invite-2026/"
@@ -4796,11 +4992,6 @@
         "tomatoes": {
           "value": 89,
           "url": "https://www.rottentomatoes.com/m/the_invite"
-        },
-        "imdb": {
-          "value": 7.8,
-          "id": "tt14173636",
-          "url": "https://www.imdb.com/title/tt14173636/"
         }
       },
       "reserved": 0,
@@ -4823,7 +5014,8 @@
       "showType": "Seniorkino",
       "kinoklubb": true,
       "genres": [
-        "Drama"
+        "Drama",
+        "Thriller"
       ],
       "director": "Cristian Mungiu",
       "premiere": "2026-09-04",
@@ -4834,14 +5026,14 @@
       "sold": 0,
       "eventStatus": "ok",
       "ratings": {
+        "imdb": {
+          "value": 8.2,
+          "id": "tt35410859",
+          "url": "https://www.imdb.com/title/tt35410859/"
+        },
         "letterboxd": {
           "value": 3.86,
           "url": "https://letterboxd.com/film/fjord-2026/"
-        },
-        "imdb": {
-          "value": 7.8,
-          "id": "tt35410859",
-          "url": "https://www.imdb.com/title/tt35410859/"
         }
       },
       "reserved": 0,
