@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-06T00:09:19.287Z",
+  "updatedAt": "2026-08-06T13:01:42.998Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -1457,7 +1457,7 @@
       "available": 1,
       "ratings": {
         "letterboxd": {
-          "value": 4.13,
+          "value": 4.12,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
@@ -1495,7 +1495,7 @@
       "available": 93,
       "ratings": {
         "letterboxd": {
-          "value": 4.13,
+          "value": 4.12,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
@@ -1611,7 +1611,7 @@
       "available": 5,
       "ratings": {
         "letterboxd": {
-          "value": 4.13,
+          "value": 4.12,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
@@ -1649,7 +1649,7 @@
       "available": 173,
       "ratings": {
         "letterboxd": {
-          "value": 4.13,
+          "value": 4.12,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
@@ -1726,7 +1726,7 @@
       "available": 31,
       "ratings": {
         "letterboxd": {
-          "value": 4.13,
+          "value": 4.12,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
@@ -1764,7 +1764,7 @@
       "available": 166,
       "ratings": {
         "letterboxd": {
-          "value": 4.13,
+          "value": 4.12,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
@@ -1918,7 +1918,7 @@
       "available": 59,
       "ratings": {
         "letterboxd": {
-          "value": 4.13,
+          "value": 4.12,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
@@ -1994,7 +1994,7 @@
       "available": 37,
       "ratings": {
         "letterboxd": {
-          "value": 4.13,
+          "value": 4.12,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
@@ -2071,7 +2071,7 @@
       "available": 43,
       "ratings": {
         "letterboxd": {
-          "value": 4.13,
+          "value": 4.12,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
@@ -2186,7 +2186,7 @@
       "available": 178,
       "ratings": {
         "letterboxd": {
-          "value": 4.13,
+          "value": 4.12,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
@@ -2340,7 +2340,7 @@
       "available": 155,
       "ratings": {
         "letterboxd": {
-          "value": 4.13,
+          "value": 4.12,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
@@ -2473,7 +2473,7 @@
       "available": 8,
       "ratings": {
         "letterboxd": {
-          "value": 4.13,
+          "value": 4.12,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
@@ -2685,7 +2685,7 @@
       "available": 172,
       "ratings": {
         "letterboxd": {
-          "value": 4.13,
+          "value": 4.12,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
@@ -2721,7 +2721,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92492/purchase?kanal=dxf",
       "eventId": "92492",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 4,
       "eventStatus": "ok",
       "ratings": {
         "letterboxd": {
@@ -2733,9 +2733,9 @@
           "url": "https://www.rottentomatoes.com/m/minions_and_monsters"
         }
       },
-      "reserved": 0,
+      "reserved": 4,
       "capacity": 110,
-      "available": 110
+      "available": 102
     },
     {
       "id": "EDI20260819-2026-08-06T17:30:00-Storsal",
@@ -2806,11 +2806,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92491/purchase?kanal=dxf",
       "eventId": "92491",
       "promoterId": "202",
-      "sold": 8,
+      "sold": 17,
       "eventStatus": "ok",
       "ratings": {
         "letterboxd": {
-          "value": 4.13,
+          "value": 4.12,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
@@ -2820,7 +2820,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 102
+      "available": 93
     },
     {
       "id": "EDI20260626-2026-08-06T20:15:00-Storsal",
@@ -2891,7 +2891,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92494/purchase?kanal=dxf",
       "eventId": "92494",
       "promoterId": "202",
-      "sold": 12,
+      "sold": 17,
       "eventStatus": "ok",
       "ratings": {
         "letterboxd": {
@@ -2901,7 +2901,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 98
+      "available": 93
     },
     {
       "id": "EDI20260556-2026-08-07T17:30:00-Storsal",
@@ -3018,7 +3018,7 @@
       "eventStatus": "ok",
       "ratings": {
         "letterboxd": {
-          "value": 4.13,
+          "value": 4.12,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
@@ -3066,8 +3066,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 107,
-      "available": 100
+      "capacity": 110,
+      "available": 103
     },
     {
       "id": "EDI20260819-2026-08-08T15:30:00-Storsal",
@@ -3223,11 +3223,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92811/purchase?kanal=dxf",
       "eventId": "92811",
       "promoterId": "202",
-      "sold": 7,
+      "sold": 9,
       "eventStatus": "ok",
       "ratings": {
         "letterboxd": {
-          "value": 4.13,
+          "value": 4.12,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
@@ -3237,7 +3237,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 103
+      "available": 101
     },
     {
       "id": "EDI20251106-2026-08-09T15:00:00-Storsal",
@@ -3403,8 +3403,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 108,
-      "available": 106
+      "capacity": 110,
+      "available": 108
     },
     {
       "id": "EDI20240688-2026-08-09T20:00:00-Storsal",
@@ -3432,11 +3432,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92690/purchase?kanal=dxf",
       "eventId": "92690",
       "promoterId": "202",
-      "sold": 3,
+      "sold": 9,
       "eventStatus": "ok",
       "ratings": {
         "letterboxd": {
-          "value": 4.13,
+          "value": 4.12,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
@@ -3445,8 +3445,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 246,
-      "available": 243
+      "capacity": 240,
+      "available": 231
     },
     {
       "id": "UIP20241749-2026-08-10T16:50:00-Storsal",
@@ -3602,7 +3602,7 @@
       "eventStatus": "ok",
       "ratings": {
         "letterboxd": {
-          "value": 4.13,
+          "value": 4.12,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
@@ -3764,7 +3764,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92718/purchase?kanal=dxf",
       "eventId": "92718",
       "promoterId": "202",
-      "sold": 2,
+      "sold": 4,
       "eventStatus": "ok",
       "ratings": {
         "letterboxd": {
@@ -3778,7 +3778,7 @@
       },
       "reserved": 0,
       "capacity": 108,
-      "available": 106
+      "available": 104
     },
     {
       "id": "EDI20240688-2026-08-11T20:00:00-Storsal",
@@ -3810,7 +3810,7 @@
       "eventStatus": "ok",
       "ratings": {
         "letterboxd": {
-          "value": 4.13,
+          "value": 4.12,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
@@ -3976,7 +3976,7 @@
       "eventStatus": "ok",
       "ratings": {
         "letterboxd": {
-          "value": 4.13,
+          "value": 4.12,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
@@ -4142,7 +4142,7 @@
       "eventStatus": "ok",
       "ratings": {
         "letterboxd": {
-          "value": 4.13,
+          "value": 4.12,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
@@ -4294,7 +4294,7 @@
       "eventStatus": "ok",
       "ratings": {
         "letterboxd": {
-          "value": 4.13,
+          "value": 4.12,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
