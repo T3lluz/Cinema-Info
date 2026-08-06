@@ -429,6 +429,22 @@ function ratingsCacheKey(showTitle, movie) {
   ].join("|");
 }
 
+/**
+ * Merge rating sources per key. Later parts win for a source they
+ * carry; a missing source (e.g. OMDb skipped) must not wipe last
+ * night's IMDb when Letterboxd/RT still came back.
+ */
+function mergeRatings(...parts) {
+  const out = {};
+  for (const ratings of parts) {
+    if (!ratings || typeof ratings !== "object") continue;
+    for (const key of ["imdb", "letterboxd", "tomatoes"]) {
+      if (ratings[key] != null) out[key] = ratings[key];
+    }
+  }
+  return Object.keys(out).length ? out : null;
+}
+
 function dayKeyFromShowStart(value) {
   return String(value).slice(0, 10);
 }
@@ -702,7 +718,8 @@ async function main() {
   restoreEventIds(baseShows, previousShows);
 
   // Keep last night's ratings/genres when today's lookup came up empty
-  // (transient scrape miss, or a film not yet listed).
+  // or only partially filled (e.g. OMDb key missing → Letterboxd/RT
+  // succeed but IMDb is omitted and must not wipe yesterday's score).
   const prevRatingsByTitle = new Map();
   const prevGenresByTitle = new Map();
   for (const prev of previousShows) {
@@ -720,9 +737,11 @@ async function main() {
     }
   }
   for (const show of baseShows) {
-    if (!show.ratings && prevRatingsByTitle.has(show.title)) {
-      show.ratings = prevRatingsByTitle.get(show.title);
-    }
+    const merged = mergeRatings(
+      prevRatingsByTitle.get(show.title),
+      show.ratings
+    );
+    if (merged) show.ratings = merged;
     if (!show.genres && prevGenresByTitle.has(show.title)) {
       show.genres = prevGenresByTitle.get(show.title);
     }
@@ -760,18 +779,29 @@ async function main() {
   const kept = shows.filter((show) => !dropped.has(show.id));
   const history = previousShows.filter((show) => !dropped.has(show.id));
 
-  const ratingsByTitle = new Map(freshRatingsByTitle);
+  const ratingsByTitle = new Map();
   const genresByTitle = new Map(freshGenresByTitle);
-  // Fill any title that only exists as history from its newest row.
+  // Seed with previous + any row we already filled, then let fresh
+  // sources win per key without dropping ones the fresh lookup missed.
+  for (const [title, ratings] of prevRatingsByTitle) {
+    ratingsByTitle.set(title, ratings);
+  }
   for (const show of kept) {
-    if (show.title && show.ratings) ratingsByTitle.set(show.title, show.ratings);
+    if (show.title && show.ratings) {
+      ratingsByTitle.set(
+        show.title,
+        mergeRatings(ratingsByTitle.get(show.title), show.ratings)
+      );
+    }
     if (show.title && looksLikeImdbGenres(show.genres)) {
       genresByTitle.set(show.title, show.genres);
     }
   }
-  // Fresh lookups must win — rewrite after the history pass.
   for (const [title, ratings] of freshRatingsByTitle) {
-    ratingsByTitle.set(title, ratings);
+    ratingsByTitle.set(
+      title,
+      mergeRatings(ratingsByTitle.get(title), ratings)
+    );
   }
   for (const [title, genres] of freshGenresByTitle) {
     genresByTitle.set(title, genres);
@@ -779,12 +809,12 @@ async function main() {
 
   const merged = mergeWithHistory(kept, history).map((show) => {
     const { reviews: _drop, ...rest } = show;
-    // Fresh lookups win over stale fields still sitting on history rows.
-    const ratings =
-      ratingsByTitle.get(rest.title) ||
-      rest.ratings ||
-      prevRatingsByTitle.get(rest.title) ||
-      null;
+    // Per-source merge: fresh wins where present; prior fills the gaps.
+    const ratings = mergeRatings(
+      prevRatingsByTitle.get(rest.title),
+      rest.ratings,
+      ratingsByTitle.get(rest.title)
+    );
     const genres =
       genresByTitle.get(rest.title) ||
       rest.genres ||
