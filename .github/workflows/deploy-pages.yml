@@ -41,7 +41,7 @@ jobs:
           cp -a data icons _site/
 
       - name: Upload site
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: _site
 
