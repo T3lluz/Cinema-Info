@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-06T16:57:32.618Z",
+  "updatedAt": "2026-08-06T17:18:00.349Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -165,9 +165,7 @@
         }
       },
       "genres": [
-        "Fantasy",
-        "Horror",
-        "Mystery"
+        "Horror"
       ]
     },
     {
@@ -504,9 +502,7 @@
         }
       },
       "genres": [
-        "Fantasy",
-        "Horror",
-        "Mystery"
+        "Horror"
       ]
     },
     {
@@ -712,9 +708,7 @@
         }
       },
       "genres": [
-        "Fantasy",
-        "Horror",
-        "Mystery"
+        "Horror"
       ]
     },
     {
@@ -964,9 +958,7 @@
         }
       },
       "genres": [
-        "Fantasy",
-        "Horror",
-        "Mystery"
+        "Horror"
       ]
     },
     {
@@ -1216,9 +1208,7 @@
         }
       },
       "genres": [
-        "Fantasy",
-        "Horror",
-        "Mystery"
+        "Horror"
       ]
     },
     {
@@ -1555,9 +1545,7 @@
         }
       },
       "genres": [
-        "Fantasy",
-        "Horror",
-        "Mystery"
+        "Horror"
       ]
     },
     {
@@ -2848,9 +2836,7 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Fantasy",
-        "Horror",
-        "Mystery"
+        "Horror"
       ],
       "director": "Sébastien Vanicek",
       "premiere": "2026-07-10",
@@ -3191,7 +3177,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92491/purchase?kanal=dxf",
       "eventId": "92491",
       "promoterId": "202",
-      "sold": 22,
+      "sold": 25,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -3210,7 +3196,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 88
+      "available": 85
     },
     {
       "id": "EDI20260626-2026-08-06T20:15:00-Storsal",
@@ -3228,9 +3214,7 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Fantasy",
-        "Horror",
-        "Mystery"
+        "Horror"
       ],
       "director": "Sébastien Vanicek",
       "premiere": "2026-07-10",
@@ -3238,7 +3222,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92751/purchase?kanal=dxf",
       "eventId": "92751",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -3255,7 +3239,7 @@
           "url": "https://www.rottentomatoes.com/m/evil_dead_burn"
         }
       },
-      "reserved": 2,
+      "reserved": 0,
       "capacity": 246,
       "available": 244
     },
@@ -3394,9 +3378,9 @@
           "url": "https://www.rottentomatoes.com/m/the_odyssey_2026"
         }
       },
-      "reserved": 0,
+      "reserved": 2,
       "capacity": 110,
-      "available": 108
+      "available": 106
     },
     {
       "id": "EDI20240688-2026-08-07T19:50:00-Storsal",
@@ -4891,9 +4875,7 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Fantasy",
-        "Horror",
-        "Mystery"
+        "Horror"
       ],
       "director": "Sébastien Vanicek",
       "premiere": "2026-07-10",

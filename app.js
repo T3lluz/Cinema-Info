@@ -3627,6 +3627,18 @@ function specialBadges(show) {
   return bits.join("");
 }
 
+/** Merge rating sources; later parts win only for keys they carry. */
+function mergeRatingSources(...parts) {
+  const out = {};
+  for (const ratings of parts) {
+    if (!ratings || typeof ratings !== "object") continue;
+    for (const key of ["imdb", "letterboxd", "tomatoes"]) {
+      if (ratings[key] != null) out[key] = ratings[key];
+    }
+  }
+  return Object.keys(out).length ? out : null;
+}
+
 /** Compact IMDb / Letterboxd / Tomatometer marks (SVG Repo brand icons). */
 function ratingLogo(kind) {
   // https://www.svgrepo.com/svg/333553/imdb — yellow #F5C518 on black letters
@@ -3888,7 +3900,11 @@ function groupMovies() {
     // showing of the same film that has them.
     if (!movie.genres && show.genres) movie.genres = show.genres;
     if (!movie.director && show.director) movie.director = show.director;
-    if (!movie.ratings && show.ratings) movie.ratings = show.ratings;
+    // Per-source merge across showings of the same film — a history
+    // row with only Letterboxd must not block a later row's IMDb.
+    if (show.ratings) {
+      movie.ratings = mergeRatingSources(movie.ratings, show.ratings);
+    }
   }
 
   const now = new Date();
