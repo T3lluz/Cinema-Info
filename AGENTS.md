@@ -37,3 +37,13 @@ full product description and data model.
 - `DX_EMAIL=… DX_PASSWORD=… node scripts/dx-session.mjs <path>` is for
   shell debugging against `app.dx.no`. The PWA itself needs no per-user
   DX login — see `.cursor/skills/dx-account/SKILL.md`.
+
+### Publishing (GitHub Pages)
+
+- Production URL: `https://t3lluz.github.io/Cinema-Info/`
+- Publish with `.github/workflows/deploy-pages.yml` (push to `main` or
+  workflow_dispatch). **Repo admin one-time setup:** Settings → Pages →
+  Source must be **GitHub Actions**, not “Deploy from a branch”. Legacy
+  branch deploys have been stuck in `deployment_queued`.
+- The workflow stages only the PWA files into the Pages artifact; it does
+  not publish `scripts/`, `supabase/`, or `.github/`.
