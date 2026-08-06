@@ -171,16 +171,16 @@ const I18N = {
     statsOpenMovie: "Vis {title} under Filmer",
     statsOpenDay: "Vis {day} under Dager",
     settingsTitle: "Innstillinger",
-    settingsSubtitle: "Språk, utseende, setenumre og innslipp",
+    settingsSubtitle: "Språk, utseende og innslipp",
     language: "Språk",
-    languageHint: "Velg språk for appen",
+    languageHint: "Appens språk",
     theme: "Tema",
-    themeHint: "Lys, mørk eller følg enheten",
+    themeHint: "Lys, mørk eller Auto",
     themeLight: "Lys",
     themeDark: "Mørk",
     themeSystem: "Auto",
-    material: "Stil",
-    materialHint: "Subtil gjennomskinnelighet eller flytende glass",
+    material: "Glass",
+    materialHint: "Flytende glassflater",
     materialSubtle: "Subtil",
     materialGlass: "Glass",
     directorLabel: "Regi",
@@ -192,7 +192,7 @@ const I18N = {
     "showType.Seniorkino": "Seniorkino",
     kinoklubb: "Kinoklubb",
     seatNumbers: "Setenumre",
-    seatNumbersHint: "Vis plassnummeret inne i hvert sete på salkartet",
+    seatNumbersHint: "I salkartet",
     seatNumbersOn: "Vis",
     seatNumbersOff: "Skjul",
     langNb: "Norsk",
@@ -208,7 +208,7 @@ const I18N = {
     dxConnectedAs: "Koblet via felles konto",
     dxConnectedPat: "Koblet via felles konto",
     dxConnectedHint:
-      "Innslipp hentes for i dag og tidligere dager når du åpner appen. Ingen egen innlogging trengs.",
+      "Hentes automatisk via kinoens felles konto — ingen egen innlogging.",
     dxNetworkFail: "Fikk ikke kontakt med DX. Sjekk nettforbindelsen.",
     dxSourceLabel: "Kilde",
     dxSyncedLabel: "Sist oppdatert",
@@ -334,16 +334,16 @@ const I18N = {
     statsOpenMovie: "Show {title} under Movies",
     statsOpenDay: "Show {day} under Days",
     settingsTitle: "Settings",
-    settingsSubtitle: "Language, appearance, seat numbers, and admissions",
+    settingsSubtitle: "Language, appearance, and admissions",
     language: "Language",
-    languageHint: "Choose app language",
+    languageHint: "App language",
     theme: "Theme",
-    themeHint: "Light, dark, or follow the device",
+    themeHint: "Light, dark, or Auto",
     themeLight: "Light",
     themeDark: "Dark",
     themeSystem: "Auto",
-    material: "Style",
-    materialHint: "Subtle translucency or full liquid glass",
+    material: "Glass",
+    materialHint: "Liquid glass surfaces",
     materialSubtle: "Subtle",
     materialGlass: "Glass",
     directorLabel: "Director",
@@ -355,7 +355,7 @@ const I18N = {
     "showType.Seniorkino": "Senior cinema",
     kinoklubb: "Film club",
     seatNumbers: "Seat numbers",
-    seatNumbersHint: "Show the seat number inside each square on the seat map",
+    seatNumbersHint: "On the seat map",
     seatNumbersOn: "Show",
     seatNumbersOff: "Hide",
     langNb: "Norsk",
@@ -371,7 +371,7 @@ const I18N = {
     dxConnectedAs: "Connected via shared account",
     dxConnectedPat: "Connected via shared account",
     dxConnectedHint:
-      "Admissions are fetched for today and earlier days when you open the app. No personal sign-in is needed.",
+      "Fetched automatically through the cinema’s shared account — no personal login.",
     dxNetworkFail: "Could not reach DX. Check your connection.",
     dxSourceLabel: "Source",
     dxSyncedLabel: "Last updated",
@@ -4528,94 +4528,130 @@ function renderStats() {
   );
 }
 
-function renderSettings() {
-  const bridgeError = Boolean(dxScanStatus.error);
-  const statusLabel = t("dxConnectedAs");
-
-  els.settingsContent.innerHTML = `
-    ${viewIntro("settings", "settingsTitle", "settingsSubtitle")}
-
-    <section class="settings-section">
-      <div class="settings-head">
-        <h3>${icon("language", "panel-icon")}${escapeHtml(t("language"))}</h3>
-        <p>${escapeHtml(t("languageHint"))}</p>
-      </div>
-      <div class="segmented" role="group" aria-label="${escapeHtml(t("language"))}">
-        <span class="seg-indicator" aria-hidden="true"></span>
-        <button type="button" class="seg-btn" data-lang="nb" aria-pressed="${lang === "nb"}">${escapeHtml(t("langNb"))}</button>
-        <button type="button" class="seg-btn" data-lang="en" aria-pressed="${lang === "en"}">${escapeHtml(t("langEn"))}</button>
-      </div>
-    </section>
-
-    <section class="settings-section">
-      <div class="settings-head">
-        <h3>${icon("theme", "panel-icon")}${escapeHtml(t("theme"))}</h3>
-        <p>${escapeHtml(t("themeHint"))}</p>
-      </div>
-      <div class="segmented" role="group" aria-label="${escapeHtml(t("theme"))}">
-        <span class="seg-indicator" aria-hidden="true"></span>
-        <button type="button" class="seg-btn" data-theme-opt="light" aria-pressed="${theme === "light"}">${escapeHtml(t("themeLight"))}</button>
-        <button type="button" class="seg-btn" data-theme-opt="dark" aria-pressed="${theme === "dark"}">${escapeHtml(t("themeDark"))}</button>
-        <button type="button" class="seg-btn" data-theme-opt="system" aria-pressed="${theme === "system"}">${escapeHtml(t("themeSystem"))}</button>
-      </div>
-    </section>
-
-    <section class="settings-section">
-      <div class="settings-head">
-        <h3>${icon("material", "panel-icon")}${escapeHtml(t("material"))}</h3>
-        <p>${escapeHtml(t("materialHint"))}</p>
-      </div>
-      <div class="segmented" role="group" aria-label="${escapeHtml(t("material"))}">
-        <span class="seg-indicator" aria-hidden="true"></span>
-        <button type="button" class="seg-btn" data-material-opt="subtle" aria-pressed="${material === "subtle"}">${escapeHtml(t("materialSubtle"))}</button>
-        <button type="button" class="seg-btn" data-material-opt="glass" aria-pressed="${material === "glass"}">${escapeHtml(t("materialGlass"))}</button>
-      </div>
-    </section>
-
-    <section class="settings-section">
-      <div class="settings-head">
-        <h3>${icon("seats", "panel-icon")}${escapeHtml(t("seatNumbers"))}</h3>
-        <p>${escapeHtml(t("seatNumbersHint"))}</p>
-      </div>
-      <div class="segmented" role="group" aria-label="${escapeHtml(t("seatNumbers"))}">
-        <span class="seg-indicator" aria-hidden="true"></span>
-        <button type="button" class="seg-btn" data-seat-numbers="on" aria-pressed="${showSeatNumbers}">${escapeHtml(t("seatNumbersOn"))}</button>
-        <button type="button" class="seg-btn" data-seat-numbers="off" aria-pressed="${!showSeatNumbers}">${escapeHtml(t("seatNumbersOff"))}</button>
-      </div>
-    </section>
-
-    <section class="settings-section dx-section">
-      <div class="settings-head">
-        <h3>${icon("account", "panel-icon")}${escapeHtml(t("dxTitle"))}${
-          bridgeError
-            ? `<span class="dx-chip off">${escapeHtml(t("dxChipOff"))}</span>`
-            : `<span class="dx-chip on">${escapeHtml(t("dxChipOn"))}</span>`
-        }</h3>
-        <p>${escapeHtml(t("dxSubtitle"))}</p>
-      </div>
-      <div class="dx-status connected">
-        <p class="dx-status-title">${escapeHtml(statusLabel)}</p>
-        <p class="dx-status-hint">${escapeHtml(t("dxConnectedHint"))}</p>
-        ${renderDxFacts()}
-        <p class="dx-msg" id="dxTestMsg" hidden></p>
-        <details class="dx-advanced" id="dxDetails" hidden>
-          <summary>${escapeHtml(t("dxDetails"))}</summary>
-          <pre class="dx-log" id="dxLog"></pre>
-        </details>
-        <div class="dx-actions">
-          <button type="button" class="dx-btn ghost" id="dxRefreshBtn">${escapeHtml(t("dxRefreshScans"))}</button>
-          <button type="button" class="dx-btn ghost" id="dxTestBtn">${escapeHtml(t("dxTest"))}</button>
+function settingsTile(iconName, titleKey, hintKey, controlHtml, extraClass = "") {
+  return `
+    <section class="settings-section settings-tile ${extraClass}">
+      <div class="settings-tile-head">
+        <div class="settings-row-text">
+          <h3>${icon(iconName, "panel-icon")}${escapeHtml(t(titleKey))}</h3>
+          <p>${escapeHtml(t(hintKey))}</p>
         </div>
+        ${extraClass.includes("is-switch") ? controlHtml : ""}
       </div>
+      ${extraClass.includes("is-switch") ? "" : controlHtml}
     </section>
   `;
+}
 
-  // Place each liquid indicator on the pressed button.
+function settingsSeg(ariaKey, buttonsHtml) {
+  return `
+    <div class="segmented settings-seg" role="group" aria-label="${escapeHtml(t(ariaKey))}">
+      <span class="seg-indicator" aria-hidden="true">
+        <span class="seg-indicator-rim"></span>
+      </span>
+      ${buttonsHtml}
+    </div>
+  `;
+}
+
+function settingsSwitch(ariaKey, checked, dataAttr) {
+  return `
+    <button
+      type="button"
+      class="settings-switch"
+      role="switch"
+      aria-checked="${checked}"
+      aria-label="${escapeHtml(t(ariaKey))}"
+      ${dataAttr}
+    >
+      <span class="settings-switch-knob" aria-hidden="true"></span>
+    </button>
+  `;
+}
+
+function placeSettingsSegs({ instant = true } = {}) {
   els.settingsContent.querySelectorAll(".segmented").forEach((group) => {
     const indicator = group.querySelector(".seg-indicator");
     const active = group.querySelector('.seg-btn[aria-pressed="true"]');
-    liquidMove(indicator, active, { instant: true });
+    liquidMove(indicator, active, { instant });
   });
+}
+
+function renderSettings() {
+  const bridgeError = Boolean(dxScanStatus.error);
+
+  els.settingsContent.innerHTML = `
+    <div class="settings-shell">
+      ${viewIntro("settings", "settingsTitle", "settingsSubtitle")}
+
+      <div class="settings-grid">
+        ${settingsTile(
+          "language",
+          "language",
+          "languageHint",
+          settingsSeg(
+            "language",
+            `
+          <button type="button" class="seg-btn" data-lang="nb" aria-pressed="${lang === "nb"}">${escapeHtml(t("langNb"))}</button>
+          <button type="button" class="seg-btn" data-lang="en" aria-pressed="${lang === "en"}">${escapeHtml(t("langEn"))}</button>
+        `
+          )
+        )}
+        ${settingsTile(
+          "theme",
+          "theme",
+          "themeHint",
+          settingsSeg(
+            "theme",
+            `
+          <button type="button" class="seg-btn" data-theme-opt="light" aria-pressed="${theme === "light"}">${escapeHtml(t("themeLight"))}</button>
+          <button type="button" class="seg-btn" data-theme-opt="dark" aria-pressed="${theme === "dark"}">${escapeHtml(t("themeDark"))}</button>
+          <button type="button" class="seg-btn" data-theme-opt="system" aria-pressed="${theme === "system"}">${escapeHtml(t("themeSystem"))}</button>
+        `
+          )
+        )}
+        ${settingsTile(
+          "material",
+          "material",
+          "materialHint",
+          settingsSwitch("material", material === "glass", 'data-material-switch'),
+          "is-switch"
+        )}
+        ${settingsTile(
+          "seats",
+          "seatNumbers",
+          "seatNumbersHint",
+          settingsSwitch("seatNumbers", showSeatNumbers, "data-seat-switch"),
+          "is-switch"
+        )}
+
+        <section class="settings-section dx-section">
+          <div class="settings-head">
+            <h3>${icon("account", "panel-icon")}${escapeHtml(t("dxTitle"))}${
+              bridgeError
+                ? `<span class="dx-chip off">${escapeHtml(t("dxChipOff"))}</span>`
+                : `<span class="dx-chip on">${escapeHtml(t("dxChipOn"))}</span>`
+            }</h3>
+            <p>${escapeHtml(t("dxConnectedHint"))}</p>
+          </div>
+          <div class="dx-status connected">
+            ${renderDxFacts()}
+            <p class="dx-msg" id="dxTestMsg" hidden></p>
+            <details class="dx-advanced" id="dxDetails" hidden>
+              <summary>${escapeHtml(t("dxDetails"))}</summary>
+              <pre class="dx-log" id="dxLog"></pre>
+            </details>
+            <div class="dx-actions">
+              <button type="button" class="dx-btn ghost" id="dxRefreshBtn">${escapeHtml(t("dxRefreshScans"))}</button>
+              <button type="button" class="dx-btn ghost" id="dxTestBtn">${escapeHtml(t("dxTest"))}</button>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  `;
+
+  placeSettingsSegs({ instant: true });
 
   els.settingsContent.querySelectorAll("[data-lang]").forEach((btn) => {
     btn.addEventListener("click", () => {
@@ -4643,30 +4679,32 @@ function renderSettings() {
     });
   });
 
-  els.settingsContent.querySelectorAll("[data-material-opt]").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const next = btn.dataset.materialOpt === "glass" ? "glass" : "subtle";
-      if (next === material) return;
+  const materialSwitch = els.settingsContent.querySelector("[data-material-switch]");
+  if (materialSwitch) {
+    materialSwitch.addEventListener("click", () => {
+      const next = material === "glass" ? "subtle" : "glass";
       applyMaterial(next);
       savePrefs();
-      segSelect(btn);
+      materialSwitch.setAttribute("aria-checked", String(next === "glass"));
+      // Glass restyles the segmented chips; re-seat the indicators.
+      requestAnimationFrame(() => {
+        placeSettingsSegs({ instant: true });
+        updateLiquidLenses();
+      });
     });
-  });
+  }
 
-  els.settingsContent.querySelectorAll("[data-seat-numbers]").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const next = btn.dataset.seatNumbers !== "off";
-      if (next === showSeatNumbers) return;
-      showSeatNumbers = next;
+  const seatSwitch = els.settingsContent.querySelector("[data-seat-switch]");
+  if (seatSwitch) {
+    seatSwitch.addEventListener("click", () => {
+      showSeatNumbers = !showSeatNumbers;
       savePrefs();
-      segSelect(btn);
-      // Charts already drawn keep the old digits until the day/movies
-      // view rebuilds; refresh any that are still in the DOM now.
+      seatSwitch.setAttribute("aria-checked", String(showSeatNumbers));
       for (const show of state?.shows || []) {
         if (seatChartExpanded(show)) paintSeatChart(show);
       }
     });
-  });
+  }
 
   const refreshBtn = els.settingsContent.querySelector("#dxRefreshBtn");
   if (refreshBtn) {
