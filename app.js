@@ -2969,6 +2969,18 @@ function seatPhaseOf(show, chart, now = new Date()) {
   return statusOf(show, now) === "upcoming" ? "sales" : "door";
 }
 
+/** Cheap equality for seat-id → state maps (avoids JSON.stringify on every beat). */
+function seatsMapEqual(a, b) {
+  if (a === b) return true;
+  if (!a || !b) return false;
+  const keys = Object.keys(a);
+  if (keys.length !== Object.keys(b).length) return false;
+  for (const k of keys) {
+    if (a[k] !== b[k]) return false;
+  }
+  return true;
+}
+
 /**
  * Pull one hall from the bridge. The layout only travels when this
  * device has never seen that auditorium; after that a refresh is just
