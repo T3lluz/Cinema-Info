@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-07T01:43:51.312Z",
+  "updatedAt": "2026-08-07T11:53:54.229Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -156,7 +156,7 @@
           "url": "https://www.imdb.com/title/tt31170389/"
         },
         "letterboxd": {
-          "value": 3.13,
+          "value": 3.12,
           "url": "https://letterboxd.com/film/evil-dead-burn/"
         },
         "tomatoes": {
@@ -493,7 +493,7 @@
           "url": "https://www.imdb.com/title/tt31170389/"
         },
         "letterboxd": {
-          "value": 3.13,
+          "value": 3.12,
           "url": "https://letterboxd.com/film/evil-dead-burn/"
         },
         "tomatoes": {
@@ -699,7 +699,7 @@
           "url": "https://www.imdb.com/title/tt31170389/"
         },
         "letterboxd": {
-          "value": 3.13,
+          "value": 3.12,
           "url": "https://letterboxd.com/film/evil-dead-burn/"
         },
         "tomatoes": {
@@ -949,7 +949,7 @@
           "url": "https://www.imdb.com/title/tt31170389/"
         },
         "letterboxd": {
-          "value": 3.13,
+          "value": 3.12,
           "url": "https://letterboxd.com/film/evil-dead-burn/"
         },
         "tomatoes": {
@@ -1199,7 +1199,7 @@
           "url": "https://www.imdb.com/title/tt31170389/"
         },
         "letterboxd": {
-          "value": 3.13,
+          "value": 3.12,
           "url": "https://letterboxd.com/film/evil-dead-burn/"
         },
         "tomatoes": {
@@ -1536,7 +1536,7 @@
           "url": "https://www.imdb.com/title/tt31170389/"
         },
         "letterboxd": {
-          "value": 3.13,
+          "value": 3.12,
           "url": "https://letterboxd.com/film/evil-dead-burn/"
         },
         "tomatoes": {
@@ -2856,7 +2856,7 @@
           "url": "https://www.imdb.com/title/tt31170389/"
         },
         "letterboxd": {
-          "value": 3.13,
+          "value": 3.12,
           "url": "https://letterboxd.com/film/evil-dead-burn/"
         },
         "tomatoes": {
@@ -3231,7 +3231,7 @@
           "url": "https://www.imdb.com/title/tt31170389/"
         },
         "letterboxd": {
-          "value": 3.13,
+          "value": 3.12,
           "url": "https://letterboxd.com/film/evil-dead-burn/"
         },
         "tomatoes": {
@@ -3270,7 +3270,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92494/purchase?kanal=dxf",
       "eventId": "92494",
       "promoterId": "202",
-      "sold": 25,
+      "sold": 35,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -3279,13 +3279,13 @@
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 3.19,
+          "value": 3.2,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 85
+      "capacity": 107,
+      "available": 72
     },
     {
       "id": "EDI20260556-2026-08-07T17:30:00-Storsal",
@@ -3408,7 +3408,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92783/purchase?kanal=dxf",
       "eventId": "92783",
       "promoterId": "202",
-      "sold": 2,
+      "sold": 4,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -3427,7 +3427,7 @@
       },
       "reserved": 0,
       "capacity": 246,
-      "available": 244
+      "available": 242
     },
     {
       "id": "EDI20251106-2026-08-08T15:00:00-Kinosal",
@@ -3465,7 +3465,7 @@
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 3.19,
+          "value": 3.2,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         }
       },
@@ -3690,7 +3690,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92691/purchase?kanal=dxf",
       "eventId": "92691",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 5,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -3699,13 +3699,13 @@
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 3.19,
+          "value": 3.2,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         }
       },
       "reserved": 0,
-      "capacity": 246,
-      "available": 246
+      "capacity": 241,
+      "available": 236
     },
     {
       "id": "EDI20260819-2026-08-09T16:00:00-Kinosal",
@@ -3829,7 +3829,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92745/purchase?kanal=dxf",
       "eventId": "92745",
       "promoterId": "202",
-      "sold": 2,
+      "sold": 6,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -3847,8 +3847,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 108
+      "capacity": 106,
+      "available": 100
     },
     {
       "id": "EDI20240688-2026-08-09T20:00:00-Storsal",
@@ -3981,7 +3981,7 @@
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 3.19,
+          "value": 3.2,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         }
       },
@@ -4166,7 +4166,7 @@
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 3.19,
+          "value": 3.2,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         }
       },
@@ -4400,7 +4400,7 @@
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 3.19,
+          "value": 3.2,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         }
       },
@@ -4538,7 +4538,7 @@
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 3.19,
+          "value": 3.2,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         }
       },
@@ -4724,7 +4724,7 @@
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 3.19,
+          "value": 3.2,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         }
       },
@@ -4800,7 +4800,7 @@
           "url": "https://www.imdb.com/title/tt14173636/"
         },
         "letterboxd": {
-          "value": 4.04,
+          "value": 4.05,
           "url": "https://letterboxd.com/film/the-invite-2026/"
         },
         "tomatoes": {
@@ -4892,7 +4892,7 @@
           "url": "https://www.imdb.com/title/tt31170389/"
         },
         "letterboxd": {
-          "value": 3.13,
+          "value": 3.12,
           "url": "https://letterboxd.com/film/evil-dead-burn/"
         },
         "tomatoes": {
@@ -4939,7 +4939,7 @@
           "url": "https://www.imdb.com/title/tt14173636/"
         },
         "letterboxd": {
-          "value": 4.04,
+          "value": 4.05,
           "url": "https://letterboxd.com/film/the-invite-2026/"
         },
         "tomatoes": {
@@ -4986,7 +4986,7 @@
           "url": "https://www.imdb.com/title/tt14173636/"
         },
         "letterboxd": {
-          "value": 4.04,
+          "value": 4.05,
           "url": "https://letterboxd.com/film/the-invite-2026/"
         },
         "tomatoes": {
