@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-07T11:53:54.229Z",
+  "updatedAt": "2026-08-07T23:46:56.789Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -1665,7 +1665,7 @@
           "url": "https://www.imdb.com/title/tt22084616/"
         },
         "letterboxd": {
-          "value": 4.12,
+          "value": 4.11,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
@@ -1708,7 +1708,7 @@
           "url": "https://www.imdb.com/title/tt22084616/"
         },
         "letterboxd": {
-          "value": 4.12,
+          "value": 4.11,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
@@ -1839,7 +1839,7 @@
           "url": "https://www.imdb.com/title/tt22084616/"
         },
         "letterboxd": {
-          "value": 4.12,
+          "value": 4.11,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
@@ -1882,7 +1882,7 @@
           "url": "https://www.imdb.com/title/tt22084616/"
         },
         "letterboxd": {
-          "value": 4.12,
+          "value": 4.11,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
@@ -1969,7 +1969,7 @@
           "url": "https://www.imdb.com/title/tt22084616/"
         },
         "letterboxd": {
-          "value": 4.12,
+          "value": 4.11,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
@@ -2012,7 +2012,7 @@
           "url": "https://www.imdb.com/title/tt22084616/"
         },
         "letterboxd": {
-          "value": 4.12,
+          "value": 4.11,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
@@ -2186,7 +2186,7 @@
           "url": "https://www.imdb.com/title/tt22084616/"
         },
         "letterboxd": {
-          "value": 4.12,
+          "value": 4.11,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
@@ -2272,7 +2272,7 @@
           "url": "https://www.imdb.com/title/tt22084616/"
         },
         "letterboxd": {
-          "value": 4.12,
+          "value": 4.11,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
@@ -2359,7 +2359,7 @@
           "url": "https://www.imdb.com/title/tt22084616/"
         },
         "letterboxd": {
-          "value": 4.12,
+          "value": 4.11,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
@@ -2489,7 +2489,7 @@
           "url": "https://www.imdb.com/title/tt22084616/"
         },
         "letterboxd": {
-          "value": 4.12,
+          "value": 4.11,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
@@ -2663,7 +2663,7 @@
           "url": "https://www.imdb.com/title/tt22084616/"
         },
         "letterboxd": {
-          "value": 4.12,
+          "value": 4.11,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
@@ -2811,7 +2811,7 @@
           "url": "https://www.imdb.com/title/tt22084616/"
         },
         "letterboxd": {
-          "value": 4.12,
+          "value": 4.11,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
@@ -3046,7 +3046,7 @@
           "url": "https://www.imdb.com/title/tt22084616/"
         },
         "letterboxd": {
-          "value": 4.12,
+          "value": 4.11,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
@@ -3186,7 +3186,7 @@
           "url": "https://www.imdb.com/title/tt22084616/"
         },
         "letterboxd": {
-          "value": 4.12,
+          "value": 4.11,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
@@ -3270,22 +3270,22 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92494/purchase?kanal=dxf",
       "eventId": "92494",
       "promoterId": "202",
-      "sold": 35,
+      "sold": 43,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.1,
+          "value": 6,
           "id": "tt29356163",
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 3.2,
+          "value": 3.16,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         }
       },
       "reserved": 0,
-      "capacity": 107,
-      "available": 72
+      "capacity": 110,
+      "available": 67
     },
     {
       "id": "EDI20260556-2026-08-07T17:30:00-Storsal",
@@ -3361,7 +3361,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92750/purchase?kanal=dxf",
       "eventId": "92750",
       "promoterId": "202",
-      "sold": 4,
+      "sold": 10,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -3380,7 +3380,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 106
+      "available": 100
     },
     {
       "id": "EDI20240688-2026-08-07T19:50:00-Storsal",
@@ -3408,7 +3408,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92783/purchase?kanal=dxf",
       "eventId": "92783",
       "promoterId": "202",
-      "sold": 4,
+      "sold": 27,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -3417,7 +3417,7 @@
           "url": "https://www.imdb.com/title/tt22084616/"
         },
         "letterboxd": {
-          "value": 4.12,
+          "value": 4.11,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
@@ -3427,7 +3427,7 @@
       },
       "reserved": 0,
       "capacity": 246,
-      "available": 242
+      "available": 219
     },
     {
       "id": "EDI20251106-2026-08-08T15:00:00-Kinosal",
@@ -3456,22 +3456,22 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92580/purchase?kanal=dxf",
       "eventId": "92580",
       "promoterId": "202",
-      "sold": 7,
+      "sold": 12,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.1,
+          "value": 6,
           "id": "tt29356163",
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 3.2,
+          "value": 3.16,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         }
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 103
+      "available": 98
     },
     {
       "id": "EDI20260819-2026-08-08T15:30:00-Storsal",
@@ -3595,7 +3595,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92836/purchase?kanal=dxf",
       "eventId": "92836",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 4,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -3613,8 +3613,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 246,
-      "available": 246
+      "capacity": 242,
+      "available": 238
     },
     {
       "id": "EDI20240688-2026-08-08T19:45:00-Kinosal",
@@ -3642,7 +3642,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92811/purchase?kanal=dxf",
       "eventId": "92811",
       "promoterId": "202",
-      "sold": 11,
+      "sold": 18,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -3651,7 +3651,7 @@
           "url": "https://www.imdb.com/title/tt22084616/"
         },
         "letterboxd": {
-          "value": 4.12,
+          "value": 4.11,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
@@ -3660,8 +3660,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 108,
-      "available": 97
+      "capacity": 110,
+      "available": 92
     },
     {
       "id": "EDI20251106-2026-08-09T15:00:00-Storsal",
@@ -3690,22 +3690,22 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92691/purchase?kanal=dxf",
       "eventId": "92691",
       "promoterId": "202",
-      "sold": 5,
+      "sold": 8,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.1,
+          "value": 6,
           "id": "tt29356163",
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 3.2,
+          "value": 3.16,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         }
       },
       "reserved": 0,
-      "capacity": 241,
-      "available": 236
+      "capacity": 243,
+      "available": 235
     },
     {
       "id": "EDI20260819-2026-08-09T16:00:00-Kinosal",
@@ -3847,8 +3847,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 106,
-      "available": 100
+      "capacity": 110,
+      "available": 104
     },
     {
       "id": "EDI20240688-2026-08-09T20:00:00-Storsal",
@@ -3885,7 +3885,7 @@
           "url": "https://www.imdb.com/title/tt22084616/"
         },
         "letterboxd": {
-          "value": 4.12,
+          "value": 4.11,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
@@ -3976,12 +3976,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.1,
+          "value": 6,
           "id": "tt29356163",
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 3.2,
+          "value": 3.16,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         }
       },
@@ -4071,7 +4071,7 @@
           "url": "https://www.imdb.com/title/tt22084616/"
         },
         "letterboxd": {
-          "value": 4.12,
+          "value": 4.11,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
@@ -4161,12 +4161,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.1,
+          "value": 6,
           "id": "tt29356163",
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 3.2,
+          "value": 3.16,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         }
       },
@@ -4304,7 +4304,7 @@
           "url": "https://www.imdb.com/title/tt22084616/"
         },
         "letterboxd": {
-          "value": 4.12,
+          "value": 4.11,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
@@ -4395,12 +4395,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.1,
+          "value": 6,
           "id": "tt29356163",
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 3.2,
+          "value": 3.16,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         }
       },
@@ -4490,7 +4490,7 @@
           "url": "https://www.imdb.com/title/tt22084616/"
         },
         "letterboxd": {
-          "value": 4.12,
+          "value": 4.11,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
@@ -4533,12 +4533,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.1,
+          "value": 6,
           "id": "tt29356163",
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 3.2,
+          "value": 3.16,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         }
       },
@@ -4676,7 +4676,7 @@
           "url": "https://www.imdb.com/title/tt22084616/"
         },
         "letterboxd": {
-          "value": 4.12,
+          "value": 4.11,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
@@ -4719,12 +4719,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.1,
+          "value": 6,
           "id": "tt29356163",
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 3.2,
+          "value": 3.16,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         }
       },
@@ -4847,7 +4847,7 @@
           "url": "https://www.imdb.com/title/tt22084616/"
         },
         "letterboxd": {
-          "value": 4.12,
+          "value": 4.11,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
