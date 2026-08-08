@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-07T23:46:56.789Z",
+  "updatedAt": "2026-08-08T11:38:31.332Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -198,7 +198,7 @@
           "url": "https://www.imdb.com/title/tt32890033/"
         },
         "letterboxd": {
-          "value": 3.14,
+          "value": 3.13,
           "url": "https://letterboxd.com/film/minions-monsters/"
         },
         "tomatoes": {
@@ -407,7 +407,7 @@
           "url": "https://www.imdb.com/title/tt32890033/"
         },
         "letterboxd": {
-          "value": 3.14,
+          "value": 3.13,
           "url": "https://letterboxd.com/film/minions-monsters/"
         },
         "tomatoes": {
@@ -535,7 +535,7 @@
           "url": "https://www.imdb.com/title/tt32890033/"
         },
         "letterboxd": {
-          "value": 3.14,
+          "value": 3.13,
           "url": "https://letterboxd.com/film/minions-monsters/"
         },
         "tomatoes": {
@@ -741,7 +741,7 @@
           "url": "https://www.imdb.com/title/tt32890033/"
         },
         "letterboxd": {
-          "value": 3.14,
+          "value": 3.13,
           "url": "https://letterboxd.com/film/minions-monsters/"
         },
         "tomatoes": {
@@ -1079,7 +1079,7 @@
           "url": "https://www.imdb.com/title/tt32890033/"
         },
         "letterboxd": {
-          "value": 3.14,
+          "value": 3.13,
           "url": "https://letterboxd.com/film/minions-monsters/"
         },
         "tomatoes": {
@@ -1406,7 +1406,7 @@
           "url": "https://www.imdb.com/title/tt32890033/"
         },
         "letterboxd": {
-          "value": 3.14,
+          "value": 3.13,
           "url": "https://letterboxd.com/film/minions-monsters/"
         },
         "tomatoes": {
@@ -1622,7 +1622,7 @@
           "url": "https://www.imdb.com/title/tt32890033/"
         },
         "letterboxd": {
-          "value": 3.14,
+          "value": 3.13,
           "url": "https://letterboxd.com/film/minions-monsters/"
         },
         "tomatoes": {
@@ -1796,7 +1796,7 @@
           "url": "https://www.imdb.com/title/tt32890033/"
         },
         "letterboxd": {
-          "value": 3.14,
+          "value": 3.13,
           "url": "https://letterboxd.com/film/minions-monsters/"
         },
         "tomatoes": {
@@ -1926,7 +1926,7 @@
           "url": "https://www.imdb.com/title/tt32890033/"
         },
         "letterboxd": {
-          "value": 3.14,
+          "value": 3.13,
           "url": "https://letterboxd.com/film/minions-monsters/"
         },
         "tomatoes": {
@@ -2099,7 +2099,7 @@
           "url": "https://www.imdb.com/title/tt32890033/"
         },
         "letterboxd": {
-          "value": 3.14,
+          "value": 3.13,
           "url": "https://letterboxd.com/film/minions-monsters/"
         },
         "tomatoes": {
@@ -2316,7 +2316,7 @@
           "url": "https://www.imdb.com/title/tt32890033/"
         },
         "letterboxd": {
-          "value": 3.14,
+          "value": 3.13,
           "url": "https://letterboxd.com/film/minions-monsters/"
         },
         "tomatoes": {
@@ -2533,7 +2533,7 @@
           "url": "https://www.imdb.com/title/tt32890033/"
         },
         "letterboxd": {
-          "value": 3.14,
+          "value": 3.13,
           "url": "https://letterboxd.com/film/minions-monsters/"
         },
         "tomatoes": {
@@ -2952,7 +2952,7 @@
           "url": "https://www.imdb.com/title/tt32890033/"
         },
         "letterboxd": {
-          "value": 3.14,
+          "value": 3.13,
           "url": "https://letterboxd.com/film/minions-monsters/"
         },
         "tomatoes": {
@@ -3091,7 +3091,7 @@
           "url": "https://www.imdb.com/title/tt32890033/"
         },
         "letterboxd": {
-          "value": 3.14,
+          "value": 3.13,
           "url": "https://letterboxd.com/film/minions-monsters/"
         },
         "tomatoes": {
@@ -3274,12 +3274,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6,
+          "value": 6.1,
           "id": "tt29356163",
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 3.16,
+          "value": 3.15,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         }
       },
@@ -3456,22 +3456,22 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92580/purchase?kanal=dxf",
       "eventId": "92580",
       "promoterId": "202",
-      "sold": 12,
+      "sold": 20,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6,
+          "value": 6.1,
           "id": "tt29356163",
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 3.16,
+          "value": 3.15,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         }
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 98
+      "available": 90
     },
     {
       "id": "EDI20260819-2026-08-08T15:30:00-Storsal",
@@ -3500,7 +3500,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92813/purchase?kanal=dxf",
       "eventId": "92813",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -3518,8 +3518,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 246,
-      "available": 246
+      "capacity": 244,
+      "available": 242
     },
     {
       "id": "UIP20241749-2026-08-08T17:15:00-Kinosal",
@@ -3557,7 +3557,7 @@
           "url": "https://www.imdb.com/title/tt32890033/"
         },
         "letterboxd": {
-          "value": 3.14,
+          "value": 3.13,
           "url": "https://letterboxd.com/film/minions-monsters/"
         },
         "tomatoes": {
@@ -3595,7 +3595,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92836/purchase?kanal=dxf",
       "eventId": "92836",
       "promoterId": "202",
-      "sold": 4,
+      "sold": 7,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -3613,8 +3613,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 242,
-      "available": 238
+      "capacity": 243,
+      "available": 236
     },
     {
       "id": "EDI20240688-2026-08-08T19:45:00-Kinosal",
@@ -3642,7 +3642,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92811/purchase?kanal=dxf",
       "eventId": "92811",
       "promoterId": "202",
-      "sold": 18,
+      "sold": 23,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -3659,9 +3659,9 @@
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
         }
       },
-      "reserved": 0,
+      "reserved": 1,
       "capacity": 110,
-      "available": 92
+      "available": 86
     },
     {
       "id": "EDI20251106-2026-08-09T15:00:00-Storsal",
@@ -3690,21 +3690,21 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92691/purchase?kanal=dxf",
       "eventId": "92691",
       "promoterId": "202",
-      "sold": 8,
+      "sold": 11,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6,
+          "value": 6.1,
           "id": "tt29356163",
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 3.16,
+          "value": 3.15,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         }
       },
       "reserved": 0,
-      "capacity": 243,
+      "capacity": 246,
       "available": 235
     },
     {
@@ -3791,7 +3791,7 @@
           "url": "https://www.imdb.com/title/tt32890033/"
         },
         "letterboxd": {
-          "value": 3.14,
+          "value": 3.13,
           "url": "https://letterboxd.com/film/minions-monsters/"
         },
         "tomatoes": {
@@ -3933,7 +3933,7 @@
           "url": "https://www.imdb.com/title/tt32890033/"
         },
         "letterboxd": {
-          "value": 3.14,
+          "value": 3.13,
           "url": "https://letterboxd.com/film/minions-monsters/"
         },
         "tomatoes": {
@@ -3976,12 +3976,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6,
+          "value": 6.1,
           "id": "tt29356163",
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 3.16,
+          "value": 3.15,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         }
       },
@@ -4157,22 +4157,22 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92721/purchase?kanal=dxf",
       "eventId": "92721",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 4,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6,
+          "value": 6.1,
           "id": "tt29356163",
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 3.16,
+          "value": 3.15,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 110
+      "capacity": 106,
+      "available": 102
     },
     {
       "id": "EDI20260819-2026-08-11T17:20:00-Storsal",
@@ -4266,8 +4266,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 108,
-      "available": 104
+      "capacity": 110,
+      "available": 106
     },
     {
       "id": "EDI20240688-2026-08-11T20:00:00-Storsal",
@@ -4352,7 +4352,7 @@
           "url": "https://www.imdb.com/title/tt32890033/"
         },
         "letterboxd": {
-          "value": 3.14,
+          "value": 3.13,
           "url": "https://letterboxd.com/film/minions-monsters/"
         },
         "tomatoes": {
@@ -4395,12 +4395,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6,
+          "value": 6.1,
           "id": "tt29356163",
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 3.16,
+          "value": 3.15,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         }
       },
@@ -4533,12 +4533,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6,
+          "value": 6.1,
           "id": "tt29356163",
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 3.16,
+          "value": 3.15,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         }
       },
@@ -4719,12 +4719,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6,
+          "value": 6.1,
           "id": "tt29356163",
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 3.16,
+          "value": 3.15,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         }
       },
