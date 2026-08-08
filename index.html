@@ -21,7 +21,7 @@
     <meta property="og:image" content="https://t3lluz.github.io/Cinema-Info/icons/icon-512.png" />
     <meta name="twitter:card" content="summary" />
     <title>Buen kino</title>
-    <link rel="stylesheet" href="styles.css?v=110" />
+    <link rel="stylesheet" href="styles.css?v=111" />
     <script>
       // Paint the saved theme + material before the first frame, so a
       // dark or glass visitor never sees a light flash. "system"/unset
@@ -54,33 +54,6 @@
     </script>
   </head>
   <body data-tab="day">
-    <!-- Liquid-glass lenses: app.js draws a displacement map matching
-         each element's exact size and corner radius onto these filters,
-         so Chromium refracts the backdrop at the rim like curved glass.
-         Safari/Firefox fall back to the plain blur declared first in
-         CSS. Scale stays 0 (no-op) until the map is drawn. -->
-    <svg class="liquid-defs" width="0" height="0" aria-hidden="true" focusable="false">
-      <filter id="lens-nav" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-        <feImage result="map" preserveAspectRatio="none" />
-        <feDisplacementMap in="SourceGraphic" in2="map" scale="0" xChannelSelector="R" yChannelSelector="G" />
-      </filter>
-      <filter id="lens-nav-rim" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-        <feImage result="map" preserveAspectRatio="none" />
-        <feDisplacementMap in="SourceGraphic" in2="map" scale="0" xChannelSelector="R" yChannelSelector="G" />
-      </filter>
-      <filter id="lens-chip" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-        <feImage result="map" preserveAspectRatio="none" />
-        <feDisplacementMap in="SourceGraphic" in2="map" scale="0" xChannelSelector="R" yChannelSelector="G" />
-      </filter>
-      <filter id="lens-chip-rim" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-        <feImage result="map" preserveAspectRatio="none" />
-        <feDisplacementMap in="SourceGraphic" in2="map" scale="0" xChannelSelector="R" yChannelSelector="G" />
-      </filter>
-      <filter id="lens-header" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-        <feImage result="map" preserveAspectRatio="none" />
-        <feDisplacementMap in="SourceGraphic" in2="map" scale="0" xChannelSelector="R" yChannelSelector="G" />
-      </filter>
-    </svg>
     <header class="top">
       <div class="top-row">
         <div class="brand">
@@ -147,16 +120,11 @@
     </main>
 
     <nav class="pill-nav" aria-label="Hovedmeny">
-      <!-- Shell / selection / tabs are siblings so each glass layer can
-           sample the page behind it. Nesting backdrop-filters stacked a
-           fake painted rim on top of a dead backdrop. -->
       <div class="pill-nav-shell">
         <div class="pill-nav-glass" aria-hidden="true"></div>
-        <div class="pill-nav-rim" aria-hidden="true"></div>
         <div class="pill-indicator-track" aria-hidden="true">
           <div class="pill-lens">
             <span class="pill-indicator"></span>
-            <span class="pill-indicator-rim"></span>
           </div>
         </div>
         <div class="pill-nav-inner" role="tablist">
@@ -188,6 +156,6 @@
       </div>
     </nav>
 
-    <script src="app.js?v=83" type="module"></script>
+    <script src="app.js?v=84" type="module"></script>
   </body>
 </html>

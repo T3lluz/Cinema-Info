@@ -518,7 +518,7 @@ let activeTab = "day";
 let lang = "nb";
 /** "light" | "dark" | "system" — "system" follows the device. */
 let theme = "system";
-/** "subtle" (translucent blur chrome) | "glass" (full liquid glass). */
+/** "subtle" (frosted chrome) | "glass" (translucent panes + colour field). */
 let material = "subtle";
 const DARK_MQ = window.matchMedia("(prefers-color-scheme: dark)");
 /** Digits painted on each seat square in the hall chart. */
@@ -614,9 +614,24 @@ function focusSelectorWithin(host) {
 }
 
 /** Forget what a host holds, for the places that write inside it by
- * hand — a seat chart repaints on its own, within the day list. */
+ * hand — movie expand panels rewrite themselves inside the movies list. */
 function repaintNext(host) {
   painted.delete(host);
+}
+
+/**
+ * Coalesce full-view redraws onto one animation frame so live + scan +
+ * seat jobs finishing in the same beat only rebuild the page once.
+ */
+let renderQueued = false;
+function scheduleRender() {
+  if (renderQueued) return;
+  renderQueued = true;
+  requestAnimationFrame(() => {
+    renderQueued = false;
+    if (activeTab === "settings") return;
+    renderActiveView();
+  });
 }
 
 /** Beat jobs already in flight, by name. */
@@ -685,26 +700,13 @@ async function init() {
   setupPullToRefresh();
   setupDaySwipe();
 
-  // Keep liquid indicators aligned after layout changes.
+  // Keep tab/day indicators aligned after layout changes.
   window.addEventListener("resize", () => {
     movePillIndicator(activeTab, { instant: true });
     moveDayIndicator({ instant: true });
-    updateLiquidLenses();
   });
 
-  // Draw the refraction lenses once the chrome has its real size, and
-  // redraw when it changes — the header grows and shrinks with the tab.
-  requestAnimationFrame(() => {
-    updateLiquidLenses();
-    updateNavContrast();
-    if ("ResizeObserver" in window) {
-      const ro = new ResizeObserver(() => updateLiquidLenses());
-      for (const [, selector] of LENS_TARGETS) {
-        const el = document.querySelector(selector);
-        if (el) ro.observe(el);
-      }
-    }
-  });
+  requestAnimationFrame(() => scheduleNavContrast());
 
   // What sits under the navbar changes as the page scrolls.
   window.addEventListener("scroll", scheduleNavContrast, { passive: true });
@@ -924,7 +926,13 @@ function setupDaySwipe() {
 
   const setX = (x) => {
     curX = x;
-    track.style.transform = x ? `translate3d(${x}px, 0, 0)` : "";
+    if (x) {
+      track.classList.add("is-dragging");
+      track.style.transform = `translate3d(${x}px, 0, 0)`;
+    } else {
+      track.style.transform = "";
+      track.classList.remove("is-dragging");
+    }
   };
 
   /** Land on `day`: the peek pane already showed it, so the list swaps in
@@ -1245,24 +1253,18 @@ function beatJob(name, run) {
 /**
  * One beat of the app.
  *
- * First redraw: a minute passing moves progress bars, the timeline's
- * now-marker and the line through a showing that has just finished, all
- * without a single fetch. Then send off whatever has come due — sold
- * counts, check-in counts, open seat charts — and, on its own calmer
- * gate, the programme itself, so a screen left on for days notices a
- * film that was added, moved or taken off.
- *
- * Each render skips the DOM when the markup it built is the markup
- * already on screen, so a beat where nothing moved costs nothing.
+ * First a cheap clock tick: progress bars, the timeline now-marker, and
+ * status class flips — no HTML rebuild. A full redraw only runs when a
+ * fetch actually moved a figure (via scheduleRender). Then send off
+ * whatever has come due — sold counts, check-in counts, open seat
+ * charts — and, on its own calmer gate, the programme itself.
  */
 function liveBeat() {
   if (document.visibilityState !== "visible" || !state?.shows) return;
 
-  // Settings is a form. Redrawing it under the visitor would eat a
-  // half-typed password, and nothing on it moves by itself anyway.
-  if (activeTab !== "settings") renderActiveView();
+  // Settings is a form; nothing on it moves by itself.
+  if (activeTab !== "settings") tickLiveUI();
   markDoneDays();
-  scheduleNavContrast();
 
   beatJob("program", async () => {
     if (Date.now() - lastProgramAt < PROGRAM_RECHECK_MS) return;
@@ -1271,6 +1273,115 @@ function liveBeat() {
   beatJob("live", () => refreshLive({ quiet: true }));
   beatJob("scan", () => syncScanned({ quiet: true }));
   beatJob("seats", () => refreshOpenSeatCharts({ quiet: true }));
+}
+
+/**
+ * Lightweight per-beat UI: update what the clock moves without rebuilding
+ * the whole view. Structural status changes (soon→live→done) schedule one
+ * full redraw; otherwise only widths/classes are patched in place.
+ */
+function tickLiveUI() {
+  const now = new Date();
+  if (activeTab === "day") {
+    tickDayCards(now);
+    tickTimeline(now);
+  } else if (activeTab === "movies") {
+    tickMovieStatuses(now);
+  }
+}
+
+/** Patch live progress bars; full-redraw when a card's status class flips. */
+function tickDayCards(now) {
+  if (!els.content || holdDayRender) return;
+  let needsFull = false;
+  for (const show of dayShows(selectedDay)) {
+    const card = els.content.querySelector(
+      `[data-show="${cssEscape(show.id)}"]`
+    );
+    if (!card) continue;
+    const status = statusOf(show, now);
+    const prev =
+      (card.classList.contains("live") && "live") ||
+      (card.classList.contains("done") && "done") ||
+      (card.classList.contains("soon") && "soon") ||
+      "upcoming";
+    if (prev !== status) {
+      needsFull = true;
+      continue;
+    }
+    if (status !== "live" || !show.end) continue;
+    const pct = Math.min(
+      Math.round(((now - show.start) / (show.end - show.start)) * 100),
+      100
+    );
+    const left = Math.max(Math.round((show.end - now) / 60_000), 0);
+    const fill = card.querySelector(".live-fill");
+    const dot = card.querySelector(".live-dot");
+    const leftEl = card.querySelector(".live-left");
+    if (fill) fill.style.width = `${pct}%`;
+    if (dot) dot.style.left = `${pct}%`;
+    if (leftEl) leftEl.textContent = `${left} min`;
+  }
+  if (needsFull) scheduleRender();
+}
+
+/** Movies tab: only full-redraw when a showing's status flips. */
+function tickMovieStatuses(now) {
+  const host = els.moviesContent;
+  if (!host) return;
+  for (const el of host.querySelectorAll("[data-show]")) {
+    const show = state.shows.find((s) => s.id === el.dataset.show);
+    if (!show) continue;
+    const status = statusOf(show, now);
+    const prev =
+      (el.classList.contains("live") && "live") ||
+      (el.classList.contains("done") && "done") ||
+      (el.classList.contains("soon") && "soon") ||
+      "upcoming";
+    if (prev !== status) {
+      scheduleRender();
+      return;
+    }
+  }
+}
+
+/**
+ * Move the timeline now-line and flip block status classes without a
+ * morph — same day layout, only the clock has moved.
+ */
+function tickTimeline(now = new Date()) {
+  if (!state?.shows || activeTab === "settings" || els.timeline.hidden) return;
+  if (!els.timeline.querySelector(".tl-tracks")) return;
+  if (els.timeline.dataset.day !== (activeTab === "day" ? selectedDay : toDayKey(now))) {
+    renderTimeline();
+    return;
+  }
+
+  const layout = computeTimelineLayout();
+  for (const lane of layout.lanes) {
+    const track = els.timeline.querySelector(
+      `.tl-track[data-screen="${cssEscape(lane.screen)}"]:not(.tl-exit)`
+    );
+    if (!track) continue;
+    const blocks = [...track.querySelectorAll(".tl-block:not(.tl-exit)")];
+    lane.blocks.forEach((b, i) => {
+      const el = blocks[i];
+      if (!el) return;
+      const next = `tl-block ${b.status}${b.estimated ? " estimated" : ""}`;
+      if (el.className !== next) el.className = next;
+    });
+  }
+
+  let nowEl = els.timeline.querySelector(".tl-now:not(.tl-exit)");
+  if (layout.nowPct != null) {
+    if (nowEl) {
+      nowEl.style.left = `${layout.nowPct}%`;
+    } else {
+      renderTimeline({ forceMorph: true });
+    }
+  } else if (nowEl) {
+    nowEl.remove();
+  }
 }
 
 function t(key, vars = {}) {
@@ -1580,127 +1691,9 @@ function applyMaterial(next) {
 }
 
 /**
- * Liquid-glass displacement map (restored post wrap-around rim).
- * Soft falloff into the pane; rim layers pull neighbouring page colour
- * around the lip. No painted specular.
- *
- * opts.wrap — outward bevel strength (0–1)
- * opts.rimBias — push the active band toward the outer lip
- */
-function liquidLensMap(w, h, r, bend, _disp, opts = {}) {
-  const wrap = opts.wrap ?? 0.42;
-  const rimBias = opts.rimBias ?? 0;
-  const canvas = document.createElement("canvas");
-  canvas.width = w;
-  canvas.height = h;
-  const ctx = canvas.getContext("2d");
-  const img = ctx.createImageData(w, h);
-  const data = img.data;
-  const hw = w / 2;
-  const hh = h / 2;
-  for (let y = 0; y < h; y++) {
-    for (let x = 0; x < w; x++) {
-      const px = x + 0.5 - hw;
-      const py = y + 0.5 - hh;
-      const qx = Math.abs(px) - (hw - r);
-      const qy = Math.abs(py) - (hh - r);
-      const ax = Math.max(qx, 0);
-      const ay = Math.max(qy, 0);
-      const corner = Math.hypot(ax, ay);
-      const d = corner + Math.min(Math.max(qx, qy), 0) - r;
-      let t = Math.min(Math.max(1 + d / bend, 0), 1);
-      if (rimBias > 0) t = Math.pow(t, 1 + rimBias * 2.4);
-      let ox = 0;
-      let oy = 0;
-      if (t > 0) {
-        let nx = 0;
-        let ny = 0;
-        if (qx > 0 && qy > 0) {
-          const len = corner || 1;
-          nx = (ax / len) * Math.sign(px);
-          ny = (ay / len) * Math.sign(py);
-        } else if (qx > qy) {
-          nx = Math.sign(px);
-        } else {
-          ny = Math.sign(py);
-        }
-        const e = t * t * t * (t * (t * 6 - 15) + 10);
-        const fresnel = Math.pow(t, 0.5);
-        const inward = e * (0.72 + 0.28 * fresnel);
-        const outward = Math.pow(t, 2.05) * wrap;
-        ox = nx * (-inward + outward);
-        oy = ny * (-inward + outward);
-      }
-      const i = (y * w + x) * 4;
-      data[i] = Math.round(128 + ox * 127);
-      data[i + 1] = Math.round(128 + oy * 127);
-      data[i + 2] = 128;
-      data[i + 3] = 255;
-    }
-  }
-  ctx.putImageData(img, 0, 0);
-  return canvas.toDataURL();
-}
-
-/** Bump when the map recipe changes so size-cached filters can't stick. */
-const LENS_MAP_REV = 8;
-
-/** Restored: plate + wrap-around rim lip (the v86 look). */
-const LENS_TARGETS = [
-  ["lens-nav", ".pill-nav-glass", 20, 15, undefined, { wrap: 0.38 }],
-  [
-    "lens-nav-rim",
-    ".pill-nav-rim",
-    9,
-    30,
-    undefined,
-    { wrap: 0.7, rimBias: 1.1 },
-  ],
-  ["lens-chip", ".pill-indicator", 16, 17, undefined, { wrap: 0.4 }],
-  [
-    "lens-chip-rim",
-    ".pill-indicator-rim",
-    8,
-    32,
-    undefined,
-    { wrap: 0.75, rimBias: 1.15 },
-  ],
-  ["lens-header", ".top", 12, 12, 0, { wrap: 0.25 }],
-];
-
-function updateLiquidLenses() {
-  for (const [id, selector, bend, disp, radius, mapOpts] of LENS_TARGETS) {
-    const filter = document.getElementById(id);
-    const el = document.querySelector(selector);
-    if (!filter || !el) continue;
-    const w = Math.round(el.offsetWidth);
-    const h = Math.round(el.offsetHeight);
-    if (!w || !h) continue;
-    const size = `${LENS_MAP_REV}:${w}x${h}`;
-    if (filter.dataset.size === size) continue;
-    filter.dataset.size = size;
-    const r = radius != null ? radius : Math.min(w, h) / 2; // capsule
-    filter.setAttribute("x", "0");
-    filter.setAttribute("y", "0");
-    filter.setAttribute("width", String(w));
-    filter.setAttribute("height", String(h));
-    const image = filter.querySelector("feImage");
-    image.setAttribute("href", liquidLensMap(w, h, r, bend, disp, mapOpts));
-    image.setAttribute("x", "0");
-    image.setAttribute("y", "0");
-    image.setAttribute("width", String(w));
-    image.setAttribute("height", String(h));
-    filter
-      .querySelector("feDisplacementMap")
-      .setAttribute("scale", String(disp * 2));
-  }
-}
-
-/**
- * Adaptive tab contrast, the way iOS glass does it: each navbar tab
- * looks at what the page is showing underneath it and flips to a light
- * face the moment its patch of backdrop turns dark — a poster, a red
- * accent block — so the icons always read through the clear glass.
+ * Adaptive tab contrast: each navbar tab looks at what sits underneath
+ * and flips to a light face over dark patches (posters). Throttled —
+ * scroll-driven only, not on every live beat.
  */
 function parseCssColor(str) {
   if (!str) return null;
@@ -1766,39 +1759,33 @@ function luminanceOf(c) {
 function updateNavContrast() {
   const shell = document.querySelector(".pill-nav-glass");
   if (!shell) return;
-  // The shell's own translucent fill sits between the page and the
-  // icons, so it takes part in what the eye actually sees.
   const fill = parseCssColor(getComputedStyle(shell).backgroundColor);
-  document.querySelectorAll(".pill-tab").forEach((btn) => {
-    const rect = btn.getBoundingClientRect();
-    if (!rect.width) return;
-    let c = backdropColorAt(
-      rect.left + rect.width / 2,
-      rect.top + rect.height / 2
-    );
-    if (fill && fill.a > 0) {
-      c = {
-        r: fill.r * fill.a + c.r * (1 - fill.a),
-        g: fill.g * fill.a + c.g * (1 - fill.a),
-        b: fill.b * fill.a + c.b * (1 - fill.a),
-      };
-    }
-    // Hysteresis keeps a tab from flickering on a boundary colour.
-    const wasDark = btn.classList.contains("on-dark");
-    btn.classList.toggle(
-      "on-dark",
-      luminanceOf(c) < (wasDark ? 0.5 : 0.42)
-    );
-  });
+  // One sample at the nav centre — tabs share the same frosted strip.
+  const shellRect = shell.getBoundingClientRect();
+  if (!shellRect.width) return;
+  let c = backdropColorAt(
+    shellRect.left + shellRect.width / 2,
+    shellRect.top + shellRect.height / 2
+  );
+  if (fill && fill.a > 0) {
+    c = {
+      r: fill.r * fill.a + c.r * (1 - fill.a),
+      g: fill.g * fill.a + c.g * (1 - fill.a),
+      b: fill.b * fill.a + c.b * (1 - fill.a),
+    };
+  }
+  const tabs = document.querySelectorAll(".pill-tab");
+  const anyDark = [...tabs].some((btn) => btn.classList.contains("on-dark"));
+  const dark = luminanceOf(c) < (anyDark ? 0.5 : 0.42);
+  tabs.forEach((btn) => btn.classList.toggle("on-dark", dark));
 }
 
 function scheduleNavContrast() {
-  if (scheduleNavContrast._queued) return;
-  scheduleNavContrast._queued = true;
-  requestAnimationFrame(() => {
-    scheduleNavContrast._queued = false;
+  if (scheduleNavContrast._timer != null) return;
+  scheduleNavContrast._timer = setTimeout(() => {
+    scheduleNavContrast._timer = null;
     updateNavContrast();
-  });
+  }, 120);
 }
 
 /** Keep the browser/PWA chrome the same colour as the page behind it. */
@@ -1924,8 +1911,6 @@ function movePillIndicator(tab, opts = {}) {
     inset: 0,
     originLeft: track?.offsetLeft ?? 0,
   });
-  // Rim map is sized to the lens; redraw after width settles.
-  requestAnimationFrame(() => updateLiquidLenses());
 }
 
 async function setActiveTab(tab, { skipRender = false } = {}) {
@@ -2413,7 +2398,19 @@ function renderDay() {
   markDoneDays();
 
   if (!paint(els.content, buildDayListHTML(selectedDay))) return;
+  // Seat SVGs live outside the paint cache — hydrate after a real rewrite.
+  hydrateSeatCharts();
   observeAutoSeatCharts();
+}
+
+/** Fill open seat hosts after a day-list paint (charts are not in the string). */
+function hydrateSeatCharts() {
+  if (!state?.shows) return;
+  for (const show of dayShows(selectedDay)) {
+    if (seatChartOffered(show) && seatChartExpanded(show)) {
+      paintSeatChart(show);
+    }
+  }
 }
 
 function showEndOf(show) {
@@ -2484,7 +2481,7 @@ function computeTimelineLayout() {
   return { day, lanes, marks, nowPct: showNow ? pctOf(nowTs) : null };
 }
 
-function renderTimeline() {
+function renderTimeline({ forceMorph = false } = {}) {
   if (!state?.shows) return;
 
   // Settings is about the app, not about tonight's programme; the strip
@@ -2492,6 +2489,7 @@ function renderTimeline() {
   if (activeTab === "settings") {
     els.timeline.hidden = true;
     els.timeline.innerHTML = "";
+    delete els.timeline.dataset.day;
     return;
   }
 
@@ -2500,16 +2498,28 @@ function renderTimeline() {
   if (!layout.lanes.length) {
     els.timeline.hidden = true;
     els.timeline.innerHTML = "";
+    delete els.timeline.dataset.day;
     return;
   }
 
-  // Morph the existing bars into the new day's layout when possible;
-  // build from scratch only when there is nothing on screen yet.
+  const sameDay =
+    !forceMorph &&
+    !els.timeline.hidden &&
+    els.timeline.dataset.day === layout.day &&
+    els.timeline.querySelector(".tl-tracks");
+
+  // Same day: only statuses + now-line (cheap). Day change: morph.
+  if (sameDay) {
+    tickTimeline();
+    return;
+  }
+
   if (!els.timeline.hidden && els.timeline.querySelector(".tl-tracks")) {
     morphTimeline(layout);
   } else {
     buildTimeline(layout);
   }
+  els.timeline.dataset.day = layout.day;
 }
 
 function buildTimeline(layout) {
@@ -2576,12 +2586,17 @@ function morphTimeline(layout) {
   const entered = [];
 
   const applyBlock = (el, b) => {
-    el.className = `tl-block ${b.status}${b.estimated ? " estimated" : ""}`;
-    el.style.left = `${b.left}%`;
-    el.style.width = `${b.width}%`;
+    const next = `tl-block ${b.status}${b.estimated ? " estimated" : ""}`;
+    if (el.className !== next) el.className = next;
+    const left = `${b.left}%`;
+    const width = `${b.width}%`;
+    if (el.style.left !== left) el.style.left = left;
+    if (el.style.width !== width) el.style.width = width;
     el.style.opacity = "";
-    el.title = b.title;
-    el.firstElementChild.textContent = b.label;
+    if (el.title !== b.title) el.title = b.title;
+    if (el.firstElementChild && el.firstElementChild.textContent !== b.label) {
+      el.firstElementChild.textContent = b.label;
+    }
   };
 
   const exitEl = (el, style) => {
@@ -2954,6 +2969,18 @@ function seatPhaseOf(show, chart, now = new Date()) {
   return statusOf(show, now) === "upcoming" ? "sales" : "door";
 }
 
+/** Cheap equality for seat-id → state maps (avoids JSON.stringify on every beat). */
+function seatsMapEqual(a, b) {
+  if (a === b) return true;
+  if (!a || !b) return false;
+  const keys = Object.keys(a);
+  if (keys.length !== Object.keys(b).length) return false;
+  for (const k of keys) {
+    if (a[k] !== b[k]) return false;
+  }
+  return true;
+}
+
 /**
  * Pull one hall from the bridge. The layout only travels when this
  * device has never seen that auditorium; after that a refresh is just
@@ -3049,7 +3076,7 @@ async function loadSeatChart(
       previous.scanned === fresh.scanned &&
       previous.capacity === fresh.capacity &&
       previous.reserved === fresh.reserved &&
-      JSON.stringify(previous.seats) === JSON.stringify(fresh.seats);
+      seatsMapEqual(previous.seats, fresh.seats);
 
     // The same call DX answers with seats also carries the freshest
     // sold/scanned/reserved figures, so the card above the chart stays
@@ -3100,15 +3127,15 @@ async function loadSeatChart(
 
   // Fresher numbers redraw the card and, with it, every chart below one;
   // otherwise only this chart needs repainting.
-  if (cardChanged) renderActiveView();
+  if (cardChanged) scheduleRender();
   else if (!skipPaint) paintSeatChart(show);
 }
 
 /** Replace just this show's chart, so opening one never reflows the day. */
 function paintSeatChart(show) {
   const open = seatChartExpanded(show);
-  // The day list now holds markup the last full render did not write.
-  repaintNext(els.content);
+  // Do not invalidate the day paint cache — seat hosts are hydrated
+  // separately, so a surgical chart update must not force a full rewrite.
   for (const host of document.querySelectorAll(
     `[data-seat-show="${cssEscape(show.id)}"]`
   )) {
@@ -3201,8 +3228,6 @@ function observeAutoSeatCharts() {
       },
       { rootMargin: "300px 0px" }
     );
-  } else {
-    seatAutoObserver.disconnect();
   }
 
   for (const host of document.querySelectorAll("[data-seat-show]")) {
@@ -3310,9 +3335,7 @@ function renderSeatToggle(show) {
   return `
     ${strip}
     <div class="seat-panel" id="seatchart-${escapeHtml(show.id)}">
-      <div class="seat-wrap" data-seat-show="${escapeHtml(show.id)}">${
-        open ? renderSeatChart(show) : ""
-      }</div>
+      <div class="seat-wrap" data-seat-show="${escapeHtml(show.id)}"></div>
     </div>
   `;
 }
@@ -4705,7 +4728,7 @@ function renderSettings() {
       // Glass restyles the segmented chips; re-seat the indicators.
       requestAnimationFrame(() => {
         placeSettingsSegs({ instant: true });
-        updateLiquidLenses();
+        scheduleNavContrast();
       });
     });
   }
@@ -5016,12 +5039,15 @@ async function refreshLive({
     if (changed) persistHistory(targets.filter((s) => !removed.has(s.id)));
     lastLiveAt = Date.now();
     applyPreviewScanned();
-    setStatus(t("liveAt", { time: formatClock(new Date()) }), { live: true });
+    const liveLabel = t("liveAt", { time: formatClock(new Date()) });
+    if (els.statusText.textContent !== liveLabel) {
+      setStatus(liveLabel, { live: true });
+    }
   } finally {
     if (!quiet) setBusy(false);
   }
 
-  if (changed && activeTab !== "settings") renderActiveView();
+  if (changed && activeTab !== "settings") scheduleRender();
   return changed;
 }
 
@@ -5268,7 +5294,7 @@ async function syncScanned({ shows, force = false, quiet = false } = {}) {
     if (!quiet) setBusy(false);
   }
 
-  if (changed && activeTab !== "settings") renderActiveView();
+  if (changed && activeTab !== "settings") scheduleRender();
   return changed;
 }
 
