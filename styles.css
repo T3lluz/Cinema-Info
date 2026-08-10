@@ -531,8 +531,8 @@ h1 {
 }
 
 /* —— Header timeline ——
-   Compact coloured pills with start/end clocks. Expands to poster +
-   title via desktop hover or the phone/tablet disclosure button. */
+   Compact coloured pills with start/end clocks.
+   Phone/tablet expand → horizontal movie deck; desktop hover → rich Gantt. */
 .timeline {
   display: flex;
   flex-direction: column;
