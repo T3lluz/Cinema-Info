@@ -258,7 +258,7 @@ h1 {
 .day-controls {
   display: grid;
   grid-template-rows: 1fr;
-  margin-top: 10px;
+  margin-top: 6px;
   transition:
     grid-template-rows 0.25s ease,
     margin-top 0.25s ease,
@@ -293,24 +293,34 @@ h1 {
 }
 
 /* One-tap return when browsing another day — sits outside the scroll
-   strip so today is always reachable without hunting for its pill. */
+   strip so today is always reachable without hunting for its pill.
+   Day pills share these metrics so the strip stays one height. */
+.jump-today,
+.day-tab {
+  padding: 3px 9px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: -0.005em;
+  line-height: 1.2;
+}
+
 .jump-today {
   flex: 0 0 auto;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 3px;
+  gap: 2px;
   margin: 0;
-  padding: 5px 10px 5px 8px;
+  padding-left: 7px;
   border: 1px solid color-mix(in srgb, var(--accent) 45%, var(--line));
   border-radius: 999px;
   background: color-mix(in srgb, var(--accent) 10%, var(--surface));
   color: color-mix(in srgb, var(--accent) 88%, var(--ink));
   font: inherit;
-  font-size: 0.745rem;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: -0.005em;
-  line-height: 1.25;
+  line-height: 1.2;
   white-space: nowrap;
   cursor: pointer;
   transition: background 0.2s ease, transform 0.15s ease;
@@ -325,7 +335,8 @@ h1 {
 
 .jump-today[data-dir="forward"] {
   flex-direction: row-reverse;
-  padding: 5px 8px 5px 10px;
+  padding-left: 9px;
+  padding-right: 7px;
 }
 
 .jump-today:active {
@@ -339,13 +350,14 @@ h1 {
 .day-tabs {
   position: relative;
   display: flex;
-  gap: 5px;
+  align-items: center;
+  gap: 4px;
   flex: 1 1 auto;
   min-height: 0;
   min-width: 0;
   overflow-x: auto;
   margin: 0;
-  padding: 0 2px 2px;
+  padding: 0 1px;
   scroll-padding-inline: 2px;
   transition: padding-bottom 0.25s ease;
   scrollbar-width: none;
@@ -365,7 +377,8 @@ h1 {
 .day-indicator {
   position: absolute;
   top: 0;
-  height: calc(100% - 2px);
+  bottom: 0;
+  height: auto;
   border-radius: 999px;
   background: var(--accent);
   z-index: 0;
@@ -394,27 +407,26 @@ h1 {
 
 /* Slim enough that a week fits on a phone: the strip is a way to move
    between days, not a place to read a date off — the day's full name is
-   spelled out in the heading right below it. */
+   spelled out in the heading right below it. Same size as .jump-today. */
 .day-tab {
   position: relative;
   z-index: 1;
   flex: 0 0 auto;
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 3px;
   scroll-snap-align: center;
   border: 1px solid var(--line);
   background: var(--surface);
   color: var(--ink);
   border-radius: 999px;
-  padding: 5px 11px;
   font: inherit;
-  font-size: 0.745rem;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: -0.005em;
+  line-height: 1.2;
   cursor: pointer;
   white-space: nowrap;
-  line-height: 1.25;
   transition: background 0.25s ease 0.08s, color 0.25s ease 0.08s,
     border-color 0.25s ease 0.08s, transform 0.15s ease;
 }
@@ -438,8 +450,8 @@ h1 {
    so the strip reads like a week you can see the end of. */
 .day-tab-check {
   display: none;
-  width: 10px;
-  height: 10px;
+  width: 9px;
+  height: 9px;
   flex: 0 0 auto;
   fill: none;
   stroke: currentColor;
@@ -556,6 +568,31 @@ h1 {
   transition: height 0.35s ease, opacity 0.3s ease;
 }
 
+.tl-lane-short {
+  display: none;
+}
+
+/* Phone: shorter hall labels (Kino/Stor) and a tighter gutter so the
+   tracks themselves get the width. Full names return from 700px up. */
+@media (max-width: 699px) {
+  .timeline {
+    gap: 4px;
+  }
+
+  .tl-lane-name {
+    font-size: 0.52rem;
+    letter-spacing: 0.02em;
+  }
+
+  .tl-lane-full {
+    display: none;
+  }
+
+  .tl-lane-short {
+    display: inline;
+  }
+}
+
 .tl-area {
   position: relative;
   min-width: 0;
@@ -565,6 +602,7 @@ h1 {
   position: absolute;
   inset: 0 0 18px;
   pointer-events: none;
+  z-index: 0;
 }
 
 .tl-gridline {
@@ -572,15 +610,18 @@ h1 {
   top: 0;
   bottom: 0;
   width: 1px;
-  background: color-mix(in srgb, var(--line) 70%, transparent);
+  background: color-mix(in srgb, var(--ink) 18%, var(--line));
   transition: left 0.4s cubic-bezier(0.3, 0.75, 0.25, 1), opacity 0.3s ease;
 }
 
 .tl-gridline.minor {
-  background: color-mix(in srgb, var(--line) 40%, transparent);
+  background: color-mix(in srgb, var(--ink) 10%, var(--line));
+  opacity: 0.85;
 }
 
 .tl-tracks {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -589,8 +630,7 @@ h1 {
 .tl-track {
   position: relative;
   height: 20px;
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--line) 42%, var(--surface));
+  background: transparent;
   transition: height 0.35s ease, opacity 0.3s ease;
 }
 
@@ -602,7 +642,7 @@ h1 {
   bottom: 2px;
   border: 0;
   border-radius: 999px;
-  background: var(--accent);
+  background: color-mix(in srgb, var(--accent) 78%, transparent);
   color: #fff;
   display: flex;
   align-items: center;
@@ -623,6 +663,20 @@ h1 {
     background-color 0.3s ease,
     color 0.3s ease,
     transform 0.12s ease;
+}
+
+/* Times inherit the bar colour; pin white on solid red fills so theme
+   transitions or status classes cannot leave dark ink on accent. */
+.tl-block:not(.done):not(.estimated):not(.live):not(.soon),
+.tl-block.upcoming {
+  color: #fff;
+}
+
+.tl-block:not(.done):not(.estimated):not(.live):not(.soon) .tl-block-start,
+.tl-block:not(.done):not(.estimated):not(.live):not(.soon) .tl-block-end,
+.tl-block.upcoming .tl-block-start,
+.tl-block.upcoming .tl-block-end {
+  color: #fff;
 }
 
 .tl-block:focus {
@@ -673,7 +727,7 @@ h1 {
 }
 
 .tl-block.done {
-  background: color-mix(in srgb, var(--done) 18%, var(--surface));
+  background: color-mix(in srgb, var(--done) 28%, transparent);
   color: color-mix(in srgb, var(--done) 82%, var(--ink));
 }
 
@@ -685,12 +739,12 @@ h1 {
 }
 
 .tl-block.live {
-  background: var(--ok);
+  background: color-mix(in srgb, var(--ok) 78%, transparent);
   color: #fff;
 }
 
 .tl-block.soon {
-  background: var(--warn);
+  background: color-mix(in srgb, var(--warn) 78%, transparent);
   color: #fff;
 }
 
@@ -700,6 +754,11 @@ h1 {
 [data-theme="dark"] .tl-block.live,
 [data-theme="dark"] .tl-block.soon {
   color: #121212;
+}
+
+[data-theme="dark"] .tl-block.upcoming,
+[data-theme="dark"] .tl-block:not(.live):not(.soon):not(.done):not(.estimated) {
+  color: #fff;
 }
 
 /* Estimated end: outline instead of a busy stripe fill. */
@@ -3785,17 +3844,6 @@ button.bar-row.day-bar:focus-visible {
     height: 17px;
   }
 
-  .day-tab {
-    padding: 7px 14px;
-    font-size: 0.82rem;
-    gap: 5px;
-  }
-
-  .day-tab-check {
-    width: 11px;
-    height: 11px;
-  }
-
   .status {
     font-size: 0.78rem;
     max-width: min(11rem, 28vw);
@@ -4059,11 +4107,6 @@ button.bar-row.day-bar:focus-visible {
   .icon-btn svg {
     width: 18px;
     height: 18px;
-  }
-
-  .day-tab {
-    padding: 8px 16px;
-    font-size: 0.86rem;
   }
 
   /* Chronological day list flows into two columns; gap markers span full
