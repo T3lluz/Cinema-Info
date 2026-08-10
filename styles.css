@@ -775,17 +775,17 @@ h1 {
 .tl-hour {
   position: absolute;
   transform: translateX(-50%);
-  font-size: 0.56rem;
-  font-weight: 650;
+  font-size: 0.62rem;
+  font-weight: 700;
   color: color-mix(in srgb, var(--muted) 92%, var(--ink));
   font-variant-numeric: tabular-nums;
   transition: left 0.45s cubic-bezier(0.3, 0.75, 0.25, 1), opacity 0.3s ease;
 }
 
 .tl-hour.minor {
-  font-size: 0.5rem;
+  font-size: 0.48rem;
   font-weight: 550;
-  color: color-mix(in srgb, var(--muted) 75%, transparent);
+  color: color-mix(in srgb, var(--muted) 72%, transparent);
 }
 
 .main {

@@ -2474,7 +2474,7 @@ function computeTimelineLayout() {
     marks.push({
       ts,
       pct: pctOf(ts),
-      label: minor ? ":30" : String(d.getHours()),
+      label: minor ? formatClock(d) : String(d.getHours()),
       minor,
     });
   }
