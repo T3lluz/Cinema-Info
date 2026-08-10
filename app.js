@@ -489,6 +489,7 @@ const els = {
   jumpTodayBtn: document.getElementById("jumpTodayBtn"),
   refreshBtn: document.getElementById("refreshBtn"),
   statusText: document.getElementById("statusText"),
+  topActions: document.querySelector(".top-actions"),
   timeline: document.getElementById("timeline"),
   timelineMain: document.getElementById("timelineMain"),
   timelineExpandBtn: document.getElementById("timelineExpandBtn"),
@@ -2541,13 +2542,23 @@ function syncTimelineExpandBtn() {
   btn.setAttribute("aria-label", label);
   btn.title = label;
 
-  // Day tab: sit at the far right of the pills. Other tabs: float on the
-  // timeline so expand stays available without the day strip.
+  // Day tab: far right of the day pills. Other tabs (no pill row): sit in
+  // the header actions beside refresh so the chevron never overlays bars.
   const onDay = activeTab === "day";
-  const host = onDay ? els.dayControlsBody : els.timeline;
-  if (host && btn.parentElement !== host) host.appendChild(btn);
   btn.classList.toggle("tl-expand--docked", onDay);
-  btn.classList.toggle("tl-expand--float", !onDay);
+  btn.classList.toggle("tl-expand--header", !onDay);
+
+  if (onDay) {
+    const host = els.dayControlsBody;
+    if (host && btn.parentElement !== host) host.appendChild(btn);
+  } else {
+    const host = els.topActions;
+    if (host && els.refreshBtn) {
+      if (btn.parentElement !== host || btn.nextElementSibling !== els.refreshBtn) {
+        host.insertBefore(btn, els.refreshBtn);
+      }
+    }
+  }
 
   // Desktop hover / always-expanded own the layout; hide the chevron then.
   btn.hidden =
