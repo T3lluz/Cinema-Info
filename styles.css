@@ -551,6 +551,9 @@ h1 {
    Expand → rich Gantt (poster + title + times). On phone/tablet the
    track area scrolls horizontally so bars have room. */
 .timeline {
+  --tl-ease: cubic-bezier(0.33, 0.9, 0.28, 1);
+  --tl-dur: 0.48s;
+  --tl-dur-fast: 0.34s;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -579,7 +582,7 @@ h1 {
   gap: 6px;
   justify-content: flex-start;
   padding-bottom: 18px;
-  transition: gap 0.4s cubic-bezier(0.3, 0.75, 0.25, 1);
+  transition: gap var(--tl-dur) var(--tl-ease);
 }
 
 .tl-lane-name {
@@ -594,8 +597,11 @@ h1 {
   white-space: nowrap;
   overflow: hidden;
   transition:
-    height 0.4s cubic-bezier(0.3, 0.75, 0.25, 1),
-    opacity 0.3s ease;
+    height var(--tl-dur) var(--tl-ease),
+    font-size var(--tl-dur-fast) ease,
+    letter-spacing var(--tl-dur-fast) ease,
+    color var(--tl-dur-fast) ease,
+    opacity var(--tl-dur-fast) ease;
 }
 
 .tl-lane-short {
@@ -670,7 +676,7 @@ h1 {
 .tl-expand-chevron {
   display: block;
   flex: 0 0 auto;
-  transition: transform 0.4s cubic-bezier(0.3, 0.75, 0.25, 1);
+  transition: transform var(--tl-dur) var(--tl-ease);
 }
 
 .tl-expand[aria-expanded="true"] .tl-expand-chevron {
@@ -752,6 +758,7 @@ h1 {
       #000 calc(100% - 12px),
       transparent
     );
+    transition: mask-image 0.2s ease;
   }
 
   .timeline.is-expanded .tl-scroller::-webkit-scrollbar {
@@ -760,6 +767,7 @@ h1 {
 
   .timeline.is-expanded .tl-area {
     min-width: max(100%, 46rem);
+    transition: min-width var(--tl-dur) var(--tl-ease);
   }
 }
 
@@ -781,7 +789,9 @@ h1 {
   bottom: 0;
   width: 1px;
   background: color-mix(in srgb, var(--ink) 14%, var(--line));
-  transition: left 0.4s cubic-bezier(0.3, 0.75, 0.25, 1), opacity 0.3s ease;
+  transition:
+    left var(--tl-dur) var(--tl-ease),
+    opacity var(--tl-dur-fast) ease;
 }
 
 .tl-gridline.minor {
@@ -795,7 +805,7 @@ h1 {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  transition: gap 0.4s cubic-bezier(0.3, 0.75, 0.25, 1);
+  transition: gap var(--tl-dur) var(--tl-ease);
 }
 
 .tl-track {
@@ -803,8 +813,8 @@ h1 {
   height: 22px;
   background: transparent;
   transition:
-    height 0.4s cubic-bezier(0.3, 0.75, 0.25, 1),
-    opacity 0.3s ease;
+    height var(--tl-dur) var(--tl-ease),
+    opacity var(--tl-dur-fast) ease;
 }
 
 /* Morphing between days: bars glide and stretch to the new day's shows,
@@ -821,7 +831,9 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  gap: 6px;
+  /* Compact: no gap while the poster is collapsed, so start/end clocks
+     sit flush on opposite ends of the pill (gap only appears on expand). */
+  gap: 0;
   padding: 0 8px;
   overflow: hidden;
   white-space: nowrap;
@@ -832,17 +844,17 @@ h1 {
   container-type: inline-size;
   box-shadow: 0 1px 2px color-mix(in srgb, var(--ink) 10%, transparent);
   transition:
-    left 0.4s cubic-bezier(0.3, 0.75, 0.25, 1),
-    width 0.4s cubic-bezier(0.3, 0.75, 0.25, 1),
-    top 0.38s cubic-bezier(0.3, 0.75, 0.25, 1),
-    bottom 0.38s cubic-bezier(0.3, 0.75, 0.25, 1),
-    opacity 0.3s ease,
-    background-color 0.35s ease,
-    color 0.3s ease,
-    box-shadow 0.35s ease,
-    border-radius 0.38s cubic-bezier(0.3, 0.75, 0.25, 1),
-    padding 0.38s cubic-bezier(0.3, 0.75, 0.25, 1),
-    gap 0.35s ease,
+    left var(--tl-dur) var(--tl-ease),
+    width var(--tl-dur) var(--tl-ease),
+    top var(--tl-dur) var(--tl-ease),
+    bottom var(--tl-dur) var(--tl-ease),
+    opacity var(--tl-dur-fast) ease,
+    background-color var(--tl-dur) ease,
+    color var(--tl-dur-fast) ease,
+    box-shadow var(--tl-dur) ease,
+    border-radius var(--tl-dur) var(--tl-ease),
+    padding var(--tl-dur) var(--tl-ease),
+    gap var(--tl-dur) var(--tl-ease),
     transform 0.12s ease;
 }
 
@@ -863,12 +875,16 @@ h1 {
   border-radius: 6px;
   object-fit: cover;
   background: color-mix(in srgb, var(--line) 55%, var(--surface));
+  /* Collapse immediately; expand a beat after the track grows. */
   transition:
-    width 0.4s cubic-bezier(0.3, 0.75, 0.25, 1),
-    height 0.4s cubic-bezier(0.3, 0.75, 0.25, 1),
-    flex-basis 0.4s cubic-bezier(0.3, 0.75, 0.25, 1),
-    opacity 0.28s ease,
-    margin 0.4s cubic-bezier(0.3, 0.75, 0.25, 1);
+    width var(--tl-dur) var(--tl-ease),
+    height var(--tl-dur) var(--tl-ease),
+    flex-basis var(--tl-dur) var(--tl-ease),
+    opacity var(--tl-dur-fast) ease,
+    margin var(--tl-dur) var(--tl-ease),
+    border-radius var(--tl-dur-fast) ease,
+    box-shadow var(--tl-dur-fast) ease;
+  transition-delay: 0s;
 }
 
 .tl-block-poster-fallback {
@@ -892,9 +908,11 @@ h1 {
   align-items: stretch;
   justify-content: center;
   min-width: 0;
-  width: 100%;
+  /* Do NOT set width:100% here — with a collapsed poster sibling that
+     overflowed the pill and clipped the end clock. Flex-grow fills the
+     bar instead, so start/end stay pinned to opposite ends. */
   gap: 0;
-  transition: gap 0.35s ease;
+  transition: gap var(--tl-dur-fast) ease, padding var(--tl-dur-fast) ease;
 }
 
 .tl-block-title {
@@ -909,11 +927,14 @@ h1 {
   font-weight: 700;
   letter-spacing: -0.01em;
   line-height: 1.15;
-  transform: translateY(5px);
+  transform: translateY(4px);
+  /* Collapse immediately; expand slightly after the track/poster. */
   transition:
-    max-height 0.35s cubic-bezier(0.3, 0.75, 0.25, 1),
-    opacity 0.28s ease,
-    transform 0.35s cubic-bezier(0.3, 0.75, 0.25, 1);
+    max-height var(--tl-dur-fast) var(--tl-ease),
+    opacity var(--tl-dur-fast) ease,
+    transform var(--tl-dur-fast) var(--tl-ease),
+    font-size var(--tl-dur-fast) ease;
+  transition-delay: 0s;
 }
 
 .tl-block-times {
@@ -923,7 +944,9 @@ h1 {
   gap: 6px;
   width: 100%;
   min-width: 0;
-  transition: gap 0.3s ease, justify-content 0.3s ease;
+  transition:
+    gap var(--tl-dur-fast) ease,
+    justify-content var(--tl-dur-fast) ease;
 }
 
 /* Times inherit the bar colour; pin white on solid red fills so theme
@@ -967,12 +990,17 @@ h1 {
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.03em;
   line-height: 1;
+  transition:
+    color var(--tl-dur-fast) ease,
+    opacity var(--tl-dur-fast) ease,
+    font-size var(--tl-dur-fast) ease,
+    font-weight var(--tl-dur-fast) ease;
 }
 
 .tl-block-end {
-  margin-left: 0;
+  margin-left: auto;
   text-align: right;
-  opacity: 0.9;
+  opacity: 0.92;
 }
 
 /* Very short bars: keep only the start clock, centered. */
@@ -984,6 +1012,14 @@ h1 {
   .tl-block {
     justify-content: center;
     padding: 0 4px;
+  }
+
+  .tl-block-times {
+    justify-content: center;
+  }
+
+  .tl-block-start {
+    margin: 0 auto;
   }
 }
 
@@ -1067,9 +1103,9 @@ h1 {
   z-index: 2;
   pointer-events: none;
   transition:
-    left 0.45s cubic-bezier(0.3, 0.75, 0.25, 1),
-    opacity 0.3s ease,
-    bottom 0.4s cubic-bezier(0.3, 0.75, 0.25, 1);
+    left var(--tl-dur) var(--tl-ease),
+    opacity var(--tl-dur-fast) ease,
+    bottom var(--tl-dur) var(--tl-ease);
 }
 
 .tl-now-dot {
@@ -1129,7 +1165,9 @@ h1 {
   color: color-mix(in srgb, var(--muted) 88%, var(--ink));
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.02em;
-  transition: left 0.45s cubic-bezier(0.3, 0.75, 0.25, 1), opacity 0.3s ease;
+  transition:
+    left var(--tl-dur) var(--tl-ease),
+    opacity var(--tl-dur-fast) ease;
 }
 
 .tl-hour.minor {
@@ -4401,9 +4439,10 @@ button.bar-row.day-bar:focus-visible {
   border-radius: 12px;
   color: var(--ink);
   background: color-mix(in srgb, var(--surface) 88%, var(--bg));
+  /* Soft card rim only — no left accent stripe. Status colour lives in
+     the fill (and live/soon/done variants below). */
   box-shadow:
     inset 0 0 0 1px color-mix(in srgb, var(--line) 85%, transparent),
-    inset 3px 0 0 0 color-mix(in srgb, var(--accent) 78%, transparent),
     0 1px 3px color-mix(in srgb, var(--ink) 7%, transparent);
 }
 
@@ -4425,7 +4464,6 @@ button.bar-row.day-bar:focus-visible {
   background: color-mix(in srgb, var(--ok-soft) 55%, var(--surface));
   box-shadow:
     inset 0 0 0 1px color-mix(in srgb, var(--ok) 28%, transparent),
-    inset 3px 0 0 0 color-mix(in srgb, var(--ok) 85%, transparent),
     0 1px 3px color-mix(in srgb, var(--ink) 7%, transparent);
 }
 
@@ -4434,40 +4472,31 @@ button.bar-row.day-bar:focus-visible {
   background: color-mix(in srgb, var(--warn-soft) 55%, var(--surface));
   box-shadow:
     inset 0 0 0 1px color-mix(in srgb, var(--warn) 28%, transparent),
-    inset 3px 0 0 0 color-mix(in srgb, var(--warn) 85%, transparent),
     0 1px 3px color-mix(in srgb, var(--ink) 7%, transparent);
 }
 
 .timeline.is-expanded .tl-block.done {
   color: color-mix(in srgb, var(--done) 72%, var(--ink));
   background: color-mix(in srgb, var(--done-soft) 55%, var(--surface));
-  box-shadow:
-    inset 0 0 0 1px color-mix(in srgb, var(--done) 18%, transparent),
-    inset 3px 0 0 0 color-mix(in srgb, var(--done) 55%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--done) 18%, transparent);
 }
 
 .timeline.is-expanded .tl-block.estimated {
   background: color-mix(in srgb, var(--surface) 88%, var(--bg));
   color: var(--ink);
-  box-shadow:
-    inset 0 0 0 1.5px color-mix(in srgb, var(--accent) 42%, transparent),
-    inset 3px 0 0 0 color-mix(in srgb, var(--accent) 70%, transparent);
+  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--accent) 42%, transparent);
 }
 
 .timeline.is-expanded .tl-block.estimated.live {
   background: color-mix(in srgb, var(--ok-soft) 45%, var(--surface));
   color: var(--ink);
-  box-shadow:
-    inset 0 0 0 1.5px color-mix(in srgb, var(--ok) 42%, transparent),
-    inset 3px 0 0 0 color-mix(in srgb, var(--ok) 75%, transparent);
+  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--ok) 42%, transparent);
 }
 
 .timeline.is-expanded .tl-block.estimated.soon {
   background: color-mix(in srgb, var(--warn-soft) 45%, var(--surface));
   color: var(--ink);
-  box-shadow:
-    inset 0 0 0 1.5px color-mix(in srgb, var(--warn) 42%, transparent),
-    inset 3px 0 0 0 color-mix(in srgb, var(--warn) 75%, transparent);
+  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--warn) 42%, transparent);
 }
 
 [data-theme="dark"] .timeline.is-expanded .tl-block {
@@ -4501,6 +4530,7 @@ button.bar-row.day-bar:focus-visible {
   opacity: 1;
   border-radius: 7px;
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--ink) 8%, transparent);
+  transition-delay: 0.05s;
 }
 
 .timeline.is-expanded .tl-block-title {
@@ -4510,6 +4540,7 @@ button.bar-row.day-bar:focus-visible {
   font-size: 0.74rem;
   font-weight: 750;
   letter-spacing: -0.015em;
+  transition-delay: 0.08s;
 }
 
 .timeline.is-expanded .tl-block-meta {
@@ -4548,6 +4579,7 @@ button.bar-row.day-bar:focus-visible {
     height: 0;
     opacity: 0;
     box-shadow: none;
+    transition-delay: 0s;
   }
 }
 
@@ -4555,7 +4587,8 @@ button.bar-row.day-bar:focus-visible {
   .timeline.is-expanded .tl-block-title {
     max-height: 0;
     opacity: 0;
-    transform: translateY(5px);
+    transform: translateY(4px);
+    transition-delay: 0s;
   }
 
   .timeline.is-expanded .tl-block-meta {
@@ -4567,6 +4600,11 @@ button.bar-row.day-bar:focus-visible {
   .timeline.is-expanded .tl-block-times {
     width: 100%;
     justify-content: space-between;
+  }
+
+  .timeline.is-expanded .tl-block-end {
+    margin-left: auto;
+    text-align: right;
   }
 
   .timeline.is-expanded .tl-block-end::before {

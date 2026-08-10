@@ -2573,8 +2573,9 @@ function setTimelineExpanded(open) {
   els.timeline.classList.toggle("is-expanded", !!open);
   syncTimelineExpandBtn();
   if (open && !timelineHoverExpands() && !timelineAlwaysExpanded) {
-    // Scroll the live/next bar into view in the wide mobile strip.
-    requestAnimationFrame(() => {
+    // Let the height/morph settle a beat before scrolling — otherwise the
+    // smooth horizontal scroll fights the expand animation.
+    window.setTimeout(() => {
       const scroller = els.timelineMain?.querySelector(".tl-scroller");
       const target =
         scroller?.querySelector(".tl-block.live") ||
@@ -2585,7 +2586,7 @@ function setTimelineExpanded(open) {
         inline: "center",
         block: "nearest",
       });
-    });
+    }, 220);
   }
 }
 
