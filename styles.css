@@ -16,9 +16,8 @@
   --hold: #1d6fd4;
   --done: #6f6964;
   --done-soft: #ebe7e2;
-  /* —— Glass tokens ——
-     The chrome (navbar, header, chips) is frosted glass in every theme;
-     the "glass" material extends the same recipe to the whole page.
+  /* —— Frosted chrome tokens ——
+     Navbar, header, and chips use a translucent blur fill.
      Highlight = the specular top edge; stroke = the pane's rim. */
   --glass-fill: rgba(255, 255, 255, 0.52);
   --glass-stroke: rgba(255, 255, 255, 0.62);
@@ -26,7 +25,7 @@
   --glass-ring: rgba(22, 20, 18, 0.08);
   /* Refraction: light bends at the rim of a pane — a bright arc where
      it enters (top-left), a softer arc where it leaves (bottom-right),
-     a faint glow through the glass, and a vertical sheen. */
+     a faint glow through the pane, and a vertical sheen. */
   --refract-hi: rgba(255, 255, 255, 0.95);
   --refract-lo: rgba(255, 255, 255, 0.5);
   --refract-glow: rgba(255, 255, 255, 0.26);
@@ -52,21 +51,21 @@
 }
 
 [data-theme="dark"] {
-  --bg: #131110;
-  --surface: #262120;
-  --ink: #f6f1ea;
-  --muted: #b6aca1;
-  --line: #4a423b;
+  --bg: #121212;
+  --surface: #1e1e1e;
+  --ink: #f0f0f0;
+  --muted: #a8a8a8;
+  --line: #333333;
   --accent: #f04751;
-  --accent-soft: #48211f;
+  --accent-soft: #3d1f1e;
   --ok: #62d296;
-  --ok-soft: #203c2d;
+  --ok-soft: #1e3228;
   --warn: #e8ba55;
-  --warn-soft: #3b3118;
+  --warn-soft: #332c18;
   --hold: #5b9cf5;
-  --done: #a79d92;
-  --done-soft: #363029;
-  --glass-fill: rgba(44, 39, 36, 0.55);
+  --done: #9a9a9a;
+  --done-soft: #2a2a2a;
+  --glass-fill: rgba(40, 40, 40, 0.55);
   --glass-stroke: rgba(255, 255, 255, 0.12);
   --glass-highlight: rgba(255, 255, 255, 0.12);
   --glass-ring: rgba(0, 0, 0, 0.35);
@@ -81,47 +80,6 @@
   --nav-chip-shadow:
     0 8px 22px rgba(0, 0, 0, 0.35),
     0 2px 6px rgba(0, 0, 0, 0.22);
-}
-
-/* —— Materials ——
-   "subtle" (default): solid surfaces under lightly frosted chrome.
-   "glass": full liquid glass — every panel is a translucent pane over
-   a soft colour field, with a specular top edge. Same accents, same
-   layout; only the material changes. */
-[data-material="glass"] {
-  --bg: #e9e8ee;
-  /* Real glass is clear, not frosted white: keep the fill thin and let
-     the rim + refraction do the work. */
-  --surface: rgba(255, 255, 255, 0.26);
-  --line: rgba(94, 82, 76, 0.15);
-  /* The rim of a pane: a bright specular edge instead of a grey line. */
-  --pane-stroke: rgba(255, 255, 255, 0.6);
-  --accent-soft: rgba(196, 30, 42, 0.11);
-  --ok-soft: rgba(27, 107, 69, 0.12);
-  --warn-soft: rgba(154, 103, 0, 0.13);
-  --done-soft: rgba(111, 105, 100, 0.13);
-  --glass-fill: rgba(255, 255, 255, 0.16);
-  --glass-sheen: rgba(255, 255, 255, 0.2);
-  --glass-shadow: rgba(45, 36, 32, 0.14);
-  --refract-glow: rgba(255, 255, 255, 0.14);
-  --nav-chip-fill: rgba(255, 255, 255, 0.05);
-}
-
-[data-theme="dark"][data-material="glass"] {
-  --bg: #101014;
-  --surface: rgba(255, 255, 255, 0.045);
-  --line: rgba(255, 255, 255, 0.11);
-  --muted: #aca6a9;
-  --pane-stroke: rgba(255, 255, 255, 0.15);
-  --accent-soft: rgba(240, 71, 81, 0.15);
-  --ok-soft: rgba(98, 210, 150, 0.13);
-  --warn-soft: rgba(232, 186, 85, 0.13);
-  --done-soft: rgba(255, 255, 255, 0.08);
-  --glass-fill: rgba(20, 19, 25, 0.22);
-  --glass-sheen: rgba(255, 255, 255, 0.05);
-  --glass-shadow: rgba(0, 0, 0, 0.45);
-  --refract-glow: rgba(255, 255, 255, 0.04);
-  --nav-chip-fill: rgba(255, 255, 255, 0.03);
 }
 
 * {
@@ -179,76 +137,6 @@ body {
   overflow: hidden;
 }
 
-/* Liquid glass needs something behind it worth refracting: a fixed
-   colour field with enough structure that a pane's rim visibly bends
-   the gradients passing under it. */
-[data-material="glass"] body {
-  background: transparent;
-}
-
-[data-material="glass"] body::before {
-  content: "";
-  position: fixed;
-  inset: -12%;
-  z-index: -1;
-  pointer-events: none;
-  /* Two broad, quiet orange glows: one high left, one low right. */
-  background:
-    radial-gradient(
-      58% 44% at 6% 2%,
-      color-mix(in srgb, #e78a3a 13%, transparent),
-      transparent 72%
-    ),
-    radial-gradient(
-      62% 48% at 96% 100%,
-      color-mix(in srgb, #e78a3a 11%, transparent),
-      transparent 74%
-    );
-}
-
-/* Every major pane becomes a sheet of clear glass: a thin translucent
-   fill, a bright specular rim, refraction at the edges (the lens filter
-   in Chromium; frost elsewhere), and light bending along the arcs. */
-[data-material="glass"] .show-card,
-[data-material="glass"] .movie-tile,
-[data-material="glass"] .stats-panel,
-[data-material="glass"] .stats-hero,
-[data-material="glass"] .settings-section,
-[data-material="glass"] .seat-strip,
-[data-material="glass"] .seat-chart,
-[data-material="glass"] .seat-note {
-  border-color: var(--pane-stroke);
-  backdrop-filter: blur(3px) saturate(1);
-  -webkit-backdrop-filter: blur(3px) saturate(1);
-  box-shadow:
-    inset 1.4px 1.4px 1px -1px var(--refract-hi),
-    inset -1.4px -1.4px 1px -1px var(--refract-lo),
-    inset 0 0 8px 0 var(--refract-glow),
-    0 12px 30px var(--glass-shadow, transparent);
-}
-
-/* Glass panes are rounder — closer to the pebble shapes iOS cuts. */
-[data-material="glass"] .show-card {
-  border-radius: 18px;
-}
-
-[data-material="glass"] .show-status {
-  border-radius: 18px 0 0 18px;
-}
-
-[data-material="glass"] .movie-tile,
-[data-material="glass"] .stats-panel,
-[data-material="glass"] .stats-hero,
-[data-material="glass"] .settings-section {
-  border-radius: 18px;
-}
-
-[data-material="glass"] .seat-strip,
-[data-material="glass"] .seat-chart,
-[data-material="glass"] .seat-note {
-  border-radius: 0 0 18px 18px;
-}
-
 .top {
   position: sticky;
   top: 0;
@@ -259,13 +147,6 @@ body {
   border-bottom: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
   backdrop-filter: blur(12px) url(#lens-header) saturate(1);
   -webkit-backdrop-filter: blur(12px) saturate(1);
-}
-
-[data-material="glass"] .top {
-  background: color-mix(in srgb, var(--bg) 14%, transparent);
-  border-bottom-color: var(--glass-stroke);
-  backdrop-filter: blur(2px) url(#lens-header) saturate(1);
-  -webkit-backdrop-filter: blur(6px) saturate(1);
 }
 
 /* Same centered column as .content: max width, then shared side padding. */
@@ -2576,7 +2457,7 @@ button.bar-row.day-bar:focus-visible {
 
 /* —— Settings ——
    Compact tile grid: language/theme keep segmented chips; binary prefs
-   are switches. On tablet+ the four prefs sit two-by-two with DX below. */
+   are switches. On tablet+ prefs sit two-by-two with DX below. */
 .settings-shell {
   width: 100%;
   max-width: 720px;
@@ -3407,19 +3288,19 @@ button.bar-row.day-bar:focus-visible {
 /* Dark seats are pastel — white numbers wash out. A heavy ink-dark
    tint keeps the seat hue while clearing ~4.5:1 on red/green/amber/blue. */
 [data-theme="dark"] .seat-num.sold {
-  fill: color-mix(in srgb, #12100e 90%, var(--accent));
+  fill: color-mix(in srgb, #121212 90%, var(--accent));
 }
 
 [data-theme="dark"] .phase-door .seat-num.sold {
-  fill: color-mix(in srgb, #12100e 90%, var(--warn));
+  fill: color-mix(in srgb, #121212 90%, var(--warn));
 }
 
 [data-theme="dark"] .seat-num.in {
-  fill: color-mix(in srgb, #12100e 90%, var(--ok));
+  fill: color-mix(in srgb, #121212 90%, var(--ok));
 }
 
 [data-theme="dark"] .seat-num.reserved {
-  fill: color-mix(in srgb, #12100e 90%, var(--hold));
+  fill: color-mix(in srgb, #121212 90%, var(--hold));
 }
 
 [data-theme="dark"] .seat-num.blocked {
@@ -3586,7 +3467,8 @@ button.bar-row.day-bar:focus-visible {
     transform 0.28s cubic-bezier(0.34, 1.56, 0.5, 1);
 }
 
-/* Rim only paints under glass — mirrors the navbar selection chip. */
+/* Rim is reserved for the pill-nav selection chip; settings segments
+   keep a solid accent indicator. */
 .seg-indicator-rim {
   display: none;
 }
@@ -3612,66 +3494,6 @@ button.bar-row.day-bar:focus-visible {
 
 .seg-btn[aria-pressed="true"] {
   color: #fff;
-}
-
-/* Glass: track + selection use the same chip language as the pill nav. */
-[data-material="glass"] .segmented {
-  background: var(--glass-fill);
-  border-color: transparent;
-  box-shadow:
-    0 6px 18px var(--glass-shadow, rgba(0, 0, 0, 0.12)),
-    0 1px 4px rgba(0, 0, 0, 0.06);
-  backdrop-filter: blur(12px) saturate(1);
-  -webkit-backdrop-filter: blur(12px) saturate(1);
-}
-
-[data-material="glass"] .seg-indicator {
-  background: var(--nav-chip-fill);
-  backdrop-filter: url(#lens-chip) saturate(1);
-  -webkit-backdrop-filter: blur(3px) saturate(1);
-  box-shadow: var(--nav-chip-shadow);
-}
-
-[data-material="glass"] .seg-indicator-rim {
-  display: block;
-  position: absolute;
-  inset: 0;
-  border-radius: 999px;
-  border: 0;
-  padding: 2.5px;
-  box-sizing: border-box;
-  background: transparent;
-  -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  mask-composite: exclude;
-  backdrop-filter: url(#lens-chip-rim) saturate(1);
-  -webkit-backdrop-filter: blur(1.5px) saturate(1);
-}
-
-[data-material="glass"] .seg-btn[aria-pressed="true"] {
-  color: var(--accent);
-}
-
-[data-material="glass"] .settings-switch {
-  background: var(--glass-fill);
-  border-color: transparent;
-  box-shadow: var(--nav-chip-shadow);
-  backdrop-filter: blur(8px) saturate(1);
-  -webkit-backdrop-filter: blur(8px) saturate(1);
-}
-
-[data-material="glass"] .settings-switch[aria-checked="true"] {
-  background: color-mix(in srgb, var(--accent) 78%, var(--glass-fill));
-  box-shadow: var(--nav-chip-shadow);
-}
-
-[data-material="glass"] .settings-switch-knob {
-  background: rgba(255, 255, 255, 0.92);
 }
 
 /* —— Pill navbar —— */
@@ -3862,12 +3684,6 @@ button.bar-row.day-bar:focus-visible {
 
 .pill-tab.on-dark[aria-selected="true"] {
   color: color-mix(in srgb, var(--accent) 45%, #fff);
-}
-
-/* Glass material: clearer shell so the page colours drive the rim. */
-[data-material="glass"] .pill-nav-glass {
-  backdrop-filter: blur(2px) url(#lens-nav) saturate(1);
-  -webkit-backdrop-filter: blur(6px) saturate(1);
 }
 
 .stats-hero,

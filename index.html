@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="nb" data-theme="light" data-material="subtle">
+<html lang="nb" data-theme="light">
   <head>
     <meta charset="UTF-8" />
     <meta
@@ -21,11 +21,10 @@
     <meta property="og:image" content="https://t3lluz.github.io/Cinema-Info/icons/icon-512.png" />
     <meta name="twitter:card" content="summary" />
     <title>Buen kino</title>
-    <link rel="stylesheet" href="styles.css?v=110" />
+    <link rel="stylesheet" href="styles.css?v=111" />
     <script>
-      // Paint the saved theme + material before the first frame, so a
-      // dark or glass visitor never sees a light flash. "system"/unset
-      // follows the device.
+      // Paint the saved theme before the first frame, so a dark visitor
+      // never sees a light flash. "system"/unset follows the device.
       try {
         var p = JSON.parse(localStorage.getItem("cinemaInfoPrefs") || "{}");
         var theme =
@@ -35,20 +34,10 @@
                 window.matchMedia("(prefers-color-scheme: dark)").matches
               ? "dark"
               : "light";
-        var material = p.material === "glass" ? "glass" : "subtle";
         document.documentElement.dataset.theme = theme;
-        document.documentElement.dataset.material = material;
+        delete document.documentElement.dataset.material;
         var tc = document.querySelector('meta[name="theme-color"]');
-        if (tc) {
-          tc.content =
-            theme === "dark"
-              ? material === "glass"
-                ? "#101014"
-                : "#131110"
-              : material === "glass"
-                ? "#eceaf1"
-                : "#efece8";
-        }
+        if (tc) tc.content = theme === "dark" ? "#121212" : "#efece8";
         if (p.lang === "en") document.documentElement.lang = "en";
       } catch (e) {}
     </script>
@@ -188,6 +177,6 @@
       </div>
     </nav>
 
-    <script src="app.js?v=83" type="module"></script>
+    <script src="app.js?v=84" type="module"></script>
   </body>
 </html>
