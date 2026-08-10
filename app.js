@@ -539,6 +539,9 @@ const MOVIE_SHOWS_PREVIEW = 3;
 /** Tablet and desktop have room for every hall at once, so charts there
  * are unfolded from the start instead of hiding behind a button. */
 const SEATS_OPEN_MQ = window.matchMedia("(min-width: 700px)");
+/** Wider viewports get half-hour ticks on the header timeline. */
+const TL_WIDE_MQ = window.matchMedia("(min-width: 700px)");
+const HALF_HOUR = 1_800_000;
 /** Loads auto-unfolded halls as they scroll into view. */
 let seatAutoObserver = null;
 /** How many fetches are in flight; the refresh button spins while any are. */
@@ -680,6 +683,11 @@ async function init() {
     updateLiquidLenses();
   });
 
+  // Crossing phone/desktop changes whether the timeline shows :30 ticks.
+  TL_WIDE_MQ.addEventListener?.("change", () => {
+    if (state?.shows) renderTimeline();
+  });
+
   // Draw the refraction lenses once the chrome has its real size, and
   // redraw when it changes — the header grows and shrinks with the tab.
   requestAnimationFrame(() => {
@@ -799,6 +807,12 @@ function setupSeatCharts() {
     const statsDay = e.target.closest?.("[data-stats-day]");
     if (statsDay) {
       openDayFromStats(statsDay.dataset.statsDay);
+      return;
+    }
+
+    const tlShow = e.target.closest?.("[data-tl-show]");
+    if (tlShow) {
+      focusShowFromTimeline(tlShow.dataset.tlShow);
       return;
     }
 
@@ -2430,30 +2444,58 @@ function computeTimelineLayout() {
         const start = s.start.getTime();
         const end = showEndOf(s).getTime();
         const left = pctOf(start);
+        const startClock = formatClock(s.start);
+        const endClock = s.end
+          ? formatClock(s.end)
+          : "~" + formatClock(showEndOf(s));
+        const range = `${startClock}–${endClock}`;
         return {
+          id: s.id,
+          dayKey: s.dayKey,
           left,
           width: Math.max(pctOf(end) - left, 1.5),
           status: statusOf(s, now),
           estimated: !s.end,
-          label: formatClock(s.start),
-          title: `${s.title} · ${formatClock(s.start)}–${
-            s.end ? formatClock(s.end) : "~" + formatClock(showEndOf(s))
-          }`,
+          startLabel: startClock,
+          endLabel: endClock,
+          tip: `${s.title} · ${range}`,
         };
       }),
   }));
 
-  // Hour marks double as gridlines; keyed by timestamp so a morph can
-  // slide marks for the same hour and cross-fade the rest.
-  const stepHours = span > 9 * HOUR ? 2 : 1;
+  // Tick marks double as gridlines; keyed by timestamp so a morph can
+  // slide marks for the same instant and cross-fade the rest. Half-hour
+  // ticks appear when the strip is wide enough (desktop sooner than phone).
+  const step = timelineMarkStep(span);
   const marks = [];
-  for (let ts = t0; ts <= t1; ts += stepHours * HOUR) {
-    marks.push({ ts, pct: pctOf(ts), label: String(new Date(ts).getHours()) });
+  for (let ts = t0; ts <= t1; ts += step) {
+    const d = new Date(ts);
+    const minor = d.getMinutes() !== 0;
+    marks.push({
+      ts,
+      pct: pctOf(ts),
+      label: minor ? formatClock(d) : String(d.getHours()),
+      minor,
+    });
   }
 
   const nowTs = now.getTime();
   const showNow = day === toDayKey(now) && nowTs >= t0 && nowTs <= t1;
   return { day, lanes, marks, nowPct: showNow ? pctOf(nowTs) : null };
+}
+
+/** How fine the timeline axis is — half hours when space allows. */
+function timelineMarkStep(span) {
+  const wide = TL_WIDE_MQ.matches;
+  const HOUR = 3_600_000;
+  if (wide) {
+    // Desktop: :30 ticks unless the day is unusually long.
+    return span > 12 * HOUR ? HOUR : HALF_HOUR;
+  }
+  // Phone: half hours only on compact evenings; otherwise hourly / 2h.
+  if (span > 10 * HOUR) return 2 * HOUR;
+  if (span > 6.5 * HOUR) return HOUR;
+  return HALF_HOUR;
 }
 
 function renderTimeline() {
@@ -2484,12 +2526,21 @@ function renderTimeline() {
   }
 }
 
+function tlBlockInnerHTML(b) {
+  return `<span class="tl-block-start">${escapeHtml(b.startLabel)}</span>
+      <span class="tl-block-end">${escapeHtml(b.endLabel)}</span>`;
+}
+
 function buildTimeline(layout) {
-  const blockHTML = (b) => `<div class="tl-block ${b.status}${b.estimated ? " estimated" : ""}"
+  const blockHTML = (b) => `<button type="button" class="tl-block ${b.status}${
+    b.estimated ? " estimated" : ""
+  }"
       style="left:${b.left}%;width:${b.width}%"
-      title="${escapeHtml(b.title)}">
-      <span class="tl-block-label">${b.label}</span>
-    </div>`;
+      data-tl-show="${escapeHtml(b.id)}"
+      title="${escapeHtml(b.tip)}"
+      aria-label="${escapeHtml(b.tip)}">
+      ${tlBlockInnerHTML(b)}
+    </button>`;
 
   els.timeline.hidden = false;
   els.timeline.innerHTML = `
@@ -2503,7 +2554,7 @@ function buildTimeline(layout) {
       <div class="tl-gridlines">${layout.marks
         .map(
           (m) =>
-            `<span class="tl-gridline" data-ts="${m.ts}" style="left:${m.pct}%"></span>`
+            `<span class="tl-gridline${m.minor ? " minor" : ""}" data-ts="${m.ts}" style="left:${m.pct}%"></span>`
         )
         .join("")}</div>
       <div class="tl-tracks">${layout.lanes
@@ -2522,7 +2573,7 @@ function buildTimeline(layout) {
       <div class="tl-hours">${layout.marks
         .map(
           (m) =>
-            `<span class="tl-hour" data-ts="${m.ts}" style="left:${m.pct}%">${m.label}</span>`
+            `<span class="tl-hour${m.minor ? " minor" : ""}" data-ts="${m.ts}" style="left:${m.pct}%">${m.label}</span>`
         )
         .join("")}</div>
     </div>
@@ -2552,8 +2603,17 @@ function morphTimeline(layout) {
     el.style.left = `${b.left}%`;
     el.style.width = `${b.width}%`;
     el.style.opacity = "";
-    el.title = b.title;
-    el.firstElementChild.textContent = b.label;
+    el.dataset.tlShow = b.id;
+    el.title = b.tip;
+    el.setAttribute("aria-label", b.tip);
+    const startEl = el.querySelector(".tl-block-start");
+    const endEl = el.querySelector(".tl-block-end");
+    if (startEl && endEl) {
+      startEl.textContent = b.startLabel;
+      endEl.textContent = b.endLabel;
+    } else {
+      el.innerHTML = tlBlockInnerHTML(b);
+    }
   };
 
   const exitEl = (el, style) => {
@@ -2592,7 +2652,8 @@ function morphTimeline(layout) {
       nameEl.style.height = "0px";
       nameEl.style.opacity = "0";
       entered.push(() => {
-        nameEl.style.height = "20px";
+        // Clear the inline height so the stylesheet (incl. breakpoints) wins.
+        nameEl.style.height = "";
         nameEl.style.opacity = "1";
       });
     }
@@ -2603,7 +2664,7 @@ function morphTimeline(layout) {
       trackEl.style.height = "0px";
       trackEl.style.opacity = "0";
       entered.push(() => {
-        trackEl.style.height = "20px";
+        trackEl.style.height = "";
         trackEl.style.opacity = "1";
       });
     }
@@ -2624,12 +2685,13 @@ function morphTimeline(layout) {
         applyBlock(oldBlocks[i], b);
         return;
       }
-      const el = document.createElement("div");
+      const el = document.createElement("button");
+      el.type = "button";
       el.className = `tl-block ${b.status}${b.estimated ? " estimated" : ""}`;
       el.style.left = `${b.left + b.width / 2}%`;
       el.style.width = "0%";
       el.style.opacity = "0";
-      el.appendChild(document.createElement("span")).className = "tl-block-label";
+      el.innerHTML = tlBlockInnerHTML(b);
       trackEl.appendChild(el);
       entered.push(() => applyBlock(el, b));
     });
@@ -2652,14 +2714,16 @@ function morphTimeline(layout) {
       ])
     );
     for (const m of layout.marks) {
+      const className = m.minor ? `${cls} minor` : cls;
       let el = old.get(String(m.ts));
       if (el) {
         old.delete(String(m.ts));
+        el.className = className;
         el.style.left = `${m.pct}%`;
         if (withLabel) el.textContent = m.label;
       } else {
         el = document.createElement("span");
-        el.className = cls;
+        el.className = className;
         el.dataset.ts = m.ts;
         el.style.left = `${m.pct}%`;
         el.style.opacity = "0";
@@ -2700,6 +2764,35 @@ function morphTimeline(layout) {
     void area.offsetWidth;
     for (const fn of entered) fn();
   }
+}
+
+/** Jump from a timeline bar to that showing's card in the day list. */
+async function focusShowFromTimeline(showId) {
+  if (!showId || !state?.shows) return;
+  const show = state.shows.find((s) => s.id === showId);
+  if (!show) return;
+
+  const dayChanged = !!(show.dayKey && show.dayKey !== selectedDay);
+  if (dayChanged) setSelectedDay(show.dayKey);
+
+  if (activeTab !== "day") {
+    await setActiveTab("day");
+  } else if (dayChanged) {
+    renderDay();
+  }
+
+  // Let the day list paint before scrolling — tab/day switches rebuild it.
+  requestAnimationFrame(() => {
+    const card = els.content?.querySelector(
+      `[data-show="${cssEscape(showId)}"]`
+    );
+    if (!card) return;
+    card.scrollIntoView({ behavior: "smooth", block: "center" });
+    card.classList.remove("tl-target");
+    void card.offsetWidth;
+    card.classList.add("tl-target");
+    window.setTimeout(() => card.classList.remove("tl-target"), 1100);
+  });
 }
 
 /**
@@ -3742,8 +3835,8 @@ function renderShowCard(show, now, index = 0, opts = {}) {
       ${statusRail}
       ${renderPoster(show, 52, 74)}
       <div class="show-main">
-        <div class="time-range">${formatClock(show.start)}<span class="sep">–</span>${endLabel}</div>
         <h2 class="show-title">${escapeHtml(show.title)}</h2>
+        <div class="time-range">${formatClock(show.start)}<span class="sep">–</span>${endLabel}</div>
         <div class="meta-line">${metaBits}</div>
         ${langLine}
         ${progress}

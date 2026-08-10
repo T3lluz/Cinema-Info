@@ -518,14 +518,15 @@ h1 {
   background: var(--accent);
 }
 
-/* —— Header timeline —— */
+/* —— Header timeline ——
+   Flat, compact schedule strip: start left, end right; title lives in the tip. */
 .timeline {
   display: grid;
   grid-template-columns: auto 1fr;
-  gap: 8px;
+  gap: 10px;
   align-items: stretch;
   /* Only set vertical margin — horizontal auto centering comes from .top > *. */
-  margin-top: 12px;
+  margin-top: 14px;
   animation: rise 0.32s ease both;
 }
 
@@ -536,20 +537,20 @@ h1 {
 .tl-names {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
   justify-content: flex-start;
-  padding-bottom: 16px;
+  padding-bottom: 18px;
 }
 
 .tl-lane-name {
   height: 20px;
   display: flex;
   align-items: center;
-  font-size: 0.62rem;
-  font-weight: 750;
-  letter-spacing: 0.03em;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: color-mix(in srgb, var(--muted) 88%, var(--ink));
   white-space: nowrap;
   overflow: hidden;
   transition: height 0.35s ease, opacity 0.3s ease;
@@ -562,7 +563,7 @@ h1 {
 
 .tl-gridlines {
   position: absolute;
-  inset: 0 0 16px;
+  inset: 0 0 18px;
   pointer-events: none;
 }
 
@@ -575,17 +576,21 @@ h1 {
   transition: left 0.4s cubic-bezier(0.3, 0.75, 0.25, 1), opacity 0.3s ease;
 }
 
+.tl-gridline.minor {
+  background: color-mix(in srgb, var(--line) 40%, transparent);
+}
+
 .tl-tracks {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
 }
 
 .tl-track {
   position: relative;
   height: 20px;
-  border-radius: 6px;
-  background: color-mix(in srgb, var(--bg) 60%, var(--surface));
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--line) 42%, var(--surface));
   transition: height 0.35s ease, opacity 0.3s ease;
 }
 
@@ -595,53 +600,88 @@ h1 {
   position: absolute;
   top: 2px;
   bottom: 2px;
-  border-radius: 5px;
+  border: 0;
+  border-radius: 999px;
   background: var(--accent);
   color: #fff;
   display: flex;
   align-items: center;
-  padding: 0 5px;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 0 7px;
   overflow: hidden;
   white-space: nowrap;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  font: inherit;
+  text-align: left;
+  container-type: inline-size;
   transition:
     left 0.4s cubic-bezier(0.3, 0.75, 0.25, 1),
     width 0.4s cubic-bezier(0.3, 0.75, 0.25, 1),
     opacity 0.3s ease,
     background-color 0.3s ease,
-    color 0.3s ease;
+    color 0.3s ease,
+    transform 0.12s ease;
+}
+
+.tl-block:focus {
+  outline: none;
+}
+
+.tl-block:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--accent) 55%, var(--ink));
+  outline-offset: 2px;
+  z-index: 1;
+}
+
+.tl-block:active {
+  transform: scale(0.985);
 }
 
 .tl-exit {
   pointer-events: none;
 }
 
-.tl-block-label {
+.tl-block-start,
+.tl-block-end {
+  flex: 0 0 auto;
+  font-family: var(--mono);
   font-size: 0.58rem;
-  font-weight: 750;
+  font-weight: 700;
   font-variant-numeric: tabular-nums;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.tl-block-end {
+  margin-left: auto;
+  text-align: right;
+  opacity: 0.9;
+}
+
+/* Very short bars: keep only the start clock, centered. */
+@container (max-width: 52px) {
+  .tl-block-end {
+    display: none;
+  }
+
+  .tl-block {
+    justify-content: center;
+    padding: 0 4px;
+  }
 }
 
 .tl-block.done {
-  background: var(--done-soft);
-  color: color-mix(in srgb, var(--done) 90%, var(--ink));
-  border: 1px solid color-mix(in srgb, var(--done) 30%, transparent);
+  background: color-mix(in srgb, var(--done) 18%, var(--surface));
+  color: color-mix(in srgb, var(--done) 82%, var(--ink));
 }
 
-/* Struck out end to end: a finished showing is something the eye skips
-   rather than something it has to decode from a paler bar. */
-.tl-block.done::after {
-  content: "";
-  position: absolute;
-  left: 3px;
-  right: 3px;
-  top: 50%;
-  height: 1.5px;
-  border-radius: 2px;
-  background: currentColor;
-  opacity: 0.7;
-  transform: translateY(-50%);
-  pointer-events: none;
+.tl-block.done .tl-block-start,
+.tl-block.done .tl-block-end {
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
+  text-decoration-color: color-mix(in srgb, var(--done) 55%, transparent);
 }
 
 .tl-block.live {
@@ -654,19 +694,30 @@ h1 {
   color: #fff;
 }
 
+/* Estimated end: outline instead of a busy stripe fill. */
 .tl-block.estimated {
-  background-image: repeating-linear-gradient(
-    -45deg,
-    transparent 0 5px,
-    rgba(255, 255, 255, 0.14) 5px 9px
-  );
+  background: color-mix(in srgb, var(--accent) 16%, var(--surface));
+  color: color-mix(in srgb, var(--accent) 78%, var(--ink));
+  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--accent) 55%, transparent);
+}
+
+.tl-block.estimated.live {
+  background: color-mix(in srgb, var(--ok) 18%, var(--surface));
+  color: color-mix(in srgb, var(--ok) 80%, var(--ink));
+  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--ok) 55%, transparent);
+}
+
+.tl-block.estimated.soon {
+  background: color-mix(in srgb, var(--warn) 20%, var(--surface));
+  color: color-mix(in srgb, var(--warn) 78%, var(--ink));
+  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--warn) 55%, transparent);
 }
 
 .tl-now {
   position: absolute;
-  top: -3px;
-  bottom: 13px;
-  width: 2px;
+  top: -2px;
+  bottom: 14px;
+  width: 1.5px;
   border-radius: 2px;
   background: var(--accent);
   z-index: 2;
@@ -679,8 +730,8 @@ h1 {
   top: -3px;
   left: 50%;
   transform: translateX(-50%);
-  width: 7px;
-  height: 7px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   background: var(--accent);
   animation: pulse 2s ease-in-out infinite;
@@ -697,20 +748,44 @@ h1 {
   }
 }
 
+/* Flash the day-list card after a timeline tap. */
+.show-card.tl-target,
+.show-row.tl-target > .show-card {
+  animation: tlTarget 1.05s ease;
+}
+
+@keyframes tlTarget {
+  0% {
+    border-color: color-mix(in srgb, var(--accent) 55%, var(--line));
+  }
+  35% {
+    border-color: color-mix(in srgb, var(--accent) 40%, var(--line));
+  }
+  100% {
+    border-color: var(--line);
+  }
+}
+
 .tl-hours {
   position: relative;
-  height: 16px;
-  margin-top: 2px;
+  height: 18px;
+  margin-top: 4px;
 }
 
 .tl-hour {
   position: absolute;
   transform: translateX(-50%);
-  font-size: 0.58rem;
-  font-weight: 650;
-  color: var(--muted);
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: color-mix(in srgb, var(--muted) 92%, var(--ink));
   font-variant-numeric: tabular-nums;
   transition: left 0.45s cubic-bezier(0.3, 0.75, 0.25, 1), opacity 0.3s ease;
+}
+
+.tl-hour.minor {
+  font-size: 0.48rem;
+  font-weight: 550;
+  color: color-mix(in srgb, var(--muted) 72%, transparent);
 }
 
 .main {
@@ -1072,25 +1147,26 @@ a.tile-show:focus-visible {
   gap: 2px;
 }
 
+.show-title {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
 .time-range {
   font-family: var(--mono);
-  font-size: 0.88rem;
-  font-weight: 800;
+  font-size: 0.84rem;
+  font-weight: 750;
   letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums;
+  color: color-mix(in srgb, var(--ink) 78%, var(--muted));
 }
 
 .time-range .sep {
   color: var(--muted);
   font-weight: 500;
-}
-
-.show-title {
-  margin: 0;
-  font-size: 0.92rem;
-  font-weight: 800;
-  line-height: 1.2;
-  letter-spacing: -0.01em;
 }
 
 .meta-line {
@@ -3718,20 +3794,25 @@ button.bar-row.day-bar:focus-visible {
   }
 
   .tl-lane-name {
-    height: 24px;
-    font-size: 0.7rem;
+    height: 22px;
+    font-size: 0.66rem;
   }
 
   .tl-track {
-    height: 24px;
+    height: 22px;
   }
 
-  .tl-block-label {
-    font-size: 0.66rem;
+  .tl-block-start,
+  .tl-block-end {
+    font-size: 0.64rem;
   }
 
   .tl-hour {
-    font-size: 0.66rem;
+    font-size: 0.68rem;
+  }
+
+  .tl-hour.minor {
+    font-size: 0.52rem;
   }
 
   .section-label {
@@ -3764,12 +3845,12 @@ button.bar-row.day-bar:focus-visible {
     border-radius: 9px;
   }
 
-  .time-range {
-    font-size: 0.98rem;
+  .show-title {
+    font-size: 1.08rem;
   }
 
-  .show-title {
-    font-size: 1.05rem;
+  .time-range {
+    font-size: 0.94rem;
   }
 
   .meta-line {
@@ -4054,12 +4135,12 @@ button.bar-row.day-bar:focus-visible {
     height: 114px;
   }
 
-  .time-range {
-    font-size: 1.05rem;
+  .show-title {
+    font-size: 1.16rem;
   }
 
-  .show-title {
-    font-size: 1.12rem;
+  .time-range {
+    font-size: 1rem;
   }
 
   .meta-line {
@@ -4197,12 +4278,12 @@ button.bar-row.day-bar:focus-visible {
     height: 150px;
   }
 
-  .time-range {
-    font-size: 1.12rem;
+  .show-title {
+    font-size: 1.24rem;
   }
 
-  .show-title {
-    font-size: 1.2rem;
+  .time-range {
+    font-size: 1.06rem;
   }
 
   .ticket-ratio {
