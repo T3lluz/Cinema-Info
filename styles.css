@@ -33,16 +33,18 @@
   --nav-shadow:
     0 12px 32px rgba(22, 20, 18, 0.16),
     0 2px 8px rgba(22, 20, 18, 0.08);
-  /* Selection pebble: nearly clear — the rim is refraction, not paint. */
-  --nav-chip-fill: rgba(255, 255, 255, 0.06);
+  /* Selection pebble: solid surface chip with a soft lift shadow. */
+  --nav-chip-fill: #ffffff;
+  --nav-chip-border: color-mix(in srgb, var(--line) 70%, transparent);
   --nav-chip-shadow:
-    0 8px 22px rgba(22, 20, 18, 0.12),
-    0 2px 6px rgba(22, 20, 18, 0.08);
+    0 8px 22px rgba(22, 20, 18, 0.14),
+    0 3px 8px rgba(22, 20, 18, 0.1),
+    0 1px 2px rgba(22, 20, 18, 0.06);
   --font: "Segoe UI", system-ui, -apple-system, sans-serif;
   --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
-  --nav-h: 62px;
+  --nav-h: 66px;
   /* Shared content column — stays phone-sized on mobile, widens on larger screens. */
   --page-max: 720px;
   --page-pad-x: 16px;
@@ -76,10 +78,12 @@
   --nav-shadow:
     0 12px 32px rgba(0, 0, 0, 0.5),
     0 2px 8px rgba(0, 0, 0, 0.3);
-  --nav-chip-fill: rgba(255, 255, 255, 0.04);
+  --nav-chip-fill: #2a2a2a;
+  --nav-chip-border: color-mix(in srgb, var(--line) 80%, transparent);
   --nav-chip-shadow:
-    0 8px 22px rgba(0, 0, 0, 0.35),
-    0 2px 6px rgba(0, 0, 0, 0.22);
+    0 10px 24px rgba(0, 0, 0, 0.5),
+    0 3px 8px rgba(0, 0, 0, 0.35),
+    0 1px 2px rgba(0, 0, 0, 0.25);
 }
 
 * {
@@ -3651,7 +3655,7 @@ button.bar-row.day-bar:focus-visible {
   z-index: 1;
 }
 
-/* Positioned wrapper: moves as one unit; glass + rim stay siblings. */
+/* Positioned wrapper: moves as one unit under the selected tab. */
 .pill-lens {
   position: absolute;
   top: 0;
@@ -3660,41 +3664,25 @@ button.bar-row.day-bar:focus-visible {
   border-radius: 999px;
   transform: translateX(var(--pill-x, 0px));
   transition:
-    width 0.28s cubic-bezier(0.4, 0, 0.2, 1),
-    transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    width 0.38s cubic-bezier(0.3, 0.8, 0.25, 1),
+    transform 0.38s cubic-bezier(0.3, 0.8, 0.25, 1);
   pointer-events: none;
+  filter: drop-shadow(0 4px 10px color-mix(in srgb, var(--ink) 12%, transparent));
 }
 
-/* Selection pebble: clear lens. Rim brightens from page content only. */
+/* Selection pebble: solid chip with a soft cast shadow. */
 .pill-indicator {
   position: absolute;
   inset: 0;
-  border: 0;
+  border: 1px solid var(--nav-chip-border);
   border-radius: 999px;
   background: var(--nav-chip-fill);
-  backdrop-filter: url(#lens-chip) saturate(1);
-  -webkit-backdrop-filter: blur(3px) saturate(1);
   box-shadow: var(--nav-chip-shadow);
 }
 
+/* Solid chip — no glass rim refraction. */
 .pill-indicator-rim {
-  position: absolute;
-  inset: 0;
-  border-radius: 999px;
-  border: 0;
-  padding: 2.5px;
-  box-sizing: border-box;
-  background: transparent;
-  -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  mask-composite: exclude;
-  backdrop-filter: url(#lens-chip-rim) saturate(1);
-  -webkit-backdrop-filter: blur(1.5px) saturate(1);
+  display: none;
 }
 
 /* Tabs sit above both glass layers; no fill of their own. */
@@ -3711,8 +3699,8 @@ button.bar-row.day-bar:focus-visible {
   background: transparent;
 }
 
-/* Tabs: icon over label, always both — nothing shifts or unfolds when
-   the selection moves, only colour and the lens underneath. */
+/* Unselected: icon-only, larger. Selected: icon shrinks up, label
+   rises from below onto the solid chip. */
 .pill-tab {
   position: relative;
   z-index: 2;
@@ -3720,32 +3708,49 @@ button.bar-row.day-bar:focus-visible {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 3px;
-  min-height: 52px;
+  gap: 0;
+  min-height: 56px;
   border: 0;
   border-radius: 999px;
   background: transparent;
   color: var(--muted);
   font: inherit;
-  font-size: 0.6rem;
-  font-weight: 700;
+  font-size: 0.58rem;
+  font-weight: 750;
   letter-spacing: 0.01em;
   cursor: pointer;
-  padding: 7px 4px 6px;
-  transition: color 0.22s ease;
+  padding: 8px 4px 7px;
+  overflow: hidden;
+  transition: color 0.28s ease;
 }
 
 .pill-tab svg {
   flex-shrink: 0;
-  width: 21px;
-  height: 21px;
-  transition: transform 0.3s cubic-bezier(0.3, 1.2, 0.4, 1);
+  width: 26px;
+  height: 26px;
+  transform: translateY(0);
+  transition:
+    width 0.36s cubic-bezier(0.3, 0.85, 0.25, 1),
+    height 0.36s cubic-bezier(0.3, 0.85, 0.25, 1),
+    transform 0.36s cubic-bezier(0.3, 0.85, 0.25, 1),
+    opacity 0.28s ease;
 }
 
 .pill-tab-label {
   display: block;
-  line-height: 1.2;
+  max-height: 0;
+  margin-top: 0;
+  opacity: 0;
+  overflow: hidden;
+  line-height: 1.15;
   white-space: nowrap;
+  transform: translateY(10px);
+  pointer-events: none;
+  transition:
+    max-height 0.34s cubic-bezier(0.3, 0.85, 0.25, 1),
+    margin-top 0.34s cubic-bezier(0.3, 0.85, 0.25, 1),
+    opacity 0.28s ease,
+    transform 0.36s cubic-bezier(0.22, 1.1, 0.3, 1);
 }
 
 .pill-tab:focus-visible {
@@ -3753,23 +3758,37 @@ button.bar-row.day-bar:focus-visible {
   outline-offset: -2px;
 }
 
-.pill-tab:active svg {
-  transform: scale(1.12);
+.pill-tab:active:not([aria-selected="true"]) svg {
+  transform: scale(1.1);
 }
 
 .pill-tab[aria-selected="true"] {
   color: var(--accent);
 }
 
-/* Tabs flip to a light face when dark content slides in beneath their
-   patch of glass — sampled per tab in app.js, like iOS adaptive glass. */
-.pill-tab.on-dark {
+.pill-tab[aria-selected="true"] svg {
+  width: 17px;
+  height: 17px;
+  transform: translateY(-2px);
+}
+
+.pill-tab[aria-selected="true"] .pill-tab-label {
+  max-height: 1.3em;
+  margin-top: 3px;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Unselected tabs adapt to dark content under the glass. The selected
+   tab sits on the solid chip, so it always keeps accent ink. */
+.pill-tab.on-dark:not([aria-selected="true"]) {
   color: rgba(255, 255, 255, 0.92);
   text-shadow: 0 1px 5px rgba(0, 0, 0, 0.35);
 }
 
 .pill-tab.on-dark[aria-selected="true"] {
-  color: color-mix(in srgb, var(--accent) 45%, #fff);
+  color: var(--accent);
+  text-shadow: none;
 }
 
 .stats-hero,
@@ -4057,14 +4076,19 @@ button.bar-row.day-bar:focus-visible {
   }
 
   .pill-tab {
-    min-height: 54px;
-    font-size: 0.62rem;
-    padding: 7px 8px 6px;
+    min-height: 58px;
+    font-size: 0.6rem;
+    padding: 8px 8px 7px;
   }
 
   .pill-tab svg {
-    width: 22px;
-    height: 22px;
+    width: 27px;
+    height: 27px;
+  }
+
+  .pill-tab[aria-selected="true"] svg {
+    width: 18px;
+    height: 18px;
   }
 }
 
@@ -4238,14 +4262,19 @@ button.bar-row.day-bar:focus-visible {
   }
 
   .pill-tab {
-    min-height: 56px;
-    font-size: 0.64rem;
-    padding: 7px 10px 6px;
+    min-height: 60px;
+    font-size: 0.62rem;
+    padding: 8px 10px 7px;
   }
 
   .pill-tab svg {
-    width: 23px;
-    height: 23px;
+    width: 28px;
+    height: 28px;
+  }
+
+  .pill-tab[aria-selected="true"] svg {
+    width: 18px;
+    height: 18px;
   }
 }
 
