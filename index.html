@@ -21,7 +21,7 @@
     <meta property="og:image" content="https://t3lluz.github.io/Cinema-Info/icons/icon-512.png" />
     <meta name="twitter:card" content="summary" />
     <title>Buen kino</title>
-    <link rel="stylesheet" href="styles.css?v=120" />
+    <link rel="stylesheet" href="styles.css?v=121" />
     <script>
       // Paint the saved theme before the first frame, so a dark visitor
       // never sees a light flash. "system"/unset follows the device.
@@ -89,7 +89,24 @@
         </div>
       </div>
 
-      <div id="timeline" class="timeline" hidden></div>
+      <div id="timeline" class="timeline" hidden>
+        <div id="timelineMain" class="tl-main"></div>
+        <button
+          id="timelineExpandBtn"
+          class="tl-expand"
+          type="button"
+          aria-expanded="false"
+          aria-controls="timelineMain"
+        >
+          <span class="tl-expand-label" data-i18n="tlExpand">Vis detaljer</span>
+          <svg class="tl-expand-chevron" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+            <path
+              fill="currentColor"
+              d="M7.4 9.4 12 14l4.6-4.6L18 10.8l-6 6-6-6z"
+            />
+          </svg>
+        </button>
+      </div>
 
       <div id="dayControls" class="day-controls">
         <div class="day-controls-body">
@@ -177,6 +194,6 @@
       </div>
     </nav>
 
-    <script src="app.js?v=87" type="module"></script>
+    <script src="app.js?v=88" type="module"></script>
   </body>
 </html>

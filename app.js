@@ -142,6 +142,8 @@ const I18N = {
       "Salkart for {screen}: {sold} av {capacity} plasser solgt, {scanned} skannet inn.",
     today: "I dag",
     jumpTodayAria: "Gå til i dag",
+    tlExpand: "Vis detaljer",
+    tlCollapse: "Skjul detaljer",
     yesterday: "I går",
     tomorrow: "I morgen",
     dayTab: "{weekday} {d}.{m}",
@@ -302,6 +304,8 @@ const I18N = {
       "Seat map for {screen}: {sold} of {capacity} seats sold, {scanned} scanned in.",
     today: "Today",
     jumpTodayAria: "Go to today",
+    tlExpand: "Show details",
+    tlCollapse: "Hide details",
     yesterday: "Yesterday",
     tomorrow: "Tomorrow",
     dayTab: "{weekday} {d}.{m}",
@@ -480,6 +484,8 @@ const els = {
   refreshBtn: document.getElementById("refreshBtn"),
   statusText: document.getElementById("statusText"),
   timeline: document.getElementById("timeline"),
+  timelineMain: document.getElementById("timelineMain"),
+  timelineExpandBtn: document.getElementById("timelineExpandBtn"),
   views: {
     day: document.getElementById("view-day"),
     movies: document.getElementById("view-movies"),
@@ -541,6 +547,8 @@ const MOVIE_SHOWS_PREVIEW = 3;
 const SEATS_OPEN_MQ = window.matchMedia("(min-width: 700px)");
 /** Wider viewports get half-hour ticks on the header timeline. */
 const TL_WIDE_MQ = window.matchMedia("(min-width: 700px)");
+/** Desktop with a real hover pointer expands the timeline on hover. */
+const TL_HOVER_MQ = window.matchMedia("(min-width: 860px) and (hover: hover)");
 const HALF_HOUR = 1_800_000;
 /** Loads auto-unfolded halls as they scroll into view. */
 let seatAutoObserver = null;
@@ -662,6 +670,8 @@ async function init() {
     if (!state?.shows?.some((s) => s.dayKey === today)) return;
     selectDay(today);
   });
+
+  setupTimelineExpand();
 
   setInterval(liveBeat, BEAT_MS);
 
@@ -1811,6 +1821,7 @@ function applyLanguage() {
   els.refreshBtn.setAttribute("aria-label", t("refresh"));
   els.refreshBtn.title = t("refresh");
   els.jumpTodayBtn?.setAttribute("aria-label", t("jumpTodayAria"));
+  syncTimelineExpandBtn();
   els.dayTabs.setAttribute(
     "aria-label",
     lang === "en" ? "Choose day" : "Velg dag"
@@ -2500,32 +2511,104 @@ function timelineMarkStep(span) {
   return HALF_HOUR;
 }
 
+function clearTimelineMain() {
+  if (els.timelineMain) els.timelineMain.innerHTML = "";
+}
+
+function timelineHoverExpands() {
+  return TL_HOVER_MQ.matches;
+}
+
+function syncTimelineExpandBtn() {
+  const btn = els.timelineExpandBtn;
+  if (!btn) return;
+  const open = !!els.timeline?.classList.contains("is-expanded");
+  const label = t(open ? "tlCollapse" : "tlExpand");
+  btn.setAttribute("aria-expanded", String(open));
+  btn.setAttribute("aria-label", label);
+  const text = btn.querySelector(".tl-expand-label");
+  if (text) text.textContent = label;
+  // Desktop hover owns expand; the disclosure control is for touch layouts.
+  btn.hidden = !!els.timeline?.hidden || timelineHoverExpands();
+}
+
+function setTimelineExpanded(open) {
+  if (!els.timeline) return;
+  els.timeline.classList.toggle("is-expanded", !!open);
+  syncTimelineExpandBtn();
+}
+
+/** Phone/tablet: tap the disclosure to expand. Desktop: hover/focus does it. */
+function setupTimelineExpand() {
+  const tl = els.timeline;
+  const btn = els.timelineExpandBtn;
+  if (!tl || !btn) return;
+
+  btn.addEventListener("click", (e) => {
+    e.preventDefault();
+    setTimelineExpanded(!tl.classList.contains("is-expanded"));
+  });
+
+  tl.addEventListener("pointerenter", (e) => {
+    if (!timelineHoverExpands()) return;
+    if (e.pointerType === "touch") return;
+    setTimelineExpanded(true);
+  });
+  tl.addEventListener("pointerleave", () => {
+    if (!timelineHoverExpands()) return;
+    setTimelineExpanded(false);
+  });
+  tl.addEventListener("focusin", () => {
+    if (!timelineHoverExpands()) return;
+    setTimelineExpanded(true);
+  });
+  tl.addEventListener("focusout", (e) => {
+    if (!timelineHoverExpands()) return;
+    if (e.relatedTarget && tl.contains(e.relatedTarget)) return;
+    setTimelineExpanded(false);
+  });
+
+  TL_HOVER_MQ.addEventListener?.("change", () => {
+    // Leaving desktop hover mode: collapse so the button starts from closed.
+    if (!timelineHoverExpands()) setTimelineExpanded(false);
+    else syncTimelineExpandBtn();
+  });
+
+  syncTimelineExpandBtn();
+}
+
+function hideTimeline() {
+  els.timeline.hidden = true;
+  els.timeline.classList.remove("is-expanded");
+  clearTimelineMain();
+  syncTimelineExpandBtn();
+}
+
 function renderTimeline() {
   if (!state?.shows) return;
 
   // Settings is about the app, not about tonight's programme; the strip
   // has nothing to say there and only crowds the header.
   if (activeTab === "settings") {
-    els.timeline.hidden = true;
-    els.timeline.innerHTML = "";
+    hideTimeline();
     return;
   }
 
   const layout = computeTimelineLayout();
 
   if (!layout.lanes.length) {
-    els.timeline.hidden = true;
-    els.timeline.innerHTML = "";
+    hideTimeline();
     return;
   }
 
   // Morph the existing bars into the new day's layout when possible;
   // build from scratch only when there is nothing on screen yet.
-  if (!els.timeline.hidden && els.timeline.querySelector(".tl-tracks")) {
+  if (!els.timeline.hidden && els.timelineMain?.querySelector(".tl-tracks")) {
     morphTimeline(layout);
   } else {
     buildTimeline(layout);
   }
+  syncTimelineExpandBtn();
 }
 
 function tlBlockArtHTML(b) {
@@ -2580,7 +2663,7 @@ function buildTimeline(layout) {
     </button>`;
 
   els.timeline.hidden = false;
-  els.timeline.innerHTML = `
+  els.timelineMain.innerHTML = `
     <div class="tl-names">${layout.lanes
       .map(
         (l) =>
@@ -2625,11 +2708,12 @@ function buildTimeline(layout) {
  * and the "now" line move.
  */
 function morphTimeline(layout) {
-  const namesBox = els.timeline.querySelector(".tl-names");
-  const gridsBox = els.timeline.querySelector(".tl-gridlines");
-  const tracksBox = els.timeline.querySelector(".tl-tracks");
-  const hoursBox = els.timeline.querySelector(".tl-hours");
-  const area = els.timeline.querySelector(".tl-area");
+  const root = els.timelineMain || els.timeline;
+  const namesBox = root.querySelector(".tl-names");
+  const gridsBox = root.querySelector(".tl-gridlines");
+  const tracksBox = root.querySelector(".tl-tracks");
+  const hoursBox = root.querySelector(".tl-hours");
+  const area = root.querySelector(".tl-area");
 
   /** Finishing touches for entering nodes, applied one frame after they
    * are inserted with their start styles so the transition can play. */

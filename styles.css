@@ -531,13 +531,12 @@ h1 {
 }
 
 /* —— Header timeline ——
-   Compact coloured pills with start/end clocks on phone and tablet.
-   Desktop (hover): the strip expands to reveal poster + title. */
+   Compact coloured pills with start/end clocks. Expands to poster +
+   title via desktop hover or the phone/tablet disclosure button. */
 .timeline {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 10px;
-  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
   /* Only set vertical margin — horizontal auto centering comes from .top > *. */
   margin-top: 14px;
   animation: rise 0.32s ease both;
@@ -547,12 +546,21 @@ h1 {
   display: none;
 }
 
+.tl-main {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px;
+  align-items: stretch;
+  min-width: 0;
+}
+
 .tl-names {
   display: flex;
   flex-direction: column;
   gap: 6px;
   justify-content: flex-start;
   padding-bottom: 18px;
+  transition: gap 0.4s cubic-bezier(0.3, 0.75, 0.25, 1);
 }
 
 .tl-lane-name {
@@ -566,36 +574,87 @@ h1 {
   color: color-mix(in srgb, var(--muted) 88%, var(--ink));
   white-space: nowrap;
   overflow: hidden;
-  transition: height 0.35s ease, opacity 0.3s ease;
+  transition:
+    height 0.4s cubic-bezier(0.3, 0.75, 0.25, 1),
+    opacity 0.3s ease;
 }
 
 .tl-lane-short {
   display: none;
 }
 
-/* Compact pill layout: hide poster/title and let the clocks sit at
-   opposite ends of the bar. Desktop hover reopens the richer view. */
-.tl-block-poster,
-.tl-block-poster-fallback,
-.tl-block-title {
+/* Disclosure under the strip — phone/tablet only (desktop uses hover). */
+.tl-expand {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  gap: 4px;
+  margin: 0;
+  padding: 5px 12px 3px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: color-mix(in srgb, var(--muted) 88%, var(--ink));
+  font: inherit;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    color 0.22s ease,
+    background 0.22s ease,
+    transform 0.15s ease;
+}
+
+.tl-expand:hover {
+  color: var(--ink);
+  background: color-mix(in srgb, var(--ink) 5%, transparent);
+}
+
+.tl-expand:active {
+  transform: scale(0.96);
+}
+
+.tl-expand:focus {
+  outline: none;
+}
+
+.tl-expand:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--accent) 55%, var(--ink));
+  outline-offset: 2px;
+}
+
+.tl-expand[hidden] {
   display: none;
 }
 
-.tl-block-meta,
-.tl-block-times {
-  display: contents;
+.tl-expand-chevron {
+  display: block;
+  flex: 0 0 auto;
+  transition: transform 0.4s cubic-bezier(0.3, 0.75, 0.25, 1);
 }
 
-.tl-block-end {
-  margin-left: auto;
-  text-align: right;
-  opacity: 0.9;
+.timeline.is-expanded .tl-expand-chevron {
+  transform: rotate(180deg);
+}
+
+.timeline.is-expanded .tl-expand {
+  color: color-mix(in srgb, var(--accent) 72%, var(--ink));
+}
+
+@media (min-width: 860px) and (hover: hover) {
+  .tl-expand {
+    display: none;
+  }
 }
 
 /* Phone: shorter hall labels (Kino/Stor) and a tighter gutter so the
    tracks themselves get the width. Full names return from 700px up. */
 @media (max-width: 699px) {
-  .timeline {
+  .tl-main {
     gap: 4px;
   }
 
@@ -645,17 +704,21 @@ h1 {
   display: flex;
   flex-direction: column;
   gap: 6px;
+  transition: gap 0.4s cubic-bezier(0.3, 0.75, 0.25, 1);
 }
 
 .tl-track {
   position: relative;
   height: 20px;
   background: transparent;
-  transition: height 0.35s ease, opacity 0.3s ease;
+  transition:
+    height 0.4s cubic-bezier(0.3, 0.75, 0.25, 1),
+    opacity 0.3s ease;
 }
 
 /* Morphing between days: bars glide and stretch to the new day's shows,
-   timed to land with the page as it slides in. */
+   timed to land with the page as it slides in. Compact clocks sit at
+   opposite ends; expand grows poster + title in place. */
 .tl-block {
   position: absolute;
   top: 2px;
@@ -666,7 +729,7 @@ h1 {
   color: #fff;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 6px;
   padding: 0 7px;
   overflow: hidden;
@@ -693,17 +756,31 @@ h1 {
 
 .tl-block-poster,
 .tl-block-poster-fallback {
-  display: none;
-  flex: 0 0 auto;
-  width: 28px;
-  height: 40px;
+  display: block;
+  flex: 0 0 0;
+  width: 0;
+  height: 0;
+  min-width: 0;
+  min-height: 0;
+  opacity: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  pointer-events: none;
   border-radius: 6px;
   object-fit: cover;
   background: color-mix(in srgb, var(--line) 55%, var(--surface));
+  transition:
+    width 0.4s cubic-bezier(0.3, 0.75, 0.25, 1),
+    height 0.4s cubic-bezier(0.3, 0.75, 0.25, 1),
+    flex-basis 0.4s cubic-bezier(0.3, 0.75, 0.25, 1),
+    opacity 0.28s ease,
+    margin 0.4s cubic-bezier(0.3, 0.75, 0.25, 1);
 }
 
 .tl-block-poster-fallback {
-  display: none;
+  display: flex;
   align-items: center;
   justify-content: center;
   font-size: 0.72rem;
@@ -717,22 +794,34 @@ h1 {
 }
 
 .tl-block-meta {
-  min-width: 0;
-  flex: 1 1 auto;
   display: flex;
+  flex: 1 1 auto;
   flex-direction: column;
-  gap: 2px;
+  align-items: stretch;
+  justify-content: center;
+  min-width: 0;
+  width: 100%;
+  gap: 0;
+  transition: gap 0.35s ease;
 }
 
 .tl-block-title {
-  display: none;
+  display: block;
+  width: 100%;
+  max-height: 0;
   min-width: 0;
+  opacity: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: -0.01em;
   line-height: 1.15;
+  transform: translateY(5px);
+  transition:
+    max-height 0.35s cubic-bezier(0.3, 0.75, 0.25, 1),
+    opacity 0.28s ease,
+    transform 0.35s cubic-bezier(0.3, 0.75, 0.25, 1);
 }
 
 .tl-block-times {
@@ -740,7 +829,9 @@ h1 {
   align-items: baseline;
   justify-content: space-between;
   gap: 6px;
+  width: 100%;
   min-width: 0;
+  transition: gap 0.3s ease, justify-content 0.3s ease;
 }
 
 /* Times inherit the bar colour; pin white on solid red fills so theme
@@ -787,6 +878,7 @@ h1 {
 }
 
 .tl-block-end {
+  margin-left: 0;
   text-align: right;
   opacity: 0.9;
 }
@@ -873,7 +965,10 @@ h1 {
   background: var(--accent);
   z-index: 2;
   pointer-events: none;
-  transition: left 0.45s cubic-bezier(0.3, 0.75, 0.25, 1), opacity 0.3s ease;
+  transition:
+    left 0.45s cubic-bezier(0.3, 0.75, 0.25, 1),
+    opacity 0.3s ease,
+    bottom 0.4s cubic-bezier(0.3, 0.75, 0.25, 1);
 }
 
 .tl-now-dot {
@@ -4152,301 +4247,220 @@ button.bar-row.day-bar:focus-visible {
   }
 }
 
-/* —— Desktop timeline hover-expand ——
-   Stays a compact pill strip until the pointer (or keyboard focus) is on
-   it, then grows into poster + title + times. Phone/tablet never expand. */
-@media (min-width: 860px) and (hover: hover) {
-  .tl-names,
-  .tl-tracks {
-    transition: gap 0.4s cubic-bezier(0.3, 0.75, 0.25, 1);
-  }
+/* —— Timeline expand (hover on desktop, disclosure on phone/tablet) —— */
+.timeline.is-expanded .tl-names,
+.timeline.is-expanded .tl-tracks {
+  gap: 8px;
+}
 
-  .tl-lane-name,
-  .tl-track {
-    transition:
-      height 0.4s cubic-bezier(0.3, 0.75, 0.25, 1),
-      opacity 0.3s ease;
-  }
+.timeline.is-expanded .tl-lane-name,
+.timeline.is-expanded .tl-track {
+  height: 48px;
+}
 
-  .tl-now {
-    transition:
-      left 0.45s cubic-bezier(0.3, 0.75, 0.25, 1),
-      opacity 0.3s ease,
-      bottom 0.4s cubic-bezier(0.3, 0.75, 0.25, 1);
-  }
+.timeline.is-expanded .tl-now {
+  bottom: 16px;
+}
 
-  /* Compact desktop: same end-to-end clocks as phone. Keep a real flex
-     tree (not display:contents) so hover can grow poster/title in place. */
-  .tl-block {
-    justify-content: flex-start;
-  }
+.timeline.is-expanded .tl-block {
+  top: 0;
+  bottom: 0;
+  justify-content: flex-start;
+  gap: 8px;
+  padding: 4px 9px 4px 4px;
+  border-radius: 11px;
+  color: var(--ink);
+  background: color-mix(in srgb, var(--accent) 11%, var(--surface));
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--accent) 20%, transparent),
+    0 1px 2px color-mix(in srgb, var(--ink) 6%, transparent);
+}
 
-  .tl-block-meta {
-    display: flex;
-    flex: 1 1 auto;
-    flex-direction: column;
-    align-items: stretch;
-    justify-content: center;
-    min-width: 0;
-    width: 100%;
-    gap: 0;
-    transition: gap 0.35s ease;
-  }
+.timeline.is-expanded .tl-block:not(.done):not(.estimated):not(.live):not(.soon),
+.timeline.is-expanded .tl-block.upcoming {
+  color: var(--ink);
+  background: color-mix(in srgb, var(--accent) 11%, var(--surface));
+}
 
-  .tl-block-times {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 6px;
-    width: 100%;
-    min-width: 0;
-    transition: gap 0.3s ease, justify-content 0.3s ease;
-  }
+.timeline.is-expanded .tl-block:not(.done):not(.estimated):not(.live):not(.soon) .tl-block-start,
+.timeline.is-expanded .tl-block:not(.done):not(.estimated):not(.live):not(.soon) .tl-block-end,
+.timeline.is-expanded .tl-block.upcoming .tl-block-start,
+.timeline.is-expanded .tl-block.upcoming .tl-block-end {
+  color: color-mix(in srgb, var(--muted) 70%, var(--ink));
+}
 
-  .tl-block-poster,
-  .tl-block-poster-fallback {
-    display: block;
-    flex: 0 0 0;
+.timeline.is-expanded .tl-block.live {
+  color: var(--ink);
+  background: color-mix(in srgb, var(--ok) 16%, var(--surface));
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--ok) 32%, transparent),
+    0 1px 2px color-mix(in srgb, var(--ink) 6%, transparent);
+}
+
+.timeline.is-expanded .tl-block.soon {
+  color: var(--ink);
+  background: color-mix(in srgb, var(--warn) 18%, var(--surface));
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--warn) 34%, transparent),
+    0 1px 2px color-mix(in srgb, var(--ink) 6%, transparent);
+}
+
+.timeline.is-expanded .tl-block.done {
+  color: color-mix(in srgb, var(--done) 70%, var(--ink));
+  background: color-mix(in srgb, var(--done) 12%, var(--surface));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--done) 22%, transparent);
+}
+
+.timeline.is-expanded .tl-block.estimated {
+  background: color-mix(in srgb, var(--accent) 8%, var(--surface));
+  color: var(--ink);
+  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--accent) 42%, transparent);
+}
+
+.timeline.is-expanded .tl-block.estimated.live {
+  background: color-mix(in srgb, var(--ok) 12%, var(--surface));
+  color: var(--ink);
+  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--ok) 42%, transparent);
+}
+
+.timeline.is-expanded .tl-block.estimated.soon {
+  background: color-mix(in srgb, var(--warn) 14%, var(--surface));
+  color: var(--ink);
+  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--warn) 42%, transparent);
+}
+
+[data-theme="dark"] .timeline.is-expanded .tl-block.live,
+[data-theme="dark"] .timeline.is-expanded .tl-block.soon,
+[data-theme="dark"] .timeline.is-expanded .tl-block.upcoming,
+[data-theme="dark"] .timeline.is-expanded .tl-block:not(.live):not(.soon):not(.done):not(.estimated) {
+  color: var(--ink);
+}
+
+.timeline.is-expanded .tl-block-poster,
+.timeline.is-expanded .tl-block-poster-fallback {
+  flex-basis: 28px;
+  width: 28px;
+  height: 40px;
+  opacity: 1;
+  border-radius: 6px;
+}
+
+.timeline.is-expanded .tl-block-title {
+  max-height: 1.35em;
+  opacity: 1;
+  transform: none;
+  font-size: 0.74rem;
+}
+
+.timeline.is-expanded .tl-block-meta {
+  gap: 3px;
+}
+
+.timeline.is-expanded .tl-block-times {
+  justify-content: flex-start;
+  gap: 5px;
+}
+
+.timeline.is-expanded .tl-block-end {
+  margin-left: 0;
+  text-align: left;
+  opacity: 1;
+}
+
+.timeline.is-expanded .tl-block-end::before {
+  content: "–";
+  margin-right: 5px;
+  opacity: 0.55;
+}
+
+.timeline.is-expanded .tl-block-start,
+.timeline.is-expanded .tl-block-end {
+  font-size: 0.6rem;
+}
+
+/* Narrow expanded slots drop poster, then title. */
+@container (max-width: 148px) {
+  .timeline.is-expanded .tl-block-poster,
+  .timeline.is-expanded .tl-block-poster-fallback {
+    flex-basis: 0;
     width: 0;
     height: 0;
-    min-width: 0;
-    min-height: 0;
     opacity: 0;
-    margin: 0;
-    padding: 0;
-    border: 0;
-    overflow: hidden;
-    pointer-events: none;
-    border-radius: 7px;
-    transition:
-      width 0.4s cubic-bezier(0.3, 0.75, 0.25, 1),
-      height 0.4s cubic-bezier(0.3, 0.75, 0.25, 1),
-      flex-basis 0.4s cubic-bezier(0.3, 0.75, 0.25, 1),
-      opacity 0.28s ease,
-      margin 0.4s cubic-bezier(0.3, 0.75, 0.25, 1);
   }
+}
 
-  .tl-block-poster-fallback {
-    display: flex;
-  }
-
-  .tl-block-title {
-    display: block;
-    width: 100%;
+@container (max-width: 96px) {
+  .timeline.is-expanded .tl-block-title {
     max-height: 0;
     opacity: 0;
-    overflow: hidden;
     transform: translateY(5px);
-    transition:
-      max-height 0.35s cubic-bezier(0.3, 0.75, 0.25, 1),
-      opacity 0.28s ease,
-      transform 0.35s cubic-bezier(0.3, 0.75, 0.25, 1);
   }
 
-  .tl-block-end {
-    margin-left: 0;
+  .timeline.is-expanded .tl-block-meta {
+    flex-direction: row;
+    align-items: center;
+    gap: 0;
   }
 
-  .timeline:hover .tl-names,
-  .timeline:hover .tl-tracks,
-  .timeline:focus-within .tl-names,
-  .timeline:focus-within .tl-tracks {
+  .timeline.is-expanded .tl-block-times {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .timeline.is-expanded .tl-block-end::before {
+    content: none;
+    margin: 0;
+  }
+}
+
+@media (min-width: 700px) {
+  .timeline.is-expanded .tl-lane-name,
+  .timeline.is-expanded .tl-track {
+    height: 52px;
+  }
+
+  .timeline.is-expanded .tl-block {
     gap: 8px;
+    padding: 5px 10px 5px 5px;
   }
 
-  .timeline:hover .tl-lane-name,
-  .timeline:hover .tl-track,
-  .timeline:focus-within .tl-lane-name,
-  .timeline:focus-within .tl-track {
-    height: 56px;
-  }
-
-  .timeline:hover .tl-now,
-  .timeline:focus-within .tl-now {
-    bottom: 16px;
-  }
-
-  .timeline:hover .tl-block,
-  .timeline:focus-within .tl-block {
-    top: 0;
-    bottom: 0;
-    justify-content: flex-start;
-    gap: 9px;
-    padding: 5px 11px 5px 5px;
-    border-radius: 12px;
-    color: var(--ink);
-    background: color-mix(in srgb, var(--accent) 11%, var(--surface));
-    box-shadow:
-      inset 0 0 0 1px color-mix(in srgb, var(--accent) 20%, transparent),
-      0 1px 2px color-mix(in srgb, var(--ink) 6%, transparent);
-  }
-
-  .timeline:hover .tl-block:not(.done):not(.estimated):not(.live):not(.soon),
-  .timeline:hover .tl-block.upcoming,
-  .timeline:focus-within .tl-block:not(.done):not(.estimated):not(.live):not(.soon),
-  .timeline:focus-within .tl-block.upcoming {
-    color: var(--ink);
-    background: color-mix(in srgb, var(--accent) 11%, var(--surface));
-  }
-
-  .timeline:hover .tl-block:not(.done):not(.estimated):not(.live):not(.soon) .tl-block-start,
-  .timeline:hover .tl-block:not(.done):not(.estimated):not(.live):not(.soon) .tl-block-end,
-  .timeline:hover .tl-block.upcoming .tl-block-start,
-  .timeline:hover .tl-block.upcoming .tl-block-end,
-  .timeline:focus-within .tl-block:not(.done):not(.estimated):not(.live):not(.soon) .tl-block-start,
-  .timeline:focus-within .tl-block:not(.done):not(.estimated):not(.live):not(.soon) .tl-block-end,
-  .timeline:focus-within .tl-block.upcoming .tl-block-start,
-  .timeline:focus-within .tl-block.upcoming .tl-block-end {
-    color: color-mix(in srgb, var(--muted) 70%, var(--ink));
-  }
-
-  .timeline:hover .tl-block.live,
-  .timeline:focus-within .tl-block.live {
-    color: var(--ink);
-    background: color-mix(in srgb, var(--ok) 16%, var(--surface));
-    box-shadow:
-      inset 0 0 0 1px color-mix(in srgb, var(--ok) 32%, transparent),
-      0 1px 2px color-mix(in srgb, var(--ink) 6%, transparent);
-  }
-
-  .timeline:hover .tl-block.soon,
-  .timeline:focus-within .tl-block.soon {
-    color: var(--ink);
-    background: color-mix(in srgb, var(--warn) 18%, var(--surface));
-    box-shadow:
-      inset 0 0 0 1px color-mix(in srgb, var(--warn) 34%, transparent),
-      0 1px 2px color-mix(in srgb, var(--ink) 6%, transparent);
-  }
-
-  .timeline:hover .tl-block.done,
-  .timeline:focus-within .tl-block.done {
-    color: color-mix(in srgb, var(--done) 70%, var(--ink));
-    background: color-mix(in srgb, var(--done) 12%, var(--surface));
-    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--done) 22%, transparent);
-  }
-
-  .timeline:hover .tl-block.estimated,
-  .timeline:focus-within .tl-block.estimated {
-    background: color-mix(in srgb, var(--accent) 8%, var(--surface));
-    color: var(--ink);
-    box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--accent) 42%, transparent);
-  }
-
-  .timeline:hover .tl-block.estimated.live,
-  .timeline:focus-within .tl-block.estimated.live {
-    background: color-mix(in srgb, var(--ok) 12%, var(--surface));
-    color: var(--ink);
-    box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--ok) 42%, transparent);
-  }
-
-  .timeline:hover .tl-block.estimated.soon,
-  .timeline:focus-within .tl-block.estimated.soon {
-    background: color-mix(in srgb, var(--warn) 14%, var(--surface));
-    color: var(--ink);
-    box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--warn) 42%, transparent);
-  }
-
-  [data-theme="dark"] .timeline:hover .tl-block.live,
-  [data-theme="dark"] .timeline:hover .tl-block.soon,
-  [data-theme="dark"] .timeline:hover .tl-block.upcoming,
-  [data-theme="dark"] .timeline:hover .tl-block:not(.live):not(.soon):not(.done):not(.estimated),
-  [data-theme="dark"] .timeline:focus-within .tl-block.live,
-  [data-theme="dark"] .timeline:focus-within .tl-block.soon,
-  [data-theme="dark"] .timeline:focus-within .tl-block.upcoming,
-  [data-theme="dark"] .timeline:focus-within .tl-block:not(.live):not(.soon):not(.done):not(.estimated) {
-    color: var(--ink);
-  }
-
-  .timeline:hover .tl-block-poster,
-  .timeline:hover .tl-block-poster-fallback,
-  .timeline:focus-within .tl-block-poster,
-  .timeline:focus-within .tl-block-poster-fallback {
+  .timeline.is-expanded .tl-block-poster,
+  .timeline.is-expanded .tl-block-poster-fallback {
     flex-basis: 30px;
     width: 30px;
     height: 44px;
-    opacity: 1;
+    border-radius: 7px;
   }
 
-  .timeline:hover .tl-block-title,
-  .timeline:focus-within .tl-block-title {
-    max-height: 1.35em;
-    opacity: 1;
-    transform: none;
+  .timeline.is-expanded .tl-block-title {
+    font-size: 0.78rem;
+  }
+
+  .timeline.is-expanded .tl-block-start,
+  .timeline.is-expanded .tl-block-end {
+    font-size: 0.62rem;
+  }
+}
+
+@media (min-width: 860px) {
+  .timeline.is-expanded .tl-lane-name,
+  .timeline.is-expanded .tl-track {
+    height: 56px;
+  }
+
+  .timeline.is-expanded .tl-block {
+    gap: 9px;
+    padding: 5px 11px 5px 5px;
+    border-radius: 12px;
+  }
+
+  .timeline.is-expanded .tl-block-title {
     font-size: 0.82rem;
   }
 
-  .timeline:hover .tl-block-meta,
-  .timeline:focus-within .tl-block-meta {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 3px;
-  }
-
-  .timeline:hover .tl-block-times,
-  .timeline:focus-within .tl-block-times {
-    justify-content: flex-start;
-    gap: 5px;
-  }
-
-  .timeline:hover .tl-block-end,
-  .timeline:focus-within .tl-block-end {
-    margin-left: 0;
-    text-align: left;
-    opacity: 1;
-  }
-
-  .timeline:hover .tl-block-end::before,
-  .timeline:focus-within .tl-block-end::before {
-    content: "–";
-    margin-right: 5px;
-    opacity: 0.55;
-  }
-
-  .timeline:hover .tl-block-start,
-  .timeline:hover .tl-block-end,
-  .timeline:focus-within .tl-block-start,
-  .timeline:focus-within .tl-block-end {
+  .timeline.is-expanded .tl-block-start,
+  .timeline.is-expanded .tl-block-end {
     font-size: 0.64rem;
-  }
-
-  /* Narrow expanded slots drop poster, then title. */
-  @container (max-width: 148px) {
-    .timeline:hover .tl-block-poster,
-    .timeline:hover .tl-block-poster-fallback,
-    .timeline:focus-within .tl-block-poster,
-    .timeline:focus-within .tl-block-poster-fallback {
-      width: 0;
-      height: 0;
-      opacity: 0;
-    }
-  }
-
-  @container (max-width: 96px) {
-    .timeline:hover .tl-block-title,
-    .timeline:focus-within .tl-block-title {
-      max-height: 0;
-      opacity: 0;
-      transform: translateY(5px);
-    }
-
-    .timeline:hover .tl-block-meta,
-    .timeline:focus-within .tl-block-meta {
-      flex-direction: row;
-      align-items: center;
-      gap: 0;
-    }
-
-    .timeline:hover .tl-block-times,
-    .timeline:focus-within .tl-block-times {
-      width: 100%;
-      justify-content: space-between;
-    }
-
-    .timeline:hover .tl-block-end::before,
-    .timeline:focus-within .tl-block-end::before {
-      content: none;
-      margin: 0;
-    }
   }
 }
 
