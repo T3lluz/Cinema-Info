@@ -2452,6 +2452,8 @@ function computeTimelineLayout() {
         return {
           id: s.id,
           dayKey: s.dayKey,
+          title: s.title || "",
+          posterUrl: s.posterUrl || "",
           left,
           width: Math.max(pctOf(end) - left, 1.5),
           status: statusOf(s, now),
@@ -2526,9 +2528,25 @@ function renderTimeline() {
   }
 }
 
+function tlBlockArtHTML(b) {
+  if (b.posterUrl) {
+    return `<img class="tl-block-poster" src="${escapeHtml(
+      b.posterUrl
+    )}" alt="" loading="lazy" width="28" height="40" draggable="false" />`;
+  }
+  const initial = escapeHtml((b.title || "?").slice(0, 1));
+  return `<span class="tl-block-poster-fallback" aria-hidden="true">${initial}</span>`;
+}
+
 function tlBlockInnerHTML(b) {
-  return `<span class="tl-block-start">${escapeHtml(b.startLabel)}</span>
-      <span class="tl-block-end">${escapeHtml(b.endLabel)}</span>`;
+  return `${tlBlockArtHTML(b)}
+    <span class="tl-block-meta">
+      <span class="tl-block-title">${escapeHtml(b.title)}</span>
+      <span class="tl-block-times">
+        <span class="tl-block-start">${escapeHtml(b.startLabel)}</span>
+        <span class="tl-block-end">${escapeHtml(b.endLabel)}</span>
+      </span>
+    </span>`;
 }
 
 /** Compact hall label for the timeline gutter — "Kinosal"→"Kino", etc. */
@@ -2625,11 +2643,28 @@ function morphTimeline(layout) {
     el.dataset.tlShow = b.id;
     el.title = b.tip;
     el.setAttribute("aria-label", b.tip);
+    const titleEl = el.querySelector(".tl-block-title");
     const startEl = el.querySelector(".tl-block-start");
     const endEl = el.querySelector(".tl-block-end");
-    if (startEl && endEl) {
+    const posterEl = el.querySelector(".tl-block-poster");
+    const fallbackEl = el.querySelector(".tl-block-poster-fallback");
+    if (titleEl && startEl && endEl && (posterEl || fallbackEl)) {
+      titleEl.textContent = b.title;
       startEl.textContent = b.startLabel;
       endEl.textContent = b.endLabel;
+      if (b.posterUrl) {
+        if (posterEl) {
+          if (posterEl.getAttribute("src") !== b.posterUrl) {
+            posterEl.setAttribute("src", b.posterUrl);
+          }
+        } else {
+          el.innerHTML = tlBlockInnerHTML(b);
+        }
+      } else if (fallbackEl) {
+        fallbackEl.textContent = (b.title || "?").slice(0, 1);
+      } else {
+        el.innerHTML = tlBlockInnerHTML(b);
+      }
     } else {
       el.innerHTML = tlBlockInnerHTML(b);
     }

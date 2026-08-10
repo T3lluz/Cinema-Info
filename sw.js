@@ -5,8 +5,8 @@ const CACHE = "cinema-info-v109";
 const PRECACHE = [
   "./",
   "./index.html",
-  "./styles.css?v=117",
-  "./app.js?v=86",
+  "./styles.css?v=118",
+  "./app.js?v=87",
   "./favicon.svg",
   "./apple-touch-icon.png",
   "./icons/icon-192.png",
