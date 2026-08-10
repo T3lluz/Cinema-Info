@@ -3808,7 +3808,11 @@ button.bar-row.day-bar:focus-visible {
   }
 
   .tl-hour {
-    font-size: 0.62rem;
+    font-size: 0.68rem;
+  }
+
+  .tl-hour.minor {
+    font-size: 0.52rem;
   }
 
   .section-label {
