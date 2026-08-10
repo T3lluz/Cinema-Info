@@ -258,7 +258,7 @@ h1 {
 .day-controls {
   display: grid;
   grid-template-rows: 1fr;
-  margin-top: 10px;
+  margin-top: 6px;
   transition:
     grid-template-rows 0.25s ease,
     margin-top 0.25s ease,
@@ -293,24 +293,34 @@ h1 {
 }
 
 /* One-tap return when browsing another day — sits outside the scroll
-   strip so today is always reachable without hunting for its pill. */
+   strip so today is always reachable without hunting for its pill.
+   Day pills share these metrics so the strip stays one height. */
+.jump-today,
+.day-tab {
+  padding: 3px 9px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: -0.005em;
+  line-height: 1.2;
+}
+
 .jump-today {
   flex: 0 0 auto;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 3px;
+  gap: 2px;
   margin: 0;
-  padding: 5px 10px 5px 8px;
+  padding-left: 7px;
   border: 1px solid color-mix(in srgb, var(--accent) 45%, var(--line));
   border-radius: 999px;
   background: color-mix(in srgb, var(--accent) 10%, var(--surface));
   color: color-mix(in srgb, var(--accent) 88%, var(--ink));
   font: inherit;
-  font-size: 0.745rem;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: -0.005em;
-  line-height: 1.25;
+  line-height: 1.2;
   white-space: nowrap;
   cursor: pointer;
   transition: background 0.2s ease, transform 0.15s ease;
@@ -325,7 +335,8 @@ h1 {
 
 .jump-today[data-dir="forward"] {
   flex-direction: row-reverse;
-  padding: 5px 8px 5px 10px;
+  padding-left: 9px;
+  padding-right: 7px;
 }
 
 .jump-today:active {
@@ -339,13 +350,14 @@ h1 {
 .day-tabs {
   position: relative;
   display: flex;
-  gap: 5px;
+  align-items: center;
+  gap: 4px;
   flex: 1 1 auto;
   min-height: 0;
   min-width: 0;
   overflow-x: auto;
   margin: 0;
-  padding: 0 2px 2px;
+  padding: 0 1px;
   scroll-padding-inline: 2px;
   transition: padding-bottom 0.25s ease;
   scrollbar-width: none;
@@ -365,7 +377,8 @@ h1 {
 .day-indicator {
   position: absolute;
   top: 0;
-  height: calc(100% - 2px);
+  bottom: 0;
+  height: auto;
   border-radius: 999px;
   background: var(--accent);
   z-index: 0;
@@ -394,28 +407,26 @@ h1 {
 
 /* Slim enough that a week fits on a phone: the strip is a way to move
    between days, not a place to read a date off — the day's full name is
-   spelled out in the heading right below it. Sized in px so tablet /
-   desktop root rem bumps do not enlarge the pills. */
+   spelled out in the heading right below it. Same size as .jump-today. */
 .day-tab {
   position: relative;
   z-index: 1;
   flex: 0 0 auto;
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 3px;
   scroll-snap-align: center;
   border: 1px solid var(--line);
   background: var(--surface);
   color: var(--ink);
   border-radius: 999px;
-  padding: 5px 11px;
   font: inherit;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: -0.005em;
+  line-height: 1.2;
   cursor: pointer;
   white-space: nowrap;
-  line-height: 1.25;
   transition: background 0.25s ease 0.08s, color 0.25s ease 0.08s,
     border-color 0.25s ease 0.08s, transform 0.15s ease;
 }
@@ -439,8 +450,8 @@ h1 {
    so the strip reads like a week you can see the end of. */
 .day-tab-check {
   display: none;
-  width: 10px;
-  height: 10px;
+  width: 9px;
+  height: 9px;
   flex: 0 0 auto;
   fill: none;
   stroke: currentColor;
