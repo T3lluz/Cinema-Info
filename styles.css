@@ -602,6 +602,7 @@ h1 {
   position: absolute;
   inset: 0 0 18px;
   pointer-events: none;
+  z-index: 0;
 }
 
 .tl-gridline {
@@ -609,15 +610,18 @@ h1 {
   top: 0;
   bottom: 0;
   width: 1px;
-  background: color-mix(in srgb, var(--line) 70%, transparent);
+  background: color-mix(in srgb, var(--ink) 18%, var(--line));
   transition: left 0.4s cubic-bezier(0.3, 0.75, 0.25, 1), opacity 0.3s ease;
 }
 
 .tl-gridline.minor {
-  background: color-mix(in srgb, var(--line) 40%, transparent);
+  background: color-mix(in srgb, var(--ink) 10%, var(--line));
+  opacity: 0.85;
 }
 
 .tl-tracks {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -626,8 +630,7 @@ h1 {
 .tl-track {
   position: relative;
   height: 20px;
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--line) 42%, var(--surface));
+  background: transparent;
   transition: height 0.35s ease, opacity 0.3s ease;
 }
 
@@ -639,7 +642,7 @@ h1 {
   bottom: 2px;
   border: 0;
   border-radius: 999px;
-  background: var(--accent);
+  background: color-mix(in srgb, var(--accent) 78%, transparent);
   color: #fff;
   display: flex;
   align-items: center;
@@ -724,7 +727,7 @@ h1 {
 }
 
 .tl-block.done {
-  background: color-mix(in srgb, var(--done) 18%, var(--surface));
+  background: color-mix(in srgb, var(--done) 28%, transparent);
   color: color-mix(in srgb, var(--done) 82%, var(--ink));
 }
 
@@ -736,12 +739,12 @@ h1 {
 }
 
 .tl-block.live {
-  background: var(--ok);
+  background: color-mix(in srgb, var(--ok) 78%, transparent);
   color: #fff;
 }
 
 .tl-block.soon {
-  background: var(--warn);
+  background: color-mix(in srgb, var(--warn) 78%, transparent);
   color: #fff;
 }
 
