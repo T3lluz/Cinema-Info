@@ -694,6 +694,14 @@ h1 {
   color: #fff;
 }
 
+/* Dark theme paints solid bars in bright accent/green/amber — white
+   times wash out (esp. yellow/green). Near-black ink on those fills,
+   matching seat-map numbers. Soft done/estimated bars keep their own
+   colours below. */
+[data-theme="dark"] .tl-block:not(.done):not(.estimated) {
+  color: #121212;
+}
+
 /* Estimated end: outline instead of a busy stripe fill. */
 .tl-block.estimated {
   background: color-mix(in srgb, var(--accent) 16%, var(--surface));
