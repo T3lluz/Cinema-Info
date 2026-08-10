@@ -194,6 +194,8 @@ const I18N = {
     seatNumbersHint: "I salkartet",
     seatNumbersOn: "Vis",
     seatNumbersOff: "Skjul",
+    tlAlways: "Utvidet tidslinje",
+    tlAlwaysHint: "Alltid vis plakat og tittel — uten utvid-knapp",
     langNb: "Norsk",
     langEn: "English",
     spokenNorwegian: "Norsk tale",
@@ -356,6 +358,8 @@ const I18N = {
     seatNumbersHint: "On the seat map",
     seatNumbersOn: "Show",
     seatNumbersOff: "Hide",
+    tlAlways: "Expanded timeline",
+    tlAlwaysHint: "Always show poster and title — no expand button",
     langNb: "Norsk",
     langEn: "English",
     spokenNorwegian: "Norwegian",
@@ -439,6 +443,7 @@ const ICONS = {
   // A hall seen from above: the screen, then rows of seats.
   seats:
     "M4 3.6h16a1.1 1.1 0 0 1 0 2.2H4a1.1 1.1 0 0 1 0-2.2ZM3.4 8.6h3.8a.9.9 0 0 1 .9.9v2.2a.9.9 0 0 1-.9.9H3.4a.9.9 0 0 1-.9-.9V9.5a.9.9 0 0 1 .9-.9Zm6.7 0h3.8a.9.9 0 0 1 .9.9v2.2a.9.9 0 0 1-.9.9h-3.8a.9.9 0 0 1-.9-.9V9.5a.9.9 0 0 1 .9-.9Zm6.7 0h3.8a.9.9 0 0 1 .9.9v2.2a.9.9 0 0 1-.9.9h-3.8a.9.9 0 0 1-.9-.9V9.5a.9.9 0 0 1 .9-.9ZM3.4 15h3.8a.9.9 0 0 1 .9.9v2.2a.9.9 0 0 1-.9.9H3.4a.9.9 0 0 1-.9-.9v-2.2a.9.9 0 0 1 .9-.9Zm6.7 0h3.8a.9.9 0 0 1 .9.9v2.2a.9.9 0 0 1-.9.9h-3.8a.9.9 0 0 1-.9-.9v-2.2a.9.9 0 0 1 .9-.9Zm6.7 0h3.8a.9.9 0 0 1 .9.9v2.2a.9.9 0 0 1-.9.9h-3.8a.9.9 0 0 1-.9-.9v-2.2a.9.9 0 0 1 .9-.9Z",
+  timeline: "M3 5h18v2.4H3V5Zm0 5.8h12v2.4H3v-2.4Zm0 5.8h16v2.4H3v-2.4Z",
 };
 
 /** "Nothing here" said the same way everywhere: a faded glyph and a line. */
@@ -519,6 +524,8 @@ let theme = "system";
 const DARK_MQ = window.matchMedia("(prefers-color-scheme: dark)");
 /** Digits painted on each seat square in the hall chart. */
 let showSeatNumbers = true;
+/** When on, the header timeline stays in the rich expanded layout. */
+let timelineAlwaysExpanded = false;
 let enrichedAll = false;
 let lastLiveAt = 0;
 /** When the program snapshot was last read, so a long-open tab re-reads it. */
@@ -637,6 +644,7 @@ async function init() {
     ? prefs.theme
     : "system";
   showSeatNumbers = prefs.showSeatNumbers !== false;
+  timelineAlwaysExpanded = prefs.timelineAlwaysExpanded === true;
 
   applyTheme(theme);
   // A device flipping between light and dark mid-session should carry
@@ -1432,6 +1440,7 @@ function savePrefs() {
       lang,
       theme,
       showSeatNumbers,
+      timelineAlwaysExpanded,
     })
   );
 }
@@ -2540,15 +2549,19 @@ function syncTimelineExpandBtn() {
   btn.classList.toggle("tl-expand--docked", onDay);
   btn.classList.toggle("tl-expand--float", !onDay);
 
-  // Desktop hover owns expand; the control is for touch / narrow layouts.
-  btn.hidden = !!els.timeline.hidden || timelineHoverExpands();
+  // Desktop hover / always-expanded own the layout; hide the chevron then.
+  btn.hidden =
+    !!els.timeline.hidden ||
+    timelineHoverExpands() ||
+    timelineAlwaysExpanded;
 }
 
 function setTimelineExpanded(open) {
   if (!els.timeline) return;
+  if (timelineAlwaysExpanded) open = true;
   els.timeline.classList.toggle("is-expanded", !!open);
   syncTimelineExpandBtn();
-  if (open && !timelineHoverExpands()) {
+  if (open && !timelineHoverExpands() && !timelineAlwaysExpanded) {
     // Scroll the live/next bar into view in the wide mobile strip.
     requestAnimationFrame(() => {
       const scroller = els.timelineMain?.querySelector(".tl-scroller");
@@ -2655,6 +2668,7 @@ function renderTimeline() {
   } else {
     buildTimeline(layout);
   }
+  if (timelineAlwaysExpanded) els.timeline.classList.add("is-expanded");
   syncTimelineExpandBtn();
 }
 
@@ -4899,6 +4913,17 @@ function renderSettings() {
               settingsSwitch("seatNumbers", showSeatNumbers, "data-seat-switch"),
               "is-inline"
             )}
+            ${settingsRow(
+              "timeline",
+              "tlAlways",
+              "tlAlwaysHint",
+              settingsSwitch(
+                "tlAlways",
+                timelineAlwaysExpanded,
+                "data-tl-always-switch"
+              ),
+              "is-inline"
+            )}
           </div>
         </section>
 
@@ -4967,6 +4992,25 @@ function renderSettings() {
       seatSwitch.setAttribute("aria-checked", String(showSeatNumbers));
       for (const show of state?.shows || []) {
         if (seatChartExpanded(show)) paintSeatChart(show);
+      }
+    });
+  }
+
+  const tlAlwaysSwitch = els.settingsContent.querySelector(
+    "[data-tl-always-switch]"
+  );
+  if (tlAlwaysSwitch) {
+    tlAlwaysSwitch.addEventListener("click", () => {
+      timelineAlwaysExpanded = !timelineAlwaysExpanded;
+      savePrefs();
+      tlAlwaysSwitch.setAttribute(
+        "aria-checked",
+        String(timelineAlwaysExpanded)
+      );
+      if (els.timeline && !els.timeline.hidden) {
+        setTimelineExpanded(timelineAlwaysExpanded);
+      } else {
+        syncTimelineExpandBtn();
       }
     });
   }
