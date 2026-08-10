@@ -172,6 +172,7 @@ const I18N = {
     statsOpenDay: "Vis {day} under Dager",
     settingsTitle: "Innstillinger",
     settingsSubtitle: "Språk, utseende og innslipp",
+    prefsSection: "Preferanser",
     language: "Språk",
     languageHint: "Appens språk",
     theme: "Tema",
@@ -179,10 +180,6 @@ const I18N = {
     themeLight: "Lys",
     themeDark: "Mørk",
     themeSystem: "Auto",
-    material: "Glass",
-    materialHint: "Flytende glassflater",
-    materialSubtle: "Subtil",
-    materialGlass: "Glass",
     directorLabel: "Regi",
     ratingImdbAria: "IMDb-vurdering {n} av 10",
     ratingLetterboxdAria: "Letterboxd-vurdering {n} av 5",
@@ -335,6 +332,7 @@ const I18N = {
     statsOpenDay: "Show {day} under Days",
     settingsTitle: "Settings",
     settingsSubtitle: "Language, appearance, and admissions",
+    prefsSection: "Preferences",
     language: "Language",
     languageHint: "App language",
     theme: "Theme",
@@ -342,10 +340,6 @@ const I18N = {
     themeLight: "Light",
     themeDark: "Dark",
     themeSystem: "Auto",
-    material: "Glass",
-    materialHint: "Liquid glass surfaces",
-    materialSubtle: "Subtle",
-    materialGlass: "Glass",
     directorLabel: "Director",
     ratingImdbAria: "IMDb rating {n} out of 10",
     ratingLetterboxdAria: "Letterboxd rating {n} out of 5",
@@ -436,9 +430,6 @@ const ICONS = {
     "m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v1.99h11.17A15.4 15.4 0 0 1 9 11.35 15.6 15.6 0 0 1 6.69 8h-2a17.6 17.6 0 0 0 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04ZM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12Zm-2.62 7 1.62-4.33L19.12 17h-3.24Z",
   theme:
     "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2Zm0 18V4a8 8 0 0 1 0 16Z",
-  // A droplet — the liquid-glass material picker.
-  material:
-    "M12 2.4c.3 0 .58.14.76.38C14.6 5.2 18.6 10.6 18.6 14a6.6 6.6 0 1 1-13.2 0c0-3.4 4-8.8 5.84-11.22.18-.24.46-.38.76-.38Zm-2.9 11.2a.9.9 0 0 0-.9.9 3.8 3.8 0 0 0 3.8 3.8.9.9 0 1 0 0-1.8 2 2 0 0 1-2-2 .9.9 0 0 0-.9-.9Z",
   account:
     "M12.65 10A5.99 5.99 0 0 0 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6a5.99 5.99 0 0 0 5.65-4H17v4h4v-4h2v-4H12.65ZM7 14a2 2 0 1 1 0-4 2 2 0 0 1 0 4Z",
   // A hall seen from above: the screen, then rows of seats.
@@ -518,8 +509,6 @@ let activeTab = "day";
 let lang = "nb";
 /** "light" | "dark" | "system" — "system" follows the device. */
 let theme = "system";
-/** "subtle" (translucent blur chrome) | "glass" (full liquid glass). */
-let material = "subtle";
 const DARK_MQ = window.matchMedia("(prefers-color-scheme: dark)");
 /** Digits painted on each seat square in the hall chart. */
 let showSeatNumbers = true;
@@ -635,7 +624,6 @@ async function init() {
   theme = ["light", "dark", "system"].includes(prefs.theme)
     ? prefs.theme
     : "system";
-  material = prefs.material === "glass" ? "glass" : "subtle";
   showSeatNumbers = prefs.showSeatNumbers !== false;
 
   applyTheme(theme);
@@ -1418,7 +1406,6 @@ function savePrefs() {
       activeTab,
       lang,
       theme,
-      material,
       showSeatNumbers,
     })
   );
@@ -1563,18 +1550,7 @@ function applyTheme(next) {
   clearTimeout(applyTheme._t);
   applyTheme._t = setTimeout(() => root.classList.remove("theme-anim"), 400);
   root.dataset.theme = resolvedTheme();
-  root.dataset.material = material;
-  syncThemeChrome();
-  scheduleNavContrast();
-}
-
-function applyMaterial(next) {
-  material = next === "glass" ? "glass" : "subtle";
-  const root = document.documentElement;
-  root.classList.add("theme-anim");
-  clearTimeout(applyTheme._t);
-  applyTheme._t = setTimeout(() => root.classList.remove("theme-anim"), 400);
-  root.dataset.material = material;
+  delete root.dataset.material;
   syncThemeChrome();
   scheduleNavContrast();
 }
@@ -1804,12 +1780,8 @@ function scheduleNavContrast() {
 /** Keep the browser/PWA chrome the same colour as the page behind it. */
 function syncThemeChrome() {
   const dark = resolvedTheme() === "dark";
-  const colors = {
-    light: material === "glass" ? "#eceaf1" : "#efece8",
-    dark: material === "glass" ? "#101014" : "#131110",
-  };
   const meta = document.querySelector('meta[name="theme-color"]');
-  if (meta) meta.content = dark ? colors.dark : colors.light;
+  if (meta) meta.content = dark ? "#121212" : "#efece8";
   const bar = document.querySelector(
     'meta[name="apple-mobile-web-app-status-bar-style"]'
   );
@@ -4544,18 +4516,21 @@ function renderStats() {
   );
 }
 
-function settingsTile(iconName, titleKey, hintKey, controlHtml, extraClass = "") {
+/** One preference row inside a grouped settings list. */
+function settingsRow(iconName, titleKey, hintKey, controlHtml, extraClass = "") {
+  const inline = extraClass.includes("is-inline");
   return `
-    <section class="settings-section settings-tile ${extraClass}">
-      <div class="settings-tile-head">
-        <div class="settings-row-text">
-          <h3>${icon(iconName, "panel-icon")}${escapeHtml(t(titleKey))}</h3>
-          <p>${escapeHtml(t(hintKey))}</p>
-        </div>
-        ${extraClass.includes("is-switch") ? controlHtml : ""}
+    <div class="settings-row ${extraClass}">
+      <div class="settings-row-text">
+        <h3>${icon(iconName, "panel-icon")}${escapeHtml(t(titleKey))}</h3>
+        <p>${escapeHtml(t(hintKey))}</p>
       </div>
-      ${extraClass.includes("is-switch") ? "" : controlHtml}
-    </section>
+      ${
+        inline
+          ? controlHtml
+          : `<div class="settings-row-control">${controlHtml}</div>`
+      }
+    </div>
   `;
 }
 
@@ -4600,66 +4575,67 @@ function renderSettings() {
     <div class="settings-shell">
       ${viewIntro("settings", "settingsTitle", "settingsSubtitle")}
 
-      <div class="settings-grid">
-        ${settingsTile(
-          "language",
-          "language",
-          "languageHint",
-          settingsSeg(
-            "language",
+      <div class="settings-layout">
+        <section class="settings-panel" aria-labelledby="settings-prefs-label">
+          <h3 class="settings-label" id="settings-prefs-label">${escapeHtml(t("prefsSection"))}</h3>
+          <div class="settings-group">
+            ${settingsRow(
+              "language",
+              "language",
+              "languageHint",
+              settingsSeg(
+                "language",
+                `
+              <button type="button" class="seg-btn" data-lang="nb" aria-pressed="${lang === "nb"}">${escapeHtml(t("langNb"))}</button>
+              <button type="button" class="seg-btn" data-lang="en" aria-pressed="${lang === "en"}">${escapeHtml(t("langEn"))}</button>
             `
-          <button type="button" class="seg-btn" data-lang="nb" aria-pressed="${lang === "nb"}">${escapeHtml(t("langNb"))}</button>
-          <button type="button" class="seg-btn" data-lang="en" aria-pressed="${lang === "en"}">${escapeHtml(t("langEn"))}</button>
-        `
-          )
-        )}
-        ${settingsTile(
-          "theme",
-          "theme",
-          "themeHint",
-          settingsSeg(
-            "theme",
+              )
+            )}
+            ${settingsRow(
+              "theme",
+              "theme",
+              "themeHint",
+              settingsSeg(
+                "theme",
+                `
+              <button type="button" class="seg-btn" data-theme-opt="light" aria-pressed="${theme === "light"}">${escapeHtml(t("themeLight"))}</button>
+              <button type="button" class="seg-btn" data-theme-opt="dark" aria-pressed="${theme === "dark"}">${escapeHtml(t("themeDark"))}</button>
+              <button type="button" class="seg-btn" data-theme-opt="system" aria-pressed="${theme === "system"}">${escapeHtml(t("themeSystem"))}</button>
             `
-          <button type="button" class="seg-btn" data-theme-opt="light" aria-pressed="${theme === "light"}">${escapeHtml(t("themeLight"))}</button>
-          <button type="button" class="seg-btn" data-theme-opt="dark" aria-pressed="${theme === "dark"}">${escapeHtml(t("themeDark"))}</button>
-          <button type="button" class="seg-btn" data-theme-opt="system" aria-pressed="${theme === "system"}">${escapeHtml(t("themeSystem"))}</button>
-        `
-          )
-        )}
-        ${settingsTile(
-          "material",
-          "material",
-          "materialHint",
-          settingsSwitch("material", material === "glass", 'data-material-switch'),
-          "is-switch"
-        )}
-        ${settingsTile(
-          "seats",
-          "seatNumbers",
-          "seatNumbersHint",
-          settingsSwitch("seatNumbers", showSeatNumbers, "data-seat-switch"),
-          "is-switch"
-        )}
+              )
+            )}
+            ${settingsRow(
+              "seats",
+              "seatNumbers",
+              "seatNumbersHint",
+              settingsSwitch("seatNumbers", showSeatNumbers, "data-seat-switch"),
+              "is-inline"
+            )}
+          </div>
+        </section>
 
-        <section class="settings-section dx-section">
-          <div class="settings-head">
-            <h3>${icon("account", "panel-icon")}${escapeHtml(t("dxTitle"))}${
+        <section class="settings-panel dx-section" aria-labelledby="settings-dx-label">
+          <div class="settings-label-row">
+            <h3 class="settings-label" id="settings-dx-label">${escapeHtml(t("dxTitle"))}</h3>
+            ${
               bridgeError
                 ? `<span class="dx-chip off">${escapeHtml(t("dxChipOff"))}</span>`
                 : `<span class="dx-chip on">${escapeHtml(t("dxChipOn"))}</span>`
-            }</h3>
-            <p>${escapeHtml(t("dxConnectedHint"))}</p>
+            }
           </div>
-          <div class="dx-status connected">
-            ${renderDxFacts()}
-            <p class="dx-msg" id="dxTestMsg" hidden></p>
-            <details class="dx-advanced" id="dxDetails" hidden>
-              <summary>${escapeHtml(t("dxDetails"))}</summary>
-              <pre class="dx-log" id="dxLog"></pre>
-            </details>
-            <div class="dx-actions">
-              <button type="button" class="dx-btn ghost" id="dxRefreshBtn">${escapeHtml(t("dxRefreshScans"))}</button>
-              <button type="button" class="dx-btn ghost" id="dxTestBtn">${escapeHtml(t("dxTest"))}</button>
+          <div class="settings-group">
+            <p class="settings-group-hint">${escapeHtml(t("dxConnectedHint"))}</p>
+            <div class="dx-status connected">
+              ${renderDxFacts()}
+              <p class="dx-msg" id="dxTestMsg" hidden></p>
+              <details class="dx-advanced" id="dxDetails" hidden>
+                <summary>${escapeHtml(t("dxDetails"))}</summary>
+                <pre class="dx-log" id="dxLog"></pre>
+              </details>
+              <div class="dx-actions">
+                <button type="button" class="dx-btn ghost" id="dxRefreshBtn">${escapeHtml(t("dxRefreshScans"))}</button>
+                <button type="button" class="dx-btn ghost" id="dxTestBtn">${escapeHtml(t("dxTest"))}</button>
+              </div>
             </div>
           </div>
         </section>
@@ -4694,21 +4670,6 @@ function renderSettings() {
       segSelect(btn);
     });
   });
-
-  const materialSwitch = els.settingsContent.querySelector("[data-material-switch]");
-  if (materialSwitch) {
-    materialSwitch.addEventListener("click", () => {
-      const next = material === "glass" ? "subtle" : "glass";
-      applyMaterial(next);
-      savePrefs();
-      materialSwitch.setAttribute("aria-checked", String(next === "glass"));
-      // Glass restyles the segmented chips; re-seat the indicators.
-      requestAnimationFrame(() => {
-        placeSettingsSegs({ instant: true });
-        updateLiquidLenses();
-      });
-    });
-  }
 
   const seatSwitch = els.settingsContent.querySelector("[data-seat-switch]");
   if (seatSwitch) {
