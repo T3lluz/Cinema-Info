@@ -556,6 +556,31 @@ h1 {
   transition: height 0.35s ease, opacity 0.3s ease;
 }
 
+.tl-lane-short {
+  display: none;
+}
+
+/* Phone: shorter hall labels (Kino/Stor) and a tighter gutter so the
+   tracks themselves get the width. Full names return from 700px up. */
+@media (max-width: 699px) {
+  .timeline {
+    gap: 4px;
+  }
+
+  .tl-lane-name {
+    font-size: 0.52rem;
+    letter-spacing: 0.02em;
+  }
+
+  .tl-lane-full {
+    display: none;
+  }
+
+  .tl-lane-short {
+    display: inline;
+  }
+}
+
 .tl-area {
   position: relative;
   min-width: 0;
@@ -694,12 +719,22 @@ h1 {
   color: #fff;
 }
 
+/* Upcoming / default accent bars are solid red — always white times. */
+.tl-block.upcoming {
+  color: #fff;
+}
+
 /* Dark theme paints live/soon bars in pastel green/amber — white times
    wash out. Near-black ink on those fills only. Red (accent) bars keep
    white text for contrast on the darker fill. */
 [data-theme="dark"] .tl-block.live,
 [data-theme="dark"] .tl-block.soon {
   color: #121212;
+}
+
+[data-theme="dark"] .tl-block.upcoming,
+[data-theme="dark"] .tl-block:not(.live):not(.soon):not(.done):not(.estimated) {
+  color: #fff;
 }
 
 /* Estimated end: outline instead of a busy stripe fill. */

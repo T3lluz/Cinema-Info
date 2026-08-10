@@ -2531,6 +2531,25 @@ function tlBlockInnerHTML(b) {
       <span class="tl-block-end">${escapeHtml(b.endLabel)}</span>`;
 }
 
+/** Compact hall label for the timeline gutter — "Kinosal"→"Kino", etc. */
+function shortScreenLabel(screen) {
+  const name = String(screen || "").trim();
+  if (/sal$/i.test(name) && name.length > 4) return name.slice(0, -3);
+  return name;
+}
+
+function tlLaneNameHTML(screen) {
+  const full = escapeHtml(screen);
+  const short = escapeHtml(shortScreenLabel(screen));
+  return `<span class="tl-lane-full">${full}</span><span class="tl-lane-short">${short}</span>`;
+}
+
+function fillTlLaneName(el, screen) {
+  el.dataset.screen = screen;
+  el.title = screen;
+  el.innerHTML = tlLaneNameHTML(screen);
+}
+
 function buildTimeline(layout) {
   const blockHTML = (b) => `<button type="button" class="tl-block ${b.status}${
     b.estimated ? " estimated" : ""
@@ -2547,7 +2566,7 @@ function buildTimeline(layout) {
     <div class="tl-names">${layout.lanes
       .map(
         (l) =>
-          `<span class="tl-lane-name" data-screen="${escapeHtml(l.screen)}">${escapeHtml(l.screen)}</span>`
+          `<span class="tl-lane-name" data-screen="${escapeHtml(l.screen)}" title="${escapeHtml(l.screen)}">${tlLaneNameHTML(l.screen)}</span>`
       )
       .join("")}</div>
     <div class="tl-area">
@@ -2647,8 +2666,7 @@ function morphTimeline(layout) {
     if (!nameEl) {
       nameEl = document.createElement("span");
       nameEl.className = "tl-lane-name";
-      nameEl.dataset.screen = lane.screen;
-      nameEl.textContent = lane.screen;
+      fillTlLaneName(nameEl, lane.screen);
       nameEl.style.height = "0px";
       nameEl.style.opacity = "0";
       entered.push(() => {
@@ -2656,6 +2674,11 @@ function morphTimeline(layout) {
         nameEl.style.height = "";
         nameEl.style.opacity = "1";
       });
+    } else if (
+      !nameEl.querySelector(".tl-lane-full") ||
+      nameEl.dataset.screen !== lane.screen
+    ) {
+      fillTlLaneName(nameEl, lane.screen);
     }
     if (!trackEl) {
       trackEl = document.createElement("div");
