@@ -394,7 +394,8 @@ h1 {
 
 /* Slim enough that a week fits on a phone: the strip is a way to move
    between days, not a place to read a date off — the day's full name is
-   spelled out in the heading right below it. */
+   spelled out in the heading right below it. Sized in px so tablet /
+   desktop root rem bumps do not enlarge the pills. */
 .day-tab {
   position: relative;
   z-index: 1;
@@ -409,7 +410,7 @@ h1 {
   border-radius: 999px;
   padding: 5px 11px;
   font: inherit;
-  font-size: 0.745rem;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: -0.005em;
   cursor: pointer;
@@ -3829,17 +3830,6 @@ button.bar-row.day-bar:focus-visible {
     height: 17px;
   }
 
-  .day-tab {
-    padding: 7px 14px;
-    font-size: 0.82rem;
-    gap: 5px;
-  }
-
-  .day-tab-check {
-    width: 11px;
-    height: 11px;
-  }
-
   .status {
     font-size: 0.78rem;
     max-width: min(11rem, 28vw);
@@ -4103,11 +4093,6 @@ button.bar-row.day-bar:focus-visible {
   .icon-btn svg {
     width: 18px;
     height: 18px;
-  }
-
-  .day-tab {
-    padding: 8px 16px;
-    font-size: 0.86rem;
   }
 
   /* Chronological day list flows into two columns; gap markers span full
