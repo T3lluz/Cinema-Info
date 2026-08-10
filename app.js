@@ -2450,7 +2450,6 @@ function computeTimelineLayout() {
           estimated: !s.end,
           startLabel: startClock,
           endLabel: endClock,
-          name: s.title,
           tip: `${s.title} · ${range}`,
         };
       }),
@@ -2499,7 +2498,6 @@ function renderTimeline() {
 
 function tlBlockInnerHTML(b) {
   return `<span class="tl-block-start">${escapeHtml(b.startLabel)}</span>
-      <span class="tl-block-title">${escapeHtml(b.name)}</span>
       <span class="tl-block-end">${escapeHtml(b.endLabel)}</span>`;
 }
 
@@ -2579,11 +2577,9 @@ function morphTimeline(layout) {
     el.title = b.tip;
     el.setAttribute("aria-label", b.tip);
     const startEl = el.querySelector(".tl-block-start");
-    const titleEl = el.querySelector(".tl-block-title");
     const endEl = el.querySelector(".tl-block-end");
-    if (startEl && titleEl && endEl) {
+    if (startEl && endEl) {
       startEl.textContent = b.startLabel;
-      titleEl.textContent = b.name;
       endEl.textContent = b.endLabel;
     } else {
       el.innerHTML = tlBlockInnerHTML(b);
