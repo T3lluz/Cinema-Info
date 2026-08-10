@@ -2430,15 +2430,17 @@ function computeTimelineLayout() {
         const start = s.start.getTime();
         const end = showEndOf(s).getTime();
         const left = pctOf(start);
+        const endClock = s.end
+          ? formatClock(s.end)
+          : "~" + formatClock(showEndOf(s));
+        const range = `${formatClock(s.start)}–${endClock}`;
         return {
           left,
           width: Math.max(pctOf(end) - left, 1.5),
           status: statusOf(s, now),
           estimated: !s.end,
-          label: formatClock(s.start),
-          title: `${s.title} · ${formatClock(s.start)}–${
-            s.end ? formatClock(s.end) : "~" + formatClock(showEndOf(s))
-          }`,
+          label: range,
+          title: `${s.title} · ${range}`,
         };
       }),
   }));
@@ -3742,8 +3744,8 @@ function renderShowCard(show, now, index = 0, opts = {}) {
       ${statusRail}
       ${renderPoster(show, 52, 74)}
       <div class="show-main">
-        <div class="time-range">${formatClock(show.start)}<span class="sep">–</span>${endLabel}</div>
         <h2 class="show-title">${escapeHtml(show.title)}</h2>
+        <div class="time-range">${formatClock(show.start)}<span class="sep">–</span>${endLabel}</div>
         <div class="meta-line">${metaBits}</div>
         ${langLine}
         ${progress}

@@ -1072,25 +1072,26 @@ a.tile-show:focus-visible {
   gap: 2px;
 }
 
+.show-title {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
 .time-range {
   font-family: var(--mono);
-  font-size: 0.88rem;
-  font-weight: 800;
+  font-size: 0.84rem;
+  font-weight: 750;
   letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums;
+  color: color-mix(in srgb, var(--ink) 78%, var(--muted));
 }
 
 .time-range .sep {
   color: var(--muted);
   font-weight: 500;
-}
-
-.show-title {
-  margin: 0;
-  font-size: 0.92rem;
-  font-weight: 800;
-  line-height: 1.2;
-  letter-spacing: -0.01em;
 }
 
 .meta-line {
@@ -3764,12 +3765,12 @@ button.bar-row.day-bar:focus-visible {
     border-radius: 9px;
   }
 
-  .time-range {
-    font-size: 0.98rem;
+  .show-title {
+    font-size: 1.08rem;
   }
 
-  .show-title {
-    font-size: 1.05rem;
+  .time-range {
+    font-size: 0.94rem;
   }
 
   .meta-line {
@@ -4054,12 +4055,12 @@ button.bar-row.day-bar:focus-visible {
     height: 114px;
   }
 
-  .time-range {
-    font-size: 1.05rem;
+  .show-title {
+    font-size: 1.16rem;
   }
 
-  .show-title {
-    font-size: 1.12rem;
+  .time-range {
+    font-size: 1rem;
   }
 
   .meta-line {
@@ -4197,12 +4198,12 @@ button.bar-row.day-bar:focus-visible {
     height: 150px;
   }
 
-  .time-range {
-    font-size: 1.12rem;
+  .show-title {
+    font-size: 1.24rem;
   }
 
-  .show-title {
-    font-size: 1.2rem;
+  .time-range {
+    font-size: 1.06rem;
   }
 
   .ticket-ratio {
