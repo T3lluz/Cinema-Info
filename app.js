@@ -172,6 +172,7 @@ const I18N = {
     statsOpenDay: "Vis {day} under Dager",
     settingsTitle: "Innstillinger",
     settingsSubtitle: "Språk, utseende og innslipp",
+    prefsSection: "Preferanser",
     language: "Språk",
     languageHint: "Appens språk",
     theme: "Tema",
@@ -331,6 +332,7 @@ const I18N = {
     statsOpenDay: "Show {day} under Days",
     settingsTitle: "Settings",
     settingsSubtitle: "Language, appearance, and admissions",
+    prefsSection: "Preferences",
     language: "Language",
     languageHint: "App language",
     theme: "Theme",
@@ -4514,18 +4516,21 @@ function renderStats() {
   );
 }
 
-function settingsTile(iconName, titleKey, hintKey, controlHtml, extraClass = "") {
+/** One preference row inside a grouped settings list. */
+function settingsRow(iconName, titleKey, hintKey, controlHtml, extraClass = "") {
+  const inline = extraClass.includes("is-inline");
   return `
-    <section class="settings-section settings-tile ${extraClass}">
-      <div class="settings-tile-head">
-        <div class="settings-row-text">
-          <h3>${icon(iconName, "panel-icon")}${escapeHtml(t(titleKey))}</h3>
-          <p>${escapeHtml(t(hintKey))}</p>
-        </div>
-        ${extraClass.includes("is-switch") ? controlHtml : ""}
+    <div class="settings-row ${extraClass}">
+      <div class="settings-row-text">
+        <h3>${icon(iconName, "panel-icon")}${escapeHtml(t(titleKey))}</h3>
+        <p>${escapeHtml(t(hintKey))}</p>
       </div>
-      ${extraClass.includes("is-switch") ? "" : controlHtml}
-    </section>
+      ${
+        inline
+          ? controlHtml
+          : `<div class="settings-row-control">${controlHtml}</div>`
+      }
+    </div>
   `;
 }
 
@@ -4570,59 +4575,67 @@ function renderSettings() {
     <div class="settings-shell">
       ${viewIntro("settings", "settingsTitle", "settingsSubtitle")}
 
-      <div class="settings-grid">
-        ${settingsTile(
-          "language",
-          "language",
-          "languageHint",
-          settingsSeg(
-            "language",
+      <div class="settings-layout">
+        <section class="settings-panel" aria-labelledby="settings-prefs-label">
+          <h3 class="settings-label" id="settings-prefs-label">${escapeHtml(t("prefsSection"))}</h3>
+          <div class="settings-group">
+            ${settingsRow(
+              "language",
+              "language",
+              "languageHint",
+              settingsSeg(
+                "language",
+                `
+              <button type="button" class="seg-btn" data-lang="nb" aria-pressed="${lang === "nb"}">${escapeHtml(t("langNb"))}</button>
+              <button type="button" class="seg-btn" data-lang="en" aria-pressed="${lang === "en"}">${escapeHtml(t("langEn"))}</button>
             `
-          <button type="button" class="seg-btn" data-lang="nb" aria-pressed="${lang === "nb"}">${escapeHtml(t("langNb"))}</button>
-          <button type="button" class="seg-btn" data-lang="en" aria-pressed="${lang === "en"}">${escapeHtml(t("langEn"))}</button>
-        `
-          )
-        )}
-        ${settingsTile(
-          "theme",
-          "theme",
-          "themeHint",
-          settingsSeg(
-            "theme",
+              )
+            )}
+            ${settingsRow(
+              "theme",
+              "theme",
+              "themeHint",
+              settingsSeg(
+                "theme",
+                `
+              <button type="button" class="seg-btn" data-theme-opt="light" aria-pressed="${theme === "light"}">${escapeHtml(t("themeLight"))}</button>
+              <button type="button" class="seg-btn" data-theme-opt="dark" aria-pressed="${theme === "dark"}">${escapeHtml(t("themeDark"))}</button>
+              <button type="button" class="seg-btn" data-theme-opt="system" aria-pressed="${theme === "system"}">${escapeHtml(t("themeSystem"))}</button>
             `
-          <button type="button" class="seg-btn" data-theme-opt="light" aria-pressed="${theme === "light"}">${escapeHtml(t("themeLight"))}</button>
-          <button type="button" class="seg-btn" data-theme-opt="dark" aria-pressed="${theme === "dark"}">${escapeHtml(t("themeDark"))}</button>
-          <button type="button" class="seg-btn" data-theme-opt="system" aria-pressed="${theme === "system"}">${escapeHtml(t("themeSystem"))}</button>
-        `
-          )
-        )}
-        ${settingsTile(
-          "seats",
-          "seatNumbers",
-          "seatNumbersHint",
-          settingsSwitch("seatNumbers", showSeatNumbers, "data-seat-switch"),
-          "is-switch"
-        )}
+              )
+            )}
+            ${settingsRow(
+              "seats",
+              "seatNumbers",
+              "seatNumbersHint",
+              settingsSwitch("seatNumbers", showSeatNumbers, "data-seat-switch"),
+              "is-inline"
+            )}
+          </div>
+        </section>
 
-        <section class="settings-section dx-section">
-          <div class="settings-head">
-            <h3>${icon("account", "panel-icon")}${escapeHtml(t("dxTitle"))}${
+        <section class="settings-panel dx-section" aria-labelledby="settings-dx-label">
+          <div class="settings-label-row">
+            <h3 class="settings-label" id="settings-dx-label">${escapeHtml(t("dxTitle"))}</h3>
+            ${
               bridgeError
                 ? `<span class="dx-chip off">${escapeHtml(t("dxChipOff"))}</span>`
                 : `<span class="dx-chip on">${escapeHtml(t("dxChipOn"))}</span>`
-            }</h3>
-            <p>${escapeHtml(t("dxConnectedHint"))}</p>
+            }
           </div>
-          <div class="dx-status connected">
-            ${renderDxFacts()}
-            <p class="dx-msg" id="dxTestMsg" hidden></p>
-            <details class="dx-advanced" id="dxDetails" hidden>
-              <summary>${escapeHtml(t("dxDetails"))}</summary>
-              <pre class="dx-log" id="dxLog"></pre>
-            </details>
-            <div class="dx-actions">
-              <button type="button" class="dx-btn ghost" id="dxRefreshBtn">${escapeHtml(t("dxRefreshScans"))}</button>
-              <button type="button" class="dx-btn ghost" id="dxTestBtn">${escapeHtml(t("dxTest"))}</button>
+          <div class="settings-group">
+            <p class="settings-group-hint">${escapeHtml(t("dxConnectedHint"))}</p>
+            <div class="dx-status connected">
+              ${renderDxFacts()}
+              <p class="dx-msg" id="dxTestMsg" hidden></p>
+              <details class="dx-advanced" id="dxDetails" hidden>
+                <summary>${escapeHtml(t("dxDetails"))}</summary>
+                <pre class="dx-log" id="dxLog"></pre>
+              </details>
+              <div class="dx-actions">
+                <button type="button" class="dx-btn ghost" id="dxRefreshBtn">${escapeHtml(t("dxRefreshScans"))}</button>
+                <button type="button" class="dx-btn ghost" id="dxTestBtn">${escapeHtml(t("dxTest"))}</button>
+              </div>
             </div>
           </div>
         </section>

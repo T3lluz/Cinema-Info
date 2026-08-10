@@ -2456,58 +2456,89 @@ button.bar-row.day-bar:focus-visible {
 }
 
 /* —— Settings ——
-   Compact tile grid: language/theme keep segmented chips; binary prefs
-   are switches. On tablet+ prefs sit two-by-two with DX below. */
+   Grouped list (iOS/Material): preferences in one inset group, DX
+   admissions in another. Mobile stacks; desktop places them side by side. */
 .settings-shell {
   width: 100%;
-  max-width: 720px;
+  max-width: 560px;
   margin: 0 auto;
 }
 
 .settings-shell .view-intro {
   max-width: none;
-  margin-bottom: 10px;
+  margin-bottom: 18px;
 }
 
-.settings-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 8px;
-}
-
-.settings-section {
-  padding: 12px 14px;
-  border-radius: 14px;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  margin-bottom: 0;
-}
-
-.settings-tile {
+.settings-layout {
   display: flex;
   flex-direction: column;
+  gap: 22px;
+}
+
+.settings-panel {
+  min-width: 0;
+  animation: rise 0.32s ease both;
+}
+
+.settings-panel.dx-section {
+  animation-delay: 60ms;
+}
+
+.settings-label,
+.settings-label-row .settings-label {
+  margin: 0 0 8px 4px;
+  font-size: 0.72rem;
+  font-weight: 750;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.settings-label-row {
+  display: flex;
+  align-items: center;
   gap: 10px;
+  margin: 0 0 8px 4px;
+}
+
+.settings-label-row .settings-label {
+  margin: 0;
+  flex: 1 1 auto;
   min-width: 0;
 }
 
-.settings-tile-head {
+.settings-group {
+  border-radius: 16px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  overflow: hidden;
+}
+
+.settings-group-hint {
+  margin: 0;
+  padding: 12px 16px 0;
+  font-size: 0.78rem;
+  line-height: 1.4;
+  color: var(--muted);
+}
+
+.settings-row {
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 12px;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px 16px;
+  min-width: 0;
 }
 
-.settings-tile.is-switch {
-  gap: 0;
+.settings-row + .settings-row {
+  border-top: 1px solid color-mix(in srgb, var(--line) 88%, transparent);
 }
 
-.settings-tile.is-switch .settings-tile-head {
+.settings-row.is-inline {
+  flex-direction: row;
   align-items: center;
-}
-
-.settings-section.dx-section {
-  padding: 12px 14px;
-  animation-delay: 60ms;
+  justify-content: space-between;
+  gap: 16px;
 }
 
 .settings-row-text {
@@ -2515,41 +2546,39 @@ button.bar-row.day-bar:focus-visible {
   flex: 1 1 auto;
 }
 
-.settings-row-text h3,
-.settings-head h3 {
+.settings-row-text h3 {
   display: flex;
   align-items: center;
-  gap: 7px;
+  gap: 8px;
   margin: 0;
-  font-size: 0.88rem;
-  font-weight: 800;
+  font-size: 0.92rem;
+  font-weight: 750;
 }
 
-.settings-row-text p,
-.settings-head p {
-  margin: 2px 0 0;
-  font-size: 0.72rem;
-  line-height: 1.3;
+.settings-row-text p {
+  margin: 3px 0 0;
+  font-size: 0.76rem;
+  line-height: 1.35;
   color: var(--muted);
 }
 
-.settings-head p {
-  margin-bottom: 8px;
+.settings-row-control {
+  min-width: 0;
 }
 
-/* Segmented controls fill the tile; chips stay content-tight on wide rows. */
+/* Segmented controls fill the row so three theme chips keep room. */
 .settings-seg.segmented {
   width: 100%;
   grid-auto-columns: 1fr;
 }
 
 .settings-seg .seg-btn {
-  padding: 7px 10px;
-  font-size: 0.78rem;
+  padding: 8px 10px;
+  font-size: 0.8rem;
   white-space: nowrap;
 }
 
-/* Binary prefs — small iOS-style switch. */
+/* Binary prefs — compact trailing switch. */
 .settings-switch {
   appearance: none;
   position: relative;
@@ -2594,10 +2623,7 @@ button.bar-row.day-bar:focus-visible {
   transform: translateX(16px) scale(0.94);
 }
 
-/* Whether DX is hooked up is the first thing worth knowing about that
-   block, so it rides alongside its heading. */
 .dx-chip {
-  margin-left: auto;
   flex: 0 0 auto;
   padding: 3px 9px;
   border-radius: 999px;
@@ -2617,113 +2643,60 @@ button.bar-row.day-bar:focus-visible {
   color: var(--muted);
 }
 
-/* Two-up as soon as tiles have room — phones in landscape and up. */
-@media (min-width: 400px) {
-  .settings-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-  }
-
-  .settings-section.dx-section {
-    grid-column: 1 / -1;
-  }
-}
-
-@media (min-width: 560px) {
-  .settings-grid {
-    gap: 10px;
-  }
-
-  .dx-facts {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 0 16px;
-  }
-
-  .dx-facts li {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 2px;
-  }
-
-  .dx-facts strong {
-    text-align: left;
-  }
-}
-
-.dx-form {
+.dx-status {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 0;
+  padding: 4px 0 12px;
 }
 
-.dx-field {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  font-size: 0.78rem;
-  font-weight: 700;
-  color: var(--muted);
-}
-
-.dx-field input {
-  appearance: none;
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  background: color-mix(in srgb, var(--bg) 88%, var(--surface));
-  color: var(--text);
-  font: inherit;
-  font-size: 0.92rem;
-  font-weight: 600;
-  padding: 11px 12px;
-}
-
-.dx-field input:focus {
-  outline: 2px solid color-mix(in srgb, var(--accent) 55%, transparent);
-  outline-offset: 1px;
-  border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
-}
-
-.dx-hint {
+.dx-facts {
+  list-style: none;
   margin: 0;
-  font-size: 0.78rem;
-  line-height: 1.35;
-  color: var(--muted);
-  font-weight: 500;
+  padding: 4px 16px 0;
+  display: grid;
+  gap: 0;
 }
 
-.dx-hint a {
-  color: var(--accent);
-  font-weight: 700;
-  text-decoration: none;
-}
-
-.dx-divider {
+.dx-facts li {
   display: flex;
-  align-items: center;
-  gap: 10px;
-  color: var(--muted);
-  font-size: 0.72rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  margin: 2px 0;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px 0;
+  font-size: 0.8rem;
+  border-top: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
 }
 
-.dx-divider::before,
-.dx-divider::after {
-  content: "";
-  flex: 1;
-  height: 1px;
-  background: var(--line);
+.dx-facts li:first-child {
+  border-top: 0;
+}
+
+.dx-facts span {
+  color: var(--muted);
+  flex: 0 1 auto;
+}
+
+.dx-facts strong {
+  font-weight: 750;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.dx-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 4px 16px 0;
 }
 
 .dx-btn {
   appearance: none;
   border: 0;
-  border-radius: 12px;
-  padding: 12px 14px;
+  border-radius: 11px;
+  padding: 10px 12px;
   font: inherit;
-  font-size: 0.9rem;
+  font-size: 0.84rem;
   font-weight: 750;
   cursor: pointer;
   transition: transform 0.12s ease, opacity 0.15s ease;
@@ -2738,25 +2711,23 @@ button.bar-row.day-bar:focus-visible {
   cursor: default;
 }
 
-.dx-btn.primary {
-  background: var(--accent);
-  color: #fff;
-}
-
 .dx-btn.ghost {
-  background: color-mix(in srgb, var(--bg) 80%, var(--surface));
-  color: var(--text);
+  flex: 1 1 auto;
+  min-width: min(100%, 8.5rem);
+  background: color-mix(in srgb, var(--bg) 72%, var(--surface));
+  color: var(--ink);
   border: 1px solid var(--line);
 }
 
 .dx-msg {
   margin: 0;
+  padding: 8px 16px 0;
   font-size: 0.8rem;
   font-weight: 650;
 }
 
 .dx-msg.ok {
-  color: color-mix(in srgb, #1a7f37 70%, var(--text));
+  color: color-mix(in srgb, #1a7f37 70%, var(--ink));
 }
 
 .dx-msg.err {
@@ -2764,7 +2735,7 @@ button.bar-row.day-bar:focus-visible {
 }
 
 .dx-advanced {
-  margin-top: 4px;
+  margin: 8px 16px 0;
   border-top: 1px solid var(--line);
   padding-top: 10px;
 }
@@ -2786,109 +2757,6 @@ button.bar-row.day-bar:focus-visible {
   margin-bottom: 10px;
 }
 
-.dx-status {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.dx-status-title {
-  margin: 0;
-  font-size: 0.92rem;
-  font-weight: 750;
-}
-
-.dx-status-hint {
-  margin: 0;
-  font-size: 0.78rem;
-  color: var(--muted);
-}
-
-.dx-section .dx-facts {
-  margin-top: 0;
-}
-
-.dx-check {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: 10px;
-  align-items: start;
-  padding: 10px 12px;
-  border-radius: 10px;
-  background: color-mix(in srgb, var(--bg) 82%, var(--surface));
-  border: 1px solid var(--line);
-  cursor: pointer;
-}
-
-.dx-check input {
-  width: 18px;
-  height: 18px;
-  margin: 1px 0 0;
-  accent-color: var(--accent);
-}
-
-.dx-check span {
-  font-size: 0.76rem;
-  line-height: 1.4;
-  color: var(--muted);
-  font-weight: 500;
-}
-
-.dx-check strong {
-  display: block;
-  font-size: 0.85rem;
-  font-weight: 750;
-  color: var(--ink);
-  margin-bottom: 2px;
-}
-
-.dx-facts {
-  list-style: none;
-  margin: 2px 0 0;
-  padding: 10px 12px;
-  display: grid;
-  gap: 7px;
-  border-radius: 10px;
-  background: color-mix(in srgb, var(--bg) 82%, var(--surface));
-  border: 1px solid var(--line);
-}
-
-.dx-facts li {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 14px;
-  font-size: 0.78rem;
-}
-
-.dx-facts span {
-  color: var(--muted);
-  flex: 0 0 auto;
-}
-
-.dx-facts strong {
-  font-weight: 750;
-  text-align: right;
-  overflow-wrap: anywhere;
-}
-
-.dx-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.dx-actions .dx-btn {
-  flex: 1 1 auto;
-  min-width: min(100%, 9.5rem);
-  padding: 10px 12px;
-  font-size: 0.84rem;
-}
-
-.dx-btn.danger {
-  color: var(--accent);
-}
-
 .dx-log {
   margin: 0;
   padding: 9px 11px;
@@ -2901,6 +2769,81 @@ button.bar-row.day-bar:focus-visible {
   white-space: pre-wrap;
   overflow-wrap: anywhere;
   color: var(--muted);
+}
+
+/* Tablet+: facts can breathe as three short columns. */
+@media (min-width: 560px) {
+  .settings-shell {
+    max-width: 640px;
+  }
+
+  .dx-facts {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0 12px;
+    padding-top: 8px;
+  }
+
+  .dx-facts li {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3px;
+    padding: 8px 0 4px;
+    border-top: 0;
+  }
+
+  .dx-facts li:not(:first-child) {
+    border-left: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
+    padding-left: 12px;
+  }
+
+  .dx-facts strong {
+    text-align: left;
+  }
+}
+
+/* Desktop: preferences beside admissions — one scan, no orphan tiles. */
+@media (min-width: 860px) {
+  .settings-shell {
+    max-width: 960px;
+  }
+
+  .settings-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.95fr);
+    gap: 20px;
+    align-items: start;
+  }
+
+  .dx-facts {
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding-top: 4px;
+  }
+
+  .dx-facts li {
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 10px 0;
+    border-left: 0;
+    padding-left: 0;
+    border-top: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
+  }
+
+  .dx-facts li:first-child {
+    border-top: 0;
+  }
+
+  .dx-facts strong {
+    text-align: right;
+  }
+}
+
+@media (min-width: 1100px) {
+  .settings-shell {
+    max-width: 1040px;
+  }
 }
 
 /* —— Admission (scanned tickets) ——
@@ -3688,7 +3631,6 @@ button.bar-row.day-bar:focus-visible {
 
 .stats-hero,
 .stats-panel,
-.settings-section,
 .view-intro {
   animation: rise 0.32s ease both;
 }
@@ -4223,10 +4165,6 @@ button.bar-row.day-bar:focus-visible {
 
   .stats-hero-value {
     font-size: clamp(2.4rem, 4vw, 3rem);
-  }
-
-  .settings-shell {
-    max-width: 780px;
   }
 }
 
