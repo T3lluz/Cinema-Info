@@ -539,6 +539,9 @@ const MOVIE_SHOWS_PREVIEW = 3;
 /** Tablet and desktop have room for every hall at once, so charts there
  * are unfolded from the start instead of hiding behind a button. */
 const SEATS_OPEN_MQ = window.matchMedia("(min-width: 700px)");
+/** Wider viewports get half-hour ticks on the header timeline. */
+const TL_WIDE_MQ = window.matchMedia("(min-width: 700px)");
+const HALF_HOUR = 1_800_000;
 /** Loads auto-unfolded halls as they scroll into view. */
 let seatAutoObserver = null;
 /** How many fetches are in flight; the refresh button spins while any are. */
@@ -678,6 +681,11 @@ async function init() {
     movePillIndicator(activeTab, { instant: true });
     moveDayIndicator({ instant: true });
     updateLiquidLenses();
+  });
+
+  // Crossing phone/desktop changes whether the timeline shows :30 ticks.
+  TL_WIDE_MQ.addEventListener?.("change", () => {
+    if (state?.shows) renderTimeline();
   });
 
   // Draw the refraction lenses once the chrome has its real size, and
@@ -2455,17 +2463,39 @@ function computeTimelineLayout() {
       }),
   }));
 
-  // Hour marks double as gridlines; keyed by timestamp so a morph can
-  // slide marks for the same hour and cross-fade the rest.
-  const stepHours = span > 9 * HOUR ? 2 : 1;
+  // Tick marks double as gridlines; keyed by timestamp so a morph can
+  // slide marks for the same instant and cross-fade the rest. Half-hour
+  // ticks appear when the strip is wide enough (desktop sooner than phone).
+  const step = timelineMarkStep(span);
   const marks = [];
-  for (let ts = t0; ts <= t1; ts += stepHours * HOUR) {
-    marks.push({ ts, pct: pctOf(ts), label: String(new Date(ts).getHours()) });
+  for (let ts = t0; ts <= t1; ts += step) {
+    const d = new Date(ts);
+    const minor = d.getMinutes() !== 0;
+    marks.push({
+      ts,
+      pct: pctOf(ts),
+      label: minor ? ":30" : String(d.getHours()),
+      minor,
+    });
   }
 
   const nowTs = now.getTime();
   const showNow = day === toDayKey(now) && nowTs >= t0 && nowTs <= t1;
   return { day, lanes, marks, nowPct: showNow ? pctOf(nowTs) : null };
+}
+
+/** How fine the timeline axis is — half hours when space allows. */
+function timelineMarkStep(span) {
+  const wide = TL_WIDE_MQ.matches;
+  const HOUR = 3_600_000;
+  if (wide) {
+    // Desktop: :30 ticks unless the day is unusually long.
+    return span > 12 * HOUR ? HOUR : HALF_HOUR;
+  }
+  // Phone: half hours only on compact evenings; otherwise hourly / 2h.
+  if (span > 10 * HOUR) return 2 * HOUR;
+  if (span > 6.5 * HOUR) return HOUR;
+  return HALF_HOUR;
 }
 
 function renderTimeline() {
@@ -2524,7 +2554,7 @@ function buildTimeline(layout) {
       <div class="tl-gridlines">${layout.marks
         .map(
           (m) =>
-            `<span class="tl-gridline" data-ts="${m.ts}" style="left:${m.pct}%"></span>`
+            `<span class="tl-gridline${m.minor ? " minor" : ""}" data-ts="${m.ts}" style="left:${m.pct}%"></span>`
         )
         .join("")}</div>
       <div class="tl-tracks">${layout.lanes
@@ -2543,7 +2573,7 @@ function buildTimeline(layout) {
       <div class="tl-hours">${layout.marks
         .map(
           (m) =>
-            `<span class="tl-hour" data-ts="${m.ts}" style="left:${m.pct}%">${m.label}</span>`
+            `<span class="tl-hour${m.minor ? " minor" : ""}" data-ts="${m.ts}" style="left:${m.pct}%">${m.label}</span>`
         )
         .join("")}</div>
     </div>
@@ -2684,14 +2714,16 @@ function morphTimeline(layout) {
       ])
     );
     for (const m of layout.marks) {
+      const className = m.minor ? `${cls} minor` : cls;
       let el = old.get(String(m.ts));
       if (el) {
         old.delete(String(m.ts));
+        el.className = className;
         el.style.left = `${m.pct}%`;
         if (withLabel) el.textContent = m.label;
       } else {
         el = document.createElement("span");
-        el.className = cls;
+        el.className = className;
         el.dataset.ts = m.ts;
         el.style.left = `${m.pct}%`;
         el.style.opacity = "0";
