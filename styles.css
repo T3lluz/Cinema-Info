@@ -694,11 +694,11 @@ h1 {
   color: #fff;
 }
 
-/* Dark theme paints solid bars in bright accent/green/amber — white
-   times wash out (esp. yellow/green). Near-black ink on those fills,
-   matching seat-map numbers. Soft done/estimated bars keep their own
-   colours below. */
-[data-theme="dark"] .tl-block:not(.done):not(.estimated) {
+/* Dark theme paints live/soon bars in pastel green/amber — white times
+   wash out. Near-black ink on those fills only. Red (accent) bars keep
+   white text for contrast on the darker fill. */
+[data-theme="dark"] .tl-block.live,
+[data-theme="dark"] .tl-block.soon {
   color: #121212;
 }
 
