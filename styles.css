@@ -650,6 +650,20 @@ h1 {
     transform 0.12s ease;
 }
 
+/* Times inherit the bar colour; pin white on solid red fills so theme
+   transitions or status classes cannot leave dark ink on accent. */
+.tl-block:not(.done):not(.estimated):not(.live):not(.soon),
+.tl-block.upcoming {
+  color: #fff;
+}
+
+.tl-block:not(.done):not(.estimated):not(.live):not(.soon) .tl-block-start,
+.tl-block:not(.done):not(.estimated):not(.live):not(.soon) .tl-block-end,
+.tl-block.upcoming .tl-block-start,
+.tl-block.upcoming .tl-block-end {
+  color: #fff;
+}
+
 .tl-block:focus {
   outline: none;
 }
@@ -716,11 +730,6 @@ h1 {
 
 .tl-block.soon {
   background: var(--warn);
-  color: #fff;
-}
-
-/* Upcoming / default accent bars are solid red — always white times. */
-.tl-block.upcoming {
   color: #fff;
 }
 
