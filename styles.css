@@ -680,6 +680,8 @@ h1 {
 }
 
 .tl-block-end {
+  /* Pins end to the right when the title is container-hidden. */
+  margin-left: auto;
   text-align: right;
 }
 
