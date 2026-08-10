@@ -292,6 +292,18 @@ h1 {
   min-width: 0;
 }
 
+/* Soften the pills into the expand chevron on the right, matching the
+   left-edge fade of the day strip. */
+.day-controls-body:has(.tl-expand:not([hidden])) .day-tabs {
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 10px,
+    #000 calc(100% - 18px),
+    transparent
+  );
+}
+
 /* One-tap return when browsing another day — sits outside the scroll
    strip so today is always reachable without hunting for its pill.
    Day pills share these metrics so the strip stays one height. */
@@ -535,6 +547,7 @@ h1 {
    Expand → rich Gantt (poster + title + times). On phone/tablet the
    track area scrolls horizontally so bars have room. */
 .timeline {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 2px;
@@ -589,39 +602,47 @@ h1 {
   overflow: visible;
 }
 
-/* Disclosure under the strip — phone/tablet only (desktop uses hover). */
+/* Timeline detail chevron — phone/tablet only (desktop uses hover).
+   On the Day tab it docks at the far right of the pills (paired with
+   "I dag" on the left). On other tabs it floats on the timeline edge. */
 .tl-expand {
+  flex: 0 0 auto;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  align-self: center;
-  gap: 4px;
+  width: 28px;
+  height: 28px;
   margin: 0;
-  padding: 5px 12px 3px;
-  border: 0;
+  padding: 0;
+  border: 1px solid color-mix(in srgb, var(--line) 90%, var(--ink));
   border-radius: 999px;
-  background: transparent;
-  color: color-mix(in srgb, var(--muted) 88%, var(--ink));
+  background:
+    color-mix(in srgb, var(--surface) 88%, transparent);
+  color: color-mix(in srgb, var(--muted) 70%, var(--ink));
+  box-shadow: 0 1px 3px color-mix(in srgb, var(--ink) 8%, transparent);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   font: inherit;
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.01em;
   line-height: 1;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
+  z-index: 2;
   transition:
     color 0.22s ease,
     background 0.22s ease,
+    border-color 0.22s ease,
+    box-shadow 0.22s ease,
     transform 0.15s ease;
 }
 
 .tl-expand:hover {
   color: var(--ink);
-  background: color-mix(in srgb, var(--ink) 5%, transparent);
+  border-color: color-mix(in srgb, var(--accent) 35%, var(--line));
+  background: color-mix(in srgb, var(--surface) 96%, var(--accent-soft));
 }
 
 .tl-expand:active {
-  transform: scale(0.96);
+  transform: scale(0.94);
 }
 
 .tl-expand:focus {
@@ -637,18 +658,28 @@ h1 {
   display: none;
 }
 
+.tl-expand[aria-expanded="true"] {
+  color: color-mix(in srgb, var(--accent) 78%, var(--ink));
+  border-color: color-mix(in srgb, var(--accent) 42%, var(--line));
+  background: color-mix(in srgb, var(--accent-soft) 55%, var(--surface));
+}
+
 .tl-expand-chevron {
   display: block;
   flex: 0 0 auto;
   transition: transform 0.4s cubic-bezier(0.3, 0.75, 0.25, 1);
 }
 
-.timeline.is-expanded .tl-expand-chevron {
+.tl-expand[aria-expanded="true"] .tl-expand-chevron {
   transform: rotate(180deg);
 }
 
-.timeline.is-expanded .tl-expand {
-  color: color-mix(in srgb, var(--accent) 72%, var(--ink));
+/* Floated onto the timeline when the day pills aren't on screen. */
+.tl-expand--float {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 3;
 }
 
 @media (min-width: 860px) and (hover: hover) {

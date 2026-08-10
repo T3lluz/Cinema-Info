@@ -480,6 +480,7 @@ const els = {
   settingsContent: document.getElementById("settingsContent"),
   dayTabs: document.getElementById("dayTabs"),
   dayControls: document.getElementById("dayControls"),
+  dayControlsBody: document.querySelector(".day-controls-body"),
   jumpTodayBtn: document.getElementById("jumpTodayBtn"),
   refreshBtn: document.getElementById("refreshBtn"),
   statusText: document.getElementById("statusText"),
@@ -1987,6 +1988,7 @@ async function setActiveTab(tab, { skipRender = false } = {}) {
 
   els.dayControls.hidden = tab !== "day";
   els.refreshBtn.hidden = tab === "settings";
+  syncTimelineExpandBtn();
   // The day strip was unmeasurable while hidden; re-seat its indicator
   // now that it is visible again so the selected pill keeps its color.
   if (tab === "day") moveDayIndicator({ instant: true });
@@ -2523,15 +2525,23 @@ function timelineHoverExpands() {
 
 function syncTimelineExpandBtn() {
   const btn = els.timelineExpandBtn;
-  if (!btn) return;
-  const open = !!els.timeline?.classList.contains("is-expanded");
+  if (!btn || !els.timeline) return;
+  const open = els.timeline.classList.contains("is-expanded");
   const label = t(open ? "tlCollapse" : "tlExpand");
   btn.setAttribute("aria-expanded", String(open));
   btn.setAttribute("aria-label", label);
-  const text = btn.querySelector(".tl-expand-label");
-  if (text) text.textContent = label;
-  // Desktop hover owns expand; the disclosure control is for touch layouts.
-  btn.hidden = !!els.timeline?.hidden || timelineHoverExpands();
+  btn.title = label;
+
+  // Day tab: sit at the far right of the pills. Other tabs: float on the
+  // timeline so expand stays available without the day strip.
+  const onDay = activeTab === "day";
+  const host = onDay ? els.dayControlsBody : els.timeline;
+  if (host && btn.parentElement !== host) host.appendChild(btn);
+  btn.classList.toggle("tl-expand--docked", onDay);
+  btn.classList.toggle("tl-expand--float", !onDay);
+
+  // Desktop hover owns expand; the control is for touch / narrow layouts.
+  btn.hidden = !!els.timeline.hidden || timelineHoverExpands();
 }
 
 function setTimelineExpanded(open) {
@@ -2555,7 +2565,7 @@ function setTimelineExpanded(open) {
   }
 }
 
-/** Phone/tablet: tap the disclosure to expand. Desktop: hover/focus does it. */
+/** Phone/tablet: chevron control (or double-tap). Desktop: hover/focus. */
 function setupTimelineExpand() {
   const tl = els.timeline;
   const btn = els.timelineExpandBtn;
@@ -2563,6 +2573,7 @@ function setupTimelineExpand() {
 
   btn.addEventListener("click", (e) => {
     e.preventDefault();
+    e.stopPropagation();
     setTimelineExpanded(!tl.classList.contains("is-expanded"));
   });
 
@@ -2584,6 +2595,25 @@ function setupTimelineExpand() {
     if (e.relatedTarget && tl.contains(e.relatedTarget)) return;
     setTimelineExpanded(false);
   });
+
+  // Double-tap the compact strip to toggle when a pointer isn't hovering.
+  let lastTap = 0;
+  tl.addEventListener(
+    "pointerup",
+    (e) => {
+      if (timelineHoverExpands()) return;
+      if (e.pointerType !== "touch" && e.pointerType !== "pen") return;
+      if (e.target.closest?.("button, a")) return;
+      const now = Date.now();
+      if (now - lastTap < 320) {
+        lastTap = 0;
+        setTimelineExpanded(!tl.classList.contains("is-expanded"));
+      } else {
+        lastTap = now;
+      }
+    },
+    { passive: true }
+  );
 
   TL_HOVER_MQ.addEventListener?.("change", () => {
     // Leaving desktop hover mode: collapse so the button starts from closed.
