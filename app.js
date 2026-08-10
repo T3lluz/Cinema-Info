@@ -2539,15 +2539,13 @@ function setTimelineExpanded(open) {
   els.timeline.classList.toggle("is-expanded", !!open);
   syncTimelineExpandBtn();
   if (open && !timelineHoverExpands()) {
-    // Bring the live/next showing into view in the mobile deck.
+    // Scroll the live/next bar into view in the wide mobile strip.
     requestAnimationFrame(() => {
-      const deck = els.timelineMain?.querySelector(".tl-deck");
-      if (!deck) return;
+      const scroller = els.timelineMain?.querySelector(".tl-scroller");
       const target =
-        deck.querySelector(".tl-card.live") ||
-        deck.querySelector(".tl-card.soon") ||
-        deck.querySelector(".tl-card:not(.done)") ||
-        deck.querySelector(".tl-card");
+        scroller?.querySelector(".tl-block.live") ||
+        scroller?.querySelector(".tl-block.soon") ||
+        scroller?.querySelector(".tl-block:not(.done)");
       target?.scrollIntoView({
         behavior: "smooth",
         inline: "center",
@@ -2651,50 +2649,6 @@ function tlBlockInnerHTML(b) {
     </span>`;
 }
 
-/** Flat chronological cards for the phone/tablet expanded deck. */
-function deckCardsFromLayout(layout) {
-  return layout.lanes
-    .flatMap((l) => l.blocks)
-    .sort((a, b) => (a.startMs || 0) - (b.startMs || 0) || a.left - b.left);
-}
-
-function tlCardArtHTML(b) {
-  if (b.posterUrl) {
-    return `<img class="tl-card-poster" src="${escapeHtml(
-      b.posterUrl
-    )}" alt="" loading="lazy" width="44" height="64" draggable="false" />`;
-  }
-  const initial = escapeHtml((b.title || "?").slice(0, 1));
-  return `<span class="tl-card-poster-fallback" aria-hidden="true">${initial}</span>`;
-}
-
-function tlCardHTML(b) {
-  const screen = escapeHtml(shortScreenLabel(b.screen || ""));
-  return `<button type="button" class="tl-card ${b.status}${
-    b.estimated ? " estimated" : ""
-  }"
-      data-tl-show="${escapeHtml(b.id)}"
-      title="${escapeHtml(b.tip)}"
-      aria-label="${escapeHtml(b.tip)}"
-      role="listitem">
-      <span class="tl-card-start">${escapeHtml(b.startLabel)}</span>
-      <span class="tl-card-body">
-        ${tlCardArtHTML(b)}
-        <span class="tl-card-text">
-          <span class="tl-card-title">${escapeHtml(b.title)}</span>
-          <span class="tl-card-screen">${screen}</span>
-        </span>
-      </span>
-      <span class="tl-card-end">${escapeHtml(b.endLabel)}</span>
-    </button>`;
-}
-
-function renderTimelineDeck(layout) {
-  const deck = els.timelineMain?.querySelector(".tl-deck");
-  if (!deck) return;
-  deck.innerHTML = deckCardsFromLayout(layout).map(tlCardHTML).join("");
-}
-
 /** Compact hall label for the timeline gutter — "Kinosal"→"Kino", etc. */
 function shortScreenLabel(screen) {
   const name = String(screen || "").trim();
@@ -2727,47 +2681,40 @@ function buildTimeline(layout) {
 
   els.timeline.hidden = false;
   els.timelineMain.innerHTML = `
-    <div class="tl-gantt-slot">
-      <div class="tl-gantt">
-        <div class="tl-names">${layout.lanes
+    <div class="tl-names">${layout.lanes
+      .map(
+        (l) =>
+          `<span class="tl-lane-name" data-screen="${escapeHtml(l.screen)}" title="${escapeHtml(l.screen)}">${tlLaneNameHTML(l.screen)}</span>`
+      )
+      .join("")}</div>
+    <div class="tl-scroller">
+      <div class="tl-area">
+        <div class="tl-gridlines">${layout.marks
           .map(
-            (l) =>
-              `<span class="tl-lane-name" data-screen="${escapeHtml(l.screen)}" title="${escapeHtml(l.screen)}">${tlLaneNameHTML(l.screen)}</span>`
+            (m) =>
+              `<span class="tl-gridline${m.minor ? " minor" : ""}" data-ts="${m.ts}" style="left:${m.pct}%"></span>`
           )
           .join("")}</div>
-        <div class="tl-area">
-          <div class="tl-gridlines">${layout.marks
-            .map(
-              (m) =>
-                `<span class="tl-gridline${m.minor ? " minor" : ""}" data-ts="${m.ts}" style="left:${m.pct}%"></span>`
-            )
-            .join("")}</div>
-          <div class="tl-tracks">${layout.lanes
-            .map(
-              (l) =>
-                `<div class="tl-track" data-screen="${escapeHtml(l.screen)}">${l.blocks
-                  .map(blockHTML)
-                  .join("")}</div>`
-            )
-            .join("")}</div>
-          ${
-            layout.nowPct != null
-              ? `<div class="tl-now" style="left:${layout.nowPct}%"><span class="tl-now-dot"></span></div>`
-              : ""
-          }
-          <div class="tl-hours">${layout.marks
-            .map(
-              (m) =>
-                `<span class="tl-hour${m.minor ? " minor" : ""}" data-ts="${m.ts}" style="left:${m.pct}%">${m.label}</span>`
-            )
-            .join("")}</div>
-        </div>
+        <div class="tl-tracks">${layout.lanes
+          .map(
+            (l) =>
+              `<div class="tl-track" data-screen="${escapeHtml(l.screen)}">${l.blocks
+                .map(blockHTML)
+                .join("")}</div>`
+          )
+          .join("")}</div>
+        ${
+          layout.nowPct != null
+            ? `<div class="tl-now" style="left:${layout.nowPct}%"><span class="tl-now-dot"></span></div>`
+            : ""
+        }
+        <div class="tl-hours">${layout.marks
+          .map(
+            (m) =>
+              `<span class="tl-hour${m.minor ? " minor" : ""}" data-ts="${m.ts}" style="left:${m.pct}%">${m.label}</span>`
+          )
+          .join("")}</div>
       </div>
-    </div>
-    <div class="tl-deck-slot">
-      <div class="tl-deck" role="list">${deckCardsFromLayout(layout)
-        .map(tlCardHTML)
-        .join("")}</div>
     </div>
   `;
 }
@@ -2790,7 +2737,6 @@ function morphTimeline(layout) {
     buildTimeline(layout);
     return;
   }
-  renderTimelineDeck(layout);
 
   /** Finishing touches for entering nodes, applied one frame after they
    * are inserted with their start styles so the transition can play. */
