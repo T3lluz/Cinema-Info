@@ -3890,8 +3890,7 @@ button.bar-row.day-bar:focus-visible {
     height: 22px;
   }
 
-  .tl-block-start,
-  .tl-block-end {
+  .tl-block-start {
     font-size: 0.64rem;
   }
 
