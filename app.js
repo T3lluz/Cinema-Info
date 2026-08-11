@@ -556,9 +556,15 @@ const MOVIE_SHOWS_PREVIEW = 3;
 const SEATS_OPEN_MQ = window.matchMedia("(min-width: 700px)");
 /** Wider viewports get half-hour ticks on the header timeline. */
 const TL_WIDE_MQ = window.matchMedia("(min-width: 700px)");
+/** Narrow viewports scroll the timeline sideways so hours stay readable. */
+const TL_SCROLL_MQ = window.matchMedia("(max-width: 859px)");
 /** Desktop with a real hover pointer expands the timeline on hover. */
 const TL_HOVER_MQ = window.matchMedia("(min-width: 860px) and (hover: hover)");
 const HALF_HOUR = 1_800_000;
+/** Minimum pixels per hour on a scrollable (phone/tablet) timeline. */
+const TL_PX_PER_HOUR = 64;
+/** Extra canvas width past the last hour so edge labels/bars aren't clipped. */
+const TL_EDGE_PAD_PX = 14;
 /** Loads auto-unfolded halls as they scroll into view. */
 let seatAutoObserver = null;
 /** How many fetches are in flight; the refresh button spins while any are. */
@@ -703,10 +709,13 @@ async function init() {
     updateLiquidLenses();
   });
 
-  // Crossing phone/desktop changes whether the timeline shows :30 ticks.
-  TL_WIDE_MQ.addEventListener?.("change", () => {
+  // Crossing phone/desktop changes whether the timeline shows :30 ticks
+  // and whether the strip scrolls sideways with a fixed px-per-hour.
+  const rerenderTimeline = () => {
     if (state?.shows) renderTimeline();
-  });
+  };
+  TL_WIDE_MQ.addEventListener?.("change", rerenderTimeline);
+  TL_SCROLL_MQ.addEventListener?.("change", rerenderTimeline);
 
   // Draw the refraction lenses once the chrome has its real size, and
   // redraw when it changes — the header grows and shrinks with the tab.
@@ -2453,6 +2462,11 @@ function computeTimelineLayout() {
   t0 = Math.floor((t0 - 20 * 60_000) / HOUR) * HOUR;
   t1 = Math.ceil((t1 + 15 * 60_000) / HOUR) * HOUR;
   const span = t1 - t0;
+  // Phone/tablet: give each hour enough pixels and scroll sideways.
+  // Desktop: the area simply fills the header column.
+  const minWidthPx = TL_SCROLL_MQ.matches
+    ? Math.round((span / HOUR) * TL_PX_PER_HOUR + TL_EDGE_PAD_PX * 2)
+    : 0;
   const pctOf = (ms) => ((ms - t0) / span) * 100;
 
   const screens = [...new Set(shows.map((s) => s.screen))].sort((a, b) =>
@@ -2491,9 +2505,14 @@ function computeTimelineLayout() {
   }));
 
   // Tick marks double as gridlines; keyed by timestamp so a morph can
-  // slide marks for the same instant and cross-fade the rest. Half-hour
-  // ticks appear when the strip is wide enough (desktop sooner than phone).
-  const step = timelineMarkStep(span);
+  // slide marks for the same instant and cross-fade the rest. Step size
+  // follows the real pixel density once the strip has a min-width.
+  const step = timelineMarkStep(span, minWidthPx);
+  const widthForLabels = minWidthPx || 0;
+  const pxPerHour = widthForLabels > 0 ? widthForLabels / (span / HOUR) : 0;
+  // Half-hour clock text needs room ("12:30" ≈ 28px); below ~88px/hour
+  // keep the tick/gridline but drop the label so it doesn't collide.
+  const labelMinors = pxPerHour >= 88;
   const marks = [];
   for (let ts = t0; ts <= t1; ts += step) {
     const d = new Date(ts);
@@ -2501,25 +2520,46 @@ function computeTimelineLayout() {
     marks.push({
       ts,
       pct: pctOf(ts),
-      label: minor ? formatClock(d) : String(d.getHours()),
+      label: minor
+        ? labelMinors
+          ? formatClock(d)
+          : ""
+        : String(d.getHours()),
       minor,
     });
   }
 
   const nowTs = now.getTime();
   const showNow = day === toDayKey(now) && nowTs >= t0 && nowTs <= t1;
-  return { day, lanes, marks, nowPct: showNow ? pctOf(nowTs) : null };
+  return {
+    day,
+    lanes,
+    marks,
+    nowPct: showNow ? pctOf(nowTs) : null,
+    minWidthPx,
+    spanMs: span,
+  };
 }
 
 /** How fine the timeline axis is — half hours when space allows. */
-function timelineMarkStep(span) {
-  const wide = TL_WIDE_MQ.matches;
+function timelineMarkStep(span, minWidthPx = 0) {
   const HOUR = 3_600_000;
+  // Prefer the laid-out pixel density: a scrollable strip with ~58px/hour
+  // can take half-hour ticks even on a phone.
+  const widthPx =
+    minWidthPx ||
+    els.timelineMain?.querySelector(".tl-scroller")?.clientWidth ||
+    0;
+  const pxPerHour = widthPx > 0 ? widthPx / (span / HOUR) : 0;
+  if (pxPerHour >= 52) return HALF_HOUR;
+  if (pxPerHour >= 36) return HOUR;
+
+  const wide = TL_WIDE_MQ.matches;
   if (wide) {
-    // Desktop: :30 ticks unless the day is unusually long.
+    // Desktop without a forced min-width: :30 unless the day is long.
     return span > 12 * HOUR ? HOUR : HALF_HOUR;
   }
-  // Phone: half hours only on compact evenings; otherwise hourly / 2h.
+  // Fallback when we don't know width yet (first paint).
   if (span > 10 * HOUR) return 2 * HOUR;
   if (span > 6.5 * HOUR) return HOUR;
   return HALF_HOUR;
@@ -2575,18 +2615,62 @@ function setTimelineExpanded(open) {
   if (open && !timelineHoverExpands() && !timelineAlwaysExpanded) {
     // Let the height/morph settle a beat before scrolling — otherwise the
     // smooth horizontal scroll fights the expand animation.
-    window.setTimeout(() => {
-      const scroller = els.timelineMain?.querySelector(".tl-scroller");
-      const target =
-        scroller?.querySelector(".tl-block.live") ||
-        scroller?.querySelector(".tl-block.soon") ||
-        scroller?.querySelector(".tl-block:not(.done)");
-      target?.scrollIntoView({
-        behavior: "smooth",
-        inline: "center",
-        block: "nearest",
-      });
-    }, 220);
+    window.setTimeout(() => scrollTimelineToFocus({ smooth: true }), 220);
+  }
+}
+
+/** Horizontal-only scroll so the focused bar / now-line sits in view
+ * without dragging the page (scrollIntoView was shifting the sticky header). */
+function scrollTimelineToFocus({ smooth = false } = {}) {
+  const scroller = els.timelineMain?.querySelector(".tl-scroller");
+  if (!scroller) return;
+  // Only meaningful when the canvas is wider than the viewport.
+  if (scroller.scrollWidth <= scroller.clientWidth + 2) return;
+
+  const target =
+    scroller.querySelector(".tl-now") ||
+    scroller.querySelector(".tl-block.live") ||
+    scroller.querySelector(".tl-block.soon") ||
+    scroller.querySelector(".tl-block:not(.done)");
+  if (!target) return;
+
+  const sRect = scroller.getBoundingClientRect();
+  const tRect = target.getBoundingClientRect();
+  const targetCenter = tRect.left + tRect.width / 2;
+  const viewCenter = sRect.left + sRect.width / 2;
+  const next = Math.max(
+    0,
+    Math.min(
+      scroller.scrollWidth - scroller.clientWidth,
+      scroller.scrollLeft + (targetCenter - viewCenter)
+    )
+  );
+  scroller.scrollTo({
+    left: next,
+    behavior: smooth ? "smooth" : "auto",
+  });
+}
+
+/** Size the track canvas and keep "now" in view after a build/morph. */
+function applyTimelineChrome(layout, { scroll = true, smooth = false } = {}) {
+  const area = els.timelineMain?.querySelector(".tl-area");
+  const scroller = els.timelineMain?.querySelector(".tl-scroller");
+  if (!area || !scroller) return;
+
+  const minPx = layout.minWidthPx || 0;
+  if (minPx > 0) {
+    area.style.minWidth = `${minPx}px`;
+    scroller.classList.add("is-scrollable");
+  } else {
+    area.style.minWidth = "";
+    scroller.classList.remove("is-scrollable");
+  }
+
+  if (scroll) {
+    // Double rAF: wait until layout has the new min-width before measuring.
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => scrollTimelineToFocus({ smooth }));
+    });
   }
 }
 
@@ -2675,13 +2759,16 @@ function renderTimeline() {
 
   // Morph the existing bars into the new day's layout when possible;
   // build from scratch only when there is nothing on screen yet.
-  if (!els.timeline.hidden && els.timelineMain?.querySelector(".tl-tracks")) {
+  const hadTracks = !els.timeline.hidden && els.timelineMain?.querySelector(".tl-tracks");
+  if (hadTracks) {
     morphTimeline(layout);
   } else {
     buildTimeline(layout);
   }
   if (timelineAlwaysExpanded) els.timeline.classList.add("is-expanded");
   syncTimelineExpandBtn();
+  // Fresh build: jump to now. Day morph: ease there so the strip doesn't jump.
+  applyTimelineChrome(layout, { scroll: true, smooth: hadTracks });
 }
 
 function tlBlockArtHTML(b) {
@@ -2745,31 +2832,33 @@ function buildTimeline(layout) {
       .join("")}</div>
     <div class="tl-scroller">
       <div class="tl-area">
-        <div class="tl-gridlines">${layout.marks
-          .map(
-            (m) =>
-              `<span class="tl-gridline${m.minor ? " minor" : ""}" data-ts="${m.ts}" style="left:${m.pct}%"></span>`
-          )
-          .join("")}</div>
-        <div class="tl-tracks">${layout.lanes
-          .map(
-            (l) =>
-              `<div class="tl-track" data-screen="${escapeHtml(l.screen)}">${l.blocks
-                .map(blockHTML)
-                .join("")}</div>`
-          )
-          .join("")}</div>
-        ${
-          layout.nowPct != null
-            ? `<div class="tl-now" style="left:${layout.nowPct}%"><span class="tl-now-dot"></span></div>`
-            : ""
-        }
-        <div class="tl-hours">${layout.marks
-          .map(
-            (m) =>
-              `<span class="tl-hour${m.minor ? " minor" : ""}" data-ts="${m.ts}" style="left:${m.pct}%">${m.label}</span>`
-          )
-          .join("")}</div>
+        <div class="tl-canvas">
+          <div class="tl-gridlines">${layout.marks
+            .map(
+              (m) =>
+                `<span class="tl-gridline${m.minor ? " minor" : ""}" data-ts="${m.ts}" style="left:${m.pct}%"></span>`
+            )
+            .join("")}</div>
+          <div class="tl-tracks">${layout.lanes
+            .map(
+              (l) =>
+                `<div class="tl-track" data-screen="${escapeHtml(l.screen)}">${l.blocks
+                  .map(blockHTML)
+                  .join("")}</div>`
+            )
+            .join("")}</div>
+          ${
+            layout.nowPct != null
+              ? `<div class="tl-now" style="left:${layout.nowPct}%"><span class="tl-now-dot"></span></div>`
+              : ""
+          }
+          <div class="tl-hours">${layout.marks
+            .map(
+              (m) =>
+                `<span class="tl-hour${m.minor ? " minor" : ""}" data-ts="${m.ts}" style="left:${m.pct}%">${m.label}</span>`
+            )
+            .join("")}</div>
+        </div>
       </div>
     </div>
   `;
@@ -2789,7 +2878,14 @@ function morphTimeline(layout) {
   const tracksBox = root.querySelector(".tl-tracks");
   const hoursBox = root.querySelector(".tl-hours");
   const area = root.querySelector(".tl-area");
-  if (!namesBox || !gridsBox || !tracksBox || !hoursBox || !area) {
+  // Prefer the inset canvas; fall back to the area for older markup mid-session.
+  const canvas = root.querySelector(".tl-canvas") || area;
+  if (!namesBox || !gridsBox || !tracksBox || !hoursBox || !canvas) {
+    buildTimeline(layout);
+    return;
+  }
+  // Upgrade a pre-canvas timeline in place once, so inset padding applies.
+  if (!root.querySelector(".tl-canvas") && area) {
     buildTimeline(layout);
     return;
   }
@@ -2961,7 +3057,7 @@ function morphTimeline(layout) {
   patchMarks(hoursBox, "tl-hour", true);
 
   // "Now" line: slide when it stays, fade when it appears or leaves.
-  let nowEl = area.querySelector(".tl-now:not(.tl-exit)");
+  let nowEl = canvas.querySelector(".tl-now:not(.tl-exit)");
   if (layout.nowPct != null) {
     if (nowEl) {
       nowEl.style.left = `${layout.nowPct}%`;
@@ -2971,7 +3067,7 @@ function morphTimeline(layout) {
       nowEl.style.left = `${layout.nowPct}%`;
       nowEl.style.opacity = "0";
       nowEl.appendChild(document.createElement("span")).className = "tl-now-dot";
-      area.insertBefore(nowEl, hoursBox);
+      canvas.insertBefore(nowEl, hoursBox);
       entered.push(() => {
         nowEl.style.opacity = "1";
       });
@@ -2982,7 +3078,7 @@ function morphTimeline(layout) {
 
   // Flush start styles, then let entering pieces transition into place.
   if (entered.length) {
-    void area.offsetWidth;
+    void canvas.offsetWidth;
     for (const fn of entered) fn();
   }
 }
@@ -5712,6 +5808,7 @@ function formatClock(date) {
   return date.toLocaleTimeString(lang === "en" ? "en-GB" : "nb-NO", {
     hour: "2-digit",
     minute: "2-digit",
+    hour12: false,
   });
 }
 
