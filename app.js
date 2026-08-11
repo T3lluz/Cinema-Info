@@ -142,8 +142,6 @@ const I18N = {
       "Salkart for {screen}: {sold} av {capacity} plasser solgt, {scanned} skannet inn.",
     today: "I dag",
     jumpTodayAria: "Gå til i dag",
-    tlExpand: "Vis detaljer",
-    tlCollapse: "Skjul detaljer",
     yesterday: "I går",
     tomorrow: "I morgen",
     dayTab: "{weekday} {d}.{m}",
@@ -194,8 +192,6 @@ const I18N = {
     seatNumbersHint: "I salkartet",
     seatNumbersOn: "Vis",
     seatNumbersOff: "Skjul",
-    tlAlways: "Utvidet tidslinje",
-    tlAlwaysHint: "Alltid vis plakat og tittel — uten utvid-knapp",
     langNb: "Norsk",
     langEn: "English",
     spokenNorwegian: "Norsk tale",
@@ -306,8 +302,6 @@ const I18N = {
       "Seat map for {screen}: {sold} of {capacity} seats sold, {scanned} scanned in.",
     today: "Today",
     jumpTodayAria: "Go to today",
-    tlExpand: "Show details",
-    tlCollapse: "Hide details",
     yesterday: "Yesterday",
     tomorrow: "Tomorrow",
     dayTab: "{weekday} {d}.{m}",
@@ -358,8 +352,6 @@ const I18N = {
     seatNumbersHint: "On the seat map",
     seatNumbersOn: "Show",
     seatNumbersOff: "Hide",
-    tlAlways: "Expanded timeline",
-    tlAlwaysHint: "Always show poster and title — no expand button",
     langNb: "Norsk",
     langEn: "English",
     spokenNorwegian: "Norwegian",
@@ -491,8 +483,6 @@ const els = {
   statusText: document.getElementById("statusText"),
   topActions: document.querySelector(".top-actions"),
   timeline: document.getElementById("timeline"),
-  timelineMain: document.getElementById("timelineMain"),
-  timelineExpandBtn: document.getElementById("timelineExpandBtn"),
   views: {
     day: document.getElementById("view-day"),
     movies: document.getElementById("view-movies"),
@@ -525,8 +515,6 @@ let theme = "system";
 const DARK_MQ = window.matchMedia("(prefers-color-scheme: dark)");
 /** Digits painted on each seat square in the hall chart. */
 let showSeatNumbers = true;
-/** When on, the header timeline stays in the rich expanded layout. */
-let timelineAlwaysExpanded = false;
 let enrichedAll = false;
 let lastLiveAt = 0;
 /** When the program snapshot was last read, so a long-open tab re-reads it. */
@@ -556,25 +544,7 @@ const MOVIE_SHOWS_PREVIEW = 3;
 const SEATS_OPEN_MQ = window.matchMedia("(min-width: 700px)");
 /** Wider viewports get half-hour ticks on the header timeline. */
 const TL_WIDE_MQ = window.matchMedia("(min-width: 700px)");
-/** Narrow viewports scroll the timeline sideways so hours stay readable. */
-const TL_SCROLL_MQ = window.matchMedia("(max-width: 859px)");
-/** Desktop with a real hover pointer expands the timeline on hover. */
-const TL_HOVER_MQ = window.matchMedia("(min-width: 860px) and (hover: hover)");
 const HALF_HOUR = 1_800_000;
-/**
- * Phone/tablet scroll density is derived from the day's shortest show so
- * that bar still fits expanded content (poster + title + both clocks).
- * Longer bars scale from the same px-per-hour. Floor keeps compact clocks
- * readable on long-only days; the target clears the CSS container cutoffs
- * that hide poster (content-box <148px) and title (<96px), including the
- * expanded bar's horizontal padding under border-box sizing. Sized a bit
- * past the bare cutoff so a typical title (e.g. "Paw Patrol: Dinofilmen")
- * usually fits without ellipsis.
- */
-const TL_MIN_BAR_PX = 210;
-const TL_PX_PER_HOUR_FLOOR = 72;
-/** Extra canvas width past the last hour so edge labels/bars aren't clipped. */
-const TL_EDGE_PAD_PX = 14;
 /** Loads auto-unfolded halls as they scroll into view. */
 let seatAutoObserver = null;
 /** How many fetches are in flight; the refresh button spins while any are. */
@@ -661,7 +631,6 @@ async function init() {
     ? prefs.theme
     : "system";
   showSeatNumbers = prefs.showSeatNumbers !== false;
-  timelineAlwaysExpanded = prefs.timelineAlwaysExpanded === true;
 
   applyTheme(theme);
   // A device flipping between light and dark mid-session should carry
@@ -697,7 +666,6 @@ async function init() {
     selectDay(today);
   });
 
-  setupTimelineExpand();
 
   setInterval(liveBeat, BEAT_MS);
 
@@ -719,13 +687,10 @@ async function init() {
     updateLiquidLenses();
   });
 
-  // Crossing phone/desktop changes whether the timeline shows :30 ticks
-  // and whether the strip scrolls sideways with a fixed px-per-hour.
-  const rerenderTimeline = () => {
+  // Crossing phone/desktop changes whether the timeline shows :30 ticks.
+  TL_WIDE_MQ.addEventListener?.("change", () => {
     if (state?.shows) renderTimeline();
-  };
-  TL_WIDE_MQ.addEventListener?.("change", rerenderTimeline);
-  TL_SCROLL_MQ.addEventListener?.("change", rerenderTimeline);
+  });
 
   // Draw the refraction lenses once the chrome has its real size, and
   // redraw when it changes — the header grows and shrinks with the tab.
@@ -1460,7 +1425,6 @@ function savePrefs() {
       lang,
       theme,
       showSeatNumbers,
-      timelineAlwaysExpanded,
     })
   );
 }
@@ -1851,7 +1815,6 @@ function applyLanguage() {
   els.refreshBtn.setAttribute("aria-label", t("refresh"));
   els.refreshBtn.title = t("refresh");
   els.jumpTodayBtn?.setAttribute("aria-label", t("jumpTodayAria"));
-  syncTimelineExpandBtn();
   els.dayTabs.setAttribute(
     "aria-label",
     lang === "en" ? "Choose day" : "Velg dag"
@@ -2017,7 +1980,6 @@ async function setActiveTab(tab, { skipRender = false } = {}) {
 
   els.dayControls.hidden = tab !== "day";
   els.refreshBtn.hidden = tab === "settings";
-  syncTimelineExpandBtn();
   // The day strip was unmeasurable while hidden; re-seat its indicator
   // now that it is visible again so the selected pill keeps its color.
   if (tab === "day") moveDayIndicator({ instant: true });
@@ -2472,12 +2434,6 @@ function computeTimelineLayout() {
   t0 = Math.floor((t0 - 20 * 60_000) / HOUR) * HOUR;
   t1 = Math.ceil((t1 + 15 * 60_000) / HOUR) * HOUR;
   const span = t1 - t0;
-  // Phone/tablet: stretch the hour scale from the shortest show so every
-  // bar can hold its content, then scroll sideways. Desktop fills the column.
-  const pxPerHour = timelineScrollPxPerHour(shows);
-  const minWidthPx = pxPerHour
-    ? Math.round((span / HOUR) * pxPerHour + TL_EDGE_PAD_PX * 2)
-    : 0;
   const pctOf = (ms) => ((ms - t0) / span) * 100;
 
   const screens = [...new Set(shows.map((s) => s.screen))].sort((a, b) =>
@@ -2500,10 +2456,6 @@ function computeTimelineLayout() {
         return {
           id: s.id,
           dayKey: s.dayKey,
-          screen,
-          title: s.title || "",
-          posterUrl: s.posterUrl || "",
-          startMs: start,
           left,
           width: Math.max(pctOf(end) - left, 1.5),
           status: statusOf(s, now),
@@ -2516,14 +2468,9 @@ function computeTimelineLayout() {
   }));
 
   // Tick marks double as gridlines; keyed by timestamp so a morph can
-  // slide marks for the same instant and cross-fade the rest. Step size
-  // follows the real pixel density once the strip has a min-width.
-  const step = timelineMarkStep(span, minWidthPx);
-  const trackWidthPx = minWidthPx > 0 ? Math.max(0, minWidthPx - TL_EDGE_PAD_PX * 2) : 0;
-  const pxPerHourLaid = trackWidthPx > 0 ? trackWidthPx / (span / HOUR) : 0;
-  // Half-hour clock text needs room ("12:30" ≈ 28px); below ~88px/hour
-  // keep the tick/gridline but drop the label so it doesn't collide.
-  const labelMinors = pxPerHourLaid >= 88;
+  // slide marks for the same instant and cross-fade the rest. Half-hour
+  // ticks appear when the strip is wide enough (desktop sooner than phone).
+  const step = timelineMarkStep(span);
   const marks = [];
   for (let ts = t0; ts <= t1; ts += step) {
     const d = new Date(ts);
@@ -2531,243 +2478,28 @@ function computeTimelineLayout() {
     marks.push({
       ts,
       pct: pctOf(ts),
-      label: minor
-        ? labelMinors
-          ? formatClock(d)
-          : ""
-        : String(d.getHours()),
+      label: minor ? formatClock(d) : String(d.getHours()),
       minor,
     });
   }
 
   const nowTs = now.getTime();
   const showNow = day === toDayKey(now) && nowTs >= t0 && nowTs <= t1;
-  return {
-    day,
-    lanes,
-    marks,
-    nowPct: showNow ? pctOf(nowTs) : null,
-    minWidthPx,
-    spanMs: span,
-  };
-}
-
-/**
- * Pixels per hour on a scrollable timeline: wide enough that the shortest
- * show of the day still fits poster, title, and start/end clocks. All
- * other bars share that scale. Desktop returns 0 (fill the column).
- */
-function timelineScrollPxPerHour(shows) {
-  if (!TL_SCROLL_MQ.matches || !shows?.length) return 0;
-  const HOUR = 3_600_000;
-  let shortestMs = Infinity;
-  for (const s of shows) {
-    const ms = showEndOf(s).getTime() - s.start.getTime();
-    if (ms > 0 && ms < shortestMs) shortestMs = ms;
-  }
-  if (!Number.isFinite(shortestMs) || shortestMs <= 0) return TL_PX_PER_HOUR_FLOOR;
-  const needed = TL_MIN_BAR_PX / (shortestMs / HOUR);
-  return Math.max(TL_PX_PER_HOUR_FLOOR, Math.ceil(needed));
+  return { day, lanes, marks, nowPct: showNow ? pctOf(nowTs) : null };
 }
 
 /** How fine the timeline axis is — half hours when space allows. */
-function timelineMarkStep(span, minWidthPx = 0) {
-  const HOUR = 3_600_000;
-  // Prefer the track (canvas) density: subtract edge pad so ticks match
-  // the same px-per-hour used to size bars.
-  const trackPx = minWidthPx > 0 ? Math.max(0, minWidthPx - TL_EDGE_PAD_PX * 2) : 0;
-  const widthPx =
-    trackPx ||
-    els.timelineMain?.querySelector(".tl-scroller")?.clientWidth ||
-    0;
-  const pxPerHour = widthPx > 0 ? widthPx / (span / HOUR) : 0;
-  if (pxPerHour >= 52) return HALF_HOUR;
-  if (pxPerHour >= 36) return HOUR;
-
+function timelineMarkStep(span) {
   const wide = TL_WIDE_MQ.matches;
+  const HOUR = 3_600_000;
   if (wide) {
-    // Desktop without a forced min-width: :30 unless the day is long.
+    // Desktop: :30 ticks unless the day is unusually long.
     return span > 12 * HOUR ? HOUR : HALF_HOUR;
   }
-  // Fallback when we don't know width yet (first paint).
+  // Phone: half hours only on compact evenings; otherwise hourly / 2h.
   if (span > 10 * HOUR) return 2 * HOUR;
   if (span > 6.5 * HOUR) return HOUR;
   return HALF_HOUR;
-}
-
-function clearTimelineMain() {
-  if (els.timelineMain) els.timelineMain.innerHTML = "";
-}
-
-function timelineHoverExpands() {
-  return TL_HOVER_MQ.matches;
-}
-
-function syncTimelineExpandBtn() {
-  const btn = els.timelineExpandBtn;
-  if (!btn || !els.timeline) return;
-  const open = els.timeline.classList.contains("is-expanded");
-  const label = t(open ? "tlCollapse" : "tlExpand");
-  btn.setAttribute("aria-expanded", String(open));
-  btn.setAttribute("aria-label", label);
-  btn.title = label;
-
-  // Day tab: far right of the day pills. Other tabs (no pill row): sit in
-  // the header actions beside refresh so the chevron never overlays bars.
-  const onDay = activeTab === "day";
-  btn.classList.toggle("tl-expand--docked", onDay);
-  btn.classList.toggle("tl-expand--header", !onDay);
-
-  if (onDay) {
-    const host = els.dayControlsBody;
-    if (host && btn.parentElement !== host) host.appendChild(btn);
-  } else {
-    const host = els.topActions;
-    if (host && els.refreshBtn) {
-      if (btn.parentElement !== host || btn.nextElementSibling !== els.refreshBtn) {
-        host.insertBefore(btn, els.refreshBtn);
-      }
-    }
-  }
-
-  // Desktop hover / always-expanded own the layout; hide the chevron then.
-  btn.hidden =
-    !!els.timeline.hidden ||
-    timelineHoverExpands() ||
-    timelineAlwaysExpanded;
-}
-
-function setTimelineExpanded(open) {
-  if (!els.timeline) return;
-  if (timelineAlwaysExpanded) open = true;
-  els.timeline.classList.toggle("is-expanded", !!open);
-  syncTimelineExpandBtn();
-  if (open && !timelineHoverExpands() && !timelineAlwaysExpanded) {
-    // Let the height/morph settle a beat before scrolling — otherwise the
-    // smooth horizontal scroll fights the expand animation.
-    window.setTimeout(() => scrollTimelineToFocus({ smooth: true }), 220);
-  }
-}
-
-/** Horizontal-only scroll so the focused bar / now-line sits in view
- * without dragging the page (scrollIntoView was shifting the sticky header). */
-function scrollTimelineToFocus({ smooth = false } = {}) {
-  const scroller = els.timelineMain?.querySelector(".tl-scroller");
-  if (!scroller) return;
-  // Only meaningful when the canvas is wider than the viewport.
-  if (scroller.scrollWidth <= scroller.clientWidth + 2) return;
-
-  const target =
-    scroller.querySelector(".tl-now") ||
-    scroller.querySelector(".tl-block.live") ||
-    scroller.querySelector(".tl-block.soon") ||
-    scroller.querySelector(".tl-block:not(.done)");
-  if (!target) return;
-
-  const sRect = scroller.getBoundingClientRect();
-  const tRect = target.getBoundingClientRect();
-  const targetCenter = tRect.left + tRect.width / 2;
-  const viewCenter = sRect.left + sRect.width / 2;
-  const next = Math.max(
-    0,
-    Math.min(
-      scroller.scrollWidth - scroller.clientWidth,
-      scroller.scrollLeft + (targetCenter - viewCenter)
-    )
-  );
-  scroller.scrollTo({
-    left: next,
-    behavior: smooth ? "smooth" : "auto",
-  });
-}
-
-/** Size the track canvas and keep "now" in view after a build/morph. */
-function applyTimelineChrome(layout, { scroll = true, smooth = false } = {}) {
-  const area = els.timelineMain?.querySelector(".tl-area");
-  const scroller = els.timelineMain?.querySelector(".tl-scroller");
-  if (!area || !scroller) return;
-
-  const minPx = layout.minWidthPx || 0;
-  if (minPx > 0) {
-    area.style.minWidth = `${minPx}px`;
-    scroller.classList.add("is-scrollable");
-  } else {
-    area.style.minWidth = "";
-    scroller.classList.remove("is-scrollable");
-  }
-
-  if (scroll) {
-    // Double rAF: wait until layout has the new min-width before measuring.
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => scrollTimelineToFocus({ smooth }));
-    });
-  }
-}
-
-/** Phone/tablet: chevron control (or double-tap). Desktop: hover/focus. */
-function setupTimelineExpand() {
-  const tl = els.timeline;
-  const btn = els.timelineExpandBtn;
-  if (!tl || !btn) return;
-
-  btn.addEventListener("click", (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setTimelineExpanded(!tl.classList.contains("is-expanded"));
-  });
-
-  tl.addEventListener("pointerenter", (e) => {
-    if (!timelineHoverExpands()) return;
-    if (e.pointerType === "touch") return;
-    setTimelineExpanded(true);
-  });
-  tl.addEventListener("pointerleave", () => {
-    if (!timelineHoverExpands()) return;
-    setTimelineExpanded(false);
-  });
-  tl.addEventListener("focusin", () => {
-    if (!timelineHoverExpands()) return;
-    setTimelineExpanded(true);
-  });
-  tl.addEventListener("focusout", (e) => {
-    if (!timelineHoverExpands()) return;
-    if (e.relatedTarget && tl.contains(e.relatedTarget)) return;
-    setTimelineExpanded(false);
-  });
-
-  // Double-tap the compact strip to toggle when a pointer isn't hovering.
-  let lastTap = 0;
-  tl.addEventListener(
-    "pointerup",
-    (e) => {
-      if (timelineHoverExpands()) return;
-      if (e.pointerType !== "touch" && e.pointerType !== "pen") return;
-      if (e.target.closest?.("button, a")) return;
-      const now = Date.now();
-      if (now - lastTap < 320) {
-        lastTap = 0;
-        setTimelineExpanded(!tl.classList.contains("is-expanded"));
-      } else {
-        lastTap = now;
-      }
-    },
-    { passive: true }
-  );
-
-  TL_HOVER_MQ.addEventListener?.("change", () => {
-    // Leaving desktop hover mode: collapse so the button starts from closed.
-    if (!timelineHoverExpands()) setTimelineExpanded(false);
-    else syncTimelineExpandBtn();
-  });
-
-  syncTimelineExpandBtn();
-}
-
-function hideTimeline() {
-  els.timeline.hidden = true;
-  els.timeline.classList.remove("is-expanded");
-  clearTimelineMain();
-  syncTimelineExpandBtn();
 }
 
 function renderTimeline() {
@@ -2776,50 +2508,31 @@ function renderTimeline() {
   // Settings is about the app, not about tonight's programme; the strip
   // has nothing to say there and only crowds the header.
   if (activeTab === "settings") {
-    hideTimeline();
+    els.timeline.hidden = true;
+    els.timeline.innerHTML = "";
     return;
   }
 
   const layout = computeTimelineLayout();
 
   if (!layout.lanes.length) {
-    hideTimeline();
+    els.timeline.hidden = true;
+    els.timeline.innerHTML = "";
     return;
   }
 
   // Morph the existing bars into the new day's layout when possible;
   // build from scratch only when there is nothing on screen yet.
-  const hadTracks = !els.timeline.hidden && els.timelineMain?.querySelector(".tl-tracks");
-  if (hadTracks) {
+  if (!els.timeline.hidden && els.timeline.querySelector(".tl-tracks")) {
     morphTimeline(layout);
   } else {
     buildTimeline(layout);
   }
-  if (timelineAlwaysExpanded) els.timeline.classList.add("is-expanded");
-  syncTimelineExpandBtn();
-  // Fresh build: jump to now. Day morph: ease there so the strip doesn't jump.
-  applyTimelineChrome(layout, { scroll: true, smooth: hadTracks });
-}
-
-function tlBlockArtHTML(b) {
-  if (b.posterUrl) {
-    return `<img class="tl-block-poster" src="${escapeHtml(
-      b.posterUrl
-    )}" alt="" loading="lazy" width="28" height="40" draggable="false" />`;
-  }
-  const initial = escapeHtml((b.title || "?").slice(0, 1));
-  return `<span class="tl-block-poster-fallback" aria-hidden="true">${initial}</span>`;
 }
 
 function tlBlockInnerHTML(b) {
-  return `${tlBlockArtHTML(b)}
-    <span class="tl-block-meta">
-      <span class="tl-block-title">${escapeHtml(b.title)}</span>
-      <span class="tl-block-times">
-        <span class="tl-block-start">${escapeHtml(b.startLabel)}</span>
-        <span class="tl-block-end">${escapeHtml(b.endLabel)}</span>
-      </span>
-    </span>`;
+  return `<span class="tl-block-start">${escapeHtml(b.startLabel)}</span>
+      <span class="tl-block-end">${escapeHtml(b.endLabel)}</span>`;
 }
 
 /** Compact hall label for the timeline gutter — "Kinosal"→"Kino", etc. */
@@ -2853,43 +2566,39 @@ function buildTimeline(layout) {
     </button>`;
 
   els.timeline.hidden = false;
-  els.timelineMain.innerHTML = `
+  els.timeline.innerHTML = `
     <div class="tl-names">${layout.lanes
       .map(
         (l) =>
           `<span class="tl-lane-name" data-screen="${escapeHtml(l.screen)}" title="${escapeHtml(l.screen)}">${tlLaneNameHTML(l.screen)}</span>`
       )
       .join("")}</div>
-    <div class="tl-scroller">
-      <div class="tl-area">
-        <div class="tl-canvas">
-          <div class="tl-gridlines">${layout.marks
-            .map(
-              (m) =>
-                `<span class="tl-gridline${m.minor ? " minor" : ""}" data-ts="${m.ts}" style="left:${m.pct}%"></span>`
-            )
-            .join("")}</div>
-          <div class="tl-tracks">${layout.lanes
-            .map(
-              (l) =>
-                `<div class="tl-track" data-screen="${escapeHtml(l.screen)}">${l.blocks
-                  .map(blockHTML)
-                  .join("")}</div>`
-            )
-            .join("")}</div>
-          ${
-            layout.nowPct != null
-              ? `<div class="tl-now" style="left:${layout.nowPct}%"><span class="tl-now-dot"></span></div>`
-              : ""
-          }
-          <div class="tl-hours">${layout.marks
-            .map(
-              (m) =>
-                `<span class="tl-hour${m.minor ? " minor" : ""}" data-ts="${m.ts}" style="left:${m.pct}%">${m.label}</span>`
-            )
-            .join("")}</div>
-        </div>
-      </div>
+    <div class="tl-area">
+      <div class="tl-gridlines">${layout.marks
+        .map(
+          (m) =>
+            `<span class="tl-gridline${m.minor ? " minor" : ""}" data-ts="${m.ts}" style="left:${m.pct}%"></span>`
+        )
+        .join("")}</div>
+      <div class="tl-tracks">${layout.lanes
+        .map(
+          (l) =>
+            `<div class="tl-track" data-screen="${escapeHtml(l.screen)}">${l.blocks
+              .map(blockHTML)
+              .join("")}</div>`
+        )
+        .join("")}</div>
+      ${
+        layout.nowPct != null
+          ? `<div class="tl-now" style="left:${layout.nowPct}%"><span class="tl-now-dot"></span></div>`
+          : ""
+      }
+      <div class="tl-hours">${layout.marks
+        .map(
+          (m) =>
+            `<span class="tl-hour${m.minor ? " minor" : ""}" data-ts="${m.ts}" style="left:${m.pct}%">${m.label}</span>`
+        )
+        .join("")}</div>
     </div>
   `;
 }
@@ -2902,23 +2611,11 @@ function buildTimeline(layout) {
  * and the "now" line move.
  */
 function morphTimeline(layout) {
-  const root = els.timelineMain || els.timeline;
-  const namesBox = root.querySelector(".tl-names");
-  const gridsBox = root.querySelector(".tl-gridlines");
-  const tracksBox = root.querySelector(".tl-tracks");
-  const hoursBox = root.querySelector(".tl-hours");
-  const area = root.querySelector(".tl-area");
-  // Prefer the inset canvas; fall back to the area for older markup mid-session.
-  const canvas = root.querySelector(".tl-canvas") || area;
-  if (!namesBox || !gridsBox || !tracksBox || !hoursBox || !canvas) {
-    buildTimeline(layout);
-    return;
-  }
-  // Upgrade a pre-canvas timeline in place once, so inset padding applies.
-  if (!root.querySelector(".tl-canvas") && area) {
-    buildTimeline(layout);
-    return;
-  }
+  const namesBox = els.timeline.querySelector(".tl-names");
+  const gridsBox = els.timeline.querySelector(".tl-gridlines");
+  const tracksBox = els.timeline.querySelector(".tl-tracks");
+  const hoursBox = els.timeline.querySelector(".tl-hours");
+  const area = els.timeline.querySelector(".tl-area");
 
   /** Finishing touches for entering nodes, applied one frame after they
    * are inserted with their start styles so the transition can play. */
@@ -2932,28 +2629,11 @@ function morphTimeline(layout) {
     el.dataset.tlShow = b.id;
     el.title = b.tip;
     el.setAttribute("aria-label", b.tip);
-    const titleEl = el.querySelector(".tl-block-title");
     const startEl = el.querySelector(".tl-block-start");
     const endEl = el.querySelector(".tl-block-end");
-    const posterEl = el.querySelector(".tl-block-poster");
-    const fallbackEl = el.querySelector(".tl-block-poster-fallback");
-    if (titleEl && startEl && endEl && (posterEl || fallbackEl)) {
-      titleEl.textContent = b.title;
+    if (startEl && endEl) {
       startEl.textContent = b.startLabel;
       endEl.textContent = b.endLabel;
-      if (b.posterUrl) {
-        if (posterEl) {
-          if (posterEl.getAttribute("src") !== b.posterUrl) {
-            posterEl.setAttribute("src", b.posterUrl);
-          }
-        } else {
-          el.innerHTML = tlBlockInnerHTML(b);
-        }
-      } else if (fallbackEl) {
-        fallbackEl.textContent = (b.title || "?").slice(0, 1);
-      } else {
-        el.innerHTML = tlBlockInnerHTML(b);
-      }
     } else {
       el.innerHTML = tlBlockInnerHTML(b);
     }
@@ -3087,7 +2767,7 @@ function morphTimeline(layout) {
   patchMarks(hoursBox, "tl-hour", true);
 
   // "Now" line: slide when it stays, fade when it appears or leaves.
-  let nowEl = canvas.querySelector(".tl-now:not(.tl-exit)");
+  let nowEl = area.querySelector(".tl-now:not(.tl-exit)");
   if (layout.nowPct != null) {
     if (nowEl) {
       nowEl.style.left = `${layout.nowPct}%`;
@@ -3097,7 +2777,7 @@ function morphTimeline(layout) {
       nowEl.style.left = `${layout.nowPct}%`;
       nowEl.style.opacity = "0";
       nowEl.appendChild(document.createElement("span")).className = "tl-now-dot";
-      canvas.insertBefore(nowEl, hoursBox);
+      area.insertBefore(nowEl, hoursBox);
       entered.push(() => {
         nowEl.style.opacity = "1";
       });
@@ -3108,10 +2788,11 @@ function morphTimeline(layout) {
 
   // Flush start styles, then let entering pieces transition into place.
   if (entered.length) {
-    void canvas.offsetWidth;
+    void area.offsetWidth;
     for (const fn of entered) fn();
   }
 }
+
 
 /** Jump from a timeline bar to that showing's card in the day list. */
 async function focusShowFromTimeline(showId) {
@@ -5051,17 +4732,6 @@ function renderSettings() {
               settingsSwitch("seatNumbers", showSeatNumbers, "data-seat-switch"),
               "is-inline"
             )}
-            ${settingsRow(
-              "timeline",
-              "tlAlways",
-              "tlAlwaysHint",
-              settingsSwitch(
-                "tlAlways",
-                timelineAlwaysExpanded,
-                "data-tl-always-switch"
-              ),
-              "is-inline"
-            )}
           </div>
         </section>
 
@@ -5130,25 +4800,6 @@ function renderSettings() {
       seatSwitch.setAttribute("aria-checked", String(showSeatNumbers));
       for (const show of state?.shows || []) {
         if (seatChartExpanded(show)) paintSeatChart(show);
-      }
-    });
-  }
-
-  const tlAlwaysSwitch = els.settingsContent.querySelector(
-    "[data-tl-always-switch]"
-  );
-  if (tlAlwaysSwitch) {
-    tlAlwaysSwitch.addEventListener("click", () => {
-      timelineAlwaysExpanded = !timelineAlwaysExpanded;
-      savePrefs();
-      tlAlwaysSwitch.setAttribute(
-        "aria-checked",
-        String(timelineAlwaysExpanded)
-      );
-      if (els.timeline && !els.timeline.hidden) {
-        setTimelineExpanded(timelineAlwaysExpanded);
-      } else {
-        syncTimelineExpandBtn();
       }
     });
   }
