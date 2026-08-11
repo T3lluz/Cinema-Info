@@ -562,7 +562,7 @@ const TL_SCROLL_MQ = window.matchMedia("(max-width: 859px)");
 const TL_HOVER_MQ = window.matchMedia("(min-width: 860px) and (hover: hover)");
 const HALF_HOUR = 1_800_000;
 /** Minimum pixels per hour on a scrollable (phone/tablet) timeline. */
-const TL_PX_PER_HOUR = 58;
+const TL_PX_PER_HOUR = 64;
 /** Extra canvas width past the last hour so edge labels/bars aren't clipped. */
 const TL_EDGE_PAD_PX = 14;
 /** Loads auto-unfolded halls as they scroll into view. */
