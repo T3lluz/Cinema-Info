@@ -561,8 +561,15 @@ const TL_SCROLL_MQ = window.matchMedia("(max-width: 859px)");
 /** Desktop with a real hover pointer expands the timeline on hover. */
 const TL_HOVER_MQ = window.matchMedia("(min-width: 860px) and (hover: hover)");
 const HALF_HOUR = 1_800_000;
-/** Minimum pixels per hour on a scrollable (phone/tablet) timeline. */
-const TL_PX_PER_HOUR = 64;
+/**
+ * Phone/tablet scroll density is derived from the day's shortest show so
+ * that bar still fits expanded content (poster + title + both clocks).
+ * Longer bars scale from the same px-per-hour. Floor keeps compact clocks
+ * readable on long-only days; the content target beats the CSS cutoffs
+ * that hide poster (<148px content-box ≈ 162px bar) / title (<96px).
+ */
+const TL_MIN_BAR_PX = 170;
+const TL_PX_PER_HOUR_FLOOR = 72;
 /** Extra canvas width past the last hour so edge labels/bars aren't clipped. */
 const TL_EDGE_PAD_PX = 14;
 /** Loads auto-unfolded halls as they scroll into view. */
@@ -2462,10 +2469,11 @@ function computeTimelineLayout() {
   t0 = Math.floor((t0 - 20 * 60_000) / HOUR) * HOUR;
   t1 = Math.ceil((t1 + 15 * 60_000) / HOUR) * HOUR;
   const span = t1 - t0;
-  // Phone/tablet: give each hour enough pixels and scroll sideways.
-  // Desktop: the area simply fills the header column.
-  const minWidthPx = TL_SCROLL_MQ.matches
-    ? Math.round((span / HOUR) * TL_PX_PER_HOUR + TL_EDGE_PAD_PX * 2)
+  // Phone/tablet: stretch the hour scale from the shortest show so every
+  // bar can hold its content, then scroll sideways. Desktop fills the column.
+  const pxPerHour = timelineScrollPxPerHour(shows);
+  const minWidthPx = pxPerHour
+    ? Math.round((span / HOUR) * pxPerHour + TL_EDGE_PAD_PX * 2)
     : 0;
   const pctOf = (ms) => ((ms - t0) / span) * 100;
 
@@ -2508,11 +2516,11 @@ function computeTimelineLayout() {
   // slide marks for the same instant and cross-fade the rest. Step size
   // follows the real pixel density once the strip has a min-width.
   const step = timelineMarkStep(span, minWidthPx);
-  const widthForLabels = minWidthPx || 0;
-  const pxPerHour = widthForLabels > 0 ? widthForLabels / (span / HOUR) : 0;
+  const trackWidthPx = minWidthPx > 0 ? Math.max(0, minWidthPx - TL_EDGE_PAD_PX * 2) : 0;
+  const pxPerHourLaid = trackWidthPx > 0 ? trackWidthPx / (span / HOUR) : 0;
   // Half-hour clock text needs room ("12:30" ≈ 28px); below ~88px/hour
   // keep the tick/gridline but drop the label so it doesn't collide.
-  const labelMinors = pxPerHour >= 88;
+  const labelMinors = pxPerHourLaid >= 88;
   const marks = [];
   for (let ts = t0; ts <= t1; ts += step) {
     const d = new Date(ts);
@@ -2541,13 +2549,32 @@ function computeTimelineLayout() {
   };
 }
 
+/**
+ * Pixels per hour on a scrollable timeline: wide enough that the shortest
+ * show of the day still fits poster, title, and start/end clocks. All
+ * other bars share that scale. Desktop returns 0 (fill the column).
+ */
+function timelineScrollPxPerHour(shows) {
+  if (!TL_SCROLL_MQ.matches || !shows?.length) return 0;
+  const HOUR = 3_600_000;
+  let shortestMs = Infinity;
+  for (const s of shows) {
+    const ms = showEndOf(s).getTime() - s.start.getTime();
+    if (ms > 0 && ms < shortestMs) shortestMs = ms;
+  }
+  if (!Number.isFinite(shortestMs) || shortestMs <= 0) return TL_PX_PER_HOUR_FLOOR;
+  const needed = TL_MIN_BAR_PX / (shortestMs / HOUR);
+  return Math.max(TL_PX_PER_HOUR_FLOOR, Math.ceil(needed));
+}
+
 /** How fine the timeline axis is — half hours when space allows. */
 function timelineMarkStep(span, minWidthPx = 0) {
   const HOUR = 3_600_000;
-  // Prefer the laid-out pixel density: a scrollable strip with ~58px/hour
-  // can take half-hour ticks even on a phone.
+  // Prefer the track (canvas) density: subtract edge pad so ticks match
+  // the same px-per-hour used to size bars.
+  const trackPx = minWidthPx > 0 ? Math.max(0, minWidthPx - TL_EDGE_PAD_PX * 2) : 0;
   const widthPx =
-    minWidthPx ||
+    trackPx ||
     els.timelineMain?.querySelector(".tl-scroller")?.clientWidth ||
     0;
   const pxPerHour = widthPx > 0 ? widthPx / (span / HOUR) : 0;
