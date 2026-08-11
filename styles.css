@@ -536,9 +536,10 @@ h1 {
 }
 
 /* —— Header timeline ——
-   Solid squircle bars: start left, end right; title lives in the tip.
-   JS sizes the canvas from the day's shortest show so both clocks fit,
-   then scrolls sideways when the day is denser than the viewport. */
+   Solid squircle bars with a bold start clock (end time lives in the tip).
+   Span is first show → last show — no empty lead/trail. JS sizes the
+   canvas from the shortest show so the start clock fits, then scrolls
+   sideways when the day is denser than the viewport. */
 .timeline {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
@@ -603,7 +604,7 @@ h1 {
 .tl-scroller {
   min-width: 0;
   overflow: visible;
-  scroll-padding-inline: 12px;
+  scroll-padding-inline: 6px;
 }
 
 .tl-scroller.is-scrollable {
@@ -614,8 +615,8 @@ h1 {
   mask-image: linear-gradient(
     to right,
     transparent,
-    #000 10px,
-    #000 calc(100% - 10px),
+    #000 8px,
+    #000 calc(100% - 8px),
     transparent
   );
 }
@@ -624,12 +625,11 @@ h1 {
   display: none;
 }
 
-/* Inset canvas: hour labels at 0%/100% keep their full width, and the
-   first/last bars aren't flush against the scroller clip. Absolute
+/* Inset canvas: a thin pad so edge hour labels aren't clipped. Absolute
    children (bars, marks, now) share this same box so they stay aligned. */
 .tl-canvas {
   position: relative;
-  margin: 0 12px;
+  margin: 0 6px;
   min-width: 0;
 }
 
@@ -686,15 +686,15 @@ h1 {
   color: #fff;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 4px;
-  padding: 0 6px;
+  justify-content: center;
+  gap: 0;
+  padding: 0 5px;
   overflow: hidden;
   white-space: nowrap;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
   font: inherit;
-  text-align: left;
+  text-align: center;
   transition:
     left 0.4s cubic-bezier(0.3, 0.75, 0.25, 1),
     width 0.4s cubic-bezier(0.3, 0.75, 0.25, 1),
@@ -712,9 +712,7 @@ h1 {
 }
 
 .tl-block:not(.done):not(.estimated):not(.live):not(.soon) .tl-block-start,
-.tl-block:not(.done):not(.estimated):not(.live):not(.soon) .tl-block-end,
-.tl-block.upcoming .tl-block-start,
-.tl-block.upcoming .tl-block-end {
+.tl-block.upcoming .tl-block-start {
   color: #fff;
 }
 
@@ -736,8 +734,7 @@ h1 {
   pointer-events: none;
 }
 
-.tl-block-start,
-.tl-block-end {
+.tl-block-start {
   flex: 0 0 auto;
   font-family: var(--mono);
   font-size: 0.58rem;
@@ -747,18 +744,12 @@ h1 {
   line-height: 1;
 }
 
-.tl-block-end {
-  margin-left: auto;
-  text-align: right;
-}
-
 .tl-block.done {
   background: color-mix(in srgb, var(--done) 55%, var(--surface));
   color: color-mix(in srgb, var(--done) 92%, var(--ink));
 }
 
-.tl-block.done .tl-block-start,
-.tl-block.done .tl-block-end {
+.tl-block.done .tl-block-start {
   text-decoration: line-through;
   text-decoration-thickness: 1px;
   text-decoration-color: color-mix(in srgb, var(--done) 55%, transparent);

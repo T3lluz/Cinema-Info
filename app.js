@@ -546,13 +546,13 @@ const SEATS_OPEN_MQ = window.matchMedia("(min-width: 700px)");
 const TL_WIDE_MQ = window.matchMedia("(min-width: 700px)");
 const HALF_HOUR = 1_800_000;
 /**
- * Shortest-bar target width so both bold start/end clocks fit with pad.
- * Canvas density comes from that show; denser days scroll sideways.
+ * Shortest-bar target so a bold start clock fits with pad. Canvas density
+ * comes from that show; denser days scroll sideways.
  */
-const TL_MIN_BAR_PX = 96;
-const TL_PX_PER_HOUR_FLOOR = 56;
-/** Extra canvas width past the last hour so edge labels/bars aren't clipped. */
-const TL_EDGE_PAD_PX = 12;
+const TL_MIN_BAR_PX = 40;
+const TL_PX_PER_HOUR_FLOOR = 40;
+/** Small inset so hour labels at the edges aren't clipped. */
+const TL_EDGE_PAD_PX = 6;
 /** Loads auto-unfolded halls as they scroll into view. */
 let seatAutoObserver = null;
 /** How many fetches are in flight; the refresh button spins while any are. */
@@ -2426,7 +2426,7 @@ function showEndOf(show) {
 const TL_EXIT_MS = 500;
 
 /**
- * Pixels per hour so the day's shortest show still fits both clocks.
+ * Pixels per hour so the day's shortest show still fits its start clock.
  * Longer bars share that scale; the strip scrolls when the canvas is
  * wider than the viewport.
  */
@@ -2458,10 +2458,11 @@ function computeTimelineLayout() {
   if (!shows.length) return { day, lanes: [] };
 
   const HOUR = 3_600_000;
+  // Span is first start → last end only — no empty lead/trail before the
+  // first show or after the last, so bars claim the full track width.
   let t0 = Math.min(...shows.map((s) => s.start.getTime()));
   let t1 = Math.max(...shows.map((s) => showEndOf(s).getTime()));
-  t0 = Math.floor((t0 - 20 * 60_000) / HOUR) * HOUR;
-  t1 = Math.ceil((t1 + 15 * 60_000) / HOUR) * HOUR;
+  if (t1 <= t0) t1 = t0 + HOUR;
   const span = t1 - t0;
   const pxPerHour = timelinePxPerHour(shows);
   const minWidthPx = Math.round((span / HOUR) * pxPerHour + TL_EDGE_PAD_PX * 2);
@@ -2492,7 +2493,6 @@ function computeTimelineLayout() {
           status: statusOf(s, now),
           estimated: !s.end,
           startLabel: startClock,
-          endLabel: endClock,
           tip: `${s.title} · ${range}`,
         };
       }),
@@ -2508,7 +2508,10 @@ function computeTimelineLayout() {
   // the label when hours are too tight.
   const labelMinors = pxPerHourLaid >= 72;
   const marks = [];
-  for (let ts = t0; ts <= t1; ts += step) {
+  // Only marks that fall inside the tight show span (no empty hours
+  // before the first or after the last film).
+  const firstMark = Math.ceil(t0 / step) * step;
+  for (let ts = firstMark; ts <= t1; ts += step) {
     const d = new Date(ts);
     const minor = d.getMinutes() !== 0;
     marks.push({
@@ -2609,8 +2612,7 @@ function renderTimeline() {
 }
 
 function tlBlockInnerHTML(b) {
-  return `<span class="tl-block-start">${escapeHtml(b.startLabel)}</span>
-      <span class="tl-block-end">${escapeHtml(b.endLabel)}</span>`;
+  return `<span class="tl-block-start">${escapeHtml(b.startLabel)}</span>`;
 }
 
 /** Compact hall label for the timeline gutter — "Kinosal"→"Kino", etc. */
@@ -2718,10 +2720,8 @@ function morphTimeline(layout) {
     el.title = b.tip;
     el.setAttribute("aria-label", b.tip);
     const startEl = el.querySelector(".tl-block-start");
-    const endEl = el.querySelector(".tl-block-end");
-    if (startEl && endEl) {
+    if (startEl) {
       startEl.textContent = b.startLabel;
-      endEl.textContent = b.endLabel;
     } else {
       el.innerHTML = tlBlockInnerHTML(b);
     }
