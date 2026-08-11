@@ -2508,6 +2508,11 @@ function computeTimelineLayout() {
   // slide marks for the same instant and cross-fade the rest. Step size
   // follows the real pixel density once the strip has a min-width.
   const step = timelineMarkStep(span, minWidthPx);
+  const widthForLabels = minWidthPx || 0;
+  const pxPerHour = widthForLabels > 0 ? widthForLabels / (span / HOUR) : 0;
+  // Half-hour clock text needs room ("12:30" ≈ 28px); below ~88px/hour
+  // keep the tick/gridline but drop the label so it doesn't collide.
+  const labelMinors = pxPerHour >= 88;
   const marks = [];
   for (let ts = t0; ts <= t1; ts += step) {
     const d = new Date(ts);
@@ -2515,7 +2520,11 @@ function computeTimelineLayout() {
     marks.push({
       ts,
       pct: pctOf(ts),
-      label: minor ? formatClock(d) : String(d.getHours()),
+      label: minor
+        ? labelMinors
+          ? formatClock(d)
+          : ""
+        : String(d.getHours()),
       minor,
     });
   }

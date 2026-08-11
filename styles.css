@@ -1180,6 +1180,11 @@ h1 {
   color: color-mix(in srgb, var(--muted) 68%, transparent);
 }
 
+/* Unlabeled half-hour ticks: keep the gridline, hide the empty chip. */
+.tl-hour.minor:empty {
+  display: none;
+}
+
 .main {
   flex: 1;
   display: flex;
