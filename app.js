@@ -565,8 +565,9 @@ const HALF_HOUR = 1_800_000;
  * Phone/tablet scroll density is derived from the day's shortest show so
  * that bar still fits expanded content (poster + title + both clocks).
  * Longer bars scale from the same px-per-hour. Floor keeps compact clocks
- * readable on long-only days; the content target beats the CSS cutoffs
- * that hide poster (<148px content-box ≈ 162px bar) / title (<96px).
+ * readable on long-only days; the target clears the CSS container cutoffs
+ * that hide poster (content-box <148px) and title (<96px), including the
+ * expanded bar's horizontal padding under border-box sizing.
  */
 const TL_MIN_BAR_PX = 170;
 const TL_PX_PER_HOUR_FLOOR = 72;
