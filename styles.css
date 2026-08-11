@@ -549,7 +549,8 @@ h1 {
 /* —— Header timeline ——
    Compact coloured pills with start/end clocks.
    Expand → rich Gantt (poster + title + times). On phone/tablet the
-   track area scrolls horizontally so bars have room. */
+   track area scrolls horizontally; JS sizes hours from the shortest
+   show so every bar can hold its content. */
 .timeline {
   --tl-ease: cubic-bezier(0.33, 0.9, 0.28, 1);
   --tl-dur: 0.48s;
