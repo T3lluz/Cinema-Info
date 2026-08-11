@@ -567,9 +567,11 @@ const HALF_HOUR = 1_800_000;
  * Longer bars scale from the same px-per-hour. Floor keeps compact clocks
  * readable on long-only days; the target clears the CSS container cutoffs
  * that hide poster (content-box <148px) and title (<96px), including the
- * expanded bar's horizontal padding under border-box sizing.
+ * expanded bar's horizontal padding under border-box sizing. Sized a bit
+ * past the bare cutoff so a typical title (e.g. "Paw Patrol: Dinofilmen")
+ * usually fits without ellipsis.
  */
-const TL_MIN_BAR_PX = 170;
+const TL_MIN_BAR_PX = 210;
 const TL_PX_PER_HOUR_FLOOR = 72;
 /** Extra canvas width past the last hour so edge labels/bars aren't clipped. */
 const TL_EDGE_PAD_PX = 14;
