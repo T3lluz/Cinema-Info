@@ -611,6 +611,27 @@ h1 {
 .tl-scroller {
   min-width: 0;
   overflow: visible;
+  scroll-padding-inline: 16px;
+}
+
+/* Phone/tablet: always scroll the track canvas — compact pills and
+   expanded Gantt share one scale so bars line up with the hour marks. */
+.tl-scroller.is-scrollable {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 10px,
+    #000 calc(100% - 10px),
+    transparent
+  );
+}
+
+.tl-scroller.is-scrollable::-webkit-scrollbar {
+  display: none;
 }
 
 /* Timeline detail chevron — phone/tablet only (desktop uses hover).
@@ -744,35 +765,17 @@ h1 {
   }
 }
 
-/* Phone/tablet expanded: widen the track canvas and scroll sideways. */
-@media (max-width: 859px) {
-  .timeline.is-expanded .tl-scroller {
-    overflow-x: auto;
-    overscroll-behavior-x: contain;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    mask-image: linear-gradient(
-      to right,
-      transparent,
-      #000 12px,
-      #000 calc(100% - 12px),
-      transparent
-    );
-    transition: mask-image 0.2s ease;
-  }
-
-  .timeline.is-expanded .tl-scroller::-webkit-scrollbar {
-    display: none;
-  }
-
-  .timeline.is-expanded .tl-area {
-    min-width: max(100%, 46rem);
-    transition: min-width var(--tl-dur) var(--tl-ease);
-  }
-}
-
 .tl-area {
   position: relative;
+  min-width: 0;
+}
+
+/* Inset canvas: hour labels at 0%/100% keep their full width, and the
+   first/last bars aren't flush against the scroller clip. Absolute
+   children (bars, marks, now) share this same box so they stay aligned. */
+.tl-canvas {
+  position: relative;
+  margin: 0 14px;
   min-width: 0;
 }
 
@@ -842,6 +845,7 @@ h1 {
   font: inherit;
   text-align: left;
   container-type: inline-size;
+  scroll-margin-inline: 28px;
   box-shadow: 0 1px 2px color-mix(in srgb, var(--ink) 10%, transparent);
   transition:
     left var(--tl-dur) var(--tl-ease),
@@ -4548,27 +4552,47 @@ button.bar-row.day-bar:focus-visible {
   padding-left: 1px;
 }
 
+/* Keep start/end on opposite ends so a partially scrolled bar still
+   shows a clock on the visible edge (avoids empty grey stubs). */
 .timeline.is-expanded .tl-block-times {
-  justify-content: flex-start;
-  gap: 5px;
+  justify-content: space-between;
+  gap: 6px;
 }
 
 .timeline.is-expanded .tl-block-end {
-  margin-left: 0;
-  text-align: left;
+  margin-left: auto;
+  text-align: right;
   opacity: 1;
 }
 
 .timeline.is-expanded .tl-block-end::before {
-  content: "–";
-  margin-right: 5px;
-  opacity: 0.5;
+  content: none;
+  margin: 0;
 }
 
 .timeline.is-expanded .tl-block-start,
 .timeline.is-expanded .tl-block-end {
   font-size: 0.6rem;
   font-weight: 650;
+}
+
+/* Narrow expanded bars: pack clocks with an en-dash. */
+@container (max-width: 112px) {
+  .timeline.is-expanded .tl-block-times {
+    justify-content: flex-start;
+    gap: 5px;
+  }
+
+  .timeline.is-expanded .tl-block-end {
+    margin-left: 0;
+    text-align: left;
+  }
+
+  .timeline.is-expanded .tl-block-end::before {
+    content: "–";
+    margin-right: 5px;
+    opacity: 0.5;
+  }
 }
 
 @container (max-width: 148px) {
@@ -4595,21 +4619,6 @@ button.bar-row.day-bar:focus-visible {
     flex-direction: row;
     align-items: center;
     gap: 0;
-  }
-
-  .timeline.is-expanded .tl-block-times {
-    width: 100%;
-    justify-content: space-between;
-  }
-
-  .timeline.is-expanded .tl-block-end {
-    margin-left: auto;
-    text-align: right;
-  }
-
-  .timeline.is-expanded .tl-block-end::before {
-    content: none;
-    margin: 0;
   }
 }
 
@@ -4640,10 +4649,6 @@ button.bar-row.day-bar:focus-visible {
   .timeline.is-expanded .tl-block-end {
     font-size: 0.62rem;
   }
-
-  .timeline.is-expanded .tl-area {
-    min-width: max(100%, 52rem);
-  }
 }
 
 @media (min-width: 860px) {
@@ -4667,12 +4672,9 @@ button.bar-row.day-bar:focus-visible {
     font-size: 0.64rem;
   }
 
-  /* Desktop is wide enough — no forced min canvas width / sideways scroll. */
-  .timeline.is-expanded .tl-area {
-    min-width: 0;
-  }
-
-  .timeline.is-expanded .tl-scroller {
+  /* Desktop fills the column — JS clears min-width; no sideways scroll. */
+  .timeline.is-expanded .tl-scroller,
+  .timeline.is-expanded .tl-scroller.is-scrollable {
     overflow: visible;
     mask-image: none;
   }
