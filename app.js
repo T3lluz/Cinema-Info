@@ -545,6 +545,14 @@ const SEATS_OPEN_MQ = window.matchMedia("(min-width: 700px)");
 /** Wider viewports get half-hour ticks on the header timeline. */
 const TL_WIDE_MQ = window.matchMedia("(min-width: 700px)");
 const HALF_HOUR = 1_800_000;
+/**
+ * Shortest-bar target width so both bold start/end clocks fit with pad.
+ * Canvas density comes from that show; denser days scroll sideways.
+ */
+const TL_MIN_BAR_PX = 96;
+const TL_PX_PER_HOUR_FLOOR = 56;
+/** Extra canvas width past the last hour so edge labels/bars aren't clipped. */
+const TL_EDGE_PAD_PX = 12;
 /** Loads auto-unfolded halls as they scroll into view. */
 let seatAutoObserver = null;
 /** How many fetches are in flight; the refresh button spins while any are. */
@@ -685,6 +693,7 @@ async function init() {
     movePillIndicator(activeTab, { instant: true });
     moveDayIndicator({ instant: true });
     updateLiquidLenses();
+    if (state?.shows && !els.timeline?.hidden) renderTimeline();
   });
 
   // Crossing phone/desktop changes whether the timeline shows :30 ticks.
@@ -2416,6 +2425,26 @@ function showEndOf(show) {
 /** How long timeline pieces get to finish their exit transition. */
 const TL_EXIT_MS = 500;
 
+/**
+ * Pixels per hour so the day's shortest show still fits both clocks.
+ * Longer bars share that scale; the strip scrolls when the canvas is
+ * wider than the viewport.
+ */
+function timelinePxPerHour(shows) {
+  if (!shows?.length) return TL_PX_PER_HOUR_FLOOR;
+  const HOUR = 3_600_000;
+  let shortestMs = Infinity;
+  for (const s of shows) {
+    const ms = showEndOf(s).getTime() - s.start.getTime();
+    if (ms > 0 && ms < shortestMs) shortestMs = ms;
+  }
+  if (!Number.isFinite(shortestMs) || shortestMs <= 0) {
+    return TL_PX_PER_HOUR_FLOOR;
+  }
+  const needed = TL_MIN_BAR_PX / (shortestMs / HOUR);
+  return Math.max(TL_PX_PER_HOUR_FLOOR, Math.ceil(needed));
+}
+
 /** Everything needed to draw the header timeline for one day, expressed
  * as percentages so the same data drives both a fresh build and a morph. */
 function computeTimelineLayout() {
@@ -2434,6 +2463,8 @@ function computeTimelineLayout() {
   t0 = Math.floor((t0 - 20 * 60_000) / HOUR) * HOUR;
   t1 = Math.ceil((t1 + 15 * 60_000) / HOUR) * HOUR;
   const span = t1 - t0;
+  const pxPerHour = timelinePxPerHour(shows);
+  const minWidthPx = Math.round((span / HOUR) * pxPerHour + TL_EDGE_PAD_PX * 2);
   const pctOf = (ms) => ((ms - t0) / span) * 100;
 
   const screens = [...new Set(shows.map((s) => s.screen))].sort((a, b) =>
@@ -2468,9 +2499,14 @@ function computeTimelineLayout() {
   }));
 
   // Tick marks double as gridlines; keyed by timestamp so a morph can
-  // slide marks for the same instant and cross-fade the rest. Half-hour
-  // ticks appear when the strip is wide enough (desktop sooner than phone).
-  const step = timelineMarkStep(span);
+  // slide marks for the same instant and cross-fade the rest. Density
+  // follows the canvas px-per-hour so labels stay readable when scrolled.
+  const trackWidthPx = Math.max(0, minWidthPx - TL_EDGE_PAD_PX * 2);
+  const pxPerHourLaid = trackWidthPx / (span / HOUR);
+  const step = timelineMarkStep(span, pxPerHourLaid);
+  // Half-hour clock text needs room ("12:30"); keep the tick but drop
+  // the label when hours are too tight.
+  const labelMinors = pxPerHourLaid >= 72;
   const marks = [];
   for (let ts = t0; ts <= t1; ts += step) {
     const d = new Date(ts);
@@ -2478,28 +2514,68 @@ function computeTimelineLayout() {
     marks.push({
       ts,
       pct: pctOf(ts),
-      label: minor ? formatClock(d) : String(d.getHours()),
+      label: minor
+        ? labelMinors
+          ? formatClock(d)
+          : ""
+        : String(d.getHours()),
       minor,
     });
   }
 
   const nowTs = now.getTime();
   const showNow = day === toDayKey(now) && nowTs >= t0 && nowTs <= t1;
-  return { day, lanes, marks, nowPct: showNow ? pctOf(nowTs) : null };
+  return {
+    day,
+    lanes,
+    marks,
+    nowPct: showNow ? pctOf(nowTs) : null,
+    minWidthPx,
+  };
 }
 
 /** How fine the timeline axis is — half hours when space allows. */
-function timelineMarkStep(span) {
-  const wide = TL_WIDE_MQ.matches;
+function timelineMarkStep(span, pxPerHour = 0) {
   const HOUR = 3_600_000;
+  if (pxPerHour >= 52) return HALF_HOUR;
+  if (pxPerHour >= 36) return HOUR;
+
+  const wide = TL_WIDE_MQ.matches;
   if (wide) {
-    // Desktop: :30 ticks unless the day is unusually long.
+    // Desktop fallback before density is known: :30 unless the day is long.
     return span > 12 * HOUR ? HOUR : HALF_HOUR;
   }
-  // Phone: half hours only on compact evenings; otherwise hourly / 2h.
   if (span > 10 * HOUR) return 2 * HOUR;
   if (span > 6.5 * HOUR) return HOUR;
   return HALF_HOUR;
+}
+
+/**
+ * Size the track canvas from the layout min-width and enable sideways
+ * scroll only when the day is denser than the available column.
+ */
+function applyTimelineChrome(layout, { scroll = true } = {}) {
+  const scroller = els.timeline?.querySelector(".tl-scroller");
+  const canvas = els.timeline?.querySelector(".tl-canvas");
+  if (!scroller || !canvas) return;
+
+  const minWidthPx = layout?.minWidthPx || 0;
+  const trackMin =
+    minWidthPx > 0 ? Math.max(0, minWidthPx - TL_EDGE_PAD_PX * 2) : 0;
+  canvas.style.minWidth = trackMin ? `${trackMin}px` : "";
+
+  // Read after min-width applies so scrollWidth reflects the real canvas.
+  void canvas.offsetWidth;
+  const needsScroll = scroller.scrollWidth > scroller.clientWidth + 1;
+  scroller.classList.toggle("is-scrollable", needsScroll);
+
+  if (!scroll || !needsScroll || layout?.nowPct == null) return;
+
+  // Keep "now" in view without jumping the page vertically.
+  const trackW = canvas.clientWidth || 1;
+  const nowX = (layout.nowPct / 100) * trackW + TL_EDGE_PAD_PX;
+  const target = Math.max(0, nowX - scroller.clientWidth / 2);
+  scroller.scrollLeft = target;
 }
 
 function renderTimeline() {
@@ -2523,11 +2599,13 @@ function renderTimeline() {
 
   // Morph the existing bars into the new day's layout when possible;
   // build from scratch only when there is nothing on screen yet.
-  if (!els.timeline.hidden && els.timeline.querySelector(".tl-tracks")) {
+  const hadTracks = !els.timeline.hidden && els.timeline.querySelector(".tl-tracks");
+  if (hadTracks) {
     morphTimeline(layout);
   } else {
     buildTimeline(layout);
   }
+  applyTimelineChrome(layout, { scroll: true });
 }
 
 function tlBlockInnerHTML(b) {
@@ -2573,32 +2651,36 @@ function buildTimeline(layout) {
           `<span class="tl-lane-name" data-screen="${escapeHtml(l.screen)}" title="${escapeHtml(l.screen)}">${tlLaneNameHTML(l.screen)}</span>`
       )
       .join("")}</div>
-    <div class="tl-area">
-      <div class="tl-gridlines">${layout.marks
-        .map(
-          (m) =>
-            `<span class="tl-gridline${m.minor ? " minor" : ""}" data-ts="${m.ts}" style="left:${m.pct}%"></span>`
-        )
-        .join("")}</div>
-      <div class="tl-tracks">${layout.lanes
-        .map(
-          (l) =>
-            `<div class="tl-track" data-screen="${escapeHtml(l.screen)}">${l.blocks
-              .map(blockHTML)
-              .join("")}</div>`
-        )
-        .join("")}</div>
-      ${
-        layout.nowPct != null
-          ? `<div class="tl-now" style="left:${layout.nowPct}%"><span class="tl-now-dot"></span></div>`
-          : ""
-      }
-      <div class="tl-hours">${layout.marks
-        .map(
-          (m) =>
-            `<span class="tl-hour${m.minor ? " minor" : ""}" data-ts="${m.ts}" style="left:${m.pct}%">${m.label}</span>`
-        )
-        .join("")}</div>
+    <div class="tl-scroller">
+      <div class="tl-canvas">
+        <div class="tl-area">
+          <div class="tl-gridlines">${layout.marks
+            .map(
+              (m) =>
+                `<span class="tl-gridline${m.minor ? " minor" : ""}" data-ts="${m.ts}" style="left:${m.pct}%"></span>`
+            )
+            .join("")}</div>
+          <div class="tl-tracks">${layout.lanes
+            .map(
+              (l) =>
+                `<div class="tl-track" data-screen="${escapeHtml(l.screen)}">${l.blocks
+                  .map(blockHTML)
+                  .join("")}</div>`
+            )
+            .join("")}</div>
+          ${
+            layout.nowPct != null
+              ? `<div class="tl-now" style="left:${layout.nowPct}%"><span class="tl-now-dot"></span></div>`
+              : ""
+          }
+          <div class="tl-hours">${layout.marks
+            .map(
+              (m) =>
+                `<span class="tl-hour${m.minor ? " minor" : ""}" data-ts="${m.ts}" style="left:${m.pct}%">${m.label}</span>`
+            )
+            .join("")}</div>
+        </div>
+      </div>
     </div>
   `;
 }
@@ -2616,6 +2698,12 @@ function morphTimeline(layout) {
   const tracksBox = els.timeline.querySelector(".tl-tracks");
   const hoursBox = els.timeline.querySelector(".tl-hours");
   const area = els.timeline.querySelector(".tl-area");
+  const canvas = els.timeline.querySelector(".tl-canvas");
+
+  if (!namesBox || !gridsBox || !tracksBox || !hoursBox || !area || !canvas) {
+    buildTimeline(layout);
+    return;
+  }
 
   /** Finishing touches for entering nodes, applied one frame after they
    * are inserted with their start styles so the transition can play. */

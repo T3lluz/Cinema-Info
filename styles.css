@@ -536,10 +536,12 @@ h1 {
 }
 
 /* —— Header timeline ——
-   Flat, compact schedule strip: start left, end right; title lives in the tip. */
+   Solid squircle bars: start left, end right; title lives in the tip.
+   JS sizes the canvas from the day's shortest show so both clocks fit,
+   then scrolls sideways when the day is denser than the viewport. */
 .timeline {
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: auto minmax(0, 1fr);
   gap: 10px;
   align-items: stretch;
   /* Only set vertical margin — horizontal auto centering comes from .top > *. */
@@ -598,6 +600,39 @@ h1 {
   }
 }
 
+.tl-scroller {
+  min-width: 0;
+  overflow: visible;
+  scroll-padding-inline: 12px;
+}
+
+.tl-scroller.is-scrollable {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 10px,
+    #000 calc(100% - 10px),
+    transparent
+  );
+}
+
+.tl-scroller.is-scrollable::-webkit-scrollbar {
+  display: none;
+}
+
+/* Inset canvas: hour labels at 0%/100% keep their full width, and the
+   first/last bars aren't flush against the scroller clip. Absolute
+   children (bars, marks, now) share this same box so they stay aligned. */
+.tl-canvas {
+  position: relative;
+  margin: 0 12px;
+  min-width: 0;
+}
+
 .tl-area {
   position: relative;
   min-width: 0;
@@ -646,21 +681,20 @@ h1 {
   top: 2px;
   bottom: 2px;
   border: 0;
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--accent) 78%, transparent);
+  border-radius: 7px;
+  background: var(--accent);
   color: #fff;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 6px;
-  padding: 0 7px;
+  gap: 4px;
+  padding: 0 6px;
   overflow: hidden;
   white-space: nowrap;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
   font: inherit;
   text-align: left;
-  container-type: inline-size;
   transition:
     left 0.4s cubic-bezier(0.3, 0.75, 0.25, 1),
     width 0.4s cubic-bezier(0.3, 0.75, 0.25, 1),
@@ -707,33 +741,20 @@ h1 {
   flex: 0 0 auto;
   font-family: var(--mono);
   font-size: 0.58rem;
-  font-weight: 700;
+  font-weight: 800;
   font-variant-numeric: tabular-nums;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.04em;
   line-height: 1;
 }
 
 .tl-block-end {
   margin-left: auto;
   text-align: right;
-  opacity: 0.9;
-}
-
-/* Very short bars: keep only the start clock, centered. */
-@container (max-width: 52px) {
-  .tl-block-end {
-    display: none;
-  }
-
-  .tl-block {
-    justify-content: center;
-    padding: 0 4px;
-  }
 }
 
 .tl-block.done {
-  background: color-mix(in srgb, var(--done) 28%, transparent);
-  color: color-mix(in srgb, var(--done) 82%, var(--ink));
+  background: color-mix(in srgb, var(--done) 55%, var(--surface));
+  color: color-mix(in srgb, var(--done) 92%, var(--ink));
 }
 
 .tl-block.done .tl-block-start,
@@ -744,12 +765,12 @@ h1 {
 }
 
 .tl-block.live {
-  background: color-mix(in srgb, var(--ok) 78%, transparent);
+  background: var(--ok);
   color: #fff;
 }
 
 .tl-block.soon {
-  background: color-mix(in srgb, var(--warn) 78%, transparent);
+  background: var(--warn);
   color: #fff;
 }
 
@@ -768,21 +789,21 @@ h1 {
 
 /* Estimated end: outline instead of a busy stripe fill. */
 .tl-block.estimated {
-  background: color-mix(in srgb, var(--accent) 16%, var(--surface));
-  color: color-mix(in srgb, var(--accent) 78%, var(--ink));
-  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--accent) 55%, transparent);
+  background: color-mix(in srgb, var(--accent) 22%, var(--surface));
+  color: color-mix(in srgb, var(--accent) 82%, var(--ink));
+  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--accent) 60%, transparent);
 }
 
 .tl-block.estimated.live {
-  background: color-mix(in srgb, var(--ok) 18%, var(--surface));
-  color: color-mix(in srgb, var(--ok) 80%, var(--ink));
-  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--ok) 55%, transparent);
+  background: color-mix(in srgb, var(--ok) 24%, var(--surface));
+  color: color-mix(in srgb, var(--ok) 84%, var(--ink));
+  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--ok) 60%, transparent);
 }
 
 .tl-block.estimated.soon {
-  background: color-mix(in srgb, var(--warn) 20%, var(--surface));
-  color: color-mix(in srgb, var(--warn) 78%, var(--ink));
-  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--warn) 55%, transparent);
+  background: color-mix(in srgb, var(--warn) 26%, var(--surface));
+  color: color-mix(in srgb, var(--warn) 82%, var(--ink));
+  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--warn) 60%, transparent);
 }
 
 .tl-now {
