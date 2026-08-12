@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-12T11:55:49.259Z",
+  "updatedAt": "2026-08-12T23:56:22.026Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -3279,7 +3279,7 @@
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 2.94,
+          "value": 2.92,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         }
       },
@@ -3465,7 +3465,7 @@
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 2.94,
+          "value": 2.92,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         }
       },
@@ -3699,7 +3699,7 @@
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 2.94,
+          "value": 2.92,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         }
       },
@@ -3981,7 +3981,7 @@
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 2.94,
+          "value": 2.92,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         }
       },
@@ -4166,7 +4166,7 @@
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 2.94,
+          "value": 2.92,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         }
       },
@@ -4343,7 +4343,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92790/purchase?kanal=dxf",
       "eventId": "92790",
       "promoterId": "202",
-      "sold": 6,
+      "sold": 15,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -4362,7 +4362,7 @@
       },
       "reserved": 0,
       "capacity": 246,
-      "available": 240
+      "available": 231
     },
     {
       "id": "EDI20251106-2026-08-12T17:30:00-Kinosal",
@@ -4400,7 +4400,7 @@
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 2.94,
+          "value": 2.92,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         }
       },
@@ -4434,7 +4434,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92791/purchase?kanal=dxf",
       "eventId": "92791",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 9,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -4453,7 +4453,7 @@
       },
       "reserved": 0,
       "capacity": 246,
-      "available": 246
+      "available": 237
     },
     {
       "id": "EDI20240688-2026-08-12T20:00:00-Kinosal",
@@ -4481,7 +4481,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92788/purchase?kanal=dxf",
       "eventId": "92788",
       "promoterId": "202",
-      "sold": 10,
+      "sold": 19,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -4499,8 +4499,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 108,
-      "available": 98
+      "capacity": 110,
+      "available": 91
     },
     {
       "id": "EDI20251106-2026-08-13T16:50:00-Kinosal",
@@ -4538,7 +4538,7 @@
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 2.94,
+          "value": 2.92,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         }
       },
@@ -4573,7 +4573,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92853/purchase?kanal=dxf",
       "eventId": "92853",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 5,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -4592,7 +4592,7 @@
       },
       "reserved": 0,
       "capacity": 246,
-      "available": 246
+      "available": 241
     },
     {
       "id": "UIP20241680-2026-08-13T19:10:00-Kinosal",
@@ -4620,7 +4620,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92792/purchase?kanal=dxf",
       "eventId": "92792",
       "promoterId": "202",
-      "sold": 5,
+      "sold": 9,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -4638,8 +4638,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 108,
-      "available": 103
+      "capacity": 110,
+      "available": 101
     },
     {
       "id": "EDI20240688-2026-08-13T20:00:00-Storsal",
@@ -4724,7 +4724,7 @@
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 2.94,
+          "value": 2.92,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         }
       },
@@ -4760,7 +4760,12 @@
       "promoterId": "202",
       "sold": 0,
       "eventStatus": "ok",
-      "ratings": null,
+      "ratings": {
+        "letterboxd": {
+          "value": 3.14,
+          "url": "https://letterboxd.com/film/the-end-of-oak-street/"
+        }
+      },
       "reserved": 0,
       "capacity": 110,
       "available": 110
@@ -4838,7 +4843,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92722/purchase?kanal=dxf",
       "eventId": "92722",
       "promoterId": "202",
-      "sold": 2,
+      "sold": 13,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -4857,7 +4862,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 108
+      "available": 97
     },
     {
       "id": "EDI20260626-2026-08-14T21:30:00-Storsal",
@@ -4940,7 +4945,7 @@
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 2.94,
+          "value": 2.92,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         }
       },
@@ -5071,7 +5076,12 @@
       "promoterId": "202",
       "sold": 0,
       "eventStatus": "ok",
-      "ratings": null,
+      "ratings": {
+        "letterboxd": {
+          "value": 3.14,
+          "url": "https://letterboxd.com/film/the-end-of-oak-street/"
+        }
+      },
       "reserved": 0,
       "capacity": 286,
       "available": 286
@@ -5102,7 +5112,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92798/purchase?kanal=dxf",
       "eventId": "92798",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 4,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -5121,7 +5131,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 110
+      "available": 106
     },
     {
       "id": "EDI20240688-2026-08-15T20:30:00-Storsal",
@@ -5149,7 +5159,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92727/purchase?kanal=dxf",
       "eventId": "92727",
       "promoterId": "202",
-      "sold": 2,
+      "sold": 4,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -5168,7 +5178,7 @@
       },
       "reserved": 0,
       "capacity": 286,
-      "available": 284
+      "available": 282
     },
     {
       "id": "EDI20251106-2026-08-16T15:00:00-Kinosal",
@@ -5206,7 +5216,7 @@
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 2.94,
+          "value": 2.92,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         }
       },
@@ -5384,7 +5394,12 @@
       "promoterId": "202",
       "sold": 0,
       "eventStatus": "ok",
-      "ratings": null,
+      "ratings": {
+        "letterboxd": {
+          "value": 3.14,
+          "url": "https://letterboxd.com/film/the-end-of-oak-street/"
+        }
+      },
       "reserved": 0,
       "capacity": 110,
       "available": 110
@@ -5472,7 +5487,7 @@
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 2.94,
+          "value": 2.92,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         }
       },
@@ -5603,7 +5618,12 @@
       "promoterId": "202",
       "sold": 0,
       "eventStatus": "ok",
-      "ratings": null,
+      "ratings": {
+        "letterboxd": {
+          "value": 3.14,
+          "url": "https://letterboxd.com/film/the-end-of-oak-street/"
+        }
+      },
       "reserved": 0,
       "capacity": 286,
       "available": 286
