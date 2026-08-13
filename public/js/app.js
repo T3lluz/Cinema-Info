@@ -550,11 +550,11 @@ const TL_MIN_BLOCK_PX = 92;
 /** Side pad on the plot so hour labels sitting on 0%/100% are not clipped. */
 const TL_CANVAS_PAD = 10;
 const TL_MAX_CANVAS_PX = 3600;
-/** After the visitor stops panning, snap "now" back to the centre. */
+/** After the visitor stops panning, bring "now" back on screen if it left. */
 const TL_FOLLOW_RESUME_MS = 1800;
 /** Day last auto-scrolled on the timeline — skip the jump on live refreshes. */
 let tlScrollDay = "";
-/** Keep the now-marker in the middle of the track until the visitor pans. */
+/** Keep the now-marker on screen until the visitor pans. */
 let tlFollowNow = true;
 let tlProgrammaticScroll = false;
 let tlFollowResumeTimer = 0;
@@ -2548,14 +2548,6 @@ function timelinePlotWidth(span, minDuration, areaWidth) {
   );
 }
 
-/** Half the track on each side when "now" is showing, so it can sit
- * dead-centre even at the first or last hour. */
-function timelineSidePad(layout, areaWidth) {
-  return layout.nowPct != null
-    ? Math.round(areaWidth / 2)
-    : TL_CANVAS_PAD;
-}
-
 function applyTimelineCanvasSize(layout) {
   const canvas = els.timeline.querySelector(".tl-canvas");
   const area = els.timeline.querySelector(".tl-area");
@@ -2566,11 +2558,8 @@ function applyTimelineCanvasSize(layout) {
     layout.minDuration,
     areaW
   );
-  const sidePad = timelineSidePad(layout, areaW);
-  const canvasW = plotWidth + sidePad * 2;
+  const canvasW = plotWidth + TL_CANVAS_PAD * 2;
   canvas.style.width = `${canvasW}px`;
-  canvas.style.paddingLeft = `${sidePad}px`;
-  canvas.style.paddingRight = `${sidePad}px`;
   area.classList.toggle("is-scrollable", canvasW > areaW + 1);
 }
 
@@ -2588,22 +2577,22 @@ function setupTimelineFollow() {
         tlFollowNow = true;
         if (!state?.shows || els.timeline.hidden) return;
         const layout = computeTimelineLayout();
-        if (layout.nowPct != null) centerTimelineOnNow(layout, { smooth: true });
+        if (layout.nowPct != null) {
+          scrollTimelineToNow(layout, { smooth: true });
+        }
       }, TL_FOLLOW_RESUME_MS);
     },
     true
   );
 }
 
-function centerTimelineOnNow(layout, { smooth = false } = {}) {
-  const area = els.timeline.querySelector(".tl-area");
-  const plot = els.timeline.querySelector(".tl-plot");
-  if (!area || !plot || layout.nowPct == null) return;
-  const pad = timelineSidePad(layout, area.clientWidth);
-  const x = pad + (layout.nowPct / 100) * plot.clientWidth;
-  const target = x - area.clientWidth / 2;
+function timelineNowX(layout, plot) {
+  return TL_CANVAS_PAD + (layout.nowPct / 100) * plot.clientWidth;
+}
+
+function scrollTimelineArea(area, next, { smooth = false } = {}) {
   const max = Math.max(0, area.scrollWidth - area.clientWidth);
-  const next = Math.max(0, Math.min(max, target));
+  next = Math.max(0, Math.min(max, next));
   if (Math.abs(area.scrollLeft - next) < 1) return;
 
   tlProgrammaticScroll = true;
@@ -2624,6 +2613,30 @@ function centerTimelineOnNow(layout, { smooth = false } = {}) {
   }
 }
 
+/** Keep the now-marker on screen without empty track on either side.
+ * `place` is a fresh day: sit it in the left third so upcoming shows
+ * are visible (clamped — morning stays at the start, late night at the
+ * end). Otherwise only nudge when it would leave the viewport. */
+function scrollTimelineToNow(layout, { smooth = false, place = false } = {}) {
+  const area = els.timeline.querySelector(".tl-area");
+  const plot = els.timeline.querySelector(".tl-plot");
+  if (!area || !plot || layout.nowPct == null) return;
+  const x = timelineNowX(layout, plot);
+  const viewW = area.clientWidth;
+  const inset = Math.min(40, Math.round(viewW * 0.12));
+  let next = area.scrollLeft;
+  if (place) {
+    next = x - viewW * 0.32;
+  } else if (x < area.scrollLeft + inset) {
+    next = x - inset;
+  } else if (x > area.scrollLeft + viewW - inset) {
+    next = x - viewW + inset;
+  } else {
+    return;
+  }
+  scrollTimelineArea(area, next, { smooth });
+}
+
 /** How fine the timeline axis is — half hours when the plot has room. */
 function timelineMarkStep(span, plotWidth) {
   const HOUR = 3_600_000;
@@ -2633,7 +2646,7 @@ function timelineMarkStep(span, plotWidth) {
   return 2 * HOUR;
 }
 
-/** Keep today's now-marker in the middle; other days start at the left. */
+/** Keep today's now-marker on screen; other days start at the left. */
 function syncTimelineScroll(layout) {
   const area = els.timeline.querySelector(".tl-area");
   if (!area) return;
@@ -2656,7 +2669,7 @@ function syncTimelineScroll(layout) {
     clearTimeout(tlFollowResumeTimer);
   }
   if (!tlFollowNow) return;
-  centerTimelineOnNow(layout, { smooth: dayChanged });
+  scrollTimelineToNow(layout, { smooth: dayChanged, place: dayChanged });
 }
 
 function renderTimeline() {
