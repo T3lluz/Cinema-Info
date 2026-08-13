@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-12T23:56:22.026Z",
+  "updatedAt": "2026-08-13T11:55:56.813Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -4620,7 +4620,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92792/purchase?kanal=dxf",
       "eventId": "92792",
       "promoterId": "202",
-      "sold": 9,
+      "sold": 13,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -4638,8 +4638,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 101
+      "capacity": 108,
+      "available": 95
     },
     {
       "id": "EDI20240688-2026-08-13T20:00:00-Storsal",
@@ -4762,8 +4762,13 @@
       "eventStatus": "ok",
       "ratings": {
         "letterboxd": {
-          "value": 3.14,
+          "value": 3.16,
           "url": "https://letterboxd.com/film/the-end-of-oak-street/"
+        },
+        "imdb": {
+          "value": 6.6,
+          "id": "tt27165187",
+          "url": "https://www.imdb.com/title/tt27165187/"
         }
       },
       "reserved": 0,
@@ -4800,12 +4805,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.9,
+          "value": 7.8,
           "id": "tt14173636",
           "url": "https://www.imdb.com/title/tt14173636/"
         },
         "letterboxd": {
-          "value": 4.05,
+          "value": 4.04,
           "url": "https://letterboxd.com/film/the-invite-2026/"
         },
         "tomatoes": {
@@ -4843,7 +4848,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92722/purchase?kanal=dxf",
       "eventId": "92722",
       "promoterId": "202",
-      "sold": 13,
+      "sold": 17,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -4862,7 +4867,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 97
+      "available": 93
     },
     {
       "id": "EDI20260626-2026-08-14T21:30:00-Storsal",
@@ -5031,12 +5036,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.9,
+          "value": 7.8,
           "id": "tt14173636",
           "url": "https://www.imdb.com/title/tt14173636/"
         },
         "letterboxd": {
-          "value": 4.05,
+          "value": 4.04,
           "url": "https://letterboxd.com/film/the-invite-2026/"
         },
         "tomatoes": {
@@ -5078,8 +5083,13 @@
       "eventStatus": "ok",
       "ratings": {
         "letterboxd": {
-          "value": 3.14,
+          "value": 3.16,
           "url": "https://letterboxd.com/film/the-end-of-oak-street/"
+        },
+        "imdb": {
+          "value": 6.6,
+          "id": "tt27165187",
+          "url": "https://www.imdb.com/title/tt27165187/"
         }
       },
       "reserved": 0,
@@ -5349,12 +5359,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.9,
+          "value": 7.8,
           "id": "tt14173636",
           "url": "https://www.imdb.com/title/tt14173636/"
         },
         "letterboxd": {
-          "value": 4.05,
+          "value": 4.04,
           "url": "https://letterboxd.com/film/the-invite-2026/"
         },
         "tomatoes": {
@@ -5396,8 +5406,13 @@
       "eventStatus": "ok",
       "ratings": {
         "letterboxd": {
-          "value": 3.14,
+          "value": 3.16,
           "url": "https://letterboxd.com/film/the-end-of-oak-street/"
+        },
+        "imdb": {
+          "value": 6.6,
+          "id": "tt27165187",
+          "url": "https://www.imdb.com/title/tt27165187/"
         }
       },
       "reserved": 0,
@@ -5434,12 +5449,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.9,
+          "value": 7.8,
           "id": "tt14173636",
           "url": "https://www.imdb.com/title/tt14173636/"
         },
         "letterboxd": {
-          "value": 4.05,
+          "value": 4.04,
           "url": "https://letterboxd.com/film/the-invite-2026/"
         },
         "tomatoes": {
@@ -5573,12 +5588,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.9,
+          "value": 7.8,
           "id": "tt14173636",
           "url": "https://www.imdb.com/title/tt14173636/"
         },
         "letterboxd": {
-          "value": 4.05,
+          "value": 4.04,
           "url": "https://letterboxd.com/film/the-invite-2026/"
         },
         "tomatoes": {
@@ -5620,8 +5635,13 @@
       "eventStatus": "ok",
       "ratings": {
         "letterboxd": {
-          "value": 3.14,
+          "value": 3.16,
           "url": "https://letterboxd.com/film/the-end-of-oak-street/"
+        },
+        "imdb": {
+          "value": 6.6,
+          "id": "tt27165187",
+          "url": "https://www.imdb.com/title/tt27165187/"
         }
       },
       "reserved": 0,
