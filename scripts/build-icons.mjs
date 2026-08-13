@@ -1,4 +1,4 @@
-// Regenerates favicon.svg, icons/*.png and apple-touch-icon.png.
+// Regenerates public/assets/favicon.svg, icons/*.png and apple-touch-icon.png.
 // One-off tooling — run from the repo root with:
 //   npm install sharp && node scripts/build-icons.mjs
 import sharp from "sharp";
@@ -6,7 +6,7 @@ import { writeFile, mkdir } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
-const OUT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
+const OUT = resolve(dirname(fileURLToPath(import.meta.url)), "..", "public", "assets");
 
 // Ticket geometry in a 512x512 viewBox
 const x0 = 82, x1 = 430, y0 = 152, y1 = 360, r = 30, n = 27, mid = 256;

@@ -31,14 +31,11 @@ jobs:
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
-      # Only the PWA surface — not .git, scripts/, supabase/, .github/, etc.
+      # Only the PWA surface — public/, not scripts/, supabase/, .github/, etc.
       - name: Stage site
         run: |
           mkdir -p _site
-          cp -a index.html app.js styles.css sw.js \
-            manifest.webmanifest favicon.svg apple-touch-icon.png \
-            .nojekyll _site/
-          cp -a data icons _site/
+          cp -a public/. _site/
 
       - name: Upload site
         uses: actions/upload-pages-artifact@v4

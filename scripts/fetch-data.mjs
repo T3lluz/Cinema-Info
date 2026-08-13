@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Builds data/program.json for the GitHub Pages site.
+ * Builds public/data/program.json for the GitHub Pages site.
  * Buen kino API is not CORS-friendly in browsers, so we snapshot it here.
  * Sold counts + real end times come from DX/eBillett.
  */
@@ -28,7 +28,7 @@ const RETRIES = 3;
 const TIMEOUT_MS = 20000;
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const OUT = join(__dirname, "..", "data", "program.json");
+const OUT = join(__dirname, "..", "public", "data", "program.json");
 
 const PROGRAM_URL =
   "https://www.buenkino.no/api/program?includeDocuments=true&first=500";

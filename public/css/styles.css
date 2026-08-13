@@ -17,7 +17,7 @@
   --done: #6f6964;
   --done-soft: #ebe7e2;
   /* —— Frosted chrome tokens ——
-     Navbar, header, and chips use a translucent blur fill.
+     Navbar and chips use a translucent blur fill.
      Highlight = the specular top edge; stroke = the pane's rim. */
   --glass-fill: rgba(255, 255, 255, 0.52);
   --glass-stroke: rgba(255, 255, 255, 0.62);
@@ -44,6 +44,12 @@
   --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --dot-cell: 8px;
+  --dot-core: 1.85px;
+  --dot-edge: 2.25px;
+  --header-glass-tint: rgba(255, 255, 255, 0.55);
+  --header-glass-solid: rgba(239, 236, 232, 0.94);
+  --header-dot-paint: rgba(22, 20, 18, 0.1);
   --nav-h: 66px;
   /* Shared content column — stays phone-sized on mobile, widens on larger screens. */
   --page-max: 720px;
@@ -84,6 +90,9 @@
     0 10px 24px rgba(0, 0, 0, 0.5),
     0 3px 8px rgba(0, 0, 0, 0.35),
     0 1px 2px rgba(0, 0, 0, 0.25);
+  --header-glass-tint: rgba(16, 16, 22, 0.55);
+  --header-glass-solid: rgba(18, 18, 18, 0.94);
+  --header-dot-paint: rgba(255, 255, 255, 0.1);
 }
 
 * {
@@ -142,19 +151,105 @@ body {
 }
 
 .top {
+  --header-fade: linear-gradient(
+    to bottom,
+    #000 0%,
+    #000 86%,
+    rgba(0, 0, 0, 0.4) 93%,
+    transparent 100%
+  );
   position: sticky;
   top: 0;
-  z-index: 10;
+  z-index: 20;
   /* Horizontal inset lives on the inner column so header + main share one center. */
   padding: calc(12px + var(--safe-top)) 0 10px;
-  background: color-mix(in srgb, var(--bg) 55%, transparent);
-  border-bottom: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
-  backdrop-filter: blur(12px) url(#lens-header) saturate(1);
-  -webkit-backdrop-filter: blur(12px) saturate(1);
+  background: transparent;
+  overflow: visible;
+}
+
+.header-fade {
+  position: absolute;
+  inset: 0 0 -16px 0;
+  pointer-events: none;
+}
+
+.header-frost,
+.header-glass,
+.header-frost-dots {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.header-frost-dots {
+  backdrop-filter: blur(6px) saturate(2.8) contrast(1.18) brightness(1.08);
+  -webkit-backdrop-filter: blur(6px) saturate(2.8) contrast(1.18) brightness(1.08);
+  -webkit-mask-image:
+    radial-gradient(circle at center, #000 var(--dot-core), transparent var(--dot-edge)),
+    var(--header-fade);
+  mask-image:
+    radial-gradient(circle at center, #000 var(--dot-core), transparent var(--dot-edge)),
+    var(--header-fade);
+  -webkit-mask-size: var(--dot-cell) var(--dot-cell), 100% 100%;
+  mask-size: var(--dot-cell) var(--dot-cell), 100% 100%;
+  -webkit-mask-repeat: repeat, no-repeat;
+  mask-repeat: repeat, no-repeat;
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+}
+
+.header-glass {
+  background: var(--header-glass-tint);
+  backdrop-filter: blur(20px) saturate(1.12);
+  -webkit-backdrop-filter: blur(20px) saturate(1.12);
+  -webkit-mask-image:
+    radial-gradient(circle at center, transparent var(--dot-core), #000 var(--dot-edge)),
+    var(--header-fade);
+  mask-image:
+    radial-gradient(circle at center, transparent var(--dot-core), #000 var(--dot-edge)),
+    var(--header-fade);
+  -webkit-mask-size: var(--dot-cell) var(--dot-cell), 100% 100%;
+  mask-size: var(--dot-cell) var(--dot-cell), 100% 100%;
+  -webkit-mask-repeat: repeat, no-repeat;
+  mask-repeat: repeat, no-repeat;
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+}
+
+.header-top {
+  position: relative;
+  z-index: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header-glass,
+  .header-frost-dots,
+  .nav-glass,
+  .nav-frost-dots {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .header-glass,
+  .nav-glass {
+    background: var(--header-glass-solid);
+  }
+
+  .header-frost-dots,
+  .nav-frost-dots {
+    background-image: radial-gradient(
+      circle at center,
+      var(--header-dot-paint) var(--dot-core),
+      transparent var(--dot-edge)
+    );
+    background-size: var(--dot-cell) var(--dot-cell);
+  }
 }
 
 /* Same centered column as .content: max width, then shared side padding. */
-.top > * {
+.header-top > * {
   box-sizing: border-box;
   max-width: var(--page-max);
   margin-left: auto;
@@ -536,13 +631,14 @@ h1 {
 }
 
 /* —— Header timeline ——
-   Flat, compact schedule strip: start left, end right; title lives in the tip. */
+   Hall names stay put; the plot scrolls sideways so every bar is wide
+   enough for both clocks. Bars are surface chips, same language as cards. */
 .timeline {
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 10px;
   align-items: stretch;
-  /* Only set vertical margin — horizontal auto centering comes from .top > *. */
+  /* Only set vertical margin — horizontal auto centering comes from .header-top > *. */
   margin-top: 14px;
   animation: rise 0.32s ease both;
 }
@@ -560,7 +656,7 @@ h1 {
 }
 
 .tl-lane-name {
-  height: 20px;
+  height: 22px;
   display: flex;
   align-items: center;
   font-size: 0.6rem;
@@ -601,6 +697,26 @@ h1 {
 .tl-area {
   position: relative;
   min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x;
+  scrollbar-width: none;
+}
+
+.tl-area::-webkit-scrollbar {
+  display: none;
+}
+
+.tl-canvas {
+  min-width: 100%;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+
+.tl-plot {
+  position: relative;
 }
 
 .tl-gridlines {
@@ -615,13 +731,13 @@ h1 {
   top: 0;
   bottom: 0;
   width: 1px;
-  background: color-mix(in srgb, var(--ink) 18%, var(--line));
+  background: color-mix(in srgb, var(--ink) 12%, var(--line));
   transition: left 0.4s cubic-bezier(0.3, 0.75, 0.25, 1), opacity 0.3s ease;
 }
 
 .tl-gridline.minor {
-  background: color-mix(in srgb, var(--ink) 10%, var(--line));
-  opacity: 0.85;
+  background: color-mix(in srgb, var(--ink) 7%, var(--line));
+  opacity: 0.8;
 }
 
 .tl-tracks {
@@ -634,8 +750,10 @@ h1 {
 
 .tl-track {
   position: relative;
-  height: 20px;
-  background: transparent;
+  height: 22px;
+  background: color-mix(in srgb, var(--surface) 78%, var(--bg));
+  border: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
+  border-radius: 8px;
   transition: height 0.35s ease, opacity 0.3s ease;
 }
 
@@ -645,43 +763,30 @@ h1 {
   position: absolute;
   top: 2px;
   bottom: 2px;
-  border: 0;
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--accent) 78%, transparent);
-  color: #fff;
+  border: 1px solid color-mix(in srgb, var(--accent) 28%, var(--line));
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--accent-soft) 82%, var(--surface));
+  color: color-mix(in srgb, var(--accent) 82%, var(--ink));
+  box-shadow: 0 1px 2px color-mix(in srgb, var(--ink) 7%, transparent);
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 6px;
-  padding: 0 7px;
+  padding: 0 8px;
   overflow: hidden;
   white-space: nowrap;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
   font: inherit;
   text-align: left;
-  container-type: inline-size;
   transition:
     left 0.4s cubic-bezier(0.3, 0.75, 0.25, 1),
     width 0.4s cubic-bezier(0.3, 0.75, 0.25, 1),
     opacity 0.3s ease,
     background-color 0.3s ease,
     color 0.3s ease,
+    border-color 0.3s ease,
     transform 0.12s ease;
-}
-
-/* Times inherit the bar colour; pin white on solid red fills so theme
-   transitions or status classes cannot leave dark ink on accent. */
-.tl-block:not(.done):not(.estimated):not(.live):not(.soon),
-.tl-block.upcoming {
-  color: #fff;
-}
-
-.tl-block:not(.done):not(.estimated):not(.live):not(.soon) .tl-block-start,
-.tl-block:not(.done):not(.estimated):not(.live):not(.soon) .tl-block-end,
-.tl-block.upcoming .tl-block-start,
-.tl-block.upcoming .tl-block-end {
-  color: #fff;
 }
 
 .tl-block:focus {
@@ -689,13 +794,19 @@ h1 {
 }
 
 .tl-block:focus-visible {
-  outline: 2px solid color-mix(in srgb, var(--accent) 55%, var(--ink));
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
   z-index: 1;
 }
 
 .tl-block:active {
   transform: scale(0.985);
+}
+
+@media (hover: hover) {
+  .tl-block:hover {
+    border-color: color-mix(in srgb, var(--accent) 50%, var(--line));
+  }
 }
 
 .tl-exit {
@@ -706,8 +817,8 @@ h1 {
 .tl-block-end {
   flex: 0 0 auto;
   font-family: var(--mono);
-  font-size: 0.58rem;
-  font-weight: 700;
+  font-size: 0.62rem;
+  font-weight: 750;
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.03em;
   line-height: 1;
@@ -716,24 +827,13 @@ h1 {
 .tl-block-end {
   margin-left: auto;
   text-align: right;
-  opacity: 0.9;
-}
-
-/* Very short bars: keep only the start clock, centered. */
-@container (max-width: 52px) {
-  .tl-block-end {
-    display: none;
-  }
-
-  .tl-block {
-    justify-content: center;
-    padding: 0 4px;
-  }
 }
 
 .tl-block.done {
-  background: color-mix(in srgb, var(--done) 28%, transparent);
-  color: color-mix(in srgb, var(--done) 82%, var(--ink));
+  background: color-mix(in srgb, var(--done-soft) 80%, var(--surface));
+  border-color: color-mix(in srgb, var(--done) 22%, var(--line));
+  color: color-mix(in srgb, var(--done) 78%, var(--ink));
+  box-shadow: none;
 }
 
 .tl-block.done .tl-block-start,
@@ -744,45 +844,21 @@ h1 {
 }
 
 .tl-block.live {
-  background: color-mix(in srgb, var(--ok) 78%, transparent);
-  color: #fff;
+  background: color-mix(in srgb, var(--ok-soft) 88%, var(--surface));
+  border-color: color-mix(in srgb, var(--ok) 38%, var(--line));
+  color: color-mix(in srgb, var(--ok) 82%, var(--ink));
 }
 
 .tl-block.soon {
-  background: color-mix(in srgb, var(--warn) 78%, transparent);
-  color: #fff;
+  background: color-mix(in srgb, var(--warn-soft) 88%, var(--surface));
+  border-color: color-mix(in srgb, var(--warn) 38%, var(--line));
+  color: color-mix(in srgb, var(--warn) 82%, var(--ink));
 }
 
-/* Dark theme paints live/soon bars in pastel green/amber — white times
-   wash out. Near-black ink on those fills only. Red (accent) bars keep
-   white text for contrast on the darker fill. */
-[data-theme="dark"] .tl-block.live,
-[data-theme="dark"] .tl-block.soon {
-  color: #121212;
-}
-
-[data-theme="dark"] .tl-block.upcoming,
-[data-theme="dark"] .tl-block:not(.live):not(.soon):not(.done):not(.estimated) {
-  color: #fff;
-}
-
-/* Estimated end: outline instead of a busy stripe fill. */
+/* Estimated end: dashed rim, same soft fill as a confirmed bar. */
 .tl-block.estimated {
-  background: color-mix(in srgb, var(--accent) 16%, var(--surface));
-  color: color-mix(in srgb, var(--accent) 78%, var(--ink));
-  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--accent) 55%, transparent);
-}
-
-.tl-block.estimated.live {
-  background: color-mix(in srgb, var(--ok) 18%, var(--surface));
-  color: color-mix(in srgb, var(--ok) 80%, var(--ink));
-  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--ok) 55%, transparent);
-}
-
-.tl-block.estimated.soon {
-  background: color-mix(in srgb, var(--warn) 20%, var(--surface));
-  color: color-mix(in srgb, var(--warn) 78%, var(--ink));
-  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--warn) 55%, transparent);
+  border-style: dashed;
+  box-shadow: none;
 }
 
 .tl-now {
@@ -3600,50 +3676,73 @@ button.bar-row.day-bar:focus-visible {
   pointer-events: none;
 }
 
-/* Stack: glass plate + selection pebble + tabs as siblings, so each
-   backdrop-filter samples the live page — not a nested dead layer. */
+/* Stack: dotted frost plate + selection pebble + tabs as siblings, so
+   each backdrop-filter samples the live page — not a nested dead layer. */
 .pill-nav-shell {
   --pill-pad: 5px;
   pointer-events: auto;
   position: relative;
   width: min(var(--nav-max), 100%);
-}
-
-/* Outer capsule: thin frost + soft falloff refraction of the page. */
-.pill-nav-glass {
-  position: absolute;
-  inset: 0;
   border-radius: 999px;
-  border: 0;
-  background: var(--glass-fill);
-  backdrop-filter: blur(12px) url(#lens-nav) saturate(1);
-  -webkit-backdrop-filter: blur(12px) saturate(1);
   box-shadow: var(--nav-shadow);
+}
+
+/* Capsule clip only — no edge fade. Selection pebble stays outside so
+   its shadow isn't cut off. */
+.nav-dots {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  overflow: hidden;
   pointer-events: none;
   z-index: 0;
 }
 
-/* Wrap-around rim lip — samples live page colour at the perimeter. */
-.pill-nav-rim {
+.nav-frost,
+.nav-glass,
+.nav-frost-dots {
   position: absolute;
   inset: 0;
-  border-radius: 999px;
-  border: 0;
-  padding: 3px;
-  box-sizing: border-box;
   pointer-events: none;
-  z-index: 0;
-  background: transparent;
-  -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  mask-composite: exclude;
-  backdrop-filter: url(#lens-nav-rim) saturate(1);
-  -webkit-backdrop-filter: blur(2px) saturate(1);
+}
+
+.nav-frost-dots {
+  backdrop-filter: blur(6px) saturate(2.8) contrast(1.18) brightness(1.08);
+  -webkit-backdrop-filter: blur(6px) saturate(2.8) contrast(1.18) brightness(1.08);
+  -webkit-mask-image: radial-gradient(
+    circle at center,
+    #000 var(--dot-core),
+    transparent var(--dot-edge)
+  );
+  mask-image: radial-gradient(
+    circle at center,
+    #000 var(--dot-core),
+    transparent var(--dot-edge)
+  );
+  -webkit-mask-size: var(--dot-cell) var(--dot-cell);
+  mask-size: var(--dot-cell) var(--dot-cell);
+  -webkit-mask-repeat: repeat;
+  mask-repeat: repeat;
+}
+
+.nav-glass {
+  background: var(--header-glass-tint);
+  backdrop-filter: blur(20px) saturate(1.12);
+  -webkit-backdrop-filter: blur(20px) saturate(1.12);
+  -webkit-mask-image: radial-gradient(
+    circle at center,
+    transparent var(--dot-core),
+    #000 var(--dot-edge)
+  );
+  mask-image: radial-gradient(
+    circle at center,
+    transparent var(--dot-core),
+    #000 var(--dot-edge)
+  );
+  -webkit-mask-size: var(--dot-cell) var(--dot-cell);
+  mask-size: var(--dot-cell) var(--dot-cell);
+  -webkit-mask-repeat: repeat;
+  mask-repeat: repeat;
 }
 
 /* Selection track — sized to the padded content box of the shell. */
@@ -3870,17 +3969,17 @@ button.bar-row.day-bar:focus-visible {
   }
 
   .tl-lane-name {
-    height: 22px;
+    height: 24px;
     font-size: 0.66rem;
   }
 
   .tl-track {
-    height: 22px;
+    height: 24px;
   }
 
   .tl-block-start,
   .tl-block-end {
-    font-size: 0.64rem;
+    font-size: 0.66rem;
   }
 
   .tl-hour {

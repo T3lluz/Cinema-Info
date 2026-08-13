@@ -7,10 +7,10 @@ full product description and data model.
 
 ### What this is
 
-- A **static, dependency-free** vanilla-JS PWA: `index.html`, `app.js`,
-  `styles.css`, `sw.js`, plus `data/program.json` (a committed snapshot the app
-  reads at runtime via `./data/program.json`). There is **no `package.json`,
-  no build step, and no npm install** for the app itself.
+- A **static, dependency-free** vanilla-JS PWA under `public/`: `index.html`,
+  `js/app.js`, `css/styles.css`, `sw.js`, plus `data/program.json` (a committed
+  snapshot the app reads at runtime via `./data/program.json`). There is **no
+  `package.json`, no build step, and no npm install** for the app itself.
 - Node scripts in `scripts/` use only Node built-ins (`node:fs`, global
   `fetch`), except `build-icons.mjs` which needs `sharp` (only for regenerating
   the committed PWA icons — not needed to run the app).
@@ -20,20 +20,21 @@ full product description and data model.
 
 ### Running the app (primary dev workflow)
 
-- Serve the repo root as static files, exactly as `README.md` documents:
-  `python3 -m http.server 8080`, then open `http://localhost:8080/`.
-- The app works fully offline of any backend because `data/program.json` is
-  committed; sold counts try to live-update from the DX/eBillett API but the
+- Serve `public/` as static files, exactly as `README.md` documents:
+  `python3 -m http.server 8080 --directory public`, then open
+  `http://localhost:8080/`.
+- The app works fully offline of any backend because `public/data/program.json`
+  is committed; sold counts try to live-update from the DX/eBillett API but the
   schedule renders from the snapshot regardless.
 - No lint/test/build tooling is configured in this repo — there is nothing to
-  lint or unit-test. "Building" the app is just serving the static files.
+  lint or unit-test. "Building" the app is just serving `public/`.
 
 ### Refreshing / debugging data (optional, network-dependent)
 
-- `node scripts/fetch-data.mjs` rewrites `data/program.json` from Buen's API +
-  DX/eBillett. It needs outbound network to `buenkino.no` and `api.dx.no`
+- `node scripts/fetch-data.mjs` rewrites `public/data/program.json` from Buen's
+  API + DX/eBillett. It needs outbound network to `buenkino.no` and `api.dx.no`
   (both reachable from the cloud VM). Restore the committed snapshot afterward
-  (`git checkout -- data/program.json`) if you only ran it to test.
+  (`git checkout -- public/data/program.json`) if you only ran it to test.
 - `DX_EMAIL=… DX_PASSWORD=… node scripts/dx-session.mjs <path>` is for
   shell debugging against `app.dx.no`. The PWA itself needs no per-user
   DX login — see `.cursor/skills/dx-account/SKILL.md`.
@@ -45,5 +46,5 @@ full product description and data model.
   workflow_dispatch). **Repo admin one-time setup:** Settings → Pages →
   Source must be **GitHub Actions**, not “Deploy from a branch”. Legacy
   branch deploys have been stuck in `deployment_queued`.
-- The workflow stages only the PWA files into the Pages artifact; it does
-  not publish `scripts/`, `supabase/`, or `.github/`.
+- The workflow stages `public/` into the Pages artifact; it does not
+  publish `scripts/`, `supabase/`, or `.github/`.

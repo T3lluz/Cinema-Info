@@ -545,6 +545,19 @@ const SEATS_OPEN_MQ = window.matchMedia("(min-width: 700px)");
 /** Wider viewports get half-hour ticks on the header timeline. */
 const TL_WIDE_MQ = window.matchMedia("(min-width: 700px)");
 const HALF_HOUR = 1_800_000;
+/** A bar this wide still fits both start and end clocks (incl. "~18:00"). */
+const TL_MIN_BLOCK_PX = 92;
+/** Side pad on the plot so hour labels sitting on 0%/100% are not clipped. */
+const TL_CANVAS_PAD = 10;
+const TL_MAX_CANVAS_PX = 3600;
+/** After the visitor stops panning, snap "now" back to the centre. */
+const TL_FOLLOW_RESUME_MS = 1800;
+/** Day last auto-scrolled on the timeline — skip the jump on live refreshes. */
+let tlScrollDay = "";
+/** Keep the now-marker in the middle of the track until the visitor pans. */
+let tlFollowNow = true;
+let tlProgrammaticScroll = false;
+let tlFollowResumeTimer = 0;
 /** Loads auto-unfolded halls as they scroll into view. */
 let seatAutoObserver = null;
 /** How many fetches are in flight; the refresh button spins while any are. */
@@ -691,6 +704,22 @@ async function init() {
   TL_WIDE_MQ.addEventListener?.("change", () => {
     if (state?.shows) renderTimeline();
   });
+
+  // The plot width is measured from the track column; redo the scale
+  // when that column changes (rotate, window, lane-name gutter).
+  if ("ResizeObserver" in window && els.timeline) {
+    let lastAreaW = 0;
+    const tlRo = new ResizeObserver(() => {
+      if (!state?.shows || els.timeline.hidden) return;
+      const w = measureTimelineAreaWidth();
+      if (Math.abs(w - lastAreaW) < 2) return;
+      lastAreaW = w;
+      renderTimeline();
+    });
+    tlRo.observe(els.timeline);
+  }
+
+  setupTimelineFollow();
 
   // Draw the refraction lenses once the chrome has its real size, and
   // redraw when it changes — the header grows and shrinks with the tab.
@@ -1641,15 +1670,6 @@ const LENS_MAP_REV = 8;
 
 /** Restored: plate + wrap-around rim lip (the v86 look). */
 const LENS_TARGETS = [
-  ["lens-nav", ".pill-nav-glass", 20, 15, undefined, { wrap: 0.38 }],
-  [
-    "lens-nav-rim",
-    ".pill-nav-rim",
-    9,
-    30,
-    undefined,
-    { wrap: 0.7, rimBias: 1.1 },
-  ],
   ["lens-chip", ".pill-indicator", 16, 17, undefined, { wrap: 0.4 }],
   [
     "lens-chip-rim",
@@ -1659,7 +1679,6 @@ const LENS_TARGETS = [
     undefined,
     { wrap: 0.75, rimBias: 1.15 },
   ],
-  ["lens-header", ".top", 12, 12, 0, { wrap: 0.25 }],
 ];
 
 function updateLiquidLenses() {
@@ -1758,7 +1777,7 @@ function luminanceOf(c) {
 }
 
 function updateNavContrast() {
-  const shell = document.querySelector(".pill-nav-glass");
+  const shell = document.querySelector(".nav-glass");
   if (!shell) return;
   // The shell's own translucent fill sits between the page and the
   // icons, so it takes part in what the eye actually sees.
@@ -2417,7 +2436,9 @@ function showEndOf(show) {
 const TL_EXIT_MS = 500;
 
 /** Everything needed to draw the header timeline for one day, expressed
- * as percentages so the same data drives both a fresh build and a morph. */
+ * as percentages so the same data drives both a fresh build and a morph.
+ * The plot is at least wide enough that the shortest bar still fits both
+ * clocks; longer days then scroll sideways instead of clipping times. */
 function computeTimelineLayout() {
   const now = new Date();
   // Day tab follows the selected day; other tabs always show today.
@@ -2435,6 +2456,11 @@ function computeTimelineLayout() {
   t1 = Math.ceil((t1 + 15 * 60_000) / HOUR) * HOUR;
   const span = t1 - t0;
   const pctOf = (ms) => ((ms - t0) / span) * 100;
+  const minDuration = Math.min(
+    ...shows.map((s) => showEndOf(s).getTime() - s.start.getTime())
+  );
+  const areaWidth = measureTimelineAreaWidth();
+  const plotWidth = timelinePlotWidth(span, minDuration, areaWidth);
 
   const screens = [...new Set(shows.map((s) => s.screen))].sort((a, b) =>
     a.localeCompare(b, "nb")
@@ -2457,7 +2483,7 @@ function computeTimelineLayout() {
           id: s.id,
           dayKey: s.dayKey,
           left,
-          width: Math.max(pctOf(end) - left, 1.5),
+          width: Math.max(pctOf(end) - left, 0.8),
           status: statusOf(s, now),
           estimated: !s.end,
           startLabel: startClock,
@@ -2468,9 +2494,9 @@ function computeTimelineLayout() {
   }));
 
   // Tick marks double as gridlines; keyed by timestamp so a morph can
-  // slide marks for the same instant and cross-fade the rest. Half-hour
-  // ticks appear when the strip is wide enough (desktop sooner than phone).
-  const step = timelineMarkStep(span);
+  // slide marks for the same instant and cross-fade the rest. Density
+  // follows the (possibly scrolled) plot, not the viewport.
+  const step = timelineMarkStep(span, plotWidth);
   const marks = [];
   for (let ts = t0; ts <= t1; ts += step) {
     const d = new Date(ts);
@@ -2485,21 +2511,152 @@ function computeTimelineLayout() {
 
   const nowTs = now.getTime();
   const showNow = day === toDayKey(now) && nowTs >= t0 && nowTs <= t1;
-  return { day, lanes, marks, nowPct: showNow ? pctOf(nowTs) : null };
+  return {
+    day,
+    lanes,
+    marks,
+    nowPct: showNow ? pctOf(nowTs) : null,
+    span,
+    minDuration,
+    plotWidth,
+  };
 }
 
-/** How fine the timeline axis is — half hours when space allows. */
-function timelineMarkStep(span) {
-  const wide = TL_WIDE_MQ.matches;
-  const HOUR = 3_600_000;
-  if (wide) {
-    // Desktop: :30 ticks unless the day is unusually long.
-    return span > 12 * HOUR ? HOUR : HALF_HOUR;
+/** Track-column width the plot is scaled against. */
+function measureTimelineAreaWidth() {
+  const area = els.timeline?.querySelector(".tl-area");
+  if (area?.clientWidth) return area.clientWidth;
+  const timelineW = els.timeline?.clientWidth;
+  if (timelineW) {
+    const namesW =
+      els.timeline.querySelector(".tl-names")?.getBoundingClientRect().width ||
+      36;
+    const gap = window.matchMedia("(max-width: 699px)").matches ? 4 : 10;
+    return Math.max(timelineW - namesW - gap, 160);
   }
-  // Phone: half hours only on compact evenings; otherwise hourly / 2h.
-  if (span > 10 * HOUR) return 2 * HOUR;
-  if (span > 6.5 * HOUR) return HOUR;
-  return HALF_HOUR;
+  const page = Math.min(window.innerWidth, 720) - 32;
+  return Math.max(page - 40, 160);
+}
+
+/** Plot wide enough that the shortest showing still fits both clocks. */
+function timelinePlotWidth(span, minDuration, areaWidth) {
+  const available = Math.max(areaWidth - TL_CANVAS_PAD * 2, 120);
+  const fromShortest =
+    minDuration > 0 ? (span / minDuration) * TL_MIN_BLOCK_PX : available;
+  return Math.ceil(
+    Math.min(Math.max(fromShortest, available), TL_MAX_CANVAS_PX)
+  );
+}
+
+/** Half the track on each side when "now" is showing, so it can sit
+ * dead-centre even at the first or last hour. */
+function timelineSidePad(layout, areaWidth) {
+  return layout.nowPct != null
+    ? Math.round(areaWidth / 2)
+    : TL_CANVAS_PAD;
+}
+
+function applyTimelineCanvasSize(layout) {
+  const canvas = els.timeline.querySelector(".tl-canvas");
+  const area = els.timeline.querySelector(".tl-area");
+  if (!canvas || !area) return;
+  const areaW = area.clientWidth || layout.plotWidth;
+  const plotWidth = timelinePlotWidth(
+    layout.span,
+    layout.minDuration,
+    areaW
+  );
+  const sidePad = timelineSidePad(layout, areaW);
+  const canvasW = plotWidth + sidePad * 2;
+  canvas.style.width = `${canvasW}px`;
+  canvas.style.paddingLeft = `${sidePad}px`;
+  canvas.style.paddingRight = `${sidePad}px`;
+  area.classList.toggle("is-scrollable", canvasW > areaW + 1);
+}
+
+function setupTimelineFollow() {
+  if (!els.timeline) return;
+  // The scroll box is rebuilt; listen on the header so we always hear it.
+  els.timeline.addEventListener(
+    "scroll",
+    (e) => {
+      if (e.target !== els.timeline.querySelector(".tl-area")) return;
+      if (tlProgrammaticScroll) return;
+      tlFollowNow = false;
+      clearTimeout(tlFollowResumeTimer);
+      tlFollowResumeTimer = window.setTimeout(() => {
+        tlFollowNow = true;
+        if (!state?.shows || els.timeline.hidden) return;
+        const layout = computeTimelineLayout();
+        if (layout.nowPct != null) centerTimelineOnNow(layout, { smooth: true });
+      }, TL_FOLLOW_RESUME_MS);
+    },
+    true
+  );
+}
+
+function centerTimelineOnNow(layout, { smooth = false } = {}) {
+  const area = els.timeline.querySelector(".tl-area");
+  const plot = els.timeline.querySelector(".tl-plot");
+  if (!area || !plot || layout.nowPct == null) return;
+  const pad = timelineSidePad(layout, area.clientWidth);
+  const x = pad + (layout.nowPct / 100) * plot.clientWidth;
+  const target = x - area.clientWidth / 2;
+  const max = Math.max(0, area.scrollWidth - area.clientWidth);
+  const next = Math.max(0, Math.min(max, target));
+  if (Math.abs(area.scrollLeft - next) < 1) return;
+
+  tlProgrammaticScroll = true;
+  const done = () => {
+    tlProgrammaticScroll = false;
+  };
+  if (smooth) {
+    area.scrollTo({ left: next, behavior: "smooth" });
+    const onEnd = () => {
+      area.removeEventListener("scrollend", onEnd);
+      done();
+    };
+    area.addEventListener("scrollend", onEnd);
+    window.setTimeout(done, 500);
+  } else {
+    area.scrollLeft = next;
+    requestAnimationFrame(done);
+  }
+}
+
+/** How fine the timeline axis is — half hours when the plot has room. */
+function timelineMarkStep(span, plotWidth) {
+  const HOUR = 3_600_000;
+  const pxPerHour = plotWidth / (span / HOUR);
+  if (pxPerHour >= 52) return HALF_HOUR;
+  if (pxPerHour >= 28) return HOUR;
+  return 2 * HOUR;
+}
+
+/** Keep today's now-marker in the middle; other days start at the left. */
+function syncTimelineScroll(layout) {
+  const area = els.timeline.querySelector(".tl-area");
+  if (!area) return;
+  const dayChanged = layout.day !== tlScrollDay;
+  tlScrollDay = layout.day;
+
+  if (layout.nowPct == null) {
+    if (dayChanged) {
+      tlProgrammaticScroll = true;
+      area.scrollLeft = 0;
+      requestAnimationFrame(() => {
+        tlProgrammaticScroll = false;
+      });
+    }
+    return;
+  }
+
+  if (dayChanged) {
+    tlFollowNow = true;
+    clearTimeout(tlFollowResumeTimer);
+  }
+  if (!tlFollowNow) return;
+  centerTimelineOnNow(layout, { smooth: dayChanged });
 }
 
 function renderTimeline() {
@@ -2510,6 +2667,8 @@ function renderTimeline() {
   if (activeTab === "settings") {
     els.timeline.hidden = true;
     els.timeline.innerHTML = "";
+    tlScrollDay = "";
+    tlFollowNow = true;
     return;
   }
 
@@ -2518,16 +2677,20 @@ function renderTimeline() {
   if (!layout.lanes.length) {
     els.timeline.hidden = true;
     els.timeline.innerHTML = "";
+    tlScrollDay = "";
+    tlFollowNow = true;
     return;
   }
 
   // Morph the existing bars into the new day's layout when possible;
   // build from scratch only when there is nothing on screen yet.
-  if (!els.timeline.hidden && els.timeline.querySelector(".tl-tracks")) {
+  if (!els.timeline.hidden && els.timeline.querySelector(".tl-canvas")) {
     morphTimeline(layout);
   } else {
     buildTimeline(layout);
   }
+  applyTimelineCanvasSize(layout);
+  requestAnimationFrame(() => syncTimelineScroll(layout));
 }
 
 function tlBlockInnerHTML(b) {
@@ -2574,31 +2737,35 @@ function buildTimeline(layout) {
       )
       .join("")}</div>
     <div class="tl-area">
-      <div class="tl-gridlines">${layout.marks
-        .map(
-          (m) =>
-            `<span class="tl-gridline${m.minor ? " minor" : ""}" data-ts="${m.ts}" style="left:${m.pct}%"></span>`
-        )
-        .join("")}</div>
-      <div class="tl-tracks">${layout.lanes
-        .map(
-          (l) =>
-            `<div class="tl-track" data-screen="${escapeHtml(l.screen)}">${l.blocks
-              .map(blockHTML)
-              .join("")}</div>`
-        )
-        .join("")}</div>
-      ${
-        layout.nowPct != null
-          ? `<div class="tl-now" style="left:${layout.nowPct}%"><span class="tl-now-dot"></span></div>`
-          : ""
-      }
-      <div class="tl-hours">${layout.marks
-        .map(
-          (m) =>
-            `<span class="tl-hour${m.minor ? " minor" : ""}" data-ts="${m.ts}" style="left:${m.pct}%">${m.label}</span>`
-        )
-        .join("")}</div>
+      <div class="tl-canvas">
+        <div class="tl-plot">
+          <div class="tl-gridlines">${layout.marks
+            .map(
+              (m) =>
+                `<span class="tl-gridline${m.minor ? " minor" : ""}" data-ts="${m.ts}" style="left:${m.pct}%"></span>`
+            )
+            .join("")}</div>
+          <div class="tl-tracks">${layout.lanes
+            .map(
+              (l) =>
+                `<div class="tl-track" data-screen="${escapeHtml(l.screen)}">${l.blocks
+                  .map(blockHTML)
+                  .join("")}</div>`
+            )
+            .join("")}</div>
+          ${
+            layout.nowPct != null
+              ? `<div class="tl-now" style="left:${layout.nowPct}%"><span class="tl-now-dot"></span></div>`
+              : ""
+          }
+          <div class="tl-hours">${layout.marks
+            .map(
+              (m) =>
+                `<span class="tl-hour${m.minor ? " minor" : ""}" data-ts="${m.ts}" style="left:${m.pct}%">${m.label}</span>`
+            )
+            .join("")}</div>
+        </div>
+      </div>
     </div>
   `;
 }
@@ -2612,10 +2779,14 @@ function buildTimeline(layout) {
  */
 function morphTimeline(layout) {
   const namesBox = els.timeline.querySelector(".tl-names");
+  const plot = els.timeline.querySelector(".tl-plot");
   const gridsBox = els.timeline.querySelector(".tl-gridlines");
   const tracksBox = els.timeline.querySelector(".tl-tracks");
   const hoursBox = els.timeline.querySelector(".tl-hours");
-  const area = els.timeline.querySelector(".tl-area");
+  if (!plot || !namesBox || !gridsBox || !tracksBox || !hoursBox) {
+    buildTimeline(layout);
+    return;
+  }
 
   /** Finishing touches for entering nodes, applied one frame after they
    * are inserted with their start styles so the transition can play. */
@@ -2767,7 +2938,7 @@ function morphTimeline(layout) {
   patchMarks(hoursBox, "tl-hour", true);
 
   // "Now" line: slide when it stays, fade when it appears or leaves.
-  let nowEl = area.querySelector(".tl-now:not(.tl-exit)");
+  let nowEl = plot.querySelector(".tl-now:not(.tl-exit)");
   if (layout.nowPct != null) {
     if (nowEl) {
       nowEl.style.left = `${layout.nowPct}%`;
@@ -2777,7 +2948,7 @@ function morphTimeline(layout) {
       nowEl.style.left = `${layout.nowPct}%`;
       nowEl.style.opacity = "0";
       nowEl.appendChild(document.createElement("span")).className = "tl-now-dot";
-      area.insertBefore(nowEl, hoursBox);
+      plot.insertBefore(nowEl, hoursBox);
       entered.push(() => {
         nowEl.style.opacity = "1";
       });
@@ -2788,7 +2959,7 @@ function morphTimeline(layout) {
 
   // Flush start styles, then let entering pieces transition into place.
   if (entered.length) {
-    void area.offsetWidth;
+    void plot.offsetWidth;
     for (const fn of entered) fn();
   }
 }

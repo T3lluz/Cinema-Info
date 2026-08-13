@@ -56,12 +56,12 @@ jobs:
 
       - name: Commit when the snapshot changed
         run: |
-          if git diff --quiet -- data/program.json; then
+          if git diff --quiet -- public/data/program.json; then
             echo "No program changes."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/program.json
+          git add public/data/program.json
           git commit -m "Refresh program snapshot"
           git push

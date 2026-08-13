@@ -11,17 +11,17 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="description" content="Buen kino – program, tider og solgte billetter" />
     <link rel="manifest" href="manifest.webmanifest" />
-    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-    <link rel="icon" href="icons/icon-192.png" type="image/png" sizes="192x192" />
-    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="assets/icons/icon-192.png" type="image/png" sizes="192x192" />
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Buen kino" />
     <meta property="og:description" content="Program, tider og solgte billetter for Buen kino" />
     <meta property="og:url" content="https://t3lluz.github.io/Cinema-Info/" />
-    <meta property="og:image" content="https://t3lluz.github.io/Cinema-Info/icons/icon-512.png" />
+    <meta property="og:image" content="https://t3lluz.github.io/Cinema-Info/assets/icons/icon-512.png" />
     <meta name="twitter:card" content="summary" />
     <title>Buen kino</title>
-    <link rel="stylesheet" href="styles.css?v=130" />
+    <link rel="stylesheet" href="css/styles.css?v=133" />
     <script>
       // Paint the saved theme before the first frame, so a dark visitor
       // never sees a light flash. "system"/unset follows the device.
@@ -49,14 +49,6 @@
          Safari/Firefox fall back to the plain blur declared first in
          CSS. Scale stays 0 (no-op) until the map is drawn. -->
     <svg class="liquid-defs" width="0" height="0" aria-hidden="true" focusable="false">
-      <filter id="lens-nav" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-        <feImage result="map" preserveAspectRatio="none" />
-        <feDisplacementMap in="SourceGraphic" in2="map" scale="0" xChannelSelector="R" yChannelSelector="G" />
-      </filter>
-      <filter id="lens-nav-rim" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-        <feImage result="map" preserveAspectRatio="none" />
-        <feDisplacementMap in="SourceGraphic" in2="map" scale="0" xChannelSelector="R" yChannelSelector="G" />
-      </filter>
       <filter id="lens-chip" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
         <feImage result="map" preserveAspectRatio="none" />
         <feDisplacementMap in="SourceGraphic" in2="map" scale="0" xChannelSelector="R" yChannelSelector="G" />
@@ -65,45 +57,49 @@
         <feImage result="map" preserveAspectRatio="none" />
         <feDisplacementMap in="SourceGraphic" in2="map" scale="0" xChannelSelector="R" yChannelSelector="G" />
       </filter>
-      <filter id="lens-header" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-        <feImage result="map" preserveAspectRatio="none" />
-        <feDisplacementMap in="SourceGraphic" in2="map" scale="0" xChannelSelector="R" yChannelSelector="G" />
-      </filter>
     </svg>
-    <header class="top">
-      <div class="top-row">
-        <div class="brand">
-          <img class="brand-mark" src="favicon.svg" alt="" width="28" height="28" />
-          <h1>Buen kino</h1>
+    <header class="top app-header">
+      <div class="header-fade" aria-hidden="true">
+        <div class="header-frost">
+          <div class="header-frost-dots"></div>
         </div>
-        <div class="top-actions">
-          <p id="statusText" class="status">—</p>
-          <button id="refreshBtn" class="icon-btn" type="button" aria-label="Oppdater">
-            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
-              <path
-                fill="currentColor"
-                d="M17.65 6.35A7.95 7.95 0 0 0 12 4a8 8 0 1 0 7.75 10h-2.1A6 6 0 1 1 12 6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35Z"
-              />
-            </svg>
-          </button>
-        </div>
+        <div class="header-glass"></div>
       </div>
+      <div class="header-top">
+        <div class="top-row">
+          <div class="brand">
+            <img class="brand-mark" src="assets/favicon.svg" alt="" width="28" height="28" />
+            <h1>Buen kino</h1>
+          </div>
+          <div class="top-actions">
+            <p id="statusText" class="status">—</p>
+            <button id="refreshBtn" class="icon-btn" type="button" aria-label="Oppdater">
+              <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+                <path
+                  fill="currentColor"
+                  d="M17.65 6.35A7.95 7.95 0 0 0 12 4a8 8 0 1 0 7.75 10h-2.1A6 6 0 1 1 12 6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35Z"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
 
-      <div id="timeline" class="timeline" hidden></div>
+        <div id="timeline" class="timeline" hidden></div>
 
-      <div id="dayControls" class="day-controls">
-        <div class="day-controls-body">
-          <button
-            id="jumpTodayBtn"
-            class="jump-today"
-            type="button"
-            hidden
-            aria-label="Gå til i dag"
-          >
-            <span class="jump-today-arrow" aria-hidden="true">‹</span>
-            <span data-i18n="today">I dag</span>
-          </button>
-          <div id="dayTabs" class="day-tabs" role="tablist" aria-label="Velg dag"></div>
+        <div id="dayControls" class="day-controls">
+          <div class="day-controls-body">
+            <button
+              id="jumpTodayBtn"
+              class="jump-today"
+              type="button"
+              hidden
+              aria-label="Gå til i dag"
+            >
+              <span class="jump-today-arrow" aria-hidden="true">‹</span>
+              <span data-i18n="today">I dag</span>
+            </button>
+            <div id="dayTabs" class="day-tabs" role="tablist" aria-label="Velg dag"></div>
+          </div>
         </div>
       </div>
     </header>
@@ -136,12 +132,15 @@
     </main>
 
     <nav class="pill-nav" aria-label="Hovedmeny">
-      <!-- Shell / selection / tabs are siblings so each glass layer can
-           sample the page behind it. Nesting backdrop-filters stacked a
-           fake painted rim on top of a dead backdrop. -->
+      <!-- Dotted frost plate + selection pebble + tabs as siblings, so
+           each backdrop-filter samples the page behind it. -->
       <div class="pill-nav-shell">
-        <div class="pill-nav-glass" aria-hidden="true"></div>
-        <div class="pill-nav-rim" aria-hidden="true"></div>
+        <div class="nav-dots" aria-hidden="true">
+          <div class="nav-frost">
+            <div class="nav-frost-dots"></div>
+          </div>
+          <div class="nav-glass"></div>
+        </div>
         <div class="pill-indicator-track" aria-hidden="true">
           <div class="pill-lens">
             <span class="pill-indicator"></span>
@@ -177,6 +176,6 @@
       </div>
     </nav>
 
-    <script src="app.js?v=98" type="module"></script>
+    <script src="js/app.js?v=101" type="module"></script>
   </body>
 </html>
