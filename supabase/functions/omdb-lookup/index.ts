@@ -5,7 +5,7 @@ import "jsr:@supabase/functions-js/edge-runtime.d.ts";
  *
  * The PWA is static on GitHub Pages, so keys and upstream calls stay
  * here. OMDb covers search + plot/ratings; IMDb's public GraphQL fills
- * in cast headshots and the popular-titles feed. Same CORS / anon-key
+ * in cast headshots and the coming-soon feed. Same CORS / anon-key
  * pattern as `dx-web-login`.
  */
 
@@ -81,6 +81,54 @@ const POPULAR_QUERY = `query Popular($n: Int!) {
     }
   }
 }`;
+
+const COMING_SOON_QUERY = `query ComingSoon($n: Int!, $d: Date!) {
+  comingSoon(first: $n, comingSoonType: MOVIE, releasingOnOrAfter: $d) {
+    edges {
+      node {
+        id
+        titleText { text }
+        titleType { id text }
+        releaseYear { year }
+        releaseDate { day month year }
+        ratingsSummary { aggregateRating voteCount }
+        primaryImage { url }
+        plot { plotText { plainText } }
+        runtime { seconds }
+        certificate { rating }
+        genres { genres { text } }
+      }
+    }
+  }
+}`;
+
+function todayOslo() {
+  return new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Europe/Oslo",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(new Date());
+}
+
+function upcomingDateKey(value: unknown) {
+  const s = String(value || "").trim();
+  if (/^\d{4}-\d{2}-\d{2}/.test(s)) return s.slice(0, 10);
+  if (/^\d{4}-\d{2}$/.test(s)) return `${s}-01`;
+  if (/^\d{4}$/.test(s)) return `${s}-01-01`;
+  const ms = Date.parse(s);
+  if (!Number.isFinite(ms)) return "";
+  const d = new Date(ms);
+  const y = d.getUTCFullYear();
+  const m = String(d.getUTCMonth() + 1).padStart(2, "0");
+  const day = String(d.getUTCDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
+}
+
+function isUpcomingRelease(value: unknown, today: string) {
+  const key = upcomingDateKey(value);
+  return Boolean(key && key >= today);
+}
 
 function json(data: unknown, status = 200) {
   return new Response(JSON.stringify(data), {
@@ -498,16 +546,45 @@ Deno.serve(async (req) => {
       return json({ ok: true, movie });
     }
 
-    if (action === "popular") {
+    if (action === "popular" || action === "upcoming") {
       const n = Math.min(
         Math.max(Number(body.limit) || POPULAR_LIMIT, 6),
         48,
       );
-      const data = await imdbGql(POPULAR_QUERY, { n });
-      const titles = Array.isArray(data?.popularTitles?.titles)
-        ? data.popularTitles.titles
-        : [];
-      const movies = titles.map(packPopular).filter(Boolean);
+      const today = todayOslo();
+      let titles: unknown[] = [];
+      try {
+        const soon = await imdbGql(COMING_SOON_QUERY, { n, d: today });
+        const edges = Array.isArray(soon?.comingSoon?.edges)
+          ? soon.comingSoon.edges
+          : [];
+        titles = edges
+          .map((edge: unknown) => {
+            const rec = edge && typeof edge === "object"
+              ? (edge as Record<string, unknown>)
+              : {};
+            return rec.node;
+          })
+          .filter(Boolean);
+      } catch {
+        titles = [];
+      }
+      if (!titles.length) {
+        const data = await imdbGql(POPULAR_QUERY, { n });
+        titles = Array.isArray(data?.popularTitles?.titles)
+          ? data.popularTitles.titles
+          : [];
+      }
+      const movies = titles
+        .map((row) => packPopular(row as Record<string, unknown>))
+        .filter((row): row is NonNullable<ReturnType<typeof packPopular>> =>
+          Boolean(row && isUpcomingRelease(row.released || row.year, today))
+        )
+        .sort((a, b) => {
+          const da = upcomingDateKey(a.released || a.year);
+          const db = upcomingDateKey(b.released || b.year);
+          return da.localeCompare(db) || a.title.localeCompare(b.title);
+        });
       return json({ ok: true, movies });
     }
 

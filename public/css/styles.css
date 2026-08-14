@@ -1345,6 +1345,7 @@ h1 {
 .no-anim .view-intro,
 .no-anim .movie-search,
 .no-anim .movies-section-head,
+.no-anim .upcoming-day,
 .no-anim .upcoming-card,
 .no-anim .stats-hero,
 .no-anim .stats-panel,
@@ -2723,6 +2724,52 @@ a.rating-badge:hover {
   padding: 2px 0 4px 0;
 }
 
+.upcoming-day {
+  position: relative;
+  padding-left: 22px;
+  animation: rise 0.32s ease both;
+  animation-delay: calc(min(var(--i, 0), 10) * 40ms);
+}
+
+.upcoming-day::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 8px;
+  bottom: -18px;
+  width: 2px;
+  background: color-mix(in srgb, var(--line) 80%, var(--accent));
+}
+
+.upcoming-day:last-of-type::before {
+  bottom: 12px;
+}
+
+.upcoming-day::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 6px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-soft) 80%, var(--bg));
+}
+
+.upcoming-day.is-today::after {
+  box-shadow:
+    0 0 0 3px color-mix(in srgb, var(--accent-soft) 80%, var(--bg)),
+    0 0 0 7px color-mix(in srgb, var(--accent) 16%, transparent);
+}
+
+.upcoming-day-label {
+  margin: 0 0 8px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
 .upcoming-list {
   display: flex;
   flex-direction: column;
@@ -2837,6 +2884,11 @@ a.rating-badge:hover {
   text-transform: uppercase;
 }
 
+.upcoming-chip.coming {
+  background: color-mix(in srgb, var(--line) 55%, var(--surface));
+  color: var(--muted);
+}
+
 .upcoming-more,
 .upcoming-loading {
   display: flex;
@@ -2880,8 +2932,11 @@ a.rating-badge:hover {
 
 /* —— OMDb detail sheet ——
    Dotted frost fills the viewport behind the panel (same recipe as
-   header/nav). The panel stays solid on top. */
+   header/nav). The frost stays fully painted and is revealed with a
+   clip from the tapped tile — fading backdrop-filter looks stepped. */
 .omdb-sheet {
+  --sheet-ox: 50%;
+  --sheet-oy: 78%;
   position: fixed;
   inset: 0;
   z-index: 40;
@@ -2900,28 +2955,34 @@ a.rating-badge:hover {
   inset: 0;
   pointer-events: none;
   z-index: 0;
-  opacity: 0;
-  transition: opacity 0.36s cubic-bezier(0.32, 0.72, 0, 1);
+  clip-path: circle(0px at var(--sheet-ox) var(--sheet-oy));
+  transition: clip-path 0.56s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: clip-path;
 }
 
 .omdb-sheet.is-open .omdb-sheet-veil {
-  opacity: 1;
+  clip-path: circle(160vmax at var(--sheet-ox) var(--sheet-oy));
 }
 
 .omdb-sheet.is-leaving .omdb-sheet-veil {
-  opacity: 0;
+  clip-path: circle(0px at var(--sheet-ox) var(--sheet-oy));
 }
 
 .omdb-sheet.is-leaving {
   pointer-events: none;
 }
 
+.omdb-sheet-dim,
 .omdb-sheet-frost,
 .omdb-sheet-glass,
 .omdb-sheet-frost-dots {
   position: absolute;
   inset: 0;
   pointer-events: none;
+}
+
+.omdb-sheet-dim {
+  background: color-mix(in srgb, var(--ink) 20%, transparent);
 }
 
 .omdb-sheet-frost-dots {
@@ -2978,6 +3039,7 @@ a.rating-badge:hover {
   position: relative;
   z-index: 1;
   width: min(100%, 560px);
+  min-height: min(64vh, 520px);
   max-height: min(88vh, 760px);
   overflow: auto;
   padding: 18px 16px 20px;
@@ -2986,20 +3048,42 @@ a.rating-badge:hover {
   border: 1px solid var(--line);
   box-shadow: none;
   opacity: 0;
-  transform: translateY(22px);
+  transform: translateY(20px) scale(0.96);
+  transform-origin: 50% 100%;
   transition:
-    opacity 0.34s cubic-bezier(0.32, 0.72, 0, 1),
-    transform 0.34s cubic-bezier(0.32, 0.72, 0, 1);
+    opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.48s cubic-bezier(0.22, 1, 0.36, 1),
+    border-radius 0.48s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .omdb-sheet.is-open .omdb-sheet-panel {
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
 }
 
 .omdb-sheet.is-leaving .omdb-sheet-panel {
   opacity: 0;
-  transform: translateY(16px);
+  transform: translateY(14px) scale(0.97);
+}
+
+.omdb-sheet.is-flipping .omdb-sheet-panel {
+  transition: none !important;
+  overflow: hidden;
+}
+
+.omdb-sheet-body {
+  opacity: 0;
+  transition: opacity 0.32s ease 0.14s;
+}
+
+.omdb-sheet.is-open:not(.is-flipping) .omdb-sheet-body {
+  opacity: 1;
+}
+
+.omdb-sheet.is-leaving .omdb-sheet-body {
+  opacity: 0;
+  transition-delay: 0s;
+  transition-duration: 0.16s;
 }
 
 .omdb-sheet-close {
