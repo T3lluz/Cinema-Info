@@ -84,36 +84,18 @@ const SEAT_LAYOUT_TTL_MS = 30 * 24 * 60 * 60 * 1000;
  */
 const HAPTIC_CLICK_MS = 2;
 /**
- * Pixel Android 16 notification-dismiss haptics (SystemUI
- * MagneticNotificationRowManagerImpl intensity):
- *   pull:    5× PRIMITIVE_LOW_TICK @ WEAK_VIBRATION_SCALE 0.2, every 60ms
- *   detach:  PRIMITIVE_CLICK @ 0.7
- * Web vibrate() is full amplitude only — a 5-tick full-amp train reads as
- * a buzzsaw. Approximate soft pull as one 1ms tick (≈0.2 of a 5ms LOW_TICK
- * budget); threshold as ~12ms×0.7 → 4ms (not 8).
+ * Material 3 Expressive default spatial spring (AOSP ExpressiveMotionTokens):
+ * stiffness 380, dampingRatio 0.8. omega = √k rad/s, /1000 for a ms step.
+ * A full-page pager uses the default spatial spec, not the bouncy fast one.
  */
-const HAPTIC_PULL_MS = 1;
-const HAPTIC_PULL_PERIOD_MS = 60;
-const HAPTIC_THRESHOLD_MS = 4;
-/**
- * Magnetic peel tuned for a full-page day turn (not a thin notification):
- * earlier rip, snappier springs, neighbour stays put under the card so
- * only one panel moves.
- */
-const MAGNETIC_SWIPED = 0.62;
-const MAGNETIC_REDUCTION = 0.65;
-/** Mapped content px before the card rips free (~65dp finger at 0.62×). */
-const MAGNETIC_DETACH_DP = 40;
-const MAGNETIC_ATTACH_DP = 28;
-/** Slow release past this still commits (snappy without a long drag). */
-const MAGNETIC_COMMIT_DP = 28;
-const MAGNETIC_MAX_PRE_ROUNDNESS = 0.8;
-/** ~400 dp/s — easier flick commit than stock 500. */
-const MAGNETIC_DISMISS_VEL = 0.4;
-const MAGNETIC_DETACH_OMEGA = Math.sqrt(1100) / 1000;
-const MAGNETIC_DETACH_ZETA = 0.92;
-const MAGNETIC_SNAP_OMEGA = Math.sqrt(700) / 1000;
-const MAGNETIC_SNAP_ZETA = 0.72;
+const SWIPE_SPRING_OMEGA = Math.sqrt(380) / 1000;
+const SWIPE_SPRING_ZETA = 0.8;
+/** Fraction of the page a slow drag must cover to commit. */
+const SWIPE_COMMIT_FRAC = 0.28;
+/** Flick commit, px/ms (~320 px/s). */
+const SWIPE_FLICK = 0.32;
+/** Axis-lock slop before a touch is a day-swipe, not a scroll. */
+const SWIPE_LOCK_PX = 10;
 
 /** One step of Android SpringForce (mass 1). omega in rad/ms. */
 function stepSpring(x, v, target, dt, omega, zeta) {
@@ -982,25 +964,25 @@ function releaseDayRender({ discardQueued = false } = {}) {
 }
 
 /**
- * Interactive swipe between days: Pixel Android 16 magnetic notification
- * dismiss, adapted for a full page. The current day is the card; the
- * neighbour stays fixed underneath as the stack. While attached the page
- * lags (~0.62×) and corners round; crossing ~40dp rips it free. Release
- * flings the card off or bounces it back.
+ * Interactive swipe between days: a 1:1 carousel. Neighbouring days sit
+ * beside the current page (not stacked under it). The finger is tracked
+ * 1:1; on release a Material 3 Expressive default-spatial spring settles
+ * the track. Swipe haptics are intentionally off — they fought the gesture.
  *
- * Built for robustness against every "stuck between days" failure mode:
- * - Pointer events with capture on the (stable) day view, so the gesture
- *   survives DOM re-renders that would silently end a touch-event stream.
- * - The settle animation runs on requestAnimationFrame instead of a CSS
- *   transition, so it can never be left hanging by a missed transitionend.
- * - A new touch can grab the page mid-flight and keep dragging from
- *   exactly where it is; if the grabbed animation was already committing,
- *   the day is committed on the spot so quick repeated swipes flow
- *   naturally from day to day.
+ * Robustness:
+ * - Pointer capture on the stable day view, so a live redraw cannot kill
+ *   the touch stream.
+ * - Settle on rAF, never CSS transitionend.
+ * - Mid-flight grab: a new touch inherits the exact offset; a committing
+ *   animation is landed first so chained swipes keep flowing.
+ * - touchmove preventDefault after axis-lock, so vertical scroll cannot
+ *   steal a horizontal pager gesture (pointer events alone cannot).
+ * - pointerup / cancel / lostcapture share one release path, so Chrome
+ *   firing lostpointercapture first cannot bounce a committed swipe back.
  *
- * The header (day pills and timeline) switches onto the incoming day
- * when the card detaches, and back if it re-attaches. Day-pill taps
- * peel with the same fly-off via slideToDay.
+ * The header previews the incoming day once the drag is clearly headed
+ * there (instant pill scroll — a smooth scroll mid-drag fights the finger).
+ * Day-pill taps use the same slide via slideToDay.
  */
 function setupDaySwipe() {
   const view = els.views.day;
@@ -1009,19 +991,12 @@ function setupDaySwipe() {
 
   /** @type {"idle"|"pending"|"drag"|"ignore"|"animating"} */
   let mode = "idle";
-  /** Pointer that owns the gesture; extra fingers are ignored so a stray
-   * second touch can't end the drag early. */
   let pointerId = null;
   let startX = 0;
   let startY = 0;
-  /** Finger-space origin (non-zero when grabbing a snap-back). */
+  /** Track offset at gesture start (non-zero when grabbing an animation). */
   let baseX = 0;
-  let rawX = 0;
-  let contentX = 0;
-  let roundness = 0;
-  let detached = false;
-  /** 1 = peeling toward next (content moves left), −1 = previous. */
-  let peelDir = 0;
+  let curX = 0;
   let width = 0;
   let days = [];
   let idx = -1;
@@ -1029,135 +1004,112 @@ function setupDaySwipe() {
   let lastT = 0;
   let vx = 0;
   let raf = 0;
-  /** Direction of the currently running snap animation (−1/0/1). */
+  /** Direction of the currently running snap (−1/0/1). */
   let animDir = 0;
-  /** Day that animation commits to on arrival ("" while springing back). */
+  /** Day the animation commits on arrival ("" while springing back). */
   let animDay = "";
-  /** Ends the running snap animation right now, or null when idle. */
   let finishAnim = null;
   /** Side the header is previewing mid-drag (−1/0/1). */
   let previewDir = 0;
-  let lastPullHapticT = 0;
 
-  const clearPaint = () => {
-    rawX = 0;
-    contentX = 0;
-    roundness = 0;
-    detached = false;
-    peelDir = 0;
-    track.classList.remove("is-peeling", "peel-next", "peel-prev");
-    els.content.style.transform = "";
-    els.content.style.removeProperty("--peel");
+  /** Android-style rubber band: ~0.55 at the origin, easing toward a cap. */
+  const rubberBand = (over) => {
+    const c = 0.55;
+    return (over * width * c) / (width + c * Math.abs(over));
   };
 
-  const applyPaint = () => {
-    els.content.style.transform = contentX
-      ? `translate3d(${contentX}px, 0, 0)`
-      : "";
-    els.content.style.setProperty("--peel", String(roundness));
-    const towardNext = peelDir > 0 || (peelDir === 0 && contentX < 0);
-    track.classList.toggle("peel-next", towardNext);
-    track.classList.toggle("peel-prev", !towardNext);
-  };
-
-  let hapticDetached = false;
-  const onMagneticHaptic = (t) => {
-    if (detached !== hapticDetached) {
-      hapticDetached = detached;
-      hapticThreshold();
-      lastPullHapticT = t;
-      return;
+  /**
+   * Move the track. `--swipe` is a sin envelope: 0 at rest (0 or ±width)
+   * and 1 at halfway, so corner rounding eases out instead of popping off
+   * when the page lands.
+   */
+  const setX = (x) => {
+    curX = x;
+    track.style.transform = x ? `translate3d(${x}px, 0, 0)` : "";
+    const u = width ? Math.min(1, Math.abs(x) / width) : 0;
+    const morph = Math.sin(u * Math.PI);
+    if (morph > 0.001) {
+      track.style.setProperty("--swipe", morph.toFixed(3));
+      track.classList.add("is-swiping");
+    } else {
+      track.style.removeProperty("--swipe");
+      track.classList.remove("is-swiping");
     }
-    if (hapticDetached) return;
-    // Soft pull: one 1ms tick every 60ms once the card has actually moved
-    // (Pixel scale starts near 0 at WEAK 0.2 × normalized^1.27).
-    if (Math.abs(contentX) < 8) return;
-    if (t - lastPullHapticT < HAPTIC_PULL_PERIOD_MS) return;
-    lastPullHapticT = t;
-    hapticVibrate(HAPTIC_PULL_MS);
   };
 
-  const mapPull = (raw, blocked) => {
-    const swiped = blocked
-      ? MAGNETIC_SWIPED * MAGNETIC_REDUCTION
-      : MAGNETIC_SWIPED;
-    contentX = swiped * raw;
-    roundness = Math.min(
-      Math.abs(contentX) / MAGNETIC_DETACH_DP,
-      MAGNETIC_MAX_PRE_ROUNDNESS
-    );
+  const fillPanes = () => {
+    els.dayPanePrev.innerHTML = idx > 0 ? buildDayListHTML(days[idx - 1]) : "";
+    els.dayPaneNext.innerHTML =
+      idx < days.length - 1 ? buildDayListHTML(days[idx + 1]) : "";
   };
 
-  const mapDetached = (raw) => {
-    const sign = Math.sign(raw) || peelDir || 1;
-    contentX = raw - sign * MAGNETIC_DETACH_DP;
-    roundness = 1;
+  const lockScroll = () => {
+    view.classList.add("is-dragging");
+    view.style.touchAction = "none";
+    try {
+      view.setPointerCapture(pointerId);
+    } catch {
+      /* capture is best-effort; touchmove preventDefault is the fallback */
+    }
   };
 
-  /** Land on `day`: the peek pane already showed it, so the list swaps in
-   * without replaying the card entrance animation. */
+  const unlockScroll = () => {
+    view.classList.remove("is-dragging");
+    view.style.touchAction = "";
+  };
+
   const commitDay = (day) => {
     els.content.dataset.key = day;
-    setSelectedDay(day);
+    setSelectedDay(day, { tabScroll: "auto" });
     renderDay();
     enrichVisibleDay();
   };
 
-  /** Header follows detach / commit progress. */
+  /** Enter at 38%, leave at 28%, so a drag around the middle does not flicker. */
   const previewHeader = () => {
-    let dir = 0;
-    const pastCommit =
-      detached || Math.abs(contentX) >= MAGNETIC_COMMIT_DP;
-    if (pastCommit) {
-      dir = peelDir || (contentX < 0 ? 1 : contentX > 0 ? -1 : 0);
-      if ((dir > 0 && idx >= days.length - 1) || (dir < 0 && idx <= 0)) {
-        dir = 0;
-      }
-    }
+    if (!width) return;
+    const frac = -curX / width;
+    const enter =
+      previewDir !== 0 && Math.sign(frac) === previewDir
+        ? SWIPE_COMMIT_FRAC
+        : SWIPE_COMMIT_FRAC + 0.1;
+    let dir = Math.abs(frac) > enter ? Math.sign(frac) : 0;
+    if ((dir > 0 && idx >= days.length - 1) || (dir < 0 && idx <= 0)) dir = 0;
     if (dir === previewDir) return;
     previewDir = dir;
-    setSelectedDay(days[idx + dir]);
+    setSelectedDay(days[idx + dir], { tabScroll: "auto" });
   };
 
-  const beginPeel = () => {
-    track.classList.add("is-peeling");
+  const grabFlight = () => {
+    cancelAnimationFrame(raf);
+    finishAnim = null;
+    if (animDir !== 0) {
+      const newDay = animDay;
+      releaseDayRender({ discardQueued: true });
+      commitDay(newDay);
+      holdDayRender = true;
+      setX(curX + width * animDir);
+      idx = days.indexOf(newDay);
+      fillPanes();
+      animDir = 0;
+      animDay = "";
+    }
+    baseX = curX;
+    previewDir = 0;
+    mode = "drag";
+    holdDayRender = true;
+    lockScroll();
   };
 
   view.addEventListener("pointerdown", (e) => {
-    // Touch/pen only: mouse users scroll and click, they don't swipe.
     if (e.pointerType === "mouse" || !e.isPrimary || pointerId !== null) return;
     pointerId = e.pointerId;
     startX = lastX = e.clientX;
     startY = e.clientY;
     lastT = e.timeStamp;
     vx = 0;
-    lastPullHapticT = 0;
-    hapticDetached = detached;
-    if (mode === "animating") {
-      // Catch the page mid-flight and let the finger take over from
-      // exactly where it is — no jump, no waiting. If the animation
-      // was already committing to a neighbour day, commit it now and
-      // rebase so a follow-up swipe moves on from the new day.
-      cancelAnimationFrame(raf);
-      if (animDir !== 0) {
-        finishAnim?.();
-        baseX = 0;
-        mode = "pending";
-      } else {
-        finishAnim = null;
-        animDir = 0;
-        animDay = "";
-        holdDayRender = true;
-        beginPeel();
-        startX = e.clientX;
-        baseX = detached ? contentX : contentX / MAGNETIC_SWIPED;
-        rawX = baseX;
-        mode = "drag";
-        try {
-          view.setPointerCapture(pointerId);
-        } catch {}
-      }
-    } else {
+    if (mode === "animating") grabFlight();
+    else {
       baseX = 0;
       mode = "pending";
     }
@@ -1172,14 +1124,16 @@ function setupDaySwipe() {
     if (mode === "pending") {
       const dx = x - startX;
       const dy = y - startY;
-      // Wait until the gesture direction is clear; vertical wins so
-      // normal scrolling is never hijacked (touch-action: pan-y keeps
-      // vertical panning with the browser).
-      if (Math.abs(dy) > 10 && Math.abs(dy) >= Math.abs(dx)) {
+      if (Math.abs(dy) > SWIPE_LOCK_PX && Math.abs(dy) >= Math.abs(dx)) {
         mode = "ignore";
         return;
       }
-      if (Math.abs(dx) < 10 || Math.abs(dx) < Math.abs(dy) * 1.2) return;
+      if (
+        Math.abs(dx) < SWIPE_LOCK_PX ||
+        Math.abs(dx) < Math.abs(dy) * 1.2
+      ) {
+        return;
+      }
       if (!state?.shows) {
         mode = "ignore";
         return;
@@ -1191,125 +1145,95 @@ function setupDaySwipe() {
         return;
       }
       width = track.offsetWidth || view.offsetWidth || 1;
-      els.dayPanePrev.innerHTML = idx > 0 ? buildDayListHTML(days[idx - 1]) : "";
-      els.dayPaneNext.innerHTML =
-        idx < days.length - 1 ? buildDayListHTML(days[idx + 1]) : "";
-      // Re-base on the engage point so the page starts moving from
-      // right under the finger instead of jumping the 10px dead zone.
+      fillPanes();
       startX = x;
       lastX = x;
       lastT = e.timeStamp;
       mode = "drag";
       holdDayRender = true;
-      beginPeel();
-      try {
-        view.setPointerCapture(pointerId);
-      } catch {}
+      lockScroll();
     }
 
     const dt = e.timeStamp - lastT;
-    if (dt > 0) {
+    if (dt > 0 && dt < 48) {
       const inst = (x - lastX) / dt;
-      vx = vx === 0 ? inst : inst * 0.6 + vx * 0.4;
+      vx = vx === 0 ? inst : inst * 0.55 + vx * 0.45;
+      lastX = x;
+      lastT = e.timeStamp;
+    } else if (dt >= 48) {
+      vx = 0;
       lastX = x;
       lastT = e.timeStamp;
     }
 
-    rawX = baseX + (x - startX);
-    const blocked =
-      (rawX > 0 && idx <= 0) || (rawX < 0 && idx >= days.length - 1);
-    if (rawX) peelDir = rawX < 0 ? 1 : -1;
-
-    if (!blocked && !detached && Math.abs(MAGNETIC_SWIPED * rawX) >= MAGNETIC_DETACH_DP) {
-      detached = true;
-    }
-
-    if (blocked || !detached) {
-      mapPull(rawX, blocked);
-    } else {
-      mapDetached(rawX);
-      // Re-attach when the card is close enough to the stack again.
-      if (Math.abs(contentX) <= MAGNETIC_ATTACH_DP) {
-        detached = false;
-        baseX = contentX / MAGNETIC_SWIPED;
-        startX = x;
-        rawX = baseX;
-        mapPull(rawX, false);
-      }
-    }
-
-    applyPaint();
-    onMagneticHaptic(e.timeStamp);
+    let next = baseX + (x - startX);
+    const minX = idx >= days.length - 1 ? 0 : -width;
+    const maxX = idx <= 0 ? 0 : width;
+    if (next > maxX) next = maxX + rubberBand(next - maxX);
+    else if (next < minX) next = minX - rubberBand(minX - next);
+    setX(next);
     previewHeader();
   });
 
+  /** Keep native vertical scroll from stealing the pager after axis-lock. */
+  view.addEventListener(
+    "touchmove",
+    (e) => {
+      if (mode === "drag") e.preventDefault();
+    },
+    { passive: false }
+  );
+
   const settle = () => {
-    if (mode === "drag") {
-      const canPrev = idx > 0;
-      const canNext = idx < days.length - 1;
-      let dir = 0;
-      if (detached) {
-        dir = contentX < 0 ? 1 : -1;
-      } else if (canNext && (vx < -MAGNETIC_DISMISS_VEL || contentX <= -MAGNETIC_COMMIT_DP)) {
-        dir = 1;
-      } else if (canPrev && (vx > MAGNETIC_DISMISS_VEL || contentX >= MAGNETIC_COMMIT_DP)) {
-        dir = -1;
-      }
-      if (dir === 1 && !canNext) dir = 0;
-      if (dir === -1 && !canPrev) dir = 0;
-      const contentV = detached ? vx : MAGNETIC_SWIPED * vx;
-      snapTo(dir, { haptic: true, v0: contentV });
-    } else if (mode !== "animating") {
-      mode = "idle";
+    if (mode !== "drag") {
+      if (mode !== "animating") mode = "idle";
+      return;
     }
+    const canPrev = idx > 0;
+    const canNext = idx < days.length - 1;
+    const projected = curX + vx * 180;
+    const dragDX = curX - baseX;
+    const line = width * SWIPE_COMMIT_FRAC;
+    let dir = 0;
+    if (canNext && dragDX < -8 && (projected < -line || vx < -SWIPE_FLICK)) {
+      dir = 1;
+    } else if (
+      canPrev &&
+      dragDX > 8 &&
+      (projected > line || vx > SWIPE_FLICK)
+    ) {
+      dir = -1;
+    }
+    snapTo(dir);
   };
 
-  view.addEventListener("pointerup", (e) => {
+  const releasePointer = (e, canceled) => {
     if (e.pointerId !== pointerId) return;
     pointerId = null;
-    settle();
-  });
+    unlockScroll();
+    if (canceled && mode === "drag") snapTo(0);
+    else settle();
+  };
 
-  view.addEventListener("pointercancel", (e) => {
-    if (e.pointerId !== pointerId) return;
-    pointerId = null;
-    if (mode === "drag") snapTo(0, { haptic: true });
-    else if (mode !== "animating") mode = "idle";
-  });
-
-  // Last-resort recovery: if the view's own capture is ever lost without
-  // a pointerup or pointercancel, spring back instead of freezing
-  // mid-swipe. (Bubbled events from a child losing its implicit capture
-  // when ours kicks in must not end the gesture, hence the target check.)
+  view.addEventListener("pointerup", (e) => releasePointer(e, false));
+  view.addEventListener("pointercancel", (e) => releasePointer(e, true));
   view.addEventListener("lostpointercapture", (e) => {
-    if (e.target !== view || e.pointerId !== pointerId) return;
-    pointerId = null;
-    if (mode === "drag") snapTo(0, { haptic: true });
-    else if (mode !== "animating") mode = "idle";
+    if (e.target !== view) return;
+    releasePointer(e, false);
   });
 
-  /** Spring the card off (dir ±1) or bounce it back onto the stack (0). */
-  function snapTo(dir, { day = dir === 0 ? "" : days[idx + dir], v0 = vx, haptic = false } = {}) {
+  /** Spring the track to rest; dir −1/1 slides to the neighbour, 0 back. */
+  function snapTo(dir, { day = dir === 0 ? "" : days[idx + dir], v0 = vx } = {}) {
     cancelAnimationFrame(raf);
     mode = "animating";
     animDir = dir;
     animDay = day;
     const target = dir === 0 ? 0 : dir === 1 ? -width : width;
+    const overshoot = 14;
 
-    if (day) setSelectedDay(day);
-    else if (previewDir !== 0) setSelectedDay(days[idx]);
+    if (day) setSelectedDay(day, { tabScroll: "auto" });
+    else if (previewDir !== 0) setSelectedDay(days[idx], { tabScroll: "auto" });
     previewDir = 0;
-    if (haptic) {
-      if (dir !== 0 && !detached) hapticThreshold();
-      else if (dir === 0 && detached) hapticThreshold();
-    }
-    hapticDetached = false;
-    lastPullHapticT = 0;
-    if (dir !== 0) {
-      detached = true;
-      roundness = 1;
-      peelDir = dir;
-    }
 
     const finish = () => {
       cancelAnimationFrame(raf);
@@ -1317,58 +1241,54 @@ function setupDaySwipe() {
       animDir = 0;
       animDay = "";
       releaseDayRender({ discardQueued: dir !== 0 });
-      clearPaint();
+      if (day) commitDay(day);
+      setX(0);
       els.dayPanePrev.innerHTML = "";
       els.dayPaneNext.innerHTML = "";
-      if (day) commitDay(day);
       mode = "idle";
     };
     finishAnim = finish;
 
-    if (contentX === target || reduceMotion.matches) {
+    if (Math.abs(curX - target) < 0.5 || reduceMotion.matches) {
       finish();
       return;
     }
 
-    beginPeel();
-    const omega = dir === 0 ? MAGNETIC_SNAP_OMEGA : MAGNETIC_DETACH_OMEGA;
-    const zeta = dir === 0 ? MAGNETIC_SNAP_ZETA : MAGNETIC_DETACH_ZETA;
-    let x = contentX;
-    let v = Math.max(-3, Math.min(3, v0));
+    let x = curX;
+    let v = Math.max(-2.4, Math.min(2.4, v0));
     let prevTs = performance.now();
 
     const stepFrame = (ts) => {
-      const dt = Math.min(Math.max(ts - prevTs, 0.001), 64);
+      const dt = Math.min(Math.max(ts - prevTs, 0.001), 32);
       prevTs = ts;
-      const s = stepSpring(x, v, target, dt, omega, zeta);
+      const s = stepSpring(
+        x,
+        v,
+        target,
+        dt,
+        SWIPE_SPRING_OMEGA,
+        SWIPE_SPRING_ZETA
+      );
       x = s.x;
       v = s.v;
-      const settled = Math.abs(x - target) < 0.5 && Math.abs(v) < 0.02;
-      const flownPast =
-        dir !== 0 &&
-        Math.sign(x - target) !== Math.sign((x - v * dt) - target) &&
-        Math.abs(x - target) < 8;
-      if (settled || (dir !== 0 && Math.abs(x) >= width - 0.5) || flownPast) {
+      if (Math.abs(x - target) < 0.5 && Math.abs(v) < 0.02) {
         finish();
         return;
       }
-      contentX = x;
-      if (dir === 0) {
-        roundness = Math.min(
-          Math.abs(x) / MAGNETIC_DETACH_DP,
-          MAGNETIC_MAX_PRE_ROUNDNESS
-        );
-        detached = false;
+      let vis = x;
+      if (dir !== 0) {
+        vis =
+          dir === 1
+            ? Math.max(x, -width - overshoot)
+            : Math.min(x, width + overshoot);
       }
-      applyPaint();
+      setX(vis);
       raf = requestAnimationFrame(stepFrame);
     };
     raf = requestAnimationFrame(stepFrame);
   }
 
-  /** Slide to `day` without a gesture (day-pill taps), reusing the peel
-   * animation so the page and the header always move as one. Returns false
-   * when no slide is possible and the caller should just switch day. */
+  /** Slide to `day` without a gesture (day-pill taps). */
   slideToDay = (day) => {
     if (!state?.shows || els.views.day.hidden) return false;
     if (mode === "pending" || mode === "drag" || pointerId !== null) return false;
@@ -1385,17 +1305,12 @@ function setupDaySwipe() {
     days = all;
     idx = from;
     baseX = 0;
-    clearPaint();
+    setX(0);
     const dir = to > from ? 1 : -1;
     els.dayPanePrev.innerHTML = dir === -1 ? buildDayListHTML(day) : "";
     els.dayPaneNext.innerHTML = dir === 1 ? buildDayListHTML(day) : "";
     holdDayRender = true;
-    beginPeel();
-    detached = true;
-    roundness = 1;
-    peelDir = dir;
-    applyPaint();
-    snapTo(dir, { day, v0: -dir * 2 });
+    snapTo(dir, { day, v0: 0 });
     return true;
   };
 }
@@ -1637,11 +1552,6 @@ function hapticTarget(el) {
 
 function hapticClick() {
   hapticVibrate(HAPTIC_CLICK_MS);
-}
-
-/** Notification-row detach / re-attach: PRIMITIVE_CLICK at 0.7. */
-function hapticThreshold() {
-  hapticVibrate(HAPTIC_THRESHOLD_MS);
 }
 
 function hapticVibrate(pattern) {
@@ -2450,7 +2360,7 @@ function populateFilters() {
  * swipe can start the header moving while the page is still gliding.
  * Returns true when the day actually changed.
  */
-function setSelectedDay(day) {
+function setSelectedDay(day, { tabScroll = "smooth" } = {}) {
   if (!day || day === selectedDay || !state?.shows) return false;
   selectedDay = day;
   savePrefs();
@@ -2461,7 +2371,9 @@ function setSelectedDay(day) {
   // Show/hide the today chip before scrolling so the strip width is final.
   updateJumpTodayBtn();
   moveDayIndicator();
-  scrollSelectedDayTabIntoView({ behavior: "smooth" });
+  scrollSelectedDayTabIntoView({
+    behavior: tabScroll === "smooth" ? "smooth" : "auto",
+  });
   renderTimeline();
   return true;
 }

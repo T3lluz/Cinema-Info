@@ -1012,50 +1012,52 @@ h1 {
   }
 }
 
-/* —— Day swipe: magnetic peel; only the top card moves —— */
+/* —— Day swipe: 1:1 carousel, Material 3 Expressive spatial spring —— */
 #view-day {
-  /* The browser keeps vertical panning; horizontal drags are ours. */
   touch-action: pan-y;
+  overflow-x: clip;
+  overscroll-behavior-x: none;
+}
+
+#view-day.is-dragging {
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .day-swipe {
   position: relative;
-  overflow: hidden;
 }
 
-/* Incoming day stays fixed under the current page (the stack). Moving
-   both looked like two panels swiping — Pixel notifications tug the
-   stack a hair; full-page days must not. */
+.day-swipe.is-swiping {
+  overflow: hidden;
+  will-change: transform;
+}
+
 .day-pane {
   position: absolute;
-  inset: 0;
-  z-index: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  min-height: 100%;
   overflow: hidden;
   pointer-events: none;
-  visibility: hidden;
-  background: var(--bg);
 }
 
-.day-swipe.peel-next > .day-pane.next,
-.day-swipe.peel-prev > .day-pane.prev {
-  visibility: visible;
+.day-pane.prev {
+  transform: translate3d(-100%, 0, 0);
 }
 
-.day-swipe > #content {
-  position: relative;
-  z-index: 1;
-  background: var(--bg);
+.day-pane.next {
+  transform: translate3d(100%, 0, 0);
 }
 
-.day-swipe.is-peeling > #content {
+.day-swipe.is-swiping > #content,
+.day-swipe.is-swiping > .day-pane {
+  border-radius: calc(28px * var(--swipe, 0));
   overflow: hidden;
-  border-radius: calc(28px * var(--peel, 0));
-  box-shadow:
-    0 calc(4px * var(--peel, 0)) calc(18px * var(--peel, 0))
-      color-mix(in srgb, #000 calc(12% * var(--peel, 0)), transparent),
-    0 calc(12px * var(--peel, 0)) calc(40px * var(--peel, 0))
-      color-mix(in srgb, #000 calc(18% * var(--peel, 0)), transparent);
-  will-change: transform;
 }
 
 @media (prefers-reduced-motion: reduce) {
