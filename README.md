@@ -12,6 +12,7 @@ Mobile-friendly schedule for **Buen kino** — same info as the KinoProgram Chro
   or a whole week can be read at a glance
 - Live: everything on screen re-reads itself every 5 seconds, hands off
 - Norwegian/English + light/dark theme
+- Optional tap haptics (Settings → Haptics), on by default; works in Chrome on Android
 - Optional DX account connection for **admissions** — how many of the sold tickets have been scanned
 - …and a **seat map** per showing: which seats are sold, and which of those are already inside
 

@@ -218,8 +218,9 @@ const I18N = {
     seatNumbersOn: "Vis",
     seatNumbersOff: "Skjul",
     haptics: "Haptikk",
-    hapticsHint: "Ett lett tick ved trykk. Virker i Chrome på Android.",
-    hapticsUnavailable: "Ikke tilgjengelig på denne enheten.",
+    hapticsHint: "Lett tick ved trykk. Virker i Chrome på Android.",
+    hapticsOn: "På",
+    hapticsOff: "Av",
     langNb: "Norsk",
     langEn: "English",
     spokenNorwegian: "Norsk tale",
@@ -381,8 +382,9 @@ const I18N = {
     seatNumbersOn: "Show",
     seatNumbersOff: "Hide",
     haptics: "Haptics",
-    hapticsHint: "A single light tick on taps. Works in Chrome on Android.",
-    hapticsUnavailable: "Not available on this device.",
+    hapticsHint: "A light tick on taps. Works in Chrome on Android.",
+    hapticsOn: "On",
+    hapticsOff: "Off",
     langNb: "Norsk",
     langEn: "English",
     spokenNorwegian: "Norwegian",
@@ -548,7 +550,7 @@ let theme = "system";
 const DARK_MQ = window.matchMedia("(prefers-color-scheme: dark)");
 /** Digits painted on each seat square in the hall chart. */
 let showSeatNumbers = true;
-/** Click ticks via navigator.vibrate — Android Chromium only. */
+/** Click ticks via navigator.vibrate — Android Chromium. Off = silent. */
 let hapticsOn = true;
 let enrichedAll = false;
 let lastLiveAt = 0;
@@ -5380,14 +5382,14 @@ function renderSettings() {
             ${settingsRow(
               "haptics",
               "haptics",
-              canHaptic() ? "hapticsHint" : "hapticsUnavailable",
-              settingsSwitch(
+              "hapticsHint",
+              settingsSeg(
                 "haptics",
-                canHaptic() && hapticsOn,
-                "data-haptic-switch",
-                canHaptic() ? "" : "disabled"
-              ),
-              "is-inline"
+                `
+              <button type="button" class="seg-btn" data-haptic-opt="on" aria-pressed="${hapticsOn}">${escapeHtml(t("hapticsOn"))}</button>
+              <button type="button" class="seg-btn" data-haptic-opt="off" aria-pressed="${!hapticsOn}">${escapeHtml(t("hapticsOff"))}</button>
+            `
+              )
             )}
           </div>
         </section>
@@ -5461,17 +5463,23 @@ function renderSettings() {
     });
   }
 
-  const hapticSwitch = els.settingsContent.querySelector("[data-haptic-switch]");
-  if (hapticSwitch && !hapticSwitch.disabled) {
-    hapticSwitch.addEventListener("click", () => {
-      hapticsOn = !hapticsOn;
+  els.settingsContent.querySelectorAll("[data-haptic-opt]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const next = btn.dataset.hapticOpt === "on";
+      if (next === hapticsOn) return;
+      hapticsOn = next;
       savePrefs();
-      hapticSwitch.setAttribute("aria-checked", String(hapticsOn));
-      // Turning it on happens after pointerup (which was skipped while
-      // it was off), so confirm the switch itself.
+      segSelect(btn);
       if (hapticsOn) hapticVibrate();
+      else {
+        try {
+          navigator.vibrate?.(0);
+        } catch {
+          /* ignore */
+        }
+      }
     });
-  }
+  });
 
   const refreshBtn = els.settingsContent.querySelector("#dxRefreshBtn");
   if (refreshBtn) {
