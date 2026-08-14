@@ -616,8 +616,15 @@ const TL_CANVAS_PAD = 10;
 const TL_MAX_CANVAS_PX = 3600;
 /** After the visitor stops panning, bring "now" back on screen if it left. */
 const TL_FOLLOW_RESUME_MS = 1800;
+/** Fast day-switch swipe; motion blur rides velocity, not a second tween. */
+const TL_SWITCH_MS = 280;
 /** Day last auto-scrolled on the timeline — skip the jump on live refreshes. */
 let tlScrollDay = "";
+/** Day whose bars are on screen (or sliding in). */
+let tlPaintDay = "";
+/** True while the timeline is mid day-switch swipe. */
+let tlSwitching = false;
+let tlSwitchRaf = 0;
 /** Keep the now-marker on screen until the visitor pans. */
 let tlFollowNow = true;
 let tlProgrammaticScroll = false;
@@ -776,7 +783,7 @@ async function init() {
   if ("ResizeObserver" in window && els.timeline) {
     let lastAreaW = 0;
     const tlRo = new ResizeObserver(() => {
-      if (!state?.shows || els.timeline.hidden) return;
+      if (!state?.shows || els.timeline.hidden || tlSwitching) return;
       const w = measureTimelineAreaWidth();
       if (Math.abs(w - lastAreaW) < 2) return;
       lastAreaW = w;
@@ -999,6 +1006,8 @@ function releaseDayRender({ discardQueued = false } = {}) {
  *
  * The header previews the incoming day once the drag is clearly headed
  * there (instant pill scroll — a smooth scroll mid-drag fights the finger).
+ * The timeline then swipes with a directional motion blur rather than
+ * morphing bars from one day into the next.
  * Day-pill taps use the same slide via slideToDay, with the liquid pill
  * and strip scrolling smoothly as they do for any other tap.
  */
@@ -2783,15 +2792,22 @@ function computeTimelineLayout() {
   };
 }
 
+/** The live plot: incoming layer during a day-switch, otherwise the host. */
+function timelineLive() {
+  return (
+    els.timeline?.querySelector(".tl-swipe-in") || els.timeline || null
+  );
+}
+
 /** Track-column width the plot is scaled against. */
 function measureTimelineAreaWidth() {
-  const area = els.timeline?.querySelector(".tl-area");
+  const live = timelineLive();
+  const area = live?.querySelector(".tl-area");
   if (area?.clientWidth) return area.clientWidth;
   const timelineW = els.timeline?.clientWidth;
   if (timelineW) {
     const namesW =
-      els.timeline.querySelector(".tl-names")?.getBoundingClientRect().width ||
-      36;
+      live?.querySelector(".tl-names")?.getBoundingClientRect().width || 36;
     const gap = window.matchMedia("(max-width: 699px)").matches ? 4 : 10;
     return Math.max(timelineW - namesW - gap, 160);
   }
@@ -2810,8 +2826,9 @@ function timelinePlotWidth(span, minDuration, areaWidth) {
 }
 
 function applyTimelineCanvasSize(layout) {
-  const canvas = els.timeline.querySelector(".tl-canvas");
-  const area = els.timeline.querySelector(".tl-area");
+  const live = timelineLive();
+  const canvas = live?.querySelector(".tl-canvas");
+  const area = live?.querySelector(".tl-area");
   if (!canvas || !area) return;
   const areaW = area.clientWidth || layout.plotWidth;
   const plotWidth = timelinePlotWidth(
@@ -2830,7 +2847,7 @@ function setupTimelineFollow() {
   els.timeline.addEventListener(
     "scroll",
     (e) => {
-      if (e.target !== els.timeline.querySelector(".tl-area")) return;
+      if (e.target !== timelineLive()?.querySelector(".tl-area")) return;
       if (tlProgrammaticScroll) return;
       tlFollowNow = false;
       clearTimeout(tlFollowResumeTimer);
@@ -2879,8 +2896,9 @@ function scrollTimelineArea(area, next, { smooth = false } = {}) {
  * are visible (clamped — morning stays at the start, late night at the
  * end). Otherwise only nudge when it would leave the viewport. */
 function scrollTimelineToNow(layout, { smooth = false, place = false } = {}) {
-  const area = els.timeline.querySelector(".tl-area");
-  const plot = els.timeline.querySelector(".tl-plot");
+  const live = timelineLive();
+  const area = live?.querySelector(".tl-area");
+  const plot = live?.querySelector(".tl-plot");
   if (!area || !plot || layout.nowPct == null) return;
   const x = timelineNowX(layout, plot);
   const viewW = area.clientWidth;
@@ -2908,8 +2926,8 @@ function timelineMarkStep(span, plotWidth) {
 }
 
 /** Keep today's now-marker on screen; other days start at the left. */
-function syncTimelineScroll(layout) {
-  const area = els.timeline.querySelector(".tl-area");
+function syncTimelineScroll(layout, { smooth } = {}) {
+  const area = timelineLive()?.querySelector(".tl-area");
   if (!area) return;
   const dayChanged = layout.day !== tlScrollDay;
   tlScrollDay = layout.day;
@@ -2930,7 +2948,8 @@ function syncTimelineScroll(layout) {
     clearTimeout(tlFollowResumeTimer);
   }
   if (!tlFollowNow) return;
-  scrollTimelineToNow(layout, { smooth: dayChanged, place: dayChanged });
+  const useSmooth = smooth ?? dayChanged;
+  scrollTimelineToNow(layout, { smooth: useSmooth, place: dayChanged });
 }
 
 function renderTimeline() {
@@ -2939,9 +2958,11 @@ function renderTimeline() {
   // Settings is about the app, not about tonight's programme; the strip
   // has nothing to say there and only crowds the header.
   if (activeTab === "settings") {
+    finishTimelineDaySwitch();
     els.timeline.hidden = true;
     els.timeline.innerHTML = "";
     tlScrollDay = "";
+    tlPaintDay = "";
     tlFollowNow = true;
     return;
   }
@@ -2949,22 +2970,162 @@ function renderTimeline() {
   const layout = computeTimelineLayout();
 
   if (!layout.lanes.length) {
+    finishTimelineDaySwitch();
     els.timeline.hidden = true;
     els.timeline.innerHTML = "";
     tlScrollDay = "";
+    tlPaintDay = "";
     tlFollowNow = true;
     return;
   }
 
-  // Morph the existing bars into the new day's layout when possible;
-  // build from scratch only when there is nothing on screen yet.
-  if (!els.timeline.hidden && els.timeline.querySelector(".tl-canvas")) {
+  const reduceMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+  const hasCanvas = !els.timeline.hidden && timelineLive()?.querySelector(".tl-canvas");
+  const dayChanged = !!(tlPaintDay && layout.day !== tlPaintDay);
+
+  // Mid-swipe live ticks would fight the motion; the next beat morphs.
+  if (tlSwitching && !dayChanged) return;
+
+  if (dayChanged && hasCanvas && !reduceMotion) {
+    const dir = layout.day > tlPaintDay ? 1 : -1;
+    tlPaintDay = layout.day;
+    startTimelineDaySwitch(layout, dir);
+    return;
+  }
+
+  tlPaintDay = layout.day;
+  if (dayChanged && hasCanvas) {
+    // Reduced motion: swap the day in place, no swipe and no bar morph.
+    finishTimelineDaySwitch();
+    buildTimeline(layout);
+  } else if (hasCanvas) {
     morphTimeline(layout);
   } else {
+    finishTimelineDaySwitch();
     buildTimeline(layout);
   }
   applyTimelineCanvasSize(layout);
   requestAnimationFrame(() => syncTimelineScroll(layout));
+}
+
+function tlMotionBlurNode() {
+  return document.querySelector("#tl-motion-blur feGaussianBlur");
+}
+
+/** Horizontal motion blur in px. 0 removes the filter so it cannot linger. */
+function setTimelineMotionBlur(px, ...targets) {
+  const prim = tlMotionBlurNode();
+  const x = Math.max(0, px);
+  if (prim) prim.setAttribute("stdDeviation", `${x.toFixed(2)} 0`);
+  const filter = x > 0.2 ? 'url("#tl-motion-blur")' : "";
+  for (const target of targets) {
+    if (!target) continue;
+    if (filter) target.style.filter = filter;
+    else target.style.removeProperty("filter");
+  }
+}
+
+function wrapTimelineSwipeLayer(className) {
+  const layer = document.createElement("div");
+  layer.className = `tl-swipe-layer ${className}`;
+  return layer;
+}
+
+/** Land the incoming day and drop the track so the host is a normal timeline. */
+function finishTimelineDaySwitch() {
+  cancelAnimationFrame(tlSwitchRaf);
+  tlSwitchRaf = 0;
+  const host = els.timeline;
+  const track = host?.querySelector(".tl-swipe-track");
+  const inn = host?.querySelector(".tl-swipe-in");
+  setTimelineMotionBlur(0, track, inn, host?.querySelector(".tl-swipe-out"));
+  if (inn) {
+    while (inn.firstChild) host.appendChild(inn.firstChild);
+  }
+  track?.remove();
+  host?.classList.remove("is-day-switching");
+  if (host) host.style.removeProperty("height");
+  tlSwitching = false;
+}
+
+/**
+ * Slide the outgoing day off in the swipe direction and bring the new
+ * day in from the other side. Blur is horizontal-only (SVG stdDeviation)
+ * and scaled from frame velocity so it reads as motion, not defocus.
+ * dir 1 = later day (content moves left), −1 = earlier (content moves right).
+ */
+function startTimelineDaySwitch(layout, dir) {
+  finishTimelineDaySwitch();
+  const host = els.timeline;
+  if (!host || !dir) {
+    buildTimeline(layout);
+    applyTimelineCanvasSize(layout);
+    requestAnimationFrame(() => syncTimelineScroll(layout, { smooth: false }));
+    return;
+  }
+
+  host.querySelectorAll(".tl-exit").forEach((el) => el.remove());
+  const fromH = host.getBoundingClientRect().height;
+
+  const out = wrapTimelineSwipeLayer("tl-swipe-out");
+  out.setAttribute("aria-hidden", "true");
+  while (host.firstChild) out.appendChild(host.firstChild);
+
+  const inn = wrapTimelineSwipeLayer("tl-swipe-in");
+  buildTimeline(layout, inn);
+
+  const track = document.createElement("div");
+  track.className = "tl-swipe-track";
+  if (dir > 0) track.append(out, inn);
+  else track.append(inn, out);
+
+  host.classList.add("is-day-switching");
+  host.style.height = `${fromH}px`;
+  host.appendChild(track);
+  els.timeline.hidden = false;
+  applyTimelineCanvasSize(layout);
+  syncTimelineScroll(layout, { smooth: false });
+
+  const w = out.offsetWidth || inn.offsetWidth || host.clientWidth || 1;
+  const x0 = dir > 0 ? 0 : -w;
+  const x1 = dir > 0 ? -w : 0;
+  track.style.transform = `translate3d(${x0}px, 0, 0)`;
+
+  const toH = inn.offsetHeight || inn.scrollHeight || fromH;
+
+  if (w < 8) {
+    finishTimelineDaySwitch();
+    applyTimelineCanvasSize(layout);
+    requestAnimationFrame(() => syncTimelineScroll(layout, { smooth: false }));
+    return;
+  }
+
+  tlSwitching = true;
+  const t0 = performance.now();
+  let lastX = x0;
+
+  const step = (now) => {
+    const t = Math.min(1, (now - t0) / TL_SWITCH_MS);
+    const e = t * t * (3 - 2 * t);
+    const x = x0 + (x1 - x0) * e;
+    track.style.transform = `translate3d(${x}px, 0, 0)`;
+    host.style.height = `${fromH + (toH - fromH) * e}px`;
+    const maxBlur = Math.min(18, w * 0.045);
+    setTimelineMotionBlur(
+      Math.min(maxBlur, Math.abs(x - lastX) * 0.42),
+      out,
+      inn
+    );
+    lastX = x;
+    if (t < 1) {
+      tlSwitchRaf = requestAnimationFrame(step);
+      return;
+    }
+    finishTimelineDaySwitch();
+  };
+  tlSwitchRaf = requestAnimationFrame(step);
 }
 
 function tlBlockInnerHTML(b) {
@@ -2991,7 +3152,7 @@ function fillTlLaneName(el, screen) {
   el.innerHTML = tlLaneNameHTML(screen);
 }
 
-function buildTimeline(layout) {
+function buildTimeline(layout, host = els.timeline) {
   const blockHTML = (b) => `<button type="button" class="tl-block ${b.status}${
     b.estimated ? " estimated" : ""
   }"
@@ -3003,7 +3164,7 @@ function buildTimeline(layout) {
     </button>`;
 
   els.timeline.hidden = false;
-  els.timeline.innerHTML = `
+  host.innerHTML = `
     <div class="tl-names">${layout.lanes
       .map(
         (l) =>
@@ -3046,19 +3207,18 @@ function buildTimeline(layout) {
 
 /**
  * Update the timeline in place so CSS transitions carry every piece to
- * its new spot: bars stretch/shrink and slide to the new day's shows,
- * leftover bars collapse away, new ones grow in, and hour marks slide
- * or cross-fade. Also used by the minute refresh, where only statuses
- * and the "now" line move.
+ * its new spot. Used by the minute refresh, where only statuses and the
+ * "now" line move — day changes swipe instead of morphing bars.
  */
 function morphTimeline(layout) {
-  const namesBox = els.timeline.querySelector(".tl-names");
-  const plot = els.timeline.querySelector(".tl-plot");
-  const gridsBox = els.timeline.querySelector(".tl-gridlines");
-  const tracksBox = els.timeline.querySelector(".tl-tracks");
-  const hoursBox = els.timeline.querySelector(".tl-hours");
+  const live = timelineLive();
+  const namesBox = live.querySelector(".tl-names");
+  const plot = live.querySelector(".tl-plot");
+  const gridsBox = live.querySelector(".tl-gridlines");
+  const tracksBox = live.querySelector(".tl-tracks");
+  const hoursBox = live.querySelector(".tl-hours");
   if (!plot || !namesBox || !gridsBox || !tracksBox || !hoursBox) {
-    buildTimeline(layout);
+    buildTimeline(layout, live === els.timeline ? els.timeline : live);
     return;
   }
 

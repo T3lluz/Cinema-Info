@@ -647,6 +647,46 @@ h1 {
   display: none;
 }
 
+/* Day-switch: the strip is a two-page track that slides with a
+   horizontal motion blur, in the same direction as the day swipe. */
+.timeline.is-day-switching:not([hidden]) {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.tl-swipe-track {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  width: 200%;
+  will-change: transform;
+}
+
+.tl-swipe-layer {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px;
+  align-items: stretch;
+  flex: 0 0 50%;
+  width: 50%;
+  min-width: 0;
+}
+
+.tl-swipe-out {
+  pointer-events: none;
+}
+
+.timeline.is-day-switching .tl-block,
+.timeline.is-day-switching .tl-gridline,
+.timeline.is-day-switching .tl-hour,
+.timeline.is-day-switching .tl-now,
+.timeline.is-day-switching .tl-lane-name,
+.timeline.is-day-switching .tl-track {
+  transition: none;
+}
+
 .tl-names {
   display: flex;
   flex-direction: column;
@@ -677,6 +717,10 @@ h1 {
    tracks themselves get the width. Full names return from 700px up. */
 @media (max-width: 699px) {
   .timeline {
+    gap: 4px;
+  }
+
+  .tl-swipe-layer {
     gap: 4px;
   }
 
@@ -757,8 +801,8 @@ h1 {
   transition: height 0.35s ease, opacity 0.3s ease;
 }
 
-/* Morphing between days: bars glide and stretch to the new day's shows,
-   timed to land with the page as it slides in. */
+/* Same-day live ticks: bars ease to new statuses and the now-line.
+   Day changes do not morph — they swipe (see .timeline.is-day-switching). */
 .tl-block {
   position: absolute;
   top: 2px;
@@ -1210,6 +1254,10 @@ h1 {
   .day-swipe.is-swiping > .day-pane.prev::before,
   .day-swipe.is-swiping > .day-pane.next::before {
     opacity: 0;
+  }
+
+  .timeline.is-day-switching .tl-swipe-layer {
+    filter: none !important;
   }
 }
 
