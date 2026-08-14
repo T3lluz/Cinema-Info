@@ -184,12 +184,13 @@ const I18N = {
     moviesBack: "Tilbake",
     noMovies: "Ingen filmer i programmet.",
     upcomingTitle: "Kommende filmer",
-    upcomingSubtitle: "Populært på IMDb — og det som kommer på Buen",
+    upcomingSubtitle: "Første visning først — bare filmer som ikke har startet",
     upcomingCount: "{n} filmer",
     upcomingNext: "Første visning",
     upcomingOpen: "Åpne {title}",
     upcomingShowMore: "Vis mer",
     upcomingOnBuen: "På Buen",
+    upcomingComingSoon: "Kommer",
     upcomingLoading: "Henter filmer…",
     programSection: "I programmet",
     programSectionSub: "Alle tider, neste visning først",
@@ -388,12 +389,13 @@ const I18N = {
     moviesBack: "Back",
     noMovies: "No movies in the program.",
     upcomingTitle: "Upcoming movies",
-    upcomingSubtitle: "Popular on IMDb — plus what’s coming to Buen",
+    upcomingSubtitle: "First showing first — titles that have not started yet",
     upcomingCount: "{n} movies",
     upcomingNext: "First showing",
     upcomingOpen: "Open {title}",
     upcomingShowMore: "Show more",
     upcomingOnBuen: "At Buen",
+    upcomingComingSoon: "Coming soon",
     upcomingLoading: "Loading movies…",
     programSection: "In the program",
     programSectionSub: "All times, next showing first",
@@ -680,9 +682,11 @@ let omdbSheetStatus = "";
 let omdbSheetInProgram = "";
 let omdbCastOpen = false;
 let omdbSheetTimer = 0;
-/** IMDb popular titles for the upcoming section — kept across paints. */
-let upcomingPopular = [];
-let upcomingPopularStatus = "";
+/** Source tile/card the movie sheet should expand from. */
+let omdbSheetOrigin = null;
+/** IMDb coming-soon titles for the upcoming timeline — kept across paints. */
+let upcomingRemote = [];
+let upcomingRemoteStatus = "";
 let upcomingShown = 3;
 const UPCOMING_PAGE = 3;
 /** Collapsed movie tiles show this many showings before "+N more". */
@@ -1013,14 +1017,14 @@ function setupSeatCharts() {
     const upcomingMovie = e.target.closest?.("[data-upcoming-movie]");
     if (upcomingMovie) {
       const imdbID = upcomingMovie.dataset.omdbId;
-      if (imdbID) openOmdbTitle(imdbID);
+      if (imdbID) openOmdbTitle(imdbID, upcomingMovie);
       else openMovieInProgram(upcomingMovie.dataset.upcomingMovie);
       return;
     }
 
     const omdbHit = e.target.closest?.("[data-omdb-id]");
     if (omdbHit) {
-      openOmdbTitle(omdbHit.dataset.omdbId);
+      openOmdbTitle(omdbHit.dataset.omdbId, omdbHit);
       return;
     }
 
@@ -4885,7 +4889,46 @@ function movieImdbId(movie) {
   return String(movie?.ratings?.imdb?.id || movie?.imdbID || "").trim();
 }
 
+function releaseDayKey(value) {
+  const s = String(value || "").trim();
+  if (/^\d{4}-\d{2}-\d{2}/.test(s)) return s.slice(0, 10);
+  if (/^\d{4}-\d{2}$/.test(s)) return `${s}-01`;
+  if (/^\d{4}$/.test(s)) return `${s}-01-01`;
+  const ms = Date.parse(s);
+  return Number.isFinite(ms) ? toDayKey(new Date(ms)) : "";
+}
+
+function isFutureDay(dayKey, todayKey) {
+  return Boolean(dayKey && dayKey >= todayKey);
+}
+
+function upcomingItemDay(item) {
+  if (item.source === "buen") return item.movie.next.dayKey;
+  return releaseDayKey(item.movie.released || item.year);
+}
+
+function groupUpcomingDays(feed) {
+  const groups = [];
+  for (const item of feed) {
+    const dayKey = upcomingItemDay(item);
+    if (!dayKey) continue;
+    const last = groups[groups.length - 1];
+    if (!last || last.dayKey !== dayKey) groups.push({ dayKey, items: [item] });
+    else last.items.push(item);
+  }
+  return groups;
+}
+
 function buildUpcomingFeed(movies, now) {
+  const todayKey = toDayKey(now);
+  const programmedIds = new Set();
+  const programmedTitles = new Set();
+  for (const movie of movies) {
+    const id = movieImdbId(movie);
+    if (id) programmedIds.add(id);
+    programmedTitles.add(movie.title.toLowerCase());
+  }
+
   const local = upcomingMovies(movies, now).map((movie) => ({
     source: "buen",
     imdbID: movieImdbId(movie),
@@ -4894,15 +4937,14 @@ function buildUpcomingFeed(movies, now) {
     year: "",
     movie,
   }));
-  const seenIds = new Set(local.map((row) => row.imdbID).filter(Boolean));
-  const seenTitles = new Set(local.map((row) => row.title.toLowerCase()));
-  const popular = upcomingPopular
+
+  const remote = upcomingRemote
     .filter((row) => {
       const id = String(row.imdbID || "");
       const title = String(row.title || "").toLowerCase();
-      if (id && seenIds.has(id)) return false;
-      if (title && seenTitles.has(title)) return false;
-      return true;
+      if (id && programmedIds.has(id)) return false;
+      if (title && programmedTitles.has(title)) return false;
+      return isFutureDay(releaseDayKey(row.released || row.year), todayKey);
     })
     .map((row) => ({
       source: "imdb",
@@ -4912,30 +4954,41 @@ function buildUpcomingFeed(movies, now) {
       year: row.year,
       movie: row,
     }));
-  return [...local, ...popular];
+
+  return [...local, ...remote]
+    .filter((item) => upcomingItemDay(item))
+    .sort((a, b) => {
+      const day = upcomingItemDay(a).localeCompare(upcomingItemDay(b));
+      if (day) return day;
+      if (a.source !== b.source) return a.source === "buen" ? -1 : 1;
+      return a.title.localeCompare(b.title, lang === "en" ? "en" : "nb");
+    });
 }
 
-function ensureUpcomingPopular() {
-  if (upcomingPopularStatus === "ok" || upcomingPopularStatus === "loading") {
+function ensureUpcomingRemote() {
+  if (upcomingRemoteStatus === "ok" || upcomingRemoteStatus === "loading") {
     return;
   }
-  upcomingPopularStatus = "loading";
-  callOmdbProxy({ action: "popular" })
+  upcomingRemoteStatus = "loading";
+  callOmdbProxy({ action: "upcoming" })
+    .catch(() => callOmdbProxy({ action: "popular" }))
     .then((data) => {
-      upcomingPopular = Array.isArray(data?.movies) ? data.movies : [];
-      upcomingPopularStatus = "ok";
+      upcomingRemote = Array.isArray(data?.movies) ? data.movies : [];
+      upcomingRemoteStatus = "ok";
       if (activeTab === "movies") renderMovies();
     })
     .catch(() => {
-      upcomingPopularStatus = "error";
+      upcomingRemoteStatus = "error";
       if (activeTab === "movies") renderMovies();
     });
 }
 
 function renderUpcomingSection(feed, now) {
-  const visible = feed.slice(0, upcomingShown);
-  const remaining = Math.max(0, feed.length - visible.length);
-  const loading = upcomingPopularStatus === "loading";
+  const groups = groupUpcomingDays(feed);
+  const visible = groups.slice(0, upcomingShown);
+  const remaining = Math.max(0, groups.length - visible.length);
+  const loading = upcomingRemoteStatus === "loading";
+  const count = feed.length || visible.reduce((n, g) => n + g.items.length, 0);
 
   return `
     <section class="movies-section upcoming-section" aria-labelledby="upcoming-heading">
@@ -4947,13 +5000,23 @@ function renderUpcomingSection(feed, now) {
           <p>${escapeHtml(t("upcomingSubtitle"))}</p>
         </div>
         <span class="movies-section-meta">${escapeHtml(
-          t("upcomingCount", { n: feed.length || visible.length })
+          t("upcomingCount", { n: count })
         )}</span>
       </div>
       <div class="upcoming-timeline">
-        <div class="upcoming-list">
-          ${visible.map((item, i) => renderUpcomingCard(item, now, i)).join("")}
-        </div>
+        ${visible
+          .map(
+            (group, i) => `
+          <div class="upcoming-day${
+            group.dayKey === toDayKey(now) ? " is-today" : ""
+          }" style="--i:${i}">
+            <p class="upcoming-day-label">${escapeHtml(formatDayLabel(group.dayKey))}</p>
+            <div class="upcoming-list">
+              ${group.items.map((item, j) => renderUpcomingCard(item, now, j)).join("")}
+            </div>
+          </div>`
+          )
+          .join("")}
         ${
           remaining
             ? `<button type="button" class="upcoming-more" data-upcoming-more>${escapeHtml(
@@ -5047,6 +5110,9 @@ function renderPopularCard(item, index = 0) {
         ${when.length ? `<p class="upcoming-when">${when.join('<span class="sep">·</span>')}</p>` : ""}
         ${credits ? `<p class="upcoming-credits">${credits}</p>` : ""}
         ${renderRatingBadges(ratings)}
+        <div class="upcoming-badges">
+          <span class="upcoming-chip coming">${escapeHtml(t("upcomingComingSoon"))}</span>
+        </div>
       </div>
     </button>
   `;
@@ -5118,7 +5184,10 @@ function onOmdbKeydown(e) {
     const hit = omdbResults[omdbActive] || omdbResults[0];
     if (!hit) return;
     e.preventDefault();
-    openOmdbTitle(hit.imdbID);
+    openOmdbTitle(
+      hit.imdbID,
+      els.omdbLive?.querySelector(".omdb-hit.is-active")
+    );
   }
 }
 
@@ -5223,9 +5292,10 @@ function renderOmdbLive() {
   });
 }
 
-async function openOmdbTitle(imdbID) {
+async function openOmdbTitle(imdbID, sourceEl) {
   if (!imdbID) return;
   clearTimeout(omdbSheetTimer);
+  if (!isOmdbSheetOpen()) captureSheetOrigin(sourceEl);
   omdbSheetId = imdbID;
   omdbSheetMovie = null;
   omdbSheetStatus = "loading";
@@ -5275,19 +5345,100 @@ function isOmdbSheetOpen() {
   );
 }
 
+function captureSheetOrigin(el) {
+  const node =
+    el?.closest?.(".movie-tile, .upcoming-card, .omdb-hit") || el;
+  if (!node?.getBoundingClientRect) {
+    omdbSheetOrigin = null;
+    return;
+  }
+  const rect = node.getBoundingClientRect();
+  if (rect.width < 8 || rect.height < 8) {
+    omdbSheetOrigin = null;
+    return;
+  }
+  omdbSheetOrigin = {
+    left: rect.left,
+    top: rect.top,
+    width: rect.width,
+    height: rect.height,
+    ox: rect.left + rect.width / 2,
+    oy: rect.top + rect.height / 2,
+    radius: getComputedStyle(node).borderRadius || "16px",
+  };
+}
+
+function applySheetOriginVars(sheet) {
+  const origin = omdbSheetOrigin;
+  sheet.style.setProperty("--sheet-ox", origin ? `${origin.ox}px` : "50%");
+  sheet.style.setProperty("--sheet-oy", origin ? `${origin.oy}px` : "78%");
+}
+
+function sheetFlipTransform(panel) {
+  const first = omdbSheetOrigin;
+  if (!first || !panel) return "";
+  const last = panel.getBoundingClientRect();
+  if (!last.width || !last.height) return "";
+  const dx = first.left - last.left;
+  const dy = first.top - last.top;
+  const sx = Math.max(0.12, Math.min(first.width / last.width, 8));
+  const sy = Math.max(0.12, Math.min(first.height / last.height, 8));
+  return `translate(${dx.toFixed(2)}px, ${dy.toFixed(2)}px) scale(${sx.toFixed(
+    4
+  )}, ${sy.toFixed(4)})`;
+}
+
+function sheetOriginOnScreen() {
+  const origin = omdbSheetOrigin;
+  if (!origin) return false;
+  return (
+    origin.top < window.innerHeight - 8 &&
+    origin.top + origin.height > 8 &&
+    origin.left < window.innerWidth - 8 &&
+    origin.left + origin.width > 8
+  );
+}
+
+function clearSheetPanelFlip(panel) {
+  if (!panel) return;
+  panel.style.transform = "";
+  panel.style.borderRadius = "";
+  panel.style.transformOrigin = "";
+  panel.style.opacity = "";
+}
+
 function revealOmdbSheet() {
   if (!els.omdbSheet) return;
   const sheet = els.omdbSheet;
+  const panel = sheet.querySelector(".omdb-sheet-panel");
+  applySheetOriginVars(sheet);
   sheet.hidden = false;
   document.body.classList.add("omdb-open");
   if (sheet.classList.contains("is-open")) {
     sheet.classList.remove("is-leaving");
     return;
   }
-  sheet.classList.remove("is-leaving", "is-open");
-  void sheet.offsetWidth;
+  const reduceMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+  sheet.classList.remove("is-leaving", "is-open", "is-flipping");
+  clearSheetPanelFlip(panel);
+  if (reduceMotion || !omdbSheetOrigin || !panel) {
+    void sheet.offsetWidth;
+    requestAnimationFrame(() => {
+      if (els.omdbSheet === sheet && !sheet.hidden) sheet.classList.add("is-open");
+    });
+    return;
+  }
+  sheet.classList.add("is-open", "is-flipping");
+  panel.style.transformOrigin = "top left";
+  panel.style.borderRadius = omdbSheetOrigin.radius;
+  panel.style.transform = sheetFlipTransform(panel) || "none";
+  void panel.offsetWidth;
   requestAnimationFrame(() => {
-    if (els.omdbSheet === sheet && !sheet.hidden) sheet.classList.add("is-open");
+    if (els.omdbSheet !== sheet || sheet.hidden) return;
+    sheet.classList.remove("is-flipping");
+    clearSheetPanelFlip(panel);
   });
 }
 
@@ -5297,9 +5448,14 @@ function finishOmdbSheetClose() {
   omdbSheetStatus = "";
   omdbSheetInProgram = "";
   omdbCastOpen = false;
+  omdbSheetOrigin = null;
   if (els.omdbSheet) {
+    const panel = els.omdbSheet.querySelector(".omdb-sheet-panel");
+    clearSheetPanelFlip(panel);
     els.omdbSheet.hidden = true;
-    els.omdbSheet.classList.remove("is-open", "is-leaving");
+    els.omdbSheet.classList.remove("is-open", "is-leaving", "is-flipping");
+    els.omdbSheet.style.removeProperty("--sheet-ox");
+    els.omdbSheet.style.removeProperty("--sheet-oy");
   }
   document.body.classList.remove("omdb-open");
   if (els.omdbSheetBody) els.omdbSheetBody.innerHTML = "";
@@ -5318,10 +5474,18 @@ function closeOmdbSheet() {
     finishOmdbSheetClose();
     return;
   }
-  els.omdbSheet.classList.remove("is-open");
+  const panel = els.omdbSheet.querySelector(".omdb-sheet-panel");
+  const canFlip = sheetOriginOnScreen() && panel;
+  els.omdbSheet.classList.remove("is-open", "is-flipping");
   els.omdbSheet.classList.add("is-leaving");
+  if (canFlip) {
+    panel.style.opacity = "1";
+    panel.style.transformOrigin = "top left";
+    panel.style.borderRadius = omdbSheetOrigin.radius;
+    panel.style.transform = sheetFlipTransform(panel);
+  }
   clearTimeout(omdbSheetTimer);
-  omdbSheetTimer = setTimeout(finishOmdbSheetClose, 340);
+  omdbSheetTimer = setTimeout(finishOmdbSheetClose, canFlip ? 520 : 420);
 }
 
 function renderOmdbSheet() {
@@ -5579,7 +5743,7 @@ function renderMovies() {
   if (!state?.shows) return;
   const movies = groupMovies();
   const now = new Date();
-  ensureUpcomingPopular();
+  ensureUpcomingRemote();
   const feed = buildUpcomingFeed(movies, now);
 
   els.moviesContent.classList.toggle(
@@ -5604,7 +5768,7 @@ function renderMovies() {
   }
 
   const upcomingHtml =
-    feed.length || upcomingPopularStatus === "loading"
+    feed.length || upcomingRemoteStatus === "loading"
       ? renderUpcomingSection(feed, now)
       : "";
   const programHead = upcomingHtml
