@@ -79,21 +79,16 @@ const PROGRAM_RECHECK_MS = 2 * 60 * 1000;
 /** Hall geometry only changes when someone rebuilds an auditorium. */
 const SEAT_LAYOUT_TTL_MS = 30 * 24 * 60 * 60 * 1000;
 /**
- * Drive time for a UI tap. Pixel's native CLICK primitive is ~12 ms with
- * overdrive and active braking; the web API can only run a full-amplitude
- * one-shot that keeps ringing after it stops, so 16 ms reads as a buzz.
- * 8 ms of drive plus the LRA's decay is one medium kick.
- */
-const HAPTIC_CLICK_MS = 8;
-/**
- * Light zipper tick while a day is dragged. Essentials fires
- * SEGMENT_FREQUENT_TICK every tenth of the page; we can't play that
- * primitive on the web, so a 3 ms one-shot stands in.
+ * Tap pulse. Essentials' category click is PRIMITIVE_CLICK at ~0.4
+ * (KEYBOARD_TAP on the rail). The web API has no amplitude, so 4 ms at
+ * full strength is the closest tick.
  * https://github.com/sameerasw/essentials
  */
-const HAPTIC_TICK_MS = 3;
-/** Ticks per page-width, matching Essentials' (offset * 10) buckets. */
-const HAPTIC_SWIPE_BUCKETS = 10;
+const HAPTIC_CLICK_MS = 4;
+/** Swipe zipper — shorter than a tap so a dense run of ticks stays light. */
+const HAPTIC_TICK_MS = 2;
+/** Ticks per page-width. Denser than Essentials' 10 so a drag rattles. */
+const HAPTIC_SWIPE_BUCKETS = 32;
 /** Bumped when the layout shape changes, so cached halls are refetched
  * (v2: blocked seats are included and flagged instead of dropped). */
 const SEAT_LAYOUT_VERSION = 2;
@@ -986,7 +981,7 @@ function setupDaySwipe() {
   let finishAnim = null;
   /** Side the header is previewing mid-drag (−1/0/1). */
   let previewDir = 0;
-  /** Last 10%-of-width bucket that ticked, for the swipe zipper. */
+  /** Last zipper bucket that ticked. */
   let swipeHapticBucket = 0;
 
   const swipeHapticReset = () => {
@@ -1006,8 +1001,9 @@ function setupDaySwipe() {
     );
   };
 
-  /** Tick when the page has moved another tenth of its width, like
-   * Essentials' bucketed SEGMENT_FREQUENT_TICK on HorizontalPager. */
+  /** Tick when the page has moved another slice of its width. Denser
+   * than Essentials' 10 buckets, with a lighter pulse so it rattles
+   * instead of kicking. */
   const swipeHapticMove = (x) => {
     if (!width) return;
     const fraction = Math.abs(x) / width;
@@ -1560,19 +1556,19 @@ function hapticClick() {
   }
 }
 
-/** One or more zipper ticks. Fast travel that skips buckets packs them
- * into a short pattern so speed still maps to density. */
+/** Light zipper ticks. Fast travel that skips buckets packs them into a
+ * short pattern so speed still maps to density. */
 function hapticTick(count = 1) {
   if (!hapticsOn || !canHaptic() || count < 1) return;
   try {
-    const n = Math.min(count, 4);
+    const n = Math.min(count, 6);
     if (n === 1) {
       navigator.vibrate(HAPTIC_TICK_MS);
       return;
     }
     const pat = [];
     for (let i = 0; i < n; i++) {
-      if (i) pat.push(6);
+      if (i) pat.push(4);
       pat.push(HAPTIC_TICK_MS);
     }
     navigator.vibrate(pat);
