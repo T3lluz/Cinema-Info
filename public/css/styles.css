@@ -397,7 +397,7 @@ h1 {
    Day pills share these metrics so the strip stays one height. */
 .jump-today,
 .day-tab {
-  padding: 3px 9px;
+  padding: 5px 11px;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: -0.005em;
@@ -411,11 +411,12 @@ h1 {
   justify-content: center;
   gap: 2px;
   margin: 0;
-  padding-left: 7px;
-  border: 1px solid color-mix(in srgb, var(--accent) 45%, var(--line));
+  padding-left: 9px;
+  border: 1px solid var(--nav-chip-border);
   border-radius: 999px;
-  background: color-mix(in srgb, var(--accent) 10%, var(--surface));
-  color: color-mix(in srgb, var(--accent) 88%, var(--ink));
+  background: var(--nav-chip-fill);
+  box-shadow: var(--nav-chip-shadow);
+  color: var(--accent);
   font: inherit;
   font-size: 11px;
   font-weight: 700;
@@ -451,13 +452,13 @@ h1 {
   position: relative;
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 2px;
   flex: 1 1 auto;
   min-height: 0;
   min-width: 0;
   overflow-x: auto;
   margin: 0;
-  padding: 0 1px;
+  padding: 3px 2px;
   scroll-padding-inline: 2px;
   transition: padding-bottom 0.25s ease;
   scrollbar-width: none;
@@ -474,13 +475,17 @@ h1 {
   );
 }
 
+/* Selection pebble — same chip as the navbar, so it sits on the header's
+   dotted frost instead of a solid red blob. */
 .day-indicator {
   position: absolute;
-  top: 0;
-  bottom: 0;
+  top: 3px;
+  bottom: 3px;
   height: auto;
   border-radius: 999px;
-  background: var(--accent);
+  background: var(--nav-chip-fill);
+  border: 1px solid var(--nav-chip-border);
+  box-shadow: var(--nav-chip-shadow);
   z-index: 0;
   pointer-events: none;
   transition:
@@ -505,9 +510,8 @@ h1 {
   display: none;
 }
 
-/* Slim enough that a week fits on a phone: the strip is a way to move
-   between days, not a place to read a date off — the day's full name is
-   spelled out in the heading right below it. Same size as .jump-today. */
+/* Labels on the header frost — no solid fill, so the dotted blur shows
+   through. The travelling pebble is the only chip. */
 .day-tab {
   position: relative;
   z-index: 1;
@@ -516,9 +520,9 @@ h1 {
   align-items: center;
   gap: 3px;
   scroll-snap-align: center;
-  border: 1px solid var(--line);
-  background: var(--surface);
-  color: var(--ink);
+  border: 0;
+  background: transparent;
+  color: var(--muted);
   border-radius: 999px;
   font: inherit;
   font-size: 11px;
@@ -527,8 +531,7 @@ h1 {
   line-height: 1.2;
   cursor: pointer;
   white-space: nowrap;
-  transition: background 0.25s ease 0.08s, color 0.25s ease 0.08s,
-    border-color 0.25s ease 0.08s, transform 0.15s ease;
+  transition: color 0.25s ease 0.08s, transform 0.15s ease;
 }
 
 /* The pill is slim to look at, but the thumb gets a full-height target. */
@@ -560,16 +563,14 @@ h1 {
   stroke-linejoin: round;
 }
 
-/* Today keeps an accent outline even when you are browsing another day,
+/* Today keeps accent ink even when you are browsing another day,
    so the strip always says where "now" is. */
 .day-tab.today {
-  border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
   color: color-mix(in srgb, var(--accent) 82%, var(--ink));
 }
 
 .day-tab.done {
-  background: var(--done-soft);
-  border-color: color-mix(in srgb, var(--done) 32%, var(--line));
+  background: transparent;
   color: color-mix(in srgb, var(--done) 88%, var(--ink));
   opacity: 1;
 }
@@ -586,8 +587,7 @@ h1 {
 
 .day-tab[aria-selected="true"] {
   background: transparent;
-  border-color: transparent;
-  color: #fff;
+  color: var(--accent);
   opacity: 1;
 }
 
@@ -3745,8 +3745,8 @@ button.bar-row.day-bar:focus-visible {
   gap: 4px;
   padding: 4px;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--bg) 85%, var(--surface));
-  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--header-glass-tint) 70%, transparent);
+  border: 1px solid var(--nav-chip-border);
 }
 
 .seg-indicator {
@@ -3754,7 +3754,9 @@ button.bar-row.day-bar:focus-visible {
   top: 4px;
   bottom: 4px;
   border-radius: 999px;
-  background: var(--accent);
+  background: var(--nav-chip-fill);
+  border: 1px solid var(--nav-chip-border);
+  box-shadow: var(--nav-chip-shadow);
   z-index: 0;
   pointer-events: none;
   transition:
@@ -3763,8 +3765,7 @@ button.bar-row.day-bar:focus-visible {
     transform 0.28s cubic-bezier(0.34, 1.56, 0.5, 1);
 }
 
-/* Rim is reserved for the pill-nav selection chip; settings segments
-   keep a solid accent indicator. */
+/* Settings segments use the same surface pebble as the navbar chip. */
 .seg-indicator-rim {
   display: none;
 }
@@ -3789,7 +3790,7 @@ button.bar-row.day-bar:focus-visible {
 }
 
 .seg-btn[aria-pressed="true"] {
-  color: #fff;
+  color: var(--accent);
 }
 
 /* —— Pill navbar —— */
