@@ -79,28 +79,35 @@ const PROGRAM_RECHECK_MS = 2 * 60 * 1000;
 /** Hall geometry only changes when someone rebuilds an auditorium. */
 const SEAT_LAYOUT_TTL_MS = 30 * 24 * 60 * 60 * 1000;
 /**
- * Tap haptics. `navigator.vibrate` is full amplitude; duration is the
- * only intensity knob, so keep every pulse a tick — not a buzz.
- *   tick    — day pills, settings segments, expanders
- *   confirm — bottom nav, settings switches
+ * Tap haptics. `navigator.vibrate` is always full amplitude — duration
+ * is the only knob, and it is a bad one:
+ *   ≤5ms  — ERM motors register spin-up and spin-down as two ticks
+ *   ≥20ms — the mass reaches full speed and it becomes a rumble
+ * ~8ms is the window where those two impacts fuse into one light click.
+ * Never pass a pattern (on/off/on): that is two ticks by definition.
+ * A 70ms lock stops Chrome's extra synthetic click from firing a second
+ * pulse. Do not cancel-then-vibrate: cancel itself can click.
  */
-const HAPTIC_TICK_MS = 1;
-const HAPTIC_CONFIRM_MS = 2;
+const HAPTIC_TICK_MS = 8;
+const HAPTIC_LOCK_MS = 70;
 /**
- * Material 3 Expressive default spatial spring (AOSP ExpressiveMotionTokens):
- * stiffness 380, dampingRatio 0.8. omega = √k rad/s, /1000 for a ms step.
- * A full-page pager uses the default spatial spec, not the bouncy fast one.
+ * iOS-like interpolating spring (WWDC 2023 "Animate with springs"):
+ * response ≈ 0.42s → ω = 2π / 0.42, bounce ≈ 0.08 → ζ ≈ 0.86.
+ * Softer than Material's k=380 pager so it glides, with just enough
+ * bounce that a flick still feels like it has mass.
  */
-const SWIPE_SPRING_OMEGA = Math.sqrt(380) / 1000;
-const SWIPE_SPRING_ZETA = 0.8;
-/** Incoming day is slightly smaller, then eases to full with the slide. */
-const SWIPE_PEEK_SCALE = 0.94;
+const SWIPE_SPRING_OMEGA = (Math.PI * 2) / 420;
+const SWIPE_SPRING_ZETA = 0.86;
+/** Incoming day peeks slightly small, then eases to full with the slide. */
+const SWIPE_PEEK_SCALE = 0.96;
 /** Fraction of the page a slow drag must cover to commit. */
 const SWIPE_COMMIT_FRAC = 0.28;
-/** Flick commit, px/ms (~320 px/s). */
-const SWIPE_FLICK = 0.32;
+/** Flick commit, px/ms (~280 px/s). */
+const SWIPE_FLICK = 0.28;
 /** Axis-lock slop before a touch is a day-swipe, not a scroll. */
 const SWIPE_LOCK_PX = 10;
+/** How far incoming content lags the pane, in px, for a depth parallax. */
+const SWIPE_PARALLAX_PX = 36;
 
 /** One step of Android SpringForce (mass 1). omega in rad/ms. */
 function stepSpring(x, v, target, dt, omega, zeta) {
@@ -241,7 +248,7 @@ const I18N = {
     seatNumbersOn: "Vis",
     seatNumbersOff: "Skjul",
     haptics: "Haptikk",
-    hapticsHint: "Lett tick ved trykk. Virker i Chrome på Android.",
+    hapticsHint: "Ett lett tick ved trykk. Virker i Chrome på Android.",
     hapticsUnavailable: "Ikke tilgjengelig på denne enheten.",
     langNb: "Norsk",
     langEn: "English",
@@ -404,7 +411,7 @@ const I18N = {
     seatNumbersOn: "Show",
     seatNumbersOff: "Hide",
     haptics: "Haptics",
-    hapticsHint: "A light tick on taps. Works in Chrome on Android.",
+    hapticsHint: "A single light tick on taps. Works in Chrome on Android.",
     hapticsUnavailable: "Not available on this device.",
     langNb: "Norsk",
     langEn: "English",
@@ -919,7 +926,7 @@ function setupSeatCharts() {
     const statsMovie = e.target.closest?.("[data-stats-movie]");
     if (!statsMovie || e.target !== statsMovie) return;
     e.preventDefault();
-    hapticVibrate(HAPTIC_TICK_MS);
+    hapticVibrate();
     openMovieFromStats(statsMovie.dataset.statsMovie);
   });
 
@@ -969,11 +976,15 @@ function releaseDayRender({ discardQueued = false } = {}) {
 }
 
 /**
- * Interactive swipe between days: a 1:1 carousel. Neighbouring days sit
- * beside the current page, a little smaller so they peek. The finger is
- * tracked 1:1; on release a Material 3 Expressive default-spatial spring
- * settles the track, and the incoming page eases to fullscreen with it.
- * Swipe haptics are intentionally off — they fought the gesture.
+ * Interactive swipe between days: a 1:1 carousel with depth, in the
+ * spirit of iOS Calendar + Material predictive-back + Telegram's pager.
+ *
+ * Neighbouring days sit beside the current page, slightly small. The
+ * current page rounds into a card and eases down a hair; incoming
+ * content lags a few pixels (parallax) so the motion has depth. The
+ * finger is tracked 1:1; on release an iOS-like spring settles the
+ * track, and scale / dim ride the same progress — never a second snap.
+ * Swipe haptics stay off — they fought the gesture.
  *
  * Robustness:
  * - Pointer capture on `.main`, so empty space below a short day still
@@ -981,6 +992,8 @@ function releaseDayRender({ discardQueued = false } = {}) {
  * - Settle on rAF, never CSS transitionend.
  * - Mid-flight grab: a new touch inherits the exact offset; a committing
  *   animation is landed first so chained swipes keep flowing.
+ * - Neighbour panes stay warm after a settle so the next swipe does not
+ *   hitch on an innerHTML dump.
  * - touchmove preventDefault after axis-lock, so vertical scroll cannot
  *   steal a horizontal pager gesture (pointer events alone cannot).
  * - pointerup / cancel / lostcapture share one release path, so Chrome
@@ -1021,6 +1034,8 @@ function setupDaySwipe() {
   let finishAnim = null;
   /** Side the header is previewing mid-drag (−1/0/1). */
   let previewDir = 0;
+  /** Skip rebuilding neighbour HTML when the same two days are already in. */
+  let paneKey = "";
 
   /** Android-style rubber band: ~0.55 at the origin, easing toward a cap. */
   const rubberBand = (over) => {
@@ -1045,15 +1060,15 @@ function setupDaySwipe() {
   };
 
   const peekAt = (u) => {
-    const t = u * u;
+    const t = u * u * (3 - 2 * u);
     return SWIPE_PEEK_SCALE + (1 - SWIPE_PEEK_SCALE) * t;
   };
 
   /**
-   * Move the track. `--swipe` is a sin envelope: 0 at rest (0 or ±width)
-   * and 1 at halfway, so the outgoing page's corner rounding eases out
-   * instead of popping off when the page lands. Incoming scale follows
-   * the same progress so it grows with the slide, not after it.
+   * Move the track. `--swipe` is a sin envelope (0 at rest, 1 at halfway)
+   * so dim/scale on the outgoing page ease out instead of popping off
+   * when it lands. `--lag` is a few px of parallax on the incoming page.
+   * Incoming scale follows the same progress so it grows with the slide.
    */
   const setX = (x) => {
     curX = x;
@@ -1061,10 +1076,13 @@ function setupDaySwipe() {
     const u = width ? Math.min(1, Math.abs(x) / width) : 0;
     const morph = Math.sin(u * Math.PI);
     if (morph > 0.001) {
-      track.style.setProperty("--swipe", morph.toFixed(3));
+      track.style.setProperty("--swipe", morph.toFixed(4));
+      const lag = (1 - peekAt(u)) * SWIPE_PARALLAX_PX;
+      track.style.setProperty("--lag", `${x < 0 ? lag : -lag}px`);
       track.classList.add("is-swiping");
     } else {
       track.style.removeProperty("--swipe");
+      track.style.removeProperty("--lag");
       track.classList.remove("is-swiping");
     }
     if (x && width) {
@@ -1076,9 +1094,14 @@ function setupDaySwipe() {
   };
 
   const fillPanes = () => {
-    els.dayPanePrev.innerHTML = idx > 0 ? buildDayListHTML(days[idx - 1]) : "";
-    els.dayPaneNext.innerHTML =
-      idx < days.length - 1 ? buildDayListHTML(days[idx + 1]) : "";
+    const prev = idx > 0 ? days[idx - 1] : "";
+    const next = idx < days.length - 1 ? days[idx + 1] : "";
+    const key = `${prev}|${next}`;
+    if (key !== paneKey) {
+      paneKey = key;
+      els.dayPanePrev.innerHTML = prev ? buildDayListHTML(prev) : "";
+      els.dayPaneNext.innerHTML = next ? buildDayListHTML(next) : "";
+    }
     peekNeighbors();
   };
 
@@ -1131,6 +1154,7 @@ function setupDaySwipe() {
       holdDayRender = true;
       setX(curX + width * animDir);
       idx = days.indexOf(newDay);
+      paneKey = "";
       fillPanes();
       animDir = 0;
       animDay = "";
@@ -1273,7 +1297,7 @@ function setupDaySwipe() {
     animDir = dir;
     animDay = day;
     const target = dir === 0 ? 0 : dir === 1 ? -width : width;
-    const overshoot = 10;
+    const overshoot = 16;
 
     if (day) setSelectedDay(day, { tabScroll });
     else if (previewDir !== 0) setSelectedDay(days[idx], { tabScroll: "auto" });
@@ -1285,12 +1309,16 @@ function setupDaySwipe() {
       animDir = 0;
       animDay = "";
       releaseDayRender({ discardQueued: dir !== 0 });
-      if (day) commitDay(day);
+      if (day) {
+        commitDay(day);
+        days = [...new Set(state.shows.map((s) => s.dayKey))].sort();
+        idx = days.indexOf(day);
+        paneKey = "";
+        fillPanes();
+      }
       clearPeek();
       mode = "idle";
       setX(0);
-      els.dayPanePrev.innerHTML = "";
-      els.dayPaneNext.innerHTML = "";
     };
     finishAnim = finish;
 
@@ -1300,7 +1328,7 @@ function setupDaySwipe() {
     }
 
     let x = curX;
-    let v = Math.max(-2.4, Math.min(2.4, v0));
+    let v = Math.max(-2.2, Math.min(2.2, v0));
     let prevTs = performance.now();
 
     const stepFrame = (ts) => {
@@ -1316,7 +1344,7 @@ function setupDaySwipe() {
       );
       x = s.x;
       v = s.v;
-      if (Math.abs(x - target) < 0.5 && Math.abs(v) < 0.02) {
+      if (Math.abs(x - target) < 0.75 && Math.abs(v) < 0.03) {
         finish();
         return;
       }
@@ -1354,9 +1382,10 @@ function setupDaySwipe() {
     const dir = to > from ? 1 : -1;
     els.dayPanePrev.innerHTML = dir === -1 ? buildDayListHTML(day) : "";
     els.dayPaneNext.innerHTML = dir === 1 ? buildDayListHTML(day) : "";
+    paneKey = "";
     setPeek(dir === 1 ? els.dayPaneNext : els.dayPanePrev, SWIPE_PEEK_SCALE);
     holdDayRender = true;
-    snapTo(dir, { day, v0: 0, tabScroll: "smooth" });
+    snapTo(dir, { day, v0: dir === 1 ? -1.05 : 1.05, tabScroll: "smooth" });
     return true;
   };
 }
@@ -1611,41 +1640,69 @@ function hapticTarget(el) {
   return hit;
 }
 
-/** Match Android: a light tick for selection, a firmer click for commits. */
-function hapticMsFor(hit) {
-  if (hit.classList.contains("pill-tab")) return HAPTIC_CONFIRM_MS;
-  if (hit.getAttribute("role") === "switch") return HAPTIC_CONFIRM_MS;
-  return HAPTIC_TICK_MS;
-}
+let hapticLockUntil = 0;
 
-function hapticVibrate(pattern) {
+function hapticVibrate() {
   if (!hapticsOn || !canHaptic()) return;
+  const now = performance.now();
+  if (now < hapticLockUntil) return;
+  hapticLockUntil = now + HAPTIC_LOCK_MS;
   try {
-    navigator.vibrate(pattern);
+    navigator.vibrate(HAPTIC_TICK_MS);
   } catch {
     /* some WebViews throw; a tap must never fail because of this */
   }
 }
 
 function setupHaptics() {
-  // Click, not pointerdown: a scroll or swipe that starts on a control
-  // must not tick. Mouse stays silent; keyboard arrives as click with
-  // detail 0.
+  // Touch ticks on pointerup of a real tap, not on click: Chrome on
+  // Android often synthesizes a second click, which was the extra tick.
+  // Mouse stays silent. Keyboard arrives as click with detail 0.
   let pointerType = "mouse";
+  let downX = 0;
+  let downY = 0;
+  let downHit = null;
+  let ticked = false;
+  let dragged = false;
+
   document.addEventListener(
     "pointerdown",
     (e) => {
-      if (e.isPrimary) pointerType = e.pointerType;
+      if (!e.isPrimary) return;
+      pointerType = e.pointerType;
+      downX = e.clientX;
+      downY = e.clientY;
+      downHit = hapticTarget(e.target);
+      ticked = false;
+      dragged = false;
     },
     true
   );
+
+  document.addEventListener(
+    "pointerup",
+    (e) => {
+      if (!e.isPrimary || pointerType === "mouse") return;
+      if (!downHit) return;
+      if (Math.hypot(e.clientX - downX, e.clientY - downY) > 12) {
+        dragged = true;
+        return;
+      }
+      if (hapticTarget(e.target) !== downHit) return;
+      ticked = true;
+      hapticVibrate();
+    },
+    true
+  );
+
   document.addEventListener(
     "click",
     (e) => {
+      if (ticked || dragged) return;
       if (pointerType === "mouse" && e.detail !== 0) return;
       const hit = hapticTarget(e.target);
       if (!hit) return;
-      hapticVibrate(hapticMsFor(hit));
+      hapticVibrate();
     },
     true
   );
@@ -2143,43 +2200,48 @@ async function setActiveTab(tab, { skipRender = false } = {}) {
     el.hidden = key !== tab;
   });
 
-  // Slide the whole page sideways: the old view glides out while the new
-  // one comes in from the side it lives on in the tab order.
+  // Slide the whole page sideways: iOS / Material shared-axis — a
+  // partial slide, fade, and a hint of scale, not a 100% wipe.
   if (!skipRender && prevTab !== tab && els.views[prevTab]) {
     const forward = TAB_ORDER.indexOf(tab) > TAB_ORDER.indexOf(prevTab);
     const view = els.views[tab];
     const prevView = els.views[prevTab];
+    const host = view.parentElement;
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-    // The outgoing view turns into an absolutely-positioned ghost; shift
-    // it by the old scroll offset so it doesn't jump when we scroll the
-    // new view to the top.
-    const scrollY = window.scrollY || 0;
-    prevView.hidden = false;
-    prevView.style.setProperty("--tab-shift", `${-scrollY}px`);
-    prevView.classList.add("tab-ghost", forward ? "tab-out-left" : "tab-out-right");
-    window.scrollTo(0, 0);
+    if (!reduceMotion.matches) {
+      const scrollY = window.scrollY || 0;
+      prevView.hidden = false;
+      prevView.style.setProperty("--tab-shift", `${-scrollY}px`);
+      prevView.classList.add(
+        "tab-ghost",
+        forward ? "tab-out-left" : "tab-out-right"
+      );
+      host?.classList.add("is-tab-animating");
+      window.scrollTo(0, 0);
 
-    const cleanup = () => {
-      if (tabAnimCleanup === cleanup) tabAnimCleanup = null;
-      clearTimeout(fallback);
-      view.removeEventListener("animationend", onEnd);
-      view.classList.remove(...TAB_ANIM_CLASSES);
-      prevView.classList.remove(...TAB_ANIM_CLASSES);
-      prevView.style.removeProperty("--tab-shift");
-      prevView.hidden = true;
-    };
-    // Card entrance animations bubble up from children; only the view's
-    // own slide ending should finish the transition.
-    const onEnd = (e) => {
-      if (e.target === view) cleanup();
-    };
-    const fallback = setTimeout(cleanup, 450);
-    tabAnimCleanup = cleanup;
+      const cleanup = () => {
+        if (tabAnimCleanup === cleanup) tabAnimCleanup = null;
+        clearTimeout(fallback);
+        view.removeEventListener("animationend", onEnd);
+        view.classList.remove(...TAB_ANIM_CLASSES);
+        prevView.classList.remove(...TAB_ANIM_CLASSES);
+        prevView.style.removeProperty("--tab-shift");
+        prevView.hidden = true;
+        host?.classList.remove("is-tab-animating");
+      };
+      const onEnd = (e) => {
+        if (e.target === view) cleanup();
+      };
+      const fallback = setTimeout(cleanup, 560);
+      tabAnimCleanup = cleanup;
 
-    // Restart the animation even if the class was just removed.
-    void view.offsetWidth;
-    view.classList.add(forward ? "tab-in-right" : "tab-in-left");
-    view.addEventListener("animationend", onEnd);
+      void view.offsetWidth;
+      view.classList.add(forward ? "tab-in-right" : "tab-in-left");
+      view.addEventListener("animationend", onEnd);
+    } else {
+      window.scrollTo(0, 0);
+    }
   }
 
   document.querySelectorAll(".pill-tab").forEach((btn) => {
@@ -5202,9 +5264,9 @@ function renderSettings() {
       hapticsOn = !hapticsOn;
       savePrefs();
       hapticSwitch.setAttribute("aria-checked", String(hapticsOn));
-      // Turning it on happens after the capture tick (which was skipped
-      // while it was off), so confirm the switch itself.
-      if (hapticsOn) hapticVibrate(HAPTIC_CONFIRM_MS);
+      // Turning it on happens after pointerup (which was skipped while
+      // it was off), so confirm the switch itself.
+      if (hapticsOn) hapticVibrate();
     });
   }
 

@@ -942,20 +942,38 @@ h1 {
   flex-direction: column;
   min-height: 0;
   position: relative;
+  overflow-x: clip;
   padding-bottom: calc(var(--nav-h) + 28px + var(--safe-bottom));
+}
+
+.main.is-tab-animating {
+  overflow: hidden;
 }
 
 .view[hidden] {
   display: none;
 }
 
-/* —— Tab transitions: the whole page slides sideways —— */
+/* —— Tab transitions: Material shared-axis + iOS push ——
+   A 42% slide, fade, and a hint of scale — not a 100% wipe. iOS
+   easing (cubic-bezier(0.32, 0.72, 0, 1)) so it eases out with mass. */
+.view.tab-in-right,
+.view.tab-in-left {
+  position: relative;
+  z-index: 2;
+  transform-origin: 50% 24%;
+  will-change: transform, opacity;
+  animation-duration: 0.42s;
+  animation-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
+  animation-fill-mode: both;
+}
+
 .view.tab-in-right {
-  animation: tabInRight 0.32s cubic-bezier(0.3, 0.75, 0.25, 1) both;
+  animation-name: tabInRight;
 }
 
 .view.tab-in-left {
-  animation: tabInLeft 0.32s cubic-bezier(0.3, 0.75, 0.25, 1) both;
+  animation-name: tabInLeft;
 }
 
 /* The outgoing view keeps rendering on top of the page flow while it
@@ -965,54 +983,72 @@ h1 {
   top: 0;
   left: 0;
   right: 0;
+  z-index: 1;
   pointer-events: none;
+  transform-origin: 50% 24%;
+  will-change: transform, opacity;
+}
+
+.view.tab-out-left,
+.view.tab-out-right {
+  animation-duration: 0.42s;
+  animation-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
+  animation-fill-mode: both;
 }
 
 .view.tab-out-left {
-  animation: tabOutLeft 0.32s cubic-bezier(0.3, 0.75, 0.25, 1) both;
+  animation-name: tabOutLeft;
 }
 
 .view.tab-out-right {
-  animation: tabOutRight 0.32s cubic-bezier(0.3, 0.75, 0.25, 1) both;
+  animation-name: tabOutRight;
 }
 
 @keyframes tabInRight {
   from {
-    transform: translateX(100%);
+    transform: translate3d(42%, 0, 0) scale(0.97);
+    opacity: 0.28;
   }
   to {
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 1;
   }
 }
 
 @keyframes tabInLeft {
   from {
-    transform: translateX(-100%);
+    transform: translate3d(-42%, 0, 0) scale(0.97);
+    opacity: 0.28;
   }
   to {
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 1;
   }
 }
 
 @keyframes tabOutLeft {
   from {
-    transform: translate(0, var(--tab-shift, 0px));
+    transform: translate3d(0, var(--tab-shift, 0px), 0) scale(1);
+    opacity: 1;
   }
   to {
-    transform: translate(-100%, var(--tab-shift, 0px));
+    transform: translate3d(-18%, var(--tab-shift, 0px), 0) scale(0.98);
+    opacity: 0;
   }
 }
 
 @keyframes tabOutRight {
   from {
-    transform: translate(0, var(--tab-shift, 0px));
+    transform: translate3d(0, var(--tab-shift, 0px), 0) scale(1);
+    opacity: 1;
   }
   to {
-    transform: translate(100%, var(--tab-shift, 0px));
+    transform: translate3d(18%, var(--tab-shift, 0px), 0) scale(0.98);
+    opacity: 0;
   }
 }
 
-/* —— Day swipe: 1:1 carousel, incoming page peeks then eases to full —— */
+/* —— Day swipe: 1:1 carousel with depth (iOS Calendar + predictive-back) —— */
 #view-day {
   flex: 1 0 auto;
   min-height: 100%;
@@ -1036,7 +1072,8 @@ h1 {
 }
 
 .day-swipe {
-  --peek-rest: 0.94;
+  --peek-rest: 0.96;
+  --rest-scale: 0.04;
   position: relative;
   flex: 1 0 auto;
   display: flex;
@@ -1061,9 +1098,10 @@ h1 {
   pointer-events: none;
 }
 
-/* Incoming day peeks slightly small (--peek < 1) with rounded corners.
-   The extra translate keeps its leading edge flush so the swipe shows
-   content, not a gap. --peek eases to 1 with the slide. */
+/* Incoming day peeks slightly small (--peek < 1). Extra translate keeps
+   its leading edge flush so the swipe shows content, not a gap. --peek
+   eases to 1 with the slide. Constant radius (not per-frame) so the
+   compositor is not painting a morphing clip every tick. */
 .day-pane.prev,
 .day-pane.next {
   transform-origin: 50% 0;
@@ -1082,16 +1120,67 @@ h1 {
 }
 
 .day-swipe.is-swiping > #content {
-  border-radius: calc(16px * var(--swipe, 0));
+  position: relative;
+  border-radius: 16px;
   overflow: hidden;
+  transform-origin: 50% 18%;
+  transform: scale(calc(1 - var(--rest-scale) * var(--swipe, 0)));
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Dim the outgoing page as the next one arrives — opacity only, cheap. */
+.day-swipe.is-swiping > #content::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--bg);
+  opacity: calc(0.22 * var(--swipe, 0));
+  pointer-events: none;
+  z-index: 3;
 }
 
 .day-swipe.is-swiping > .day-pane {
-  border-radius: max(
-    0px,
-    calc(18px * (1 - var(--peek, 1)) / (1 - var(--peek-rest)))
-  );
+  border-radius: 16px;
   overflow: hidden;
+}
+
+/* Parallax: incoming content lags the pane a few px so the motion has depth. */
+.day-swipe.is-swiping > .day-pane.prev > *,
+.day-swipe.is-swiping > .day-pane.next > * {
+  transform: translate3d(var(--lag, 0px), 0, 0);
+  will-change: transform;
+}
+
+/* Soft edge shade between pages — a gradient, not an animated box-shadow. */
+.day-swipe.is-swiping > .day-pane.prev::before,
+.day-swipe.is-swiping > .day-pane.next::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 28px;
+  pointer-events: none;
+  z-index: 4;
+  opacity: var(--swipe, 0);
+}
+
+.day-swipe.is-swiping > .day-pane.next::before {
+  left: 0;
+  background: linear-gradient(
+    to right,
+    color-mix(in srgb, var(--ink) 16%, transparent),
+    transparent
+  );
+}
+
+.day-swipe.is-swiping > .day-pane.prev::before {
+  right: 0;
+  background: linear-gradient(
+    to left,
+    color-mix(in srgb, var(--ink) 16%, transparent),
+    transparent
+  );
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1107,6 +1196,16 @@ h1 {
   .day-pane.prev,
   .day-pane.next {
     --peek: 1;
+  }
+
+  .day-swipe {
+    --rest-scale: 0;
+  }
+
+  .day-swipe.is-swiping > #content::after,
+  .day-swipe.is-swiping > .day-pane.prev::before,
+  .day-swipe.is-swiping > .day-pane.next::before {
+    opacity: 0;
   }
 }
 
