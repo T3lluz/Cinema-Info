@@ -976,8 +976,8 @@ function releaseDayRender({ discardQueued = false } = {}) {
  * Swipe haptics are intentionally off — they fought the gesture.
  *
  * Robustness:
- * - Pointer capture on the stable day view, so a live redraw cannot kill
- *   the touch stream.
+ * - Pointer capture on `.main`, so empty space below a short day still
+ *   pages, and a live redraw cannot kill the touch stream.
  * - Settle on rAF, never CSS transitionend.
  * - Mid-flight grab: a new touch inherits the exact offset; a committing
  *   animation is landed first so chained swipes keep flowing.
@@ -993,6 +993,9 @@ function releaseDayRender({ discardQueued = false } = {}) {
  */
 function setupDaySwipe() {
   const view = els.views.day;
+  /** Main, not the view: a short day leaves empty space in `.main`
+   * (and its nav padding) that must still page between days. */
+  const host = view.parentElement;
   const track = els.daySwipe;
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
@@ -1081,9 +1084,10 @@ function setupDaySwipe() {
 
   const lockScroll = () => {
     view.classList.add("is-dragging");
-    view.style.touchAction = "none";
+    host.classList.add("is-dragging");
+    host.style.touchAction = "none";
     try {
-      view.setPointerCapture(pointerId);
+      host.setPointerCapture(pointerId);
     } catch {
       /* capture is best-effort; touchmove preventDefault is the fallback */
     }
@@ -1091,7 +1095,8 @@ function setupDaySwipe() {
 
   const unlockScroll = () => {
     view.classList.remove("is-dragging");
-    view.style.touchAction = "";
+    host.classList.remove("is-dragging");
+    host.style.touchAction = "";
   };
 
   const commitDay = (day) => {
@@ -1137,7 +1142,8 @@ function setupDaySwipe() {
     lockScroll();
   };
 
-  view.addEventListener("pointerdown", (e) => {
+  host.addEventListener("pointerdown", (e) => {
+    if (view.hidden) return;
     if (e.pointerType === "mouse" || !e.isPrimary || pointerId !== null) return;
     pointerId = e.pointerId;
     startX = lastX = e.clientX;
@@ -1151,7 +1157,7 @@ function setupDaySwipe() {
     }
   });
 
-  view.addEventListener("pointermove", (e) => {
+  host.addEventListener("pointermove", (e) => {
     if (e.pointerId !== pointerId) return;
     if (mode !== "pending" && mode !== "drag") return;
     const x = e.clientX;
@@ -1180,7 +1186,7 @@ function setupDaySwipe() {
         mode = "ignore";
         return;
       }
-      width = track.offsetWidth || view.offsetWidth || 1;
+      width = track.offsetWidth || view.offsetWidth || host.offsetWidth || 1;
       fillPanes();
       startX = x;
       lastX = x;
@@ -1212,7 +1218,7 @@ function setupDaySwipe() {
   });
 
   /** Keep native vertical scroll from stealing the pager after axis-lock. */
-  view.addEventListener(
+  host.addEventListener(
     "touchmove",
     (e) => {
       if (mode === "drag") e.preventDefault();
@@ -1251,10 +1257,10 @@ function setupDaySwipe() {
     else settle();
   };
 
-  view.addEventListener("pointerup", (e) => releasePointer(e, false));
-  view.addEventListener("pointercancel", (e) => releasePointer(e, true));
-  view.addEventListener("lostpointercapture", (e) => {
-    if (e.target !== view) return;
+  host.addEventListener("pointerup", (e) => releasePointer(e, false));
+  host.addEventListener("pointercancel", (e) => releasePointer(e, true));
+  host.addEventListener("lostpointercapture", (e) => {
+    if (e.target !== host) return;
     releasePointer(e, false);
   });
 
@@ -1338,7 +1344,7 @@ function setupDaySwipe() {
     const from = all.indexOf(selectedDay);
     const to = all.indexOf(day);
     if (from === -1 || to === -1) return false;
-    width = track.offsetWidth || view.offsetWidth || 0;
+    width = track.offsetWidth || view.offsetWidth || host.offsetWidth || 0;
     if (!width) return false;
 
     days = all;

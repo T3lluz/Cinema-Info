@@ -1014,12 +1014,18 @@ h1 {
 
 /* —— Day swipe: 1:1 carousel, incoming page peeks then eases to full —— */
 #view-day {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  width: 100%;
   touch-action: pan-y;
   overflow-x: clip;
   overscroll-behavior-x: none;
 }
 
-#view-day.is-dragging {
+#view-day.is-dragging,
+.main.is-dragging {
   touch-action: none;
   user-select: none;
   -webkit-user-select: none;
@@ -1028,6 +1034,11 @@ h1 {
 .day-swipe {
   --peek-rest: 0.94;
   position: relative;
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  width: 100%;
 }
 
 .day-swipe.is-swiping {
@@ -1096,12 +1107,16 @@ h1 {
 }
 
 .content {
-  flex: 1;
+  flex: 1 0 auto;
   padding: 12px var(--page-pad-x) 20px;
   max-width: var(--page-max);
   margin-left: auto;
   margin-right: auto;
   width: 100%;
+}
+
+#view-day > .day-swipe > #content {
+  min-height: 100%;
 }
 
 .section-label {
