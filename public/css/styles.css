@@ -1015,13 +1015,17 @@ h1 {
 /* —— Day swipe: 1:1 carousel, incoming page peeks then eases to full —— */
 #view-day {
   flex: 1 0 auto;
-  display: flex;
-  flex-direction: column;
   min-height: 100%;
   width: 100%;
   touch-action: pan-y;
   overflow-x: clip;
   overscroll-behavior-x: none;
+}
+
+/* ID display must not beat `.view[hidden]`, or the day tab never leaves. */
+#view-day:not([hidden]) {
+  display: flex;
+  flex-direction: column;
 }
 
 #view-day.is-dragging,
