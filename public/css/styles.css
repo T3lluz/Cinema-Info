@@ -2847,6 +2847,16 @@ button.bar-row.day-bar:focus-visible {
   transform: translateX(16px) scale(0.94);
 }
 
+.settings-switch:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.settings-switch:disabled:active .settings-switch-knob,
+.settings-switch:disabled[aria-checked="true"]:active .settings-switch-knob {
+  transform: none;
+}
+
 .dx-chip {
   flex: 0 0 auto;
   padding: 3px 9px;

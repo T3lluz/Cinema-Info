@@ -78,6 +78,12 @@ const DOOR_CALM_MS = 45 * 1000;
 const PROGRAM_RECHECK_MS = 2 * 60 * 1000;
 /** Hall geometry only changes when someone rebuilds an auditorium. */
 const SEAT_LAYOUT_TTL_MS = 30 * 24 * 60 * 60 * 1000;
+/**
+ * One short pulse for UI taps. Chromium on Android maps this onto the
+ * phone's motor — Pixel LRAs feel a click, cheaper ERM motors still
+ * spin up enough to notice. Intensity is not exposed on the web.
+ */
+const HAPTIC_CLICK_MS = 16;
 /** Bumped when the layout shape changes, so cached halls are refetched
  * (v2: blocked seats are included and flagged instead of dropped). */
 const SEAT_LAYOUT_VERSION = 2;
@@ -192,6 +198,9 @@ const I18N = {
     seatNumbersHint: "I salkartet",
     seatNumbersOn: "Vis",
     seatNumbersOff: "Skjul",
+    haptics: "Haptikk",
+    hapticsHint: "Kort vibrasjon ved trykk. Virker i Chrome på Android.",
+    hapticsUnavailable: "Ikke tilgjengelig på denne enheten.",
     langNb: "Norsk",
     langEn: "English",
     spokenNorwegian: "Norsk tale",
@@ -352,6 +361,9 @@ const I18N = {
     seatNumbersHint: "On the seat map",
     seatNumbersOn: "Show",
     seatNumbersOff: "Hide",
+    haptics: "Haptics",
+    hapticsHint: "A short buzz on taps. Works in Chrome on Android.",
+    hapticsUnavailable: "Not available on this device.",
     langNb: "Norsk",
     langEn: "English",
     spokenNorwegian: "Norwegian",
@@ -430,6 +442,9 @@ const ICONS = {
     "m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v1.99h11.17A15.4 15.4 0 0 1 9 11.35 15.6 15.6 0 0 1 6.69 8h-2a17.6 17.6 0 0 0 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04ZM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12Zm-2.62 7 1.62-4.33L19.12 17h-3.24Z",
   theme:
     "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2Zm0 18V4a8 8 0 0 1 0 16Z",
+  // Phone with side waves — the settings row for click ticks.
+  haptics:
+    "M0 15h2V9H0v6zm3 2h2V7H3v10zm19-8v6h2V9h-2zm-3 8h2V7h-2v10zM16.5 3h-9C6.67 3 6 3.67 6 4.5v15c0 .83.67 1.5 1.5 1.5h9c.83 0 1.5-.67 1.5-1.5v-15c0-.83-.67-1.5-1.5-1.5zM16 19H8V5h8v14z",
   account:
     "M12.65 10A5.99 5.99 0 0 0 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6a5.99 5.99 0 0 0 5.65-4H17v4h4v-4h2v-4H12.65ZM7 14a2 2 0 1 1 0-4 2 2 0 0 1 0 4Z",
   // A hall seen from above: the screen, then rows of seats.
@@ -515,6 +530,8 @@ let theme = "system";
 const DARK_MQ = window.matchMedia("(prefers-color-scheme: dark)");
 /** Digits painted on each seat square in the hall chart. */
 let showSeatNumbers = true;
+/** Click ticks via navigator.vibrate — Android Chromium only. */
+let hapticsOn = true;
 let enrichedAll = false;
 let lastLiveAt = 0;
 /** When the program snapshot was last read, so a long-open tab re-reads it. */
@@ -644,6 +661,7 @@ async function init() {
     ? prefs.theme
     : "system";
   showSeatNumbers = prefs.showSeatNumbers !== false;
+  hapticsOn = prefs.haptics !== false;
 
   applyTheme(theme);
   // A device flipping between light and dark mid-session should carry
@@ -660,6 +678,7 @@ async function init() {
   });
 
   setupSeatCharts();
+  setupHaptics();
 
   // Let mouse users scroll the day strip with the wheel.
   els.dayTabs.addEventListener(
@@ -858,6 +877,7 @@ function setupSeatCharts() {
     const statsMovie = e.target.closest?.("[data-stats-movie]");
     if (!statsMovie || e.target !== statsMovie) return;
     e.preventDefault();
+    hapticClick();
     openMovieFromStats(statsMovie.dataset.statsMovie);
   });
 
@@ -1454,7 +1474,50 @@ function savePrefs() {
       lang,
       theme,
       showSeatNumbers,
+      haptics: hapticsOn,
     })
+  );
+}
+
+/** Chromium on Android (Chrome, Edge, Samsung Internet, Opera, WebView). */
+function canHaptic() {
+  if (typeof navigator.vibrate !== "function") return false;
+  const platform = navigator.userAgentData?.platform;
+  if (platform) return platform === "Android";
+  return /Android/i.test(navigator.userAgent);
+}
+
+/**
+ * Buttons, tabs, switches, seats, and in-app links — the taps that
+ * should tick. Scroll, hover, and empty space stay silent.
+ */
+function hapticTarget(el) {
+  const node = el?.nodeType === 1 ? el : el?.parentElement;
+  const hit = node?.closest?.(
+    'button, a[href], [role="tab"], [role="switch"], [role="button"], .seat, summary'
+  );
+  if (!hit) return null;
+  if (hit.disabled || hit.getAttribute("aria-disabled") === "true") return null;
+  return hit;
+}
+
+function hapticClick() {
+  if (!hapticsOn || !canHaptic()) return;
+  try {
+    navigator.vibrate(HAPTIC_CLICK_MS);
+  } catch {
+    /* some WebViews throw; a tap must never fail because of this */
+  }
+}
+
+function setupHaptics() {
+  document.addEventListener(
+    "click",
+    (e) => {
+      if (!hapticTarget(e.target)) return;
+      hapticClick();
+    },
+    true
   );
 }
 
@@ -4850,7 +4913,7 @@ function settingsSeg(ariaKey, buttonsHtml) {
   `;
 }
 
-function settingsSwitch(ariaKey, checked, dataAttr) {
+function settingsSwitch(ariaKey, checked, dataAttr, extraAttrs = "") {
   return `
     <button
       type="button"
@@ -4859,6 +4922,7 @@ function settingsSwitch(ariaKey, checked, dataAttr) {
       aria-checked="${checked}"
       aria-label="${escapeHtml(t(ariaKey))}"
       ${dataAttr}
+      ${extraAttrs}
     >
       <span class="settings-switch-knob" aria-hidden="true"></span>
     </button>
@@ -4914,6 +4978,18 @@ function renderSettings() {
               "seatNumbers",
               "seatNumbersHint",
               settingsSwitch("seatNumbers", showSeatNumbers, "data-seat-switch"),
+              "is-inline"
+            )}
+            ${settingsRow(
+              "haptics",
+              "haptics",
+              canHaptic() ? "hapticsHint" : "hapticsUnavailable",
+              settingsSwitch(
+                "haptics",
+                canHaptic() && hapticsOn,
+                "data-haptic-switch",
+                canHaptic() ? "" : "disabled"
+              ),
               "is-inline"
             )}
           </div>
@@ -4985,6 +5061,18 @@ function renderSettings() {
       for (const show of state?.shows || []) {
         if (seatChartExpanded(show)) paintSeatChart(show);
       }
+    });
+  }
+
+  const hapticSwitch = els.settingsContent.querySelector("[data-haptic-switch]");
+  if (hapticSwitch && !hapticSwitch.disabled) {
+    hapticSwitch.addEventListener("click", () => {
+      hapticsOn = !hapticsOn;
+      savePrefs();
+      hapticSwitch.setAttribute("aria-checked", String(hapticsOn));
+      // Turning it on happens after the capture tick (which was skipped
+      // while it was off), so confirm the switch itself.
+      if (hapticsOn) hapticClick();
     });
   }
 
