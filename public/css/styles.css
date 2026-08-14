@@ -1671,7 +1671,11 @@ a.rating-badge:hover {
   height: 22px;
 }
 
-.rating-logo.letterboxd,
+.rating-logo.letterboxd {
+  width: 20px;
+  height: 13px;
+}
+
 .rating-logo.tomatoes,
 .rating-logo.metacritic {
   width: 15px;
