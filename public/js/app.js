@@ -81,8 +81,8 @@ const SEAT_LAYOUT_TTL_MS = 30 * 24 * 60 * 60 * 1000;
 /**
  * Tap haptics. `navigator.vibrate` is full amplitude; duration is the
  * only intensity knob, so keep every pulse a tick — not a buzz.
- *   tick    — selection (days, seats, rows, expanders)
- *   confirm — committed changes (bottom nav, settings switches)
+ *   tick    — day pills, settings segments, expanders
+ *   confirm — bottom nav, settings switches
  */
 const HAPTIC_TICK_MS = 1;
 const HAPTIC_CONFIRM_MS = 2;
@@ -93,13 +93,8 @@ const HAPTIC_CONFIRM_MS = 2;
  */
 const SWIPE_SPRING_OMEGA = Math.sqrt(380) / 1000;
 const SWIPE_SPRING_ZETA = 0.8;
-/** Incoming day sits at this scale until the swipe lands, then snaps up. */
-const SWIPE_PEEK_SCALE = 0.9;
-/** Snappy spring for the peek → fullscreen pop (stiffness 720, zeta 0.72). */
-const PEEK_SPRING_OMEGA = Math.sqrt(720) / 1000;
-const PEEK_SPRING_ZETA = 0.72;
-/** Start the fullscreen snap once this fraction of the page remains. */
-const PEEK_SNAP_REMAIN = 0.14;
+/** Incoming day is slightly smaller, then eases to full with the slide. */
+const SWIPE_PEEK_SCALE = 0.94;
 /** Fraction of the page a slow drag must cover to commit. */
 const SWIPE_COMMIT_FRAC = 0.28;
 /** Flick commit, px/ms (~320 px/s). */
@@ -975,11 +970,10 @@ function releaseDayRender({ discardQueued = false } = {}) {
 
 /**
  * Interactive swipe between days: a 1:1 carousel. Neighbouring days sit
- * beside the current page (not stacked under it), a little smaller than
- * the screen so they peek as a card. The finger is tracked 1:1; on
- * release a Material 3 Expressive default-spatial spring settles the
- * track, then the incoming page snaps up to fullscreen. Swipe haptics
- * are intentionally off — they fought the gesture.
+ * beside the current page, a little smaller so they peek. The finger is
+ * tracked 1:1; on release a Material 3 Expressive default-spatial spring
+ * settles the track, and the incoming page eases to fullscreen with it.
+ * Swipe haptics are intentionally off — they fought the gesture.
  *
  * Robustness:
  * - Pointer capture on the stable day view, so a live redraw cannot kill
@@ -1047,25 +1041,34 @@ function setupDaySwipe() {
     els.dayPaneNext.style.removeProperty("--peek");
   };
 
+  const peekAt = (u) => {
+    const t = u * u;
+    return SWIPE_PEEK_SCALE + (1 - SWIPE_PEEK_SCALE) * t;
+  };
+
   /**
    * Move the track. `--swipe` is a sin envelope: 0 at rest (0 or ±width)
    * and 1 at halfway, so the outgoing page's corner rounding eases out
-   * instead of popping off when the page lands. Incoming scale lives on
-   * `--peek` (the neighbour panes), not here.
+   * instead of popping off when the page lands. Incoming scale follows
+   * the same progress so it grows with the slide, not after it.
    */
   const setX = (x) => {
     curX = x;
     track.style.transform = x ? `translate3d(${x}px, 0, 0)` : "";
     const u = width ? Math.min(1, Math.abs(x) / width) : 0;
     const morph = Math.sin(u * Math.PI);
-    /* Keep is-swiping on while a commit is still popping the incoming
-     * page to fullscreen — at ±width the sin envelope is 0. */
-    if (mode === "animating" || morph > 0.001) {
-      track.style.setProperty("--swipe", Math.max(morph, 0.001).toFixed(3));
+    if (morph > 0.001) {
+      track.style.setProperty("--swipe", morph.toFixed(3));
       track.classList.add("is-swiping");
     } else {
       track.style.removeProperty("--swipe");
       track.classList.remove("is-swiping");
+    }
+    if (x && width) {
+      const incoming = x < 0 ? els.dayPaneNext : els.dayPanePrev;
+      const other = x < 0 ? els.dayPanePrev : els.dayPaneNext;
+      setPeek(incoming, peekAt(u));
+      setPeek(other, SWIPE_PEEK_SCALE);
     }
   };
 
@@ -1256,16 +1259,15 @@ function setupDaySwipe() {
   });
 
   /** Spring the track to rest; dir −1/1 slides to the neighbour, 0 back.
-   * A committing swipe keeps the incoming day at peek scale until the
-   * page is nearly in place, then a snappier spring pops it fullscreen. */
+   * Incoming scale is tied to track progress in setX, so one spring
+   * carries both the slide and the ease to fullscreen. */
   function snapTo(dir, { day = dir === 0 ? "" : days[idx + dir], v0 = vx, tabScroll = "auto" } = {}) {
     cancelAnimationFrame(raf);
     mode = "animating";
     animDir = dir;
     animDay = day;
     const target = dir === 0 ? 0 : dir === 1 ? -width : width;
-    const overshoot = 16;
-    const incoming = dir === 1 ? els.dayPaneNext : dir === -1 ? els.dayPanePrev : null;
+    const overshoot = 10;
 
     if (day) setSelectedDay(day, { tabScroll });
     else if (previewDir !== 0) setSelectedDay(days[idx], { tabScroll: "auto" });
@@ -1293,12 +1295,6 @@ function setupDaySwipe() {
 
     let x = curX;
     let v = Math.max(-2.4, Math.min(2.4, v0));
-    let peek = incoming
-      ? parseFloat(incoming.style.getPropertyValue("--peek")) || SWIPE_PEEK_SCALE
-      : 1;
-    let peekV = 0;
-    let peekTarget = SWIPE_PEEK_SCALE;
-    let peekArmed = false;
     let prevTs = performance.now();
 
     const stepFrame = (ts) => {
@@ -1314,36 +1310,7 @@ function setupDaySwipe() {
       );
       x = s.x;
       v = s.v;
-
-      const xDone = Math.abs(x - target) < 0.5 && Math.abs(v) < 0.02;
-      if (incoming && dir !== 0) {
-        if (
-          !peekArmed &&
-          (xDone || Math.abs(x - target) <= width * PEEK_SNAP_REMAIN)
-        ) {
-          peekArmed = true;
-          peekTarget = 1;
-          peekV = Math.max(peekV, 0.0028);
-        }
-        if (peekArmed) {
-          const p = stepSpring(
-            peek,
-            peekV,
-            peekTarget,
-            dt,
-            PEEK_SPRING_OMEGA,
-            PEEK_SPRING_ZETA
-          );
-          peek = p.x;
-          peekV = p.v;
-          setPeek(incoming, peek);
-        }
-      }
-      const peekDone =
-        !incoming ||
-        dir === 0 ||
-        (peekArmed && Math.abs(peek - 1) < 0.003 && Math.abs(peekV) < 0.0005);
-      if (xDone && peekDone) {
+      if (Math.abs(x - target) < 0.5 && Math.abs(v) < 0.02) {
         finish();
         return;
       }
@@ -1354,7 +1321,6 @@ function setupDaySwipe() {
             ? Math.max(x, -width - overshoot)
             : Math.min(x, width + overshoot);
       }
-      if (xDone) vis = target;
       setX(vis);
       raf = requestAnimationFrame(stepFrame);
     };
@@ -1611,13 +1577,28 @@ function canHaptic() {
 }
 
 /**
- * Buttons, tabs, switches, seats, and in-app links — the taps that
- * should tick. Scroll, hover, and empty space stay silent.
+ * Only controls that mean "I picked this" — not seats, not ticket links,
+ * not every button on a card. Scroll, swipe, and empty space stay silent.
  */
 function hapticTarget(el) {
   const node = el?.nodeType === 1 ? el : el?.parentElement;
   const hit = node?.closest?.(
-    'button, a[href], [role="tab"], [role="switch"], [role="button"], .seat, summary'
+    [
+      ".pill-tab",
+      ".day-tab",
+      ".jump-today",
+      ".icon-btn",
+      ".seg-btn",
+      ".settings-switch",
+      ".dx-btn",
+      ".tile-shows-toggle",
+      ".tile-expand-back",
+      "[data-stats-movie]",
+      "[data-stats-day]",
+      "[data-tl-show]",
+      "[data-seat-toggle]",
+      "#retryBtn",
+    ].join(", ")
   );
   if (!hit) return null;
   if (hit.disabled || hit.getAttribute("aria-disabled") === "true") return null;
@@ -1641,23 +1622,21 @@ function hapticVibrate(pattern) {
 }
 
 function setupHaptics() {
-  // Fire on finger-down so the tick lands with the tap, not as a delayed
-  // second kick on click. Keyboard activation still arrives as click
-  // with detail 0; mouse stays silent.
+  // Click, not pointerdown: a scroll or swipe that starts on a control
+  // must not tick. Mouse stays silent; keyboard arrives as click with
+  // detail 0.
+  let pointerType = "mouse";
   document.addEventListener(
     "pointerdown",
     (e) => {
-      if (e.pointerType === "mouse" || !e.isPrimary) return;
-      const hit = hapticTarget(e.target);
-      if (!hit) return;
-      hapticVibrate(hapticMsFor(hit));
+      if (e.isPrimary) pointerType = e.pointerType;
     },
     true
   );
   document.addEventListener(
     "click",
     (e) => {
-      if (e.detail !== 0) return;
+      if (pointerType === "mouse" && e.detail !== 0) return;
       const hit = hapticTarget(e.target);
       if (!hit) return;
       hapticVibrate(hapticMsFor(hit));

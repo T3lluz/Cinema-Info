@@ -1012,7 +1012,7 @@ h1 {
   }
 }
 
-/* —— Day swipe: 1:1 carousel, peeking card, then a fullscreen snap —— */
+/* —— Day swipe: 1:1 carousel, incoming page peeks then eases to full —— */
 #view-day {
   touch-action: pan-y;
   overflow-x: clip;
@@ -1026,7 +1026,7 @@ h1 {
 }
 
 .day-swipe {
-  --peek-rest: 0.9;
+  --peek-rest: 0.94;
   position: relative;
 }
 
@@ -1046,10 +1046,9 @@ h1 {
   pointer-events: none;
 }
 
-/* Incoming day peeks as a card (--peek < 1): scaled down, dropped a
-   few pixels, rounded. The extra translate keeps its leading edge
-   flush with the current page so the first pixels of the swipe show
-   content, not a gap. --peek springs to 1 when the swipe commits. */
+/* Incoming day peeks slightly small (--peek < 1) with rounded corners.
+   The extra translate keeps its leading edge flush so the swipe shows
+   content, not a gap. --peek eases to 1 with the slide. */
 .day-pane.prev,
 .day-pane.next {
   transform-origin: 50% 0;
@@ -1058,32 +1057,24 @@ h1 {
 }
 
 .day-pane.prev {
-  transform: translate3d(
-      calc(-50% - 50% * var(--peek, 1)),
-      calc(10px * (1 - var(--peek, 1)) / (1 - var(--peek-rest))),
-      0
-    )
+  transform: translate3d(calc(-50% - 50% * var(--peek, 1)), 0, 0)
     scale(var(--peek, 1));
 }
 
 .day-pane.next {
-  transform: translate3d(
-      calc(50% + 50% * var(--peek, 1)),
-      calc(10px * (1 - var(--peek, 1)) / (1 - var(--peek-rest))),
-      0
-    )
+  transform: translate3d(calc(50% + 50% * var(--peek, 1)), 0, 0)
     scale(var(--peek, 1));
 }
 
 .day-swipe.is-swiping > #content {
-  border-radius: calc(22px * var(--swipe, 0));
+  border-radius: calc(16px * var(--swipe, 0));
   overflow: hidden;
 }
 
 .day-swipe.is-swiping > .day-pane {
   border-radius: max(
     0px,
-    calc(28px * (1 - var(--peek, 1)) / (1 - var(--peek-rest)))
+    calc(18px * (1 - var(--peek, 1)) / (1 - var(--peek-rest)))
   );
   overflow: hidden;
 }
