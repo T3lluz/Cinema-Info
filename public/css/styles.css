@@ -5033,7 +5033,7 @@ button.bar-row.day-bar:focus-visible {
   border: 0;
   border-radius: 999px;
   background: transparent;
-  color: var(--muted);
+  color: color-mix(in srgb, var(--ink) 72%, var(--muted));
   font: inherit;
   font-size: 0.58rem;
   font-weight: 750;
@@ -5049,11 +5049,14 @@ button.bar-row.day-bar:focus-visible {
   width: 26px;
   height: 26px;
   transform: translateY(0);
+  color: inherit;
   transition:
     width 0.36s cubic-bezier(0.3, 0.85, 0.25, 1),
     height 0.36s cubic-bezier(0.3, 0.85, 0.25, 1),
     transform 0.36s cubic-bezier(0.3, 0.85, 0.25, 1),
-    opacity 0.28s ease;
+    opacity 0.28s ease,
+    color 0.28s ease,
+    filter 0.28s ease;
 }
 
 .pill-tab-label {
@@ -5066,11 +5069,14 @@ button.bar-row.day-bar:focus-visible {
   white-space: nowrap;
   transform: translateY(10px);
   pointer-events: none;
+  color: inherit;
   transition:
     max-height 0.34s cubic-bezier(0.3, 0.85, 0.25, 1),
     margin-top 0.34s cubic-bezier(0.3, 0.85, 0.25, 1),
     opacity 0.28s ease,
-    transform 0.36s cubic-bezier(0.22, 1.1, 0.3, 1);
+    transform 0.36s cubic-bezier(0.22, 1.1, 0.3, 1),
+    color 0.28s ease,
+    text-shadow 0.28s ease;
 }
 
 .pill-tab:focus-visible {
@@ -5083,7 +5089,7 @@ button.bar-row.day-bar:focus-visible {
 }
 
 .pill-tab[aria-selected="true"] {
-  color: var(--accent);
+  color: var(--ink);
 }
 
 .pill-tab[aria-selected="true"] svg {
@@ -5099,16 +5105,34 @@ button.bar-row.day-bar:focus-visible {
   transform: translateY(0);
 }
 
-/* Unselected tabs adapt to dark content under the glass. The selected
-   tab sits on the glass chip, so it keeps accent ink. */
-.pill-tab.on-dark:not([aria-selected="true"]) {
-  color: rgba(255, 255, 255, 0.92);
-  text-shadow: 0 1px 5px rgba(0, 0, 0, 0.35);
+/* Each icon and each label flips on its own. Colours are literal, not
+   theme ink — in dark mode --ink is already light, so a pale card
+   behind a tab still needs a real dark face. */
+.pill-tab svg.on-light,
+.pill-tab .pill-tab-label.on-light {
+  color: #1c1916;
+  filter: none;
+  text-shadow: none;
 }
 
-.pill-tab.on-dark[aria-selected="true"] {
-  color: var(--accent);
-  text-shadow: none;
+.pill-tab svg.on-dark {
+  color: rgb(255 255 255 / 0.9);
+  filter: drop-shadow(0 1px 2px rgb(0 0 0 / 0.4));
+}
+
+.pill-tab .pill-tab-label.on-dark {
+  color: rgb(255 255 255 / 0.9);
+  text-shadow: 0 1px 4px rgb(0 0 0 / 0.4);
+}
+
+.pill-tab[aria-selected="true"] svg.on-light,
+.pill-tab[aria-selected="true"] .pill-tab-label.on-light {
+  color: #111110;
+}
+
+.pill-tab[aria-selected="true"] svg.on-dark,
+.pill-tab[aria-selected="true"] .pill-tab-label.on-dark {
+  color: #fff;
 }
 
 .stats-hero,

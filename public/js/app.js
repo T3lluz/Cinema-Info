@@ -771,6 +771,7 @@ function paint(host, html) {
   const focused = focusSelectorWithin(host);
   host.innerHTML = html;
   if (focused) host.querySelector(focused)?.focus({ preventScroll: true });
+  scheduleNavContrast();
   return true;
 }
 
@@ -900,6 +901,7 @@ async function init() {
     movePillIndicator(activeTab, { instant: true });
     moveDayIndicator({ instant: true });
     updateLiquidLenses();
+    scheduleNavContrast();
   });
 
   // Crossing phone/desktop changes whether the timeline shows :30 ticks.
@@ -937,8 +939,22 @@ async function init() {
     }
   });
 
-  // What sits under the navbar changes as the page scrolls.
+  // What sits under the navbar changes as the page scrolls, as posters
+  // finish loading, and when the mobile chrome resizes the viewport.
   window.addEventListener("scroll", scheduleNavContrast, { passive: true });
+  window.visualViewport?.addEventListener("scroll", scheduleNavContrast, {
+    passive: true,
+  });
+  window.visualViewport?.addEventListener("resize", scheduleNavContrast, {
+    passive: true,
+  });
+  document.addEventListener(
+    "load",
+    (e) => {
+      if (e.target instanceof HTMLImageElement) scheduleNavContrast();
+    },
+    true
+  );
 
   // Crossing the tablet threshold changes whether seat charts are folded
   // away. Only the day list draws them, so only it needs redrawing.
@@ -1344,6 +1360,7 @@ function setupDaySwipe() {
     ghost.style.transform = `translate3d(${dir * AXIS_IN_START_PCT * (1 - p)}%, 0, 0) scale3d(${inn}, ${inn}, 1)`;
     content.style.transform = `translate3d(${dir * -AXIS_OUT_PCT * p}%, 0, 0) scale3d(${out}, ${out}, 1)`;
     content.style.opacity = String(1 - p);
+    scheduleNavContrast();
   };
 
   const clearAxisStyles = () => {
@@ -2203,47 +2220,114 @@ function updateLiquidLenses() {
 }
 
 /**
- * Adaptive tab contrast, the way iOS glass does it: each navbar tab
- * looks at what the page is showing underneath it and flips to a light
- * face the moment its patch of backdrop turns dark — a poster, a red
- * accent block — so the icons always read through the clear glass.
+ * Adaptive nav faces, the way iOS glass does it: each icon and each
+ * label looks at the page patch underneath it and flips to white on
+ * dark (a poster, a red rail, night theme) or ink on light, on its
+ * own — so two tabs over different cards can disagree, and a selected
+ * label sitting lower than its icon can disagree with that icon.
+ *
+ * mix-blend-mode: difference would be pixel-reactive for free, but a
+ * fixed navbar is its own stacking context (so the blend never sees
+ * the page) and difference turns Buen's red/green occupancy into
+ * complementary artefacts. Sampling the DOM stack stays binary.
  */
 function parseCssColor(str) {
   if (!str) return null;
+  const s = String(str).trim().toLowerCase();
+  if (s === "transparent") return { r: 0, g: 0, b: 0, a: 0 };
+
   let m =
-    /^rgba?\(\s*([\d.]+)\s*,\s*([\d.]+)\s*,\s*([\d.]+)(?:\s*,\s*([\d.]+))?\s*\)$/.exec(
-      str
-    );
-  if (m) {
-    return { r: +m[1], g: +m[2], b: +m[3], a: m[4] == null ? 1 : +m[4] };
-  }
-  m =
-    /^color\(srgb\s+([\d.-]+)\s+([\d.-]+)\s+([\d.-]+)(?:\s*\/\s*([\d.]+%?))?\)$/.exec(
-      str
+    /^rgba?\(\s*([\d.]+)\s*[, ]\s*([\d.]+)\s*[, ]\s*([\d.]+)(?:\s*[,/]\s*([\d.]+%?))?\s*\)$/.exec(
+      s
     );
   if (m) {
     const a =
-      m[4] == null
-        ? 1
-        : m[4].endsWith("%")
-          ? parseFloat(m[4]) / 100
-          : +m[4];
+      m[4] == null ? 1 : m[4].endsWith("%") ? parseFloat(m[4]) / 100 : +m[4];
+    return { r: +m[1], g: +m[2], b: +m[3], a };
+  }
+
+  m =
+    /^color\(srgb\s+([\d.-]+)\s+([\d.-]+)\s+([\d.-]+)(?:\s*\/\s*([\d.]+%?))?\)$/.exec(
+      s
+    );
+  if (m) {
+    const a =
+      m[4] == null ? 1 : m[4].endsWith("%") ? parseFloat(m[4]) / 100 : +m[4];
     return { r: +m[1] * 255, g: +m[2] * 255, b: +m[3] * 255, a };
+  }
+
+  if (s[0] === "#") {
+    let h = s.slice(1);
+    if (h.length === 3 || h.length === 4) {
+      h = [...h].map((c) => c + c).join("");
+    }
+    if (h.length === 6 || h.length === 8) {
+      return {
+        r: parseInt(h.slice(0, 2), 16),
+        g: parseInt(h.slice(2, 4), 16),
+        b: parseInt(h.slice(4, 6), 16),
+        a: h.length === 8 ? parseInt(h.slice(6, 8), 16) / 255 : 1,
+      };
+    }
   }
   return null;
 }
 
-/** Average poster: film one-sheets skew dark, so an image reads as dark. */
+/** Average poster: film one-sheets skew dark, so an unread image is dark. */
 const POSTER_GUESS = { r: 70, g: 64, b: 62, a: 1 };
 
+/** src → {r,g,b,a} once a CORS probe has averaged the bitmap. */
+const imgColorCache = new Map();
+
+function imageColor(img) {
+  const src = img.currentSrc || img.src;
+  if (!src) return POSTER_GUESS;
+  const cached = imgColorCache.get(src);
+  if (cached && cached !== "pending") return cached;
+  if (cached !== "pending") {
+    imgColorCache.set(src, "pending");
+    const probe = new Image();
+    probe.crossOrigin = "anonymous";
+    probe.onload = () => {
+      try {
+        const canvas = document.createElement("canvas");
+        canvas.width = 8;
+        canvas.height = 8;
+        const ctx = canvas.getContext("2d", { willReadFrequently: true });
+        ctx.drawImage(probe, 0, 0, 8, 8);
+        const data = ctx.getImageData(0, 0, 8, 8).data;
+        let r = 0;
+        let g = 0;
+        let b = 0;
+        let n = 0;
+        for (let i = 0; i < data.length; i += 4) {
+          r += data[i];
+          g += data[i + 1];
+          b += data[i + 2];
+          n += 1;
+        }
+        imgColorCache.set(src, { r: r / n, g: g / n, b: b / n, a: 1 });
+        scheduleNavContrast();
+      } catch {
+        imgColorCache.set(src, POSTER_GUESS);
+      }
+    };
+    probe.onerror = () => imgColorCache.set(src, POSTER_GUESS);
+    probe.src = src;
+  }
+  return POSTER_GUESS;
+}
+
 /** The colour the page shows at a point, compositing translucent layers
- * bottom-up and skipping the navbar itself. */
+ * bottom-up and skipping the navbar itself. The glass fill is ignored
+ * on purpose: frosting lightens a dark poster toward mid-grey and
+ * would keep icons ink when they need to be white. */
 function backdropColorAt(x, y) {
   const layers = [];
   for (const el of document.elementsFromPoint(x, y)) {
     if (el === document.documentElement || el.closest(".pill-nav")) continue;
     if (el.tagName === "IMG") {
-      layers.push(POSTER_GUESS);
+      layers.push(imageColor(el));
       break;
     }
     const color = parseCssColor(getComputedStyle(el).backgroundColor);
@@ -2265,36 +2349,67 @@ function backdropColorAt(x, y) {
   return { r, g, b };
 }
 
+/** WCAG relative luminance — the cutoff where white ink beats black. */
 function luminanceOf(c) {
-  return (0.2126 * c.r + 0.7152 * c.g + 0.0722 * c.b) / 255;
+  const lin = (channel) => {
+    const x = channel / 255;
+    return x <= 0.04045 ? x / 12.92 : ((x + 0.055) / 1.055) ** 2.4;
+  };
+  return 0.2126 * lin(c.r) + 0.7152 * lin(c.g) + 0.0722 * lin(c.b);
+}
+
+const FACE_SAMPLE = [
+  [0.5, 0.5],
+  [0.28, 0.32],
+  [0.72, 0.32],
+  [0.28, 0.72],
+  [0.72, 0.72],
+];
+
+function sampleFaceBackdrop(el) {
+  const rect = el.getBoundingClientRect();
+  if (rect.width < 2 || rect.height < 2) return null;
+  let r = 0;
+  let g = 0;
+  let b = 0;
+  for (const [px, py] of FACE_SAMPLE) {
+    const c = backdropColorAt(
+      rect.left + rect.width * px,
+      rect.top + rect.height * py
+    );
+    r += c.r;
+    g += c.g;
+    b += c.b;
+  }
+  const n = FACE_SAMPLE.length;
+  return { r: r / n, g: g / n, b: b / n };
+}
+
+function applyFaceContrast(el, fallbackDark) {
+  const c = sampleFaceBackdrop(el);
+  const wasDark = el.classList.contains("on-dark");
+  const lum = c ? luminanceOf(c) : null;
+  const dark =
+    lum == null ? !!fallbackDark : lum < (wasDark ? 0.42 : 0.28);
+  el.classList.toggle("on-dark", dark);
+  el.classList.toggle("on-light", !dark);
+  return dark;
 }
 
 function updateNavContrast() {
-  const shell = document.querySelector(".nav-glass");
-  if (!shell) return;
-  // The shell's own translucent fill sits between the page and the
-  // icons, so it takes part in what the eye actually sees.
-  const fill = parseCssColor(getComputedStyle(shell).backgroundColor);
   document.querySelectorAll(".pill-tab").forEach((btn) => {
-    const rect = btn.getBoundingClientRect();
-    if (!rect.width) return;
-    let c = backdropColorAt(
-      rect.left + rect.width / 2,
-      rect.top + rect.height / 2
-    );
-    if (fill && fill.a > 0) {
-      c = {
-        r: fill.r * fill.a + c.r * (1 - fill.a),
-        g: fill.g * fill.a + c.g * (1 - fill.a),
-        b: fill.b * fill.a + c.b * (1 - fill.a),
-      };
+    const icon = btn.querySelector("svg");
+    const label = btn.querySelector(".pill-tab-label");
+    const iconDark = icon ? applyFaceContrast(icon) : false;
+    if (!label) return;
+    // Collapsed labels have no box; keep them in step with the icon
+    // so the word does not flash the wrong ink when the tab selects.
+    if (label.getBoundingClientRect().height < 2) {
+      label.classList.toggle("on-dark", iconDark);
+      label.classList.toggle("on-light", !iconDark);
+    } else {
+      applyFaceContrast(label, iconDark);
     }
-    // Hysteresis keeps a tab from flickering on a boundary colour.
-    const wasDark = btn.classList.contains("on-dark");
-    btn.classList.toggle(
-      "on-dark",
-      luminanceOf(c) < (wasDark ? 0.5 : 0.42)
-    );
   });
 }
 
@@ -2594,6 +2709,7 @@ function renderActiveView() {
   if (activeTab !== "day") {
     renderTimeline();
   }
+  scheduleNavContrast();
 }
 
 async function loadProgramSnapshot() {
