@@ -1012,36 +1012,44 @@ h1 {
   }
 }
 
-/* —— Day swipe: track follows the finger, neighbour day peeks in —— */
+/* —— Day swipe: magnetic peel, like Pixel Android 16 notification dismiss —— */
 #view-day {
   /* The browser keeps vertical panning; horizontal drags are ours. */
   touch-action: pan-y;
 }
 
-/* The swipe track is moved with translate3d from JS (finger-follow while
-   dragging, a rAF spring on release) — no CSS transition involved, so a
-   snap can never be left hanging halfway. */
 .day-swipe {
   position: relative;
-  will-change: transform;
 }
 
+/* Neighbour day sits under the current page (the stack). The current
+   page peels off on top with magnetic lag, rounding, and a lift shadow. */
 .day-pane {
   position: absolute;
-  top: 0;
-  bottom: 0;
+  inset: 0;
+  z-index: 0;
   overflow: hidden;
   pointer-events: none;
 }
 
-.day-pane.prev {
-  left: -100%;
-  right: 100%;
+.day-swipe > #content {
+  position: relative;
+  z-index: 1;
 }
 
-.day-pane.next {
-  left: 100%;
-  right: -100%;
+.day-swipe.is-peeling {
+  overflow: hidden;
+}
+
+.day-swipe.is-peeling > #content {
+  background: var(--bg);
+  overflow: hidden;
+  border-radius: calc(28px * var(--peel, 0));
+  box-shadow:
+    0 calc(4px * var(--peel, 0)) calc(18px * var(--peel, 0))
+      color-mix(in srgb, #000 calc(12% * var(--peel, 0)), transparent),
+    0 calc(12px * var(--peel, 0)) calc(40px * var(--peel, 0))
+      color-mix(in srgb, #000 calc(18% * var(--peel, 0)), transparent);
 }
 
 @media (prefers-reduced-motion: reduce) {
