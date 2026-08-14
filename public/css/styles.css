@@ -2528,21 +2528,18 @@ a.rating-badge:hover {
   color: var(--muted);
 }
 
+.movie-search:has(.omdb-live:not([hidden])) .movie-search-hint {
+  display: none;
+}
+
 .omdb-live {
-  position: absolute;
-  z-index: 12;
-  left: 0;
-  right: 0;
-  top: calc(44px + 6px);
-  max-height: min(58vh, 420px);
-  overflow: auto;
-  padding: 6px;
-  border-radius: 14px;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  box-shadow:
-    0 18px 40px color-mix(in srgb, var(--ink) 18%, transparent),
-    0 2px 8px color-mix(in srgb, var(--ink) 8%, transparent);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 10px 0 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
 }
 
 .omdb-live[hidden] {
@@ -2556,10 +2553,10 @@ a.rating-badge:hover {
   align-items: center;
   width: 100%;
   margin: 0;
-  padding: 7px 8px;
-  border: 0;
-  border-radius: 10px;
-  background: transparent;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
   color: inherit;
   font: inherit;
   text-align: left;
@@ -2621,6 +2618,15 @@ a.rating-badge:hover {
   text-transform: uppercase;
 }
 
+.omdb-live-label {
+  margin: 2px 2px 0;
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
 .omdb-live-note,
 .omdb-live-status {
   display: flex;
@@ -2628,6 +2634,9 @@ a.rating-badge:hover {
   gap: 8px;
   margin: 0;
   padding: 12px 10px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: var(--surface);
   color: var(--muted);
   font-size: 0.82rem;
 }
@@ -2832,6 +2841,55 @@ a.rating-badge:hover {
   margin-top: 2px;
 }
 
+.upcoming-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.upcoming-more,
+.upcoming-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 42px;
+  margin: 4px 0 0;
+  padding: 0 14px;
+  border-radius: 14px;
+  border: 1px dashed color-mix(in srgb, var(--line) 85%, var(--accent));
+  background: color-mix(in srgb, var(--surface) 72%, var(--bg));
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.upcoming-loading {
+  border-style: solid;
+  color: var(--muted);
+  cursor: default;
+}
+
+.upcoming-more:active {
+  transform: scale(0.99);
+}
+
+.upcoming-loading .spinner {
+  width: 14px;
+  height: 14px;
+  border-width: 2px;
+}
+
 .movie-tile.is-flash {
   outline: 2px solid color-mix(in srgb, var(--accent) 55%, transparent);
   outline-offset: 1px;
@@ -2872,7 +2930,7 @@ a.rating-badge:hover {
   border-radius: 20px 20px 16px 16px;
   background: var(--surface);
   border: 1px solid var(--line);
-  box-shadow: 0 24px 60px color-mix(in srgb, var(--ink) 28%, transparent);
+  box-shadow: none;
   animation: sheetUp 0.32s cubic-bezier(0.32, 0.72, 0, 1) both;
 }
 
@@ -2969,6 +3027,84 @@ a.rating-badge:hover {
   margin: 0 0 14px;
   font-size: 0.9rem;
   line-height: 1.45;
+}
+
+.omdb-people {
+  margin: 0 0 16px;
+}
+
+.omdb-people-head {
+  margin: 0 0 10px;
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.omdb-cast-grid,
+.omdb-director-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(88px, 1fr));
+  gap: 12px 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.omdb-director-row {
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  margin-bottom: 14px;
+}
+
+.omdb-person {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  text-align: center;
+}
+
+.omdb-person-photo,
+.omdb-person-fallback {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: color-mix(in srgb, var(--line) 70%, var(--surface));
+  border: 1px solid var(--line);
+  display: block;
+}
+
+.omdb-person-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.omdb-person-name {
+  font-size: 0.72rem;
+  font-weight: 750;
+  line-height: 1.2;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.omdb-person-role {
+  font-size: 0.64rem;
+  color: var(--muted);
+  line-height: 1.2;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .omdb-facts {

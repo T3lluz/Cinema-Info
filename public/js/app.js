@@ -184,15 +184,18 @@ const I18N = {
     moviesBack: "Tilbake",
     noMovies: "Ingen filmer i programmet.",
     upcomingTitle: "Kommende filmer",
-    upcomingSubtitle: "Nye titler, første visning først",
+    upcomingSubtitle: "Populært på IMDb — og det som kommer på Buen",
     upcomingCount: "{n} filmer",
     upcomingNext: "Første visning",
-    upcomingOpen: "Vis {title} i programmet",
+    upcomingOpen: "Åpne {title}",
+    upcomingShowMore: "Vis mer",
+    upcomingOnBuen: "På Buen",
+    upcomingLoading: "Henter filmer…",
     programSection: "I programmet",
     programSectionSub: "Alle tider, neste visning først",
     searchPlaceholder: "Søk etter en film…",
     searchAria: "Søk etter en film på OMDb",
-    searchHint: "Søk i OMDb — trykk et treff for plakat, omtale og rolleliste",
+    searchHint: "Søketreffene blir liggende — trykk en film for plakat, omtale og rolleliste",
     searchClear: "Tøm søk",
     searchResults: "Søketreff",
     searchNoResults: "Ingen treff for «{q}».",
@@ -383,15 +386,18 @@ const I18N = {
     moviesBack: "Back",
     noMovies: "No movies in the program.",
     upcomingTitle: "Upcoming movies",
-    upcomingSubtitle: "New titles, first showing first",
+    upcomingSubtitle: "Popular on IMDb — plus what’s coming to Buen",
     upcomingCount: "{n} movies",
     upcomingNext: "First showing",
-    upcomingOpen: "Show {title} in the program",
+    upcomingOpen: "Open {title}",
+    upcomingShowMore: "Show more",
+    upcomingOnBuen: "At Buen",
+    upcomingLoading: "Loading movies…",
     programSection: "In the program",
     programSectionSub: "All times, next showing first",
     searchPlaceholder: "Search for a movie…",
     searchAria: "Search for a movie on OMDb",
-    searchHint: "Search OMDb — tap a result for poster, plot, and cast",
+    searchHint: "Results stay put — tap a film for poster, plot, and cast",
     searchClear: "Clear search",
     searchResults: "Search results",
     searchNoResults: "No results for “{q}”.",
@@ -668,6 +674,11 @@ let omdbSheetId = "";
 let omdbSheetMovie = null;
 let omdbSheetStatus = "";
 let omdbSheetInProgram = "";
+/** IMDb popular titles for the upcoming section — kept across paints. */
+let upcomingPopular = [];
+let upcomingPopularStatus = "";
+let upcomingShown = 3;
+const UPCOMING_PAGE = 3;
 /** Collapsed movie tiles show this many showings before "+N more". */
 const MOVIE_SHOWS_PREVIEW = 3;
 /** Tablet and desktop have room for every hall at once, so charts there
@@ -972,9 +983,18 @@ function setupSeatCharts() {
       return;
     }
 
+    const upcomingMore = e.target.closest?.("[data-upcoming-more]");
+    if (upcomingMore) {
+      upcomingShown += UPCOMING_PAGE;
+      renderMovies();
+      return;
+    }
+
     const upcomingMovie = e.target.closest?.("[data-upcoming-movie]");
     if (upcomingMovie) {
-      openMovieInProgram(upcomingMovie.dataset.upcomingMovie);
+      const imdbID = upcomingMovie.dataset.omdbId;
+      if (imdbID) openOmdbTitle(imdbID);
+      else openMovieInProgram(upcomingMovie.dataset.upcomingMovie);
       return;
     }
 
@@ -4824,14 +4844,61 @@ function upcomingMovies(movies, now) {
     .sort((a, b) => a.next.start - b.next.start || a.title.localeCompare(b.title));
 }
 
-function renderUpcomingSection(upcoming, now) {
-  const groups = [];
-  for (const movie of upcoming) {
-    const dayKey = movie.next.dayKey;
-    const last = groups[groups.length - 1];
-    if (last && last.dayKey === dayKey) last.movies.push(movie);
-    else groups.push({ dayKey, movies: [movie] });
+function movieImdbId(movie) {
+  return String(movie?.ratings?.imdb?.id || movie?.imdbID || "").trim();
+}
+
+function buildUpcomingFeed(movies, now) {
+  const local = upcomingMovies(movies, now).map((movie) => ({
+    source: "buen",
+    imdbID: movieImdbId(movie),
+    title: movie.title,
+    posterUrl: movie.posterUrl,
+    year: "",
+    movie,
+  }));
+  const seenIds = new Set(local.map((row) => row.imdbID).filter(Boolean));
+  const seenTitles = new Set(local.map((row) => row.title.toLowerCase()));
+  const popular = upcomingPopular
+    .filter((row) => {
+      const id = String(row.imdbID || "");
+      const title = String(row.title || "").toLowerCase();
+      if (id && seenIds.has(id)) return false;
+      if (title && seenTitles.has(title)) return false;
+      return true;
+    })
+    .map((row) => ({
+      source: "imdb",
+      imdbID: row.imdbID,
+      title: row.title,
+      posterUrl: row.poster,
+      year: row.year,
+      movie: row,
+    }));
+  return [...local, ...popular];
+}
+
+function ensureUpcomingPopular() {
+  if (upcomingPopularStatus === "ok" || upcomingPopularStatus === "loading") {
+    return;
   }
+  upcomingPopularStatus = "loading";
+  callOmdbProxy({ action: "popular" })
+    .then((data) => {
+      upcomingPopular = Array.isArray(data?.movies) ? data.movies : [];
+      upcomingPopularStatus = "ok";
+      if (activeTab === "movies") renderMovies();
+    })
+    .catch(() => {
+      upcomingPopularStatus = "error";
+      if (activeTab === "movies") renderMovies();
+    });
+}
+
+function renderUpcomingSection(feed, now) {
+  const visible = feed.slice(0, upcomingShown);
+  const remaining = Math.max(0, feed.length - visible.length);
+  const loading = upcomingPopularStatus === "loading";
 
   return `
     <section class="movies-section upcoming-section" aria-labelledby="upcoming-heading">
@@ -4843,40 +4910,41 @@ function renderUpcomingSection(upcoming, now) {
           <p>${escapeHtml(t("upcomingSubtitle"))}</p>
         </div>
         <span class="movies-section-meta">${escapeHtml(
-          t("upcomingCount", { n: upcoming.length })
+          t("upcomingCount", { n: feed.length || visible.length })
         )}</span>
       </div>
       <div class="upcoming-timeline">
-        ${groups
-          .map(
-            (group, i) => `
-          <div class="upcoming-day" style="--i:${i}">
-            <p class="upcoming-day-label">${escapeHtml(formatDayLabel(group.dayKey))}</p>
-            <div class="upcoming-list">
-              ${group.movies.map((movie) => renderUpcomingCard(movie, now)).join("")}
-            </div>
-          </div>`
-          )
-          .join("")}
+        <div class="upcoming-list">
+          ${visible.map((item, i) => renderUpcomingCard(item, now, i)).join("")}
+        </div>
+        ${
+          remaining
+            ? `<button type="button" class="upcoming-more" data-upcoming-more>${escapeHtml(
+                t("upcomingShowMore")
+              )}</button>`
+            : ""
+        }
+        ${
+          loading && !remaining
+            ? `<p class="upcoming-loading"><span class="spinner" aria-hidden="true"></span>${escapeHtml(
+                t("upcomingLoading")
+              )}</p>`
+            : ""
+        }
       </div>
     </section>
   `;
 }
 
-function renderUpcomingCard(movie, now) {
+function renderUpcomingCard(item, now, index = 0) {
+  if (item.source === "imdb") return renderPopularCard(item, index);
+  const movie = item.movie;
   const show = movie.next;
   const duration = formatRunning(movie.runningLabel, movie.runningMinutes);
-  const when = [
-    formatClock(show.start),
-    show.screen,
-  ]
+  const when = [formatClock(show.start), show.screen]
     .filter(Boolean)
     .map((x) => escapeHtml(String(x)));
-  const meta = [
-    formatAge(movie.age),
-    duration,
-    showsLabel(movie.shows.length),
-  ]
+  const meta = [formatAge(movie.age), duration, showsLabel(movie.shows.length)]
     .filter(Boolean)
     .map((x) => escapeHtml(String(x)))
     .join(" · ");
@@ -4892,11 +4960,14 @@ function renderUpcomingCard(movie, now) {
     movie.premiere && movie.premiere === show.dayKey
       ? specialBadges({ showType: movie.showType || "Norgespremiere", kinoklubb: movie.kinoklubb })
       : specialBadges(show);
+  const imdbAttr = item.imdbID
+    ? ` data-omdb-id="${escapeHtml(item.imdbID)}"`
+    : "";
 
   return `
-    <button type="button" class="upcoming-card" data-upcoming-movie="${escapeHtml(
+    <button type="button" class="upcoming-card" style="--i:${index}" data-upcoming-movie="${escapeHtml(
       movie.title
-    )}" aria-label="${escapeHtml(t("upcomingOpen", { title: movie.title }))}">
+    )}"${imdbAttr} aria-label="${escapeHtml(t("upcomingOpen", { title: movie.title }))}">
       ${renderPoster(movie, 58, 84, "upcoming-poster")}
       <div class="upcoming-body">
         <h4 class="upcoming-title">${escapeHtml(movie.title)}</h4>
@@ -4904,7 +4975,41 @@ function renderUpcomingCard(movie, now) {
         ${meta ? `<p class="upcoming-meta">${meta}</p>` : ""}
         ${credits ? `<p class="upcoming-credits">${credits}</p>` : ""}
         ${renderRatingBadges(movie.ratings)}
-        ${premiere ? `<div class="upcoming-badges">${premiere}</div>` : ""}
+        <div class="upcoming-badges">
+          <span class="upcoming-chip">${escapeHtml(t("upcomingOnBuen"))}</span>
+          ${premiere || ""}
+        </div>
+      </div>
+    </button>
+  `;
+}
+
+function renderPopularCard(item, index = 0) {
+  const movie = item.movie;
+  const ratings = {};
+  const imdbVal = Number.parseFloat(movie.imdbRating);
+  if (Number.isFinite(imdbVal)) {
+    ratings.imdb = { value: imdbVal, url: movie.imdbUrl || "" };
+  }
+  const when = [movie.released || movie.year, movie.runtime, movie.rated]
+    .filter(Boolean)
+    .map((x) => escapeHtml(String(x)));
+  const credits = movie.genre
+    ? escapeHtml(String(movie.genre).split(", ").map(formatGenre).filter(Boolean).join(" · "))
+    : "";
+
+  return `
+    <button type="button" class="upcoming-card" style="--i:${index}" data-upcoming-movie="${escapeHtml(
+      movie.title
+    )}" data-omdb-id="${escapeHtml(item.imdbID)}" aria-label="${escapeHtml(
+      t("upcomingOpen", { title: movie.title })
+    )}">
+      ${renderPoster({ title: movie.title, posterUrl: movie.poster }, 58, 84, "upcoming-poster")}
+      <div class="upcoming-body">
+        <h4 class="upcoming-title">${escapeHtml(movie.title)}</h4>
+        ${when.length ? `<p class="upcoming-when">${when.join('<span class="sep">·</span>')}</p>` : ""}
+        ${credits ? `<p class="upcoming-credits">${credits}</p>` : ""}
+        ${renderRatingBadges(ratings)}
       </div>
     </button>
   `;
@@ -4946,9 +5051,6 @@ function setupOmdbSearch() {
     els.omdbClear.hidden = !String(omdbQuery).trim();
     scheduleOmdbSearch();
   });
-  input.addEventListener("focus", () => {
-    if (omdbResults.length || omdbStatus) showOmdbLive(true);
-  });
   input.addEventListener("keydown", onOmdbKeydown);
   els.omdbClear?.addEventListener("click", () => {
     omdbQuery = "";
@@ -4958,9 +5060,6 @@ function setupOmdbSearch() {
     input.focus();
   });
 
-  document.addEventListener("click", (e) => {
-    if (!els.movieSearch?.contains(e.target)) showOmdbLive(false);
-  });
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && !els.omdbSheet?.hidden) {
       e.preventDefault();
@@ -4970,13 +5069,6 @@ function setupOmdbSearch() {
 }
 
 function onOmdbKeydown(e) {
-  if (e.key === "Escape") {
-    if (omdbResults.length || omdbStatus) {
-      e.preventDefault();
-      showOmdbLive(false);
-    }
-    return;
-  }
   if (e.key === "ArrowDown" || e.key === "ArrowUp") {
     if (!omdbResults.length) return;
     e.preventDefault();
@@ -5057,7 +5149,8 @@ function renderOmdbLive() {
     html = `<p class="omdb-live-note">${escapeHtml(t("searchNoResults", { q }))}</p>`;
   } else {
     const programmed = new Set((state?.shows || []).map((s) => s.title.toLowerCase()));
-    html = omdbResults
+    html = `<p class="omdb-live-label">${escapeHtml(t("searchResults"))}</p>`;
+    html += omdbResults
       .map((hit, i) => {
         const poster = hit.poster
           ? `<img class="omdb-hit-poster" src="${escapeHtml(hit.poster)}" alt="" width="40" height="56">`
@@ -5095,19 +5188,23 @@ function renderOmdbLive() {
 
 async function openOmdbTitle(imdbID) {
   if (!imdbID) return;
-  showOmdbLive(false);
   omdbSheetId = imdbID;
   omdbSheetMovie = null;
   omdbSheetStatus = "loading";
-  omdbSheetInProgram = matchProgramTitle(omdbResults.find((r) => r.imdbID === imdbID)?.title);
+  omdbSheetInProgram =
+    matchProgramByImdb(imdbID) ||
+    matchProgramTitle(omdbResults.find((r) => r.imdbID === imdbID)?.title);
   renderOmdbSheet();
   try {
     const data = await callOmdbProxy({ action: "title", id: imdbID });
     if (omdbSheetId !== imdbID) return;
     omdbSheetMovie = data?.movie || null;
     omdbSheetStatus = omdbSheetMovie ? "ok" : "error";
-    if (omdbSheetMovie?.title) {
-      omdbSheetInProgram = matchProgramTitle(omdbSheetMovie.title) || omdbSheetInProgram;
+    if (omdbSheetMovie) {
+      omdbSheetInProgram =
+        matchProgramByImdb(omdbSheetMovie.imdbID) ||
+        matchProgramTitle(omdbSheetMovie.title) ||
+        omdbSheetInProgram;
     }
   } catch {
     if (omdbSheetId !== imdbID) return;
@@ -5120,6 +5217,13 @@ function matchProgramTitle(title) {
   const want = String(title || "").trim().toLowerCase();
   if (!want || !state?.shows) return "";
   const hit = state.shows.find((s) => String(s.title).toLowerCase() === want);
+  return hit?.title || "";
+}
+
+function matchProgramByImdb(imdbID) {
+  const id = String(imdbID || "").trim();
+  if (!id || !state?.shows) return "";
+  const hit = state.shows.find((s) => String(s.ratings?.imdb?.id || "") === id);
   return hit?.title || "";
 }
 
@@ -5164,16 +5268,18 @@ function renderOmdbSheet() {
     .map((x) => escapeHtml(String(x)))
     .join(" · ");
   const ratings = omdbRatingsFromMovie(movie);
+  const directors = peopleFromMovie(movie.directors, movie.director);
+  const cast = peopleFromMovie(movie.cast, movie.actors);
   const facts = [
-    [t("omdbDirector"), movie.director],
-    [t("omdbCast"), movie.actors],
+    directors.length ? null : [t("omdbDirector"), movie.director],
+    cast.length ? null : [t("omdbCast"), movie.actors],
     [t("omdbWriter"), movie.writer],
     [t("omdbReleased"), movie.released],
     [t("omdbLanguage"), movie.language],
     [t("omdbCountry"), movie.country],
     [t("omdbAwards"), movie.awards],
     [t("omdbBoxOffice"), movie.boxOffice],
-  ].filter(([, v]) => v);
+  ].filter((row) => row && row[1]);
 
   const programBtn = omdbSheetInProgram
     ? `<button type="button" class="omdb-sheet-btn primary" data-omdb-program="${escapeHtml(
@@ -5198,6 +5304,8 @@ function renderOmdbSheet() {
         ? `<p class="omdb-sheet-plot">${escapeHtml(movie.plot)}</p>`
         : ""
     }
+    ${renderPeopleBlock(t("omdbDirector"), directors, "omdb-director-row")}
+    ${renderPeopleBlock(t("omdbCast"), cast, "omdb-cast-grid")}
     ${
       facts.length
         ? `<dl class="omdb-facts">${facts
@@ -5220,6 +5328,61 @@ function renderOmdbSheet() {
           : ""
       }
     </div>
+  `;
+}
+
+function personInitials(name) {
+  const parts = String(name || "")
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean);
+  if (!parts.length) return "?";
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+}
+
+function peopleFromMovie(list, fallbackNames) {
+  if (Array.isArray(list) && list.length) {
+    return list
+      .map((row) => ({
+        name: String(row?.name || "").trim(),
+        photo: String(row?.photo || "").trim(),
+        character: String(row?.character || "").trim(),
+      }))
+      .filter((row) => row.name);
+  }
+  return String(fallbackNames || "")
+    .split(",")
+    .map((name) => name.trim())
+    .filter(Boolean)
+    .map((name) => ({ name, photo: "", character: "" }));
+}
+
+function renderPeopleBlock(label, people, gridClass) {
+  if (!people.length) return "";
+  return `
+    <section class="omdb-people">
+      <h3 class="omdb-people-head">${escapeHtml(label)}</h3>
+      <ul class="${gridClass}">
+        ${people
+          .map((person) => {
+            const photo = person.photo
+              ? `<img class="omdb-person-photo" src="${escapeHtml(
+                  person.photo
+                )}" alt="" width="72" height="72" loading="lazy">`
+              : `<div class="omdb-person-fallback">${escapeHtml(
+                  personInitials(person.name)
+                )}</div>`;
+            const role = person.character
+              ? `<span class="omdb-person-role">${escapeHtml(person.character)}</span>`
+              : "";
+            return `<li class="omdb-person">${photo}<span class="omdb-person-name">${escapeHtml(
+              person.name
+            )}</span>${role}</li>`;
+          })
+          .join("")}
+      </ul>
+    </section>
   `;
 }
 
@@ -5291,7 +5454,8 @@ function renderMovies() {
   if (!state?.shows) return;
   const movies = groupMovies();
   const now = new Date();
-  const upcoming = upcomingMovies(movies, now);
+  ensureUpcomingPopular();
+  const feed = buildUpcomingFeed(movies, now);
 
   els.moviesContent.classList.toggle(
     "no-anim",
@@ -5314,10 +5478,11 @@ function renderMovies() {
     return;
   }
 
-  const upcomingHtml = upcoming.length
-    ? renderUpcomingSection(upcoming, now)
-    : "";
-  const programHead = upcoming.length
+  const upcomingHtml =
+    feed.length || upcomingPopularStatus === "loading"
+      ? renderUpcomingSection(feed, now)
+      : "";
+  const programHead = upcomingHtml
     ? `<div class="movies-section">
         <div class="movies-section-head">
           <div>
