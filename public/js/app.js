@@ -96,8 +96,9 @@ const SWIPE_FLICK = 0.28;
 const SWIPE_LOCK_PX = 10;
 /** Shared-axis slide used by tab switches and day changes. */
 const SHARED_AXIS_MS = 560;
-/** Visual travel of the shared-axis slide (matches tabIn/tabOut keyframes). */
-const AXIS_IN_PCT = 28;
+/** Incoming starts fully off-screen. The tab keyframe's 28% from-state
+ * already covers ~72% of the page — fine for a tap, a jump on a drag. */
+const AXIS_IN_START_PCT = 100;
 const AXIS_OUT_PCT = 24;
 const AXIS_SCALE = 0.02;
 const AXIS_EASE = "cubic-bezier(0.32, 0.72, 0, 1)";
@@ -1098,7 +1099,7 @@ function setupDaySwipe() {
     width ? Math.min(1, Math.abs(curX) / width) : 0;
 
   const applyAxis = (p, dir) => {
-    ghost.style.transform = `translate3d(${dir * AXIS_IN_PCT * (1 - p)}%, 0, 0) scale(${0.98 + AXIS_SCALE * p})`;
+    ghost.style.transform = `translate3d(${dir * AXIS_IN_START_PCT * (1 - p)}%, 0, 0) scale(${0.98 + AXIS_SCALE * p})`;
     content.style.transform = `translate3d(${dir * -AXIS_OUT_PCT * p}%, 0, 0) scale(${1 - AXIS_SCALE * p})`;
     content.style.opacity = String(1 - p);
   };
@@ -1116,15 +1117,11 @@ function setupDaySwipe() {
 
   const fillIncoming = (day) => {
     if (!day || !ghost) return false;
-    if (day === incomingDay) {
-      ghost.hidden = false;
-      return true;
-    }
+    if (day === incomingDay) return true;
     incomingHtml = buildDayListHTML(day);
     incomingDay = day;
     ghost.classList.add("no-anim");
     ghost.innerHTML = incomingHtml;
-    ghost.hidden = false;
     return true;
   };
 
@@ -1279,8 +1276,13 @@ function setupDaySwipe() {
     }
     curX = dx;
     dragDir = dir;
-    if (dir && fillIncoming(days[idx + dir])) applyAxis(axisP(), dir);
-    else applyAxis(0, dir || 1);
+    if (dir && fillIncoming(days[idx + dir])) {
+      applyAxis(axisP(), dir);
+      ghost.hidden = false;
+    } else {
+      applyAxis(0, 1);
+      if (ghost) ghost.hidden = true;
+    }
   });
 
   /** Keep native vertical scroll from stealing the pager after axis-lock. */
