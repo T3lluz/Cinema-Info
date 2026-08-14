@@ -2387,7 +2387,13 @@ function backdropColorAt(x, y) {
   const theming = document.documentElement.classList.contains("theme-anim");
   const layers = [];
   for (const el of document.elementsFromPoint(x, y)) {
-    if (el === document.documentElement || el.closest(".pill-nav")) continue;
+    if (
+      el === document.documentElement ||
+      el.closest(".pill-nav") ||
+      el.closest(".pill-nav-chrome")
+    ) {
+      continue;
+    }
     if (el.tagName === "IMG") {
       layers.push(imageColor(el));
       break;
@@ -2470,7 +2476,23 @@ function applyFaceContrast(el, fallbackDark) {
   return dark;
 }
 
+function navUsesBlend() {
+  return (
+    typeof CSS !== "undefined" &&
+    CSS.supports?.("mix-blend-mode", "difference")
+  );
+}
+
 function updateNavContrast() {
+  // Difference blend on the faces layer already inverts against the
+  // live page (posters included) in both themes. Class toggling would
+  // paint a literal black/white that then gets blended twice.
+  if (navUsesBlend()) {
+    document.querySelectorAll(".pill-tab svg, .pill-tab-label").forEach((el) => {
+      el.classList.remove("on-dark", "on-light");
+    });
+    return;
+  }
   document.querySelectorAll(".pill-tab").forEach((btn) => {
     const icon = btn.querySelector("svg");
     const label = btn.querySelector(".pill-tab-label");
@@ -2627,13 +2649,23 @@ function movePillIndicator(tab, opts = {}) {
   const indicator = document.querySelector(".pill-lens");
   const track = indicator?.parentElement;
   const btn = document.querySelector(`.pill-tab[data-tab="${tab}"]`);
-  // Fill the tab cell inside the track so the floating selection chip
-  // has the same rim gap on every side (set by --pill-pad).
-  liquidMove(indicator, btn, {
-    ...opts,
-    inset: 0,
-    originLeft: track?.offsetLeft ?? 0,
-  });
+  if (!indicator || !track || !btn) return;
+  // Tabs and the chip live in sibling fixed layers. offsetLeft is not
+  // in the same tree, so park the chip from viewport boxes.
+  const trackLeft = track.getBoundingClientRect().left;
+  const btnBox = btn.getBoundingClientRect();
+  liquidMove(
+    indicator,
+    {
+      offsetLeft: btnBox.left - trackLeft + (track.offsetLeft || 0),
+      offsetWidth: btnBox.width,
+    },
+    {
+      ...opts,
+      inset: 0,
+      originLeft: track.offsetLeft || 0,
+    }
+  );
   // Rim map is sized to the lens; redraw after width settles.
   requestAnimationFrame(() => updateLiquidLenses());
 }
@@ -4893,21 +4925,23 @@ function mergeRatingSources(...parts) {
   return Object.keys(out).length ? out : null;
 }
 
-/** Brand marks, all drawn in the same 24×24 box so badges line up. */
+/** Compact IMDb / Letterboxd / Tomatometer marks (SVG Repo brand icons). */
 function ratingLogo(kind, score) {
+  // https://www.svgrepo.com/svg/333553/imdb — yellow #F5C518 on black letters
   if (kind === "imdb") {
-    return `<svg class="rating-logo imdb" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2" fill="#1a1a1a"/><path fill="#f5c518" d="M13.646 10.237c-.057-.032-.16-.048-.313-.048v3.542c.201 0 .324-.041.371-.122s.07-.301.07-.66v-2.092c0-.244-.008-.4-.023-.469a.223.223 0 0 0-.105-.151zm3.499 1.182c-.082 0-.137.031-.162.091-.025.061-.037.214-.037.46v1.426c0 .237.014.389.041.456.029.066.086.1.168.1.086 0 .199-.035.225-.103.027-.069.039-.234.039-.495V11.97c0-.228-.014-.377-.043-.447-.032-.069-.147-.104-.231-.104z"/><path fill="#f5c518" d="M6.631 14.663H5.229V9.266h1.402v5.397zm4.822 0H10.23l-.006-3.643-.49 3.643h-.875L8.342 11.1l-.004 3.563H7.111V9.266H8.93c.051.327.107.71.166 1.15l.201 1.371.324-2.521h1.832v5.397zm3.664-1.601c0 .484-.027.808-.072.97a.728.728 0 0 1-.238.383.996.996 0 0 1-.422.193c-.166.037-.418.055-.754.055h-1.699V9.266h1.047c.678 0 1.07.031 1.309.093.24.062.422.164.545.306.125.142.203.3.234.475.031.174.051.516.051 1.026v1.896zm3.654.362c0 .324-.023.565-.066.723a.757.757 0 0 1-.309.413.947.947 0 0 1-.572.174c-.158 0-.365-.035-.502-.104a1.144 1.144 0 0 1-.377-.312l-.088.344h-1.262V9.266h1.35v1.755a1.09 1.09 0 0 1 .375-.289c.137-.064.344-.096.504-.096.186 0 .348.029.484.087a.716.716 0 0 1 .44.549c.016.1.023.313.023.638v1.514z"/></svg>`;
+    return `<svg class="rating-logo imdb" viewBox="0 0 24 24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="18" height="18" rx="1" fill="#1a1a1a"/><path fill="#F5C518" d="M13.646 10.237c-.057-.032-.16-.048-.313-.048v3.542c.201 0 .324-.041.371-.122s.07-.301.07-.66v-2.092c0-.244-.008-.4-.023-.469a.223.223 0 0 0-.105-.151zm3.499 1.182c-.082 0-.137.031-.162.091-.025.061-.037.214-.037.46v1.426c0 .237.014.389.041.456.029.066.086.1.168.1.086 0 .199-.035.225-.103.027-.069.039-.234.039-.495V11.97c0-.228-.014-.377-.043-.447-.032-.069-.147-.104-.231-.104z"/><path fill="#F5C518" d="M20 3H4a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1zM6.631 14.663H5.229V9.266h1.402v5.397zm4.822 0H10.23l-.006-3.643-.49 3.643h-.875L8.342 11.1l-.004 3.563H7.111V9.266H8.93c.051.327.107.71.166 1.15l.201 1.371.324-2.521h1.832v5.397zm3.664-1.601c0 .484-.027.808-.072.97a.728.728 0 0 1-.238.383.996.996 0 0 1-.422.193c-.166.037-.418.055-.754.055h-1.699V9.266h1.047c.678 0 1.07.031 1.309.093.24.062.422.164.545.306.125.142.203.3.234.475.031.174.051.516.051 1.026v1.896zm3.654.362c0 .324-.023.565-.066.723a.757.757 0 0 1-.309.413.947.947 0 0 1-.572.174c-.158 0-.365-.035-.502-.104a1.144 1.144 0 0 1-.377-.312l-.088.344h-1.262V9.266h1.35v1.755a1.09 1.09 0 0 1 .375-.289c.137-.064.344-.096.504-.096.186 0 .348.029.484.087a.716.716 0 0 1 .44.549c.016.1.023.313.023.638v1.514z"/></svg>`;
   }
+  // https://www.svgrepo.com/svg/341990/letterboxd — green #00D735 on black L
   if (kind === "letterboxd") {
-    return `<svg class="rating-logo letterboxd" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6.6" cy="12" r="5.15" fill="#ff8000"/><circle cx="12" cy="12" r="5.15" fill="#00e054"/><circle cx="17.4" cy="12" r="5.15" fill="#40bcf4"/></svg>`;
+    return `<svg class="rating-logo letterboxd" viewBox="0 0 32 32" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><circle cx="16" cy="16" r="16" fill="#14181c"/><path fill="#00D735" fill-rule="evenodd" d="M11.052 22.339v-12.74h-2.323v-3.198h8.438v3.198h-2.328v12.766h5.234v-3.49h3.781v6.724h-15.125v-3.26zM0 16c0 8.839 7.161 16 16 16s16-7.161 16-16c0-8.839-7.161-16-16-16s-16 7.161-16 16z"/></svg>`;
   }
   if (kind === "metacritic") {
     const n = Number(score);
     const fill = n >= 61 ? "#66cc33" : n >= 40 ? "#ffcc33" : "#f33";
-    const ink = n >= 40 && n < 61 ? "#1a1a1a" : "#fff";
-    return `<svg class="rating-logo metacritic" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="4" fill="${fill}"/><path fill="${ink}" d="M7.15 16.7V7.3h2.2l2.65 6.15L14.65 7.3h2.2v9.4h-1.85v-6.4l-2.35 6.4h-1.3l-2.35-6.4v6.4H7.15z"/></svg>`;
+    return `<svg class="rating-logo metacritic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3" fill="${fill}"/></svg>`;
   }
-  return `<svg class="rating-logo tomatoes" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 5.1c.7-1.5 2-2.6 3.6-2.9.2 1.5-.3 2.9-1.4 3.8 1.5.6 2.6 2.4 2.6 4.5 0 3.4-2.1 6.2-4.8 6.2S7.2 13.9 7.2 10.5c0-2.1 1.1-3.9 2.6-4.5-1.1-.9-1.6-2.3-1.4-3.8 1.6.3 2.9 1.4 3.6 2.9z"/></svg>`;
+  // https://www.svgrepo.com/svg/473773/rottentomatoes — fresh #FA320A / rotten via CSS
+  return `<svg class="rating-logo tomatoes" viewBox="0 0 32 32" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><circle cx="15" cy="18" r="13" fill="#1a1a1a"/><path fill="currentColor" d="M10.299 12.882l0.030 0.422c0.018 0.232 0.030 0.911 0.030 1.507v1.083l0.727-0.031c0.379-0.013 0.738-0.048 1.090-0.104l-0.049 0.007c0.867-0.182 1.31-0.597 1.358-1.272 0.008-0.054 0.013-0.116 0.013-0.179 0-0.357-0.15-0.68-0.391-0.908l-0.001-0.001c-0.397-0.386-0.951-0.52-2.166-0.522zM6.53 10.023h3.097c0.425-0.045 0.917-0.070 1.416-0.070 1.070 0 2.113 0.118 3.116 0.34l-0.095-0.018c1.282 0.347 2.315 1.213 2.879 2.353l0.012 0.026c0.062 0.132 0.115 0.257 0.162 0.381l9.526 0.010 0.034 3.639-3.43-0.030v9.434l-3.726-0.020v-9.4l-2.658 0.020c-0.312 0.589-0.76 1.068-1.304 1.408l-0.015 0.009c-0.359 0.22-0.375 0.237-0.317 0.33 0.159 0.25 2.655 4.551 2.655 4.572l-4.236 0.024-2.515-4.219c-0.042-0.059-0.152-0.085-0.43-0.105l-0.371-0.025 0.046 4.349-3.843-0.047zM8.335 1.004l-1.913 1.577 2.602 2.249c-0.462-0.152-0.993-0.24-1.545-0.24-2.118 0-3.934 1.29-4.705 3.128l-0.013 0.034c0.992-0.285 2.131-0.449 3.308-0.449 0.306 0 0.61 0.011 0.911 0.033l-0.040-0.002c-3.546 2.315-5.857 6.265-5.857 10.755 0 3.689 1.561 7.014 4.058 9.351l0.007 0.007c2.805 2.208 6.389 3.541 10.284 3.541 4.757 0 9.049-1.988 12.091-5.179l0.006-0.007c7.542-8.098 2.209-23.984-12.953-21.34 0.134-1.462 0.791-1.878 1.553-2.002-1.112-1.866-4.586-0.917-5.693 1.717-0.034 0.080-2.101-3.172-2.101-3.172z"/></svg>`;
 }
 
 function formatRatingValue(value, digits = 1) {

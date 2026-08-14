@@ -1662,11 +1662,20 @@ a.rating-badge:hover {
 }
 
 .rating-logo {
-  flex: 0 0 16px;
-  width: 16px;
-  height: 16px;
+  flex: 0 0 auto;
   display: block;
-  overflow: visible;
+}
+
+.rating-logo.imdb {
+  width: 22px;
+  height: 22px;
+}
+
+.rating-logo.letterboxd,
+.rating-logo.tomatoes,
+.rating-logo.metacritic {
+  width: 15px;
+  height: 15px;
 }
 
 .rating-logo.tomatoes {
@@ -4852,16 +4861,27 @@ button.bar-row.day-bar:focus-visible {
 }
 
 /* —— Pill navbar —— */
+.pill-nav-chrome,
 .pill-nav {
   position: fixed;
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 20;
   display: flex;
   justify-content: center;
   padding: 0 var(--page-pad-x) calc(14px + var(--safe-bottom));
   pointer-events: none;
+}
+
+.pill-nav-chrome {
+  z-index: 20;
+}
+
+/* White faces invert against the live page. Must be its own fixed
+   layer — mix-blend-mode cannot see past a parent stacking context. */
+.pill-nav {
+  z-index: 21;
+  mix-blend-mode: difference;
 }
 
 /* Stack: dotted frost plate + selection pebble + tabs as siblings, so
@@ -4871,8 +4891,17 @@ button.bar-row.day-bar:focus-visible {
   pointer-events: auto;
   position: relative;
   width: min(var(--nav-max), 100%);
+  min-height: var(--nav-h);
   border-radius: 999px;
   box-shadow: var(--nav-shadow);
+}
+
+.pill-nav-chrome .pill-nav-shell {
+  pointer-events: none;
+}
+
+.pill-nav .pill-nav-shell {
+  box-shadow: none;
 }
 
 /* Capsule clip only — no edge fade. Selection chip stays outside so
@@ -5030,7 +5059,7 @@ button.bar-row.day-bar:focus-visible {
   border: 0;
   border-radius: 999px;
   background: transparent;
-  color: color-mix(in srgb, var(--ink) 72%, var(--muted));
+  color: #fff;
   font: inherit;
   font-size: 0.58rem;
   font-weight: 750;
@@ -5086,7 +5115,7 @@ button.bar-row.day-bar:focus-visible {
 }
 
 .pill-tab[aria-selected="true"] {
-  color: var(--ink);
+  color: #fff;
 }
 
 .pill-tab[aria-selected="true"] svg {
@@ -5102,9 +5131,8 @@ button.bar-row.day-bar:focus-visible {
   transform: translateY(0);
 }
 
-/* Each icon and each label flips on its own. Colours are literal, not
-   theme ink — in dark mode --ink is already light, so a pale card
-   behind a tab still needs a real dark face. */
+/* Face colour is white + mix-blend-mode: difference on .pill-nav.
+   JS on-dark / on-light is only the no-blend fallback. */
 .pill-tab svg.on-light,
 .pill-tab .pill-tab-label.on-light {
   color: #1c1916;
@@ -5114,12 +5142,10 @@ button.bar-row.day-bar:focus-visible {
 
 .pill-tab svg.on-dark {
   color: rgb(255 255 255 / 0.9);
-  filter: drop-shadow(0 1px 2px rgb(0 0 0 / 0.4));
 }
 
 .pill-tab .pill-tab-label.on-dark {
   color: rgb(255 255 255 / 0.9);
-  text-shadow: 0 1px 4px rgb(0 0 0 / 0.4);
 }
 
 .pill-tab[aria-selected="true"] svg.on-light,
@@ -5130,6 +5156,21 @@ button.bar-row.day-bar:focus-visible {
 .pill-tab[aria-selected="true"] svg.on-dark,
 .pill-tab[aria-selected="true"] .pill-tab-label.on-dark {
   color: #fff;
+}
+
+@supports (mix-blend-mode: difference) {
+  .pill-tab svg.on-light,
+  .pill-tab .pill-tab-label.on-light,
+  .pill-tab svg.on-dark,
+  .pill-tab .pill-tab-label.on-dark,
+  .pill-tab[aria-selected="true"] svg.on-light,
+  .pill-tab[aria-selected="true"] .pill-tab-label.on-light,
+  .pill-tab[aria-selected="true"] svg.on-dark,
+  .pill-tab[aria-selected="true"] .pill-tab-label.on-dark {
+    color: inherit;
+    filter: none;
+    text-shadow: none;
+  }
 }
 
 .stats-hero,

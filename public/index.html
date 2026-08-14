@@ -192,22 +192,28 @@
       </section>
     </main>
 
-    <nav class="pill-nav" aria-label="Hovedmeny">
-      <!-- Dotted frost plate + translucent glass chip + tabs as siblings, so
-           each backdrop-filter samples the page behind it. -->
+    <!-- Glass + chip stay unblended. Icons live in a sibling fixed layer
+         with mix-blend-mode: difference so they invert against the real
+         page (including posters) in both themes. A fixed parent isolates
+         descendant blends, so the faces have to be their own layer. -->
+    <div class="pill-nav-chrome" aria-hidden="true">
       <div class="pill-nav-shell">
-        <div class="nav-dots" aria-hidden="true">
+        <div class="nav-dots">
           <div class="nav-frost">
             <div class="nav-frost-dots"></div>
           </div>
           <div class="nav-glass"></div>
         </div>
-        <div class="pill-indicator-track" aria-hidden="true">
+        <div class="pill-indicator-track">
           <div class="pill-lens">
             <span class="pill-indicator"></span>
             <span class="pill-indicator-rim"></span>
           </div>
         </div>
+      </div>
+    </div>
+    <nav class="pill-nav" aria-label="Hovedmeny">
+      <div class="pill-nav-shell">
         <div class="pill-nav-inner" role="tablist">
           <button type="button" class="pill-tab" data-tab="day" role="tab" aria-selected="true" aria-controls="view-day">
             <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
