@@ -33,7 +33,7 @@
   --nav-shadow:
     0 12px 32px rgba(22, 20, 18, 0.16),
     0 2px 8px rgba(22, 20, 18, 0.08);
-  /* Selection pebble: solid surface chip with a soft lift shadow. */
+  /* Selection chip: lift shadow; fill is the reduced-motion fallback. */
   --nav-chip-fill: #ffffff;
   --nav-chip-border: color-mix(in srgb, var(--line) 70%, transparent);
   --nav-chip-shadow:
@@ -237,6 +237,10 @@ body {
     background: var(--header-glass-solid);
   }
 
+  .pill-indicator > .nav-glass {
+    background: var(--nav-chip-fill);
+  }
+
   .header-frost-dots,
   .nav-frost-dots {
     background-image: radial-gradient(
@@ -397,7 +401,7 @@ h1 {
    Day pills share these metrics so the strip stays one height. */
 .jump-today,
 .day-tab {
-  padding: 5px 11px;
+  padding: 3px 9px;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: -0.005em;
@@ -411,12 +415,11 @@ h1 {
   justify-content: center;
   gap: 2px;
   margin: 0;
-  padding-left: 9px;
-  border: 1px solid var(--nav-chip-border);
+  padding-left: 7px;
+  border: 1px solid color-mix(in srgb, var(--accent) 45%, var(--line));
   border-radius: 999px;
-  background: var(--nav-chip-fill);
-  box-shadow: var(--nav-chip-shadow);
-  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 10%, var(--surface));
+  color: color-mix(in srgb, var(--accent) 88%, var(--ink));
   font: inherit;
   font-size: 11px;
   font-weight: 700;
@@ -452,13 +455,13 @@ h1 {
   position: relative;
   display: flex;
   align-items: center;
-  gap: 2px;
+  gap: 4px;
   flex: 1 1 auto;
   min-height: 0;
   min-width: 0;
   overflow-x: auto;
   margin: 0;
-  padding: 3px 2px;
+  padding: 0 1px;
   scroll-padding-inline: 2px;
   transition: padding-bottom 0.25s ease;
   scrollbar-width: none;
@@ -475,17 +478,13 @@ h1 {
   );
 }
 
-/* Selection pebble — same chip as the navbar, so it sits on the header's
-   dotted frost instead of a solid red blob. */
 .day-indicator {
   position: absolute;
-  top: 3px;
-  bottom: 3px;
+  top: 0;
+  bottom: 0;
   height: auto;
   border-radius: 999px;
-  background: var(--nav-chip-fill);
-  border: 1px solid var(--nav-chip-border);
-  box-shadow: var(--nav-chip-shadow);
+  background: var(--accent);
   z-index: 0;
   pointer-events: none;
   transition:
@@ -510,8 +509,9 @@ h1 {
   display: none;
 }
 
-/* Labels on the header frost — no solid fill, so the dotted blur shows
-   through. The travelling pebble is the only chip. */
+/* Slim enough that a week fits on a phone: the strip is a way to move
+   between days, not a place to read a date off — the day's full name is
+   spelled out in the heading right below it. Same size as .jump-today. */
 .day-tab {
   position: relative;
   z-index: 1;
@@ -520,9 +520,9 @@ h1 {
   align-items: center;
   gap: 3px;
   scroll-snap-align: center;
-  border: 0;
-  background: transparent;
-  color: var(--muted);
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
   border-radius: 999px;
   font: inherit;
   font-size: 11px;
@@ -531,7 +531,8 @@ h1 {
   line-height: 1.2;
   cursor: pointer;
   white-space: nowrap;
-  transition: color 0.25s ease 0.08s, transform 0.15s ease;
+  transition: background 0.25s ease 0.08s, color 0.25s ease 0.08s,
+    border-color 0.25s ease 0.08s, transform 0.15s ease;
 }
 
 /* The pill is slim to look at, but the thumb gets a full-height target. */
@@ -563,14 +564,16 @@ h1 {
   stroke-linejoin: round;
 }
 
-/* Today keeps accent ink even when you are browsing another day,
+/* Today keeps an accent outline even when you are browsing another day,
    so the strip always says where "now" is. */
 .day-tab.today {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
   color: color-mix(in srgb, var(--accent) 82%, var(--ink));
 }
 
 .day-tab.done {
-  background: transparent;
+  background: var(--done-soft);
+  border-color: color-mix(in srgb, var(--done) 32%, var(--line));
   color: color-mix(in srgb, var(--done) 88%, var(--ink));
   opacity: 1;
 }
@@ -587,7 +590,8 @@ h1 {
 
 .day-tab[aria-selected="true"] {
   background: transparent;
-  color: var(--accent);
+  border-color: transparent;
+  color: #fff;
   opacity: 1;
 }
 
@@ -3745,8 +3749,8 @@ button.bar-row.day-bar:focus-visible {
   gap: 4px;
   padding: 4px;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--header-glass-tint) 70%, transparent);
-  border: 1px solid var(--nav-chip-border);
+  background: color-mix(in srgb, var(--bg) 85%, var(--surface));
+  border: 1px solid var(--line);
 }
 
 .seg-indicator {
@@ -3754,9 +3758,7 @@ button.bar-row.day-bar:focus-visible {
   top: 4px;
   bottom: 4px;
   border-radius: 999px;
-  background: var(--nav-chip-fill);
-  border: 1px solid var(--nav-chip-border);
-  box-shadow: var(--nav-chip-shadow);
+  background: var(--accent);
   z-index: 0;
   pointer-events: none;
   transition:
@@ -3765,7 +3767,8 @@ button.bar-row.day-bar:focus-visible {
     transform 0.28s cubic-bezier(0.34, 1.56, 0.5, 1);
 }
 
-/* Settings segments use the same surface pebble as the navbar chip. */
+/* Rim is reserved for the pill-nav selection chip; settings segments
+   keep a solid accent indicator. */
 .seg-indicator-rim {
   display: none;
 }
@@ -3790,7 +3793,7 @@ button.bar-row.day-bar:focus-visible {
 }
 
 .seg-btn[aria-pressed="true"] {
-  color: var(--accent);
+  color: #fff;
 }
 
 /* —— Pill navbar —— */
@@ -3817,7 +3820,7 @@ button.bar-row.day-bar:focus-visible {
   box-shadow: var(--nav-shadow);
 }
 
-/* Capsule clip only — no edge fade. Selection pebble stays outside so
+/* Capsule clip only — no edge fade. Selection chip stays outside so
    its shadow isn't cut off. */
 .nav-dots {
   position: absolute;
@@ -3885,7 +3888,8 @@ button.bar-row.day-bar:focus-visible {
   z-index: 1;
 }
 
-/* Positioned wrapper: moves as one unit under the selected tab. */
+/* Positioned wrapper: moves as one unit under the selected tab.
+   No CSS filter here — that would trap child backdrop-filters. */
 .pill-lens {
   position: absolute;
   top: 0;
@@ -3897,22 +3901,36 @@ button.bar-row.day-bar:focus-visible {
     width 0.38s cubic-bezier(0.3, 0.8, 0.25, 1),
     transform 0.38s cubic-bezier(0.3, 0.8, 0.25, 1);
   pointer-events: none;
-  filter: drop-shadow(0 4px 10px color-mix(in srgb, var(--ink) 12%, transparent));
 }
 
-/* Selection pebble: solid chip with a soft cast shadow. */
+/* Selection chip: the same dotted frost as the plate, a shade thicker
+   so it lifts off as a piece of the same glass. */
 .pill-indicator {
   position: absolute;
   inset: 0;
-  border: 1px solid var(--nav-chip-border);
   border-radius: 999px;
-  background: var(--nav-chip-fill);
+  overflow: hidden;
+  border: 1px solid var(--glass-stroke);
+  background: transparent;
   box-shadow: var(--nav-chip-shadow);
 }
 
-/* Solid chip — no glass rim refraction. */
+.pill-indicator > .nav-glass {
+  background: color-mix(
+    in srgb,
+    var(--header-glass-solid) 62%,
+    var(--header-glass-tint)
+  );
+}
+
 .pill-indicator-rim {
-  display: none;
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  pointer-events: none;
+  box-shadow:
+    inset 0 1px 0 var(--glass-highlight),
+    inset 0 0 0 1px var(--glass-ring);
 }
 
 /* Tabs sit above both glass layers; no fill of their own. */
@@ -3930,7 +3948,7 @@ button.bar-row.day-bar:focus-visible {
 }
 
 /* Unselected: icon-only, larger. Selected: icon shrinks up, label
-   rises from below onto the solid chip. */
+   rises from below onto the frosted chip. */
 .pill-tab {
   position: relative;
   z-index: 2;
@@ -4010,7 +4028,7 @@ button.bar-row.day-bar:focus-visible {
 }
 
 /* Unselected tabs adapt to dark content under the glass. The selected
-   tab sits on the solid chip, so it always keeps accent ink. */
+   tab sits on the thicker frost chip, so it keeps accent ink. */
 .pill-tab.on-dark:not([aria-selected="true"]) {
   color: rgba(255, 255, 255, 0.92);
   text-shadow: 0 1px 5px rgba(0, 0, 0, 0.35);
