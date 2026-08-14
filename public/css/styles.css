@@ -240,7 +240,11 @@ body {
   .pill-indicator {
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
-    background: var(--header-glass-solid);
+    background: rgb(255 255 255 / 0.16);
+  }
+
+  [data-theme="dark"] .pill-indicator {
+    background: rgb(255 255 255 / 0.1);
   }
 
   .header-frost-dots,
@@ -3905,27 +3909,25 @@ button.bar-row.day-bar:focus-visible {
   pointer-events: none;
 }
 
-/* Smooth glass chip on the dotted plate — same frost tokens, no dots. */
+/* Very translucent blurry chip; 2px frosted edge; no shadow or glow. */
 .pill-indicator {
   position: absolute;
   inset: 0;
   border-radius: 999px;
-  border: 1px solid var(--glass-stroke);
-  background: var(--glass-fill);
-  backdrop-filter: blur(16px) saturate(1.15);
-  -webkit-backdrop-filter: blur(16px) saturate(1.15);
-  box-shadow:
-    inset 0 1px 0 var(--glass-highlight),
-    0 6px 16px color-mix(in srgb, var(--ink) 12%, transparent),
-    0 1px 3px color-mix(in srgb, var(--ink) 8%, transparent);
+  border: 2px solid rgb(255 255 255 / 0.28);
+  background: rgb(255 255 255 / 0.1);
+  backdrop-filter: blur(24px) saturate(1.2);
+  -webkit-backdrop-filter: blur(24px) saturate(1.2);
+  box-shadow: none;
+}
+
+[data-theme="dark"] .pill-indicator {
+  border-color: rgb(255 255 255 / 0.2);
+  background: rgb(255 255 255 / 0.07);
 }
 
 .pill-indicator-rim {
-  position: absolute;
-  inset: 0;
-  border-radius: 999px;
-  pointer-events: none;
-  box-shadow: inset 0 0 0 1px var(--glass-ring);
+  display: none;
 }
 
 /* Tabs sit above both glass layers; no fill of their own. */
