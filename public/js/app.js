@@ -88,49 +88,14 @@ const SEAT_LAYOUT_TTL_MS = 30 * 24 * 60 * 60 * 1000;
  */
 const HAPTIC_TICK_MS = 1;
 const HAPTIC_LOCK_MS = 70;
-/**
- * iOS-like interpolating spring (WWDC 2023 "Animate with springs"):
- * response ≈ 0.42s → ω = 2π / 0.42, bounce ≈ 0.08 → ζ ≈ 0.86.
- * Softer than Material's k=380 pager so it glides, with just enough
- * bounce that a flick still feels like it has mass.
- */
-const SWIPE_SPRING_OMEGA = (Math.PI * 2) / 420;
-const SWIPE_SPRING_ZETA = 0.86;
-/** Incoming day peeks slightly small, then eases to full with the slide. */
-const SWIPE_PEEK_SCALE = 0.96;
-/** Fraction of the page a slow drag must cover to commit. */
+/** Fraction of the page a slow drag must cover to commit a day swipe. */
 const SWIPE_COMMIT_FRAC = 0.28;
 /** Flick commit, px/ms (~280 px/s). */
 const SWIPE_FLICK = 0.28;
 /** Axis-lock slop before a touch is a day-swipe, not a scroll. */
 const SWIPE_LOCK_PX = 10;
-/** How far incoming content lags the pane, in px, for a depth parallax. */
-const SWIPE_PARALLAX_PX = 36;
-
-/** One step of Android SpringForce (mass 1). omega in rad/ms. */
-function stepSpring(x, v, target, dt, omega, zeta) {
-  const dx = x - target;
-  if (zeta >= 0.999) {
-    const A = dx;
-    const B = v + omega * A;
-    const e = Math.exp(-omega * dt);
-    return {
-      x: target + (A + B * dt) * e,
-      v: (B - omega * (A + B * dt)) * e,
-    };
-  }
-  const wd = omega * Math.sqrt(1 - zeta * zeta);
-  const e = Math.exp(-zeta * omega * dt);
-  const cos = Math.cos(wd * dt);
-  const sin = Math.sin(wd * dt);
-  const B = (v + zeta * omega * dx) / wd;
-  return {
-    x: target + e * (dx * cos + B * sin),
-    v:
-      -zeta * omega * e * (dx * cos + B * sin) +
-      e * (-dx * wd * sin + B * wd * cos),
-  };
-}
+/** Shared-axis slide used by tab switches and day changes. */
+const SHARED_AXIS_MS = 560;
 /** Bumped when the layout shape changes, so cached halls are refetched
  * (v2: blocked seats are included and flagged instead of dropped). */
 const SEAT_LAYOUT_VERSION = 2;
@@ -532,8 +497,7 @@ function viewIntro(iconName, titleKey, subtitleKey, meta = "") {
 const els = {
   content: document.getElementById("content"),
   daySwipe: document.getElementById("daySwipe"),
-  dayPanePrev: document.getElementById("dayPanePrev"),
-  dayPaneNext: document.getElementById("dayPaneNext"),
+  dayGhost: document.getElementById("dayGhost"),
   moviesContent: document.getElementById("moviesContent"),
   statsContent: document.getElementById("statsContent"),
   settingsContent: document.getElementById("settingsContent"),
@@ -634,10 +598,9 @@ let seatAutoObserver = null;
 /** How many fetches are in flight; the refresh button spins while any are. */
 let busyCount = 0;
 
-/** Set by setupDaySwipe: play the swipe slide for a day change that did not
- * come from a gesture. Returns false when it cannot run and the caller
- * should switch day without animating. */
-let slideToDay = null;
+/** True while a day-swipe is following the finger (before the shared-axis
+ * slide plays). Pill taps are swallowed so they cannot fight the gesture. */
+let daySwipeDragging = false;
 
 /**
  * The markup last written into each view.
@@ -966,10 +929,9 @@ function describeSeat(seat) {
   });
 }
 
-/** While a swipe gesture is in progress, live refreshes must not replace
- * the day list under the finger (that used to kill the touch stream and
- * leave the page frozen between days). renderDay checks this flag and
- * queues itself; the swipe code replays the render once the gesture ends. */
+/** While a day change is in flight, live refreshes must not replace the
+ * list (that used to kill a touch stream and leave the page frozen).
+ * renderDay queues itself; the transition replays once it lands. */
 let holdDayRender = false;
 let queuedDayRender = false;
 
@@ -980,139 +942,148 @@ function releaseDayRender({ discardQueued = false } = {}) {
   if (replay) renderDay();
 }
 
+function programDays() {
+  return [...new Set((state?.shows || []).map((s) => s.dayKey))].sort();
+}
+
 /**
- * Interactive swipe between days: a 1:1 carousel with depth, in the
- * spirit of iOS Calendar + Material predictive-back + Telegram's pager.
+ * iOS / Material shared-axis slide — a partial slide, fade, and a hint
+ * of scale, not a 100% wipe. Tabs and day changes share this so the
+ * two motions stay identical. Callers must land any in-flight slide
+ * (`tabAnimCleanup?.()`) before swapping DOM for a new one.
+ */
+function playSharedAxisTransition({ incoming, outgoing, forward, host, onDone }) {
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  if (reduceMotion.matches) {
+    window.scrollTo(0, 0);
+    onDone?.();
+    return;
+  }
+
+  const scrollY = window.scrollY || 0;
+  outgoing.hidden = false;
+  outgoing.style.setProperty("--tab-shift", `${-scrollY}px`);
+  outgoing.classList.add(
+    "tab-ghost",
+    forward ? "tab-out-left" : "tab-out-right"
+  );
+  host?.classList.add("is-tab-animating");
+  window.scrollTo(0, 0);
+
+  const cleanup = () => {
+    if (tabAnimCleanup === cleanup) tabAnimCleanup = null;
+    clearTimeout(fallback);
+    incoming.removeEventListener("animationend", onEnd);
+    incoming.classList.remove(...TAB_ANIM_CLASSES);
+    outgoing.classList.remove(...TAB_ANIM_CLASSES);
+    outgoing.style.removeProperty("--tab-shift");
+    outgoing.hidden = true;
+    host?.classList.remove("is-tab-animating");
+    onDone?.();
+  };
+  const onEnd = (e) => {
+    if (e.target === incoming) cleanup();
+  };
+  const fallback = setTimeout(cleanup, SHARED_AXIS_MS);
+  tabAnimCleanup = cleanup;
+
+  void incoming.offsetWidth;
+  incoming.classList.add(forward ? "tab-in-right" : "tab-in-left");
+  incoming.addEventListener("animationend", onEnd);
+}
+
+/**
+ * Day list uses the same shared-axis CSS slide as tab switching.
+ * Returns false when it cannot run so the caller can switch without
+ * animating. Returns true when the day was already selected, or the
+ * slide started (pill taps during a drag are swallowed).
+ */
+function transitionToDay(day, { tabScroll = "smooth" } = {}) {
+  if (!day || !state?.shows || els.views.day.hidden) return false;
+  if (daySwipeDragging) return true;
+  if (day === selectedDay) return true;
+
+  const all = programDays();
+  const from = all.indexOf(selectedDay);
+  const to = all.indexOf(day);
+  if (from === -1 || to === -1) return false;
+
+  if (tabAnimCleanup) tabAnimCleanup();
+
+  const content = els.content;
+  const ghost = els.dayGhost;
+  const forward = to > from;
+  const html = buildDayListHTML(day);
+
+  const paintIncoming = () => {
+    setSelectedDay(day, { tabScroll });
+    content.classList.add("no-anim");
+    content.dataset.key = day;
+    paint(content, html);
+    observeAutoSeatCharts();
+  };
+
+  const reduceMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+  if (reduceMotion || !ghost) {
+    paintIncoming();
+    window.scrollTo(0, 0);
+    releaseDayRender({ discardQueued: true });
+    enrichVisibleDay();
+    return true;
+  }
+
+  holdDayRender = true;
+  ghost.replaceChildren(...[...content.childNodes]);
+  paintIncoming();
+  playSharedAxisTransition({
+    incoming: content,
+    outgoing: ghost,
+    forward,
+    host: els.daySwipe,
+    onDone() {
+      ghost.replaceChildren();
+      releaseDayRender({ discardQueued: false });
+    },
+  });
+  enrichVisibleDay();
+  return true;
+}
+
+/**
+ * Detect a horizontal swipe on the day tab, then play the shared-axis
+ * slide — the same CSS animation as switching navbar tabs. The finger
+ * is not tracked 1:1 (that meant transforming three full day lists
+ * every frame). Axis-lock still keeps vertical scroll; a flick or a
+ * 28% drag commits.
  *
- * Neighbouring days sit beside the current page, slightly small. The
- * current page rounds into a card and eases down a hair; incoming
- * content lags a few pixels (parallax) so the motion has depth. The
- * finger is tracked 1:1; on release an iOS-like spring settles the
- * track, and scale / dim ride the same progress — never a second snap.
- * Swipe haptics stay off — they fought the gesture.
- *
- * Robustness:
- * - Pointer capture on `.main`, so empty space below a short day still
- *   pages, and a live redraw cannot kill the touch stream.
- * - Settle on rAF, never CSS transitionend.
- * - Mid-flight grab: a new touch inherits the exact offset; a committing
- *   animation is landed first so chained swipes keep flowing.
- * - Neighbour panes stay warm after a settle so the next swipe does not
- *   hitch on an innerHTML dump.
- * - touchmove preventDefault after axis-lock, so vertical scroll cannot
- *   steal a horizontal pager gesture (pointer events alone cannot).
- * - pointerup / cancel / lostcapture share one release path, so Chrome
- *   firing lostpointercapture first cannot bounce a committed swipe back.
- *
- * The header previews the incoming day once the drag is clearly headed
- * there (instant pill scroll — a smooth scroll mid-drag fights the finger).
- * The timeline bars then swipe with a directional motion blur; hall names
- * stay put and the hour labels cross-fade.
- * Day-pill taps use the same slide via slideToDay, with the liquid pill
- * and strip scrolling smoothly as they do for any other tap.
+ * Pointer capture on `.main` so empty space below a short day still
+ * pages. touchmove preventDefault after lock so scroll cannot steal
+ * the gesture. pointerup / cancel / lostcapture share one release path.
  */
 function setupDaySwipe() {
   const view = els.views.day;
   /** Main, not the view: a short day leaves empty space in `.main`
    * (and its nav padding) that must still page between days. */
   const host = view.parentElement;
-  const track = els.daySwipe;
-  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-  /** @type {"idle"|"pending"|"drag"|"ignore"|"animating"} */
+  /** @type {"idle"|"pending"|"drag"|"ignore"} */
   let mode = "idle";
   let pointerId = null;
   let startX = 0;
   let startY = 0;
-  /** Track offset at gesture start (non-zero when grabbing an animation). */
-  let baseX = 0;
-  let curX = 0;
   let width = 0;
   let days = [];
   let idx = -1;
   let lastX = 0;
   let lastT = 0;
   let vx = 0;
-  let raf = 0;
-  /** Direction of the currently running snap (−1/0/1). */
-  let animDir = 0;
-  /** Day the animation commits on arrival ("" while springing back). */
-  let animDay = "";
-  let finishAnim = null;
-  /** Side the header is previewing mid-drag (−1/0/1). */
-  let previewDir = 0;
-  /** Skip rebuilding neighbour HTML when the same two days are already in. */
-  let paneKey = "";
-
-  /** Android-style rubber band: ~0.55 at the origin, easing toward a cap. */
-  const rubberBand = (over) => {
-    const c = 0.55;
-    return (over * width * c) / (width + c * Math.abs(over));
-  };
-
-  const setPeek = (el, peek) => {
-    if (!el) return;
-    if (Math.abs(peek - 1) < 0.0008) el.style.removeProperty("--peek");
-    else el.style.setProperty("--peek", peek.toFixed(4));
-  };
-
-  const peekNeighbors = () => {
-    setPeek(els.dayPanePrev, SWIPE_PEEK_SCALE);
-    setPeek(els.dayPaneNext, SWIPE_PEEK_SCALE);
-  };
-
-  const clearPeek = () => {
-    els.dayPanePrev.style.removeProperty("--peek");
-    els.dayPaneNext.style.removeProperty("--peek");
-  };
-
-  const peekAt = (u) => {
-    const t = u * u * (3 - 2 * u);
-    return SWIPE_PEEK_SCALE + (1 - SWIPE_PEEK_SCALE) * t;
-  };
-
-  /**
-   * Move the track. `--swipe` is a sin envelope (0 at rest, 1 at halfway)
-   * so dim/scale on the outgoing page ease out instead of popping off
-   * when it lands. `--lag` is a few px of parallax on the incoming page.
-   * Incoming scale follows the same progress so it grows with the slide.
-   */
-  const setX = (x) => {
-    curX = x;
-    track.style.transform = x ? `translate3d(${x}px, 0, 0)` : "";
-    const u = width ? Math.min(1, Math.abs(x) / width) : 0;
-    const morph = Math.sin(u * Math.PI);
-    if (morph > 0.001) {
-      track.style.setProperty("--swipe", morph.toFixed(4));
-      const lag = (1 - peekAt(u)) * SWIPE_PARALLAX_PX;
-      track.style.setProperty("--lag", `${x < 0 ? lag : -lag}px`);
-      track.classList.add("is-swiping");
-    } else {
-      track.style.removeProperty("--swipe");
-      track.style.removeProperty("--lag");
-      track.classList.remove("is-swiping");
-    }
-    if (x && width) {
-      const incoming = x < 0 ? els.dayPaneNext : els.dayPanePrev;
-      const other = x < 0 ? els.dayPanePrev : els.dayPaneNext;
-      setPeek(incoming, peekAt(u));
-      setPeek(other, SWIPE_PEEK_SCALE);
-    }
-  };
-
-  const fillPanes = () => {
-    const prev = idx > 0 ? days[idx - 1] : "";
-    const next = idx < days.length - 1 ? days[idx + 1] : "";
-    const key = `${prev}|${next}`;
-    if (key !== paneKey) {
-      paneKey = key;
-      els.dayPanePrev.innerHTML = prev ? buildDayListHTML(prev) : "";
-      els.dayPaneNext.innerHTML = next ? buildDayListHTML(next) : "";
-    }
-    peekNeighbors();
-  };
+  let curX = 0;
 
   const lockScroll = () => {
+    daySwipeDragging = true;
+    holdDayRender = true;
     view.classList.add("is-dragging");
     host.classList.add("is-dragging");
     host.style.touchAction = "none";
@@ -1124,53 +1095,10 @@ function setupDaySwipe() {
   };
 
   const unlockScroll = () => {
+    daySwipeDragging = false;
     view.classList.remove("is-dragging");
     host.classList.remove("is-dragging");
     host.style.touchAction = "";
-  };
-
-  const commitDay = (day) => {
-    els.content.dataset.key = day;
-    setSelectedDay(day, { tabScroll: "auto" });
-    renderDay();
-    enrichVisibleDay();
-  };
-
-  /** Enter at 38%, leave at 28%, so a drag around the middle does not flicker. */
-  const previewHeader = () => {
-    if (!width) return;
-    const frac = -curX / width;
-    const enter =
-      previewDir !== 0 && Math.sign(frac) === previewDir
-        ? SWIPE_COMMIT_FRAC
-        : SWIPE_COMMIT_FRAC + 0.1;
-    let dir = Math.abs(frac) > enter ? Math.sign(frac) : 0;
-    if ((dir > 0 && idx >= days.length - 1) || (dir < 0 && idx <= 0)) dir = 0;
-    if (dir === previewDir) return;
-    previewDir = dir;
-    setSelectedDay(days[idx + dir], { tabScroll: "auto" });
-  };
-
-  const grabFlight = () => {
-    cancelAnimationFrame(raf);
-    finishAnim = null;
-    if (animDir !== 0) {
-      const newDay = animDay;
-      releaseDayRender({ discardQueued: true });
-      commitDay(newDay);
-      holdDayRender = true;
-      setX(curX + width * animDir);
-      idx = days.indexOf(newDay);
-      paneKey = "";
-      fillPanes();
-      animDir = 0;
-      animDay = "";
-    }
-    baseX = curX;
-    previewDir = 0;
-    mode = "drag";
-    holdDayRender = true;
-    lockScroll();
   };
 
   host.addEventListener("pointerdown", (e) => {
@@ -1181,11 +1109,8 @@ function setupDaySwipe() {
     startY = e.clientY;
     lastT = e.timeStamp;
     vx = 0;
-    if (mode === "animating") grabFlight();
-    else {
-      baseX = 0;
-      mode = "pending";
-    }
+    curX = 0;
+    mode = "pending";
   });
 
   host.addEventListener("pointermove", (e) => {
@@ -1201,29 +1126,26 @@ function setupDaySwipe() {
         mode = "ignore";
         return;
       }
-      if (
-        Math.abs(dx) < SWIPE_LOCK_PX ||
-        Math.abs(dx) < Math.abs(dy) * 1.2
-      ) {
+      if (Math.abs(dx) < SWIPE_LOCK_PX || Math.abs(dx) < Math.abs(dy) * 1.2) {
         return;
       }
       if (!state?.shows) {
         mode = "ignore";
         return;
       }
-      days = [...new Set(state.shows.map((s) => s.dayKey))].sort();
+      days = programDays();
       idx = days.indexOf(selectedDay);
       if (idx === -1) {
         mode = "ignore";
         return;
       }
-      width = track.offsetWidth || view.offsetWidth || host.offsetWidth || 1;
-      fillPanes();
+      width =
+        els.daySwipe?.offsetWidth || view.offsetWidth || host.offsetWidth || 1;
       startX = x;
       lastX = x;
       lastT = e.timeStamp;
+      curX = 0;
       mode = "drag";
-      holdDayRender = true;
       lockScroll();
     }
 
@@ -1239,13 +1161,7 @@ function setupDaySwipe() {
       lastT = e.timeStamp;
     }
 
-    let next = baseX + (x - startX);
-    const minX = idx >= days.length - 1 ? 0 : -width;
-    const maxX = idx <= 0 ? 0 : width;
-    if (next > maxX) next = maxX + rubberBand(next - maxX);
-    else if (next < minX) next = minX - rubberBand(minX - next);
-    setX(next);
-    previewHeader();
+    curX = x - startX;
   });
 
   /** Keep native vertical scroll from stealing the pager after axis-lock. */
@@ -1257,35 +1173,43 @@ function setupDaySwipe() {
     { passive: false }
   );
 
-  const settle = () => {
-    if (mode !== "drag") {
-      if (mode !== "animating") mode = "idle";
+  const settle = (canceled) => {
+    const wasDrag = mode === "drag";
+    mode = "idle";
+    if (!wasDrag) return;
+    if (canceled) {
+      releaseDayRender({ discardQueued: false });
       return;
     }
     const canPrev = idx > 0;
     const canNext = idx < days.length - 1;
     const projected = curX + vx * 180;
-    const dragDX = curX - baseX;
     const line = width * SWIPE_COMMIT_FRAC;
     let dir = 0;
-    if (canNext && dragDX < -8 && (projected < -line || vx < -SWIPE_FLICK)) {
+    if (canNext && curX < -8 && (projected < -line || vx < -SWIPE_FLICK)) {
       dir = 1;
     } else if (
       canPrev &&
-      dragDX > 8 &&
+      curX > 8 &&
       (projected > line || vx > SWIPE_FLICK)
     ) {
       dir = -1;
     }
-    snapTo(dir);
+    if (dir === 0) {
+      releaseDayRender({ discardQueued: false });
+      return;
+    }
+    const day = days[idx + dir];
+    if (!day || !transitionToDay(day, { tabScroll: "auto" })) {
+      releaseDayRender({ discardQueued: false });
+    }
   };
 
   const releasePointer = (e, canceled) => {
     if (e.pointerId !== pointerId) return;
     pointerId = null;
     unlockScroll();
-    if (canceled && mode === "drag") snapTo(0);
-    else settle();
+    settle(canceled);
   };
 
   host.addEventListener("pointerup", (e) => releasePointer(e, false));
@@ -1294,107 +1218,6 @@ function setupDaySwipe() {
     if (e.target !== host) return;
     releasePointer(e, false);
   });
-
-  /** Spring the track to rest; dir −1/1 slides to the neighbour, 0 back.
-   * Incoming scale is tied to track progress in setX, so one spring
-   * carries both the slide and the ease to fullscreen. */
-  function snapTo(dir, { day = dir === 0 ? "" : days[idx + dir], v0 = vx, tabScroll = "auto" } = {}) {
-    cancelAnimationFrame(raf);
-    mode = "animating";
-    animDir = dir;
-    animDay = day;
-    const target = dir === 0 ? 0 : dir === 1 ? -width : width;
-    const overshoot = 16;
-
-    if (day) setSelectedDay(day, { tabScroll });
-    else if (previewDir !== 0) setSelectedDay(days[idx], { tabScroll: "auto" });
-    previewDir = 0;
-
-    const finish = () => {
-      cancelAnimationFrame(raf);
-      finishAnim = null;
-      animDir = 0;
-      animDay = "";
-      releaseDayRender({ discardQueued: dir !== 0 });
-      if (day) {
-        commitDay(day);
-        days = [...new Set(state.shows.map((s) => s.dayKey))].sort();
-        idx = days.indexOf(day);
-        paneKey = "";
-        fillPanes();
-      }
-      clearPeek();
-      mode = "idle";
-      setX(0);
-    };
-    finishAnim = finish;
-
-    if (Math.abs(curX - target) < 0.5 || reduceMotion.matches) {
-      finish();
-      return;
-    }
-
-    let x = curX;
-    let v = Math.max(-2.2, Math.min(2.2, v0));
-    let prevTs = performance.now();
-
-    const stepFrame = (ts) => {
-      const dt = Math.min(Math.max(ts - prevTs, 0.001), 32);
-      prevTs = ts;
-      const s = stepSpring(
-        x,
-        v,
-        target,
-        dt,
-        SWIPE_SPRING_OMEGA,
-        SWIPE_SPRING_ZETA
-      );
-      x = s.x;
-      v = s.v;
-      if (Math.abs(x - target) < 0.75 && Math.abs(v) < 0.03) {
-        finish();
-        return;
-      }
-      let vis = x;
-      if (dir !== 0) {
-        vis =
-          dir === 1
-            ? Math.max(x, -width - overshoot)
-            : Math.min(x, width + overshoot);
-      }
-      setX(vis);
-      raf = requestAnimationFrame(stepFrame);
-    };
-    raf = requestAnimationFrame(stepFrame);
-  }
-
-  /** Slide to `day` without a gesture (day-pill taps). */
-  slideToDay = (day) => {
-    if (!state?.shows || els.views.day.hidden) return false;
-    if (mode === "pending" || mode === "drag" || pointerId !== null) return false;
-    if (mode === "animating") finishAnim?.();
-    if (day === selectedDay) return true;
-
-    const all = [...new Set(state.shows.map((s) => s.dayKey))].sort();
-    const from = all.indexOf(selectedDay);
-    const to = all.indexOf(day);
-    if (from === -1 || to === -1) return false;
-    width = track.offsetWidth || view.offsetWidth || host.offsetWidth || 0;
-    if (!width) return false;
-
-    days = all;
-    idx = from;
-    baseX = 0;
-    setX(0);
-    const dir = to > from ? 1 : -1;
-    els.dayPanePrev.innerHTML = dir === -1 ? buildDayListHTML(day) : "";
-    els.dayPaneNext.innerHTML = dir === 1 ? buildDayListHTML(day) : "";
-    paneKey = "";
-    setPeek(dir === 1 ? els.dayPaneNext : els.dayPanePrev, SWIPE_PEEK_SCALE);
-    holdDayRender = true;
-    snapTo(dir, { day, v0: dir === 1 ? -1.05 : 1.05, tabScroll: "smooth" });
-    return true;
-  };
 }
 
 let sessionDay = toDayKey(new Date());
@@ -2207,54 +2030,24 @@ async function setActiveTab(tab, { skipRender = false } = {}) {
     el.hidden = key !== tab;
   });
 
-  // Slide the whole page sideways: iOS / Material shared-axis — a
-  // partial slide, fade, and a hint of scale, not a 100% wipe.
+  // Same shared-axis slide as day changes: partial slide, fade, scale.
   if (!skipRender && prevTab !== tab && els.views[prevTab]) {
     const forward = TAB_ORDER.indexOf(tab) > TAB_ORDER.indexOf(prevTab);
     const view = els.views[tab];
     const prevView = els.views[prevTab];
     const host = view.parentElement;
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     // Child rise animations on a first paint would play on top of the
     // slide and look like a second copy of the page. Mark the incoming
     // host as already shown so render skips them.
     if (tab === "movies") els.moviesContent.dataset.rendered = "1";
     if (tab === "stats") els.statsContent.dataset.rendered = "1";
     if (tab === "settings") els.settingsContent.dataset.rendered = "1";
-
-    if (!reduceMotion.matches) {
-      const scrollY = window.scrollY || 0;
-      prevView.hidden = false;
-      prevView.style.setProperty("--tab-shift", `${-scrollY}px`);
-      prevView.classList.add(
-        "tab-ghost",
-        forward ? "tab-out-left" : "tab-out-right"
-      );
-      host?.classList.add("is-tab-animating");
-      window.scrollTo(0, 0);
-
-      const cleanup = () => {
-        if (tabAnimCleanup === cleanup) tabAnimCleanup = null;
-        clearTimeout(fallback);
-        view.removeEventListener("animationend", onEnd);
-        view.classList.remove(...TAB_ANIM_CLASSES);
-        prevView.classList.remove(...TAB_ANIM_CLASSES);
-        prevView.style.removeProperty("--tab-shift");
-        prevView.hidden = true;
-        host?.classList.remove("is-tab-animating");
-      };
-      const onEnd = (e) => {
-        if (e.target === view) cleanup();
-      };
-      const fallback = setTimeout(cleanup, 560);
-      tabAnimCleanup = cleanup;
-
-      void view.offsetWidth;
-      view.classList.add(forward ? "tab-in-right" : "tab-in-left");
-      view.addEventListener("animationend", onEnd);
-    } else {
-      window.scrollTo(0, 0);
-    }
+    playSharedAxisTransition({
+      incoming: view,
+      outgoing: prevView,
+      forward,
+      host,
+    });
   }
 
   document.querySelectorAll(".pill-tab").forEach((btn) => {
@@ -2555,11 +2348,11 @@ function updateJumpTodayBtn() {
   if (arrow) arrow.textContent = back ? "‹" : "›";
 }
 
-/** Day change from a tap: slides the page like a swipe would, so the list
- * and the header move together whichever way the day was picked. */
+/** Day change from a tap: the same shared-axis slide as a swipe, so the
+ * list and the header move together whichever way the day was picked. */
 async function selectDay(day) {
   if (!day || day === selectedDay || !state?.shows) return;
-  if (slideToDay?.(day)) return;
+  if (transitionToDay(day)) return;
   if (!setSelectedDay(day)) return;
   renderDay();
   await enrichVisibleDay();
@@ -2674,8 +2467,8 @@ function buildDayListHTML(day) {
 function renderDay() {
   if (!state?.shows) return;
 
-  // Never replace the list while a swipe is following the finger —
-  // wait for the gesture to finish, then apply the freshest data.
+  // Never replace the list while a day change is in flight — wait for
+  // the slide to finish, then apply the freshest data.
   if (holdDayRender) {
     queuedDayRender = true;
     return;

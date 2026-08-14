@@ -21,7 +21,7 @@
     <meta property="og:image" content="https://t3lluz.github.io/Cinema-Info/assets/icons/icon-512.png" />
     <meta name="twitter:card" content="summary" />
     <title>Buen kino</title>
-    <link rel="stylesheet" href="css/styles.css?v=145" />
+    <link rel="stylesheet" href="css/styles.css?v=146" />
     <script>
       // Paint the saved theme before the first frame, so a dark visitor
       // never sees a light flash. "system"/unset follows the device.
@@ -118,14 +118,13 @@
     <main class="main">
       <section id="view-day" class="view" data-view="day" aria-live="polite">
         <div id="daySwipe" class="day-swipe">
-          <div id="dayPanePrev" class="content day-pane prev no-anim" aria-hidden="true"></div>
+          <div id="dayGhost" class="content no-anim" hidden aria-hidden="true"></div>
           <div id="content" class="content">
             <div class="state loading">
               <div class="spinner" aria-hidden="true"></div>
               <p data-i18n="loading">Henter program…</p>
             </div>
           </div>
-          <div id="dayPaneNext" class="content day-pane next no-anim" aria-hidden="true"></div>
         </div>
       </section>
 
@@ -187,6 +186,6 @@
       </div>
     </nav>
 
-    <script src="js/app.js?v=120" type="module"></script>
+    <script src="js/app.js?v=121" type="module"></script>
   </body>
 </html>

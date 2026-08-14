@@ -984,7 +984,8 @@ h1 {
   padding-bottom: calc(var(--nav-h) + 28px + var(--safe-bottom));
 }
 
-.main.is-tab-animating {
+.main.is-tab-animating,
+.day-swipe.is-tab-animating {
   overflow: hidden;
 }
 
@@ -998,11 +999,12 @@ h1 {
   display: none;
 }
 
-/* —— Tab transitions: Material shared-axis + iOS push ——
+/* —— Shared-axis transitions (tabs + day changes) ——
    Incoming page stays opaque so the outgoing one cannot show through
-   (settings used to paint on top of the previous tab). iOS easing. */
-.view.tab-in-right,
-.view.tab-in-left {
+   (settings used to paint on top of the previous tab). iOS easing.
+   Same classes drive day switches, so the two motions stay identical. */
+.tab-in-right,
+.tab-in-left {
   position: relative;
   z-index: 2;
   transform-origin: 50% 24%;
@@ -1010,19 +1012,20 @@ h1 {
   animation-duration: 0.42s;
   animation-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
   animation-fill-mode: both;
+  background: var(--bg);
 }
 
-.view.tab-in-right {
+.tab-in-right {
   animation-name: tabInRight;
 }
 
-.view.tab-in-left {
+.tab-in-left {
   animation-name: tabInLeft;
 }
 
-/* The outgoing view keeps rendering on top of the page flow while it
+/* The outgoing page keeps rendering on top of the page flow while it
    slides away; --tab-shift compensates for the pre-switch scroll offset. */
-.view.tab-ghost {
+.tab-ghost {
   position: absolute;
   top: 0;
   left: 0;
@@ -1035,18 +1038,18 @@ h1 {
   will-change: transform, opacity;
 }
 
-.view.tab-out-left,
-.view.tab-out-right {
+.tab-out-left,
+.tab-out-right {
   animation-duration: 0.42s;
   animation-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
   animation-fill-mode: both;
 }
 
-.view.tab-out-left {
+.tab-out-left {
   animation-name: tabOutLeft;
 }
 
-.view.tab-out-right {
+.tab-out-right {
   animation-name: tabOutRight;
 }
 
@@ -1090,7 +1093,8 @@ h1 {
   }
 }
 
-/* —— Day swipe: 1:1 carousel with depth (iOS Calendar + predictive-back) —— */
+/* Day list host. Horizontal paging is a shared-axis CSS animation (the
+   same classes as tab switching), not a 1:1 carousel. */
 #view-day {
   flex: 1 0 auto;
   min-height: 100%;
@@ -1114,8 +1118,6 @@ h1 {
 }
 
 .day-swipe {
-  --peek-rest: 0.96;
-  --rest-scale: 0.04;
   position: relative;
   flex: 1 0 auto;
   display: flex;
@@ -1124,130 +1126,14 @@ h1 {
   width: 100%;
 }
 
-.day-swipe.is-swiping {
-  will-change: transform;
-}
-
-.day-pane {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  max-width: none;
-  margin: 0;
-  min-height: 100%;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-/* Incoming day peeks slightly small (--peek < 1). Extra translate keeps
-   its leading edge flush so the swipe shows content, not a gap. --peek
-   eases to 1 with the slide. Constant radius (not per-frame) so the
-   compositor is not painting a morphing clip every tick. */
-.day-pane.prev,
-.day-pane.next {
-  transform-origin: 50% 0;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-}
-
-.day-pane.prev {
-  transform: translate3d(calc(-50% - 50% * var(--peek, 1)), 0, 0)
-    scale(var(--peek, 1));
-}
-
-.day-pane.next {
-  transform: translate3d(calc(50% + 50% * var(--peek, 1)), 0, 0)
-    scale(var(--peek, 1));
-}
-
-.day-swipe.is-swiping > #content {
-  position: relative;
-  border-radius: 16px;
-  overflow: hidden;
-  transform-origin: 50% 18%;
-  transform: scale(calc(1 - var(--rest-scale) * var(--swipe, 0)));
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-}
-
-/* Dim the outgoing page as the next one arrives — opacity only, cheap. */
-.day-swipe.is-swiping > #content::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: var(--bg);
-  opacity: calc(0.22 * var(--swipe, 0));
-  pointer-events: none;
-  z-index: 3;
-}
-
-.day-swipe.is-swiping > .day-pane {
-  border-radius: 16px;
-  overflow: hidden;
-}
-
-/* Parallax: incoming content lags the pane a few px so the motion has depth. */
-.day-swipe.is-swiping > .day-pane.prev > *,
-.day-swipe.is-swiping > .day-pane.next > * {
-  transform: translate3d(var(--lag, 0px), 0, 0);
-  will-change: transform;
-}
-
-/* Soft edge shade between pages — a gradient, not an animated box-shadow. */
-.day-swipe.is-swiping > .day-pane.prev::before,
-.day-swipe.is-swiping > .day-pane.next::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 28px;
-  pointer-events: none;
-  z-index: 4;
-  opacity: var(--swipe, 0);
-}
-
-.day-swipe.is-swiping > .day-pane.next::before {
-  left: 0;
-  background: linear-gradient(
-    to right,
-    color-mix(in srgb, var(--ink) 16%, transparent),
-    transparent
-  );
-}
-
-.day-swipe.is-swiping > .day-pane.prev::before {
-  right: 0;
-  background: linear-gradient(
-    to left,
-    color-mix(in srgb, var(--ink) 16%, transparent),
-    transparent
-  );
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .view.tab-in-right,
-  .view.tab-in-left,
-  .view.tab-out-left,
-  .view.tab-out-right,
+  .tab-in-right,
+  .tab-in-left,
+  .tab-out-left,
+  .tab-out-right,
   .tile-expand-panel,
   .tile-expand-panel.is-leaving {
     animation-duration: 0.01s;
-  }
-
-  .day-pane.prev,
-  .day-pane.next {
-    --peek: 1;
-  }
-
-  .day-swipe {
-    --rest-scale: 0;
-  }
-
-  .day-swipe.is-swiping > #content::after,
-  .day-swipe.is-swiping > .day-pane.prev::before,
-  .day-swipe.is-swiping > .day-pane.next::before {
-    opacity: 0;
   }
 
   .timeline.is-day-switching .tl-swipe-rail > .tl-tracks {
