@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-14T11:53:25.725Z",
+  "updatedAt": "2026-08-14T23:35:47.658Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -3274,12 +3274,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6,
+          "value": 6.1,
           "id": "tt29356163",
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 2.91,
+          "value": 2.9,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         }
       },
@@ -3460,12 +3460,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6,
+          "value": 6.1,
           "id": "tt29356163",
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 2.91,
+          "value": 2.9,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         }
       },
@@ -3694,12 +3694,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6,
+          "value": 6.1,
           "id": "tt29356163",
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 2.91,
+          "value": 2.9,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         }
       },
@@ -3976,12 +3976,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6,
+          "value": 6.1,
           "id": "tt29356163",
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 2.91,
+          "value": 2.9,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         }
       },
@@ -4161,12 +4161,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6,
+          "value": 6.1,
           "id": "tt29356163",
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 2.91,
+          "value": 2.9,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         }
       },
@@ -4395,12 +4395,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6,
+          "value": 6.1,
           "id": "tt29356163",
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 2.91,
+          "value": 2.9,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         }
       },
@@ -4533,12 +4533,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6,
+          "value": 6.1,
           "id": "tt29356163",
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 2.91,
+          "value": 2.9,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         }
       },
@@ -4715,22 +4715,22 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92687/purchase?kanal=dxf",
       "eventId": "92687",
       "promoterId": "202",
-      "sold": 3,
+      "sold": 10,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6,
+          "value": 6.1,
           "id": "tt29356163",
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 2.91,
+          "value": 2.9,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         }
       },
       "reserved": 0,
       "capacity": 286,
-      "available": 283
+      "available": 276
     },
     {
       "id": "WAB20240233-2026-08-14T18:15:00-Kinosal",
@@ -4767,11 +4767,11 @@
           "url": "https://www.imdb.com/title/tt27165187/"
         },
         "letterboxd": {
-          "value": 3.18,
+          "value": 3.17,
           "url": "https://letterboxd.com/film/the-end-of-oak-street/"
         },
         "tomatoes": {
-          "value": 71,
+          "value": 74,
           "url": "https://www.rottentomatoes.com/m/the_end_of_oak_street"
         }
       },
@@ -4805,7 +4805,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92689/purchase?kanal=dxf",
       "eventId": "92689",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 1,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -4824,7 +4824,7 @@
       },
       "reserved": 0,
       "capacity": 246,
-      "available": 246
+      "available": 245
     },
     {
       "id": "EDI20240688-2026-08-14T20:45:00-Kinosal",
@@ -4852,7 +4852,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92722/purchase?kanal=dxf",
       "eventId": "92722",
       "promoterId": "202",
-      "sold": 22,
+      "sold": 38,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -4871,7 +4871,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 88
+      "available": 72
     },
     {
       "id": "EDI20260626-2026-08-14T21:30:00-Storsal",
@@ -4897,7 +4897,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92797/purchase?kanal=dxf",
       "eventId": "92797",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -4916,7 +4916,7 @@
       },
       "reserved": 0,
       "capacity": 246,
-      "available": 246
+      "available": 244
     },
     {
       "id": "EDI20251106-2026-08-15T14:50:00-Kinosal",
@@ -4945,22 +4945,22 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92724/purchase?kanal=dxf",
       "eventId": "92724",
       "promoterId": "202",
-      "sold": 5,
+      "sold": 12,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6,
+          "value": 6.1,
           "id": "tt29356163",
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 2.91,
+          "value": 2.9,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 105
+      "capacity": 105,
+      "available": 93
     },
     {
       "id": "EDI20260819-2026-08-15T15:20:00-Storsal",
@@ -5054,8 +5054,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 109,
-      "available": 108
+      "capacity": 110,
+      "available": 109
     },
     {
       "id": "WAB20240233-2026-08-15T18:00:00-Storsal",
@@ -5092,11 +5092,11 @@
           "url": "https://www.imdb.com/title/tt27165187/"
         },
         "letterboxd": {
-          "value": 3.18,
+          "value": 3.17,
           "url": "https://letterboxd.com/film/the-end-of-oak-street/"
         },
         "tomatoes": {
-          "value": 71,
+          "value": 74,
           "url": "https://www.rottentomatoes.com/m/the_end_of_oak_street"
         }
       },
@@ -5130,7 +5130,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92798/purchase?kanal=dxf",
       "eventId": "92798",
       "promoterId": "202",
-      "sold": 8,
+      "sold": 10,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -5148,7 +5148,7 @@
         }
       },
       "reserved": 0,
-      "capacity": 108,
+      "capacity": 110,
       "available": 100
     },
     {
@@ -5177,7 +5177,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92727/purchase?kanal=dxf",
       "eventId": "92727",
       "promoterId": "202",
-      "sold": 4,
+      "sold": 6,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -5196,7 +5196,7 @@
       },
       "reserved": 0,
       "capacity": 286,
-      "available": 282
+      "available": 280
     },
     {
       "id": "EDI20251106-2026-08-16T15:00:00-Kinosal",
@@ -5229,12 +5229,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6,
+          "value": 6.1,
           "id": "tt29356163",
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 2.91,
+          "value": 2.9,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         }
       },
@@ -5419,11 +5419,11 @@
           "url": "https://www.imdb.com/title/tt27165187/"
         },
         "letterboxd": {
-          "value": 3.18,
+          "value": 3.17,
           "url": "https://letterboxd.com/film/the-end-of-oak-street/"
         },
         "tomatoes": {
-          "value": 71,
+          "value": 74,
           "url": "https://www.rottentomatoes.com/m/the_end_of_oak_street"
         }
       },
@@ -5457,7 +5457,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92500/purchase?kanal=dxf",
       "eventId": "92500",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 1,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -5475,8 +5475,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 110
+      "capacity": 109,
+      "available": 108
     },
     {
       "id": "EDI20251106-2026-08-18T17:00:00-Kinosal",
@@ -5509,12 +5509,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6,
+          "value": 6.1,
           "id": "tt29356163",
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 2.91,
+          "value": 2.9,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         }
       },
@@ -5652,11 +5652,11 @@
           "url": "https://www.imdb.com/title/tt27165187/"
         },
         "letterboxd": {
-          "value": 3.18,
+          "value": 3.17,
           "url": "https://letterboxd.com/film/the-end-of-oak-street/"
         },
         "tomatoes": {
-          "value": 71,
+          "value": 74,
           "url": "https://www.rottentomatoes.com/m/the_end_of_oak_street"
         }
       },
@@ -5695,12 +5695,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6,
+          "value": 6.1,
           "id": "tt29356163",
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 2.91,
+          "value": 2.9,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         }
       },
@@ -5743,11 +5743,11 @@
           "url": "https://www.imdb.com/title/tt27165187/"
         },
         "letterboxd": {
-          "value": 3.18,
+          "value": 3.17,
           "url": "https://letterboxd.com/film/the-end-of-oak-street/"
         },
         "tomatoes": {
-          "value": 71,
+          "value": 74,
           "url": "https://www.rottentomatoes.com/m/the_end_of_oak_street"
         }
       },
@@ -6006,7 +6006,7 @@
           "url": "https://www.imdb.com/title/tt35410859/"
         },
         "letterboxd": {
-          "value": 3.86,
+          "value": 3.87,
           "url": "https://letterboxd.com/film/fjord-2026/"
         }
       },
