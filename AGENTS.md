@@ -48,3 +48,8 @@ full product description and data model.
   branch deploys have been stuck in `deployment_queued`.
 - The workflow stages `public/` into the Pages artifact; it does not
   publish `scripts/`, `supabase/`, or `.github/`.
+- Every deploy stamps a unique cache-bust token (the short commit SHA)
+  into `_site/index.html` and `_site/sw.js` via `scripts/stamp-version.mjs`.
+  Do not hand-edit `?v=` or `cinema-info-v…` — a forgotten bump used to
+  leave phones on the old CSS/JS after push. Local `public/` placeholders
+  are enough for `http.server`.

@@ -36,6 +36,7 @@ jobs:
         run: |
           mkdir -p _site
           cp -a public/. _site/
+          node scripts/stamp-version.mjs _site "${GITHUB_SHA::7}"
 
       - name: Upload site
         uses: actions/upload-pages-artifact@v4

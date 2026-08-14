@@ -251,7 +251,10 @@ supabase/               # Edge Function for admissions / seat maps
 ```
 
 The site is published with the **Deploy GitHub Pages** workflow
-(`.github/workflows/deploy-pages.yml`). **Required once:** in
+(`.github/workflows/deploy-pages.yml`). Each deploy stamps the commit
+SHA into the stylesheet / script URLs and the service-worker cache name,
+so a push always lands as a fresh PWA instead of a cached copy.
+**Required once:** in
 [Settings → Pages](https://github.com/T3lluz/Cinema-Info/settings/pages),
 set Source to **GitHub Actions**. Until that switch is made, pushes
 still trigger the legacy “Deploy from a branch” job (which has been
