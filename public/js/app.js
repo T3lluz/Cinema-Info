@@ -1060,9 +1060,11 @@ function transitionToDay(day, { tabScroll = "smooth" } = {}) {
 
 /**
  * Detect a horizontal swipe on the day tab. The finger scrubs the same
- * shared-axis slide as tab switching (incoming from 28% at 0.98 scale,
- * outgoing to 24% fading). Release either finishes that slide or eases
- * back. Pill taps still play the CSS keyframe version.
+ * shared-axis slide as tab switching (incoming from off-screen at 0.98
+ * scale, outgoing to 24% fading). Release either finishes that slide or
+ * eases back. Day pills and the timeline switch at halfway so the header
+ * stays in step with the page. Pill taps still play the CSS keyframe
+ * version.
  *
  * Pointer capture on `.main` so empty space below a short day still
  * pages. touchmove preventDefault after lock so scroll cannot steal
@@ -1093,6 +1095,8 @@ function setupDaySwipe() {
   let dragDir = 0;
   let incomingDay = "";
   let incomingHtml = "";
+  let fromDay = "";
+  let headerAhead = false;
   let finishSettling = null;
 
   const axisP = () =>
@@ -1125,6 +1129,17 @@ function setupDaySwipe() {
     return true;
   };
 
+  /** Day pills + timeline follow the page at halfway, not at land. */
+  const syncHeader = (p, force) => {
+    if (!fromDay) return;
+    const crossIn = headerAhead ? 0.42 : 0.5;
+    const wantIncoming =
+      force === "in" || (force !== "out" && p >= crossIn);
+    const want = wantIncoming && incomingDay ? incomingDay : fromDay;
+    if (want !== selectedDay) setSelectedDay(want, { tabScroll: "auto" });
+    headerAhead = want === incomingDay;
+  };
+
   const lockScroll = () => {
     daySwipeDragging = true;
     holdDayRender = true;
@@ -1147,6 +1162,9 @@ function setupDaySwipe() {
   const finishCancel = () => {
     finishSettling = null;
     daySwipeDragging = false;
+    syncHeader(0, "out");
+    fromDay = "";
+    headerAhead = false;
     clearAxisStyles();
     mode = "idle";
     releaseDayRender({ discardQueued: false });
@@ -1167,6 +1185,8 @@ function setupDaySwipe() {
     }
     incomingDay = "";
     incomingHtml = "";
+    fromDay = "";
+    headerAhead = false;
     ghost.replaceChildren();
     clearAxisStyles();
     mode = "idle";
@@ -1175,6 +1195,7 @@ function setupDaySwipe() {
 
   const settleTo = (commit, dir) => {
     if (commit && !incomingDay) commit = false;
+    syncHeader(commit ? 1 : 0, commit ? "in" : "out");
     const target = commit ? 1 : 0;
     const p = axisP();
     const land = () => (commit ? finishCommit() : finishCancel());
@@ -1250,6 +1271,8 @@ function setupDaySwipe() {
       lastX = x;
       lastT = e.timeStamp;
       curX = 0;
+      fromDay = selectedDay;
+      headerAhead = false;
       mode = "drag";
       lockScroll();
       track.classList.add("is-axis-drag");
@@ -1279,9 +1302,11 @@ function setupDaySwipe() {
     if (dir && fillIncoming(days[idx + dir])) {
       applyAxis(axisP(), dir);
       ghost.hidden = false;
+      syncHeader(axisP());
     } else {
       applyAxis(0, 1);
       if (ghost) ghost.hidden = true;
+      syncHeader(0, "out");
     }
   });
 
