@@ -1012,7 +1012,7 @@ h1 {
   }
 }
 
-/* —— Day swipe: 1:1 carousel, Material 3 Expressive spatial spring —— */
+/* —— Day swipe: 1:1 carousel, peeking card, then a fullscreen snap —— */
 #view-day {
   touch-action: pan-y;
   overflow-x: clip;
@@ -1026,11 +1026,11 @@ h1 {
 }
 
 .day-swipe {
+  --peek-rest: 0.9;
   position: relative;
 }
 
 .day-swipe.is-swiping {
-  overflow: hidden;
   will-change: transform;
 }
 
@@ -1046,17 +1046,45 @@ h1 {
   pointer-events: none;
 }
 
+/* Incoming day peeks as a card (--peek < 1): scaled down, dropped a
+   few pixels, rounded. The extra translate keeps its leading edge
+   flush with the current page so the first pixels of the swipe show
+   content, not a gap. --peek springs to 1 when the swipe commits. */
+.day-pane.prev,
+.day-pane.next {
+  transform-origin: 50% 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
 .day-pane.prev {
-  transform: translate3d(-100%, 0, 0);
+  transform: translate3d(
+      calc(-50% - 50% * var(--peek, 1)),
+      calc(10px * (1 - var(--peek, 1)) / (1 - var(--peek-rest))),
+      0
+    )
+    scale(var(--peek, 1));
 }
 
 .day-pane.next {
-  transform: translate3d(100%, 0, 0);
+  transform: translate3d(
+      calc(50% + 50% * var(--peek, 1)),
+      calc(10px * (1 - var(--peek, 1)) / (1 - var(--peek-rest))),
+      0
+    )
+    scale(var(--peek, 1));
 }
 
-.day-swipe.is-swiping > #content,
+.day-swipe.is-swiping > #content {
+  border-radius: calc(22px * var(--swipe, 0));
+  overflow: hidden;
+}
+
 .day-swipe.is-swiping > .day-pane {
-  border-radius: calc(28px * var(--swipe, 0));
+  border-radius: max(
+    0px,
+    calc(28px * (1 - var(--peek, 1)) / (1 - var(--peek-rest)))
+  );
   overflow: hidden;
 }
 
@@ -1068,6 +1096,11 @@ h1 {
   .tile-expand-panel,
   .tile-expand-panel.is-leaving {
     animation-duration: 0.01s;
+  }
+
+  .day-pane.prev,
+  .day-pane.next {
+    --peek: 1;
   }
 }
 
