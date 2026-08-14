@@ -79,11 +79,12 @@ const PROGRAM_RECHECK_MS = 2 * 60 * 1000;
 /** Hall geometry only changes when someone rebuilds an auditorium. */
 const SEAT_LAYOUT_TTL_MS = 30 * 24 * 60 * 60 * 1000;
 /**
- * One short pulse for UI taps. Chromium on Android maps this onto the
- * phone's motor — Pixel LRAs feel a click, cheaper ERM motors still
- * spin up enough to notice. Intensity is not exposed on the web.
+ * Drive time for a UI tap. Pixel's native CLICK primitive is ~12 ms with
+ * overdrive and active braking; the web API can only run a full-amplitude
+ * one-shot that keeps ringing after it stops, so 16 ms reads as a buzz.
+ * 8 ms of drive plus the LRA's decay is one medium kick.
  */
-const HAPTIC_CLICK_MS = 16;
+const HAPTIC_CLICK_MS = 8;
 /** Bumped when the layout shape changes, so cached halls are refetched
  * (v2: blocked seats are included and flagged instead of dropped). */
 const SEAT_LAYOUT_VERSION = 2;
