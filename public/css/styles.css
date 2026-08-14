@@ -647,16 +647,17 @@ h1 {
   display: none;
 }
 
-/* Day-switch: the strip is a two-page track that slides with a
-   horizontal motion blur, in the same direction as the day swipe. */
-.timeline.is-day-switching:not([hidden]) {
-  display: block;
+/* Day-switch: only the bars swipe. Hall names stay put; hour labels
+   and the now-line cross-fade. */
+.tl-tracks-swipe {
   position: relative;
+  z-index: 1;
   overflow: hidden;
+  width: 100%;
   pointer-events: none;
 }
 
-.tl-swipe-track {
+.tl-swipe-rail {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -664,11 +665,7 @@ h1 {
   will-change: transform;
 }
 
-.tl-swipe-layer {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 10px;
-  align-items: stretch;
+.tl-swipe-rail > .tl-tracks {
   flex: 0 0 50%;
   width: 50%;
   min-width: 0;
@@ -678,13 +675,14 @@ h1 {
   pointer-events: none;
 }
 
-.timeline.is-day-switching .tl-block,
-.timeline.is-day-switching .tl-gridline,
-.timeline.is-day-switching .tl-hour,
-.timeline.is-day-switching .tl-now,
-.timeline.is-day-switching .tl-lane-name,
-.timeline.is-day-switching .tl-track {
+.timeline.is-day-switching .tl-block {
   transition: none;
+}
+
+.timeline.is-day-switching .tl-hour,
+.timeline.is-day-switching .tl-gridline,
+.timeline.is-day-switching .tl-now {
+  transition: opacity 0.22s ease;
 }
 
 .tl-names {
@@ -717,10 +715,6 @@ h1 {
    tracks themselves get the width. Full names return from 700px up. */
 @media (max-width: 699px) {
   .timeline {
-    gap: 4px;
-  }
-
-  .tl-swipe-layer {
     gap: 4px;
   }
 
@@ -802,7 +796,7 @@ h1 {
 }
 
 /* Same-day live ticks: bars ease to new statuses and the now-line.
-   Day changes do not morph — they swipe (see .timeline.is-day-switching). */
+   Day changes swipe the bars only (see .tl-tracks-swipe). */
 .tl-block {
   position: absolute;
   top: 2px;
@@ -1256,7 +1250,7 @@ h1 {
     opacity: 0;
   }
 
-  .timeline.is-day-switching .tl-swipe-layer {
+  .timeline.is-day-switching .tl-swipe-rail > .tl-tracks {
     filter: none !important;
   }
 }

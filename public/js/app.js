@@ -1006,8 +1006,8 @@ function releaseDayRender({ discardQueued = false } = {}) {
  *
  * The header previews the incoming day once the drag is clearly headed
  * there (instant pill scroll — a smooth scroll mid-drag fights the finger).
- * The timeline then swipes with a directional motion blur rather than
- * morphing bars from one day into the next.
+ * The timeline bars then swipe with a directional motion blur; hall names
+ * stay put and the hour labels cross-fade.
  * Day-pill taps use the same slide via slideToDay, with the liquid pill
  * and strip scrolling smoothly as they do for any other tap.
  */
@@ -2792,22 +2792,15 @@ function computeTimelineLayout() {
   };
 }
 
-/** The live plot: incoming layer during a day-switch, otherwise the host. */
-function timelineLive() {
-  return (
-    els.timeline?.querySelector(".tl-swipe-in") || els.timeline || null
-  );
-}
-
 /** Track-column width the plot is scaled against. */
 function measureTimelineAreaWidth() {
-  const live = timelineLive();
-  const area = live?.querySelector(".tl-area");
+  const area = els.timeline?.querySelector(".tl-area");
   if (area?.clientWidth) return area.clientWidth;
   const timelineW = els.timeline?.clientWidth;
   if (timelineW) {
     const namesW =
-      live?.querySelector(".tl-names")?.getBoundingClientRect().width || 36;
+      els.timeline.querySelector(".tl-names")?.getBoundingClientRect().width ||
+      36;
     const gap = window.matchMedia("(max-width: 699px)").matches ? 4 : 10;
     return Math.max(timelineW - namesW - gap, 160);
   }
@@ -2826,9 +2819,8 @@ function timelinePlotWidth(span, minDuration, areaWidth) {
 }
 
 function applyTimelineCanvasSize(layout) {
-  const live = timelineLive();
-  const canvas = live?.querySelector(".tl-canvas");
-  const area = live?.querySelector(".tl-area");
+  const canvas = els.timeline.querySelector(".tl-canvas");
+  const area = els.timeline.querySelector(".tl-area");
   if (!canvas || !area) return;
   const areaW = area.clientWidth || layout.plotWidth;
   const plotWidth = timelinePlotWidth(
@@ -2847,7 +2839,7 @@ function setupTimelineFollow() {
   els.timeline.addEventListener(
     "scroll",
     (e) => {
-      if (e.target !== timelineLive()?.querySelector(".tl-area")) return;
+      if (e.target !== els.timeline.querySelector(".tl-area")) return;
       if (tlProgrammaticScroll) return;
       tlFollowNow = false;
       clearTimeout(tlFollowResumeTimer);
@@ -2896,9 +2888,8 @@ function scrollTimelineArea(area, next, { smooth = false } = {}) {
  * are visible (clamped — morning stays at the start, late night at the
  * end). Otherwise only nudge when it would leave the viewport. */
 function scrollTimelineToNow(layout, { smooth = false, place = false } = {}) {
-  const live = timelineLive();
-  const area = live?.querySelector(".tl-area");
-  const plot = live?.querySelector(".tl-plot");
+  const area = els.timeline.querySelector(".tl-area");
+  const plot = els.timeline.querySelector(".tl-plot");
   if (!area || !plot || layout.nowPct == null) return;
   const x = timelineNowX(layout, plot);
   const viewW = area.clientWidth;
@@ -2927,7 +2918,7 @@ function timelineMarkStep(span, plotWidth) {
 
 /** Keep today's now-marker on screen; other days start at the left. */
 function syncTimelineScroll(layout, { smooth } = {}) {
-  const area = timelineLive()?.querySelector(".tl-area");
+  const area = els.timeline.querySelector(".tl-area");
   if (!area) return;
   const dayChanged = layout.day !== tlScrollDay;
   tlScrollDay = layout.day;
@@ -2982,7 +2973,7 @@ function renderTimeline() {
   const reduceMotion = window.matchMedia(
     "(prefers-reduced-motion: reduce)"
   ).matches;
-  const hasCanvas = !els.timeline.hidden && timelineLive()?.querySelector(".tl-canvas");
+  const hasCanvas = !els.timeline.hidden && els.timeline.querySelector(".tl-canvas");
   const dayChanged = !!(tlPaintDay && layout.day !== tlPaintDay);
 
   // Mid-swipe live ticks would fight the motion; the next beat morphs.
@@ -3027,39 +3018,132 @@ function setTimelineMotionBlur(px, ...targets) {
   }
 }
 
-function wrapTimelineSwipeLayer(className) {
-  const layer = document.createElement("div");
-  layer.className = `tl-swipe-layer ${className}`;
-  return layer;
+function tlExitEl(el, style) {
+  el.classList.add("tl-exit");
+  Object.assign(el.style, style, { opacity: "0" });
+  setTimeout(() => el.remove(), TL_EXIT_MS);
 }
 
-/** Land the incoming day and drop the track so the host is a normal timeline. */
+/** Land the incoming bars and restore a single .tl-tracks in the plot. */
 function finishTimelineDaySwitch() {
   cancelAnimationFrame(tlSwitchRaf);
   tlSwitchRaf = 0;
   const host = els.timeline;
-  const track = host?.querySelector(".tl-swipe-track");
-  const inn = host?.querySelector(".tl-swipe-in");
-  setTimelineMotionBlur(0, track, inn, host?.querySelector(".tl-swipe-out"));
-  if (inn) {
-    while (inn.firstChild) host.appendChild(inn.firstChild);
+  const viewport = host?.querySelector(".tl-tracks-swipe");
+  const inn = viewport?.querySelector(".tl-swipe-in");
+  const out = viewport?.querySelector(".tl-swipe-out");
+  setTimelineMotionBlur(0, inn, out);
+  if (inn && viewport) {
+    inn.classList.remove("tl-swipe-in");
+    viewport.replaceWith(inn);
+  } else {
+    viewport?.remove();
   }
-  track?.remove();
   host?.classList.remove("is-day-switching");
-  if (host) host.style.removeProperty("height");
   tlSwitching = false;
 }
 
+/** Hall names stay in the gutter; only grow/shrink if a screen appears or leaves. */
+function morphTimelineNames(layout) {
+  const namesBox = els.timeline.querySelector(".tl-names");
+  if (!namesBox) return [];
+  const entered = [];
+  const oldNames = new Map(
+    [...namesBox.querySelectorAll(".tl-lane-name:not(.tl-exit)")].map((el) => [
+      el.dataset.screen,
+      el,
+    ])
+  );
+  let prevName = null;
+  for (const lane of layout.lanes) {
+    let nameEl = oldNames.get(lane.screen);
+    oldNames.delete(lane.screen);
+    if (!nameEl) {
+      nameEl = document.createElement("span");
+      nameEl.className = "tl-lane-name";
+      fillTlLaneName(nameEl, lane.screen);
+      nameEl.style.height = "0px";
+      nameEl.style.opacity = "0";
+      entered.push(() => {
+        nameEl.style.height = "";
+        nameEl.style.opacity = "1";
+      });
+    } else if (
+      !nameEl.querySelector(".tl-lane-full") ||
+      nameEl.dataset.screen !== lane.screen
+    ) {
+      fillTlLaneName(nameEl, lane.screen);
+    }
+    namesBox.insertBefore(
+      nameEl,
+      prevName ? prevName.nextSibling : namesBox.firstChild
+    );
+    prevName = nameEl;
+  }
+  for (const el of oldNames.values()) tlExitEl(el, { height: "0px" });
+  return entered;
+}
+
+/** Hour labels and gridlines fade out and in; they do not swipe or slide. */
+function crossfadeTimelineAxis(layout) {
+  const plot = els.timeline.querySelector(".tl-plot");
+  const hoursBox = plot?.querySelector(".tl-hours");
+  const gridsBox = plot?.querySelector(".tl-gridlines");
+  if (!plot || !hoursBox || !gridsBox) return [];
+  const entered = [];
+
+  const fadeBox = (box, cls, withLabel) => {
+    for (const el of box.querySelectorAll(`.${cls}:not(.tl-exit)`)) {
+      tlExitEl(el, {});
+    }
+    for (const m of layout.marks) {
+      const el = document.createElement("span");
+      el.className = m.minor ? `${cls} minor` : cls;
+      el.dataset.ts = m.ts;
+      el.style.left = `${m.pct}%`;
+      el.style.opacity = "0";
+      if (withLabel) el.textContent = m.label;
+      box.appendChild(el);
+      entered.push(() => {
+        el.style.opacity = "";
+      });
+    }
+  };
+  fadeBox(gridsBox, "tl-gridline", false);
+  fadeBox(hoursBox, "tl-hour", true);
+
+  let nowEl = plot.querySelector(".tl-now:not(.tl-exit)");
+  if (layout.nowPct != null) {
+    if (nowEl) tlExitEl(nowEl, {});
+    const incoming = document.createElement("div");
+    incoming.className = "tl-now";
+    incoming.style.left = `${layout.nowPct}%`;
+    incoming.style.opacity = "0";
+    incoming.appendChild(document.createElement("span")).className =
+      "tl-now-dot";
+    plot.insertBefore(incoming, hoursBox);
+    entered.push(() => {
+      incoming.style.opacity = "";
+    });
+  } else if (nowEl) {
+    tlExitEl(nowEl, {});
+  }
+  return entered;
+}
+
 /**
- * Slide the outgoing day off in the swipe direction and bring the new
- * day in from the other side. Blur is horizontal-only (SVG stdDeviation)
- * and scaled from frame velocity so it reads as motion, not defocus.
- * dir 1 = later day (content moves left), −1 = earlier (content moves right).
+ * Swipe only the showing bars. dir 1 = later day (bars left), −1 = earlier
+ * (bars right). Names stay; times cross-fade. Motion blur is horizontal-only
+ * and scaled from frame velocity.
  */
 function startTimelineDaySwitch(layout, dir) {
   finishTimelineDaySwitch();
   const host = els.timeline;
-  if (!host || !dir) {
+  const plot = host?.querySelector(".tl-plot");
+  const tracksBox =
+    plot?.querySelector(":scope > .tl-tracks") ||
+    plot?.querySelector(".tl-tracks");
+  if (!host || !plot || !tracksBox || !dir) {
     buildTimeline(layout);
     applyTimelineCanvasSize(layout);
     requestAnimationFrame(() => syncTimelineScroll(layout, { smooth: false }));
@@ -3067,33 +3151,43 @@ function startTimelineDaySwitch(layout, dir) {
   }
 
   host.querySelectorAll(".tl-exit").forEach((el) => el.remove());
-  const fromH = host.getBoundingClientRect().height;
 
-  const out = wrapTimelineSwipeLayer("tl-swipe-out");
+  const viewport = document.createElement("div");
+  viewport.className = "tl-tracks-swipe";
+
+  const out = tracksBox;
+  out.classList.add("tl-swipe-out");
   out.setAttribute("aria-hidden", "true");
-  while (host.firstChild) out.appendChild(host.firstChild);
 
-  const inn = wrapTimelineSwipeLayer("tl-swipe-in");
-  buildTimeline(layout, inn);
+  const inn = document.createElement("div");
+  inn.className = "tl-tracks tl-swipe-in";
+  inn.innerHTML = tlTracksInnerHTML(layout);
 
-  const track = document.createElement("div");
-  track.className = "tl-swipe-track";
-  if (dir > 0) track.append(out, inn);
-  else track.append(inn, out);
+  const rail = document.createElement("div");
+  rail.className = "tl-swipe-rail";
+  if (dir > 0) rail.append(out, inn);
+  else rail.append(inn, out);
+  viewport.appendChild(rail);
+
+  const hoursBox = plot.querySelector(".tl-hours");
+  plot.insertBefore(viewport, plot.querySelector(".tl-now") || hoursBox);
 
   host.classList.add("is-day-switching");
-  host.style.height = `${fromH}px`;
-  host.appendChild(track);
-  els.timeline.hidden = false;
+  const entered = [
+    ...morphTimelineNames(layout),
+    ...crossfadeTimelineAxis(layout),
+  ];
   applyTimelineCanvasSize(layout);
   syncTimelineScroll(layout, { smooth: false });
+  if (entered.length) {
+    void plot.offsetWidth;
+    for (const fn of entered) fn();
+  }
 
-  const w = out.offsetWidth || inn.offsetWidth || host.clientWidth || 1;
+  const w = viewport.clientWidth || out.offsetWidth || 1;
   const x0 = dir > 0 ? 0 : -w;
   const x1 = dir > 0 ? -w : 0;
-  track.style.transform = `translate3d(${x0}px, 0, 0)`;
-
-  const toH = inn.offsetHeight || inn.scrollHeight || fromH;
+  rail.style.transform = `translate3d(${x0}px, 0, 0)`;
 
   if (w < 8) {
     finishTimelineDaySwitch();
@@ -3110,8 +3204,7 @@ function startTimelineDaySwitch(layout, dir) {
     const t = Math.min(1, (now - t0) / TL_SWITCH_MS);
     const e = t * t * (3 - 2 * t);
     const x = x0 + (x1 - x0) * e;
-    track.style.transform = `translate3d(${x}px, 0, 0)`;
-    host.style.height = `${fromH + (toH - fromH) * e}px`;
+    rail.style.transform = `translate3d(${x}px, 0, 0)`;
     const maxBlur = Math.min(18, w * 0.045);
     setTimelineMotionBlur(
       Math.min(maxBlur, Math.abs(x - lastX) * 0.42),
@@ -3133,6 +3226,29 @@ function tlBlockInnerHTML(b) {
       <span class="tl-block-end">${escapeHtml(b.endLabel)}</span>`;
 }
 
+function tlBlockButtonHTML(b) {
+  return `<button type="button" class="tl-block ${b.status}${
+    b.estimated ? " estimated" : ""
+  }"
+      style="left:${b.left}%;width:${b.width}%"
+      data-tl-show="${escapeHtml(b.id)}"
+      title="${escapeHtml(b.tip)}"
+      aria-label="${escapeHtml(b.tip)}">
+      ${tlBlockInnerHTML(b)}
+    </button>`;
+}
+
+function tlTracksInnerHTML(layout) {
+  return layout.lanes
+    .map(
+      (l) =>
+        `<div class="tl-track" data-screen="${escapeHtml(l.screen)}">${l.blocks
+          .map(tlBlockButtonHTML)
+          .join("")}</div>`
+    )
+    .join("");
+}
+
 /** Compact hall label for the timeline gutter — "Kinosal"→"Kino", etc. */
 function shortScreenLabel(screen) {
   const name = String(screen || "").trim();
@@ -3152,19 +3268,9 @@ function fillTlLaneName(el, screen) {
   el.innerHTML = tlLaneNameHTML(screen);
 }
 
-function buildTimeline(layout, host = els.timeline) {
-  const blockHTML = (b) => `<button type="button" class="tl-block ${b.status}${
-    b.estimated ? " estimated" : ""
-  }"
-      style="left:${b.left}%;width:${b.width}%"
-      data-tl-show="${escapeHtml(b.id)}"
-      title="${escapeHtml(b.tip)}"
-      aria-label="${escapeHtml(b.tip)}">
-      ${tlBlockInnerHTML(b)}
-    </button>`;
-
+function buildTimeline(layout) {
   els.timeline.hidden = false;
-  host.innerHTML = `
+  els.timeline.innerHTML = `
     <div class="tl-names">${layout.lanes
       .map(
         (l) =>
@@ -3180,14 +3286,7 @@ function buildTimeline(layout, host = els.timeline) {
                 `<span class="tl-gridline${m.minor ? " minor" : ""}" data-ts="${m.ts}" style="left:${m.pct}%"></span>`
             )
             .join("")}</div>
-          <div class="tl-tracks">${layout.lanes
-            .map(
-              (l) =>
-                `<div class="tl-track" data-screen="${escapeHtml(l.screen)}">${l.blocks
-                  .map(blockHTML)
-                  .join("")}</div>`
-            )
-            .join("")}</div>
+          <div class="tl-tracks">${tlTracksInnerHTML(layout)}</div>
           ${
             layout.nowPct != null
               ? `<div class="tl-now" style="left:${layout.nowPct}%"><span class="tl-now-dot"></span></div>`
@@ -3211,14 +3310,15 @@ function buildTimeline(layout, host = els.timeline) {
  * "now" line move — day changes swipe instead of morphing bars.
  */
 function morphTimeline(layout) {
-  const live = timelineLive();
-  const namesBox = live.querySelector(".tl-names");
-  const plot = live.querySelector(".tl-plot");
-  const gridsBox = live.querySelector(".tl-gridlines");
-  const tracksBox = live.querySelector(".tl-tracks");
-  const hoursBox = live.querySelector(".tl-hours");
+  const namesBox = els.timeline.querySelector(".tl-names");
+  const plot = els.timeline.querySelector(".tl-plot");
+  const gridsBox = els.timeline.querySelector(".tl-gridlines");
+  const tracksBox =
+    plot.querySelector(":scope > .tl-tracks") ||
+    plot.querySelector(".tl-tracks");
+  const hoursBox = els.timeline.querySelector(".tl-hours");
   if (!plot || !namesBox || !gridsBox || !tracksBox || !hoursBox) {
-    buildTimeline(layout, live === els.timeline ? els.timeline : live);
+    buildTimeline(layout);
     return;
   }
 
