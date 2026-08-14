@@ -2676,7 +2676,11 @@ function updateJumpTodayBtn() {
   const today = toDayKey(new Date());
   const hasToday = !!state?.shows?.some((s) => s.dayKey === today);
   const away = hasToday && selectedDay && selectedDay !== today;
-  slot.hidden = !away;
+  // Class, not [hidden]: the UA sheet uses display:none !important, which
+  // would skip the slide. inert keeps the collapsed chip off the tab path.
+  slot.classList.toggle("is-out", !away);
+  slot.toggleAttribute("inert", !away);
+  slot.setAttribute("aria-hidden", String(!away));
   btn.setAttribute("aria-label", t("jumpTodayAria"));
   const back = selectedDay > today;
   btn.dataset.dir = back ? "back" : "forward";

@@ -442,8 +442,7 @@ h1 {
 
 /* Cancel the flex gap while collapsed so the strip does not keep an
    8px hole after the chip has slid away. */
-.jump-today-slot[hidden] {
-  display: grid;
+.jump-today-slot.is-out {
   grid-template-columns: 0fr;
   margin-inline-end: -8px;
   visibility: hidden;
@@ -486,7 +485,7 @@ h1 {
     opacity 0.22s ease;
 }
 
-.jump-today-slot[hidden] .jump-today {
+.jump-today-slot.is-out .jump-today {
   transform: translateX(-110%);
   opacity: 0;
   transition:
