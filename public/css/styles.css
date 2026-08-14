@@ -1662,24 +1662,15 @@ a.rating-badge:hover {
 }
 
 .rating-logo {
-  flex: 0 0 auto;
+  flex: 0 0 16px;
+  width: 16px;
+  height: 16px;
   display: block;
 }
 
-.rating-logo.imdb {
-  width: 22px;
-  height: 22px;
-}
-
 .rating-logo.letterboxd {
-  width: 20px;
-  height: 13px;
-}
-
-.rating-logo.tomatoes,
-.rating-logo.metacritic {
-  width: 15px;
-  height: 15px;
+  flex-basis: 24px;
+  width: 24px;
 }
 
 .rating-logo.tomatoes {
