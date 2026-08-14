@@ -472,6 +472,11 @@ function mergeTitle(
   return base;
 }
 
+function voteCount(value: unknown) {
+  const n = Number(String(value ?? "").replace(/[^\d.]/g, ""));
+  return Number.isFinite(n) ? n : 0;
+}
+
 function packPopular(title: Record<string, unknown>) {
   const typeObj = title.titleType && typeof title.titleType === "object"
     ? (title.titleType as Record<string, unknown>)
@@ -488,6 +493,7 @@ function packPopular(title: Record<string, unknown>) {
     plot: packed.plot,
     imdbRating: packed.imdbRating,
     imdbVotes: packed.imdbVotes,
+    votes: voteCount(packed.imdbVotes),
     genre: packed.genre,
     rated: packed.rated,
     runtime: packed.runtime,
@@ -552,40 +558,57 @@ Deno.serve(async (req) => {
         48,
       );
       const today = todayOslo();
-      let titles: unknown[] = [];
-      try {
-        const soon = await imdbGql(COMING_SOON_QUERY, { n, d: today });
-        const edges = Array.isArray(soon?.comingSoon?.edges)
-          ? soon.comingSoon.edges
-          : [];
-        titles = edges
+      const [soonRes, popularRes] = await Promise.allSettled([
+        imdbGql(COMING_SOON_QUERY, { n, d: today }),
+        imdbGql(POPULAR_QUERY, { n }),
+      ]);
+      const soonNodes = soonRes.status === "fulfilled"
+        ? (Array.isArray(soonRes.value?.comingSoon?.edges)
+          ? soonRes.value.comingSoon.edges
+          : [])
           .map((edge: unknown) => {
             const rec = edge && typeof edge === "object"
               ? (edge as Record<string, unknown>)
               : {};
             return rec.node;
           })
-          .filter(Boolean);
-      } catch {
-        titles = [];
-      }
-      if (!titles.length) {
-        const data = await imdbGql(POPULAR_QUERY, { n });
-        titles = Array.isArray(data?.popularTitles?.titles)
-          ? data.popularTitles.titles
-          : [];
-      }
-      const movies = titles
+          .filter(Boolean)
+        : [];
+      const popularNodes = popularRes.status === "fulfilled" &&
+          Array.isArray(popularRes.value?.popularTitles?.titles)
+        ? popularRes.value.popularTitles.titles
+        : [];
+      const soon = soonNodes
         .map((row) => packPopular(row as Record<string, unknown>))
         .filter((row): row is NonNullable<ReturnType<typeof packPopular>> =>
-          Boolean(row && isUpcomingRelease(row.released || row.year, today))
+          Boolean(row && row.poster && isUpcomingRelease(row.released || row.year, today))
+        );
+      const popularUpcoming = popularNodes
+        .map((row) => packPopular(row as Record<string, unknown>))
+        .filter((row): row is NonNullable<ReturnType<typeof packPopular>> =>
+          Boolean(row && row.poster && isUpcomingRelease(row.released || row.year, today))
         )
-        .sort((a, b) => {
-          const da = upcomingDateKey(a.released || a.year);
-          const db = upcomingDateKey(b.released || b.year);
-          return da.localeCompare(db) || a.title.localeCompare(b.title);
-        });
-      return json({ ok: true, movies });
+        .sort((a, b) => (b.votes - a.votes) || a.title.localeCompare(b.title));
+      const seen = new Set(popularUpcoming.map((row) => row.imdbID));
+      const soonKnown = soon
+        .filter((row) =>
+          !seen.has(row.imdbID) && (row.votes >= 400 || Number.parseFloat(row.imdbRating) >= 6.5)
+        )
+        .sort((a, b) => (b.votes - a.votes) || a.title.localeCompare(b.title));
+      const movies = [...popularUpcoming];
+      for (const row of soonKnown) {
+        seen.add(row.imdbID);
+        movies.push(row);
+      }
+      if (movies.length < 6) {
+        for (const row of soon) {
+          if (seen.has(row.imdbID)) continue;
+          seen.add(row.imdbID);
+          movies.push(row);
+          if (movies.length >= 12) break;
+        }
+      }
+      return json({ ok: true, movies: movies.slice(0, 18) });
     }
 
     return json({ error: "Unknown action" }, 400);

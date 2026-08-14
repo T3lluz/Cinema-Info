@@ -3,8 +3,8 @@
 Mobile-friendly schedule for **Buen kino** — same info as the KinoProgram Chrome extension:
 
 - Movies with posters
-- Upcoming movies: Buen titles plus popular IMDb films, three at a time
-- Search any film — results stay visible; tap for poster, plot, and cast headshots
+- Upcoming movies: the next three coming titles (Buen premieres first, then well-known films); Show more pages three at a time, Close snaps back to three
+- Search the Buen program (titles and times) plus more films — results stay visible; tap a film for poster, plot, and cast, or a time to jump there
 - Real start / end times (from eBillett)
 - Live sold / capacity / occupancy per show, with sold-out and few-left flags
 - Progress bar + minutes left for shows playing right now
@@ -194,13 +194,18 @@ back to IMDb's public suggestion + GraphQL endpoints so scores still
 land in the snapshot.
 
 The same tab has an **Upcoming movies** list: Buen titles that have
-not started yet, then popular movies from IMDb. The first three are
-shown; **Show more** reveals three at a time. Search results stay on
-the page after you leave the box. Opening a title shows poster, plot,
-ratings, and a cast grid with headshots. Lookups go through the
-`omdb-lookup` Edge Function so the API key never ships in the static
-site; set `OMDB_API_KEY` as a **Supabase function secret** as well
-(same value as the Actions secret).
+not started yet, then popular movies from IMDb (obscure coming-soon
+dumps are filtered out). The next **three** titles are shown;
+**Show more** reveals three at a time; **Close** collapses back to
+the original three. Search indexes
+the Buen programme — film titles and start times — and then more
+films from OMDb. Results stay on the page after you leave the box,
+grouped as *At Buen*, *Times*, and *More movies*. Opening a title
+shows poster, plot, ratings, and a cast grid with headshots; opening
+a time jumps to that showing. Lookups go through the `omdb-lookup`
+Edge Function so the API key never ships in the static site; set
+`OMDB_API_KEY` as a **Supabase function secret** as well (same value
+as the Actions secret).
 
 The nightly run matters for history: Buen’s API drops a show the moment
 it starts, so the script re-asks DX about the showings that have left the
@@ -232,8 +237,13 @@ the list there and then.
 
 ```bash
 OMDB_API_KEY=… node scripts/fetch-data.mjs   # key optional; IMDb still fills without it
-python3 -m http.server 8080 --directory public
+node scripts/dev-server.mjs                  # http://127.0.0.1:8080/ — reloads on save
 ```
+
+Leave that process running. It serves `public/` and refreshes the open
+tab when HTML, JS, or data changes; CSS swaps in without a full reload.
+`python3 -m http.server 8080 --directory public` still works if you only
+need a static copy.
 
 The repo root is tooling and docs. The site itself lives in `public/`:
 

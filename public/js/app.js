@@ -184,21 +184,27 @@ const I18N = {
     moviesBack: "Tilbake",
     noMovies: "Ingen filmer i programmet.",
     upcomingTitle: "Kommende filmer",
-    upcomingSubtitle: "Første visning først — bare filmer som ikke har startet",
+    upcomingSubtitle: "Neste premiere på Buen, deretter de mest kjente",
     upcomingCount: "{n} filmer",
     upcomingNext: "Første visning",
     upcomingOpen: "Åpne {title}",
     upcomingShowMore: "Vis mer",
+    upcomingShowLess: "Lukk",
     upcomingOnBuen: "På Buen",
     upcomingComingSoon: "Kommer",
     upcomingLoading: "Henter filmer…",
     programSection: "I programmet",
     programSectionSub: "Alle tider, neste visning først",
-    searchPlaceholder: "Søk etter en film…",
-    searchAria: "Søk etter en film på OMDb",
-    searchHint: "Søketreffene blir liggende — trykk en film for plakat, omtale og rolleliste",
+    searchPlaceholder: "Søk i programmet…",
+    searchAria: "Søk etter film, dag eller klokkeslett på Buen",
+    searchHint:
+      "Film, dag eller klokkeslett — treffene blir liggende. Trykk en film for plakat, eller en tid for å hoppe dit.",
     searchClear: "Tøm søk",
     searchResults: "Søketreff",
+    searchAtBuen: "På Buen",
+    searchTimes: "Tider",
+    searchMoreFilms: "Flere filmer",
+    searchOpenShow: "Vis {title} {time}",
     searchNoResults: "Ingen treff for «{q}».",
     searchError: "Kunne ikke søke akkurat nå.",
     searchLoading: "Søker…",
@@ -389,21 +395,27 @@ const I18N = {
     moviesBack: "Back",
     noMovies: "No movies in the program.",
     upcomingTitle: "Upcoming movies",
-    upcomingSubtitle: "First showing first — titles that have not started yet",
+    upcomingSubtitle: "Next premiere at Buen, then the best-known titles",
     upcomingCount: "{n} movies",
     upcomingNext: "First showing",
     upcomingOpen: "Open {title}",
     upcomingShowMore: "Show more",
+    upcomingShowLess: "Close",
     upcomingOnBuen: "At Buen",
     upcomingComingSoon: "Coming soon",
     upcomingLoading: "Loading movies…",
     programSection: "In the program",
     programSectionSub: "All times, next showing first",
-    searchPlaceholder: "Search for a movie…",
-    searchAria: "Search for a movie on OMDb",
-    searchHint: "Results stay put — tap a film for poster, plot, and cast",
+    searchPlaceholder: "Search the program…",
+    searchAria: "Search for a movie, day, or time at Buen",
+    searchHint:
+      "Movie, day, or time — results stay put. Tap a film for the poster, or a time to jump there.",
     searchClear: "Clear search",
     searchResults: "Search results",
+    searchAtBuen: "At Buen",
+    searchTimes: "Times",
+    searchMoreFilms: "More movies",
+    searchOpenShow: "Show {title} {time}",
     searchNoResults: "No results for “{q}”.",
     searchError: "Could not search right now.",
     searchLoading: "Searching…",
@@ -672,6 +684,8 @@ const expandedMovieUpcoming = new Set();
  * cannot steal the query, the caret, or an open result list. */
 let omdbQuery = "";
 let omdbResults = [];
+let searchLocalMovies = [];
+let searchLocalShows = [];
 let omdbActive = -1;
 let omdbStatus = "";
 let omdbTimer = 0;
@@ -682,8 +696,6 @@ let omdbSheetStatus = "";
 let omdbSheetInProgram = "";
 let omdbCastOpen = false;
 let omdbSheetTimer = 0;
-/** Source tile/card the movie sheet should expand from. */
-let omdbSheetOrigin = null;
 /** IMDb coming-soon titles for the upcoming timeline — kept across paints. */
 let upcomingRemote = [];
 let upcomingRemoteStatus = "";
@@ -739,6 +751,11 @@ let daySwipeDragging = false;
  * touched when it really has something new to say.
  */
 const painted = new WeakMap();
+/** Neighbor-day markup, warmed while idle so a swipe does not parse a
+ * full card list on the first move. Dropped whenever the programme
+ * snapshot is replaced. */
+const dayHtmlCache = new Map();
+let dayHtmlPrefetch = 0;
 
 /**
  * Write `html` into `host` if it differs; true when the DOM changed.
@@ -770,6 +787,15 @@ function focusSelectorWithin(host) {
   }
   if (el.dataset?.movieClose != null) {
     return `[data-movie-close="${cssEscape(el.dataset.movieClose)}"]`;
+  }
+  if (el.dataset?.upcomingMore != null) {
+    return `[data-upcoming-more="${cssEscape(el.dataset.upcomingMore)}"]`;
+  }
+  if (el.dataset?.searchShow) {
+    return `[data-search-show="${cssEscape(el.dataset.searchShow)}"]`;
+  }
+  if (el.dataset?.searchMovie) {
+    return `[data-search-movie="${cssEscape(el.dataset.searchMovie)}"]`;
   }
   for (const [key, attr] of [
     ["seatToggle", "data-seat-toggle"],
@@ -921,7 +947,15 @@ async function init() {
   });
 
   if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("./sw.js").catch(() => {});
+    const local =
+      location.hostname === "localhost" || location.hostname === "127.0.0.1";
+    if (local) {
+      navigator.serviceWorker.getRegistrations().then((regs) => {
+        for (const r of regs) r.unregister();
+      });
+    } else {
+      navigator.serviceWorker.register("./sw.js").catch(() => {});
+    }
   }
 
   await load({ forceLive: true });
@@ -1009,7 +1043,11 @@ function setupSeatCharts() {
 
     const upcomingMore = e.target.closest?.("[data-upcoming-more]");
     if (upcomingMore) {
-      upcomingShown += UPCOMING_PAGE;
+      if (upcomingMore.dataset.upcomingMore === "less") {
+        upcomingShown = UPCOMING_PAGE;
+      } else {
+        upcomingShown += UPCOMING_PAGE;
+      }
       renderMovies();
       return;
     }
@@ -1019,6 +1057,20 @@ function setupSeatCharts() {
       const imdbID = upcomingMovie.dataset.omdbId;
       if (imdbID) openOmdbTitle(imdbID, upcomingMovie);
       else openMovieInProgram(upcomingMovie.dataset.upcomingMovie);
+      return;
+    }
+
+    const searchShow = e.target.closest?.("[data-search-show]");
+    if (searchShow) {
+      focusShowFromTimeline(searchShow.dataset.searchShow);
+      return;
+    }
+
+    const searchMovie = e.target.closest?.("[data-search-movie]");
+    if (searchMovie) {
+      const imdbID = searchMovie.dataset.omdbId;
+      if (imdbID) openOmdbTitle(imdbID, searchMovie);
+      else openMovieInProgram(searchMovie.dataset.searchMovie);
       return;
     }
 
@@ -1133,7 +1185,7 @@ function programDays() {
  * two motions stay identical. Callers must land any in-flight slide
  * (`tabAnimCleanup?.()`) before swapping DOM for a new one.
  */
-function playSharedAxisTransition({ incoming, outgoing, forward, host, onDone }) {
+function playSharedAxisTransition({ incoming, outgoing, forward, host, onDone, scrollY }) {
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   if (reduceMotion.matches) {
     window.scrollTo(0, 0);
@@ -1141,9 +1193,9 @@ function playSharedAxisTransition({ incoming, outgoing, forward, host, onDone })
     return;
   }
 
-  const scrollY = window.scrollY || 0;
+  const y = scrollY ?? (window.scrollY || 0);
   outgoing.hidden = false;
-  outgoing.style.setProperty("--tab-shift", `${-scrollY}px`);
+  outgoing.style.setProperty("--tab-shift", `${-y}px`);
   outgoing.classList.add(
     "tab-ghost",
     forward ? "tab-out-left" : "tab-out-right"
@@ -1194,10 +1246,10 @@ function transitionToDay(day, { tabScroll = "smooth" } = {}) {
   const content = els.content;
   const ghost = els.dayGhost;
   const forward = to > from;
-  const html = buildDayListHTML(day);
+  const html = dayListHTML(day);
 
   const paintIncoming = () => {
-    setSelectedDay(day, { tabScroll });
+    setSelectedDay(day, { tabScroll, timeline: false });
     content.classList.add("no-anim");
     content.dataset.key = day;
     paint(content, html);
@@ -1210,24 +1262,33 @@ function transitionToDay(day, { tabScroll = "smooth" } = {}) {
   if (reduceMotion || !ghost) {
     paintIncoming();
     window.scrollTo(0, 0);
+    renderTimeline();
     releaseDayRender({ discardQueued: true });
     enrichVisibleDay();
+    prefetchNeighborDayHtml();
     return true;
   }
 
   holdDayRender = true;
+  const scrollY = window.scrollY || 0;
   ghost.replaceChildren(...[...content.childNodes]);
+  // Scroll first so the incoming list paints at the top — painting it
+  // at the old offset, then jumping, is the tap-path hitch.
+  window.scrollTo(0, 0);
   paintIncoming();
   playSharedAxisTransition({
     incoming: content,
     outgoing: ghost,
     forward,
     host: els.daySwipe,
+    scrollY,
     onDone() {
       ghost.replaceChildren();
       releaseDayRender({ discardQueued: false });
+      prefetchNeighborDayHtml();
     },
   });
+  requestAnimationFrame(() => renderTimeline());
   enrichVisibleDay();
   return true;
 }
@@ -1236,9 +1297,9 @@ function transitionToDay(day, { tabScroll = "smooth" } = {}) {
  * Detect a horizontal swipe on the day tab. The finger scrubs the same
  * shared-axis slide as tab switching (incoming from off-screen at 0.98
  * scale, outgoing to 24% fading). Release either finishes that slide or
- * eases back. Day pills and the timeline switch at halfway so the header
- * stays in step with the page. Pill taps still play the CSS keyframe
- * version.
+ * eases back. Pills follow at halfway; the timeline waits for settle so
+ * a header rebuild cannot hitch the drag. Pill taps still play the CSS
+ * keyframe version.
  *
  * Pointer capture on `.main` so empty space below a short day still
  * pages. touchmove preventDefault after lock so scroll cannot steal
@@ -1272,13 +1333,16 @@ function setupDaySwipe() {
   let fromDay = "";
   let headerAhead = false;
   let finishSettling = null;
+  let settleGen = 0;
 
   const axisP = () =>
     width ? Math.min(1, Math.abs(curX) / width) : 0;
 
   const applyAxis = (p, dir) => {
-    ghost.style.transform = `translate3d(${dir * AXIS_IN_START_PCT * (1 - p)}%, 0, 0) scale(${0.98 + AXIS_SCALE * p})`;
-    content.style.transform = `translate3d(${dir * -AXIS_OUT_PCT * p}%, 0, 0) scale(${1 - AXIS_SCALE * p})`;
+    const inn = 0.98 + AXIS_SCALE * p;
+    const out = 1 - AXIS_SCALE * p;
+    ghost.style.transform = `translate3d(${dir * AXIS_IN_START_PCT * (1 - p)}%, 0, 0) scale3d(${inn}, ${inn}, 1)`;
+    content.style.transform = `translate3d(${dir * -AXIS_OUT_PCT * p}%, 0, 0) scale3d(${out}, ${out}, 1)`;
     content.style.opacity = String(1 - p);
   };
 
@@ -1296,21 +1360,23 @@ function setupDaySwipe() {
   const fillIncoming = (day) => {
     if (!day || !ghost) return false;
     if (day === incomingDay) return true;
-    incomingHtml = buildDayListHTML(day);
+    incomingHtml = dayListHTML(day);
     incomingDay = day;
     ghost.classList.add("no-anim");
     ghost.innerHTML = incomingHtml;
     return true;
   };
 
-  /** Day pills + timeline follow the page at halfway, not at land. */
+  /** Day pills follow the page at halfway; the timeline waits for settle. */
   const syncHeader = (p, force) => {
     if (!fromDay) return;
     const crossIn = headerAhead ? 0.42 : 0.5;
     const wantIncoming =
       force === "in" || (force !== "out" && p >= crossIn);
     const want = wantIncoming && incomingDay ? incomingDay : fromDay;
-    if (want !== selectedDay) setSelectedDay(want, { tabScroll: "auto" });
+    if (want !== selectedDay) {
+      setSelectedDay(want, { tabScroll: "auto", persist: false, timeline: false });
+    }
     headerAhead = want === incomingDay;
   };
 
@@ -1341,7 +1407,9 @@ function setupDaySwipe() {
     headerAhead = false;
     clearAxisStyles();
     mode = "idle";
+    savePrefs();
     releaseDayRender({ discardQueued: false });
+    prefetchNeighborDayHtml();
   };
 
   const finishCommit = () => {
@@ -1349,9 +1417,14 @@ function setupDaySwipe() {
     daySwipeDragging = false;
     const day = incomingDay;
     if (day) {
-      setSelectedDay(day, { tabScroll: "auto" });
+      setSelectedDay(day, { tabScroll: "auto", persist: false, timeline: false });
       content.classList.add("no-anim");
       content.dataset.key = day;
+      // Rest the outgoing layer under the incoming ghost before the
+      // swap, so clearing transforms cannot flash the old day.
+      content.style.transition = "none";
+      content.style.transform = "none";
+      content.style.opacity = "1";
       content.replaceChildren(...[...ghost.childNodes]);
       painted.set(content, incomingHtml);
       observeAutoSeatCharts();
@@ -1362,9 +1435,18 @@ function setupDaySwipe() {
     fromDay = "";
     headerAhead = false;
     ghost.replaceChildren();
-    clearAxisStyles();
-    mode = "idle";
-    releaseDayRender({ discardQueued: false });
+    ghost.hidden = true;
+    savePrefs();
+    const gen = settleGen;
+    // Drop will-change after the swap has painted — demoting the layer
+    // on the same frame as the DOM move is a one-frame hitch.
+    requestAnimationFrame(() => {
+      if (gen !== settleGen) return;
+      clearAxisStyles();
+      mode = "idle";
+      releaseDayRender({ discardQueued: false });
+      prefetchNeighborDayHtml();
+    });
   };
 
   const settleTo = (commit, dir) => {
@@ -1372,18 +1454,25 @@ function setupDaySwipe() {
     syncHeader(commit ? 1 : 0, commit ? "in" : "out");
     const target = commit ? 1 : 0;
     const p = axisP();
+    const remain = Math.abs(p - target);
     const land = () => (commit ? finishCommit() : finishCancel());
 
-    if (reduceMotion.matches || Math.abs(p - target) < 0.02) {
+    if (reduceMotion.matches || remain < 0.008) {
+      requestAnimationFrame(() => renderTimeline());
       land();
       return;
     }
 
     mode = "settling";
-    const dur = `${AXIS_MS}ms`;
+    // Flush the last finger sample so the CSS transition starts from
+    // here, not from a stale pre-drag transform.
+    void content.offsetWidth;
+    const durMs = Math.max(220, Math.round(AXIS_MS * (0.4 + 0.6 * remain)));
+    const dur = `${durMs}ms`;
     content.style.transition = `transform ${dur} ${AXIS_EASE}, opacity ${dur} ${AXIS_EASE}`;
     ghost.style.transition = `transform ${dur} ${AXIS_EASE}`;
     applyAxis(target, dir);
+    requestAnimationFrame(() => renderTimeline());
 
     const done = () => {
       if (finishSettling !== done) return;
@@ -1394,7 +1483,7 @@ function setupDaySwipe() {
     const onEnd = (e) => {
       if (e.target === ghost) done();
     };
-    const fallback = setTimeout(done, SHARED_AXIS_MS);
+    const fallback = setTimeout(done, durMs + 80);
     finishSettling = done;
     ghost.addEventListener("transitionend", onEnd);
   };
@@ -1403,6 +1492,7 @@ function setupDaySwipe() {
     if (view.hidden) return;
     if (e.pointerType === "mouse" || !e.isPrimary || pointerId !== null) return;
     if (mode === "settling") finishSettling?.();
+    settleGen += 1;
     if (tabAnimCleanup) tabAnimCleanup();
     pointerId = e.pointerId;
     startX = lastX = e.clientX;
@@ -1774,6 +1864,7 @@ function hapticTarget(el) {
       ".tile-shows-toggle",
       ".tile-expand-back",
       ".upcoming-card",
+      ".upcoming-more",
       ".omdb-hit",
       ".omdb-sheet-close",
       ".omdb-sheet-btn",
@@ -2248,7 +2339,10 @@ function applyLanguage() {
   document
     .querySelector(".omdb-sheet-close")
     ?.setAttribute("aria-label", t("omdbClose"));
-  if (omdbResults.length || omdbStatus) renderOmdbLive();
+  if (omdbResults.length || omdbStatus || searchLocalMovies.length || searchLocalShows.length) {
+    if (String(omdbQuery || "").trim().length >= 2) refreshLocalSearch(omdbQuery);
+    renderOmdbLive();
+  }
   if (omdbSheetId && !els.omdbSheet?.classList.contains("is-leaving")) {
     renderOmdbSheet();
   }
@@ -2443,6 +2537,7 @@ async function load({ forceLive = false, silent = false, ifChanged = false } = {
       updatedAt: data.updatedAt,
       shows,
     };
+    dayHtmlCache.clear();
 
     populateFilters();
     setStatus(
@@ -2643,10 +2738,10 @@ function populateFilters() {
  * swipe can start the header moving while the page is still gliding.
  * Returns true when the day actually changed.
  */
-function setSelectedDay(day, { tabScroll = "smooth" } = {}) {
+function setSelectedDay(day, { tabScroll = "smooth", persist = true, timeline = true } = {}) {
   if (!day || day === selectedDay || !state?.shows) return false;
   selectedDay = day;
-  savePrefs();
+  if (persist) savePrefs();
   // Update selection in place so the liquid indicator can travel.
   els.dayTabs.querySelectorAll(".day-tab").forEach((b) => {
     b.setAttribute("aria-selected", String(b.dataset.day === day));
@@ -2658,7 +2753,7 @@ function setSelectedDay(day, { tabScroll = "smooth" } = {}) {
   scrollSelectedDayTabIntoView({
     behavior: tabScroll === "smooth" ? "smooth" : "auto",
   });
-  renderTimeline();
+  if (timeline) renderTimeline();
   return true;
 }
 
@@ -2764,6 +2859,34 @@ function dayShows(day) {
     .sort((a, b) => a.start - b.start);
 }
 
+function dayListHTML(day) {
+  const hit = dayHtmlCache.get(day);
+  if (hit != null) return hit;
+  const html = buildDayListHTML(day);
+  dayHtmlCache.set(day, html);
+  return html;
+}
+
+function prefetchNeighborDayHtml() {
+  const token = ++dayHtmlPrefetch;
+  const days = programDays();
+  const i = days.indexOf(selectedDay);
+  if (i < 0) return;
+  const warm = () => {
+    if (token !== dayHtmlPrefetch || !state?.shows) return;
+    for (const day of [days[i - 1], days[i + 1]]) {
+      if (day && !dayHtmlCache.has(day)) {
+        dayHtmlCache.set(day, buildDayListHTML(day));
+      }
+    }
+  };
+  if (typeof requestIdleCallback === "function") {
+    requestIdleCallback(warm, { timeout: 480 });
+  } else {
+    setTimeout(warm, 0);
+  }
+}
+
 /** Full markup for one day's list; used for the visible day and for the
  * peek panes while swiping between days. */
 function buildDayListHTML(day) {
@@ -2828,8 +2951,12 @@ function renderDay() {
   renderTimeline();
   markDoneDays();
 
-  if (!paint(els.content, buildDayListHTML(selectedDay))) return;
+  const html = buildDayListHTML(selectedDay);
+  dayHtmlCache.clear();
+  dayHtmlCache.set(selectedDay, html);
+  if (!paint(els.content, html)) return;
   observeAutoSeatCharts();
+  prefetchNeighborDayHtml();
 }
 
 function showEndOf(show) {
@@ -4919,6 +5046,44 @@ function groupUpcomingDays(feed) {
   return groups;
 }
 
+function parseCount(value) {
+  const n = Number(String(value ?? "").replace(/[^\d.]/g, ""));
+  return Number.isFinite(n) ? n : 0;
+}
+
+function remotePopularity(row) {
+  const votes = parseCount(row?.votes ?? row?.imdbVotes);
+  const rating = Number.parseFloat(row?.imdbRating);
+  return votes * 10 + (Number.isFinite(rating) ? rating * 800 : 0);
+}
+
+/** Keep the IMDb filler to titles people actually know. */
+function curateRemoteUpcoming(rows, todayKey) {
+  const scored = [];
+  for (const row of rows || []) {
+    if (!row?.title || !row.poster) continue;
+    if (!isFutureDay(releaseDayKey(row.released || row.year), todayKey)) {
+      continue;
+    }
+    const votes = parseCount(row.votes ?? row.imdbVotes);
+    const rating = Number.parseFloat(row.imdbRating);
+    const known = votes >= 400 || (Number.isFinite(rating) && rating >= 6.5);
+    scored.push({
+      row,
+      known,
+      pop: remotePopularity(row),
+      day: releaseDayKey(row.released || row.year),
+    });
+  }
+  const known = scored.filter((x) => x.known).sort((a, b) => b.pop - a.pop);
+  const rest = scored
+    .filter((x) => !x.known)
+    .sort((a, b) => a.day.localeCompare(b.day) || b.pop - a.pop);
+  const picked =
+    known.length >= 3 ? known : [...known, ...rest.slice(0, Math.max(0, 6 - known.length))];
+  return picked.slice(0, 12).map((x) => x.row);
+}
+
 function buildUpcomingFeed(movies, now) {
   const todayKey = toDayKey(now);
   const programmedIds = new Set();
@@ -4929,22 +5094,24 @@ function buildUpcomingFeed(movies, now) {
     programmedTitles.add(movie.title.toLowerCase());
   }
 
-  const local = upcomingMovies(movies, now).map((movie) => ({
-    source: "buen",
-    imdbID: movieImdbId(movie),
-    title: movie.title,
-    posterUrl: movie.posterUrl,
-    year: "",
-    movie,
-  }));
+  const local = upcomingMovies(movies, now)
+    .map((movie) => ({
+      source: "buen",
+      imdbID: movieImdbId(movie),
+      title: movie.title,
+      posterUrl: movie.posterUrl,
+      year: "",
+      movie,
+    }))
+    .filter((item) => upcomingItemDay(item));
 
-  const remote = upcomingRemote
+  const remote = curateRemoteUpcoming(upcomingRemote, todayKey)
     .filter((row) => {
       const id = String(row.imdbID || "");
       const title = String(row.title || "").toLowerCase();
       if (id && programmedIds.has(id)) return false;
       if (title && programmedTitles.has(title)) return false;
-      return isFutureDay(releaseDayKey(row.released || row.year), todayKey);
+      return true;
     })
     .map((row) => ({
       source: "imdb",
@@ -4953,16 +5120,12 @@ function buildUpcomingFeed(movies, now) {
       posterUrl: row.poster,
       year: row.year,
       movie: row,
-    }));
+    }))
+    .filter((item) => upcomingItemDay(item));
 
-  return [...local, ...remote]
-    .filter((item) => upcomingItemDay(item))
-    .sort((a, b) => {
-      const day = upcomingItemDay(a).localeCompare(upcomingItemDay(b));
-      if (day) return day;
-      if (a.source !== b.source) return a.source === "buen" ? -1 : 1;
-      return a.title.localeCompare(b.title, lang === "en" ? "en" : "nb");
-    });
+  // Buen premieres first (next showing), then popular titles — do not
+  // bury the cinema's own films under a same-day IMDb dump.
+  return [...local, ...remote];
 }
 
 function ensureUpcomingRemote() {
@@ -4984,11 +5147,27 @@ function ensureUpcomingRemote() {
 }
 
 function renderUpcomingSection(feed, now) {
-  const groups = groupUpcomingDays(feed);
-  const visible = groups.slice(0, upcomingShown);
-  const remaining = Math.max(0, groups.length - visible.length);
+  const total = feed.length;
+  if (upcomingShown > total && total >= UPCOMING_PAGE) upcomingShown = total;
+  if (upcomingShown < UPCOMING_PAGE) upcomingShown = UPCOMING_PAGE;
+  const visibleItems = feed.slice(0, upcomingShown);
+  const groups = groupUpcomingDays(visibleItems);
+  const remaining = Math.max(0, total - visibleItems.length);
+  const canLess = upcomingShown > UPCOMING_PAGE && total > UPCOMING_PAGE;
   const loading = upcomingRemoteStatus === "loading";
-  const count = feed.length || visible.reduce((n, g) => n + g.items.length, 0);
+  const count = total || visibleItems.length;
+  const actions = [
+    remaining
+      ? `<button type="button" class="upcoming-more" data-upcoming-more="more">${escapeHtml(
+          t("upcomingShowMore")
+        )}</button>`
+      : "",
+    canLess
+      ? `<button type="button" class="upcoming-more less" data-upcoming-more="less">${escapeHtml(
+          t("upcomingShowLess")
+        )}</button>`
+      : "",
+  ].filter(Boolean);
 
   return `
     <section class="movies-section upcoming-section" aria-labelledby="upcoming-heading">
@@ -5004,7 +5183,7 @@ function renderUpcomingSection(feed, now) {
         )}</span>
       </div>
       <div class="upcoming-timeline">
-        ${visible
+        ${groups
           .map(
             (group, i) => `
           <div class="upcoming-day${
@@ -5018,14 +5197,12 @@ function renderUpcomingSection(feed, now) {
           )
           .join("")}
         ${
-          remaining
-            ? `<button type="button" class="upcoming-more" data-upcoming-more>${escapeHtml(
-                t("upcomingShowMore")
-              )}</button>`
+          actions.length
+            ? `<div class="upcoming-actions">${actions.join("")}</div>`
             : ""
         }
         ${
-          loading && !remaining
+          loading && !visibleItems.length
             ? `<p class="upcoming-loading"><span class="spinner" aria-hidden="true"></span>${escapeHtml(
                 t("upcomingLoading")
               )}</p>`
@@ -5145,6 +5322,238 @@ function openMovieInProgram(title) {
   }
 }
 
+function foldText(value) {
+  return String(value || "")
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/æ/g, "ae")
+    .replace(/ø/g, "o")
+    .replace(/å/g, "a");
+}
+
+function searchTokens(value) {
+  return foldText(value)
+    .replace(/[^\p{L}\p{N}:.]+/gu, " ")
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean);
+}
+
+function hayHasTokens(hay, tokens) {
+  if (!tokens.length) return false;
+  const folded = foldText(hay);
+  return tokens.every((tok) => folded.includes(tok));
+}
+
+const SEARCH_STOP = new Set([
+  "kl",
+  "sal",
+  "i",
+  "dag",
+  "gar",
+  "gaar",
+  "morgen",
+  "today",
+  "tomorrow",
+  "yesterday",
+  "at",
+  "the",
+  "on",
+]);
+
+function weekdayNameMap() {
+  const map = new Map();
+  const add = (name, dow) => {
+    const folded = foldText(name);
+    if (folded.length < 3) return;
+    map.set(folded, dow);
+    map.set(folded.slice(0, 3), dow);
+  };
+  weekdays().forEach((name, i) => add(name, i));
+  [
+    "sunday",
+    "monday",
+    "tuesday",
+    "wednesday",
+    "thursday",
+    "friday",
+    "saturday",
+  ].forEach((name, i) => add(name, i));
+  [
+    "sondag",
+    "mandag",
+    "tirsdag",
+    "onsdag",
+    "torsdag",
+    "fredag",
+    "lordag",
+  ].forEach((name, i) => add(name, i));
+  return map;
+}
+
+function parseSearchIntent(q) {
+  const folded = foldText(q);
+  const tokens = searchTokens(q);
+  const now = new Date();
+  const todayKey = toDayKey(now);
+  const dayKeys = new Set();
+  const dows = new Set();
+  const addOffset = (n) => {
+    const d = new Date(now);
+    d.setDate(d.getDate() + n);
+    dayKeys.add(toDayKey(d));
+  };
+  if (/(^|\s)(i\s*dag|idag|today)(\s|$)/.test(folded)) addOffset(0);
+  if (/(^|\s)(i\s*morgen|imorgen|tomorrow)(\s|$)/.test(folded)) addOffset(1);
+  if (/(^|\s)(i\s*gar|igar|igaar|yesterday)(\s|$)/.test(folded)) addOffset(-1);
+
+  const names = weekdayNameMap();
+  for (const tok of tokens) {
+    if (names.has(tok)) dows.add(names.get(tok));
+  }
+
+  let hour = null;
+  let minute = null;
+  const time = folded.match(/\b(?:kl\s*)?(\d{1,2})(?:[:.](\d{2}))?\b/);
+  if (time) {
+    const h = Number(time[1]);
+    const m = time[2] != null ? Number(time[2]) : null;
+    const explicit = /[:.]/.test(time[0]) || /\bkl\b/.test(time[0]);
+    if (
+      h >= 0 &&
+      h <= 23 &&
+      (m == null || (m >= 0 && m <= 59)) &&
+      (explicit || (h >= 10 && h <= 23 && tokens.length <= 3))
+    ) {
+      hour = h;
+      minute = m;
+    }
+  }
+
+  const screenMatch = folded.match(/\bsal\s*(\d+)\b/);
+  const screen = screenMatch ? `sal ${screenMatch[1]}` : "";
+
+  const leftover = tokens.filter((tok) => {
+    if (SEARCH_STOP.has(tok) || names.has(tok)) return false;
+    if (/^\d{1,2}([:.]\d{2})?$/.test(tok)) return false;
+    return /[\p{L}]/u.test(tok);
+  });
+
+  return { folded, tokens, leftover, dayKeys, dows, hour, minute, screen, todayKey };
+}
+
+function remoteSearchQuery(q, intent) {
+  const words = (intent?.leftover || []).filter((tok) => tok.length >= 2);
+  return words.join(" ").trim() || "";
+}
+
+function showMatchesIntent(show, intent) {
+  if (intent.dayKeys.size && !intent.dayKeys.has(show.dayKey)) return false;
+  if (intent.dows.size && !intent.dows.has(show.start.getDay())) return false;
+  if (intent.screen && !foldText(show.screen).includes(intent.screen)) return false;
+  if (intent.hour != null) {
+    if (show.start.getHours() !== intent.hour) return false;
+    if (intent.minute != null && show.start.getMinutes() !== intent.minute) {
+      return false;
+    }
+  }
+  return true;
+}
+
+function movieSearchHay(movie) {
+  return [
+    movie.title,
+    movie.director,
+    ...(Array.isArray(movie.genres) ? movie.genres : []),
+    movie.age,
+    formatAge(movie.age),
+  ]
+    .filter(Boolean)
+    .join(" ");
+}
+
+function refreshLocalSearch(q) {
+  searchLocalMovies = [];
+  searchLocalShows = [];
+  if (!state?.shows || String(q || "").trim().length < 2) return;
+  const intent = parseSearchIntent(q);
+  const hasWhen = Boolean(
+    intent.dayKeys.size ||
+      intent.dows.size ||
+      intent.hour != null ||
+      intent.screen
+  );
+  const movies = groupMovies();
+  const now = new Date();
+  const titleHits = [];
+
+  for (const movie of movies) {
+    const titleMatch = hayHasTokens(movieSearchHay(movie), intent.leftover);
+    if (!titleMatch && intent.leftover.length) continue;
+    if (!titleMatch && !hasWhen) continue;
+    const shows = movie.shows.filter((s) => showMatchesIntent(s, intent));
+    if (!shows.length && hasWhen) continue;
+    const pool = shows.length ? shows : movie.shows;
+    const upcoming = pool.filter((s) => !isDone(s, now));
+    const next = upcoming[0] || null;
+    titleHits.push({
+      movie,
+      shows: (upcoming.length ? upcoming : pool).slice(0, 3),
+      next,
+      score: titleMatch ? 2 : 1,
+    });
+  }
+
+  titleHits.sort((a, b) => {
+    if (a.score !== b.score) return b.score - a.score;
+    const an = a.next?.start?.getTime() ?? Infinity;
+    const bn = b.next?.start?.getTime() ?? Infinity;
+    if (an !== bn) return an - bn;
+    return a.movie.title.localeCompare(b.movie.title, lang === "en" ? "en" : "nb");
+  });
+
+  if (intent.leftover.length || !hasWhen) {
+    searchLocalMovies = titleHits.slice(0, 6);
+  }
+
+  const showPool = hasWhen
+    ? state.shows.filter((s) => showMatchesIntent(s, intent))
+    : titleHits.flatMap((hit) => hit.shows);
+  const seen = new Set();
+  searchLocalShows = showPool
+    .filter((show) => {
+      if (seen.has(show.id)) return false;
+      seen.add(show.id);
+      return true;
+    })
+    .sort((a, b) => {
+      const aDone = isDone(a, now);
+      const bDone = isDone(b, now);
+      if (aDone !== bDone) return aDone ? 1 : -1;
+      return a.start - b.start;
+    })
+    .slice(0, 8);
+}
+
+function collectSearchHits() {
+  const hits = [];
+  for (const hit of searchLocalMovies) {
+    hits.push({ kind: "movie", key: `movie:${hit.movie.title}`, hit });
+  }
+  for (const show of searchLocalShows) {
+    hits.push({ kind: "show", key: `show:${show.id}`, show });
+  }
+  const localTitles = new Set(
+    searchLocalMovies.map((hit) => hit.movie.title.toLowerCase())
+  );
+  for (const row of omdbResults) {
+    if (localTitles.has(String(row.title || "").toLowerCase())) continue;
+    hits.push({ kind: "omdb", key: `omdb:${row.imdbID}`, row });
+  }
+  return hits;
+}
+
 function setupOmdbSearch() {
   const input = els.omdbQuery;
   if (!input) return;
@@ -5164,30 +5573,46 @@ function setupOmdbSearch() {
   });
 
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && isOmdbSheetOpen()) {
+    if (e.key !== "Escape") return;
+    if (isOmdbSheetOpen()) {
       e.preventDefault();
       closeOmdbSheet();
+      return;
+    }
+    if (String(omdbQuery || "").trim() || omdbStatus) {
+      e.preventDefault();
+      omdbQuery = "";
+      if (input) input.value = "";
+      if (els.omdbClear) els.omdbClear.hidden = true;
+      clearOmdbSearch();
+      input?.focus();
     }
   });
 }
 
 function onOmdbKeydown(e) {
+  const hits = collectSearchHits();
   if (e.key === "ArrowDown" || e.key === "ArrowUp") {
-    if (!omdbResults.length) return;
+    if (!hits.length) return;
     e.preventDefault();
     const delta = e.key === "ArrowDown" ? 1 : -1;
-    omdbActive = (omdbActive + delta + omdbResults.length) % omdbResults.length;
-    renderOmdbLive();
+    omdbActive = (omdbActive + delta + hits.length) % hits.length;
+    renderOmdbLive({ pinActive: true });
     return;
   }
   if (e.key === "Enter") {
-    const hit = omdbResults[omdbActive] || omdbResults[0];
+    const hit = hits[omdbActive] || hits[0];
     if (!hit) return;
     e.preventDefault();
-    openOmdbTitle(
-      hit.imdbID,
-      els.omdbLive?.querySelector(".omdb-hit.is-active")
-    );
+    const node = els.omdbLive?.querySelector(".omdb-hit.is-active");
+    if (hit.kind === "show") focusShowFromTimeline(hit.show.id);
+    else if (hit.kind === "movie") {
+      const imdbID = movieImdbId(hit.hit.movie);
+      if (imdbID) openOmdbTitle(imdbID, node);
+      else openMovieInProgram(hit.hit.movie.title);
+    } else if (hit.row?.imdbID) {
+      openOmdbTitle(hit.row.imdbID, node);
+    }
   }
 }
 
@@ -5198,10 +5623,21 @@ function scheduleOmdbSearch() {
     clearOmdbSearch();
     return;
   }
+  refreshLocalSearch(q);
+  const intent = parseSearchIntent(q);
+  const remoteQ = remoteSearchQuery(q, intent);
+  omdbActive = collectSearchHits().length ? 0 : -1;
+  if (!remoteQ) {
+    omdbAbort?.abort();
+    omdbResults = [];
+    omdbStatus =
+      searchLocalMovies.length || searchLocalShows.length ? "ok" : "empty";
+    renderOmdbLive();
+    return;
+  }
   omdbStatus = "loading";
-  omdbActive = -1;
   renderOmdbLive();
-  omdbTimer = setTimeout(() => runOmdbSearch(q), 280);
+  omdbTimer = setTimeout(() => runOmdbSearch(remoteQ), 280);
 }
 
 function clearOmdbSearch() {
@@ -5209,6 +5645,8 @@ function clearOmdbSearch() {
   omdbAbort?.abort();
   omdbAbort = null;
   omdbResults = [];
+  searchLocalMovies = [];
+  searchLocalShows = [];
   omdbActive = -1;
   omdbStatus = "";
   showOmdbLive(false);
@@ -5229,73 +5667,164 @@ async function runOmdbSearch(q) {
     const data = await callOmdbProxy({ action: "search", q }, ac.signal);
     if (ac.signal.aborted) return;
     omdbResults = Array.isArray(data?.results) ? data.results : [];
-    omdbStatus = omdbResults.length ? "ok" : "empty";
-    omdbActive = omdbResults.length ? 0 : -1;
+    const local = searchLocalMovies.length || searchLocalShows.length;
+    omdbStatus = omdbResults.length || local ? "ok" : "empty";
+    if (omdbActive < 0 && collectSearchHits().length) omdbActive = 0;
     renderOmdbLive();
   } catch (err) {
     if (err?.name === "AbortError" || ac.signal.aborted) return;
     omdbResults = [];
-    omdbStatus = "error";
-    omdbActive = -1;
+    omdbStatus =
+      searchLocalMovies.length || searchLocalShows.length ? "ok" : "error";
     renderOmdbLive();
   }
 }
 
-function renderOmdbLive() {
+function searchHitPoster(url, title) {
+  return url
+    ? `<img class="omdb-hit-poster" src="${escapeHtml(url)}" alt="" width="40" height="56">`
+    : `<div class="omdb-hit-fallback">${escapeHtml((title || "?").slice(0, 1))}</div>`;
+}
+
+function renderSearchMovieHit(entry, active) {
+  const movie = entry.movie;
+  const imdbID = movieImdbId(movie);
+  const times = (entry.shows || [])
+    .slice(0, 3)
+    .map((show) => `${shortDayLabel(show.dayKey)} ${formatClock(show.start)} · ${show.screen}`)
+    .join(" · ");
+  const more = Math.max(0, (entry.shows || []).length - 3);
+  const meta = [
+    times,
+    more ? t("moviesMore", { n: more }) : "",
+    showsLabel(movie.shows.length),
+  ]
+    .filter(Boolean)
+    .join(" · ");
+  const imdbAttr = imdbID ? ` data-omdb-id="${escapeHtml(imdbID)}"` : "";
+  return `<button type="button" class="omdb-hit${
+    active ? " is-active" : ""
+  }" role="option" id="search-opt-movie-${escapeHtml(
+    movie.title
+  )}" data-search-movie="${escapeHtml(movie.title)}"${imdbAttr} aria-selected="${active}">
+    ${searchHitPoster(movie.posterUrl, movie.title)}
+    <span class="omdb-hit-text">
+      <span class="omdb-hit-title">${escapeHtml(movie.title)}</span>
+      <span class="omdb-hit-meta">${escapeHtml(meta)}</span>
+    </span>
+    <span class="omdb-hit-chip">${escapeHtml(t("searchAtBuen"))}</span>
+  </button>`;
+}
+
+function renderSearchShowHit(show, active) {
+  const when = `${shortDayLabel(show.dayKey)} ${formatClock(show.start)}`;
+  const meta = [show.screen, formatAge(show.age)].filter(Boolean).join(" · ");
+  return `<button type="button" class="omdb-hit is-show${
+    active ? " is-active" : ""
+  }" role="option" id="search-opt-show-${escapeHtml(
+    show.id
+  )}" data-search-show="${escapeHtml(show.id)}" aria-selected="${active}" aria-label="${escapeHtml(
+    t("searchOpenShow", { title: show.title, time: when })
+  )}">
+    ${searchHitPoster(show.posterUrl, show.title)}
+    <span class="omdb-hit-text">
+      <span class="omdb-hit-title">${escapeHtml(when)}</span>
+      <span class="omdb-hit-meta">${escapeHtml(
+        [show.title, meta].filter(Boolean).join(" · ")
+      )}</span>
+    </span>
+  </button>`;
+}
+
+function renderOmdbHit(hit, active) {
+  const typeLabel = hit.type === "series" ? t("omdbTypeSeries") : t("omdbTypeMovie");
+  const meta = [hit.year, typeLabel].filter(Boolean).join(" · ");
+  return `<button type="button" class="omdb-hit${
+    active ? " is-active" : ""
+  }" role="option" id="omdb-opt-${escapeHtml(hit.imdbID)}" data-omdb-id="${escapeHtml(
+    hit.imdbID
+  )}" aria-selected="${active}">
+    ${searchHitPoster(hit.poster, hit.title)}
+    <span class="omdb-hit-text">
+      <span class="omdb-hit-title">${escapeHtml(hit.title)}</span>
+      <span class="omdb-hit-meta">${escapeHtml(meta)}</span>
+    </span>
+  </button>`;
+}
+
+function renderOmdbLive({ pinActive = false } = {}) {
   if (!els.omdbLive) return;
   const q = String(omdbQuery || "").trim();
+  const hits = collectSearchHits();
+  if (omdbActive >= hits.length) omdbActive = hits.length ? 0 : -1;
+  const activeKey = hits[omdbActive]?.key || "";
+  const localTitles = new Set(
+    searchLocalMovies.map((hit) => hit.movie.title.toLowerCase())
+  );
+  const remote = omdbResults.filter(
+    (row) => !localTitles.has(String(row.title || "").toLowerCase())
+  );
+  const hasLocal = searchLocalMovies.length || searchLocalShows.length;
   let html = "";
-  if (omdbStatus === "loading") {
+
+  if (!hasLocal && !remote.length && omdbStatus === "loading") {
     html = `<p class="omdb-live-status"><span class="spinner" aria-hidden="true"></span>${escapeHtml(
       t("searchLoading")
     )}</p>`;
-  } else if (omdbStatus === "error") {
+  } else if (!hasLocal && !remote.length && omdbStatus === "error") {
     html = `<p class="omdb-live-note">${escapeHtml(t("searchError"))}</p>`;
-  } else if (omdbStatus === "empty") {
+  } else if (!hasLocal && !remote.length) {
     html = `<p class="omdb-live-note">${escapeHtml(t("searchNoResults", { q }))}</p>`;
   } else {
-    const programmed = new Set((state?.shows || []).map((s) => s.title.toLowerCase()));
-    html = `<p class="omdb-live-label">${escapeHtml(t("searchResults"))}</p>`;
-    html += omdbResults
-      .map((hit, i) => {
-        const poster = hit.poster
-          ? `<img class="omdb-hit-poster" src="${escapeHtml(hit.poster)}" alt="" width="40" height="56">`
-          : `<div class="omdb-hit-fallback">${escapeHtml((hit.title || "?").slice(0, 1))}</div>`;
-        const inProgram = programmed.has(String(hit.title || "").toLowerCase());
-        const typeLabel =
-          hit.type === "series" ? t("omdbTypeSeries") : t("omdbTypeMovie");
-        const meta = [hit.year, typeLabel].filter(Boolean).join(" · ");
-        return `<button type="button" class="omdb-hit${
-          i === omdbActive ? " is-active" : ""
-        }" role="option" id="omdb-opt-${escapeHtml(hit.imdbID)}" data-omdb-id="${escapeHtml(
-          hit.imdbID
-        )}" aria-selected="${i === omdbActive}">
-          ${poster}
-          <span class="omdb-hit-text">
-            <span class="omdb-hit-title">${escapeHtml(hit.title)}</span>
-            <span class="omdb-hit-meta">${escapeHtml(meta)}</span>
-          </span>
-          ${inProgram ? `<span class="omdb-hit-chip">${escapeHtml(t("omdbInProgram"))}</span>` : ""}
-        </button>`;
-      })
-      .join("");
+    if (searchLocalMovies.length) {
+      html += `<p class="omdb-live-label">${escapeHtml(t("searchAtBuen"))}</p>`;
+      html += searchLocalMovies
+        .map((entry) =>
+          renderSearchMovieHit(entry, activeKey === `movie:${entry.movie.title}`)
+        )
+        .join("");
+    }
+    if (searchLocalShows.length) {
+      html += `<p class="omdb-live-label">${escapeHtml(t("searchTimes"))}</p>`;
+      html += searchLocalShows
+        .map((show) => renderSearchShowHit(show, activeKey === `show:${show.id}`))
+        .join("");
+    }
+    if (remote.length || omdbStatus === "loading") {
+      html += `<p class="omdb-live-label">${escapeHtml(t("searchMoreFilms"))}</p>`;
+      if (omdbStatus === "loading") {
+        html += `<p class="omdb-live-status compact"><span class="spinner" aria-hidden="true"></span>${escapeHtml(
+          t("searchLoading")
+        )}</p>`;
+      }
+      html += remote
+        .map((hit) => renderOmdbHit(hit, activeKey === `omdb:${hit.imdbID}`))
+        .join("");
+    }
   }
+
   els.omdbLive.innerHTML = html;
   showOmdbLive(true);
-  const active = omdbResults[omdbActive];
-  els.omdbQuery?.setAttribute(
-    "aria-activedescendant",
-    active ? `omdb-opt-${active.imdbID}` : ""
-  );
-  els.omdbLive.querySelector(".omdb-hit.is-active")?.scrollIntoView({
-    block: "nearest",
-  });
+  const current = hits[omdbActive];
+  const activeId =
+    current?.kind === "omdb"
+      ? `omdb-opt-${current.row.imdbID}`
+      : current?.kind === "show"
+        ? `search-opt-show-${current.show.id}`
+        : current?.kind === "movie"
+          ? `search-opt-movie-${current.hit.movie.title}`
+          : "";
+  els.omdbQuery?.setAttribute("aria-activedescendant", activeId);
+  if (pinActive) {
+    els.omdbLive.querySelector(".omdb-hit.is-active")?.scrollIntoView({
+      block: "nearest",
+    });
+  }
 }
 
-async function openOmdbTitle(imdbID, sourceEl) {
+async function openOmdbTitle(imdbID) {
   if (!imdbID) return;
   clearTimeout(omdbSheetTimer);
-  if (!isOmdbSheetOpen()) captureSheetOrigin(sourceEl);
   omdbSheetId = imdbID;
   omdbSheetMovie = null;
   omdbSheetStatus = "loading";
@@ -5345,100 +5874,28 @@ function isOmdbSheetOpen() {
   );
 }
 
-function captureSheetOrigin(el) {
-  const node =
-    el?.closest?.(".movie-tile, .upcoming-card, .omdb-hit") || el;
-  if (!node?.getBoundingClientRect) {
-    omdbSheetOrigin = null;
-    return;
-  }
-  const rect = node.getBoundingClientRect();
-  if (rect.width < 8 || rect.height < 8) {
-    omdbSheetOrigin = null;
-    return;
-  }
-  omdbSheetOrigin = {
-    left: rect.left,
-    top: rect.top,
-    width: rect.width,
-    height: rect.height,
-    ox: rect.left + rect.width / 2,
-    oy: rect.top + rect.height / 2,
-    radius: getComputedStyle(node).borderRadius || "16px",
-  };
-}
-
-function applySheetOriginVars(sheet) {
-  const origin = omdbSheetOrigin;
-  sheet.style.setProperty("--sheet-ox", origin ? `${origin.ox}px` : "50%");
-  sheet.style.setProperty("--sheet-oy", origin ? `${origin.oy}px` : "78%");
-}
-
-function sheetFlipTransform(panel) {
-  const first = omdbSheetOrigin;
-  if (!first || !panel) return "";
-  const last = panel.getBoundingClientRect();
-  if (!last.width || !last.height) return "";
-  const dx = first.left - last.left;
-  const dy = first.top - last.top;
-  const sx = Math.max(0.12, Math.min(first.width / last.width, 8));
-  const sy = Math.max(0.12, Math.min(first.height / last.height, 8));
-  return `translate(${dx.toFixed(2)}px, ${dy.toFixed(2)}px) scale(${sx.toFixed(
-    4
-  )}, ${sy.toFixed(4)})`;
-}
-
-function sheetOriginOnScreen() {
-  const origin = omdbSheetOrigin;
-  if (!origin) return false;
-  return (
-    origin.top < window.innerHeight - 8 &&
-    origin.top + origin.height > 8 &&
-    origin.left < window.innerWidth - 8 &&
-    origin.left + origin.width > 8
-  );
-}
-
-function clearSheetPanelFlip(panel) {
-  if (!panel) return;
-  panel.style.transform = "";
-  panel.style.borderRadius = "";
-  panel.style.transformOrigin = "";
-  panel.style.opacity = "";
-}
-
 function revealOmdbSheet() {
   if (!els.omdbSheet) return;
   const sheet = els.omdbSheet;
-  const panel = sheet.querySelector(".omdb-sheet-panel");
-  applySheetOriginVars(sheet);
-  sheet.hidden = false;
   document.body.classList.add("omdb-open");
-  if (sheet.classList.contains("is-open")) {
+  if (sheet.classList.contains("is-leaving")) {
+    clearTimeout(omdbSheetTimer);
     sheet.classList.remove("is-leaving");
-    return;
   }
+  if (!sheet.hidden && sheet.classList.contains("is-open")) return;
   const reduceMotion = window.matchMedia(
     "(prefers-reduced-motion: reduce)"
   ).matches;
-  sheet.classList.remove("is-leaving", "is-open", "is-flipping");
-  clearSheetPanelFlip(panel);
-  if (reduceMotion || !omdbSheetOrigin || !panel) {
-    void sheet.offsetWidth;
-    requestAnimationFrame(() => {
-      if (els.omdbSheet === sheet && !sheet.hidden) sheet.classList.add("is-open");
-    });
+  sheet.hidden = false;
+  sheet.classList.remove("is-open", "is-leaving");
+  if (reduceMotion) {
+    sheet.classList.add("is-open");
     return;
   }
-  sheet.classList.add("is-open", "is-flipping");
-  panel.style.transformOrigin = "top left";
-  panel.style.borderRadius = omdbSheetOrigin.radius;
-  panel.style.transform = sheetFlipTransform(panel) || "none";
-  void panel.offsetWidth;
+  void sheet.offsetWidth;
   requestAnimationFrame(() => {
     if (els.omdbSheet !== sheet || sheet.hidden) return;
-    sheet.classList.remove("is-flipping");
-    clearSheetPanelFlip(panel);
+    sheet.classList.add("is-open");
   });
 }
 
@@ -5448,14 +5905,9 @@ function finishOmdbSheetClose() {
   omdbSheetStatus = "";
   omdbSheetInProgram = "";
   omdbCastOpen = false;
-  omdbSheetOrigin = null;
   if (els.omdbSheet) {
-    const panel = els.omdbSheet.querySelector(".omdb-sheet-panel");
-    clearSheetPanelFlip(panel);
     els.omdbSheet.hidden = true;
-    els.omdbSheet.classList.remove("is-open", "is-leaving", "is-flipping");
-    els.omdbSheet.style.removeProperty("--sheet-ox");
-    els.omdbSheet.style.removeProperty("--sheet-oy");
+    els.omdbSheet.classList.remove("is-open", "is-leaving");
   }
   document.body.classList.remove("omdb-open");
   if (els.omdbSheetBody) els.omdbSheetBody.innerHTML = "";
@@ -5474,18 +5926,10 @@ function closeOmdbSheet() {
     finishOmdbSheetClose();
     return;
   }
-  const panel = els.omdbSheet.querySelector(".omdb-sheet-panel");
-  const canFlip = sheetOriginOnScreen() && panel;
-  els.omdbSheet.classList.remove("is-open", "is-flipping");
+  els.omdbSheet.classList.remove("is-open");
   els.omdbSheet.classList.add("is-leaving");
-  if (canFlip) {
-    panel.style.opacity = "1";
-    panel.style.transformOrigin = "top left";
-    panel.style.borderRadius = omdbSheetOrigin.radius;
-    panel.style.transform = sheetFlipTransform(panel);
-  }
   clearTimeout(omdbSheetTimer);
-  omdbSheetTimer = setTimeout(finishOmdbSheetClose, canFlip ? 520 : 420);
+  omdbSheetTimer = setTimeout(finishOmdbSheetClose, 440);
 }
 
 function renderOmdbSheet() {
@@ -5762,17 +6206,18 @@ function renderMovies() {
     )
   );
 
-  if (!movies.length) {
-    paint(els.moviesBody, emptyNote("movie", "noMovies"));
-    return;
-  }
-
   const upcomingHtml =
     feed.length || upcomingRemoteStatus === "loading"
       ? renderUpcomingSection(feed, now)
       : "";
-  const programHead = upcomingHtml
-    ? `<div class="movies-section">
+
+  if (!movies.length && !upcomingHtml) {
+    paint(els.moviesBody, emptyNote("movie", "noMovies"));
+    return;
+  }
+  const programHead =
+    upcomingHtml && movies.length
+      ? `<div class="movies-section">
         <div class="movies-section-head">
           <div>
             <h3>${icon("movie", "panel-icon")}${escapeHtml(t("programSection"))}</h3>
@@ -5780,6 +6225,11 @@ function renderMovies() {
           </div>
         </div>
       </div>`
+      : "";
+  const programGrid = movies.length
+    ? `<div class="movie-grid">${movies
+        .map((m, i) => renderMovieTile(m, now, i))
+        .join("")}</div>`
     : "";
 
   paint(
@@ -5787,9 +6237,7 @@ function renderMovies() {
     `
     ${upcomingHtml}
     ${programHead}
-    <div class="movie-grid">
-      ${movies.map((m, i) => renderMovieTile(m, now, i)).join("")}
-    </div>
+    ${programGrid}
   `
   );
 }

@@ -21,13 +21,17 @@ full product description and data model.
 ### Running the app (primary dev workflow)
 
 - Serve `public/` as static files, exactly as `README.md` documents:
-  `python3 -m http.server 8080 --directory public`, then open
-  `http://localhost:8080/`.
+  `node scripts/dev-server.mjs`, then open `http://127.0.0.1:8080/`.
+  That process stays up and reloads the tab when files under `public/`
+  change. `python3 -m http.server 8080 --directory public` is the
+  no-reload fallback.
 - The app works fully offline of any backend because `public/data/program.json`
   is committed; sold counts try to live-update from the DX/eBillett API but the
   schedule renders from the snapshot regardless.
 - No lint/test/build tooling is configured in this repo — there is nothing to
   lint or unit-test. "Building" the app is just serving `public/`.
+- Do not open localhost or drive the browser to verify UI. The maintainer
+  tests on the local server and replies with feedback.
 
 ### Refreshing / debugging data (optional, network-dependent)
 
@@ -52,4 +56,4 @@ full product description and data model.
   into `_site/index.html` and `_site/sw.js` via `scripts/stamp-version.mjs`.
   Do not hand-edit `?v=` or `cinema-info-v…` — a forgotten bump used to
   leave phones on the old CSS/JS after push. Local `public/` placeholders
-  are enough for `http.server`.
+  are enough for the local server.
