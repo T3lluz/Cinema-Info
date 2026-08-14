@@ -79,10 +79,13 @@ const PROGRAM_RECHECK_MS = 2 * 60 * 1000;
 /** Hall geometry only changes when someone rebuilds an auditorium. */
 const SEAT_LAYOUT_TTL_MS = 30 * 24 * 60 * 60 * 1000;
 /**
- * Tap pulse. Lighter than a Pixel CLICK; the web API has no amplitude,
- * so duration is the only way to keep it a tick.
+ * Tap haptics. `navigator.vibrate` is full amplitude; duration is the
+ * only intensity knob, so keep every pulse a tick — not a buzz.
+ *   tick    — selection (days, seats, rows, expanders)
+ *   confirm — committed changes (bottom nav, settings switches)
  */
-const HAPTIC_CLICK_MS = 2;
+const HAPTIC_TICK_MS = 1;
+const HAPTIC_CONFIRM_MS = 2;
 /**
  * Material 3 Expressive default spatial spring (AOSP ExpressiveMotionTokens):
  * stiffness 380, dampingRatio 0.8. omega = √k rad/s, /1000 for a ms step.
@@ -236,7 +239,7 @@ const I18N = {
     seatNumbersOn: "Vis",
     seatNumbersOff: "Skjul",
     haptics: "Haptikk",
-    hapticsHint: "Kort vibrasjon ved trykk. Virker i Chrome på Android.",
+    hapticsHint: "Lett tick ved trykk. Virker i Chrome på Android.",
     hapticsUnavailable: "Ikke tilgjengelig på denne enheten.",
     langNb: "Norsk",
     langEn: "English",
@@ -399,7 +402,7 @@ const I18N = {
     seatNumbersOn: "Show",
     seatNumbersOff: "Hide",
     haptics: "Haptics",
-    hapticsHint: "A short buzz on taps. Works in Chrome on Android.",
+    hapticsHint: "A light tick on taps. Works in Chrome on Android.",
     hapticsUnavailable: "Not available on this device.",
     langNb: "Norsk",
     langEn: "English",
@@ -914,7 +917,7 @@ function setupSeatCharts() {
     const statsMovie = e.target.closest?.("[data-stats-movie]");
     if (!statsMovie || e.target !== statsMovie) return;
     e.preventDefault();
-    hapticClick();
+    hapticVibrate(HAPTIC_TICK_MS);
     openMovieFromStats(statsMovie.dataset.statsMovie);
   });
 
@@ -1550,8 +1553,11 @@ function hapticTarget(el) {
   return hit;
 }
 
-function hapticClick() {
-  hapticVibrate(HAPTIC_CLICK_MS);
+/** Match Android: a light tick for selection, a firmer click for commits. */
+function hapticMsFor(hit) {
+  if (hit.classList.contains("pill-tab")) return HAPTIC_CONFIRM_MS;
+  if (hit.getAttribute("role") === "switch") return HAPTIC_CONFIRM_MS;
+  return HAPTIC_TICK_MS;
 }
 
 function hapticVibrate(pattern) {
@@ -1564,11 +1570,26 @@ function hapticVibrate(pattern) {
 }
 
 function setupHaptics() {
+  // Fire on finger-down so the tick lands with the tap, not as a delayed
+  // second kick on click. Keyboard activation still arrives as click
+  // with detail 0; mouse stays silent.
+  document.addEventListener(
+    "pointerdown",
+    (e) => {
+      if (e.pointerType === "mouse" || !e.isPrimary) return;
+      const hit = hapticTarget(e.target);
+      if (!hit) return;
+      hapticVibrate(hapticMsFor(hit));
+    },
+    true
+  );
   document.addEventListener(
     "click",
     (e) => {
-      if (!hapticTarget(e.target)) return;
-      hapticClick();
+      if (e.detail !== 0) return;
+      const hit = hapticTarget(e.target);
+      if (!hit) return;
+      hapticVibrate(hapticMsFor(hit));
     },
     true
   );
@@ -5127,7 +5148,7 @@ function renderSettings() {
       hapticSwitch.setAttribute("aria-checked", String(hapticsOn));
       // Turning it on happens after the capture tick (which was skipped
       // while it was off), so confirm the switch itself.
-      if (hapticsOn) hapticClick();
+      if (hapticsOn) hapticVibrate(HAPTIC_CONFIRM_MS);
     });
   }
 
