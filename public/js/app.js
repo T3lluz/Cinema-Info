@@ -839,6 +839,18 @@ async function init() {
     selectDay(today);
   });
 
+  // The chip's slot width eases; once it lands, park the selected pill
+  // and its liquid indicator on the new strip width.
+  els.jumpTodayBtn?.closest(".jump-today-slot")?.addEventListener(
+    "transitionend",
+    (e) => {
+      if (e.propertyName !== "grid-template-columns") return;
+      if (activeTab !== "day") return;
+      moveDayIndicator({ instant: true });
+      scrollSelectedDayTabIntoView({ behavior: "auto" });
+    }
+  );
+
 
   setInterval(liveBeat, BEAT_MS);
 
@@ -2635,7 +2647,8 @@ function setSelectedDay(day, { tabScroll = "smooth" } = {}) {
   els.dayTabs.querySelectorAll(".day-tab").forEach((b) => {
     b.setAttribute("aria-selected", String(b.dataset.day === day));
   });
-  // Show/hide the today chip before scrolling so the strip width is final.
+  // Slide the today chip in/out before scrolling; the slot width eases
+  // so the strip does not jump, then we re-center when it settles.
   updateJumpTodayBtn();
   moveDayIndicator();
   scrollSelectedDayTabIntoView({
@@ -2659,10 +2672,11 @@ function scrollSelectedDayTabIntoView({ behavior = "auto" } = {}) {
 function updateJumpTodayBtn() {
   const btn = els.jumpTodayBtn;
   if (!btn) return;
+  const slot = btn.closest(".jump-today-slot") || btn;
   const today = toDayKey(new Date());
   const hasToday = !!state?.shows?.some((s) => s.dayKey === today);
   const away = hasToday && selectedDay && selectedDay !== today;
-  btn.hidden = !away;
+  slot.hidden = !away;
   btn.setAttribute("aria-label", t("jumpTodayAria"));
   const back = selectedDay > today;
   btn.dataset.dir = back ? "back" : "forward";

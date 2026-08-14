@@ -416,7 +416,9 @@ h1 {
 
 /* One-tap return when browsing another day — sits outside the scroll
    strip so today is always reachable without hunting for its pill.
-   Day pills share these metrics so the strip stays one height. */
+   The slot collapses on a 1fr→0fr column (same trick as .day-controls)
+   so the chip slides in/out instead of popping, and the pills shift
+   with it. Day pills share these metrics so the strip stays one height. */
 .jump-today,
 .day-tab {
   padding: 3px 9px;
@@ -424,6 +426,37 @@ h1 {
   font-weight: 700;
   letter-spacing: -0.005em;
   line-height: 1.2;
+}
+
+.jump-today-slot {
+  display: grid;
+  grid-template-columns: 1fr;
+  flex: 0 0 auto;
+  min-width: 0;
+  visibility: visible;
+  transition:
+    grid-template-columns 0.38s cubic-bezier(0.22, 1.18, 0.36, 1),
+    margin-inline-end 0.38s cubic-bezier(0.22, 1.18, 0.36, 1),
+    visibility 0s;
+}
+
+/* Cancel the flex gap while collapsed so the strip does not keep an
+   8px hole after the chip has slid away. */
+.jump-today-slot[hidden] {
+  display: grid;
+  grid-template-columns: 0fr;
+  margin-inline-end: -8px;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    grid-template-columns 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    margin-inline-end 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    visibility 0s 0.3s;
+}
+
+.jump-today-clip {
+  overflow: hidden;
+  min-width: 0;
 }
 
 .jump-today {
@@ -445,7 +478,21 @@ h1 {
   line-height: 1.2;
   white-space: nowrap;
   cursor: pointer;
-  transition: background 0.2s ease, transform 0.15s ease;
+  transform: translateX(0);
+  opacity: 1;
+  transition:
+    background 0.2s ease,
+    transform 0.38s cubic-bezier(0.22, 1.18, 0.36, 1),
+    opacity 0.22s ease;
+}
+
+.jump-today-slot[hidden] .jump-today {
+  transform: translateX(-110%);
+  opacity: 0;
+  transition:
+    background 0.2s ease,
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.2s ease;
 }
 
 .jump-today-arrow {
@@ -463,10 +510,7 @@ h1 {
 
 .jump-today:active {
   transform: scale(0.95);
-}
-
-.jump-today[hidden] {
-  display: none;
+  transition-duration: 0.15s;
 }
 
 .day-tabs {

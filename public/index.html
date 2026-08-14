@@ -99,16 +99,19 @@
 
         <div id="dayControls" class="day-controls">
           <div class="day-controls-body">
-            <button
-              id="jumpTodayBtn"
-              class="jump-today"
-              type="button"
-              hidden
-              aria-label="Gå til i dag"
-            >
-              <span class="jump-today-arrow" aria-hidden="true">‹</span>
-              <span data-i18n="today">I dag</span>
-            </button>
+            <div class="jump-today-slot" hidden>
+              <div class="jump-today-clip">
+                <button
+                  id="jumpTodayBtn"
+                  class="jump-today"
+                  type="button"
+                  aria-label="Gå til i dag"
+                >
+                  <span class="jump-today-arrow" aria-hidden="true">‹</span>
+                  <span data-i18n="today">I dag</span>
+                </button>
+              </div>
+            </div>
             <div id="dayTabs" class="day-tabs" role="tablist" aria-label="Velg dag"></div>
           </div>
         </div>
