@@ -1345,7 +1345,6 @@ h1 {
 .no-anim .view-intro,
 .no-anim .movie-search,
 .no-anim .movies-section-head,
-.no-anim .upcoming-day,
 .no-anim .upcoming-card,
 .no-anim .stats-hero,
 .no-anim .stats-panel,
@@ -2004,6 +2003,28 @@ a.rating-badge:hover {
   font-weight: 800;
   line-height: 1.2;
   letter-spacing: -0.01em;
+}
+
+.movie-poster[data-omdb-id],
+.movie-poster-fallback[data-omdb-id] {
+  cursor: pointer;
+}
+
+.movie-tile-open {
+  appearance: none;
+  display: inline;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+  text-align: left;
+  text-decoration: inherit;
+  cursor: pointer;
 }
 
 /* A film with nothing left to play is crossed out and greyed, poster
@@ -2702,46 +2723,6 @@ a.rating-badge:hover {
   padding: 2px 0 4px 0;
 }
 
-.upcoming-day {
-  position: relative;
-  padding-left: 22px;
-  animation: rise 0.32s ease both;
-  animation-delay: calc(min(var(--i, 0), 10) * 40ms);
-}
-
-.upcoming-day::before {
-  content: "";
-  position: absolute;
-  left: 4px;
-  top: 8px;
-  bottom: -18px;
-  width: 2px;
-  background: color-mix(in srgb, var(--line) 85%, var(--accent));
-}
-
-.upcoming-day:last-child::before {
-  bottom: 12px;
-}
-
-.upcoming-day::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 6px;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-soft) 80%, var(--bg));
-}
-
-.upcoming-day-label {
-  margin: 0 0 8px;
-  font-size: 0.78rem;
-  font-weight: 800;
-  letter-spacing: -0.01em;
-}
-
 .upcoming-list {
   display: flex;
   flex-direction: column;
@@ -2768,9 +2749,11 @@ a.rating-badge:hover {
   transform: scale(0.99);
 }
 
-.upcoming-card.is-flash {
-  border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 16%, transparent);
+@media (hover: hover) {
+  .upcoming-card:hover {
+    border-color: color-mix(in srgb, var(--accent) 35%, var(--line));
+    background: color-mix(in srgb, var(--accent-soft) 35%, var(--surface));
+  }
 }
 
 .upcoming-poster,
@@ -2895,7 +2878,9 @@ a.rating-badge:hover {
   outline-offset: 1px;
 }
 
-/* —— OMDb detail sheet —— */
+/* —— OMDb detail sheet ——
+   Dotted frost fills the viewport behind the panel (same recipe as
+   header/nav). The panel stays solid on top. */
 .omdb-sheet {
   position: fixed;
   inset: 0;
@@ -2910,13 +2895,82 @@ a.rating-badge:hover {
   display: none;
 }
 
+.omdb-sheet-veil {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 0.36s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.omdb-sheet.is-open .omdb-sheet-veil {
+  opacity: 1;
+}
+
+.omdb-sheet.is-leaving .omdb-sheet-veil {
+  opacity: 0;
+}
+
+.omdb-sheet.is-leaving {
+  pointer-events: none;
+}
+
+.omdb-sheet-frost,
+.omdb-sheet-glass,
+.omdb-sheet-frost-dots {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.omdb-sheet-frost-dots {
+  backdrop-filter: blur(6px) saturate(2.8) contrast(1.18) brightness(1.08);
+  -webkit-backdrop-filter: blur(6px) saturate(2.8) contrast(1.18) brightness(1.08);
+  -webkit-mask-image: radial-gradient(
+    circle at center,
+    #000 var(--dot-core),
+    transparent var(--dot-edge)
+  );
+  mask-image: radial-gradient(
+    circle at center,
+    #000 var(--dot-core),
+    transparent var(--dot-edge)
+  );
+  -webkit-mask-size: var(--dot-cell) var(--dot-cell);
+  mask-size: var(--dot-cell) var(--dot-cell);
+  -webkit-mask-repeat: repeat;
+  mask-repeat: repeat;
+}
+
+.omdb-sheet-glass {
+  background: var(--header-glass-tint);
+  backdrop-filter: blur(20px) saturate(1.12);
+  -webkit-backdrop-filter: blur(20px) saturate(1.12);
+  -webkit-mask-image: radial-gradient(
+    circle at center,
+    transparent var(--dot-core),
+    #000 var(--dot-edge)
+  );
+  mask-image: radial-gradient(
+    circle at center,
+    transparent var(--dot-core),
+    #000 var(--dot-edge)
+  );
+  -webkit-mask-size: var(--dot-cell) var(--dot-cell);
+  mask-size: var(--dot-cell) var(--dot-cell);
+  -webkit-mask-repeat: repeat;
+  mask-repeat: repeat;
+}
+
 .omdb-sheet-backdrop {
   position: absolute;
   inset: 0;
+  z-index: 0;
   border: 0;
   padding: 0;
   margin: 0;
-  background: color-mix(in srgb, var(--ink) 38%, transparent);
+  background: transparent;
   cursor: pointer;
 }
 
@@ -2931,18 +2985,21 @@ a.rating-badge:hover {
   background: var(--surface);
   border: 1px solid var(--line);
   box-shadow: none;
-  animation: sheetUp 0.32s cubic-bezier(0.32, 0.72, 0, 1) both;
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 0.34s cubic-bezier(0.32, 0.72, 0, 1),
+    transform 0.34s cubic-bezier(0.32, 0.72, 0, 1);
 }
 
-@keyframes sheetUp {
-  from {
-    opacity: 0;
-    transform: translateY(18px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.omdb-sheet.is-open .omdb-sheet-panel {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.omdb-sheet.is-leaving .omdb-sheet-panel {
+  opacity: 0;
+  transform: translateY(16px);
 }
 
 .omdb-sheet-close {
@@ -3042,8 +3099,7 @@ a.rating-badge:hover {
   color: var(--muted);
 }
 
-.omdb-cast-grid,
-.omdb-director-row {
+.omdb-cast-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(88px, 1fr));
   gap: 12px 8px;
@@ -3052,9 +3108,46 @@ a.rating-badge:hover {
   list-style: none;
 }
 
-.omdb-director-row {
-  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-  margin-bottom: 14px;
+.omdb-cast-grid:not(.is-expanded) .omdb-person.is-more {
+  display: none;
+}
+
+.omdb-cast-grid.is-expanded .omdb-person.is-more {
+  animation: rise 0.28s ease both;
+}
+
+.omdb-cast-more {
+  appearance: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 40px;
+  margin: 12px 0 0;
+  padding: 0 14px;
+  border-radius: 12px;
+  border: 1px dashed color-mix(in srgb, var(--line) 85%, var(--accent));
+  background: color-mix(in srgb, var(--surface) 72%, var(--bg));
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 750;
+  cursor: pointer;
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    transform 0.12s ease;
+}
+
+.omdb-cast-more:active {
+  transform: scale(0.99);
+}
+
+@media (hover: hover) {
+  .omdb-cast-more:hover {
+    border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+    background: color-mix(in srgb, var(--accent) 8%, var(--surface));
+  }
 }
 
 .omdb-person {

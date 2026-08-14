@@ -221,6 +221,8 @@ const I18N = {
     omdbVotes: "{n} stemmer",
     omdbTypeMovie: "Film",
     omdbTypeSeries: "Serie",
+    omdbFullCast: "Hele rollelisten (+{n})",
+    omdbCastLess: "Vis færre",
     statsTitle: "Statistikk",
     statsSubtitle: "Solgte billetter, live",
     soldWeekLabel: "Solgt denne uken",
@@ -423,6 +425,8 @@ const I18N = {
     omdbVotes: "{n} votes",
     omdbTypeMovie: "Movie",
     omdbTypeSeries: "Series",
+    omdbFullCast: "Full cast (+{n})",
+    omdbCastLess: "Show less",
     statsTitle: "Stats",
     statsSubtitle: "Tickets sold, live",
     soldWeekLabel: "Sold this week",
@@ -674,6 +678,8 @@ let omdbSheetId = "";
 let omdbSheetMovie = null;
 let omdbSheetStatus = "";
 let omdbSheetInProgram = "";
+let omdbCastOpen = false;
+let omdbSheetTimer = 0;
 /** IMDb popular titles for the upcoming section — kept across paints. */
 let upcomingPopular = [];
 let upcomingPopularStatus = "";
@@ -681,6 +687,8 @@ let upcomingShown = 3;
 const UPCOMING_PAGE = 3;
 /** Collapsed movie tiles show this many showings before "+N more". */
 const MOVIE_SHOWS_PREVIEW = 3;
+/** Movie sheet shows this many headshots before "Full cast". */
+const CAST_PREVIEW = 3;
 /** Tablet and desktop have room for every hall at once, so charts there
  * are unfolded from the start instead of hiding behind a button. */
 const SEATS_OPEN_MQ = window.matchMedia("(min-width: 700px)");
@@ -1001,6 +1009,12 @@ function setupSeatCharts() {
     const omdbHit = e.target.closest?.("[data-omdb-id]");
     if (omdbHit) {
       openOmdbTitle(omdbHit.dataset.omdbId);
+      return;
+    }
+
+    const omdbCastMore = e.target.closest?.("[data-omdb-cast-more]");
+    if (omdbCastMore) {
+      toggleOmdbCast();
       return;
     }
 
@@ -1747,6 +1761,8 @@ function hapticTarget(el) {
       ".omdb-hit",
       ".omdb-sheet-close",
       ".omdb-sheet-btn",
+      ".omdb-cast-more",
+      ".movie-tile-open",
       ".movie-search-clear",
       "[data-stats-movie]",
       "[data-stats-day]",
@@ -2217,7 +2233,9 @@ function applyLanguage() {
     .querySelector(".omdb-sheet-close")
     ?.setAttribute("aria-label", t("omdbClose"));
   if (omdbResults.length || omdbStatus) renderOmdbLive();
-  if (omdbSheetId) renderOmdbSheet();
+  if (omdbSheetId && !els.omdbSheet?.classList.contains("is-leaving")) {
+    renderOmdbSheet();
+  }
   els.dayTabs.setAttribute(
     "aria-label",
     lang === "en" ? "Choose day" : "Velg dag"
@@ -4697,13 +4715,14 @@ function renderShowCard(show, now, index = 0, opts = {}) {
   )}</div>`;
 }
 
-function renderPoster(show, w, h, className = "poster") {
+function renderPoster(show, w, h, className = "poster", attrs = "") {
+  const extra = attrs ? ` ${attrs}` : "";
   if (show.posterUrl) {
     return `<img class="${className}" src="${escapeHtml(
       show.posterUrl
-    )}" alt="" loading="lazy" width="${w}" height="${h}" />`;
+    )}" alt="" loading="lazy" width="${w}" height="${h}"${extra} />`;
   }
-  return `<div class="${className}-fallback" aria-hidden="true">${escapeHtml(
+  return `<div class="${className}-fallback" aria-hidden="true"${extra}>${escapeHtml(
     (show.title || "?").slice(0, 1)
   )}</div>`;
 }
@@ -5061,7 +5080,7 @@ function setupOmdbSearch() {
   });
 
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && !els.omdbSheet?.hidden) {
+    if (e.key === "Escape" && isOmdbSheetOpen()) {
       e.preventDefault();
       closeOmdbSheet();
     }
@@ -5188,9 +5207,11 @@ function renderOmdbLive() {
 
 async function openOmdbTitle(imdbID) {
   if (!imdbID) return;
+  clearTimeout(omdbSheetTimer);
   omdbSheetId = imdbID;
   omdbSheetMovie = null;
   omdbSheetStatus = "loading";
+  omdbCastOpen = false;
   omdbSheetInProgram =
     matchProgramByImdb(imdbID) ||
     matchProgramTitle(omdbResults.find((r) => r.imdbID === imdbID)?.title);
@@ -5227,14 +5248,62 @@ function matchProgramByImdb(imdbID) {
   return hit?.title || "";
 }
 
-function closeOmdbSheet() {
+function isOmdbSheetOpen() {
+  return Boolean(
+    els.omdbSheet &&
+      !els.omdbSheet.hidden &&
+      els.omdbSheet.classList.contains("is-open") &&
+      !els.omdbSheet.classList.contains("is-leaving")
+  );
+}
+
+function revealOmdbSheet() {
+  if (!els.omdbSheet) return;
+  const sheet = els.omdbSheet;
+  sheet.hidden = false;
+  document.body.classList.add("omdb-open");
+  if (sheet.classList.contains("is-open")) {
+    sheet.classList.remove("is-leaving");
+    return;
+  }
+  sheet.classList.remove("is-leaving", "is-open");
+  void sheet.offsetWidth;
+  requestAnimationFrame(() => {
+    if (els.omdbSheet === sheet && !sheet.hidden) sheet.classList.add("is-open");
+  });
+}
+
+function finishOmdbSheetClose() {
   omdbSheetId = "";
   omdbSheetMovie = null;
   omdbSheetStatus = "";
   omdbSheetInProgram = "";
-  if (els.omdbSheet) els.omdbSheet.hidden = true;
+  omdbCastOpen = false;
+  if (els.omdbSheet) {
+    els.omdbSheet.hidden = true;
+    els.omdbSheet.classList.remove("is-open", "is-leaving");
+  }
   document.body.classList.remove("omdb-open");
   if (els.omdbSheetBody) els.omdbSheetBody.innerHTML = "";
+}
+
+function closeOmdbSheet() {
+  if (!els.omdbSheet || els.omdbSheet.hidden) {
+    finishOmdbSheetClose();
+    return;
+  }
+  if (els.omdbSheet.classList.contains("is-leaving")) return;
+  const reduceMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+  if (reduceMotion || !els.omdbSheet.classList.contains("is-open")) {
+    finishOmdbSheetClose();
+    return;
+  }
+  els.omdbSheet.classList.remove("is-open");
+  els.omdbSheet.classList.add("is-leaving");
+  clearTimeout(omdbSheetTimer);
+  omdbSheetTimer = setTimeout(finishOmdbSheetClose, 340);
 }
 
 function renderOmdbSheet() {
@@ -5243,8 +5312,7 @@ function renderOmdbSheet() {
     closeOmdbSheet();
     return;
   }
-  els.omdbSheet.hidden = false;
-  document.body.classList.add("omdb-open");
+  revealOmdbSheet();
 
   if (omdbSheetStatus === "loading") {
     els.omdbSheetBody.innerHTML = `<div class="omdb-sheet-status"><span class="spinner" aria-hidden="true"></span><p>${escapeHtml(
@@ -5270,8 +5338,11 @@ function renderOmdbSheet() {
   const ratings = omdbRatingsFromMovie(movie);
   const directors = peopleFromMovie(movie.directors, movie.director);
   const cast = peopleFromMovie(movie.cast, movie.actors);
+  const directorNames =
+    directors.map((person) => person.name).filter(Boolean).join(", ") ||
+    movie.director;
   const facts = [
-    directors.length ? null : [t("omdbDirector"), movie.director],
+    [t("omdbDirector"), directorNames],
     cast.length ? null : [t("omdbCast"), movie.actors],
     [t("omdbWriter"), movie.writer],
     [t("omdbReleased"), movie.released],
@@ -5304,8 +5375,7 @@ function renderOmdbSheet() {
         ? `<p class="omdb-sheet-plot">${escapeHtml(movie.plot)}</p>`
         : ""
     }
-    ${renderPeopleBlock(t("omdbDirector"), directors, "omdb-director-row")}
-    ${renderPeopleBlock(t("omdbCast"), cast, "omdb-cast-grid")}
+    ${renderCastBlock(cast)}
     ${
       facts.length
         ? `<dl class="omdb-facts">${facts
@@ -5358,14 +5428,28 @@ function peopleFromMovie(list, fallbackNames) {
     .map((name) => ({ name, photo: "", character: "" }));
 }
 
-function renderPeopleBlock(label, people, gridClass) {
-  if (!people.length) return "";
+function renderCastBlock(cast) {
+  if (!cast.length) return "";
+  const canExpand = cast.length > CAST_PREVIEW;
+  const extra = Math.max(0, cast.length - CAST_PREVIEW);
+  const toggle =
+    canExpand
+      ? `<button type="button" class="omdb-cast-more" data-omdb-cast-more aria-expanded="${
+          omdbCastOpen
+        }" aria-controls="omdb-cast-grid">${escapeHtml(
+          omdbCastOpen
+            ? t("omdbCastLess")
+            : t("omdbFullCast", { n: extra })
+        )}</button>`
+      : "";
   return `
     <section class="omdb-people">
-      <h3 class="omdb-people-head">${escapeHtml(label)}</h3>
-      <ul class="${gridClass}">
-        ${people
-          .map((person) => {
+      <h3 class="omdb-people-head">${escapeHtml(t("omdbCast"))}</h3>
+      <ul id="omdb-cast-grid" class="omdb-cast-grid${
+        omdbCastOpen ? " is-expanded" : ""
+      }">
+        ${cast
+          .map((person, index) => {
             const photo = person.photo
               ? `<img class="omdb-person-photo" src="${escapeHtml(
                   person.photo
@@ -5376,14 +5460,37 @@ function renderPeopleBlock(label, people, gridClass) {
             const role = person.character
               ? `<span class="omdb-person-role">${escapeHtml(person.character)}</span>`
               : "";
-            return `<li class="omdb-person">${photo}<span class="omdb-person-name">${escapeHtml(
+            const extraClass = index >= CAST_PREVIEW ? " is-more" : "";
+            return `<li class="omdb-person${extraClass}">${photo}<span class="omdb-person-name">${escapeHtml(
               person.name
             )}</span>${role}</li>`;
           })
           .join("")}
       </ul>
+      ${toggle}
     </section>
   `;
+}
+
+function toggleOmdbCast() {
+  if (!omdbSheetMovie) return;
+  omdbCastOpen = !omdbCastOpen;
+  const grid = els.omdbSheetBody?.querySelector("#omdb-cast-grid");
+  const btn = els.omdbSheetBody?.querySelector("[data-omdb-cast-more]");
+  const extra = Math.max(
+    0,
+    peopleFromMovie(omdbSheetMovie.cast, omdbSheetMovie.actors).length -
+      CAST_PREVIEW
+  );
+  if (grid && btn) {
+    grid.classList.toggle("is-expanded", omdbCastOpen);
+    btn.setAttribute("aria-expanded", String(omdbCastOpen));
+    btn.textContent = omdbCastOpen
+      ? t("omdbCastLess")
+      : t("omdbFullCast", { n: extra });
+    return;
+  }
+  renderOmdbSheet();
 }
 
 function omdbRatingsFromMovie(movie) {
@@ -5715,14 +5822,21 @@ function renderMovieTile(movie, now, index = 0) {
     .join("");
 
   const openClass = panelKind ? " is-open" : "";
+  const imdbId = movieImdbId(movie);
+  const openAttr = imdbId ? `data-omdb-id="${escapeHtml(imdbId)}"` : "";
+  const titleInner = imdbId
+    ? `<button type="button" class="movie-tile-open" ${openAttr} aria-label="${escapeHtml(
+        t("upcomingOpen", { title: movie.title })
+      )}">${escapeHtml(movie.title)}</button>`
+    : escapeHtml(movie.title);
 
   return `
     <article class="movie-tile${progress.all ? " all-done" : ""}${openClass}" style="--i:${index}" data-movie-tile="${escapeHtml(movie.title)}">
-      ${renderPoster(movie, 72, 104, "movie-poster")}
+      ${renderPoster(movie, 72, 104, "movie-poster", openAttr)}
       <div class="movie-tile-body">
         <div class="tile-main">
           <div class="movie-tile-head">
-            <h3 class="movie-tile-title">${escapeHtml(movie.title)}</h3>
+            <h3 class="movie-tile-title">${titleInner}</h3>
             ${doneTag(movie.shows, { allLabel: "done", now })}
           </div>
           ${ratingBadges}
