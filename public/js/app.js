@@ -79,16 +79,14 @@ const PROGRAM_RECHECK_MS = 2 * 60 * 1000;
 /** Hall geometry only changes when someone rebuilds an auditorium. */
 const SEAT_LAYOUT_TTL_MS = 30 * 24 * 60 * 60 * 1000;
 /**
- * Tap haptics. `navigator.vibrate` is always full amplitude — duration
- * is the only knob, and it is a bad one:
- *   ≤5ms  — ERM motors register spin-up and spin-down as two ticks
- *   ≥20ms — the mass reaches full speed and it becomes a rumble
- * ~8ms is the window where those two impacts fuse into one light click.
- * Never pass a pattern (on/off/on): that is two ticks by definition.
- * A 70ms lock stops Chrome's extra synthetic click from firing a second
- * pulse. Do not cancel-then-vibrate: cancel itself can click.
+ * Tap haptics. `navigator.vibrate` is always full amplitude, so a longer
+ * pulse is a stronger one — 8ms was a full click. 1ms is the legal
+ * minimum and the lightest tick the motor can make. The 70ms lock stops
+ * Chrome's extra synthetic click from stacking a second pulse (that was
+ * the "two ticks"). Never pass an on/off/on pattern, and do not
+ * cancel-then-vibrate: both feel like two hits.
  */
-const HAPTIC_TICK_MS = 8;
+const HAPTIC_TICK_MS = 1;
 const HAPTIC_LOCK_MS = 70;
 /**
  * iOS-like interpolating spring (WWDC 2023 "Animate with springs"):
@@ -2208,6 +2206,12 @@ async function setActiveTab(tab, { skipRender = false } = {}) {
     const prevView = els.views[prevTab];
     const host = view.parentElement;
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    // Child rise animations on a first paint would play on top of the
+    // slide and look like a second copy of the page. Mark the incoming
+    // host as already shown so render skips them.
+    if (tab === "movies") els.moviesContent.dataset.rendered = "1";
+    if (tab === "stats") els.statsContent.dataset.rendered = "1";
+    if (tab === "settings") els.settingsContent.dataset.rendered = "1";
 
     if (!reduceMotion.matches) {
       const scrollY = window.scrollY || 0;
@@ -5133,6 +5137,11 @@ function placeSettingsSegs({ instant = true } = {}) {
 
 function renderSettings() {
   const bridgeError = Boolean(dxScanStatus.error);
+  els.settingsContent.classList.toggle(
+    "no-anim",
+    els.settingsContent.dataset.rendered === "1"
+  );
+  els.settingsContent.dataset.rendered = "1";
 
   els.settingsContent.innerHTML = `
     <div class="settings-shell">
