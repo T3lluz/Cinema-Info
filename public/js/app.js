@@ -931,7 +931,10 @@ async function init() {
     updateLiquidLenses();
     updateNavContrast();
     if ("ResizeObserver" in window) {
-      const ro = new ResizeObserver(() => updateLiquidLenses());
+      const ro = new ResizeObserver(() => {
+        updateLiquidLenses();
+        scheduleNavContrast();
+      });
       for (const [, selector] of LENS_TARGETS) {
         const el = document.querySelector(selector);
         if (el) ro.observe(el);
@@ -2105,7 +2108,11 @@ function applyTheme(next) {
   const root = document.documentElement;
   root.classList.add("theme-anim");
   clearTimeout(applyTheme._t);
-  applyTheme._t = setTimeout(() => root.classList.remove("theme-anim"), 400);
+  applyTheme._t = setTimeout(() => {
+    root.classList.remove("theme-anim");
+    // Computed fills have landed on the new tokens — sample again.
+    scheduleNavContrast();
+  }, 400);
   root.dataset.theme = resolvedTheme();
   delete root.dataset.material;
   syncThemeChrome();
@@ -2231,19 +2238,33 @@ function updateLiquidLenses() {
  * the page) and difference turns Buen's red/green occupancy into
  * complementary artefacts. Sampling the DOM stack stays binary.
  */
+function parseAlpha(raw) {
+  if (raw == null) return 1;
+  return String(raw).endsWith("%") ? parseFloat(raw) / 100 : +raw;
+}
+
+function grayColor(lightness, a = 1) {
+  const v = Math.max(0, Math.min(1, lightness)) * 255;
+  return { r: v, g: v, b: v, a };
+}
+
 function parseCssColor(str) {
   if (!str) return null;
   const s = String(str).trim().toLowerCase();
   if (s === "transparent") return { r: 0, g: 0, b: 0, a: 0 };
 
   let m =
-    /^rgba?\(\s*([\d.]+)\s*[, ]\s*([\d.]+)\s*[, ]\s*([\d.]+)(?:\s*[,/]\s*([\d.]+%?))?\s*\)$/.exec(
+    /^rgba?\(\s*([\d.]+)(%?)\s*[, ]\s*([\d.]+)(%?)\s*[, ]\s*([\d.]+)(%?)(?:\s*[,/]\s*([\d.]+%?))?\s*\)$/.exec(
       s
     );
   if (m) {
-    const a =
-      m[4] == null ? 1 : m[4].endsWith("%") ? parseFloat(m[4]) / 100 : +m[4];
-    return { r: +m[1], g: +m[2], b: +m[3], a };
+    const ch = (n, pct) => (pct ? (+n / 100) * 255 : +n);
+    return {
+      r: ch(m[1], m[2]),
+      g: ch(m[3], m[4]),
+      b: ch(m[5], m[6]),
+      a: parseAlpha(m[7]),
+    };
   }
 
   m =
@@ -2251,9 +2272,31 @@ function parseCssColor(str) {
       s
     );
   if (m) {
-    const a =
-      m[4] == null ? 1 : m[4].endsWith("%") ? parseFloat(m[4]) / 100 : +m[4];
-    return { r: +m[1] * 255, g: +m[2] * 255, b: +m[3] * 255, a };
+    return {
+      r: +m[1] * 255,
+      g: +m[2] * 255,
+      b: +m[3] * 255,
+      a: parseAlpha(m[4]),
+    };
+  }
+
+  // Computed color-mix often serialises as oklch/lab. Lightness is
+  // enough to decide a white vs dark face.
+  m =
+    /^oklch\(\s*([\d.]+%?)(?:\s+[\d.-]+%?){0,2}(?:\s*\/\s*([\d.]+%?))?\s*\)$/.exec(
+      s
+    );
+  if (m) {
+    const L = m[1].endsWith("%") ? parseFloat(m[1]) / 100 : +m[1];
+    return grayColor(L, parseAlpha(m[2]));
+  }
+  m =
+    /^lab\(\s*([\d.]+%?)(?:\s+[\d.-]+%?){0,2}(?:\s*\/\s*([\d.]+%?))?\s*\)$/.exec(
+      s
+    );
+  if (m) {
+    const L = m[1].endsWith("%") ? parseFloat(m[1]) / 100 : +m[1] / 100;
+    return grayColor(L, parseAlpha(m[2]));
   }
 
   if (s[0] === "#") {
@@ -2271,6 +2314,22 @@ function parseCssColor(str) {
     }
   }
   return null;
+}
+
+function themeIsDark() {
+  return document.documentElement.dataset.theme === "dark";
+}
+
+function pageFallbackColor() {
+  return themeIsDark()
+    ? { r: 18, g: 18, b: 18 }
+    : { r: 239, g: 236, b: 232 };
+}
+
+function tokenColor(name) {
+  return parseCssColor(
+    getComputedStyle(document.documentElement).getPropertyValue(name).trim()
+  );
 }
 
 /** Average poster: film one-sheets skew dark, so an unread image is dark. */
@@ -2323,6 +2382,7 @@ function imageColor(img) {
  * on purpose: frosting lightens a dark poster toward mid-grey and
  * would keep icons ink when they need to be white. */
 function backdropColorAt(x, y) {
+  const theming = document.documentElement.classList.contains("theme-anim");
   const layers = [];
   for (const el of document.elementsFromPoint(x, y)) {
     if (el === document.documentElement || el.closest(".pill-nav")) continue;
@@ -2330,15 +2390,23 @@ function backdropColorAt(x, y) {
       layers.push(imageColor(el));
       break;
     }
+    // Mid-cross-fade fills still look like the old theme; skip them
+    // and let --bg (already flipped) decide until the anim ends.
+    if (theming) continue;
     const color = parseCssColor(getComputedStyle(el).backgroundColor);
     if (color && color.a > 0.01) {
       layers.push(color);
       if (color.a >= 0.99) break;
     }
   }
-  let base = parseCssColor(
-    getComputedStyle(document.documentElement).backgroundColor
-  ) || { r: 239, g: 236, b: 232 };
+  // --bg is the destination token (already dark after a theme flip);
+  // computed html background can still be mid-cross-fade, or a format
+  // we do not parse — both used to look "light" and pin dark-mode
+  // icons to black.
+  let base =
+    tokenColor("--bg") ||
+    parseCssColor(getComputedStyle(document.documentElement).backgroundColor) ||
+    pageFallbackColor();
   let { r, g, b } = base;
   for (let i = layers.length - 1; i >= 0; i--) {
     const c = layers[i];
@@ -2390,7 +2458,11 @@ function applyFaceContrast(el, fallbackDark) {
   const wasDark = el.classList.contains("on-dark");
   const lum = c ? luminanceOf(c) : null;
   const dark =
-    lum == null ? !!fallbackDark : lum < (wasDark ? 0.42 : 0.28);
+    lum == null
+      ? fallbackDark != null
+        ? !!fallbackDark
+        : themeIsDark()
+      : lum < (wasDark ? 0.42 : 0.28);
   el.classList.toggle("on-dark", dark);
   el.classList.toggle("on-light", !dark);
   return dark;
