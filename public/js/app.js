@@ -84,43 +84,36 @@ const SEAT_LAYOUT_TTL_MS = 30 * 24 * 60 * 60 * 1000;
  */
 const HAPTIC_CLICK_MS = 2;
 /**
- * Pixel Android 16 notification-dismiss haptics, from SystemUI
- * MagneticNotificationRowManagerImpl:
- *   pull:    5× PRIMITIVE_LOW_TICK every 60ms (pipelined, no gap)
- *   detach:  PRIMITIVE_CLICK at 0.7 when the row pops off the stack
- * Web can't play primitives or scale amplitude — duration stands in.
- * AOSP LOW_TICK target is 12ms at ~1/8 CLICK energy; 2ms full-amp is
- * our light tick. CLICK target 12ms × 0.7 ≈ 8ms for the snap.
- * https://source.android.com/docs/core/interaction/haptics/haptics-constants-primitives
+ * Pixel Android 16 notification-dismiss haptics (SystemUI
+ * MagneticNotificationRowManagerImpl intensity):
+ *   pull:    5× PRIMITIVE_LOW_TICK @ WEAK_VIBRATION_SCALE 0.2, every 60ms
+ *   detach:  PRIMITIVE_CLICK @ 0.7
+ * Web vibrate() is full amplitude only — a 5-tick full-amp train reads as
+ * a buzzsaw. Approximate soft pull as one 1ms tick (≈0.2 of a 5ms LOW_TICK
+ * budget); threshold as ~12ms×0.7 → 4ms (not 8).
  */
-const HAPTIC_LOW_TICK_MS = 2;
-const HAPTIC_PULL_TICKS = 5;
+const HAPTIC_PULL_MS = 1;
 const HAPTIC_PULL_PERIOD_MS = 60;
-const HAPTIC_THRESHOLD_MS = 8;
-/** 5 LOW_TICKs with delay 0, matching addPrimitive without a pause. */
-const HAPTIC_PULL_PATTERN = Array.from(
-  { length: HAPTIC_PULL_TICKS * 2 - 1 },
-  (_, i) => (i % 2 === 0 ? HAPTIC_LOW_TICK_MS : 0)
-);
+const HAPTIC_THRESHOLD_MS = 4;
 /**
- * Pixel Android 16 magnetic notification swipe — SystemUI
- * MagneticNotificationRowManagerImpl. CSS px ≈ dp on mobile.
- * Swiped row follows at 0.5× until |0.5·finger| ≥ 72dp, then rips free;
- * neighbours tug at 0.28× and spring back. Corners round up to 0.8 of
- * 28dp while stuck, then 1.0 once detached.
+ * Magnetic peel tuned for a full-page day turn (not a thin notification):
+ * earlier rip, snappier springs, neighbour stays put under the card so
+ * only one panel moves.
  */
-const MAGNETIC_SWIPED = 0.5;
-const MAGNETIC_NEIGHBOR = 0.28;
+const MAGNETIC_SWIPED = 0.62;
 const MAGNETIC_REDUCTION = 0.65;
-const MAGNETIC_DETACH_DP = 72;
-const MAGNETIC_ATTACH_DP = 56;
+/** Mapped content px before the card rips free (~65dp finger at 0.62×). */
+const MAGNETIC_DETACH_DP = 40;
+const MAGNETIC_ATTACH_DP = 28;
+/** Slow release past this still commits (snappy without a long drag). */
+const MAGNETIC_COMMIT_DP = 28;
 const MAGNETIC_MAX_PRE_ROUNDNESS = 0.8;
-/** 500 dp/s dismiss velocity. */
-const MAGNETIC_DISMISS_VEL = 0.5;
-const MAGNETIC_DETACH_OMEGA = Math.sqrt(800) / 1000;
-const MAGNETIC_DETACH_ZETA = 0.95;
-const MAGNETIC_SNAP_OMEGA = Math.sqrt(550) / 1000;
-const MAGNETIC_SNAP_ZETA = 0.6;
+/** ~400 dp/s — easier flick commit than stock 500. */
+const MAGNETIC_DISMISS_VEL = 0.4;
+const MAGNETIC_DETACH_OMEGA = Math.sqrt(1100) / 1000;
+const MAGNETIC_DETACH_ZETA = 0.92;
+const MAGNETIC_SNAP_OMEGA = Math.sqrt(700) / 1000;
+const MAGNETIC_SNAP_ZETA = 0.72;
 
 /** One step of Android SpringForce (mass 1). omega in rad/ms. */
 function stepSpring(x, v, target, dt, omega, zeta) {
@@ -990,11 +983,10 @@ function releaseDayRender({ discardQueued = false } = {}) {
 
 /**
  * Interactive swipe between days: Pixel Android 16 magnetic notification
- * dismiss. The current day is the row; the neighbour sits underneath as
- * the stack. While attached the page lags at 0.5×, corners round, and the
- * neighbour tugs at 0.28×. Crossing 72dp rips it free (1:1 follow, full
- * rounding, neighbour springs back). Release either flings the card off
- * or bounces it back onto the stack (SpringForce 550 / 0.6).
+ * dismiss, adapted for a full page. The current day is the card; the
+ * neighbour stays fixed underneath as the stack. While attached the page
+ * lags (~0.62×) and corners round; crossing ~40dp rips it free. Release
+ * flings the card off or bounces it back.
  *
  * Built for robustness against every "stuck between days" failure mode:
  * - Pointer events with capture on the (stable) day view, so the gesture
@@ -1026,7 +1018,6 @@ function setupDaySwipe() {
   let baseX = 0;
   let rawX = 0;
   let contentX = 0;
-  let neighborX = 0;
   let roundness = 0;
   let detached = false;
   /** 1 = peeling toward next (content moves left), −1 = previous. */
@@ -1038,7 +1029,6 @@ function setupDaySwipe() {
   let lastT = 0;
   let vx = 0;
   let raf = 0;
-  let neighborRaf = 0;
   /** Direction of the currently running snap animation (−1/0/1). */
   let animDir = 0;
   /** Day that animation commits to on arrival ("" while springing back). */
@@ -1049,24 +1039,15 @@ function setupDaySwipe() {
   let previewDir = 0;
   let lastPullHapticT = 0;
 
-  const stopNeighborSpring = () => {
-    cancelAnimationFrame(neighborRaf);
-    neighborRaf = 0;
-  };
-
   const clearPaint = () => {
-    stopNeighborSpring();
     rawX = 0;
     contentX = 0;
-    neighborX = 0;
     roundness = 0;
     detached = false;
     peelDir = 0;
-    track.classList.remove("is-peeling");
+    track.classList.remove("is-peeling", "peel-next", "peel-prev");
     els.content.style.transform = "";
     els.content.style.removeProperty("--peel");
-    els.dayPanePrev.style.transform = "";
-    els.dayPaneNext.style.transform = "";
   };
 
   const applyPaint = () => {
@@ -1075,43 +1056,8 @@ function setupDaySwipe() {
       : "";
     els.content.style.setProperty("--peel", String(roundness));
     const towardNext = peelDir > 0 || (peelDir === 0 && contentX < 0);
-    const shown = towardNext ? els.dayPaneNext : els.dayPanePrev;
-    const hidden = towardNext ? els.dayPanePrev : els.dayPaneNext;
-    shown.style.transform = neighborX
-      ? `translate3d(${neighborX}px, 0, 0)`
-      : "";
-    hidden.style.transform = "";
-  };
-
-  const springNeighborBack = () => {
-    stopNeighborSpring();
-    let x = neighborX;
-    let v = MAGNETIC_NEIGHBOR * vx;
-    let prev = performance.now();
-    const tick = (ts) => {
-      const dt = Math.min(Math.max(ts - prev, 0.001), 64);
-      prev = ts;
-      const s = stepSpring(
-        x,
-        v,
-        0,
-        dt,
-        MAGNETIC_SNAP_OMEGA,
-        MAGNETIC_SNAP_ZETA
-      );
-      x = s.x;
-      v = s.v;
-      neighborX = x;
-      applyPaint();
-      if (Math.abs(x) < 0.5 && Math.abs(v) < 0.02) {
-        neighborX = 0;
-        applyPaint();
-        neighborRaf = 0;
-        return;
-      }
-      neighborRaf = requestAnimationFrame(tick);
-    };
-    neighborRaf = requestAnimationFrame(tick);
+    track.classList.toggle("peel-next", towardNext);
+    track.classList.toggle("peel-prev", !towardNext);
   };
 
   let hapticDetached = false;
@@ -1123,20 +1069,19 @@ function setupDaySwipe() {
       return;
     }
     if (hapticDetached) return;
+    // Soft pull: one 1ms tick every 60ms once the card has actually moved
+    // (Pixel scale starts near 0 at WEAK 0.2 × normalized^1.27).
+    if (Math.abs(contentX) < 8) return;
     if (t - lastPullHapticT < HAPTIC_PULL_PERIOD_MS) return;
     lastPullHapticT = t;
-    hapticVibrate(HAPTIC_PULL_PATTERN);
+    hapticVibrate(HAPTIC_PULL_MS);
   };
 
   const mapPull = (raw, blocked) => {
     const swiped = blocked
       ? MAGNETIC_SWIPED * MAGNETIC_REDUCTION
       : MAGNETIC_SWIPED;
-    const neigh = blocked
-      ? MAGNETIC_NEIGHBOR * MAGNETIC_REDUCTION
-      : MAGNETIC_NEIGHBOR;
     contentX = swiped * raw;
-    if (!neighborRaf) neighborX = neigh * raw;
     roundness = Math.min(
       Math.abs(contentX) / MAGNETIC_DETACH_DP,
       MAGNETIC_MAX_PRE_ROUNDNESS
@@ -1158,10 +1103,12 @@ function setupDaySwipe() {
     enrichVisibleDay();
   };
 
-  /** Header follows detach, not a 30% page-width guess. */
+  /** Header follows detach / commit progress. */
   const previewHeader = () => {
     let dir = 0;
-    if (detached) {
+    const pastCommit =
+      detached || Math.abs(contentX) >= MAGNETIC_COMMIT_DP;
+    if (pastCommit) {
       dir = peelDir || (contentX < 0 ? 1 : contentX > 0 ? -1 : 0);
       if ((dir > 0 && idx >= days.length - 1) || (dir < 0 && idx <= 0)) {
         dir = 0;
@@ -1192,7 +1139,6 @@ function setupDaySwipe() {
       // was already committing to a neighbour day, commit it now and
       // rebase so a follow-up swipe moves on from the new day.
       cancelAnimationFrame(raf);
-      stopNeighborSpring();
       if (animDir !== 0) {
         finishAnim?.();
         baseX = 0;
@@ -1276,8 +1222,6 @@ function setupDaySwipe() {
 
     if (!blocked && !detached && Math.abs(MAGNETIC_SWIPED * rawX) >= MAGNETIC_DETACH_DP) {
       detached = true;
-      stopNeighborSpring();
-      springNeighborBack();
     }
 
     if (blocked || !detached) {
@@ -1287,7 +1231,6 @@ function setupDaySwipe() {
       // Re-attach when the card is close enough to the stack again.
       if (Math.abs(contentX) <= MAGNETIC_ATTACH_DP) {
         detached = false;
-        stopNeighborSpring();
         baseX = contentX / MAGNETIC_SWIPED;
         startX = x;
         rawX = baseX;
@@ -1307,13 +1250,13 @@ function setupDaySwipe() {
       let dir = 0;
       if (detached) {
         dir = contentX < 0 ? 1 : -1;
-        if (dir === 1 && !canNext) dir = 0;
-        if (dir === -1 && !canPrev) dir = 0;
-      } else if (canNext && vx < -MAGNETIC_DISMISS_VEL) {
+      } else if (canNext && (vx < -MAGNETIC_DISMISS_VEL || contentX <= -MAGNETIC_COMMIT_DP)) {
         dir = 1;
-      } else if (canPrev && vx > MAGNETIC_DISMISS_VEL) {
+      } else if (canPrev && (vx > MAGNETIC_DISMISS_VEL || contentX >= MAGNETIC_COMMIT_DP)) {
         dir = -1;
       }
+      if (dir === 1 && !canNext) dir = 0;
+      if (dir === -1 && !canPrev) dir = 0;
       const contentV = detached ? vx : MAGNETIC_SWIPED * vx;
       snapTo(dir, { haptic: true, v0: contentV });
     } else if (mode !== "animating") {
@@ -1348,8 +1291,6 @@ function setupDaySwipe() {
   /** Spring the card off (dir ±1) or bounce it back onto the stack (0). */
   function snapTo(dir, { day = dir === 0 ? "" : days[idx + dir], v0 = vx, haptic = false } = {}) {
     cancelAnimationFrame(raf);
-    stopNeighborSpring();
-    neighborX = 0;
     mode = "animating";
     animDir = dir;
     animDay = day;
@@ -1372,7 +1313,6 @@ function setupDaySwipe() {
 
     const finish = () => {
       cancelAnimationFrame(raf);
-      stopNeighborSpring();
       finishAnim = null;
       animDir = 0;
       animDay = "";

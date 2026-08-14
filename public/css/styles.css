@@ -1012,7 +1012,7 @@ h1 {
   }
 }
 
-/* —— Day swipe: magnetic peel, like Pixel Android 16 notification dismiss —— */
+/* —— Day swipe: magnetic peel; only the top card moves —— */
 #view-day {
   /* The browser keeps vertical panning; horizontal drags are ours. */
   touch-action: pan-y;
@@ -1020,29 +1020,34 @@ h1 {
 
 .day-swipe {
   position: relative;
+  overflow: hidden;
 }
 
-/* Neighbour day sits under the current page (the stack). The current
-   page peels off on top with magnetic lag, rounding, and a lift shadow. */
+/* Incoming day stays fixed under the current page (the stack). Moving
+   both looked like two panels swiping — Pixel notifications tug the
+   stack a hair; full-page days must not. */
 .day-pane {
   position: absolute;
   inset: 0;
   z-index: 0;
   overflow: hidden;
   pointer-events: none;
+  visibility: hidden;
+  background: var(--bg);
+}
+
+.day-swipe.peel-next > .day-pane.next,
+.day-swipe.peel-prev > .day-pane.prev {
+  visibility: visible;
 }
 
 .day-swipe > #content {
   position: relative;
   z-index: 1;
-}
-
-.day-swipe.is-peeling {
-  overflow: hidden;
+  background: var(--bg);
 }
 
 .day-swipe.is-peeling > #content {
-  background: var(--bg);
   overflow: hidden;
   border-radius: calc(28px * var(--peel, 0));
   box-shadow:
@@ -1050,6 +1055,7 @@ h1 {
       color-mix(in srgb, #000 calc(12% * var(--peel, 0)), transparent),
     0 calc(12px * var(--peel, 0)) calc(40px * var(--peel, 0))
       color-mix(in srgb, #000 calc(18% * var(--peel, 0)), transparent);
+  will-change: transform;
 }
 
 @media (prefers-reduced-motion: reduce) {
