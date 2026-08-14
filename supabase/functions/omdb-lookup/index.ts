@@ -1,17 +1,19 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 
 /**
- * OMDb lookup for Cinema Info.
+ * Movie lookup for Cinema Info.
  *
- * The PWA is static on GitHub Pages, so the OMDb key stays here (function
- * secret `OMDB_API_KEY`, same name as the Actions secret used by the
- * nightly snapshot) and the browser only sees search hits and title
- * details. Same CORS / anon-key pattern as `dx-web-login`.
+ * The PWA is static on GitHub Pages, so keys and upstream calls stay
+ * here. OMDb covers search + plot/ratings; IMDb's public GraphQL fills
+ * in cast headshots and the popular-titles feed. Same CORS / anon-key
+ * pattern as `dx-web-login`.
  */
 
 const OMDB = "https://www.omdbapi.com/";
+const IMDB_GQL = "https://caching.graphql.imdb.com/";
 const TIMEOUT_MS = 8000;
 const MAX_Q = 100;
+const POPULAR_LIMIT = 36;
 
 const CORS = {
   "Access-Control-Allow-Origin": "*",
@@ -19,6 +21,66 @@ const CORS = {
     "authorization, x-client-info, apikey, content-type",
   "Access-Control-Allow-Methods": "POST, OPTIONS",
 };
+
+const IMDB_HEADERS = {
+  Accept: "application/json",
+  "Content-Type": "application/json",
+  "x-imdb-client-name": "imdb-web-app",
+  "User-Agent":
+    "Mozilla/5.0 (compatible; CinemaInfo/1.0; +https://github.com/T3lluz/Cinema-Info)",
+};
+
+const TITLE_QUERY = `query Title($id: ID!) {
+  title(id: $id) {
+    id
+    titleText { text }
+    originalTitleText { text }
+    releaseYear { year }
+    releaseDate { day month year }
+    runtime { seconds }
+    certificate { rating }
+    ratingsSummary { aggregateRating voteCount }
+    metacritic { metascore { score } }
+    primaryImage { url }
+    plot { plotText { plainText } }
+    genres { genres { text } }
+    spokenLanguages { spokenLanguages { text } }
+    countriesOfOrigin { countries { text } }
+    principalCredits {
+      category { text }
+      credits {
+        name { id nameText { text } primaryImage { url } }
+        ... on Cast { characters { name } }
+      }
+    }
+    credits(first: 16, filter: { categories: ["cast"] }) {
+      edges {
+        node {
+          name { id nameText { text } primaryImage { url } }
+          ... on Cast { characters { name } }
+        }
+      }
+    }
+  }
+}`;
+
+const POPULAR_QUERY = `query Popular($n: Int!) {
+  popularTitles(limit: $n) {
+    titles {
+      id
+      titleText { text }
+      titleType { id text }
+      releaseYear { year }
+      releaseDate { day month year }
+      ratingsSummary { aggregateRating voteCount }
+      primaryImage { url }
+      plot { plotText { plainText } }
+      runtime { seconds }
+      certificate { rating }
+      genres { genres { text } }
+    }
+  }
+}`;
 
 function json(data: unknown, status = 200) {
   return new Response(JSON.stringify(data), {
@@ -46,6 +108,112 @@ function posterUrl(value: unknown) {
   return url;
 }
 
+function rewriteImdbImage(url: unknown, suffix: string) {
+  const raw = posterUrl(url);
+  if (!raw) return "";
+  if (!/m\.media-amazon\.com/i.test(raw)) return raw;
+  return raw.replace(/\._V1_.*$/i, `._V1_${suffix}`);
+}
+
+function faceUrl(url: unknown) {
+  return rewriteImdbImage(url, "UX240_CR0,0,240,240_.jpg");
+}
+
+function posterFromImdb(url: unknown) {
+  return rewriteImdbImage(url, "SX300.jpg") || posterUrl(url);
+}
+
+function imdbDate(rd: Record<string, unknown> | null | undefined) {
+  if (!rd || rd.year == null) return "";
+  const y = Number(rd.year);
+  if (!Number.isFinite(y)) return "";
+  const m = Number(rd.month);
+  const d = Number(rd.day);
+  if (Number.isFinite(m) && Number.isFinite(d)) {
+    return `${y}-${String(m).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
+  }
+  if (Number.isFinite(m)) return `${y}-${String(m).padStart(2, "0")}`;
+  return String(y);
+}
+
+function runtimeLabel(seconds: unknown) {
+  const n = Number(seconds);
+  if (!Number.isFinite(n) || n <= 0) return "";
+  return `${Math.round(n / 60)} min`;
+}
+
+function texts(list: unknown, key: string) {
+  if (!Array.isArray(list)) return [];
+  return list
+    .map((row) => {
+      const rec = row && typeof row === "object" ? (row as Record<string, unknown>) : {};
+      return na(rec[key]);
+    })
+    .filter(Boolean);
+}
+
+function packPerson(raw: unknown) {
+  const node = raw && typeof raw === "object" ? (raw as Record<string, unknown>) : {};
+  const nameObj = node.name && typeof node.name === "object"
+    ? (node.name as Record<string, unknown>)
+    : {};
+  const nameText = nameObj.nameText && typeof nameObj.nameText === "object"
+    ? (nameObj.nameText as Record<string, unknown>)
+    : {};
+  const image = nameObj.primaryImage && typeof nameObj.primaryImage === "object"
+    ? (nameObj.primaryImage as Record<string, unknown>)
+    : {};
+  const name = na(nameText.text);
+  if (!name) return null;
+  const characters = Array.isArray(node.characters) ? node.characters : [];
+  const character = characters
+    .map((c) => {
+      const rec = c && typeof c === "object" ? (c as Record<string, unknown>) : {};
+      return na(rec.name);
+    })
+    .filter(Boolean)
+    .join(" / ");
+  return {
+    id: na(nameObj.id),
+    name,
+    photo: faceUrl(image.url),
+    character,
+  };
+}
+
+function peopleFromPrincipal(
+  title: Record<string, unknown>,
+  category: string,
+) {
+  const rows = Array.isArray(title.principalCredits) ? title.principalCredits : [];
+  for (const row of rows) {
+    const rec = row && typeof row === "object" ? (row as Record<string, unknown>) : {};
+    const cat = rec.category && typeof rec.category === "object"
+      ? (rec.category as Record<string, unknown>)
+      : {};
+    if (na(cat.text).toLowerCase() !== category) continue;
+    const credits = Array.isArray(rec.credits) ? rec.credits : [];
+    return credits.map(packPerson).filter(Boolean);
+  }
+  return [];
+}
+
+function castFromTitle(title: Record<string, unknown>) {
+  const credits = title.credits && typeof title.credits === "object"
+    ? (title.credits as Record<string, unknown>)
+    : {};
+  const edges = Array.isArray(credits.edges) ? credits.edges : [];
+  const fromCredits = edges
+    .map((edge) => {
+      const rec = edge && typeof edge === "object" ? (edge as Record<string, unknown>) : {};
+      return packPerson(rec.node);
+    })
+    .filter(Boolean);
+  if (fromCredits.length) return fromCredits;
+  const stars = peopleFromPrincipal(title, "stars");
+  return stars.length ? stars : peopleFromPrincipal(title, "cast");
+}
+
 async function omdbGet(params: Record<string, string>) {
   const key = omdbKey();
   if (!key) {
@@ -65,6 +233,28 @@ async function omdbGet(params: Record<string, string>) {
     throw err;
   }
   return await res.json();
+}
+
+async function imdbGql(query: string, variables: Record<string, unknown>) {
+  const res = await fetch(IMDB_GQL, {
+    method: "POST",
+    cache: "no-store",
+    signal: AbortSignal.timeout(TIMEOUT_MS),
+    headers: IMDB_HEADERS,
+    body: JSON.stringify({ query, variables }),
+  });
+  if (!res.ok) {
+    const err = new Error(`IMDb ${res.status}`);
+    (err as Error & { code?: string }).code = "upstream";
+    throw err;
+  }
+  const data = await res.json();
+  if (data?.errors?.length) {
+    const err = new Error(String(data.errors[0]?.message || "IMDb GraphQL error"));
+    (err as Error & { code?: string }).code = "upstream";
+    throw err;
+  }
+  return data?.data || {};
 }
 
 function packSearchHit(row: Record<string, unknown>) {
@@ -116,6 +306,143 @@ function packTitle(data: Record<string, unknown>) {
     production: na(data.Production),
     website: na(data.Website),
     imdbUrl: `https://www.imdb.com/title/${encodeURIComponent(imdbID)}/`,
+    cast: [] as ReturnType<typeof packPerson>[],
+    directors: [] as ReturnType<typeof packPerson>[],
+  };
+}
+
+function packImdbTitle(title: Record<string, unknown>) {
+  const imdbID = na(title.id);
+  if (!imdbID) return null;
+  const genres = texts(title.genres && typeof title.genres === "object"
+    ? (title.genres as Record<string, unknown>).genres
+    : [], "text");
+  const languages = texts(
+    title.spokenLanguages && typeof title.spokenLanguages === "object"
+      ? (title.spokenLanguages as Record<string, unknown>).spokenLanguages
+      : [],
+    "text",
+  );
+  const countries = texts(
+    title.countriesOfOrigin && typeof title.countriesOfOrigin === "object"
+      ? (title.countriesOfOrigin as Record<string, unknown>).countries
+      : [],
+    "text",
+  );
+  const plot = title.plot && typeof title.plot === "object"
+    ? (title.plot as Record<string, unknown>).plotText
+    : null;
+  const plotText = plot && typeof plot === "object"
+    ? na((plot as Record<string, unknown>).plainText)
+    : "";
+  const ratings = title.ratingsSummary && typeof title.ratingsSummary === "object"
+    ? (title.ratingsSummary as Record<string, unknown>)
+    : {};
+  const meta = title.metacritic && typeof title.metacritic === "object"
+    ? (title.metacritic as Record<string, unknown>).metascore
+    : null;
+  const metaScore = meta && typeof meta === "object"
+    ? na((meta as Record<string, unknown>).score)
+    : "";
+  const image = title.primaryImage && typeof title.primaryImage === "object"
+    ? (title.primaryImage as Record<string, unknown>)
+    : {};
+  const titleText = title.titleText && typeof title.titleText === "object"
+    ? (title.titleText as Record<string, unknown>)
+    : {};
+  const yearObj = title.releaseYear && typeof title.releaseYear === "object"
+    ? (title.releaseYear as Record<string, unknown>)
+    : {};
+  const cert = title.certificate && typeof title.certificate === "object"
+    ? (title.certificate as Record<string, unknown>)
+    : {};
+  const runtime = title.runtime && typeof title.runtime === "object"
+    ? (title.runtime as Record<string, unknown>)
+    : {};
+  const rating = ratings.aggregateRating;
+  const votes = ratings.voteCount;
+  const directors = peopleFromPrincipal(title, "director");
+  const cast = castFromTitle(title);
+  return {
+    imdbID,
+    title: na(titleText.text) || imdbID,
+    year: yearObj.year != null ? String(yearObj.year) : "",
+    rated: na(cert.rating),
+    released: imdbDate(
+      title.releaseDate && typeof title.releaseDate === "object"
+        ? (title.releaseDate as Record<string, unknown>)
+        : null,
+    ),
+    runtime: runtimeLabel(runtime.seconds),
+    genre: genres.join(", "),
+    director: directors.map((p) => p?.name).filter(Boolean).join(", "),
+    writer: peopleFromPrincipal(title, "writer").map((p) => p?.name).filter(Boolean).join(", "),
+    actors: cast.map((p) => p?.name).filter(Boolean).join(", "),
+    plot: plotText,
+    language: languages.join(", "),
+    country: countries.join(", "),
+    awards: "",
+    poster: posterFromImdb(image.url),
+    ratings: rating != null
+      ? [{ source: "Internet Movie Database", value: `${rating}/10` }]
+      : [],
+    imdbRating: rating != null ? String(rating) : "",
+    imdbVotes: votes != null ? Number(votes).toLocaleString("en-US") : "",
+    metascore: metaScore,
+    boxOffice: "",
+    type: "movie",
+    dvd: "",
+    production: "",
+    website: "",
+    imdbUrl: `https://www.imdb.com/title/${encodeURIComponent(imdbID)}/`,
+    cast,
+    directors,
+  };
+}
+
+function mergeTitle(
+  omdb: ReturnType<typeof packTitle> | null,
+  imdb: ReturnType<typeof packImdbTitle> | null,
+) {
+  if (!omdb && !imdb) return null;
+  const base = { ...(imdb || {}), ...(omdb || {}) } as NonNullable<
+    ReturnType<typeof packTitle>
+  > & {
+    cast: ReturnType<typeof packPerson>[];
+    directors: ReturnType<typeof packPerson>[];
+  };
+  base.cast = (imdb?.cast?.length ? imdb.cast : omdb?.cast) || [];
+  base.directors = (imdb?.directors?.length ? imdb.directors : omdb?.directors) || [];
+  if (!base.poster && imdb?.poster) base.poster = imdb.poster;
+  if (!base.plot && imdb?.plot) base.plot = imdb.plot;
+  if (!base.imdbRating && imdb?.imdbRating) base.imdbRating = imdb.imdbRating;
+  if (!base.genre && imdb?.genre) base.genre = imdb.genre;
+  if (!base.director && imdb?.director) base.director = imdb.director;
+  if (!base.actors && imdb?.actors) base.actors = imdb.actors;
+  return base;
+}
+
+function packPopular(title: Record<string, unknown>) {
+  const typeObj = title.titleType && typeof title.titleType === "object"
+    ? (title.titleType as Record<string, unknown>)
+    : {};
+  if (na(typeObj.id) !== "movie") return null;
+  const packed = packImdbTitle(title);
+  if (!packed) return null;
+  return {
+    imdbID: packed.imdbID,
+    title: packed.title,
+    year: packed.year,
+    type: "movie",
+    poster: packed.poster,
+    plot: packed.plot,
+    imdbRating: packed.imdbRating,
+    imdbVotes: packed.imdbVotes,
+    genre: packed.genre,
+    rated: packed.rated,
+    runtime: packed.runtime,
+    released: packed.released,
+    imdbUrl: packed.imdbUrl,
   };
 }
 
@@ -150,13 +477,36 @@ Deno.serve(async (req) => {
       if (!/^tt\d{5,}$/i.test(id)) {
         return json({ error: "Invalid IMDb id" }, 400);
       }
-      const data = await omdbGet({ i: id, plot: "full" });
-      if (data?.Response === "False") {
-        return json({ error: data?.Error || "Not found", code: "not_found" }, 404);
+      const [omdbRes, imdbRes] = await Promise.allSettled([
+        omdbGet({ i: id, plot: "full" }),
+        imdbGql(TITLE_QUERY, { id }),
+      ]);
+      const omdbData = omdbRes.status === "fulfilled" ? omdbRes.value : null;
+      const imdbTitle = imdbRes.status === "fulfilled"
+        ? imdbRes.value?.title
+        : null;
+      if (omdbData?.Response === "False" && !imdbTitle) {
+        return json({ error: omdbData?.Error || "Not found", code: "not_found" }, 404);
       }
-      const movie = packTitle(data);
+      const movie = mergeTitle(
+        omdbData && omdbData.Response !== "False" ? packTitle(omdbData) : null,
+        imdbTitle ? packImdbTitle(imdbTitle) : null,
+      );
       if (!movie) return json({ error: "Not found", code: "not_found" }, 404);
       return json({ ok: true, movie });
+    }
+
+    if (action === "popular") {
+      const n = Math.min(
+        Math.max(Number(body.limit) || POPULAR_LIMIT, 6),
+        48,
+      );
+      const data = await imdbGql(POPULAR_QUERY, { n });
+      const titles = Array.isArray(data?.popularTitles?.titles)
+        ? data.popularTitles.titles
+        : [];
+      const movies = titles.map(packPopular).filter(Boolean);
+      return json({ ok: true, movies });
     }
 
     return json({ error: "Unknown action" }, 400);
@@ -164,8 +514,8 @@ Deno.serve(async (req) => {
     const code = (err as { code?: string })?.code || "upstream";
     const status = code === "config" ? 503 : 502;
     return json(
-      { error: err instanceof Error ? err.message : "OMDb lookup failed", code },
-      status
+      { error: err instanceof Error ? err.message : "Lookup failed", code },
+      status,
     );
   }
 });

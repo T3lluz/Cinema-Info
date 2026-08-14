@@ -3,8 +3,8 @@
 Mobile-friendly schedule for **Buen kino** — same info as the KinoProgram Chrome extension:
 
 - Movies with posters
-- Upcoming movies on a date timeline (first showing still ahead)
-- Search any film via OMDb — poster, ratings, plot, director, cast
+- Upcoming movies: Buen titles plus popular IMDb films, three at a time
+- Search any film — results stay visible; tap for poster, plot, and cast headshots
 - Real start / end times (from eBillett)
 - Live sold / capacity / occupancy per show, with sold-out and few-left flags
 - Progress bar + minutes left for shows playing right now
@@ -193,12 +193,14 @@ and variables → Actions). If the key is missing, the fetch script falls
 back to IMDb's public suggestion + GraphQL endpoints so scores still
 land in the snapshot.
 
-The same tab has an **Upcoming movies** timeline (films whose first
-showing at Buen is still ahead) and a live **OMDb search** for any
-title — poster, plot, ratings, director and cast. Search goes through
-the `omdb-lookup` Edge Function so the API key never ships in the
-static site; set `OMDB_API_KEY` as a **Supabase function secret** as
-well (same value as the Actions secret).
+The same tab has an **Upcoming movies** list: Buen titles that have
+not started yet, then popular movies from IMDb. The first three are
+shown; **Show more** reveals three at a time. Search results stay on
+the page after you leave the box. Opening a title shows poster, plot,
+ratings, and a cast grid with headshots. Lookups go through the
+`omdb-lookup` Edge Function so the API key never ships in the static
+site; set `OMDB_API_KEY` as a **Supabase function secret** as well
+(same value as the Actions secret).
 
 The nightly run matters for history: Buen’s API drops a show the moment
 it starts, so the script re-asks DX about the showings that have left the
