@@ -361,7 +361,9 @@ function packImdbTitle(title: Record<string, unknown>) {
     : {};
   const rating = ratings.aggregateRating;
   const votes = ratings.voteCount;
-  const directors = peopleFromPrincipal(title, "director");
+  const directors = peopleFromPrincipal(title, "director").map((person) =>
+    person ? { ...person, photo: "" } : person
+  );
   const cast = castFromTitle(title);
   return {
     imdbID,
