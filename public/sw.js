@@ -1,12 +1,12 @@
 /* Cinema Info service worker: network-first with cache fallback,
    so the app opens instantly and still works offline with the
    last-seen program. Live DX calls are never cached. */
-const CACHE = "cinema-info-v158";
+const CACHE = "cinema-info-v159";
 const PRECACHE = [
   "./",
   "./index.html",
-  "./css/styles.css?v=154",
-  "./js/app.js?v=126",
+  "./css/styles.css?v=155",
+  "./js/app.js?v=127",
   "./assets/favicon.svg",
   "./assets/apple-touch-icon.png",
   "./assets/icons/icon-192.png",
@@ -77,7 +77,7 @@ self.addEventListener("fetch", (event) => {
   }
 
   // Posters (CDN): cache first, they never change for a given URL.
-  if (url.hostname === "cdn.sanity.io") {
+  if (url.hostname === "cdn.sanity.io" || url.hostname === "m.media-amazon.com") {
     event.respondWith(
       caches.match(event.request).then(
         (hit) =>

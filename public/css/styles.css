@@ -1343,6 +1343,10 @@ h1 {
 .no-anim .show-card,
 .no-anim .movie-tile,
 .no-anim .view-intro,
+.no-anim .movie-search,
+.no-anim .movies-section-head,
+.no-anim .upcoming-day,
+.no-anim .upcoming-card,
 .no-anim .stats-hero,
 .no-anim .stats-panel,
 .no-anim .bar-row,
@@ -2441,6 +2445,594 @@ a.rating-badge:hover {
   font-size: 0.62rem;
   text-transform: uppercase;
   letter-spacing: 0.03em;
+}
+
+/* —— Movies search (OMDb) —— */
+.movie-search {
+  position: relative;
+  max-width: var(--page-max);
+  margin: 0 auto 16px;
+  animation: rise 0.32s ease both;
+}
+
+.movie-search-field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 12px;
+  height: 44px;
+  border-radius: 14px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--ink) 4%, transparent);
+}
+
+.movie-search-field:focus-within {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+  box-shadow:
+    0 0 0 3px color-mix(in srgb, var(--accent) 16%, transparent),
+    0 1px 0 color-mix(in srgb, var(--ink) 4%, transparent);
+}
+
+.movie-search-icon {
+  flex: 0 0 auto;
+  color: var(--muted);
+}
+
+.movie-search-field input {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.95rem;
+  font-weight: 650;
+  outline: none;
+}
+
+.movie-search-field input::placeholder {
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.movie-search-field input::-webkit-search-cancel-button {
+  appearance: none;
+}
+
+.movie-search-clear {
+  flex: 0 0 auto;
+  width: 28px;
+  height: 28px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--line) 70%, var(--surface));
+  color: var(--muted);
+  font-size: 1.15rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.movie-search-clear:active {
+  transform: scale(0.94);
+}
+
+.movie-search-hint {
+  margin: 7px 2px 0;
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+.omdb-live {
+  position: absolute;
+  z-index: 12;
+  left: 0;
+  right: 0;
+  top: calc(44px + 6px);
+  max-height: min(58vh, 420px);
+  overflow: auto;
+  padding: 6px;
+  border-radius: 14px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  box-shadow:
+    0 18px 40px color-mix(in srgb, var(--ink) 18%, transparent),
+    0 2px 8px color-mix(in srgb, var(--ink) 8%, transparent);
+}
+
+.omdb-live[hidden] {
+  display: none;
+}
+
+.omdb-hit {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  width: 100%;
+  margin: 0;
+  padding: 7px 8px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.omdb-hit:hover,
+.omdb-hit.is-active {
+  background: color-mix(in srgb, var(--accent-soft) 70%, var(--surface));
+}
+
+.omdb-hit-poster,
+.omdb-hit-fallback {
+  width: 40px;
+  height: 56px;
+  border-radius: 6px;
+  object-fit: cover;
+  background: color-mix(in srgb, var(--line) 70%, var(--surface));
+  display: block;
+}
+
+.omdb-hit-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  font-size: 0.95rem;
+  font-weight: 800;
+}
+
+.omdb-hit-text {
+  min-width: 0;
+}
+
+.omdb-hit-title {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 800;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+}
+
+.omdb-hit-meta {
+  display: block;
+  margin-top: 2px;
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+
+.omdb-hit-chip {
+  flex: 0 0 auto;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.omdb-live-note,
+.omdb-live-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 12px 10px;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.omdb-live-status .spinner {
+  width: 14px;
+  height: 14px;
+  border-width: 2px;
+}
+
+/* —— Upcoming movies timeline —— */
+.movies-section {
+  max-width: var(--page-max);
+  margin: 0 auto 18px;
+}
+
+.movies-section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 4px 0 12px;
+  animation: rise 0.32s ease both;
+}
+
+.movies-section-head h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.movies-section-head p {
+  margin: 3px 0 0;
+  font-size: 0.75rem;
+  color: var(--muted);
+  font-weight: 550;
+}
+
+.movies-section-meta {
+  flex: 0 0 auto;
+  padding: 3px 9px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 0.64rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+
+.upcoming-timeline {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin: 0;
+  padding: 2px 0 4px 0;
+}
+
+.upcoming-day {
+  position: relative;
+  padding-left: 22px;
+  animation: rise 0.32s ease both;
+  animation-delay: calc(min(var(--i, 0), 10) * 40ms);
+}
+
+.upcoming-day::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 8px;
+  bottom: -18px;
+  width: 2px;
+  background: color-mix(in srgb, var(--line) 85%, var(--accent));
+}
+
+.upcoming-day:last-child::before {
+  bottom: 12px;
+}
+
+.upcoming-day::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 6px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-soft) 80%, var(--bg));
+}
+
+.upcoming-day-label {
+  margin: 0 0 8px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.upcoming-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.upcoming-card {
+  display: grid;
+  grid-template-columns: 58px minmax(0, 1fr);
+  gap: 10px;
+  width: 100%;
+  margin: 0;
+  padding: 10px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.upcoming-card:active {
+  transform: scale(0.99);
+}
+
+.upcoming-card.is-flash {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 16%, transparent);
+}
+
+.upcoming-poster,
+.upcoming-poster-fallback {
+  width: 58px;
+  height: 84px;
+  border-radius: 8px;
+  object-fit: cover;
+  background: color-mix(in srgb, var(--line) 70%, var(--surface));
+  display: block;
+}
+
+.upcoming-poster-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+
+.upcoming-body {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.upcoming-title {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+}
+
+.upcoming-when {
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 750;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+
+.upcoming-when .sep {
+  color: var(--muted);
+  font-weight: 500;
+  padding: 0 0.3em;
+}
+
+.upcoming-meta,
+.upcoming-credits {
+  margin: 0;
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+
+.upcoming-credits {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.upcoming-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 2px;
+}
+
+.movie-tile.is-flash {
+  outline: 2px solid color-mix(in srgb, var(--accent) 55%, transparent);
+  outline-offset: 1px;
+}
+
+/* —— OMDb detail sheet —— */
+.omdb-sheet {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 12px var(--page-pad-x) calc(12px + var(--safe-bottom));
+}
+
+.omdb-sheet[hidden] {
+  display: none;
+}
+
+.omdb-sheet-backdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  background: color-mix(in srgb, var(--ink) 38%, transparent);
+  cursor: pointer;
+}
+
+.omdb-sheet-panel {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 560px);
+  max-height: min(88vh, 760px);
+  overflow: auto;
+  padding: 18px 16px 20px;
+  border-radius: 20px 20px 16px 16px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  box-shadow: 0 24px 60px color-mix(in srgb, var(--ink) 28%, transparent);
+  animation: sheetUp 0.32s cubic-bezier(0.32, 0.72, 0, 1) both;
+}
+
+@keyframes sheetUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.omdb-sheet-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--bg) 70%, var(--line));
+  color: var(--ink);
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.omdb-sheet-hero {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr);
+  gap: 14px;
+  padding-right: 36px;
+  margin-bottom: 14px;
+}
+
+.omdb-sheet-poster,
+.omdb-sheet-fallback {
+  width: 92px;
+  height: 136px;
+  border-radius: 10px;
+  object-fit: cover;
+  background: color-mix(in srgb, var(--line) 70%, var(--surface));
+  display: block;
+}
+
+.omdb-sheet-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  font-size: 1.6rem;
+  font-weight: 800;
+}
+
+.omdb-sheet-kicker {
+  margin: 0 0 4px;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+#omdbSheetTitle,
+.omdb-sheet-title {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+.omdb-sheet-sub {
+  margin: 6px 0 0;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.omdb-sheet-ratings {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.omdb-sheet-ratings .movie-ratings {
+  margin: 0;
+}
+
+.omdb-sheet-plot {
+  margin: 0 0 14px;
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.omdb-facts {
+  display: grid;
+  gap: 10px;
+  margin: 0 0 16px;
+}
+
+.omdb-fact dt {
+  margin: 0;
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.omdb-fact dd {
+  margin: 2px 0 0;
+  font-size: 0.88rem;
+  line-height: 1.35;
+}
+
+.omdb-sheet-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.omdb-sheet-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 0 14px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 750;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.omdb-sheet-btn.primary {
+  background: var(--accent);
+  border-color: transparent;
+  color: #fff;
+}
+
+.omdb-sheet-status {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 180px;
+  color: var(--muted);
+}
+
+body.omdb-open {
+  overflow: hidden;
 }
 
 /* —— Stats ——
@@ -4311,6 +4903,39 @@ button.bar-row.day-bar:focus-visible {
     width: 84px;
     height: 122px;
     border-radius: 10px;
+  }
+
+  .upcoming-card {
+    grid-template-columns: 72px minmax(0, 1fr);
+    gap: 14px;
+    padding: 12px;
+  }
+
+  .upcoming-poster,
+  .upcoming-poster-fallback {
+    width: 72px;
+    height: 104px;
+    border-radius: 10px;
+  }
+
+  .omdb-sheet {
+    align-items: center;
+    padding: 24px;
+  }
+
+  .omdb-sheet-panel {
+    border-radius: 18px;
+    max-height: min(82vh, 780px);
+  }
+
+  .omdb-sheet-hero {
+    grid-template-columns: 120px minmax(0, 1fr);
+  }
+
+  .omdb-sheet-poster,
+  .omdb-sheet-fallback {
+    width: 120px;
+    height: 178px;
   }
 
   .movie-tile-title {

@@ -8,6 +8,8 @@ const DX_PARTNER_ID = "202";
 const DX_API = "https://api.dx.no/v3";
 const DX_LOGIN_PROXY =
   "https://kypeegsbfaivyqeidnqp.supabase.co/functions/v1/dx-web-login";
+const OMDB_PROXY =
+  "https://kypeegsbfaivyqeidnqp.supabase.co/functions/v1/omdb-lookup";
 const DX_LOGIN_ANON_KEY =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt5cGVlZ3NiZmFpdnlxZWlkbnFwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUxODczMzQsImV4cCI6MjEwMDc2MzMzNH0.xUuL6dC8u_Nm6DqxS0y4KyjpMNlVn6IrxcvivSHeaaM";
 
@@ -181,6 +183,41 @@ const I18N = {
     moviesUpcomingPanel: "Kommende",
     moviesBack: "Tilbake",
     noMovies: "Ingen filmer i programmet.",
+    upcomingTitle: "Kommende filmer",
+    upcomingSubtitle: "Nye titler, første visning først",
+    upcomingCount: "{n} filmer",
+    upcomingNext: "Første visning",
+    upcomingOpen: "Vis {title} i programmet",
+    programSection: "I programmet",
+    programSectionSub: "Alle tider, neste visning først",
+    searchPlaceholder: "Søk etter en film…",
+    searchAria: "Søk etter en film på OMDb",
+    searchHint: "Søk i OMDb — trykk et treff for plakat, omtale og rolleliste",
+    searchClear: "Tøm søk",
+    searchResults: "Søketreff",
+    searchNoResults: "Ingen treff for «{q}».",
+    searchError: "Kunne ikke søke akkurat nå.",
+    searchLoading: "Søker…",
+    omdbPlot: "Handling",
+    omdbDirector: "Regi",
+    omdbWriter: "Manus",
+    omdbCast: "Medvirkende",
+    omdbGenre: "Sjanger",
+    omdbRuntime: "Tid",
+    omdbReleased: "Utgitt",
+    omdbRated: "Aldersgrense",
+    omdbAwards: "Priser",
+    omdbBoxOffice: "Billettinntekter",
+    omdbLanguage: "Språk",
+    omdbCountry: "Land",
+    omdbClose: "Lukk",
+    omdbOpenImdb: "Åpne på IMDb",
+    omdbInProgram: "Vis i programmet",
+    omdbLoading: "Henter film…",
+    omdbError: "Kunne ikke hente filmen.",
+    omdbVotes: "{n} stemmer",
+    omdbTypeMovie: "Film",
+    omdbTypeSeries: "Serie",
     statsTitle: "Statistikk",
     statsSubtitle: "Solgte billetter, live",
     soldWeekLabel: "Solgt denne uken",
@@ -345,6 +382,41 @@ const I18N = {
     moviesUpcomingPanel: "Upcoming",
     moviesBack: "Back",
     noMovies: "No movies in the program.",
+    upcomingTitle: "Upcoming movies",
+    upcomingSubtitle: "New titles, first showing first",
+    upcomingCount: "{n} movies",
+    upcomingNext: "First showing",
+    upcomingOpen: "Show {title} in the program",
+    programSection: "In the program",
+    programSectionSub: "All times, next showing first",
+    searchPlaceholder: "Search for a movie…",
+    searchAria: "Search for a movie on OMDb",
+    searchHint: "Search OMDb — tap a result for poster, plot, and cast",
+    searchClear: "Clear search",
+    searchResults: "Search results",
+    searchNoResults: "No results for “{q}”.",
+    searchError: "Could not search right now.",
+    searchLoading: "Searching…",
+    omdbPlot: "Plot",
+    omdbDirector: "Director",
+    omdbWriter: "Writer",
+    omdbCast: "Cast",
+    omdbGenre: "Genre",
+    omdbRuntime: "Runtime",
+    omdbReleased: "Released",
+    omdbRated: "Rated",
+    omdbAwards: "Awards",
+    omdbBoxOffice: "Box office",
+    omdbLanguage: "Language",
+    omdbCountry: "Country",
+    omdbClose: "Close",
+    omdbOpenImdb: "Open on IMDb",
+    omdbInProgram: "Show in the program",
+    omdbLoading: "Loading movie…",
+    omdbError: "Could not load the movie.",
+    omdbVotes: "{n} votes",
+    omdbTypeMovie: "Movie",
+    omdbTypeSeries: "Series",
     statsTitle: "Stats",
     statsSubtitle: "Tickets sold, live",
     soldWeekLabel: "Sold this week",
@@ -472,6 +544,8 @@ const ICONS = {
   seats:
     "M4 3.6h16a1.1 1.1 0 0 1 0 2.2H4a1.1 1.1 0 0 1 0-2.2ZM3.4 8.6h3.8a.9.9 0 0 1 .9.9v2.2a.9.9 0 0 1-.9.9H3.4a.9.9 0 0 1-.9-.9V9.5a.9.9 0 0 1 .9-.9Zm6.7 0h3.8a.9.9 0 0 1 .9.9v2.2a.9.9 0 0 1-.9.9h-3.8a.9.9 0 0 1-.9-.9V9.5a.9.9 0 0 1 .9-.9Zm6.7 0h3.8a.9.9 0 0 1 .9.9v2.2a.9.9 0 0 1-.9.9h-3.8a.9.9 0 0 1-.9-.9V9.5a.9.9 0 0 1 .9-.9ZM3.4 15h3.8a.9.9 0 0 1 .9.9v2.2a.9.9 0 0 1-.9.9H3.4a.9.9 0 0 1-.9-.9v-2.2a.9.9 0 0 1 .9-.9Zm6.7 0h3.8a.9.9 0 0 1 .9.9v2.2a.9.9 0 0 1-.9.9h-3.8a.9.9 0 0 1-.9-.9v-2.2a.9.9 0 0 1 .9-.9Zm6.7 0h3.8a.9.9 0 0 1 .9.9v2.2a.9.9 0 0 1-.9.9h-3.8a.9.9 0 0 1-.9-.9v-2.2a.9.9 0 0 1 .9-.9Z",
   timeline: "M3 5h18v2.4H3V5Zm0 5.8h12v2.4H3v-2.4Zm0 5.8h16v2.4H3v-2.4Z",
+  search:
+    "M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5Zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14Z",
 };
 
 /** "Nothing here" said the same way everywhere: a faded glyph and a line. */
@@ -508,6 +582,14 @@ const els = {
   daySwipe: document.getElementById("daySwipe"),
   dayGhost: document.getElementById("dayGhost"),
   moviesContent: document.getElementById("moviesContent"),
+  moviesIntro: document.getElementById("moviesIntro"),
+  moviesBody: document.getElementById("moviesBody"),
+  movieSearch: document.getElementById("movieSearch"),
+  omdbQuery: document.getElementById("omdbQuery"),
+  omdbLive: document.getElementById("omdbLive"),
+  omdbClear: document.getElementById("omdbClear"),
+  omdbSheet: document.getElementById("omdbSheet"),
+  omdbSheetBody: document.getElementById("omdbSheetBody"),
   statsContent: document.getElementById("statsContent"),
   settingsContent: document.getElementById("settingsContent"),
   dayTabs: document.getElementById("dayTabs"),
@@ -574,6 +656,18 @@ const openSeatCharts = new Set();
 const expandedMovieDone = new Set();
 /** Movie titles with the extra-upcoming dropdown open. */
 const expandedMovieUpcoming = new Set();
+/** Live OMDb search — kept out of the painted movies list so a beat
+ * cannot steal the query, the caret, or an open result list. */
+let omdbQuery = "";
+let omdbResults = [];
+let omdbActive = -1;
+let omdbStatus = "";
+let omdbTimer = 0;
+let omdbAbort = null;
+let omdbSheetId = "";
+let omdbSheetMovie = null;
+let omdbSheetStatus = "";
+let omdbSheetInProgram = "";
 /** Collapsed movie tiles show this many showings before "+N more". */
 const MOVIE_SHOWS_PREVIEW = 3;
 /** Tablet and desktop have room for every hall at once, so charts there
@@ -645,6 +739,7 @@ function focusSelectorWithin(host) {
   const el = document.activeElement;
   if (!el || el === document.body || !host.contains(el)) return "";
   if (el.id) return `[id="${cssEscape(el.id)}"]`;
+  if (el.id === "omdbQuery") return "#omdbQuery";
   if (el.dataset?.movieExpand != null && el.dataset?.expandKind != null) {
     return `[data-movie-expand="${cssEscape(
       el.dataset.movieExpand
@@ -705,6 +800,7 @@ async function init() {
 
   setupSeatCharts();
   setupHaptics();
+  setupOmdbSearch();
 
   // Let mouse users scroll the day strip with the wheel.
   els.dayTabs.addEventListener(
@@ -873,6 +969,32 @@ function setupSeatCharts() {
         movieExpand.dataset.movieExpand,
         movieExpand.dataset.expandKind
       );
+      return;
+    }
+
+    const upcomingMovie = e.target.closest?.("[data-upcoming-movie]");
+    if (upcomingMovie) {
+      openMovieInProgram(upcomingMovie.dataset.upcomingMovie);
+      return;
+    }
+
+    const omdbHit = e.target.closest?.("[data-omdb-id]");
+    if (omdbHit) {
+      openOmdbTitle(omdbHit.dataset.omdbId);
+      return;
+    }
+
+    const omdbClose = e.target.closest?.("[data-omdb-close]");
+    if (omdbClose) {
+      closeOmdbSheet();
+      return;
+    }
+
+    const omdbProgram = e.target.closest?.("[data-omdb-program]");
+    if (omdbProgram) {
+      const title = omdbProgram.dataset.omdbProgram;
+      closeOmdbSheet();
+      openMovieInProgram(title);
       return;
     }
 
@@ -1601,6 +1723,11 @@ function hapticTarget(el) {
       ".dx-btn",
       ".tile-shows-toggle",
       ".tile-expand-back",
+      ".upcoming-card",
+      ".omdb-hit",
+      ".omdb-sheet-close",
+      ".omdb-sheet-btn",
+      ".movie-search-clear",
       "[data-stats-movie]",
       "[data-stats-day]",
       "[data-tl-show]",
@@ -2057,6 +2184,20 @@ function applyLanguage() {
   els.refreshBtn.setAttribute("aria-label", t("refresh"));
   els.refreshBtn.title = t("refresh");
   els.jumpTodayBtn?.setAttribute("aria-label", t("jumpTodayAria"));
+  if (els.omdbQuery) {
+    els.omdbQuery.placeholder = t("searchPlaceholder");
+    els.omdbQuery.setAttribute("aria-label", t("searchAria"));
+  }
+  if (els.omdbClear) els.omdbClear.setAttribute("aria-label", t("searchClear"));
+  els.omdbLive?.setAttribute("aria-label", t("searchResults"));
+  document
+    .querySelector(".omdb-sheet-backdrop")
+    ?.setAttribute("aria-label", t("omdbClose"));
+  document
+    .querySelector(".omdb-sheet-close")
+    ?.setAttribute("aria-label", t("omdbClose"));
+  if (omdbResults.length || omdbStatus) renderOmdbLive();
+  if (omdbSheetId) renderOmdbSheet();
   els.dayTabs.setAttribute(
     "aria-label",
     lang === "en" ? "Choose day" : "Velg dag"
@@ -4624,6 +4765,9 @@ function groupMovies() {
         genres: show.genres || null,
         director: show.director || null,
         ratings: show.ratings || null,
+        premiere: show.premiere || null,
+        showType: show.showType || null,
+        kinoklubb: Boolean(show.kinoklubb),
         shows: [],
       });
     }
@@ -4634,6 +4778,9 @@ function groupMovies() {
     // showing of the same film that has them.
     if (!movie.genres && show.genres) movie.genres = show.genres;
     if (!movie.director && show.director) movie.director = show.director;
+    if (!movie.premiere && show.premiere) movie.premiere = show.premiere;
+    if (!movie.showType && show.showType) movie.showType = show.showType;
+    if (show.kinoklubb) movie.kinoklubb = true;
     // Per-source merge across showings of the same film — a history
     // row with only Letterboxd must not block a later row's IMDb.
     if (show.ratings) {
@@ -4662,10 +4809,489 @@ function groupMovies() {
     });
 }
 
+/**
+ * Films whose run at Buen has not started yet — every showing is still
+ * ahead — ordered by that first date for the upcoming timeline.
+ */
+function upcomingMovies(movies, now) {
+  return movies
+    .map((movie) => {
+      const next = movie.shows.find((s) => !isDone(s, now) && s.start > now);
+      const started = movie.shows.some((s) => isDone(s, now) || s.start <= now);
+      return { ...movie, next, started };
+    })
+    .filter((movie) => movie.next && !movie.started)
+    .sort((a, b) => a.next.start - b.next.start || a.title.localeCompare(b.title));
+}
+
+function renderUpcomingSection(upcoming, now) {
+  const groups = [];
+  for (const movie of upcoming) {
+    const dayKey = movie.next.dayKey;
+    const last = groups[groups.length - 1];
+    if (last && last.dayKey === dayKey) last.movies.push(movie);
+    else groups.push({ dayKey, movies: [movie] });
+  }
+
+  return `
+    <section class="movies-section upcoming-section" aria-labelledby="upcoming-heading">
+      <div class="movies-section-head">
+        <div>
+          <h3 id="upcoming-heading">${icon("timeline", "panel-icon")}${escapeHtml(
+            t("upcomingTitle")
+          )}</h3>
+          <p>${escapeHtml(t("upcomingSubtitle"))}</p>
+        </div>
+        <span class="movies-section-meta">${escapeHtml(
+          t("upcomingCount", { n: upcoming.length })
+        )}</span>
+      </div>
+      <div class="upcoming-timeline">
+        ${groups
+          .map(
+            (group, i) => `
+          <div class="upcoming-day" style="--i:${i}">
+            <p class="upcoming-day-label">${escapeHtml(formatDayLabel(group.dayKey))}</p>
+            <div class="upcoming-list">
+              ${group.movies.map((movie) => renderUpcomingCard(movie, now)).join("")}
+            </div>
+          </div>`
+          )
+          .join("")}
+      </div>
+    </section>
+  `;
+}
+
+function renderUpcomingCard(movie, now) {
+  const show = movie.next;
+  const duration = formatRunning(movie.runningLabel, movie.runningMinutes);
+  const when = [
+    formatClock(show.start),
+    show.screen,
+  ]
+    .filter(Boolean)
+    .map((x) => escapeHtml(String(x)));
+  const meta = [
+    formatAge(movie.age),
+    duration,
+    showsLabel(movie.shows.length),
+  ]
+    .filter(Boolean)
+    .map((x) => escapeHtml(String(x)))
+    .join(" · ");
+  const director = movie.director
+    ? `${escapeHtml(t("directorLabel"))} ${escapeHtml(movie.director)}`
+    : "";
+  const genres = (Array.isArray(movie.genres) ? movie.genres.map(formatGenre) : [])
+    .filter(Boolean)
+    .map((x) => escapeHtml(String(x)))
+    .join(" · ");
+  const credits = [director, genres].filter(Boolean).join(" · ");
+  const premiere =
+    movie.premiere && movie.premiere === show.dayKey
+      ? specialBadges({ showType: movie.showType || "Norgespremiere", kinoklubb: movie.kinoklubb })
+      : specialBadges(show);
+
+  return `
+    <button type="button" class="upcoming-card" data-upcoming-movie="${escapeHtml(
+      movie.title
+    )}" aria-label="${escapeHtml(t("upcomingOpen", { title: movie.title }))}">
+      ${renderPoster(movie, 58, 84, "upcoming-poster")}
+      <div class="upcoming-body">
+        <h4 class="upcoming-title">${escapeHtml(movie.title)}</h4>
+        <p class="upcoming-when">${when.join('<span class="sep">·</span>')}</p>
+        ${meta ? `<p class="upcoming-meta">${meta}</p>` : ""}
+        ${credits ? `<p class="upcoming-credits">${credits}</p>` : ""}
+        ${renderRatingBadges(movie.ratings)}
+        ${premiere ? `<div class="upcoming-badges">${premiere}</div>` : ""}
+      </div>
+    </button>
+  `;
+}
+
+function openMovieInProgram(title) {
+  if (!title || !state?.shows) return;
+  const movie = groupMovies().find((m) => m.title === title);
+  expandedMovieDone.delete(title);
+  expandedMovieUpcoming.delete(title);
+  if (movie) {
+    const { done, upcoming } = movieShowSections(movie.shows, new Date());
+    if (upcoming.length) expandedMovieUpcoming.add(title);
+    else if (done.length) expandedMovieDone.add(title);
+  }
+  const go = () => {
+    const tile = els.moviesContent?.querySelector(
+      `[data-movie-tile="${cssEscape(title)}"]`
+    );
+    if (!tile) return;
+    tile.scrollIntoView({ behavior: "smooth", block: "center" });
+    tile.classList.add("is-flash");
+    setTimeout(() => tile.classList.remove("is-flash"), 1400);
+  };
+  if (activeTab !== "movies") {
+    setActiveTab("movies").then(() => requestAnimationFrame(go));
+  } else {
+    renderMovies();
+    requestAnimationFrame(go);
+  }
+}
+
+function setupOmdbSearch() {
+  const input = els.omdbQuery;
+  if (!input) return;
+
+  input.addEventListener("input", () => {
+    omdbQuery = input.value;
+    els.omdbClear.hidden = !String(omdbQuery).trim();
+    scheduleOmdbSearch();
+  });
+  input.addEventListener("focus", () => {
+    if (omdbResults.length || omdbStatus) showOmdbLive(true);
+  });
+  input.addEventListener("keydown", onOmdbKeydown);
+  els.omdbClear?.addEventListener("click", () => {
+    omdbQuery = "";
+    input.value = "";
+    els.omdbClear.hidden = true;
+    clearOmdbSearch();
+    input.focus();
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!els.movieSearch?.contains(e.target)) showOmdbLive(false);
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !els.omdbSheet?.hidden) {
+      e.preventDefault();
+      closeOmdbSheet();
+    }
+  });
+}
+
+function onOmdbKeydown(e) {
+  if (e.key === "Escape") {
+    if (omdbResults.length || omdbStatus) {
+      e.preventDefault();
+      showOmdbLive(false);
+    }
+    return;
+  }
+  if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+    if (!omdbResults.length) return;
+    e.preventDefault();
+    const delta = e.key === "ArrowDown" ? 1 : -1;
+    omdbActive = (omdbActive + delta + omdbResults.length) % omdbResults.length;
+    renderOmdbLive();
+    return;
+  }
+  if (e.key === "Enter") {
+    const hit = omdbResults[omdbActive] || omdbResults[0];
+    if (!hit) return;
+    e.preventDefault();
+    openOmdbTitle(hit.imdbID);
+  }
+}
+
+function scheduleOmdbSearch() {
+  clearTimeout(omdbTimer);
+  const q = String(omdbQuery || "").trim();
+  if (q.length < 2) {
+    clearOmdbSearch();
+    return;
+  }
+  omdbStatus = "loading";
+  omdbActive = -1;
+  renderOmdbLive();
+  omdbTimer = setTimeout(() => runOmdbSearch(q), 280);
+}
+
+function clearOmdbSearch() {
+  clearTimeout(omdbTimer);
+  omdbAbort?.abort();
+  omdbAbort = null;
+  omdbResults = [];
+  omdbActive = -1;
+  omdbStatus = "";
+  showOmdbLive(false);
+  if (els.omdbLive) els.omdbLive.innerHTML = "";
+}
+
+function showOmdbLive(on) {
+  if (!els.omdbLive) return;
+  els.omdbLive.hidden = !on;
+  els.omdbQuery?.setAttribute("aria-expanded", String(Boolean(on)));
+}
+
+async function runOmdbSearch(q) {
+  omdbAbort?.abort();
+  const ac = new AbortController();
+  omdbAbort = ac;
+  try {
+    const data = await callOmdbProxy({ action: "search", q }, ac.signal);
+    if (ac.signal.aborted) return;
+    omdbResults = Array.isArray(data?.results) ? data.results : [];
+    omdbStatus = omdbResults.length ? "ok" : "empty";
+    omdbActive = omdbResults.length ? 0 : -1;
+    renderOmdbLive();
+  } catch (err) {
+    if (err?.name === "AbortError" || ac.signal.aborted) return;
+    omdbResults = [];
+    omdbStatus = "error";
+    omdbActive = -1;
+    renderOmdbLive();
+  }
+}
+
+function renderOmdbLive() {
+  if (!els.omdbLive) return;
+  const q = String(omdbQuery || "").trim();
+  let html = "";
+  if (omdbStatus === "loading") {
+    html = `<p class="omdb-live-status"><span class="spinner" aria-hidden="true"></span>${escapeHtml(
+      t("searchLoading")
+    )}</p>`;
+  } else if (omdbStatus === "error") {
+    html = `<p class="omdb-live-note">${escapeHtml(t("searchError"))}</p>`;
+  } else if (omdbStatus === "empty") {
+    html = `<p class="omdb-live-note">${escapeHtml(t("searchNoResults", { q }))}</p>`;
+  } else {
+    const programmed = new Set((state?.shows || []).map((s) => s.title.toLowerCase()));
+    html = omdbResults
+      .map((hit, i) => {
+        const poster = hit.poster
+          ? `<img class="omdb-hit-poster" src="${escapeHtml(hit.poster)}" alt="" width="40" height="56">`
+          : `<div class="omdb-hit-fallback">${escapeHtml((hit.title || "?").slice(0, 1))}</div>`;
+        const inProgram = programmed.has(String(hit.title || "").toLowerCase());
+        const typeLabel =
+          hit.type === "series" ? t("omdbTypeSeries") : t("omdbTypeMovie");
+        const meta = [hit.year, typeLabel].filter(Boolean).join(" · ");
+        return `<button type="button" class="omdb-hit${
+          i === omdbActive ? " is-active" : ""
+        }" role="option" id="omdb-opt-${escapeHtml(hit.imdbID)}" data-omdb-id="${escapeHtml(
+          hit.imdbID
+        )}" aria-selected="${i === omdbActive}">
+          ${poster}
+          <span class="omdb-hit-text">
+            <span class="omdb-hit-title">${escapeHtml(hit.title)}</span>
+            <span class="omdb-hit-meta">${escapeHtml(meta)}</span>
+          </span>
+          ${inProgram ? `<span class="omdb-hit-chip">${escapeHtml(t("omdbInProgram"))}</span>` : ""}
+        </button>`;
+      })
+      .join("");
+  }
+  els.omdbLive.innerHTML = html;
+  showOmdbLive(true);
+  const active = omdbResults[omdbActive];
+  els.omdbQuery?.setAttribute(
+    "aria-activedescendant",
+    active ? `omdb-opt-${active.imdbID}` : ""
+  );
+  els.omdbLive.querySelector(".omdb-hit.is-active")?.scrollIntoView({
+    block: "nearest",
+  });
+}
+
+async function openOmdbTitle(imdbID) {
+  if (!imdbID) return;
+  showOmdbLive(false);
+  omdbSheetId = imdbID;
+  omdbSheetMovie = null;
+  omdbSheetStatus = "loading";
+  omdbSheetInProgram = matchProgramTitle(omdbResults.find((r) => r.imdbID === imdbID)?.title);
+  renderOmdbSheet();
+  try {
+    const data = await callOmdbProxy({ action: "title", id: imdbID });
+    if (omdbSheetId !== imdbID) return;
+    omdbSheetMovie = data?.movie || null;
+    omdbSheetStatus = omdbSheetMovie ? "ok" : "error";
+    if (omdbSheetMovie?.title) {
+      omdbSheetInProgram = matchProgramTitle(omdbSheetMovie.title) || omdbSheetInProgram;
+    }
+  } catch {
+    if (omdbSheetId !== imdbID) return;
+    omdbSheetStatus = "error";
+  }
+  renderOmdbSheet();
+}
+
+function matchProgramTitle(title) {
+  const want = String(title || "").trim().toLowerCase();
+  if (!want || !state?.shows) return "";
+  const hit = state.shows.find((s) => String(s.title).toLowerCase() === want);
+  return hit?.title || "";
+}
+
+function closeOmdbSheet() {
+  omdbSheetId = "";
+  omdbSheetMovie = null;
+  omdbSheetStatus = "";
+  omdbSheetInProgram = "";
+  if (els.omdbSheet) els.omdbSheet.hidden = true;
+  document.body.classList.remove("omdb-open");
+  if (els.omdbSheetBody) els.omdbSheetBody.innerHTML = "";
+}
+
+function renderOmdbSheet() {
+  if (!els.omdbSheet || !els.omdbSheetBody) return;
+  if (!omdbSheetId) {
+    closeOmdbSheet();
+    return;
+  }
+  els.omdbSheet.hidden = false;
+  document.body.classList.add("omdb-open");
+
+  if (omdbSheetStatus === "loading") {
+    els.omdbSheetBody.innerHTML = `<div class="omdb-sheet-status"><span class="spinner" aria-hidden="true"></span><p>${escapeHtml(
+      t("omdbLoading")
+    )}</p></div>`;
+    return;
+  }
+  if (omdbSheetStatus !== "ok" || !omdbSheetMovie) {
+    els.omdbSheetBody.innerHTML = `<div class="omdb-sheet-status"><p>${escapeHtml(
+      t("omdbError")
+    )}</p></div>`;
+    return;
+  }
+
+  const movie = omdbSheetMovie;
+  const poster = movie.poster
+    ? `<img class="omdb-sheet-poster" src="${escapeHtml(movie.poster)}" alt="">`
+    : `<div class="omdb-sheet-fallback">${escapeHtml((movie.title || "?").slice(0, 1))}</div>`;
+  const sub = [movie.year, movie.runtime, movie.rated, movie.genre]
+    .filter(Boolean)
+    .map((x) => escapeHtml(String(x)))
+    .join(" · ");
+  const ratings = omdbRatingsFromMovie(movie);
+  const facts = [
+    [t("omdbDirector"), movie.director],
+    [t("omdbCast"), movie.actors],
+    [t("omdbWriter"), movie.writer],
+    [t("omdbReleased"), movie.released],
+    [t("omdbLanguage"), movie.language],
+    [t("omdbCountry"), movie.country],
+    [t("omdbAwards"), movie.awards],
+    [t("omdbBoxOffice"), movie.boxOffice],
+  ].filter(([, v]) => v);
+
+  const programBtn = omdbSheetInProgram
+    ? `<button type="button" class="omdb-sheet-btn primary" data-omdb-program="${escapeHtml(
+        omdbSheetInProgram
+      )}">${escapeHtml(t("omdbInProgram"))}</button>`
+    : "";
+
+  els.omdbSheetBody.innerHTML = `
+    <div class="omdb-sheet-hero">
+      ${poster}
+      <div>
+        <p class="omdb-sheet-kicker">${escapeHtml(
+          movie.type === "series" ? t("omdbTypeSeries") : t("omdbTypeMovie")
+        )}</p>
+        <h2 class="omdb-sheet-title" id="omdbSheetTitle">${escapeHtml(movie.title)}</h2>
+        ${sub ? `<p class="omdb-sheet-sub">${sub}</p>` : ""}
+        ${ratings ? `<div class="omdb-sheet-ratings">${ratings}</div>` : ""}
+      </div>
+    </div>
+    ${
+      movie.plot
+        ? `<p class="omdb-sheet-plot">${escapeHtml(movie.plot)}</p>`
+        : ""
+    }
+    ${
+      facts.length
+        ? `<dl class="omdb-facts">${facts
+            .map(
+              ([label, value]) =>
+                `<div class="omdb-fact"><dt>${escapeHtml(label)}</dt><dd>${escapeHtml(
+                  value
+                )}</dd></div>`
+            )
+            .join("")}</dl>`
+        : ""
+    }
+    <div class="omdb-sheet-actions">
+      ${programBtn}
+      ${
+        movie.imdbUrl
+          ? `<a class="omdb-sheet-btn" href="${escapeHtml(
+              movie.imdbUrl
+            )}" target="_blank" rel="noopener">${escapeHtml(t("omdbOpenImdb"))}</a>`
+          : ""
+      }
+    </div>
+  `;
+}
+
+function omdbRatingsFromMovie(movie) {
+  const ratings = { imdb: null, tomatoes: null };
+  const imdbVal = Number.parseFloat(movie.imdbRating);
+  if (Number.isFinite(imdbVal)) {
+    ratings.imdb = {
+      value: imdbVal,
+      url: movie.imdbUrl || "",
+    };
+  }
+  for (const row of movie.ratings || []) {
+    if (/rotten/i.test(row.source) && /%/.test(row.value)) {
+      const n = Number.parseInt(row.value, 10);
+      if (Number.isFinite(n)) ratings.tomatoes = { value: n };
+    }
+  }
+  const badges = renderRatingBadges(ratings);
+  const extra = [];
+  if (movie.metascore) {
+    extra.push(
+      `<span class="rating-badge"><span class="rating-value">${escapeHtml(
+        movie.metascore
+      )}</span></span>`
+    );
+  }
+  if (movie.imdbVotes) {
+    extra.push(
+      `<span class="omdb-hit-meta">${escapeHtml(
+        t("omdbVotes", { n: movie.imdbVotes })
+      )}</span>`
+    );
+  }
+  if (!badges && !extra.length) return "";
+  return `${badges || `<div class="movie-ratings"></div>`}${
+    extra.length ? extra.join("") : ""
+  }`;
+}
+
+async function callOmdbProxy(body, signal) {
+  const res = await fetch(OMDB_PROXY, {
+    method: "POST",
+    cache: "no-store",
+    signal,
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${DX_LOGIN_ANON_KEY}`,
+      apikey: DX_LOGIN_ANON_KEY,
+    },
+    body: JSON.stringify(body),
+  });
+  let data = {};
+  try {
+    data = await res.json();
+  } catch {
+    data = {};
+  }
+  if (!res.ok || data.ok === false) {
+    const err = new Error(data.error || `OMDb ${res.status}`);
+    err.code = data.code || "upstream";
+    throw err;
+  }
+  return data;
+}
+
 function renderMovies() {
   if (!state?.shows) return;
   const movies = groupMovies();
   const now = new Date();
+  const upcoming = upcomingMovies(movies, now);
 
   els.moviesContent.classList.toggle(
     "no-anim",
@@ -4673,20 +5299,40 @@ function renderMovies() {
   );
   els.moviesContent.dataset.rendered = "1";
 
-  if (!movies.length) {
-    paint(els.moviesContent, emptyNote("movie", "noMovies"));
-    return;
-  }
-
   paint(
-    els.moviesContent,
-    `
-    ${viewIntro(
+    els.moviesIntro,
+    viewIntro(
       "movie",
       "moviesTitle",
       "moviesSubtitle",
       t("moviesCount", { n: movies.length })
-    )}
+    )
+  );
+
+  if (!movies.length) {
+    paint(els.moviesBody, emptyNote("movie", "noMovies"));
+    return;
+  }
+
+  const upcomingHtml = upcoming.length
+    ? renderUpcomingSection(upcoming, now)
+    : "";
+  const programHead = upcoming.length
+    ? `<div class="movies-section">
+        <div class="movies-section-head">
+          <div>
+            <h3>${icon("movie", "panel-icon")}${escapeHtml(t("programSection"))}</h3>
+            <p>${escapeHtml(t("programSectionSub"))}</p>
+          </div>
+        </div>
+      </div>`
+    : "";
+
+  paint(
+    els.moviesBody,
+    `
+    ${upcomingHtml}
+    ${programHead}
     <div class="movie-grid">
       ${movies.map((m, i) => renderMovieTile(m, now, i)).join("")}
     </div>
@@ -4703,7 +5349,7 @@ function toggleMovieShows(title, kind) {
     set.add(title);
     other.delete(title);
   }
-  repaintNext(els.moviesContent);
+  repaintNext(els.moviesBody);
   renderMovies();
 }
 
@@ -4729,7 +5375,7 @@ function closeMovieShows(title) {
       finished = true;
       expandedMovieDone.delete(title);
       expandedMovieUpcoming.delete(title);
-      repaintNext(els.moviesContent);
+      repaintNext(els.moviesBody);
       renderMovies();
     };
     panel.addEventListener(
@@ -4744,7 +5390,7 @@ function closeMovieShows(title) {
   }
   expandedMovieDone.delete(title);
   expandedMovieUpcoming.delete(title);
-  repaintNext(els.moviesContent);
+  repaintNext(els.moviesBody);
   renderMovies();
 }
 
@@ -4906,7 +5552,7 @@ function renderMovieTile(movie, now, index = 0) {
   const openClass = panelKind ? " is-open" : "";
 
   return `
-    <article class="movie-tile${progress.all ? " all-done" : ""}${openClass}" style="--i:${index}">
+    <article class="movie-tile${progress.all ? " all-done" : ""}${openClass}" style="--i:${index}" data-movie-tile="${escapeHtml(movie.title)}">
       ${renderPoster(movie, 72, 104, "movie-poster")}
       <div class="movie-tile-body">
         <div class="tile-main">
@@ -5063,16 +5709,7 @@ function computeStatsModel(shows) {
 }
 
 function openMovieFromStats(title) {
-  if (!title || !state?.shows) return;
-  const movie = groupMovies().find((m) => m.title === title);
-  expandedMovieDone.delete(title);
-  expandedMovieUpcoming.delete(title);
-  if (movie) {
-    const { done, upcoming } = movieShowSections(movie.shows, new Date());
-    if (upcoming.length) expandedMovieUpcoming.add(title);
-    else if (done.length) expandedMovieDone.add(title);
-  }
-  setActiveTab("movies");
+  openMovieInProgram(title);
 }
 
 function openDayFromStats(dayKey) {
