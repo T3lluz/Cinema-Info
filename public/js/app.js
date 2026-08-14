@@ -79,16 +79,15 @@ const PROGRAM_RECHECK_MS = 2 * 60 * 1000;
 /** Hall geometry only changes when someone rebuilds an auditorium. */
 const SEAT_LAYOUT_TTL_MS = 30 * 24 * 60 * 60 * 1000;
 /**
- * Tap pulse. Essentials' category click is PRIMITIVE_CLICK at ~0.4
- * (KEYBOARD_TAP on the rail). The web API has no amplitude, so 4 ms at
- * full strength is the closest tick.
- * https://github.com/sameerasw/essentials
+ * Tap pulse. Lighter than a Pixel CLICK; the web API has no amplitude,
+ * so duration is the only way to keep it a tick.
  */
-const HAPTIC_CLICK_MS = 4;
-/** Swipe zipper — shorter than a tap so a dense run of ticks stays light. */
-const HAPTIC_TICK_MS = 2;
-/** Ticks per page-width. Denser than Essentials' 10 so a drag rattles. */
-const HAPTIC_SWIPE_BUCKETS = 32;
+const HAPTIC_CLICK_MS = 2;
+/**
+ * One pulse when a day swipe first leaves rest — Material 3 Expressive
+ * GESTURE_START / "snap off the edge". Not a zipper; just the unstick.
+ */
+const HAPTIC_UNSTICK_MS = 4;
 /** Bumped when the layout shape changes, so cached halls are refetched
  * (v2: blocked seats are included and flagged instead of dropped). */
 const SEAT_LAYOUT_VERSION = 2;
@@ -204,7 +203,7 @@ const I18N = {
     seatNumbersOn: "Vis",
     seatNumbersOff: "Skjul",
     haptics: "Haptikk",
-    hapticsHint: "Kort vibrasjon ved trykk og sveip. Virker i Chrome på Android.",
+    hapticsHint: "Kort vibrasjon ved trykk. Virker i Chrome på Android.",
     hapticsUnavailable: "Ikke tilgjengelig på denne enheten.",
     langNb: "Norsk",
     langEn: "English",
@@ -367,7 +366,7 @@ const I18N = {
     seatNumbersOn: "Show",
     seatNumbersOff: "Hide",
     haptics: "Haptics",
-    hapticsHint: "A short buzz on taps and swipes. Works in Chrome on Android.",
+    hapticsHint: "A short buzz on taps. Works in Chrome on Android.",
     hapticsUnavailable: "Not available on this device.",
     langNb: "Norsk",
     langEn: "English",
@@ -981,41 +980,6 @@ function setupDaySwipe() {
   let finishAnim = null;
   /** Side the header is previewing mid-drag (−1/0/1). */
   let previewDir = 0;
-  /** Last zipper bucket that ticked. */
-  let swipeHapticBucket = 0;
-
-  const swipeHapticReset = () => {
-    swipeHapticBucket = 0;
-  };
-
-  /** Align the zipper to `x` without ticking — used when catching a slide. */
-  const swipeHapticSync = (x) => {
-    if (!width) {
-      swipeHapticBucket = 0;
-      return;
-    }
-    const fraction = Math.abs(x) / width;
-    swipeHapticBucket = Math.min(
-      HAPTIC_SWIPE_BUCKETS,
-      Math.floor(fraction * HAPTIC_SWIPE_BUCKETS)
-    );
-  };
-
-  /** Tick when the page has moved another slice of its width. Denser
-   * than Essentials' 10 buckets, with a lighter pulse so it rattles
-   * instead of kicking. */
-  const swipeHapticMove = (x) => {
-    if (!width) return;
-    const fraction = Math.abs(x) / width;
-    const bucket = Math.min(
-      HAPTIC_SWIPE_BUCKETS,
-      Math.floor(fraction * HAPTIC_SWIPE_BUCKETS)
-    );
-    if (bucket === swipeHapticBucket) return;
-    const skipped = Math.abs(bucket - swipeHapticBucket);
-    swipeHapticBucket = bucket;
-    if (fraction > 0) hapticTick(skipped);
-  };
 
   const setX = (x) => {
     curX = x;
@@ -1079,14 +1043,12 @@ function setupDaySwipe() {
       baseX = curX;
       previewDir = 0;
       mode = "drag";
-      swipeHapticSync(curX);
       try {
         view.setPointerCapture(pointerId);
       } catch {}
     } else {
       baseX = 0;
       mode = "pending";
-      swipeHapticReset();
     }
   });
 
@@ -1128,6 +1090,7 @@ function setupDaySwipe() {
       lastT = e.timeStamp;
       mode = "drag";
       holdDayRender = true;
+      hapticUnstick();
       // Route the rest of the gesture to this (permanent) element, so a
       // background re-render of the list can't cut the swipe short.
       try {
@@ -1154,7 +1117,6 @@ function setupDaySwipe() {
     if (next > width) next = width + (next - width) * 0.2;
     else if (next < -width) next = -width + (next + width) * 0.2;
     setX(next);
-    swipeHapticMove(next);
     previewHeader();
   });
 
@@ -1233,7 +1195,6 @@ function setupDaySwipe() {
       setX(0);
       els.dayPanePrev.innerHTML = "";
       els.dayPaneNext.innerHTML = "";
-      swipeHapticReset();
       mode = "idle";
     };
     finishAnim = finish;
@@ -1270,7 +1231,6 @@ function setupDaySwipe() {
         return;
       }
       setX(x);
-      swipeHapticMove(x);
       raf = requestAnimationFrame(stepFrame);
     };
     raf = requestAnimationFrame(stepFrame);
@@ -1304,7 +1264,6 @@ function setupDaySwipe() {
     els.dayPanePrev.innerHTML = dir === -1 ? buildDayListHTML(day) : "";
     els.dayPaneNext.innerHTML = dir === 1 ? buildDayListHTML(day) : "";
     holdDayRender = true;
-    swipeHapticReset();
     // A tap brings no release velocity, so launch it with a gentle flick's
     // worth — a full screen from a standstill otherwise starts sluggishly.
     snapTo(dir, { day, v0: -dir * 2 });
@@ -1556,22 +1515,11 @@ function hapticClick() {
   }
 }
 
-/** Light zipper ticks. Fast travel that skips buckets packs them into a
- * short pattern so speed still maps to density. */
-function hapticTick(count = 1) {
-  if (!hapticsOn || !canHaptic() || count < 1) return;
+/** Page leaving rest on a day swipe — one unstick, then silence. */
+function hapticUnstick() {
+  if (!hapticsOn || !canHaptic()) return;
   try {
-    const n = Math.min(count, 6);
-    if (n === 1) {
-      navigator.vibrate(HAPTIC_TICK_MS);
-      return;
-    }
-    const pat = [];
-    for (let i = 0; i < n; i++) {
-      if (i) pat.push(4);
-      pat.push(HAPTIC_TICK_MS);
-    }
-    navigator.vibrate(pat);
+    navigator.vibrate(HAPTIC_UNSTICK_MS);
   } catch {
     /* same as hapticClick */
   }
