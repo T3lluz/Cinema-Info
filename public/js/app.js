@@ -96,6 +96,12 @@ const SWIPE_FLICK = 0.28;
 const SWIPE_LOCK_PX = 10;
 /** Shared-axis slide used by tab switches and day changes. */
 const SHARED_AXIS_MS = 560;
+/** Visual travel of the shared-axis slide (matches tabIn/tabOut keyframes). */
+const AXIS_IN_PCT = 28;
+const AXIS_OUT_PCT = 24;
+const AXIS_SCALE = 0.02;
+const AXIS_EASE = "cubic-bezier(0.32, 0.72, 0, 1)";
+const AXIS_MS = 420;
 /** Bumped when the layout shape changes, so cached halls are refetched
  * (v2: blocked seats are included and flagged instead of dropped). */
 const SEAT_LAYOUT_VERSION = 2;
@@ -1052,11 +1058,10 @@ function transitionToDay(day, { tabScroll = "smooth" } = {}) {
 }
 
 /**
- * Detect a horizontal swipe on the day tab, then play the shared-axis
- * slide — the same CSS animation as switching navbar tabs. The finger
- * is not tracked 1:1 (that meant transforming three full day lists
- * every frame). Axis-lock still keeps vertical scroll; a flick or a
- * 28% drag commits.
+ * Detect a horizontal swipe on the day tab. The finger scrubs the same
+ * shared-axis slide as tab switching (incoming from 28% at 0.98 scale,
+ * outgoing to 24% fading). Release either finishes that slide or eases
+ * back. Pill taps still play the CSS keyframe version.
  *
  * Pointer capture on `.main` so empty space below a short day still
  * pages. touchmove preventDefault after lock so scroll cannot steal
@@ -1067,8 +1072,12 @@ function setupDaySwipe() {
   /** Main, not the view: a short day leaves empty space in `.main`
    * (and its nav padding) that must still page between days. */
   const host = view.parentElement;
+  const track = els.daySwipe;
+  const content = els.content;
+  const ghost = els.dayGhost;
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-  /** @type {"idle"|"pending"|"drag"|"ignore"} */
+  /** @type {"idle"|"pending"|"drag"|"ignore"|"settling"} */
   let mode = "idle";
   let pointerId = null;
   let startX = 0;
@@ -1080,6 +1089,44 @@ function setupDaySwipe() {
   let lastT = 0;
   let vx = 0;
   let curX = 0;
+  let dragDir = 0;
+  let incomingDay = "";
+  let incomingHtml = "";
+  let finishSettling = null;
+
+  const axisP = () =>
+    width ? Math.min(1, Math.abs(curX) / width) : 0;
+
+  const applyAxis = (p, dir) => {
+    ghost.style.transform = `translate3d(${dir * AXIS_IN_PCT * (1 - p)}%, 0, 0) scale(${0.98 + AXIS_SCALE * p})`;
+    content.style.transform = `translate3d(${dir * -AXIS_OUT_PCT * p}%, 0, 0) scale(${1 - AXIS_SCALE * p})`;
+    content.style.opacity = String(1 - p);
+  };
+
+  const clearAxisStyles = () => {
+    track?.classList.remove("is-axis-drag");
+    for (const el of [content, ghost]) {
+      if (!el) continue;
+      el.style.transition = "";
+      el.style.transform = "";
+      el.style.opacity = "";
+    }
+    if (ghost) ghost.hidden = true;
+  };
+
+  const fillIncoming = (day) => {
+    if (!day || !ghost) return false;
+    if (day === incomingDay) {
+      ghost.hidden = false;
+      return true;
+    }
+    incomingHtml = buildDayListHTML(day);
+    incomingDay = day;
+    ghost.classList.add("no-anim");
+    ghost.innerHTML = incomingHtml;
+    ghost.hidden = false;
+    return true;
+  };
 
   const lockScroll = () => {
     daySwipeDragging = true;
@@ -1095,21 +1142,83 @@ function setupDaySwipe() {
   };
 
   const unlockScroll = () => {
-    daySwipeDragging = false;
     view.classList.remove("is-dragging");
     host.classList.remove("is-dragging");
     host.style.touchAction = "";
   };
 
+  const finishCancel = () => {
+    finishSettling = null;
+    daySwipeDragging = false;
+    clearAxisStyles();
+    mode = "idle";
+    releaseDayRender({ discardQueued: false });
+  };
+
+  const finishCommit = () => {
+    finishSettling = null;
+    daySwipeDragging = false;
+    const day = incomingDay;
+    if (day) {
+      setSelectedDay(day, { tabScroll: "auto" });
+      content.classList.add("no-anim");
+      content.dataset.key = day;
+      content.replaceChildren(...[...ghost.childNodes]);
+      painted.set(content, incomingHtml);
+      observeAutoSeatCharts();
+      enrichVisibleDay();
+    }
+    incomingDay = "";
+    incomingHtml = "";
+    ghost.replaceChildren();
+    clearAxisStyles();
+    mode = "idle";
+    releaseDayRender({ discardQueued: false });
+  };
+
+  const settleTo = (commit, dir) => {
+    if (commit && !incomingDay) commit = false;
+    const target = commit ? 1 : 0;
+    const p = axisP();
+    const land = () => (commit ? finishCommit() : finishCancel());
+
+    if (reduceMotion.matches || Math.abs(p - target) < 0.02) {
+      land();
+      return;
+    }
+
+    mode = "settling";
+    const dur = `${AXIS_MS}ms`;
+    content.style.transition = `transform ${dur} ${AXIS_EASE}, opacity ${dur} ${AXIS_EASE}`;
+    ghost.style.transition = `transform ${dur} ${AXIS_EASE}`;
+    applyAxis(target, dir);
+
+    const done = () => {
+      if (finishSettling !== done) return;
+      ghost.removeEventListener("transitionend", onEnd);
+      clearTimeout(fallback);
+      land();
+    };
+    const onEnd = (e) => {
+      if (e.target === ghost) done();
+    };
+    const fallback = setTimeout(done, SHARED_AXIS_MS);
+    finishSettling = done;
+    ghost.addEventListener("transitionend", onEnd);
+  };
+
   host.addEventListener("pointerdown", (e) => {
     if (view.hidden) return;
     if (e.pointerType === "mouse" || !e.isPrimary || pointerId !== null) return;
+    if (mode === "settling") finishSettling?.();
+    if (tabAnimCleanup) tabAnimCleanup();
     pointerId = e.pointerId;
     startX = lastX = e.clientX;
     startY = e.clientY;
     lastT = e.timeStamp;
     vx = 0;
     curX = 0;
+    dragDir = 0;
     mode = "pending";
   });
 
@@ -1129,7 +1238,7 @@ function setupDaySwipe() {
       if (Math.abs(dx) < SWIPE_LOCK_PX || Math.abs(dx) < Math.abs(dy) * 1.2) {
         return;
       }
-      if (!state?.shows) {
+      if (!state?.shows || !track || !ghost) {
         mode = "ignore";
         return;
       }
@@ -1139,14 +1248,14 @@ function setupDaySwipe() {
         mode = "ignore";
         return;
       }
-      width =
-        els.daySwipe?.offsetWidth || view.offsetWidth || host.offsetWidth || 1;
+      width = track.offsetWidth || view.offsetWidth || host.offsetWidth || 1;
       startX = x;
       lastX = x;
       lastT = e.timeStamp;
       curX = 0;
       mode = "drag";
       lockScroll();
+      track.classList.add("is-axis-drag");
     }
 
     const dt = e.timeStamp - lastT;
@@ -1161,7 +1270,17 @@ function setupDaySwipe() {
       lastT = e.timeStamp;
     }
 
-    curX = x - startX;
+    let dx = x - startX;
+    let dir = dx < 0 ? 1 : dx > 0 ? -1 : dragDir;
+    const can = dir === 1 ? idx < days.length - 1 : idx > 0;
+    if (!dir || !can) {
+      dx = 0;
+      dir = 0;
+    }
+    curX = dx;
+    dragDir = dir;
+    if (dir && fillIncoming(days[idx + dir])) applyAxis(axisP(), dir);
+    else applyAxis(0, dir || 1);
   });
 
   /** Keep native vertical scroll from stealing the pager after axis-lock. */
@@ -1175,34 +1294,29 @@ function setupDaySwipe() {
 
   const settle = (canceled) => {
     const wasDrag = mode === "drag";
-    mode = "idle";
-    if (!wasDrag) return;
-    if (canceled) {
-      releaseDayRender({ discardQueued: false });
+    if (!wasDrag) {
+      if (mode !== "settling") mode = "idle";
+      return;
+    }
+    if (canceled || !dragDir) {
+      finishCancel();
       return;
     }
     const canPrev = idx > 0;
     const canNext = idx < days.length - 1;
     const projected = curX + vx * 180;
     const line = width * SWIPE_COMMIT_FRAC;
-    let dir = 0;
+    let commit = false;
     if (canNext && curX < -8 && (projected < -line || vx < -SWIPE_FLICK)) {
-      dir = 1;
+      commit = dragDir === 1;
     } else if (
       canPrev &&
       curX > 8 &&
       (projected > line || vx > SWIPE_FLICK)
     ) {
-      dir = -1;
+      commit = dragDir === -1;
     }
-    if (dir === 0) {
-      releaseDayRender({ discardQueued: false });
-      return;
-    }
-    const day = days[idx + dir];
-    if (!day || !transitionToDay(day, { tabScroll: "auto" })) {
-      releaseDayRender({ discardQueued: false });
-    }
+    settleTo(commit, dragDir);
   };
 
   const releasePointer = (e, canceled) => {

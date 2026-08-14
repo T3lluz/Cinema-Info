@@ -1126,6 +1126,34 @@ h1 {
   width: 100%;
 }
 
+/* Finger-follow of the same shared-axis slide: incoming on top from 28%,
+   outgoing fading to 24%. Transforms are set in JS from drag progress. */
+.day-swipe.is-axis-drag {
+  overflow: hidden;
+}
+
+.day-swipe.is-axis-drag > #content,
+.day-swipe.is-axis-drag > #dayGhost {
+  background: var(--bg);
+  transform-origin: 50% 24%;
+  will-change: transform, opacity;
+}
+
+.day-swipe.is-axis-drag > #content {
+  position: relative;
+  z-index: 1;
+}
+
+.day-swipe.is-axis-drag > #dayGhost {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  pointer-events: none;
+  overflow: hidden;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .tab-in-right,
   .tab-in-left,
