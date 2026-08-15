@@ -615,6 +615,7 @@ const els = {
   omdbLive: document.getElementById("omdbLive"),
   omdbClear: document.getElementById("omdbClear"),
   omdbSheet: document.getElementById("omdbSheet"),
+  omdbSheetPanel: document.querySelector("#omdbSheet .omdb-sheet-panel"),
   omdbSheetBody: document.getElementById("omdbSheetBody"),
   statsContent: document.getElementById("statsContent"),
   settingsContent: document.getElementById("settingsContent"),
@@ -853,6 +854,7 @@ async function init() {
   setupSeatCharts();
   setupHaptics();
   setupOmdbSearch();
+  setupOmdbSheetDrag();
 
   // Let mouse users scroll the day strip with the wheel.
   els.dayTabs.addEventListener(
@@ -1002,6 +1004,7 @@ function setupPullToRefresh() {
   document.addEventListener(
     "touchstart",
     (e) => {
+      if (isOmdbSheetOpen()) return;
       if (window.scrollY <= 0 && !els.refreshBtn.disabled) {
         startY = e.touches[0].clientY;
         pulling = true;
@@ -6140,6 +6143,14 @@ function isOmdbSheetOpen() {
   );
 }
 
+function clearOmdbSheetDrag() {
+  const sheet = els.omdbSheet;
+  if (!sheet) return;
+  sheet.classList.remove("is-dragging");
+  sheet.style.removeProperty("--sheet-drag");
+  sheet.style.removeProperty("--sheet-drag-p");
+}
+
 function revealOmdbSheet() {
   if (!els.omdbSheet) return;
   const sheet = els.omdbSheet;
@@ -6147,8 +6158,10 @@ function revealOmdbSheet() {
   if (sheet.classList.contains("is-leaving")) {
     clearTimeout(omdbSheetTimer);
     sheet.classList.remove("is-leaving");
+    clearOmdbSheetDrag();
   }
   if (!sheet.hidden && sheet.classList.contains("is-open")) return;
+  clearOmdbSheetDrag();
   const reduceMotion = window.matchMedia(
     "(prefers-reduced-motion: reduce)"
   ).matches;
@@ -6174,6 +6187,7 @@ function finishOmdbSheetClose() {
   if (els.omdbSheet) {
     els.omdbSheet.hidden = true;
     els.omdbSheet.classList.remove("is-open", "is-leaving");
+    clearOmdbSheetDrag();
   }
   document.body.classList.remove("omdb-open");
   if (els.omdbSheetBody) els.omdbSheetBody.innerHTML = "";
@@ -6192,10 +6206,154 @@ function closeOmdbSheet() {
     finishOmdbSheetClose();
     return;
   }
-  els.omdbSheet.classList.remove("is-open");
-  els.omdbSheet.classList.add("is-leaving");
+  const sheet = els.omdbSheet;
+  const wasDragging = sheet.classList.contains("is-dragging");
+  sheet.classList.remove("is-dragging");
+  if (wasDragging) void sheet.offsetWidth;
+  sheet.classList.remove("is-open");
+  sheet.classList.add("is-leaving");
   clearTimeout(omdbSheetTimer);
   omdbSheetTimer = setTimeout(finishOmdbSheetClose, 440);
+}
+
+/**
+ * The movie sheet follows a downward finger and either settles back or
+ * finishes the same slide-out as the close button. The handle always
+ * starts a drag; the body only does when it is already scrolled to the
+ * top, so a list of cast can still be read.
+ */
+function setupOmdbSheetDrag() {
+  const sheet = els.omdbSheet;
+  const panel = els.omdbSheetPanel;
+  if (!sheet || !panel) return;
+
+  /** @type {"idle"|"pending"|"drag"|"ignore"} */
+  let mode = "idle";
+  let pointerId = null;
+  let fromHandle = false;
+  let startX = 0;
+  let startY = 0;
+  let lastY = 0;
+  let lastT = 0;
+  let vy = 0;
+  let curY = 0;
+
+  const setDrag = (y) => {
+    const height = panel.offsetHeight || 1;
+    const p = Math.min(1, Math.max(0, y / height));
+    sheet.style.setProperty("--sheet-drag", `${y}px`);
+    sheet.style.setProperty("--sheet-drag-p", String(p));
+  };
+
+  const releasePointer = (e, cancelled) => {
+    if (e.pointerId !== pointerId) return;
+    const wasDrag = mode === "drag";
+    pointerId = null;
+    mode = "idle";
+    fromHandle = false;
+    if (!wasDrag) return;
+    if (!isOmdbSheetOpen()) return;
+
+    const height = panel.offsetHeight || 1;
+    const flickClose = vy > SWIPE_FLICK;
+    const flickCancel = vy < -SWIPE_FLICK;
+    const far = curY > height * SWIPE_COMMIT_FRAC;
+    if (!cancelled && !flickCancel && (flickClose || far)) {
+      closeOmdbSheet();
+      return;
+    }
+    sheet.classList.remove("is-dragging");
+    void panel.offsetWidth;
+    setDrag(0);
+  };
+
+  panel.addEventListener("pointerdown", (e) => {
+    if (!isOmdbSheetOpen()) return;
+    if (!e.isPrimary || pointerId !== null) return;
+    if (e.target.closest("[data-omdb-close], a, button, input, textarea, select")) {
+      return;
+    }
+    pointerId = e.pointerId;
+    fromHandle = Boolean(e.target.closest(".omdb-sheet-grab"));
+    startX = e.clientX;
+    startY = lastY = e.clientY;
+    lastT = e.timeStamp;
+    vy = 0;
+    curY = 0;
+    mode = "pending";
+  });
+
+  panel.addEventListener("pointermove", (e) => {
+    if (e.pointerId !== pointerId) return;
+    if (mode !== "pending" && mode !== "drag") return;
+
+    const x = e.clientX;
+    const y = e.clientY;
+    const dx = x - startX;
+    const dy = y - startY;
+
+    if (mode === "pending") {
+      if (Math.abs(dx) > SWIPE_LOCK_PX && Math.abs(dx) > Math.abs(dy)) {
+        mode = "ignore";
+        return;
+      }
+      const ready = fromHandle ? dy > 0 : Math.abs(dy) >= SWIPE_LOCK_PX;
+      if (!ready) return;
+      if (dy < 0 && !fromHandle) {
+        mode = "ignore";
+        return;
+      }
+      const scroller = els.omdbSheetBody;
+      if (!fromHandle && scroller && scroller.scrollTop > 1) {
+        mode = "ignore";
+        return;
+      }
+      mode = "drag";
+      startY = lastY = y;
+      lastT = e.timeStamp;
+      curY = 0;
+      sheet.classList.add("is-dragging");
+      try {
+        panel.setPointerCapture(pointerId);
+      } catch {
+        /* capture is best-effort; touchmove preventDefault is the fallback */
+      }
+    }
+
+    if (mode !== "drag") return;
+    const raw = y - startY;
+    curY = raw > 0 ? raw : raw * 0.18;
+    const dt = e.timeStamp - lastT;
+    if (dt > 0) vy = (y - lastY) / dt;
+    lastY = y;
+    lastT = e.timeStamp;
+    setDrag(curY);
+  });
+
+  panel.addEventListener(
+    "touchmove",
+    (e) => {
+      if (mode === "drag") {
+        e.preventDefault();
+        return;
+      }
+      if (mode !== "pending") return;
+      const touch = e.touches[0];
+      if (!touch) return;
+      const dy = touch.clientY - startY;
+      if (dy > 0 && (fromHandle || (els.omdbSheetBody?.scrollTop || 0) <= 1)) {
+        e.preventDefault();
+      }
+    },
+    { passive: false }
+  );
+
+  panel.addEventListener("pointerup", (e) => releasePointer(e, false));
+  panel.addEventListener("pointercancel", (e) => releasePointer(e, true));
+  panel.addEventListener("lostpointercapture", (e) => {
+    if (e.target !== panel) return;
+    releasePointer(e, false);
+  });
 }
 
 function renderOmdbSheet() {

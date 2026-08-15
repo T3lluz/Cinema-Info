@@ -3046,6 +3046,8 @@ a.rating-badge:hover {
 .omdb-sheet {
   --sheet-ease-out: cubic-bezier(0.32, 0.72, 0, 1);
   --sheet-ease-in: cubic-bezier(0.4, 0, 0.68, 0.28);
+  --sheet-drag: 0px;
+  --sheet-drag-p: 0;
   position: fixed;
   inset: 0;
   z-index: 40;
@@ -3053,7 +3055,7 @@ a.rating-badge:hover {
   align-items: flex-end;
   justify-content: center;
   overflow: hidden;
-  padding: 12px var(--page-pad-x) calc(12px + var(--safe-bottom));
+  padding: 0;
 }
 
 .omdb-sheet[hidden] {
@@ -3087,7 +3089,7 @@ a.rating-badge:hover {
 }
 
 .omdb-sheet.is-open .omdb-sheet-dim {
-  opacity: 1;
+  opacity: calc(1 - var(--sheet-drag-p));
 }
 
 .omdb-sheet.is-leaving .omdb-sheet-dim {
@@ -3124,7 +3126,7 @@ a.rating-badge:hover {
 
 .omdb-sheet.is-open .omdb-sheet-frost-dots {
   --sheet-dot-blur: 6px;
-  opacity: 1;
+  opacity: calc(1 - var(--sheet-drag-p));
 }
 
 .omdb-sheet.is-leaving .omdb-sheet-frost-dots {
@@ -3161,7 +3163,7 @@ a.rating-badge:hover {
 
 .omdb-sheet.is-open .omdb-sheet-glass {
   --sheet-glass-blur: 20px;
-  opacity: 1;
+  opacity: calc(1 - var(--sheet-drag-p));
 }
 
 .omdb-sheet.is-leaving .omdb-sheet-glass {
@@ -3208,21 +3210,25 @@ a.rating-badge:hover {
 .omdb-sheet-panel {
   position: relative;
   z-index: 1;
-  width: min(100%, 560px);
-  min-height: min(64vh, 520px);
-  max-height: min(88vh, 760px);
-  overflow: auto;
-  padding: 18px 16px 20px;
-  border-radius: 20px 20px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: min(58vh, 480px);
+  max-height: calc(100vh - var(--safe-top) - 8px);
+  max-height: calc(100dvh - var(--safe-top) - 8px);
+  overflow: hidden;
+  padding: 0;
+  border-radius: 20px 20px 0 0;
   background: var(--surface);
   border: 1px solid var(--line);
-  box-shadow: none;
+  border-bottom: 0;
+  box-shadow: 0 -8px 28px color-mix(in srgb, var(--ink) 12%, transparent);
   transform: translate3d(0, calc(100% + 24px), 0);
   transition: transform 0.44s var(--sheet-ease-out);
 }
 
 .omdb-sheet.is-open .omdb-sheet-panel {
-  transform: none;
+  transform: translate3d(0, var(--sheet-drag), 0);
 }
 
 .omdb-sheet.is-leaving .omdb-sheet-panel {
@@ -3231,10 +3237,46 @@ a.rating-badge:hover {
   transition-duration: 0.36s;
 }
 
+.omdb-sheet.is-dragging .omdb-sheet-panel {
+  transition: none;
+  will-change: transform;
+  cursor: grabbing;
+  touch-action: none;
+}
+
+.omdb-sheet.is-dragging .omdb-sheet-dim,
+.omdb-sheet.is-dragging .omdb-sheet-frost-dots,
+.omdb-sheet.is-dragging .omdb-sheet-glass {
+  transition: none;
+}
+
+.omdb-sheet.is-dragging {
+  user-select: none;
+}
+
+.omdb-sheet-grab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  height: 36px;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+
+.omdb-sheet-handle {
+  width: 42px;
+  height: 4px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--ink) 28%, transparent);
+}
+
 .omdb-sheet-close {
   position: absolute;
-  top: 10px;
+  top: 8px;
   right: 10px;
+  z-index: 2;
   width: 36px;
   height: 36px;
   border: 0;
@@ -3244,6 +3286,20 @@ a.rating-badge:hover {
   font-size: 1.4rem;
   line-height: 1;
   cursor: pointer;
+}
+
+.omdb-sheet-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: 4px var(--page-pad-x) calc(20px + var(--safe-bottom));
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+}
+
+.omdb-sheet-panel img {
+  -webkit-user-drag: none;
 }
 
 .omdb-sheet-hero {
@@ -5435,16 +5491,6 @@ button.bar-row.day-bar:focus-visible {
     width: 72px;
     height: 104px;
     border-radius: 10px;
-  }
-
-  .omdb-sheet {
-    align-items: center;
-    padding: 24px;
-  }
-
-  .omdb-sheet-panel {
-    border-radius: 18px;
-    max-height: min(82vh, 780px);
   }
 
   .omdb-sheet-hero {
