@@ -96,6 +96,12 @@ const SWIPE_COMMIT_FRAC = 0.28;
 const SWIPE_FLICK = 0.28;
 /** Axis-lock slop before a touch is a day-swipe, not a scroll. */
 const SWIPE_LOCK_PX = 10;
+/** Movie sheet: a modest downward flick from the handle is enough. */
+const SHEET_FLICK = 0.16;
+/** Slow drag must cover this much of the sheet to commit a close. */
+const SHEET_COMMIT_FRAC = 0.16;
+/** Handle / top-of-sheet is easier to throw shut. */
+const SHEET_HANDLE_COMMIT_FRAC = 0.1;
 /** Shared-axis slide used by tab switches and day changes. */
 const SHARED_AXIS_MS = 560;
 /** Incoming starts fully off-screen. The tab keyframe's 28% from-state
@@ -6149,6 +6155,15 @@ function clearOmdbSheetDrag() {
   sheet.classList.remove("is-dragging");
   sheet.style.removeProperty("--sheet-drag");
   sheet.style.removeProperty("--sheet-drag-p");
+  sheet.style.removeProperty("--sheet-move-ms");
+  sheet.style.removeProperty("--sheet-leave-ms");
+}
+
+/** Leave duration from remaining travel and downward px/ms. */
+function omdbSheetLeaveMs(height, fromY, velocity) {
+  const remain = Math.max(64, height + 24 - Math.max(0, fromY));
+  const v = Math.max(0.7, velocity * 2.6);
+  return Math.round(Math.min(240, Math.max(90, remain / v)));
 }
 
 function revealOmdbSheet() {
@@ -6193,7 +6208,7 @@ function finishOmdbSheetClose() {
   if (els.omdbSheetBody) els.omdbSheetBody.innerHTML = "";
 }
 
-function closeOmdbSheet() {
+function closeOmdbSheet(opts = {}) {
   if (!els.omdbSheet || els.omdbSheet.hidden) {
     finishOmdbSheetClose();
     return;
@@ -6207,13 +6222,18 @@ function closeOmdbSheet() {
     return;
   }
   const sheet = els.omdbSheet;
+  const height = els.omdbSheetPanel?.offsetHeight || 480;
+  const fromY = Number(opts.fromY) || 0;
+  const velocity = Number(opts.velocity) || 0;
+  const durMs = omdbSheetLeaveMs(height, fromY, velocity);
+  sheet.style.setProperty("--sheet-leave-ms", `${durMs}ms`);
   const wasDragging = sheet.classList.contains("is-dragging");
   sheet.classList.remove("is-dragging");
   if (wasDragging) void sheet.offsetWidth;
   sheet.classList.remove("is-open");
   sheet.classList.add("is-leaving");
   clearTimeout(omdbSheetTimer);
-  omdbSheetTimer = setTimeout(finishOmdbSheetClose, 440);
+  omdbSheetTimer = setTimeout(finishOmdbSheetClose, durMs + 50);
 }
 
 /**
@@ -6248,6 +6268,7 @@ function setupOmdbSheetDrag() {
   const releasePointer = (e, cancelled) => {
     if (e.pointerId !== pointerId) return;
     const wasDrag = mode === "drag";
+    const handle = fromHandle;
     pointerId = null;
     mode = "idle";
     fromHandle = false;
@@ -6255,13 +6276,16 @@ function setupOmdbSheetDrag() {
     if (!isOmdbSheetOpen()) return;
 
     const height = panel.offsetHeight || 1;
-    const flickClose = vy > SWIPE_FLICK;
-    const flickCancel = vy < -SWIPE_FLICK;
-    const far = curY > height * SWIPE_COMMIT_FRAC;
+    const flickClose = vy > SHEET_FLICK;
+    const flickCancel = vy < -SHEET_FLICK;
+    const need = height * (handle ? SHEET_HANDLE_COMMIT_FRAC : SHEET_COMMIT_FRAC);
+    const far = curY > need;
     if (!cancelled && !flickCancel && (flickClose || far)) {
-      closeOmdbSheet();
+      closeOmdbSheet({ fromY: curY, velocity: vy });
       return;
     }
+    const snapMs = Math.round(Math.min(220, Math.max(90, 70 + curY * 0.28)));
+    sheet.style.setProperty("--sheet-move-ms", `${snapMs}ms`);
     sheet.classList.remove("is-dragging");
     void panel.offsetWidth;
     setDrag(0);
@@ -6309,9 +6333,14 @@ function setupOmdbSheetDrag() {
         return;
       }
       mode = "drag";
-      startY = lastY = y;
-      lastT = e.timeStamp;
-      curY = 0;
+      if (fromHandle) {
+        curY = Math.max(0, y - startY);
+        setDrag(curY);
+      } else {
+        startY = lastY = y;
+        lastT = e.timeStamp;
+        curY = 0;
+      }
       sheet.classList.add("is-dragging");
       try {
         panel.setPointerCapture(pointerId);
@@ -6324,7 +6353,11 @@ function setupOmdbSheetDrag() {
     const raw = y - startY;
     curY = raw > 0 ? raw : raw * 0.18;
     const dt = e.timeStamp - lastT;
-    if (dt > 0) vy = (y - lastY) / dt;
+    if (dt > 0 && dt < 48) {
+      vy = ((y - lastY) / dt) * 0.6 + vy * 0.4;
+    } else if (dt >= 48) {
+      vy *= 0.45;
+    }
     lastY = y;
     lastT = e.timeStamp;
     setDrag(curY);

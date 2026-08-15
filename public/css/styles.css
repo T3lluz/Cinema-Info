@@ -3044,8 +3044,10 @@ a.rating-badge:hover {
 }
 
 .omdb-sheet {
-  --sheet-ease-out: cubic-bezier(0.32, 0.72, 0, 1);
-  --sheet-ease-in: cubic-bezier(0.4, 0, 0.68, 0.28);
+  --sheet-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --sheet-ease-in: cubic-bezier(0.32, 0, 0.67, 0.1);
+  --sheet-move-ms: 0.32s;
+  --sheet-leave-ms: 0.22s;
   --sheet-drag: 0px;
   --sheet-drag-p: 0;
   position: fixed;
@@ -3085,7 +3087,7 @@ a.rating-badge:hover {
 .omdb-sheet-dim {
   background: var(--sheet-dim);
   opacity: 0;
-  transition: opacity 0.4s var(--sheet-ease-out);
+  transition: opacity var(--sheet-move-ms) var(--sheet-ease-out);
 }
 
 .omdb-sheet.is-open .omdb-sheet-dim {
@@ -3095,7 +3097,7 @@ a.rating-badge:hover {
 .omdb-sheet.is-leaving .omdb-sheet-dim {
   opacity: 0;
   transition-timing-function: var(--sheet-ease-in);
-  transition-duration: 0.34s;
+  transition-duration: var(--sheet-leave-ms);
 }
 
 .omdb-sheet-frost-dots {
@@ -3120,8 +3122,8 @@ a.rating-badge:hover {
   -webkit-mask-repeat: repeat;
   mask-repeat: repeat;
   transition:
-    opacity 0.4s var(--sheet-ease-out),
-    --sheet-dot-blur 0.48s var(--sheet-ease-out);
+    opacity var(--sheet-move-ms) var(--sheet-ease-out),
+    --sheet-dot-blur var(--sheet-move-ms) var(--sheet-ease-out);
 }
 
 .omdb-sheet.is-open .omdb-sheet-frost-dots {
@@ -3133,7 +3135,7 @@ a.rating-badge:hover {
   --sheet-dot-blur: 0px;
   opacity: 0;
   transition-timing-function: var(--sheet-ease-in);
-  transition-duration: 0.34s;
+  transition-duration: var(--sheet-leave-ms);
 }
 
 .omdb-sheet-glass {
@@ -3157,8 +3159,8 @@ a.rating-badge:hover {
   -webkit-mask-repeat: repeat;
   mask-repeat: repeat;
   transition:
-    opacity 0.4s var(--sheet-ease-out),
-    --sheet-glass-blur 0.48s var(--sheet-ease-out);
+    opacity var(--sheet-move-ms) var(--sheet-ease-out),
+    --sheet-glass-blur var(--sheet-move-ms) var(--sheet-ease-out);
 }
 
 .omdb-sheet.is-open .omdb-sheet-glass {
@@ -3170,7 +3172,7 @@ a.rating-badge:hover {
   --sheet-glass-blur: 0px;
   opacity: 0;
   transition-timing-function: var(--sheet-ease-in);
-  transition-duration: 0.34s;
+  transition-duration: var(--sheet-leave-ms);
 }
 
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
@@ -3213,18 +3215,18 @@ a.rating-badge:hover {
   display: flex;
   flex-direction: column;
   width: 100%;
-  min-height: min(58vh, 480px);
-  max-height: calc(100vh - var(--safe-top) - 8px);
-  max-height: calc(100dvh - var(--safe-top) - 8px);
+  min-height: min(42dvh, 320px);
+  max-height: 70vh;
+  max-height: 70dvh;
   overflow: hidden;
   padding: 0;
   border-radius: 20px 20px 0 0;
   background: var(--surface);
   border: 1px solid var(--line);
   border-bottom: 0;
-  box-shadow: 0 -8px 28px color-mix(in srgb, var(--ink) 12%, transparent);
+  box-shadow: none;
   transform: translate3d(0, calc(100% + 24px), 0);
-  transition: transform 0.44s var(--sheet-ease-out);
+  transition: transform var(--sheet-move-ms) var(--sheet-ease-out);
 }
 
 .omdb-sheet.is-open .omdb-sheet-panel {
@@ -3234,7 +3236,7 @@ a.rating-badge:hover {
 .omdb-sheet.is-leaving .omdb-sheet-panel {
   transform: translate3d(0, calc(100% + 24px), 0);
   transition-timing-function: var(--sheet-ease-in);
-  transition-duration: 0.36s;
+  transition-duration: var(--sheet-leave-ms);
 }
 
 .omdb-sheet.is-dragging .omdb-sheet-panel {
