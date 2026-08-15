@@ -21,7 +21,7 @@
     <meta property="og:image" content="https://t3lluz.github.io/Cinema-Info/assets/icons/icon-512.png" />
     <meta name="twitter:card" content="summary" />
     <title>Buen kino</title>
-    <link rel="stylesheet" href="css/styles.css?v=159" />
+    <link rel="stylesheet" href="css/styles.css?v=160" />
     <script>
       // Paint the saved theme before the first frame, so a dark visitor
       // never sees a light flash. "system"/unset follows the device.
@@ -192,10 +192,9 @@
       </section>
     </main>
 
-    <!-- Glass + chip stay unblended. Icons live in a sibling fixed layer
-         with mix-blend-mode: difference so they invert against the real
-         page (including posters) in both themes. A fixed parent isolates
-         descendant blends, so the faces have to be their own layer. -->
+    <!-- Glass + chip stay in one layer. Faces sit in a sibling layer so
+         JS can paint each icon/label a solid ink from the page underneath.
+         A blend would let the frost dots punch through the glyphs. -->
     <div class="pill-nav-chrome" aria-hidden="true">
       <div class="pill-nav-shell">
         <div class="nav-dots">
@@ -265,6 +264,6 @@
       </div>
     </div>
 
-    <script src="js/app.js?v=131" type="module"></script>
+    <script src="js/app.js?v=132" type="module"></script>
   </body>
 </html>

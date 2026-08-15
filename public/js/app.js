@@ -2230,15 +2230,16 @@ function updateLiquidLenses() {
 
 /**
  * Adaptive nav faces, the way iOS glass does it: each icon and each
- * label looks at the page patch underneath it and flips to white on
- * dark (a poster, a red rail, night theme) or ink on light, on its
- * own — so two tabs over different cards can disagree, and a selected
- * label sitting lower than its icon can disagree with that icon.
+ * label looks at the page patch underneath it and flips to solid white
+ * on dark (a poster, a red rail, night theme) or solid ink on light,
+ * on its own — so two tabs over different cards can disagree, and a
+ * selected label sitting lower than its icon can disagree with that
+ * icon.
  *
- * mix-blend-mode: difference would be pixel-reactive for free, but a
- * fixed navbar is its own stacking context (so the blend never sees
- * the page) and difference turns Buen's red/green occupancy into
- * complementary artefacts. Sampling the DOM stack stays binary.
+ * mix-blend-mode: difference is pixel-reactive, but it also inverts
+ * the frost dots inside the glyphs (broken/speckled faces) and turns
+ * Buen's red/green occupancy into complementary artefacts. Sampling
+ * the DOM stack and painting an opaque colour stays solid.
  */
 function parseAlpha(raw) {
   if (raw == null) return 1;
@@ -2434,6 +2435,32 @@ function luminanceOf(c) {
   return 0.2126 * lin(c.r) + 0.7152 * lin(c.g) + 0.0722 * lin(c.b);
 }
 
+function contrastRatio(lumA, lumB) {
+  const hi = Math.max(lumA, lumB);
+  const lo = Math.min(lumA, lumB);
+  return (hi + 0.05) / (lo + 0.05);
+}
+
+function compositeOver(fg, bg) {
+  const a = fg.a ?? 1;
+  return {
+    r: fg.r * a + bg.r * (1 - a),
+    g: fg.g * a + bg.g * (1 - a),
+    b: fg.b * a + bg.b * (1 - a),
+  };
+}
+
+/** What the face actually sits on after the glass tint. Light frost is
+ * ignored: it would lift a dark poster into mid-grey and keep icons
+ * ink when they need to be white. Dark frost is applied — it sinks
+ * the page and white must stay the default. */
+function seenBackdrop(c) {
+  if (!themeIsDark()) return c;
+  const tint = tokenColor("--header-glass-tint");
+  if (!tint || tint.a < 0.01) return c;
+  return compositeOver(tint, c);
+}
+
 const FACE_SAMPLE = [
   [0.5, 0.5],
   [0.28, 0.32],
@@ -2462,37 +2489,29 @@ function sampleFaceBackdrop(el) {
 }
 
 function applyFaceContrast(el, fallbackDark) {
-  const c = sampleFaceBackdrop(el);
+  const raw = sampleFaceBackdrop(el);
+  const c = raw ? seenBackdrop(raw) : null;
   const wasDark = el.classList.contains("on-dark");
-  const lum = c ? luminanceOf(c) : null;
-  const dark =
-    lum == null
-      ? fallbackDark != null
-        ? !!fallbackDark
-        : themeIsDark()
-      : lum < (wasDark ? 0.42 : 0.28);
+  const wasLight = el.classList.contains("on-light");
+  let dark;
+  if (!c) {
+    dark = fallbackDark != null ? !!fallbackDark : themeIsDark();
+  } else {
+    const lum = luminanceOf(c);
+    const whiteC = contrastRatio(1, lum);
+    const inkC = contrastRatio(0.006, lum);
+    // Need a clear win to flip, so a mid poster does not flicker.
+    const margin = themeIsDark() ? 1.35 : 1.15;
+    if (wasDark) dark = whiteC * margin >= inkC;
+    else if (wasLight) dark = inkC * margin < whiteC;
+    else dark = themeIsDark() ? whiteC * 1.08 >= inkC : whiteC >= inkC;
+  }
   el.classList.toggle("on-dark", dark);
   el.classList.toggle("on-light", !dark);
   return dark;
 }
 
-function navUsesBlend() {
-  return (
-    typeof CSS !== "undefined" &&
-    CSS.supports?.("mix-blend-mode", "difference")
-  );
-}
-
 function updateNavContrast() {
-  // Difference blend on the faces layer already inverts against the
-  // live page (posters included) in both themes. Class toggling would
-  // paint a literal black/white that then gets blended twice.
-  if (navUsesBlend()) {
-    document.querySelectorAll(".pill-tab svg, .pill-tab-label").forEach((el) => {
-      el.classList.remove("on-dark", "on-light");
-    });
-    return;
-  }
   document.querySelectorAll(".pill-tab").forEach((btn) => {
     const icon = btn.querySelector("svg");
     const label = btn.querySelector(".pill-tab-label");

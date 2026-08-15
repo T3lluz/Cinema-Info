@@ -54,6 +54,11 @@
   --sheet-dot-sat: 2.8;
   --sheet-dot-contrast: 1.18;
   --sheet-dot-bright: 1.08;
+  --frost-dot-sat: 2.8;
+  --frost-dot-contrast: 1.18;
+  --frost-dot-bright: 1.08;
+  --nav-face: #1c1916;
+  --nav-face-on-dark: #fff;
   --nav-h: 66px;
   /* Shared content column — stays phone-sized on mobile, widens on larger screens. */
   --page-max: 720px;
@@ -94,13 +99,20 @@
     0 10px 24px rgba(0, 0, 0, 0.5),
     0 3px 8px rgba(0, 0, 0, 0.35),
     0 1px 2px rgba(0, 0, 0, 0.25);
-  --header-glass-tint: rgba(16, 16, 22, 0.55);
+  --header-glass-tint: rgba(12, 12, 16, 0.66);
   --header-glass-solid: rgba(18, 18, 18, 0.94);
   --header-dot-paint: rgba(255, 255, 255, 0.1);
   --sheet-dim: rgba(0, 0, 0, 0.52);
   --sheet-dot-sat: 1.35;
   --sheet-dot-contrast: 1.06;
   --sheet-dot-bright: 0.82;
+  /* Dark pane: dim the live backdrop so white faces stay solid, and
+     raise contrast so the dotted frost reads as texture, not glow. */
+  --frost-dot-sat: 1.35;
+  --frost-dot-contrast: 1.28;
+  --frost-dot-bright: 0.68;
+  --nav-face: #fff;
+  --nav-face-on-dark: #fff;
 }
 
 * {
@@ -190,8 +202,10 @@ body {
 }
 
 .header-frost-dots {
-  backdrop-filter: blur(6px) saturate(2.8) contrast(1.18) brightness(1.08);
-  -webkit-backdrop-filter: blur(6px) saturate(2.8) contrast(1.18) brightness(1.08);
+  backdrop-filter: blur(6px) saturate(var(--frost-dot-sat))
+    contrast(var(--frost-dot-contrast)) brightness(var(--frost-dot-bright));
+  -webkit-backdrop-filter: blur(6px) saturate(var(--frost-dot-sat))
+    contrast(var(--frost-dot-contrast)) brightness(var(--frost-dot-bright));
   -webkit-mask-image:
     radial-gradient(circle at center, #000 var(--dot-core), transparent var(--dot-edge)),
     var(--header-fade);
@@ -4872,11 +4886,10 @@ button.bar-row.day-bar:focus-visible {
   z-index: 20;
 }
 
-/* White faces invert against the live page. Must be its own fixed
-   layer — mix-blend-mode cannot see past a parent stacking context. */
+/* Faces sit above the frost so JS can paint solid ink. A blend here
+   would let the dotted plate punch through the glyphs. */
 .pill-nav {
   z-index: 21;
-  mix-blend-mode: difference;
 }
 
 /* Stack: dotted frost plate + selection pebble + tabs as siblings, so
@@ -4919,8 +4932,10 @@ button.bar-row.day-bar:focus-visible {
 }
 
 .nav-frost-dots {
-  backdrop-filter: blur(6px) saturate(2.8) contrast(1.18) brightness(1.08);
-  -webkit-backdrop-filter: blur(6px) saturate(2.8) contrast(1.18) brightness(1.08);
+  backdrop-filter: blur(6px) saturate(var(--frost-dot-sat))
+    contrast(var(--frost-dot-contrast)) brightness(var(--frost-dot-bright));
+  -webkit-backdrop-filter: blur(6px) saturate(var(--frost-dot-sat))
+    contrast(var(--frost-dot-contrast)) brightness(var(--frost-dot-bright));
   -webkit-mask-image: radial-gradient(
     circle at center,
     #000 var(--dot-core),
@@ -5054,7 +5069,7 @@ button.bar-row.day-bar:focus-visible {
   border: 0;
   border-radius: 999px;
   background: transparent;
-  color: #fff;
+  color: var(--nav-face);
   font: inherit;
   font-size: 0.58rem;
   font-weight: 750;
@@ -5110,7 +5125,7 @@ button.bar-row.day-bar:focus-visible {
 }
 
 .pill-tab[aria-selected="true"] {
-  color: #fff;
+  color: var(--nav-face);
 }
 
 .pill-tab[aria-selected="true"] svg {
@@ -5126,8 +5141,13 @@ button.bar-row.day-bar:focus-visible {
   transform: translateY(0);
 }
 
-/* Face colour is white + mix-blend-mode: difference on .pill-nav.
-   JS on-dark / on-light is only the no-blend fallback. */
+/* Solid faces — JS flips on-dark / on-light from the page underneath.
+   No blend: difference was punching the frost dots through the glyphs. */
+.pill-tab svg,
+.pill-tab .pill-tab-label {
+  isolation: isolate;
+}
+
 .pill-tab svg.on-light,
 .pill-tab .pill-tab-label.on-light {
   color: #1c1916;
@@ -5135,12 +5155,11 @@ button.bar-row.day-bar:focus-visible {
   text-shadow: none;
 }
 
-.pill-tab svg.on-dark {
-  color: rgb(255 255 255 / 0.9);
-}
-
+.pill-tab svg.on-dark,
 .pill-tab .pill-tab-label.on-dark {
-  color: rgb(255 255 255 / 0.9);
+  color: var(--nav-face-on-dark);
+  filter: none;
+  text-shadow: none;
 }
 
 .pill-tab[aria-selected="true"] svg.on-light,
@@ -5153,19 +5172,14 @@ button.bar-row.day-bar:focus-visible {
   color: #fff;
 }
 
-@supports (mix-blend-mode: difference) {
-  .pill-tab svg.on-light,
-  .pill-tab .pill-tab-label.on-light,
-  .pill-tab svg.on-dark,
-  .pill-tab .pill-tab-label.on-dark,
-  .pill-tab[aria-selected="true"] svg.on-light,
-  .pill-tab[aria-selected="true"] .pill-tab-label.on-light,
-  .pill-tab[aria-selected="true"] svg.on-dark,
-  .pill-tab[aria-selected="true"] .pill-tab-label.on-dark {
-    color: inherit;
-    filter: none;
-    text-shadow: none;
-  }
+[data-theme="dark"] .pill-tab svg.on-light,
+[data-theme="dark"] .pill-tab .pill-tab-label.on-light {
+  color: #0a0a0a;
+}
+
+[data-theme="dark"] .pill-tab[aria-selected="true"] svg.on-light,
+[data-theme="dark"] .pill-tab[aria-selected="true"] .pill-tab-label.on-light {
+  color: #050505;
 }
 
 .stats-hero,
