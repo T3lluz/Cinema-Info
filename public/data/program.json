@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-16T11:30:53.614Z",
+  "updatedAt": "2026-08-16T23:33:05.469Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -3279,11 +3279,11 @@
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 2.91,
+          "value": 2.9,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         },
         "tomatoes": {
-          "value": 96,
+          "value": 94,
           "url": "https://www.rottentomatoes.com/m/paw_patrol_the_dino_movie"
         }
       },
@@ -3469,11 +3469,11 @@
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 2.91,
+          "value": 2.9,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         },
         "tomatoes": {
-          "value": 96,
+          "value": 94,
           "url": "https://www.rottentomatoes.com/m/paw_patrol_the_dino_movie"
         }
       },
@@ -3707,11 +3707,11 @@
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 2.91,
+          "value": 2.9,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         },
         "tomatoes": {
-          "value": 96,
+          "value": 94,
           "url": "https://www.rottentomatoes.com/m/paw_patrol_the_dino_movie"
         }
       },
@@ -3993,11 +3993,11 @@
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 2.91,
+          "value": 2.9,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         },
         "tomatoes": {
-          "value": 96,
+          "value": 94,
           "url": "https://www.rottentomatoes.com/m/paw_patrol_the_dino_movie"
         }
       },
@@ -4182,11 +4182,11 @@
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 2.91,
+          "value": 2.9,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         },
         "tomatoes": {
-          "value": 96,
+          "value": 94,
           "url": "https://www.rottentomatoes.com/m/paw_patrol_the_dino_movie"
         }
       },
@@ -4420,11 +4420,11 @@
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 2.91,
+          "value": 2.9,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         },
         "tomatoes": {
-          "value": 96,
+          "value": 94,
           "url": "https://www.rottentomatoes.com/m/paw_patrol_the_dino_movie"
         }
       },
@@ -4562,11 +4562,11 @@
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 2.91,
+          "value": 2.9,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         },
         "tomatoes": {
-          "value": 96,
+          "value": 94,
           "url": "https://www.rottentomatoes.com/m/paw_patrol_the_dino_movie"
         }
       },
@@ -4752,11 +4752,11 @@
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 2.91,
+          "value": 2.9,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         },
         "tomatoes": {
-          "value": 96,
+          "value": 94,
           "url": "https://www.rottentomatoes.com/m/paw_patrol_the_dino_movie"
         }
       },
@@ -4986,11 +4986,11 @@
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 2.91,
+          "value": 2.9,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         },
         "tomatoes": {
-          "value": 96,
+          "value": 94,
           "url": "https://www.rottentomatoes.com/m/paw_patrol_the_dino_movie"
         }
       },
@@ -5261,7 +5261,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92801/purchase?kanal=dxf",
       "eventId": "92801",
       "promoterId": "202",
-      "sold": 14,
+      "sold": 26,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -5270,17 +5270,17 @@
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 2.91,
+          "value": 2.9,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         },
         "tomatoes": {
-          "value": 96,
+          "value": 94,
           "url": "https://www.rottentomatoes.com/m/paw_patrol_the_dino_movie"
         }
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 96
+      "available": 84
     },
     {
       "id": "EDI20260819-2026-08-16T16:00:00-Storsal",
@@ -5309,7 +5309,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92830/purchase?kanal=dxf",
       "eventId": "92830",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 9,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -5328,7 +5328,7 @@
       },
       "reserved": 0,
       "capacity": 286,
-      "available": 286
+      "available": 277
     },
     {
       "id": "EDI20240688-2026-08-16T17:15:00-Kinosal",
@@ -5356,7 +5356,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92800/purchase?kanal=dxf",
       "eventId": "92800",
       "promoterId": "202",
-      "sold": 9,
+      "sold": 23,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -5374,8 +5374,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 108,
-      "available": 99
+      "capacity": 110,
+      "available": 87
     },
     {
       "id": "EDI20260623-2026-08-16T19:30:00-Storsal",
@@ -5450,7 +5450,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92799/purchase?kanal=dxf",
       "eventId": "92799",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 7,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -5469,7 +5469,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 110
+      "available": 103
     },
     {
       "id": "EDI20260623-2026-08-18T13:00:00-Kinosal",
@@ -5515,8 +5515,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 107,
-      "available": 103
+      "capacity": 110,
+      "available": 106
     },
     {
       "id": "EDI20251106-2026-08-18T17:00:00-Kinosal",
@@ -5554,11 +5554,11 @@
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 2.91,
+          "value": 2.9,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         },
         "tomatoes": {
-          "value": 96,
+          "value": 94,
           "url": "https://www.rottentomatoes.com/m/paw_patrol_the_dino_movie"
         }
       },
@@ -5744,11 +5744,11 @@
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 2.91,
+          "value": 2.9,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         },
         "tomatoes": {
-          "value": 96,
+          "value": 94,
           "url": "https://www.rottentomatoes.com/m/paw_patrol_the_dino_movie"
         }
       },
@@ -5829,7 +5829,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92878/purchase?kanal=dxf",
       "eventId": "92878",
       "promoterId": "202",
-      "sold": 2,
+      "sold": 7,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -5847,8 +5847,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 108,
-      "available": 106
+      "capacity": 110,
+      "available": 103
     },
     {
       "id": "EDI20260623-2026-08-19T20:15:00-Storsal",
@@ -5933,11 +5933,11 @@
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 2.91,
+          "value": 2.9,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         },
         "tomatoes": {
-          "value": 96,
+          "value": 94,
           "url": "https://www.rottentomatoes.com/m/paw_patrol_the_dino_movie"
         }
       },
@@ -6122,11 +6122,11 @@
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 2.91,
+          "value": 2.9,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         },
         "tomatoes": {
-          "value": 96,
+          "value": 94,
           "url": "https://www.rottentomatoes.com/m/paw_patrol_the_dino_movie"
         }
       },
@@ -6385,17 +6385,191 @@
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 2.91,
+          "value": 2.9,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         },
         "tomatoes": {
-          "value": 96,
+          "value": 94,
           "url": "https://www.rottentomatoes.com/m/paw_patrol_the_dino_movie"
         }
       },
       "reserved": 0,
       "capacity": 286,
       "available": 286
+    },
+    {
+      "id": "EDI20240688-2026-08-22T17:30:00-Kinosal",
+      "title": "Spider-Man: Brand New Day",
+      "screen": "Kinosal",
+      "start": "2026-08-22T17:30:00",
+      "end": "2026-08-22T20:04:49",
+      "dayKey": "2026-08-22",
+      "runningMinutes": 145,
+      "runningLabel": "2 t. 25 min.",
+      "age": "12 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Sci-Fi"
+      ],
+      "director": "Destin Daniel Cretton",
+      "premiere": "2026-07-29",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/13bdf9c085531b0bb6c3b7506e847f46643782b6-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/92861/purchase?kanal=dxf",
+      "eventId": "92861",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 8.1,
+          "id": "tt22084616",
+          "url": "https://www.imdb.com/title/tt22084616/"
+        },
+        "letterboxd": {
+          "value": 4.08,
+          "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
+        },
+        "tomatoes": {
+          "value": 98,
+          "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "WAB20240233-2026-08-22T18:00:00-Storsal",
+      "title": "The End of Oak Street",
+      "screen": "Storsal",
+      "start": "2026-08-22T18:00:00",
+      "end": "2026-08-22T19:50:00",
+      "dayKey": "2026-08-22",
+      "runningMinutes": 100,
+      "runningLabel": "1 t. 40 min.",
+      "age": "12 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Mystery"
+      ],
+      "director": "David Robert Mitchell",
+      "premiere": "2026-08-14",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/06a5c5a12f39cac43d7d9abd76ae107e162c3e3b-1500x2223.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/92865/purchase?kanal=dxf",
+      "eventId": "92865",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 6.6,
+          "id": "tt27165187",
+          "url": "https://www.imdb.com/title/tt27165187/"
+        },
+        "letterboxd": {
+          "value": 3.15,
+          "url": "https://letterboxd.com/film/the-end-of-oak-street/"
+        },
+        "tomatoes": {
+          "value": 77,
+          "url": "https://www.rottentomatoes.com/m/the_end_of_oak_street"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
+    },
+    {
+      "id": "EDI20260623-2026-08-22T20:30:00-Storsal",
+      "title": "The Invite",
+      "screen": "Storsal",
+      "start": "2026-08-22T20:30:00",
+      "end": "2026-08-22T22:27:00",
+      "dayKey": "2026-08-22",
+      "runningMinutes": 106,
+      "runningLabel": "1 t. 46 min.",
+      "age": "12 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": true,
+      "genres": [
+        "Comedy",
+        "Drama",
+        "Romance"
+      ],
+      "director": "Olivia Wilde",
+      "premiere": "2026-08-14",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/59ddb42978a630c065866367e38b465118602c08-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/92863/purchase?kanal=dxf",
+      "eventId": "92863",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.8,
+          "id": "tt14173636",
+          "url": "https://www.imdb.com/title/tt14173636/"
+        },
+        "letterboxd": {
+          "value": 4.03,
+          "url": "https://letterboxd.com/film/the-invite-2026/"
+        },
+        "tomatoes": {
+          "value": 89,
+          "url": "https://www.rottentomatoes.com/m/the_invite"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
+    },
+    {
+      "id": "SFN20241757-2026-08-22T21:00:00-Kinosal",
+      "title": "Insidious: Out of the Further",
+      "screen": "Kinosal",
+      "start": "2026-08-22T21:00:00",
+      "end": "2026-08-22T22:56:00",
+      "dayKey": "2026-08-22",
+      "runningMinutes": 106,
+      "runningLabel": "1 t. 46 min.",
+      "age": "15 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Horror",
+        "Mystery",
+        "Thriller"
+      ],
+      "director": "Jacob Chase",
+      "premiere": "2026-08-21",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/2e07444a64922a215b35b404c38d90bd3e609be5-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/92864/purchase?kanal=dxf",
+      "eventId": "92864",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": null,
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
     },
     {
       "id": "EDI20260087-2026-09-01T13:00:00-Kinosal",
