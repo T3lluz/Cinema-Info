@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-17T23:35:03.632Z",
+  "updatedAt": "2026-08-18T11:36:07.793Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -3279,7 +3279,7 @@
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 2.89,
+          "value": 2.9,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         },
         "tomatoes": {
@@ -3469,7 +3469,7 @@
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 2.89,
+          "value": 2.9,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         },
         "tomatoes": {
@@ -3707,7 +3707,7 @@
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 2.89,
+          "value": 2.9,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         },
         "tomatoes": {
@@ -3993,7 +3993,7 @@
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 2.89,
+          "value": 2.9,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         },
         "tomatoes": {
@@ -4182,7 +4182,7 @@
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 2.89,
+          "value": 2.9,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         },
         "tomatoes": {
@@ -4420,7 +4420,7 @@
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 2.89,
+          "value": 2.9,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         },
         "tomatoes": {
@@ -4562,7 +4562,7 @@
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 2.89,
+          "value": 2.9,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         },
         "tomatoes": {
@@ -4752,7 +4752,7 @@
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 2.89,
+          "value": 2.9,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         },
         "tomatoes": {
@@ -4986,7 +4986,7 @@
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 2.89,
+          "value": 2.9,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         },
         "tomatoes": {
@@ -5270,7 +5270,7 @@
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 2.89,
+          "value": 2.9,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         },
         "tomatoes": {
@@ -5497,7 +5497,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92500/purchase?kanal=dxf",
       "eventId": "92500",
       "promoterId": "202",
-      "sold": 4,
+      "sold": 29,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -5516,7 +5516,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 106
+      "available": 81
     },
     {
       "id": "EDI20251106-2026-08-18T17:00:00-Kinosal",
@@ -5554,7 +5554,7 @@
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 2.89,
+          "value": 2.9,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         },
         "tomatoes": {
@@ -5744,7 +5744,7 @@
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 2.89,
+          "value": 2.9,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         },
         "tomatoes": {
@@ -5933,7 +5933,7 @@
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 2.89,
+          "value": 2.9,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         },
         "tomatoes": {
@@ -6122,7 +6122,7 @@
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 2.89,
+          "value": 2.9,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         },
         "tomatoes": {
@@ -6302,8 +6302,8 @@
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
-      "capacity": 108,
-      "available": 106
+      "capacity": 110,
+      "available": 108
     },
     {
       "id": "EDI20260206-2026-08-22T14:55:00-Kinosal",
@@ -6385,7 +6385,7 @@
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 2.89,
+          "value": 2.9,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         },
         "tomatoes": {
@@ -6607,7 +6607,7 @@
           "url": "https://www.imdb.com/title/tt29356163/"
         },
         "letterboxd": {
-          "value": 2.89,
+          "value": 2.9,
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         },
         "tomatoes": {
