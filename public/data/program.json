@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-19T11:35:32.501Z",
+  "updatedAt": "2026-08-19T23:34:58.073Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -4799,7 +4799,7 @@
           "url": "https://www.imdb.com/title/tt27165187/"
         },
         "letterboxd": {
-          "value": 3.13,
+          "value": 3.12,
           "url": "https://letterboxd.com/film/the-end-of-oak-street/"
         },
         "tomatoes": {
@@ -4846,7 +4846,7 @@
           "url": "https://www.imdb.com/title/tt14173636/"
         },
         "letterboxd": {
-          "value": 4.02,
+          "value": 4.01,
           "url": "https://letterboxd.com/film/the-invite-2026/"
         },
         "tomatoes": {
@@ -5081,7 +5081,7 @@
           "url": "https://www.imdb.com/title/tt14173636/"
         },
         "letterboxd": {
-          "value": 4.02,
+          "value": 4.01,
           "url": "https://letterboxd.com/film/the-invite-2026/"
         },
         "tomatoes": {
@@ -5128,7 +5128,7 @@
           "url": "https://www.imdb.com/title/tt27165187/"
         },
         "letterboxd": {
-          "value": 3.13,
+          "value": 3.12,
           "url": "https://letterboxd.com/film/the-end-of-oak-street/"
         },
         "tomatoes": {
@@ -5412,7 +5412,7 @@
           "url": "https://www.imdb.com/title/tt14173636/"
         },
         "letterboxd": {
-          "value": 4.02,
+          "value": 4.01,
           "url": "https://letterboxd.com/film/the-invite-2026/"
         },
         "tomatoes": {
@@ -5459,7 +5459,7 @@
           "url": "https://www.imdb.com/title/tt27165187/"
         },
         "letterboxd": {
-          "value": 3.13,
+          "value": 3.12,
           "url": "https://letterboxd.com/film/the-end-of-oak-street/"
         },
         "tomatoes": {
@@ -5506,7 +5506,7 @@
           "url": "https://www.imdb.com/title/tt14173636/"
         },
         "letterboxd": {
-          "value": 4.02,
+          "value": 4.01,
           "url": "https://letterboxd.com/film/the-invite-2026/"
         },
         "tomatoes": {
@@ -5649,7 +5649,7 @@
           "url": "https://www.imdb.com/title/tt14173636/"
         },
         "letterboxd": {
-          "value": 4.02,
+          "value": 4.01,
           "url": "https://letterboxd.com/film/the-invite-2026/"
         },
         "tomatoes": {
@@ -5696,7 +5696,7 @@
           "url": "https://www.imdb.com/title/tt27165187/"
         },
         "letterboxd": {
-          "value": 3.13,
+          "value": 3.12,
           "url": "https://letterboxd.com/film/the-end-of-oak-street/"
         },
         "tomatoes": {
@@ -5735,7 +5735,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92838/purchase?kanal=dxf",
       "eventId": "92838",
       "promoterId": "202",
-      "sold": 2,
+      "sold": 9,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -5754,7 +5754,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 108
+      "available": 101
     },
     {
       "id": "WAB20240233-2026-08-19T17:45:00-Storsal",
@@ -5782,7 +5782,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92855/purchase?kanal=dxf",
       "eventId": "92855",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 6,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -5791,7 +5791,7 @@
           "url": "https://www.imdb.com/title/tt27165187/"
         },
         "letterboxd": {
-          "value": 3.13,
+          "value": 3.12,
           "url": "https://letterboxd.com/film/the-end-of-oak-street/"
         },
         "tomatoes": {
@@ -5801,7 +5801,7 @@
       },
       "reserved": 0,
       "capacity": 246,
-      "available": 246
+      "available": 240
     },
     {
       "id": "EDI20240688-2026-08-19T19:30:00-Kinosal",
@@ -5829,7 +5829,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92878/purchase?kanal=dxf",
       "eventId": "92878",
       "promoterId": "202",
-      "sold": 7,
+      "sold": 22,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -5848,7 +5848,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 103
+      "available": 88
     },
     {
       "id": "EDI20260623-2026-08-19T20:15:00-Storsal",
@@ -5876,7 +5876,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92877/purchase?kanal=dxf",
       "eventId": "92877",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -5885,7 +5885,7 @@
           "url": "https://www.imdb.com/title/tt14173636/"
         },
         "letterboxd": {
-          "value": 4.02,
+          "value": 4.01,
           "url": "https://letterboxd.com/film/the-invite-2026/"
         },
         "tomatoes": {
@@ -5895,7 +5895,7 @@
       },
       "reserved": 0,
       "capacity": 246,
-      "available": 246
+      "available": 244
     },
     {
       "id": "EDI20251106-2026-08-20T17:00:00-Kinosal",
@@ -6074,7 +6074,7 @@
           "url": "https://www.imdb.com/title/tt27165187/"
         },
         "letterboxd": {
-          "value": 3.13,
+          "value": 3.12,
           "url": "https://letterboxd.com/film/the-end-of-oak-street/"
         },
         "tomatoes": {
@@ -6204,7 +6204,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92859/purchase?kanal=dxf",
       "eventId": "92859",
       "promoterId": "202",
-      "sold": 2,
+      "sold": 5,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -6213,7 +6213,7 @@
           "url": "https://www.imdb.com/title/tt27165187/"
         },
         "letterboxd": {
-          "value": 3.13,
+          "value": 3.12,
           "url": "https://letterboxd.com/film/the-end-of-oak-street/"
         },
         "tomatoes": {
@@ -6223,7 +6223,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 108
+      "available": 105
     },
     {
       "id": "EDI20240688-2026-08-21T20:30:00-Storsal",
@@ -6302,13 +6302,13 @@
       "eventStatus": "ok",
       "ratings": {
         "letterboxd": {
-          "value": 3.26,
+          "value": 3.1,
           "url": "https://letterboxd.com/film/insidious-out-of-the-further/"
         }
       },
       "reserved": 0,
-      "capacity": 109,
-      "available": 104
+      "capacity": 110,
+      "available": 105
     },
     {
       "id": "EDI20260206-2026-08-22T14:55:00-Kinosal",
@@ -6484,7 +6484,7 @@
           "url": "https://www.imdb.com/title/tt27165187/"
         },
         "letterboxd": {
-          "value": 3.13,
+          "value": 3.12,
           "url": "https://letterboxd.com/film/the-end-of-oak-street/"
         },
         "tomatoes": {
@@ -6531,7 +6531,7 @@
           "url": "https://www.imdb.com/title/tt14173636/"
         },
         "letterboxd": {
-          "value": 4.02,
+          "value": 4.01,
           "url": "https://letterboxd.com/film/the-invite-2026/"
         },
         "tomatoes": {
@@ -6573,7 +6573,7 @@
       "eventStatus": "ok",
       "ratings": {
         "letterboxd": {
-          "value": 3.26,
+          "value": 3.1,
           "url": "https://letterboxd.com/film/insidious-out-of-the-further/"
         }
       },
@@ -6797,7 +6797,7 @@
       "eventStatus": "ok",
       "ratings": {
         "letterboxd": {
-          "value": 3.26,
+          "value": 3.1,
           "url": "https://letterboxd.com/film/insidious-out-of-the-further/"
         }
       },
@@ -6875,7 +6875,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92898/purchase?kanal=dxf",
       "eventId": "92898",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -6884,7 +6884,7 @@
           "url": "https://www.imdb.com/title/tt14173636/"
         },
         "letterboxd": {
-          "value": 4.02,
+          "value": 4.01,
           "url": "https://letterboxd.com/film/the-invite-2026/"
         },
         "tomatoes": {
@@ -6893,8 +6893,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 110
+      "capacity": 108,
+      "available": 106
     },
     {
       "id": "SFN20241757-2026-08-25T20:15:00-Storsal",
@@ -6926,7 +6926,7 @@
       "eventStatus": "ok",
       "ratings": {
         "letterboxd": {
-          "value": 3.26,
+          "value": 3.1,
           "url": "https://letterboxd.com/film/insidious-out-of-the-further/"
         }
       },
