@@ -44,7 +44,6 @@ const PROGRAM_URL =
  * the moment a showing starts.
  */
 const DX_EVENTS_URL = "https://api.dx.no/v3/partners/202/events";
-const DX_LIST_PER_PAGE = 15;
 const DX_LIST_PAGE_CAP = 4000;
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -74,7 +73,13 @@ async function fetchJson(url, init = {}) {
         },
       });
     } catch (err) {
-      lastErr = new Error(`${url} → ${err.name === "TimeoutError" ? "timeout" : err.message}`);
+      const name = err?.name || "";
+      const msg = String(err?.message || err);
+      const timedOut =
+        name === "TimeoutError" ||
+        name === "AbortError" ||
+        /timeout|aborted|terminated/i.test(msg);
+      lastErr = new Error(`${url} → ${timedOut ? "timeout" : msg}`);
       continue;
     }
     if (res.ok) return res.json();
@@ -152,11 +157,21 @@ function formatDxAge(event, movie) {
 }
 
 async function fetchDxEventPage(page) {
+  await sleep(120);
   const url = `${DX_EVENTS_URL}?perPage=50&page=${page}`;
   const data = await fetchJson(url, {
     headers: { Referer: "https://checkout.ebillett.no/" },
   });
   return Array.isArray(data?.data) ? data.data : [];
+}
+
+async function fetchDxEventPageSafe(page) {
+  try {
+    return await fetchDxEventPage(page);
+  } catch (err) {
+    console.warn(`DX events page ${page} failed:`, err.message);
+    return null;
+  }
 }
 
 /**
@@ -169,7 +184,12 @@ async function findDxPageForDay(dayKey) {
   let found = 1;
   while (lo <= hi) {
     const mid = (lo + hi) >> 1;
-    const rows = await fetchDxEventPage(mid);
+    const rows = await fetchDxEventPageSafe(mid);
+    if (rows == null) {
+      // A flaky mid-page must not collapse the search to "empty archive".
+      hi = mid - 1;
+      continue;
+    }
     if (!rows.length) {
       hi = mid - 1;
       continue;
@@ -191,7 +211,8 @@ async function fetchDxCinemaEvents(fromDay) {
   let lastPage = startPage;
   const from = Math.max(1, startPage - 1);
   for (let page = from; page <= from + 500; page++) {
-    const rows = await fetchDxEventPage(page);
+    const rows = await fetchDxEventPageSafe(page);
+    if (rows == null) continue;
     if (!rows.length) {
       empty += 1;
       if (empty >= 2) break;
@@ -968,6 +989,7 @@ async function main() {
     dxEvents = await fetchDxCinemaEvents(fromDay);
   } catch (err) {
     console.warn("DX cinema listing failed:", err.message);
+    if (err?.stack) console.warn(err.stack);
   }
 
   const data = await fetchJson(PROGRAM_URL);
@@ -1064,6 +1086,7 @@ async function main() {
       seenEventIds.add(String(show.eventId));
     }
   }
+  const matchedOnFeed = seenEventIds.size;
   for (const event of dxEvents) {
     if (seenEventIds.has(String(event.id))) continue;
     const show = showFromDxEvent(event, movies, previousShows, prevByEventId);
@@ -1074,12 +1097,9 @@ async function main() {
     drafted.push(show);
     seenEventIds.add(String(event.id));
   }
-  const dxOnly = [...seenEventIds].filter(
-    (id) => !raw.some((show) => parseTicketLink(show.ticketSaleUrl)?.eventId === id)
-  ).length;
   console.log(
     `Merged ${dxEvents.length} DX cinema events ` +
-      `(${dxOnly} not on Buen's website feed)`
+      `(${dxEvents.length - matchedOnFeed} not on Buen's current feed)`
   );
 
   // Resolve every film's ratings once before enrichment batches start.
@@ -1258,6 +1278,40 @@ async function main() {
       genres,
     };
   });
+
+  const posterByTitle = new Map();
+  const runtimeByTitle = new Map();
+  const ageByTitle = new Map();
+  for (const show of merged) {
+    if (!show?.title) continue;
+    if (show.posterUrl && !posterByTitle.has(show.title)) {
+      posterByTitle.set(show.title, show.posterUrl);
+    }
+    if (show.runningMinutes && !runtimeByTitle.has(show.title)) {
+      runtimeByTitle.set(show.title, {
+        runningMinutes: show.runningMinutes,
+        runningLabel: show.runningLabel || null,
+      });
+    }
+    if (show.age && !ageByTitle.has(show.title)) {
+      ageByTitle.set(show.title, show.age);
+    }
+  }
+  for (const show of merged) {
+    if (!show?.title) continue;
+    if (!show.posterUrl && posterByTitle.has(show.title)) {
+      show.posterUrl = posterByTitle.get(show.title);
+    }
+    if (!show.runningMinutes && runtimeByTitle.has(show.title)) {
+      const runtime = runtimeByTitle.get(show.title);
+      show.runningMinutes = runtime.runningMinutes;
+      show.runningLabel = show.runningLabel || runtime.runningLabel;
+    }
+    if (!show.age && ageByTitle.has(show.title)) {
+      show.age = ageByTitle.get(show.title);
+    }
+  }
+
   const payload = {
     updatedAt: new Date().toISOString(),
     cinema: "Buen kino",
