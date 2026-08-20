@@ -75,7 +75,9 @@ const DOOR_CALM_MS = 45 * 1000;
 /**
  * How long the program snapshot is trusted before it is read again. It
  * is the whole schedule in one file and a twice-daily job writes it, so
- * it is worth a look now and then rather than every beat.
+ * it is worth a look now and then rather than every beat. The same beat
+ * also walks DX's cinema listing so a day added in the till shows up
+ * without waiting for that job.
  */
 const PROGRAM_RECHECK_MS = 2 * 60 * 1000;
 /** Hall geometry only changes when someone rebuilds an auditorium. */
@@ -989,6 +991,12 @@ async function init() {
 
   await load({ forceLive: true });
 
+  mergeDxUpcomingProgramme()
+    .then((changed) => {
+      if (changed) renderActiveView();
+    })
+    .catch((err) => console.warn("DX programme merge failed", err));
+
   // Backfill check-in counts for every day in the background — not only
   // the visible one — so flipping back to yesterday already has numbers.
   if (isDxConnected()) {
@@ -1712,6 +1720,8 @@ function liveBeat() {
   beatJob("program", async () => {
     if (Date.now() - lastProgramAt < PROGRAM_RECHECK_MS) return;
     await reloadProgramIfChanged();
+    const dxChanged = await mergeDxUpcomingProgramme();
+    if (dxChanged && activeTab !== "settings") renderActiveView();
   });
   beatJob("live", () => refreshLive({ quiet: true }));
   beatJob("scan", () => syncScanned({ quiet: true }));
@@ -8075,6 +8085,210 @@ async function fetchDxEvent(show) {
     throw err;
   }
   return res.json();
+}
+
+function dxEventBegin(event) {
+  return String(event?.begin || "")
+    .replace(" ", "T")
+    .slice(0, 19);
+}
+
+function dxScreenName(event) {
+  return (
+    String(event?.roomName || event?.locationName || event?.location || "")
+      .replace(/\s*-\s*Kino$/i, "")
+      .trim() || "Ukjent sal"
+  );
+}
+
+function isDxCinemaEvent(event) {
+  if (!event || event.draft) return false;
+  if (String(event.productionType || "").toLowerCase() === "film") return true;
+  const loc = String(
+    event.roomName || event.locationName || event.location || ""
+  ).toLowerCase();
+  return loc.includes("kino");
+}
+
+function parseDxListingTitle(raw) {
+  const full = String(raw || "").trim();
+  const m = full.match(/^(.*?)\s*\(([^)]*)\)\s*$/);
+  if (!m) return { title: full || "Ukjent film", tags: [] };
+  return {
+    title: m[1].trim() || full,
+    tags: cleanTags(
+      m[2]
+        .split(",")
+        .map((part) => part.trim())
+        .filter(Boolean)
+    ),
+  };
+}
+
+async function fetchDxEventPage(page) {
+  const url = `${DX_API}/partners/${DX_PARTNER_ID}/events?perPage=50&page=${page}`;
+  const res = await fetch(url, {
+    cache: "no-store",
+    headers: {
+      Accept: "application/json",
+      Referer: "https://checkout.ebillett.no/",
+    },
+  });
+  if (!res.ok) {
+    const err = new Error(`DX list ${res.status}`);
+    err.status = res.status;
+    throw err;
+  }
+  const data = await res.json();
+  return Array.isArray(data?.data) ? data.data : [];
+}
+
+/** Remembered catalogue page covering "today", so later beats skip the search. */
+let dxListPageHint = 0;
+
+async function findDxPageForDay(dayKey) {
+  if (dxListPageHint > 0) {
+    const hinted = await fetchDxEventPage(dxListPageHint);
+    if (hinted.length) {
+      const first = dxEventBegin(hinted[0]).slice(0, 10);
+      const last = dxEventBegin(hinted[hinted.length - 1]).slice(0, 10);
+      if (first && last && first <= dayKey && last >= dayKey) {
+        return dxListPageHint;
+      }
+    }
+  }
+  let lo = 1;
+  let hi = 2500;
+  let found = 1;
+  while (lo <= hi) {
+    const mid = (lo + hi) >> 1;
+    const rows = await fetchDxEventPage(mid);
+    if (!rows.length) {
+      hi = mid - 1;
+      continue;
+    }
+    const lastDay = dxEventBegin(rows[rows.length - 1]).slice(0, 10);
+    if (lastDay && lastDay < dayKey) lo = mid + 1;
+    else {
+      found = mid;
+      hi = mid - 1;
+    }
+  }
+  dxListPageHint = found;
+  return found;
+}
+
+function showFromDxListing(event, knownShows) {
+  const start = dxEventBegin(event);
+  if (!start) return null;
+  const screen = dxScreenName(event);
+  const versionId = String(event.productionReference || "").trim();
+  const parsed = parseDxListingTitle(event.title);
+  const twin =
+    knownShows.find((s) => String(s.eventId) === String(event.id)) ||
+    knownShows.find((s) => s.title === parsed.title) ||
+    null;
+  const sale = event.ticketSale || {};
+  const end = event.end
+    ? String(event.end).replace(" ", "T").slice(0, 19)
+    : null;
+  return {
+    id: twin?.id || `${versionId || "dx"}-${start}-${screen}`,
+    title: twin?.title || parsed.title,
+    screen,
+    start,
+    end,
+    dayKey: start.slice(0, 10),
+    runningMinutes: twin?.runningMinutes ?? null,
+    runningLabel: twin?.runningLabel || null,
+    age: twin?.age || null,
+    tags: parsed.tags.length ? parsed.tags : cleanTags(twin?.tags),
+    showType: twin?.showType || null,
+    kinoklubb: Boolean(twin?.kinoklubb),
+    genres: twin?.genres || null,
+    director: twin?.director || null,
+    premiere: twin?.premiere || null,
+    ratings: twin?.ratings || null,
+    posterUrl: twin?.posterUrl || event.imageUrl || null,
+    ticketUrl:
+      twin?.ticketUrl ||
+      `https://checkout.ebillett.no/${DX_PARTNER_ID}/events/${event.id}/purchase?kanal=dxf`,
+    eventId: String(event.id),
+    promoterId: String(event.partnerId || DX_PARTNER_ID),
+    sold: Number(sale.sold) || 0,
+    reserved: Number(sale.reserved) || 0,
+    capacity: Number(sale.capacity) || null,
+    available: sale.available != null ? Number(sale.available) : null,
+    eventStatus: "ok",
+  };
+}
+
+/**
+ * Walk DX's public cinema catalogue from today onward and fold any
+ * missing days into the programme. Buen's website feed — the snapshot
+ * source — often lags the till, so a tab left open still picks up a
+ * day that was programmed this afternoon.
+ */
+async function mergeDxUpcomingProgramme() {
+  if (!state?.shows) return false;
+  const today = toDayKey(new Date());
+  let startPage;
+  try {
+    startPage = await findDxPageForDay(today);
+  } catch (err) {
+    console.warn("DX programme list failed:", err.message);
+    return false;
+  }
+
+  const byEventId = new Map();
+  let empty = 0;
+  for (let page = Math.max(1, startPage - 1); page <= startPage + 80; page++) {
+    let rows;
+    try {
+      rows = await fetchDxEventPage(page);
+    } catch (err) {
+      console.warn("DX programme page failed:", err.message);
+      break;
+    }
+    if (!rows.length) {
+      empty += 1;
+      if (empty >= 2) break;
+      continue;
+    }
+    empty = 0;
+    dxListPageHint = dxListPageHint || page;
+    for (const event of rows) {
+      const day = dxEventBegin(event).slice(0, 10);
+      if (!day || day < today) continue;
+      if (!isDxCinemaEvent(event)) continue;
+      byEventId.set(String(event.id), event);
+    }
+  }
+
+  if (!byEventId.size) return false;
+
+  const known = state.shows;
+  const existingByEvent = new Map(
+    known.filter((s) => s.eventId).map((s) => [String(s.eventId), s])
+  );
+  const byId = new Map(known.map((s) => [s.id, s]));
+  let added = 0;
+  for (const event of byEventId.values()) {
+    if (existingByEvent.has(String(event.id))) continue;
+    const raw = showFromDxListing(event, known);
+    if (!raw) continue;
+    const show = normalizeCachedShow(raw);
+    if (byId.has(show.id)) continue;
+    byId.set(show.id, show);
+    added += 1;
+  }
+  if (!added) return false;
+
+  state.shows = [...byId.values()].sort((a, b) => a.start - b.start);
+  persistHistory(state.shows);
+  dayHtmlCache.clear();
+  populateFilters();
+  return true;
 }
 
 /**

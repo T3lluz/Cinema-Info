@@ -2,7 +2,10 @@
 /**
  * Builds public/data/program.json for the GitHub Pages site.
  * Buen kino API is not CORS-friendly in browsers, so we snapshot it here.
- * Sold counts + real end times come from DX/eBillett.
+ * Cinema days also come from DX's public event catalogue, which reaches
+ * further than Buen's website feed and still lists shows after they start.
+ * Sold counts + real end times come from that listing (and DX/eBillett
+ * per event when the listing did not have them).
  */
 
 import { writeFileSync, mkdirSync, readFileSync, existsSync } from "node:fs";
@@ -32,6 +35,17 @@ const OUT = join(__dirname, "..", "public", "data", "program.json");
 
 const PROGRAM_URL =
   "https://www.buenkino.no/api/program?includeDocuments=true&first=500";
+
+/**
+ * Public DX event catalogue. `lastPage` always claims 1 and `perPage` is
+ * ignored (15 rows), but `page` walks the partner's archive in time
+ * order — cinema, concerts and the rest mixed together. That is how we
+ * see days Buen's website has not published yet, and history Buen drops
+ * the moment a showing starts.
+ */
+const DX_EVENTS_URL = "https://api.dx.no/v3/partners/202/events";
+const DX_LIST_PER_PAGE = 15;
+const DX_LIST_PAGE_CAP = 4000;
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -78,6 +92,193 @@ function parseTicketLink(url) {
   const m = url.match(/checkout\.ebillett\.no\/(\d+)\/events\/(\d+)/i);
   if (!m) return null;
   return { url, promoterId: m[1], eventId: m[2] };
+}
+
+function dxEventBegin(event) {
+  return String(event?.begin || "")
+    .replace(" ", "T")
+    .slice(0, 19);
+}
+
+function dxEventEnd(event) {
+  const end = String(event?.end || "").replace(" ", "T").slice(0, 19);
+  return end || null;
+}
+
+function dxTicketUrl(event) {
+  const id = event?.id;
+  if (id == null || id === "") return "";
+  return `https://checkout.ebillett.no/202/events/${id}/purchase?kanal=dxf`;
+}
+
+/** Hall name as the app already stores it: "Storsal - Kino" → "Storsal". */
+function dxScreenName(event) {
+  return String(event?.roomName || event?.locationName || event?.location || "")
+    .replace(/\s*-\s*Kino$/i, "")
+    .trim() || "Ukjent sal";
+}
+
+function isDxCinemaEvent(event) {
+  if (!event || event.draft) return false;
+  if (String(event.productionType || "").toLowerCase() === "film") return true;
+  const loc = String(
+    event.roomName || event.locationName || event.location || ""
+  ).toLowerCase();
+  return loc.includes("kino");
+}
+
+function parseDxTitle(raw) {
+  const full = String(raw || "").trim();
+  const m = full.match(/^(.*?)\s*\(([^)]*)\)\s*$/);
+  if (!m) return { title: full || "Ukjent film", tags: [] };
+  return {
+    title: m[1].trim() || full,
+    tags: cleanTags(
+      m[2]
+        .split(",")
+        .map((part) => part.trim())
+        .filter(Boolean)
+    ),
+  };
+}
+
+function formatDxAge(event, movie) {
+  const fromMovie = movie?.ageRating?.age;
+  if (fromMovie) return fromMovie;
+  const rating = String(event?.ageRating || event?.age || "").trim();
+  if (!rating) return null;
+  if (/^\d+$/.test(rating)) return `${rating} år`;
+  return rating;
+}
+
+async function fetchDxEventPage(page) {
+  const url = `${DX_EVENTS_URL}?perPage=50&page=${page}`;
+  const data = await fetchJson(url, {
+    headers: { Referer: "https://checkout.ebillett.no/" },
+  });
+  return Array.isArray(data?.data) ? data.data : [];
+}
+
+/**
+ * First catalogue page whose last row is on or after `dayKey`. Empty
+ * pages are treated as past the end of the archive.
+ */
+async function findDxPageForDay(dayKey) {
+  let lo = 1;
+  let hi = DX_LIST_PAGE_CAP;
+  let found = 1;
+  while (lo <= hi) {
+    const mid = (lo + hi) >> 1;
+    const rows = await fetchDxEventPage(mid);
+    if (!rows.length) {
+      hi = mid - 1;
+      continue;
+    }
+    const lastDay = dxEventBegin(rows[rows.length - 1]).slice(0, 10);
+    if (lastDay && lastDay < dayKey) lo = mid + 1;
+    else {
+      found = mid;
+      hi = mid - 1;
+    }
+  }
+  return found;
+}
+
+async function fetchDxCinemaEvents(fromDay) {
+  const startPage = await findDxPageForDay(fromDay);
+  const byId = new Map();
+  let empty = 0;
+  let lastPage = startPage;
+  const from = Math.max(1, startPage - 1);
+  for (let page = from; page <= from + 500; page++) {
+    const rows = await fetchDxEventPage(page);
+    if (!rows.length) {
+      empty += 1;
+      if (empty >= 2) break;
+      continue;
+    }
+    empty = 0;
+    lastPage = page;
+    for (const event of rows) {
+      const day = dxEventBegin(event).slice(0, 10);
+      if (!day || day < fromDay) continue;
+      if (!isDxCinemaEvent(event)) continue;
+      byId.set(String(event.id), event);
+    }
+  }
+  const events = [...byId.values()].sort((a, b) =>
+    dxEventBegin(a).localeCompare(dxEventBegin(b))
+  );
+  const first = events[0] ? dxEventBegin(events[0]).slice(0, 10) : null;
+  const last = events.length
+    ? dxEventBegin(events[events.length - 1]).slice(0, 10)
+    : null;
+  console.log(
+    `DX cinema listing: ${events.length} films ` +
+      `${first || "?"} → ${last || "?"} (pages ${from}–${lastPage})`
+  );
+  return events;
+}
+
+function applyDxSale(show, event) {
+  const sale = event.ticketSale || {};
+  const start = dxEventBegin(event);
+  const end = dxEventEnd(event);
+  if (start) show.start = start;
+  if (end) show.end = end;
+  if (start) show.dayKey = start.slice(0, 10);
+  show.screen = dxScreenName(event) || show.screen;
+  show.sold = Number(sale.sold) || 0;
+  show.reserved = Number(sale.reserved) || 0;
+  show.capacity = Number(sale.capacity) || null;
+  show.available = sale.available != null ? Number(sale.available) : null;
+  show.eventStatus = "ok";
+  show.eventId = String(event.id);
+  show.promoterId = String(event.partnerId || show.promoterId || "202");
+  show.ticketUrl = show.ticketUrl || dxTicketUrl(event);
+  return show;
+}
+
+function showFromDxEvent(event, movies, previousShows, prevByEventId) {
+  const start = dxEventBegin(event);
+  const screen = dxScreenName(event);
+  const versionId = String(event.productionReference || "").trim();
+  const movie = (versionId && movies[versionId]) || null;
+  const parsed = parseDxTitle(event.title);
+  const prev =
+    prevByEventId?.get(String(event.id)) ||
+    previousShows.find((s) => s.id === `${versionId || "dx"}-${start}-${screen}`) ||
+    null;
+  const title =
+    movie?.title || prev?.title || parsed.title || "Ukjent film";
+  return applyDxSale(
+    {
+      id: prev?.id || `${versionId || "dx"}-${start}-${screen}`,
+      title,
+      screen,
+      start,
+      end: dxEventEnd(event),
+      dayKey: start.slice(0, 10),
+      runningMinutes:
+        prev?.runningMinutes ?? parseRunningTime(movie?.runningTime),
+      runningLabel: prev?.runningLabel || movie?.runningTime || null,
+      age: formatDxAge(event, movie) || prev?.age || null,
+      tags: parsed.tags.length ? parsed.tags : cleanTags(prev?.tags),
+      showType: prev?.showType || null,
+      kinoklubb: Boolean(prev?.kinoklubb),
+      genres: prev?.genres || null,
+      director:
+        String(movie?.directorV2 || "").trim() || prev?.director || null,
+      premiere: movie?.premiere?.premiereDate || prev?.premiere || null,
+      posterUrl: pickPosterUrl(movie) || prev?.posterUrl || event.imageUrl || null,
+      ticketUrl: prev?.ticketUrl || dxTicketUrl(event),
+      eventId: String(event.id),
+      promoterId: String(event.partnerId || "202"),
+      sold: null,
+      eventStatus: "ok",
+    },
+    event
+  );
 }
 
 function parseRunningTime(value) {
@@ -674,6 +875,13 @@ async function enrichShow(show, gone) {
     return { ...show, sold: null, end: null, eventStatus: "unavailable" };
   }
 
+  // The DX catalogue page already carried live sales + real end times.
+  // Re-fetching every row would turn a 120-day backfill into hundreds of
+  // extra calls for figures we just read.
+  if (show.eventStatus === "ok" && show.sold != null && show.end) {
+    return show;
+  }
+
   try {
     const event = await fetchJson(
       `https://api.dx.no/v3/partners/${show.promoterId}/events/${show.eventId}`,
@@ -713,12 +921,13 @@ async function enrichShow(show, gone) {
 /**
  * Sort last night's snapshot against today's programme.
  *
- * Buen's feed lists every upcoming showing, so a show still in the
- * future that has left the feed has been pulled or moved — those must
- * go, or the app keeps advertising a film that is not playing. Anything
- * that has already started is history the feed cannot speak for: it is
- * kept, and the recent part of it is re-checked against DX so a showing
- * cancelled on the day is caught too.
+ * Buen's feed lists upcoming website showings, and the DX catalogue
+ * fills in cinema days the site has not published (and history the
+ * feed drops once a film has started). A future showing that has left
+ * both is pulled or moved — those must go. Anything that has already
+ * started is history the feed cannot speak for: it is kept, and the
+ * recent part of it is re-checked against DX so a showing cancelled
+ * on the day is caught too.
  */
 function planPreviousShows(previousShows, freshShows) {
   const freshIds = new Set(freshShows.map((s) => s.id));
@@ -751,12 +960,27 @@ function planPreviousShows(previousShows, freshShows) {
 }
 
 async function main() {
+  const previousShows = loadPreviousShows();
+  const fromDay = dayKeyDaysAgo(KEEP_DAYS);
+
+  let dxEvents = [];
+  try {
+    dxEvents = await fetchDxCinemaEvents(fromDay);
+  } catch (err) {
+    console.warn("DX cinema listing failed:", err.message);
+  }
+
   const data = await fetchJson(PROGRAM_URL);
   const movies = data.filmwebMovies || {};
   const raw = Array.isArray(data.shows) ? data.shows : [];
-  if (!raw.length) {
+  if (!raw.length && !dxEvents.length) {
     throw new Error(
       "Buen program feed returned no shows — refusing to overwrite the snapshot"
+    );
+  }
+  if (!raw.length) {
+    console.warn(
+      "Buen program feed returned no shows — continuing from the DX cinema listing"
     );
   }
 
@@ -814,6 +1038,50 @@ async function main() {
     })
     .filter(Boolean);
 
+  const prevByEventId = new Map(
+    previousShows
+      .filter((show) => show?.eventId)
+      .map((show) => [String(show.eventId), show])
+  );
+  const dxByEventId = new Map(dxEvents.map((event) => [String(event.id), event]));
+  const dxByStartScreen = new Map();
+  for (const event of dxEvents) {
+    dxByStartScreen.set(`${dxEventBegin(event)}|${dxScreenName(event)}`, event);
+  }
+  const seenEventIds = new Set();
+  for (const show of drafted) {
+    if (!show.eventId) {
+      const match = dxByStartScreen.get(`${startOf(show)}|${show.screen}`);
+      if (match) {
+        show.eventId = String(match.id);
+        show.promoterId = String(match.partnerId || show.promoterId || "202");
+        show.ticketUrl = show.ticketUrl || dxTicketUrl(match);
+        show.eventStatus = "pending";
+      }
+    }
+    if (show.eventId && dxByEventId.has(String(show.eventId))) {
+      applyDxSale(show, dxByEventId.get(String(show.eventId)));
+      seenEventIds.add(String(show.eventId));
+    }
+  }
+  for (const event of dxEvents) {
+    if (seenEventIds.has(String(event.id))) continue;
+    const show = showFromDxEvent(event, movies, previousShows, prevByEventId);
+    const movie = event.productionReference
+      ? movies[event.productionReference] || null
+      : null;
+    show.ratingsPromise = ratingsFor(movie, show.title);
+    drafted.push(show);
+    seenEventIds.add(String(event.id));
+  }
+  const dxOnly = [...seenEventIds].filter(
+    (id) => !raw.some((show) => parseTicketLink(show.ticketSaleUrl)?.eventId === id)
+  ).length;
+  console.log(
+    `Merged ${dxEvents.length} DX cinema events ` +
+      `(${dxOnly} not on Buen's website feed)`
+  );
+
   // Resolve every film's ratings once before enrichment batches start.
   await Promise.all([...ratingJobs.values()]);
   if (OMDB_API_KEY) {
@@ -841,7 +1109,6 @@ async function main() {
   }
   baseShows.sort((a, b) => a.start.localeCompare(b.start));
 
-  const previousShows = loadPreviousShows();
   restoreEventIds(baseShows, previousShows);
 
   // Keep last night's ratings/genres when today's lookup came up empty

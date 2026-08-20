@@ -9,8 +9,10 @@ name: Refresh program snapshot
 #
 # The midday run is about the programme rather than history: a film added
 # or moved during office hours should be in the app the same afternoon,
-# not the next morning. Films *removed* need no waiting — the app asks DX
-# about each showing and drops one whose event is gone.
+# not the next morning. The fetch also walks DX's cinema catalogue, so
+# days that are in the till but not yet on buenkino.no still land in the
+# snapshot. Films *removed* need no waiting — the app asks DX about each
+# showing and drops one whose event is gone.
 
 on:
   schedule:
