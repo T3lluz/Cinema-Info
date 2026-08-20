@@ -25,12 +25,25 @@ curl -s -H 'Accept: application/json' -H 'Referer: https://checkout.ebillett.no/
   for a showing that has already started (Buen's own program feed drops those
   regardless of whether they were cancelled).
 
-Buen's program feed is public too, and is the source for what is programmed
-from now on — it lists upcoming showings only:
+Buen's program feed is public too, and is the source for posters and
+tags on upcoming website showings. It lists upcoming showings only:
 
 ```bash
 curl -s 'https://www.buenkino.no/api/program?includeDocuments=true&first=500'
 ```
+
+The public DX catalogue lists **every** partner event, cinema mixed with
+concerts, in time order. `lastPage` always claims 1 and `perPage` is
+ignored (15 rows), but `page` walks the archive — that is how the
+snapshot backfills history and picks up days Buen has not published:
+
+```bash
+curl -s -H 'Accept: application/json' -H 'Referer: https://checkout.ebillett.no/' \
+  'https://api.dx.no/v3/partners/202/events?perPage=50&page=1405'
+```
+
+Keep cinema rows (`productionType` is `Film`, or the hall name contains
+`kino`). Do not take concerts in Storsal at face value.
 
 ## Signed in — `app.dx.no`
 
