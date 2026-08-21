@@ -22,6 +22,10 @@ on:
 
 permissions:
   contents: write
+  # workflow_dispatch of deploy-pages after a bot push. A GITHUB_TOKEN
+  # git push does not start other workflows, which is why the live site
+  # used to sit on an old snapshot while main kept refreshing.
+  actions: write
 
 concurrency:
   group: refresh-program
@@ -55,9 +59,11 @@ jobs:
         run: node scripts/fetch-data.mjs
 
       - name: Commit when the snapshot changed
+        id: commit
         run: |
           if git diff --quiet -- public/data/program.json; then
             echo "No program changes."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
           git config user.name "github-actions[bot]"
@@ -65,3 +71,14 @@ jobs:
           git add public/data/program.json
           git commit -m "Refresh program snapshot"
           git push
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      # github-actions[bot] pushes do not trigger on.push workflows, so
+      # the Pages deploy would never see a snapshot-only commit. Kick it
+      # explicitly; workflow_dispatch is one of the events GITHUB_TOKEN
+      # is allowed to start.
+      - name: Publish the new snapshot
+        if: steps.commit.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh workflow run deploy-pages.yml --ref main
