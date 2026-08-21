@@ -14,6 +14,10 @@ on:
     branches: [main]
   workflow_dispatch:
 
+# Snapshot refreshes are committed by github-actions[bot]. Those pushes
+# do not start this workflow, so refresh-program.yml dispatches it after
+# a real snapshot change. Human pushes to main still deploy as before.
+
 # Least privilege at workflow level; the deploy job elevates below.
 permissions:
   contents: read
