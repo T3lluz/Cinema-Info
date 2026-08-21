@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-21T11:05:15.739Z",
+  "updatedAt": "2026-08-21T11:36:14.388Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -1660,7 +1660,7 @@
       "available": 1,
       "ratings": {
         "imdb": {
-          "value": 8,
+          "value": 8.1,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
@@ -1703,7 +1703,7 @@
       "available": 93,
       "ratings": {
         "imdb": {
-          "value": 8,
+          "value": 8.1,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
@@ -1834,7 +1834,7 @@
       "available": 5,
       "ratings": {
         "imdb": {
-          "value": 8,
+          "value": 8.1,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
@@ -1877,7 +1877,7 @@
       "available": 173,
       "ratings": {
         "imdb": {
-          "value": 8,
+          "value": 8.1,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
@@ -1964,7 +1964,7 @@
       "available": 31,
       "ratings": {
         "imdb": {
-          "value": 8,
+          "value": 8.1,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
@@ -2007,7 +2007,7 @@
       "available": 166,
       "ratings": {
         "imdb": {
-          "value": 8,
+          "value": 8.1,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
@@ -2181,7 +2181,7 @@
       "available": 59,
       "ratings": {
         "imdb": {
-          "value": 8,
+          "value": 8.1,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
@@ -2267,7 +2267,7 @@
       "available": 37,
       "ratings": {
         "imdb": {
-          "value": 8,
+          "value": 8.1,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
@@ -2354,7 +2354,7 @@
       "available": 43,
       "ratings": {
         "imdb": {
-          "value": 8,
+          "value": 8.1,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
@@ -2484,7 +2484,7 @@
       "available": 178,
       "ratings": {
         "imdb": {
-          "value": 8,
+          "value": 8.1,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
@@ -2658,7 +2658,7 @@
       "available": 155,
       "ratings": {
         "imdb": {
-          "value": 8,
+          "value": 8.1,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
@@ -2806,7 +2806,7 @@
       "available": 8,
       "ratings": {
         "imdb": {
-          "value": 8,
+          "value": 8.1,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
@@ -3041,7 +3041,7 @@
       "available": 172,
       "ratings": {
         "imdb": {
-          "value": 8,
+          "value": 8.1,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
@@ -3181,7 +3181,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8,
+          "value": 8.1,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
@@ -3416,7 +3416,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8,
+          "value": 8.1,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
@@ -3654,7 +3654,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8,
+          "value": 8.1,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
@@ -3892,7 +3892,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8,
+          "value": 8.1,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
@@ -4082,7 +4082,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8,
+          "value": 8.1,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
@@ -4319,7 +4319,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8,
+          "value": 8.1,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
@@ -4509,7 +4509,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8,
+          "value": 8.1,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
@@ -4699,7 +4699,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8,
+          "value": 8.1,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
@@ -4841,7 +4841,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.6,
+          "value": 7.8,
           "id": "tt14173636",
           "url": "https://www.imdb.com/title/tt14173636/"
         },
@@ -4888,7 +4888,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8,
+          "value": 8.1,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
@@ -5076,7 +5076,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.6,
+          "value": 7.8,
           "id": "tt14173636",
           "url": "https://www.imdb.com/title/tt14173636/"
         },
@@ -5217,7 +5217,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8,
+          "value": 8.1,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
@@ -5360,7 +5360,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8,
+          "value": 8.1,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
@@ -5407,7 +5407,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.6,
+          "value": 7.8,
           "id": "tt14173636",
           "url": "https://www.imdb.com/title/tt14173636/"
         },
@@ -5501,7 +5501,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.6,
+          "value": 7.8,
           "id": "tt14173636",
           "url": "https://www.imdb.com/title/tt14173636/"
         },
@@ -5644,7 +5644,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.6,
+          "value": 7.8,
           "id": "tt14173636",
           "url": "https://www.imdb.com/title/tt14173636/"
         },
@@ -5833,7 +5833,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8,
+          "value": 8.1,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
@@ -5880,7 +5880,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.6,
+          "value": 7.8,
           "id": "tt14173636",
           "url": "https://www.imdb.com/title/tt14173636/"
         },
@@ -5975,7 +5975,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8,
+          "value": 8.1,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
@@ -6255,7 +6255,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8,
+          "value": 8.1,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
@@ -6437,7 +6437,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8,
+          "value": 8.1,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
@@ -6531,7 +6531,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.6,
+          "value": 7.8,
           "id": "tt14173636",
           "url": "https://www.imdb.com/title/tt14173636/"
         },
@@ -6709,11 +6709,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92896/purchase?kanal=dxf",
       "eventId": "92896",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 3,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8,
+          "value": 8.1,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
@@ -6727,8 +6727,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 246,
-      "available": 246
+      "capacity": 243,
+      "available": 240
     },
     {
       "id": "UIP20241680-2026-08-23T19:00:00-Kinosal",
@@ -6941,7 +6941,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.6,
+          "value": 7.8,
           "id": "tt14173636",
           "url": "https://www.imdb.com/title/tt14173636/"
         },
@@ -7123,7 +7123,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8,
+          "value": 8.1,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
@@ -7305,7 +7305,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.6,
+          "value": 7.8,
           "id": "tt14173636",
           "url": "https://www.imdb.com/title/tt14173636/"
         },
@@ -7395,7 +7395,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.3,
+          "value": 6.4,
           "id": "tt37853455",
           "url": "https://www.imdb.com/title/tt37853455/"
         },
@@ -7547,8 +7547,7 @@
       "showType": "Seniorkino",
       "kinoklubb": true,
       "genres": [
-        "Drama",
-        "Thriller"
+        "Drama"
       ],
       "director": "Cristian Mungiu",
       "premiere": "2026-09-04",
@@ -7560,7 +7559,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.1,
+          "value": 7.8,
           "id": "tt35410859",
           "url": "https://www.imdb.com/title/tt35410859/"
         },
@@ -7589,8 +7588,7 @@
       "showType": "Førpremiere",
       "kinoklubb": true,
       "genres": [
-        "Drama",
-        "Thriller"
+        "Drama"
       ],
       "director": "Cristian Mungiu",
       "premiere": "2026-09-04",
@@ -7602,7 +7600,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.1,
+          "value": 7.8,
           "id": "tt35410859",
           "url": "https://www.imdb.com/title/tt35410859/"
         },
