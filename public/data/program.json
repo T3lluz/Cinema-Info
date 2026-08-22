@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-22T11:31:31.525Z",
+  "updatedAt": "2026-08-22T23:33:48.865Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -3283,7 +3283,7 @@
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         },
         "tomatoes": {
-          "value": 94,
+          "value": 95,
           "url": "https://www.rottentomatoes.com/m/paw_patrol_the_dino_movie"
         }
       },
@@ -3473,7 +3473,7 @@
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         },
         "tomatoes": {
-          "value": 94,
+          "value": 95,
           "url": "https://www.rottentomatoes.com/m/paw_patrol_the_dino_movie"
         }
       },
@@ -3711,7 +3711,7 @@
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         },
         "tomatoes": {
-          "value": 94,
+          "value": 95,
           "url": "https://www.rottentomatoes.com/m/paw_patrol_the_dino_movie"
         }
       },
@@ -3997,7 +3997,7 @@
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         },
         "tomatoes": {
-          "value": 94,
+          "value": 95,
           "url": "https://www.rottentomatoes.com/m/paw_patrol_the_dino_movie"
         }
       },
@@ -4186,7 +4186,7 @@
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         },
         "tomatoes": {
-          "value": 94,
+          "value": 95,
           "url": "https://www.rottentomatoes.com/m/paw_patrol_the_dino_movie"
         }
       },
@@ -4424,7 +4424,7 @@
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         },
         "tomatoes": {
-          "value": 94,
+          "value": 95,
           "url": "https://www.rottentomatoes.com/m/paw_patrol_the_dino_movie"
         }
       },
@@ -4566,7 +4566,7 @@
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         },
         "tomatoes": {
-          "value": 94,
+          "value": 95,
           "url": "https://www.rottentomatoes.com/m/paw_patrol_the_dino_movie"
         }
       },
@@ -4756,7 +4756,7 @@
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         },
         "tomatoes": {
-          "value": 94,
+          "value": 95,
           "url": "https://www.rottentomatoes.com/m/paw_patrol_the_dino_movie"
         }
       },
@@ -4990,7 +4990,7 @@
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         },
         "tomatoes": {
-          "value": 94,
+          "value": 95,
           "url": "https://www.rottentomatoes.com/m/paw_patrol_the_dino_movie"
         }
       },
@@ -5274,7 +5274,7 @@
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         },
         "tomatoes": {
-          "value": 94,
+          "value": 95,
           "url": "https://www.rottentomatoes.com/m/paw_patrol_the_dino_movie"
         }
       },
@@ -5558,7 +5558,7 @@
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         },
         "tomatoes": {
-          "value": 94,
+          "value": 95,
           "url": "https://www.rottentomatoes.com/m/paw_patrol_the_dino_movie"
         }
       },
@@ -5748,7 +5748,7 @@
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         },
         "tomatoes": {
-          "value": 94,
+          "value": 95,
           "url": "https://www.rottentomatoes.com/m/paw_patrol_the_dino_movie"
         }
       },
@@ -5937,7 +5937,7 @@
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         },
         "tomatoes": {
-          "value": 94,
+          "value": 95,
           "url": "https://www.rottentomatoes.com/m/paw_patrol_the_dino_movie"
         }
       },
@@ -6126,7 +6126,7 @@
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         },
         "tomatoes": {
-          "value": 94,
+          "value": 95,
           "url": "https://www.rottentomatoes.com/m/paw_patrol_the_dino_movie"
         }
       },
@@ -6307,11 +6307,11 @@
           "url": "https://www.imdb.com/title/tt32393988/"
         },
         "letterboxd": {
-          "value": 2.84,
+          "value": 2.82,
           "url": "https://letterboxd.com/film/insidious-out-of-the-further/"
         },
         "tomatoes": {
-          "value": 71,
+          "value": 70,
           "url": "https://www.rottentomatoes.com/m/insidious_out_of_the_further"
         }
       },
@@ -6346,7 +6346,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92860/purchase?kanal=dxf",
       "eventId": "92860",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 3,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -6361,7 +6361,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 110
+      "available": 107
     },
     {
       "id": "EDI20251106-2026-08-22T15:30:00-Storsal",
@@ -6390,7 +6390,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92862/purchase?kanal=dxf",
       "eventId": "92862",
       "promoterId": "202",
-      "sold": 5,
+      "sold": 7,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -6403,13 +6403,13 @@
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         },
         "tomatoes": {
-          "value": 94,
+          "value": 95,
           "url": "https://www.rottentomatoes.com/m/paw_patrol_the_dino_movie"
         }
       },
       "reserved": 0,
       "capacity": 246,
-      "available": 241
+      "available": 239
     },
     {
       "id": "EDI20240688-2026-08-22T17:30:00-Kinosal",
@@ -6437,7 +6437,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92861/purchase?kanal=dxf",
       "eventId": "92861",
       "promoterId": "202",
-      "sold": 4,
+      "sold": 8,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -6456,7 +6456,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 106
+      "available": 102
     },
     {
       "id": "WAB20240233-2026-08-22T18:00:00-Storsal",
@@ -6484,7 +6484,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92865/purchase?kanal=dxf",
       "eventId": "92865",
       "promoterId": "202",
-      "sold": 3,
+      "sold": 8,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -6503,7 +6503,7 @@
       },
       "reserved": 0,
       "capacity": 246,
-      "available": 243
+      "available": 238
     },
     {
       "id": "EDI20260623-2026-08-22T20:30:00-Storsal",
@@ -6531,7 +6531,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92863/purchase?kanal=dxf",
       "eventId": "92863",
       "promoterId": "202",
-      "sold": 2,
+      "sold": 6,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -6550,7 +6550,7 @@
       },
       "reserved": 0,
       "capacity": 246,
-      "available": 244
+      "available": 240
     },
     {
       "id": "SFN20241757-2026-08-22T21:00:00-Kinosal",
@@ -6578,7 +6578,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92864/purchase?kanal=dxf",
       "eventId": "92864",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 10,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -6587,17 +6587,17 @@
           "url": "https://www.imdb.com/title/tt32393988/"
         },
         "letterboxd": {
-          "value": 2.84,
+          "value": 2.82,
           "url": "https://letterboxd.com/film/insidious-out-of-the-further/"
         },
         "tomatoes": {
-          "value": 71,
+          "value": 70,
           "url": "https://www.rottentomatoes.com/m/insidious_out_of_the_further"
         }
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 110
+      "available": 100
     },
     {
       "id": "EDI20251106-2026-08-23T15:00:00-Storsal",
@@ -6639,7 +6639,7 @@
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         },
         "tomatoes": {
-          "value": 94,
+          "value": 95,
           "url": "https://www.rottentomatoes.com/m/paw_patrol_the_dino_movie"
         }
       },
@@ -6735,8 +6735,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 243,
-      "available": 240
+      "capacity": 246,
+      "available": 243
     },
     {
       "id": "UIP20241680-2026-08-23T19:00:00-Kinosal",
@@ -6764,7 +6764,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92917/purchase?kanal=dxf",
       "eventId": "92917",
       "promoterId": "202",
-      "sold": 5,
+      "sold": 7,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -6782,8 +6782,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 105
+      "capacity": 108,
+      "available": 101
     },
     {
       "id": "SFN20241757-2026-08-23T20:30:00-Storsal",
@@ -6820,11 +6820,11 @@
           "url": "https://www.imdb.com/title/tt32393988/"
         },
         "letterboxd": {
-          "value": 2.84,
+          "value": 2.82,
           "url": "https://letterboxd.com/film/insidious-out-of-the-further/"
         },
         "tomatoes": {
-          "value": 71,
+          "value": 70,
           "url": "https://www.rottentomatoes.com/m/insidious_out_of_the_further"
         }
       },
@@ -6920,8 +6920,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 286,
-      "available": 286
+      "capacity": 246,
+      "available": 246
     },
     {
       "id": "EDI20260623-2026-08-25T19:30:00-Kinosal",
@@ -7005,17 +7005,17 @@
           "url": "https://www.imdb.com/title/tt32393988/"
         },
         "letterboxd": {
-          "value": 2.84,
+          "value": 2.82,
           "url": "https://letterboxd.com/film/insidious-out-of-the-further/"
         },
         "tomatoes": {
-          "value": 71,
+          "value": 70,
           "url": "https://www.rottentomatoes.com/m/insidious_out_of_the_further"
         }
       },
       "reserved": 0,
-      "capacity": 286,
-      "available": 286
+      "capacity": 246,
+      "available": 246
     },
     {
       "id": "EDI20251106-2026-08-26T17:00:00-Storsal",
@@ -7057,13 +7057,13 @@
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         },
         "tomatoes": {
-          "value": 94,
+          "value": 95,
           "url": "https://www.rottentomatoes.com/m/paw_patrol_the_dino_movie"
         }
       },
       "reserved": 0,
-      "capacity": 286,
-      "available": 286
+      "capacity": 246,
+      "available": 246
     },
     {
       "id": "EDI20260206-2026-08-26T17:30:00-Kinosal",
@@ -7153,8 +7153,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 286,
-      "available": 286
+      "capacity": 246,
+      "available": 246
     },
     {
       "id": "SFN20241757-2026-08-26T20:15:00-Kinosal",
@@ -7191,11 +7191,11 @@
           "url": "https://www.imdb.com/title/tt32393988/"
         },
         "letterboxd": {
-          "value": 2.84,
+          "value": 2.82,
           "url": "https://letterboxd.com/film/insidious-out-of-the-further/"
         },
         "tomatoes": {
-          "value": 71,
+          "value": 70,
           "url": "https://www.rottentomatoes.com/m/insidious_out_of_the_further"
         }
       },
@@ -7243,7 +7243,7 @@
           "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
         },
         "tomatoes": {
-          "value": 94,
+          "value": 95,
           "url": "https://www.rottentomatoes.com/m/paw_patrol_the_dino_movie"
         }
       },
@@ -7292,8 +7292,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 286,
-      "available": 286
+      "capacity": 246,
+      "available": 246
     },
     {
       "id": "EDI20260623-2026-08-27T19:30:00-Kinosal",
@@ -7377,17 +7377,61 @@
           "url": "https://www.imdb.com/title/tt32393988/"
         },
         "letterboxd": {
-          "value": 2.84,
+          "value": 2.82,
           "url": "https://letterboxd.com/film/insidious-out-of-the-further/"
         },
         "tomatoes": {
-          "value": 71,
+          "value": 70,
           "url": "https://www.rottentomatoes.com/m/insidious_out_of_the_further"
         }
       },
       "reserved": 0,
-      "capacity": 286,
-      "available": 286
+      "capacity": 246,
+      "available": 246
+    },
+    {
+      "id": "EDI20251707-2026-08-28T17:00:00-Storsal",
+      "title": "Miss Moxy",
+      "screen": "Storsal",
+      "start": "2026-08-28T17:00:00",
+      "end": "2026-08-28T18:38:00",
+      "dayKey": "2026-08-28",
+      "runningMinutes": 88,
+      "runningLabel": "1 t. 28 min.",
+      "age": "6 år",
+      "tags": [
+        "Norsk tale",
+        "Norsk tekst"
+      ],
+      "showType": "Norgespremiere",
+      "kinoklubb": false,
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ],
+      "director": null,
+      "premiere": "2026-08-28",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/4d5263dbeed399138e364fcb76d3acce437ff9e8-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/92964/purchase?kanal=dxf",
+      "eventId": "92964",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7,
+          "id": "tt33996352",
+          "url": "https://www.imdb.com/title/tt33996352/"
+        },
+        "letterboxd": {
+          "value": 3.32,
+          "url": "https://letterboxd.com/film/miss-moxy/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 246,
+      "available": 246
     },
     {
       "id": "EDI20251020-2026-08-28T18:15:00-Kinosal",
@@ -7424,11 +7468,11 @@
           "url": "https://www.imdb.com/title/tt37853455/"
         },
         "letterboxd": {
-          "value": 2.81,
+          "value": 2.8,
           "url": "https://letterboxd.com/film/one-night-only-2026/"
         },
         "tomatoes": {
-          "value": 75,
+          "value": 76,
           "url": "https://www.rottentomatoes.com/m/one_night_only_2026"
         }
       },
@@ -7466,22 +7510,22 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 5.7,
+          "value": 5.8,
           "id": "tt32338669",
           "url": "https://www.imdb.com/title/tt32338669/"
         },
         "letterboxd": {
-          "value": 2.71,
+          "value": 2.69,
           "url": "https://letterboxd.com/film/mutiny-2026/"
         },
         "tomatoes": {
-          "value": 84,
+          "value": 85,
           "url": "https://www.rottentomatoes.com/m/mutiny_2026"
         }
       },
       "reserved": 0,
-      "capacity": 286,
-      "available": 286
+      "capacity": 246,
+      "available": 246
     },
     {
       "id": "EDI20250644-2026-08-28T20:45:00-Kinosal",
@@ -7551,17 +7595,17 @@
           "url": "https://www.imdb.com/title/tt32393988/"
         },
         "letterboxd": {
-          "value": 2.84,
+          "value": 2.82,
           "url": "https://letterboxd.com/film/insidious-out-of-the-further/"
         },
         "tomatoes": {
-          "value": 71,
+          "value": 70,
           "url": "https://www.rottentomatoes.com/m/insidious_out_of_the_further"
         }
       },
       "reserved": 0,
-      "capacity": 286,
-      "available": 286
+      "capacity": 246,
+      "available": 246
     },
     {
       "id": "EDI20260087-2026-09-01T13:00:00-Kinosal",
@@ -7666,6 +7710,35 @@
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/49a3f819b818a409e32eb651dfd0286808b145d0-1500x2104.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92988/purchase?kanal=dxf",
       "eventId": "92988",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": null,
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20251555-2026-09-15T19:30:00-Kinosal",
+      "title": "Kjærast",
+      "screen": "Kinosal",
+      "start": "2026-09-15T19:30:00",
+      "end": "2026-09-15T21:34:00",
+      "dayKey": "2026-09-15",
+      "runningMinutes": 114,
+      "runningLabel": "1 t. 54 min.",
+      "age": "9 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": "Førpremiere",
+      "kinoklubb": false,
+      "genres": null,
+      "director": "Erik Poppe",
+      "premiere": "2026-09-18",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/49a3f819b818a409e32eb651dfd0286808b145d0-1500x2104.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93002/purchase?kanal=dxf",
+      "eventId": "93002",
       "promoterId": "202",
       "sold": 0,
       "eventStatus": "ok",
