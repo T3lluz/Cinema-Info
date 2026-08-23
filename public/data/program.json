@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-23T11:31:18.162Z",
+  "updatedAt": "2026-08-23T23:34:15.109Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -4846,7 +4846,7 @@
           "url": "https://www.imdb.com/title/tt14173636/"
         },
         "letterboxd": {
-          "value": 4.01,
+          "value": 4,
           "url": "https://letterboxd.com/film/the-invite-2026/"
         },
         "tomatoes": {
@@ -5081,7 +5081,7 @@
           "url": "https://www.imdb.com/title/tt14173636/"
         },
         "letterboxd": {
-          "value": 4.01,
+          "value": 4,
           "url": "https://letterboxd.com/film/the-invite-2026/"
         },
         "tomatoes": {
@@ -5412,7 +5412,7 @@
           "url": "https://www.imdb.com/title/tt14173636/"
         },
         "letterboxd": {
-          "value": 4.01,
+          "value": 4,
           "url": "https://letterboxd.com/film/the-invite-2026/"
         },
         "tomatoes": {
@@ -5506,7 +5506,7 @@
           "url": "https://www.imdb.com/title/tt14173636/"
         },
         "letterboxd": {
-          "value": 4.01,
+          "value": 4,
           "url": "https://letterboxd.com/film/the-invite-2026/"
         },
         "tomatoes": {
@@ -5649,7 +5649,7 @@
           "url": "https://www.imdb.com/title/tt14173636/"
         },
         "letterboxd": {
-          "value": 4.01,
+          "value": 4,
           "url": "https://letterboxd.com/film/the-invite-2026/"
         },
         "tomatoes": {
@@ -5885,7 +5885,7 @@
           "url": "https://www.imdb.com/title/tt14173636/"
         },
         "letterboxd": {
-          "value": 4.01,
+          "value": 4,
           "url": "https://letterboxd.com/film/the-invite-2026/"
         },
         "tomatoes": {
@@ -6307,11 +6307,11 @@
           "url": "https://www.imdb.com/title/tt32393988/"
         },
         "letterboxd": {
-          "value": 2.81,
+          "value": 2.8,
           "url": "https://letterboxd.com/film/insidious-out-of-the-further/"
         },
         "tomatoes": {
-          "value": 69,
+          "value": 71,
           "url": "https://www.rottentomatoes.com/m/insidious_out_of_the_further"
         }
       },
@@ -6540,7 +6540,7 @@
           "url": "https://www.imdb.com/title/tt14173636/"
         },
         "letterboxd": {
-          "value": 4.01,
+          "value": 4,
           "url": "https://letterboxd.com/film/the-invite-2026/"
         },
         "tomatoes": {
@@ -6587,11 +6587,11 @@
           "url": "https://www.imdb.com/title/tt32393988/"
         },
         "letterboxd": {
-          "value": 2.81,
+          "value": 2.8,
           "url": "https://letterboxd.com/film/insidious-out-of-the-further/"
         },
         "tomatoes": {
-          "value": 69,
+          "value": 71,
           "url": "https://www.rottentomatoes.com/m/insidious_out_of_the_further"
         }
       },
@@ -6626,7 +6626,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92892/purchase?kanal=dxf",
       "eventId": "92892",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 9,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -6645,7 +6645,7 @@
       },
       "reserved": 0,
       "capacity": 246,
-      "available": 246
+      "available": 237
     },
     {
       "id": "EDI20260206-2026-08-23T16:00:00-Kinosal",
@@ -6674,7 +6674,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92891/purchase?kanal=dxf",
       "eventId": "92891",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 4,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -6689,7 +6689,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 110
+      "available": 106
     },
     {
       "id": "EDI20240688-2026-08-23T17:15:00-Storsal",
@@ -6717,7 +6717,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92896/purchase?kanal=dxf",
       "eventId": "92896",
       "promoterId": "202",
-      "sold": 8,
+      "sold": 9,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -6734,9 +6734,9 @@
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
         }
       },
-      "reserved": 2,
+      "reserved": 0,
       "capacity": 246,
-      "available": 236
+      "available": 237
     },
     {
       "id": "UIP20241680-2026-08-23T19:00:00-Kinosal",
@@ -6764,7 +6764,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92917/purchase?kanal=dxf",
       "eventId": "92917",
       "promoterId": "202",
-      "sold": 9,
+      "sold": 21,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -6782,8 +6782,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 108,
-      "available": 99
+      "capacity": 110,
+      "available": 89
     },
     {
       "id": "SFN20241757-2026-08-23T20:30:00-Storsal",
@@ -6820,17 +6820,17 @@
           "url": "https://www.imdb.com/title/tt32393988/"
         },
         "letterboxd": {
-          "value": 2.81,
+          "value": 2.8,
           "url": "https://letterboxd.com/film/insidious-out-of-the-further/"
         },
         "tomatoes": {
-          "value": 69,
+          "value": 71,
           "url": "https://www.rottentomatoes.com/m/insidious_out_of_the_further"
         }
       },
       "reserved": 0,
-      "capacity": 244,
-      "available": 242
+      "capacity": 246,
+      "available": 244
     },
     {
       "id": "EDI20260206-2026-08-25T17:00:00-Kinosal",
@@ -6958,7 +6958,7 @@
           "url": "https://www.imdb.com/title/tt14173636/"
         },
         "letterboxd": {
-          "value": 4.01,
+          "value": 4,
           "url": "https://letterboxd.com/film/the-invite-2026/"
         },
         "tomatoes": {
@@ -7005,11 +7005,11 @@
           "url": "https://www.imdb.com/title/tt32393988/"
         },
         "letterboxd": {
-          "value": 2.81,
+          "value": 2.8,
           "url": "https://letterboxd.com/film/insidious-out-of-the-further/"
         },
         "tomatoes": {
-          "value": 69,
+          "value": 71,
           "url": "https://www.rottentomatoes.com/m/insidious_out_of_the_further"
         }
       },
@@ -7191,11 +7191,11 @@
           "url": "https://www.imdb.com/title/tt32393988/"
         },
         "letterboxd": {
-          "value": 2.81,
+          "value": 2.8,
           "url": "https://letterboxd.com/film/insidious-out-of-the-further/"
         },
         "tomatoes": {
-          "value": 69,
+          "value": 71,
           "url": "https://www.rottentomatoes.com/m/insidious_out_of_the_further"
         }
       },
@@ -7330,7 +7330,7 @@
           "url": "https://www.imdb.com/title/tt14173636/"
         },
         "letterboxd": {
-          "value": 4.01,
+          "value": 4,
           "url": "https://letterboxd.com/film/the-invite-2026/"
         },
         "tomatoes": {
@@ -7377,11 +7377,11 @@
           "url": "https://www.imdb.com/title/tt32393988/"
         },
         "letterboxd": {
-          "value": 2.81,
+          "value": 2.8,
           "url": "https://letterboxd.com/film/insidious-out-of-the-further/"
         },
         "tomatoes": {
-          "value": 69,
+          "value": 71,
           "url": "https://www.rottentomatoes.com/m/insidious_out_of_the_further"
         }
       },
@@ -7420,7 +7420,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7,
+          "value": 6.9,
           "id": "tt33996352",
           "url": "https://www.imdb.com/title/tt33996352/"
         },
@@ -7472,7 +7472,7 @@
           "url": "https://letterboxd.com/film/one-night-only-2026/"
         },
         "tomatoes": {
-          "value": 75,
+          "value": 76,
           "url": "https://www.rottentomatoes.com/m/one_night_only_2026"
         }
       },
@@ -7515,11 +7515,11 @@
           "url": "https://www.imdb.com/title/tt32338669/"
         },
         "letterboxd": {
-          "value": 2.68,
+          "value": 2.67,
           "url": "https://letterboxd.com/film/mutiny-2026/"
         },
         "tomatoes": {
-          "value": 87,
+          "value": 86,
           "url": "https://www.rottentomatoes.com/m/mutiny_2026"
         }
       },
@@ -7595,11 +7595,11 @@
           "url": "https://www.imdb.com/title/tt32393988/"
         },
         "letterboxd": {
-          "value": 2.81,
+          "value": 2.8,
           "url": "https://letterboxd.com/film/insidious-out-of-the-further/"
         },
         "tomatoes": {
-          "value": 69,
+          "value": 71,
           "url": "https://www.rottentomatoes.com/m/insidious_out_of_the_further"
         }
       },
