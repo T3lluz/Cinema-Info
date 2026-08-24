@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-23T23:34:15.109Z",
+  "updatedAt": "2026-08-24T11:39:09.409Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -4799,7 +4799,7 @@
           "url": "https://www.imdb.com/title/tt27165187/"
         },
         "letterboxd": {
-          "value": 3.1,
+          "value": 3.09,
           "url": "https://letterboxd.com/film/the-end-of-oak-street/"
         },
         "tomatoes": {
@@ -5128,7 +5128,7 @@
           "url": "https://www.imdb.com/title/tt27165187/"
         },
         "letterboxd": {
-          "value": 3.1,
+          "value": 3.09,
           "url": "https://letterboxd.com/film/the-end-of-oak-street/"
         },
         "tomatoes": {
@@ -5459,7 +5459,7 @@
           "url": "https://www.imdb.com/title/tt27165187/"
         },
         "letterboxd": {
-          "value": 3.1,
+          "value": 3.09,
           "url": "https://letterboxd.com/film/the-end-of-oak-street/"
         },
         "tomatoes": {
@@ -5696,7 +5696,7 @@
           "url": "https://www.imdb.com/title/tt27165187/"
         },
         "letterboxd": {
-          "value": 3.1,
+          "value": 3.09,
           "url": "https://letterboxd.com/film/the-end-of-oak-street/"
         },
         "tomatoes": {
@@ -5791,7 +5791,7 @@
           "url": "https://www.imdb.com/title/tt27165187/"
         },
         "letterboxd": {
-          "value": 3.1,
+          "value": 3.09,
           "url": "https://letterboxd.com/film/the-end-of-oak-street/"
         },
         "tomatoes": {
@@ -6074,7 +6074,7 @@
           "url": "https://www.imdb.com/title/tt27165187/"
         },
         "letterboxd": {
-          "value": 3.1,
+          "value": 3.09,
           "url": "https://letterboxd.com/film/the-end-of-oak-street/"
         },
         "tomatoes": {
@@ -6213,7 +6213,7 @@
           "url": "https://www.imdb.com/title/tt27165187/"
         },
         "letterboxd": {
-          "value": 3.1,
+          "value": 3.09,
           "url": "https://letterboxd.com/film/the-end-of-oak-street/"
         },
         "tomatoes": {
@@ -6307,11 +6307,11 @@
           "url": "https://www.imdb.com/title/tt32393988/"
         },
         "letterboxd": {
-          "value": 2.8,
+          "value": 2.79,
           "url": "https://letterboxd.com/film/insidious-out-of-the-further/"
         },
         "tomatoes": {
-          "value": 71,
+          "value": 70,
           "url": "https://www.rottentomatoes.com/m/insidious_out_of_the_further"
         }
       },
@@ -6493,7 +6493,7 @@
           "url": "https://www.imdb.com/title/tt27165187/"
         },
         "letterboxd": {
-          "value": 3.1,
+          "value": 3.09,
           "url": "https://letterboxd.com/film/the-end-of-oak-street/"
         },
         "tomatoes": {
@@ -6587,11 +6587,11 @@
           "url": "https://www.imdb.com/title/tt32393988/"
         },
         "letterboxd": {
-          "value": 2.8,
+          "value": 2.79,
           "url": "https://letterboxd.com/film/insidious-out-of-the-further/"
         },
         "tomatoes": {
-          "value": 71,
+          "value": 70,
           "url": "https://www.rottentomatoes.com/m/insidious_out_of_the_further"
         }
       },
@@ -6820,11 +6820,11 @@
           "url": "https://www.imdb.com/title/tt32393988/"
         },
         "letterboxd": {
-          "value": 2.8,
+          "value": 2.79,
           "url": "https://letterboxd.com/film/insidious-out-of-the-further/"
         },
         "tomatoes": {
-          "value": 71,
+          "value": 70,
           "url": "https://www.rottentomatoes.com/m/insidious_out_of_the_further"
         }
       },
@@ -6911,7 +6911,7 @@
           "url": "https://www.imdb.com/title/tt27165187/"
         },
         "letterboxd": {
-          "value": 3.1,
+          "value": 3.09,
           "url": "https://letterboxd.com/film/the-end-of-oak-street/"
         },
         "tomatoes": {
@@ -7005,11 +7005,11 @@
           "url": "https://www.imdb.com/title/tt32393988/"
         },
         "letterboxd": {
-          "value": 2.8,
+          "value": 2.79,
           "url": "https://letterboxd.com/film/insidious-out-of-the-further/"
         },
         "tomatoes": {
-          "value": 71,
+          "value": 70,
           "url": "https://www.rottentomatoes.com/m/insidious_out_of_the_further"
         }
       },
@@ -7182,7 +7182,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92901/purchase?kanal=dxf",
       "eventId": "92901",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -7191,17 +7191,17 @@
           "url": "https://www.imdb.com/title/tt32393988/"
         },
         "letterboxd": {
-          "value": 2.8,
+          "value": 2.79,
           "url": "https://letterboxd.com/film/insidious-out-of-the-further/"
         },
         "tomatoes": {
-          "value": 71,
+          "value": 70,
           "url": "https://www.rottentomatoes.com/m/insidious_out_of_the_further"
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 110
+      "capacity": 108,
+      "available": 106
     },
     {
       "id": "EDI20251106-2026-08-27T17:00:00-Kinosal",
@@ -7377,11 +7377,11 @@
           "url": "https://www.imdb.com/title/tt32393988/"
         },
         "letterboxd": {
-          "value": 2.8,
+          "value": 2.79,
           "url": "https://letterboxd.com/film/insidious-out-of-the-further/"
         },
         "tomatoes": {
-          "value": 71,
+          "value": 70,
           "url": "https://www.rottentomatoes.com/m/insidious_out_of_the_further"
         }
       },
@@ -7510,12 +7510,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 5.8,
+          "value": 5.7,
           "id": "tt32338669",
           "url": "https://www.imdb.com/title/tt32338669/"
         },
         "letterboxd": {
-          "value": 2.67,
+          "value": 2.65,
           "url": "https://letterboxd.com/film/mutiny-2026/"
         },
         "tomatoes": {
@@ -7595,17 +7595,61 @@
           "url": "https://www.imdb.com/title/tt32393988/"
         },
         "letterboxd": {
-          "value": 2.8,
+          "value": 2.79,
           "url": "https://letterboxd.com/film/insidious-out-of-the-further/"
         },
         "tomatoes": {
-          "value": 71,
+          "value": 70,
           "url": "https://www.rottentomatoes.com/m/insidious_out_of_the_further"
         }
       },
       "reserved": 0,
       "capacity": 246,
       "available": 246
+    },
+    {
+      "id": "EDI20251707-2026-08-29T15:00:00-Storsal",
+      "title": "Miss Moxy",
+      "screen": "Storsal",
+      "start": "2026-08-29T15:00:00",
+      "end": "2026-08-29T16:38:00",
+      "dayKey": "2026-08-29",
+      "runningMinutes": 88,
+      "runningLabel": "1 t. 28 min.",
+      "age": "6 år",
+      "tags": [
+        "Norsk tale",
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ],
+      "director": null,
+      "premiere": "2026-08-28",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/4d5263dbeed399138e364fcb76d3acce437ff9e8-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/92965/purchase?kanal=dxf",
+      "eventId": "92965",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 6.9,
+          "id": "tt33996352",
+          "url": "https://www.imdb.com/title/tt33996352/"
+        },
+        "letterboxd": {
+          "value": 3.32,
+          "url": "https://letterboxd.com/film/miss-moxy/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
     },
     {
       "id": "EDI20260087-2026-09-01T13:00:00-Kinosal",
@@ -7704,7 +7748,9 @@
       ],
       "showType": "Seniorkino",
       "kinoklubb": false,
-      "genres": null,
+      "genres": [
+        "Drama"
+      ],
       "director": "Erik Poppe",
       "premiere": "2026-09-18",
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/49a3f819b818a409e32eb651dfd0286808b145d0-1500x2104.webp?w=240&h=340&fit=crop&auto=format",
@@ -7733,7 +7779,9 @@
       ],
       "showType": "Førpremiere",
       "kinoklubb": false,
-      "genres": null,
+      "genres": [
+        "Drama"
+      ],
       "director": "Erik Poppe",
       "premiere": "2026-09-18",
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/49a3f819b818a409e32eb651dfd0286808b145d0-1500x2104.webp?w=240&h=340&fit=crop&auto=format",
