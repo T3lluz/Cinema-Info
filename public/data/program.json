@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-24T11:39:09.409Z",
+  "updatedAt": "2026-08-24T23:33:49.863Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -6307,11 +6307,11 @@
           "url": "https://www.imdb.com/title/tt32393988/"
         },
         "letterboxd": {
-          "value": 2.79,
+          "value": 2.78,
           "url": "https://letterboxd.com/film/insidious-out-of-the-further/"
         },
         "tomatoes": {
-          "value": 70,
+          "value": 71,
           "url": "https://www.rottentomatoes.com/m/insidious_out_of_the_further"
         }
       },
@@ -6587,11 +6587,11 @@
           "url": "https://www.imdb.com/title/tt32393988/"
         },
         "letterboxd": {
-          "value": 2.79,
+          "value": 2.78,
           "url": "https://letterboxd.com/film/insidious-out-of-the-further/"
         },
         "tomatoes": {
-          "value": 70,
+          "value": 71,
           "url": "https://www.rottentomatoes.com/m/insidious_out_of_the_further"
         }
       },
@@ -6820,11 +6820,11 @@
           "url": "https://www.imdb.com/title/tt32393988/"
         },
         "letterboxd": {
-          "value": 2.79,
+          "value": 2.78,
           "url": "https://letterboxd.com/film/insidious-out-of-the-further/"
         },
         "tomatoes": {
-          "value": 70,
+          "value": 71,
           "url": "https://www.rottentomatoes.com/m/insidious_out_of_the_further"
         }
       },
@@ -7005,11 +7005,11 @@
           "url": "https://www.imdb.com/title/tt32393988/"
         },
         "letterboxd": {
-          "value": 2.79,
+          "value": 2.78,
           "url": "https://letterboxd.com/film/insidious-out-of-the-further/"
         },
         "tomatoes": {
-          "value": 70,
+          "value": 71,
           "url": "https://www.rottentomatoes.com/m/insidious_out_of_the_further"
         }
       },
@@ -7191,11 +7191,11 @@
           "url": "https://www.imdb.com/title/tt32393988/"
         },
         "letterboxd": {
-          "value": 2.79,
+          "value": 2.78,
           "url": "https://letterboxd.com/film/insidious-out-of-the-further/"
         },
         "tomatoes": {
-          "value": 70,
+          "value": 71,
           "url": "https://www.rottentomatoes.com/m/insidious_out_of_the_further"
         }
       },
@@ -7377,11 +7377,11 @@
           "url": "https://www.imdb.com/title/tt32393988/"
         },
         "letterboxd": {
-          "value": 2.79,
+          "value": 2.78,
           "url": "https://letterboxd.com/film/insidious-out-of-the-further/"
         },
         "tomatoes": {
-          "value": 70,
+          "value": 71,
           "url": "https://www.rottentomatoes.com/m/insidious_out_of_the_further"
         }
       },
@@ -7468,7 +7468,7 @@
           "url": "https://www.imdb.com/title/tt37853455/"
         },
         "letterboxd": {
-          "value": 2.81,
+          "value": 2.8,
           "url": "https://letterboxd.com/film/one-night-only-2026/"
         },
         "tomatoes": {
@@ -7519,7 +7519,7 @@
           "url": "https://letterboxd.com/film/mutiny-2026/"
         },
         "tomatoes": {
-          "value": 86,
+          "value": 85,
           "url": "https://www.rottentomatoes.com/m/mutiny_2026"
         }
       },
@@ -7595,11 +7595,11 @@
           "url": "https://www.imdb.com/title/tt32393988/"
         },
         "letterboxd": {
-          "value": 2.79,
+          "value": 2.78,
           "url": "https://letterboxd.com/film/insidious-out-of-the-further/"
         },
         "tomatoes": {
-          "value": 70,
+          "value": 71,
           "url": "https://www.rottentomatoes.com/m/insidious_out_of_the_further"
         }
       },
@@ -7650,6 +7650,224 @@
       "reserved": 0,
       "capacity": 286,
       "available": 286
+    },
+    {
+      "id": "EDI20260206-2026-08-29T15:45:00-Kinosal",
+      "title": "Skolen med de magiske dyrene - Filmen",
+      "screen": "Kinosal",
+      "start": "2026-08-29T15:45:00",
+      "end": "2026-08-29T17:37:00",
+      "dayKey": "2026-08-29",
+      "runningMinutes": 102,
+      "runningLabel": "1 t. 42 min.",
+      "age": "6 år",
+      "tags": [
+        "Norsk tale",
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Adventure",
+        "Family",
+        "Fantasy"
+      ],
+      "director": "Maggie Peren, Bernhard Jasper",
+      "premiere": "2026-08-21",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/f00ce714aee93b0b1d9b9a319f0cee3be0765044-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/92876/purchase?kanal=dxf",
+      "eventId": "92876",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 5.7,
+          "id": "tt35286242",
+          "url": "https://www.imdb.com/title/tt35286242/"
+        },
+        "letterboxd": {
+          "value": 3.07,
+          "url": "https://letterboxd.com/film/school-of-magical-animals-4/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20240688-2026-08-29T17:15:00-Storsal",
+      "title": "Spider-Man: Brand New Day",
+      "screen": "Storsal",
+      "start": "2026-08-29T17:15:00",
+      "end": "2026-08-29T19:49:49",
+      "dayKey": "2026-08-29",
+      "runningMinutes": 145,
+      "runningLabel": "2 t. 25 min.",
+      "age": "12 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Sci-Fi"
+      ],
+      "director": "Destin Daniel Cretton",
+      "premiere": "2026-07-29",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/13bdf9c085531b0bb6c3b7506e847f46643782b6-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93014/purchase?kanal=dxf",
+      "eventId": "93014",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 8.1,
+          "id": "tt22084616",
+          "url": "https://www.imdb.com/title/tt22084616/"
+        },
+        "letterboxd": {
+          "value": 4.06,
+          "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
+        },
+        "tomatoes": {
+          "value": 98,
+          "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
+    },
+    {
+      "id": "EDI20250644-2026-08-29T18:30:00-Kinosal",
+      "title": "The Dog Stars",
+      "screen": "Kinosal",
+      "start": "2026-08-29T18:30:00",
+      "end": "2026-08-29T20:38:00",
+      "dayKey": "2026-08-29",
+      "runningMinutes": 118,
+      "runningLabel": "1 t. 58 min.",
+      "age": "15 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Drama"
+      ],
+      "director": "Ridley Scott",
+      "premiere": "2026-08-28",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/c14c7820cdb60bfa7fcebf3b5ff2a11019fb6743-1440x2057.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/92872/purchase?kanal=dxf",
+      "eventId": "92872",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": null,
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20251020-2026-08-29T20:30:00-Storsal",
+      "title": "One Night Only",
+      "screen": "Storsal",
+      "start": "2026-08-29T20:30:00",
+      "end": "2026-08-29T22:22:00",
+      "dayKey": "2026-08-29",
+      "runningMinutes": 102,
+      "runningLabel": "1 t. 42 min.",
+      "age": "12 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Comedy",
+        "Drama",
+        "Romance"
+      ],
+      "director": "Will Gluck",
+      "premiere": "2026-08-28",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/491deec41490fbd372c4f69a3b7f7f467a476c85-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/92966/purchase?kanal=dxf",
+      "eventId": "92966",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 6.4,
+          "id": "tt37853455",
+          "url": "https://www.imdb.com/title/tt37853455/"
+        },
+        "letterboxd": {
+          "value": 2.8,
+          "url": "https://letterboxd.com/film/one-night-only-2026/"
+        },
+        "tomatoes": {
+          "value": 76,
+          "url": "https://www.rottentomatoes.com/m/one_night_only_2026"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
+    },
+    {
+      "id": "EDI20251444-2026-08-29T21:15:00-Kinosal",
+      "title": "Mutiny",
+      "screen": "Kinosal",
+      "start": "2026-08-29T21:15:00",
+      "end": "2026-08-29T23:00:00",
+      "dayKey": "2026-08-29",
+      "runningMinutes": null,
+      "runningLabel": null,
+      "age": null,
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Action",
+        "Crime",
+        "Thriller"
+      ],
+      "director": "Jean-François Richet",
+      "premiere": "2026-08-28",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/9b567bb823774e2e8c86dcd638d7267767871dc2-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/92875/purchase?kanal=dxf",
+      "eventId": "92875",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 5.7,
+          "id": "tt32338669",
+          "url": "https://www.imdb.com/title/tt32338669/"
+        },
+        "letterboxd": {
+          "value": 2.65,
+          "url": "https://letterboxd.com/film/mutiny-2026/"
+        },
+        "tomatoes": {
+          "value": 85,
+          "url": "https://www.rottentomatoes.com/m/mutiny_2026"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
     },
     {
       "id": "EDI20260087-2026-09-01T13:00:00-Kinosal",
@@ -7759,7 +7977,13 @@
       "promoterId": "202",
       "sold": 0,
       "eventStatus": "ok",
-      "ratings": null,
+      "ratings": {
+        "imdb": {
+          "value": 7.6,
+          "id": "tt31451181",
+          "url": "https://www.imdb.com/title/tt31451181/"
+        }
+      },
       "reserved": 0,
       "capacity": 110,
       "available": 110
@@ -7790,7 +8014,13 @@
       "promoterId": "202",
       "sold": 0,
       "eventStatus": "ok",
-      "ratings": null,
+      "ratings": {
+        "imdb": {
+          "value": 7.6,
+          "id": "tt31451181",
+          "url": "https://www.imdb.com/title/tt31451181/"
+        }
+      },
       "reserved": 0,
       "capacity": 110,
       "available": 110
