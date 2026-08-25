@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-24T23:33:49.863Z",
+  "updatedAt": "2026-08-25T11:37:56.765Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -6967,8 +6967,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 108,
-      "available": 106
+      "capacity": 110,
+      "available": 108
     },
     {
       "id": "SFN20241757-2026-08-25T20:15:00-Storsal",
@@ -7182,7 +7182,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92901/purchase?kanal=dxf",
       "eventId": "92901",
       "promoterId": "202",
-      "sold": 2,
+      "sold": 5,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -7200,8 +7200,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 108,
-      "available": 106
+      "capacity": 107,
+      "available": 102
     },
     {
       "id": "EDI20251106-2026-08-27T17:00:00-Kinosal",
@@ -7468,11 +7468,11 @@
           "url": "https://www.imdb.com/title/tt37853455/"
         },
         "letterboxd": {
-          "value": 2.8,
+          "value": 2.83,
           "url": "https://letterboxd.com/film/one-night-only-2026/"
         },
         "tomatoes": {
-          "value": 76,
+          "value": 75,
           "url": "https://www.rottentomatoes.com/m/one_night_only_2026"
         }
       },
@@ -7515,11 +7515,11 @@
           "url": "https://www.imdb.com/title/tt32338669/"
         },
         "letterboxd": {
-          "value": 2.65,
+          "value": 2.63,
           "url": "https://letterboxd.com/film/mutiny-2026/"
         },
         "tomatoes": {
-          "value": 85,
+          "value": 86,
           "url": "https://www.rottentomatoes.com/m/mutiny_2026"
         }
       },
@@ -7810,11 +7810,11 @@
           "url": "https://www.imdb.com/title/tt37853455/"
         },
         "letterboxd": {
-          "value": 2.8,
+          "value": 2.83,
           "url": "https://letterboxd.com/film/one-night-only-2026/"
         },
         "tomatoes": {
-          "value": 76,
+          "value": 75,
           "url": "https://www.rottentomatoes.com/m/one_night_only_2026"
         }
       },
@@ -7857,14 +7857,138 @@
           "url": "https://www.imdb.com/title/tt32338669/"
         },
         "letterboxd": {
-          "value": 2.65,
+          "value": 2.63,
           "url": "https://letterboxd.com/film/mutiny-2026/"
         },
         "tomatoes": {
-          "value": 85,
+          "value": 86,
           "url": "https://www.rottentomatoes.com/m/mutiny_2026"
         }
       },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20251707-2026-08-30T15:00:00-Kinosal",
+      "title": "Miss Moxy",
+      "screen": "Kinosal",
+      "start": "2026-08-30T15:00:00",
+      "end": "2026-08-30T16:38:00",
+      "dayKey": "2026-08-30",
+      "runningMinutes": 88,
+      "runningLabel": "1 t. 28 min.",
+      "age": "6 år",
+      "tags": [
+        "Norsk tale",
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ],
+      "director": null,
+      "premiere": "2026-08-28",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/4d5263dbeed399138e364fcb76d3acce437ff9e8-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/92968/purchase?kanal=dxf",
+      "eventId": "92968",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 6.9,
+          "id": "tt33996352",
+          "url": "https://www.imdb.com/title/tt33996352/"
+        },
+        "letterboxd": {
+          "value": 3.32,
+          "url": "https://letterboxd.com/film/miss-moxy/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20251020-2026-08-30T17:45:00-Kinosal",
+      "title": "One Night Only",
+      "screen": "Kinosal",
+      "start": "2026-08-30T17:45:00",
+      "end": "2026-08-30T19:37:00",
+      "dayKey": "2026-08-30",
+      "runningMinutes": 102,
+      "runningLabel": "1 t. 42 min.",
+      "age": "12 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Comedy",
+        "Drama",
+        "Romance"
+      ],
+      "director": "Will Gluck",
+      "premiere": "2026-08-28",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/491deec41490fbd372c4f69a3b7f7f467a476c85-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/92848/purchase?kanal=dxf",
+      "eventId": "92848",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 6.4,
+          "id": "tt37853455",
+          "url": "https://www.imdb.com/title/tt37853455/"
+        },
+        "letterboxd": {
+          "value": 2.83,
+          "url": "https://letterboxd.com/film/one-night-only-2026/"
+        },
+        "tomatoes": {
+          "value": 75,
+          "url": "https://www.rottentomatoes.com/m/one_night_only_2026"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20250644-2026-08-30T20:15:00-Kinosal",
+      "title": "The Dog Stars",
+      "screen": "Kinosal",
+      "start": "2026-08-30T20:15:00",
+      "end": "2026-08-30T22:23:00",
+      "dayKey": "2026-08-30",
+      "runningMinutes": 118,
+      "runningLabel": "1 t. 58 min.",
+      "age": "15 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Drama"
+      ],
+      "director": "Ridley Scott",
+      "premiere": "2026-08-28",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/c14c7820cdb60bfa7fcebf3b5ff2a11019fb6743-1440x2057.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/92849/purchase?kanal=dxf",
+      "eventId": "92849",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": null,
       "reserved": 0,
       "capacity": 110,
       "available": 110
@@ -7893,7 +8017,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92498/purchase?kanal=dxf",
       "eventId": "92498",
       "promoterId": "202",
-      "sold": 1,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -7908,7 +8032,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 109
+      "available": 108
     },
     {
       "id": "EDI20260087-2026-09-01T19:30:00-Kinosal",
@@ -7979,7 +8103,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.6,
+          "value": 7.8,
           "id": "tt31451181",
           "url": "https://www.imdb.com/title/tt31451181/"
         }
@@ -8016,7 +8140,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.6,
+          "value": 7.8,
           "id": "tt31451181",
           "url": "https://www.imdb.com/title/tt31451181/"
         }
