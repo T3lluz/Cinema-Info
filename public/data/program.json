@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-25T23:35:50.814Z",
+  "updatedAt": "2026-08-26T11:39:14.856Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -7182,7 +7182,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92901/purchase?kanal=dxf",
       "eventId": "92901",
       "promoterId": "202",
-      "sold": 5,
+      "sold": 7,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -7201,7 +7201,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 105
+      "available": 103
     },
     {
       "id": "EDI20251106-2026-08-27T17:00:00-Kinosal",
@@ -7291,9 +7291,9 @@
           "url": "https://letterboxd.com/film/school-of-magical-animals-4/"
         }
       },
-      "reserved": 0,
+      "reserved": 9,
       "capacity": 246,
-      "available": 246
+      "available": 237
     },
     {
       "id": "EDI20260623-2026-08-27T19:30:00-Kinosal",
@@ -7515,7 +7515,7 @@
           "url": "https://www.imdb.com/title/tt32338669/"
         },
         "letterboxd": {
-          "value": 2.62,
+          "value": 2.61,
           "url": "https://letterboxd.com/film/mutiny-2026/"
         },
         "tomatoes": {
@@ -7555,7 +7555,12 @@
       "promoterId": "202",
       "sold": 0,
       "eventStatus": "ok",
-      "ratings": null,
+      "ratings": {
+        "letterboxd": {
+          "value": 3.15,
+          "url": "https://letterboxd.com/film/the-dog-stars/"
+        }
+      },
       "reserved": 0,
       "capacity": 110,
       "available": 110
@@ -7739,8 +7744,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 286,
-      "available": 283
+      "capacity": 246,
+      "available": 243
     },
     {
       "id": "EDI20250644-2026-08-29T18:30:00-Kinosal",
@@ -7770,7 +7775,12 @@
       "promoterId": "202",
       "sold": 0,
       "eventStatus": "ok",
-      "ratings": null,
+      "ratings": {
+        "letterboxd": {
+          "value": 3.15,
+          "url": "https://letterboxd.com/film/the-dog-stars/"
+        }
+      },
       "reserved": 0,
       "capacity": 110,
       "available": 110
@@ -7857,7 +7867,7 @@
           "url": "https://www.imdb.com/title/tt32338669/"
         },
         "letterboxd": {
-          "value": 2.62,
+          "value": 2.61,
           "url": "https://letterboxd.com/film/mutiny-2026/"
         },
         "tomatoes": {
@@ -7988,7 +7998,12 @@
       "promoterId": "202",
       "sold": 0,
       "eventStatus": "ok",
-      "ratings": null,
+      "ratings": {
+        "letterboxd": {
+          "value": 3.15,
+          "url": "https://letterboxd.com/film/the-dog-stars/"
+        }
+      },
       "reserved": 0,
       "capacity": 110,
       "available": 110
@@ -8083,6 +8098,53 @@
       "available": 110
     },
     {
+      "id": "EDI20260623-2026-09-01T18:00:00-Storsal",
+      "title": "The Invite",
+      "screen": "Storsal",
+      "start": "2026-09-01T18:00:00",
+      "end": "2026-09-01T19:57:04",
+      "dayKey": "2026-09-01",
+      "runningMinutes": 106,
+      "runningLabel": "1 t. 46 min.",
+      "age": "12 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": true,
+      "genres": [
+        "Comedy",
+        "Drama",
+        "Romance"
+      ],
+      "director": "Olivia Wilde",
+      "premiere": "2026-08-14",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/59ddb42978a630c065866367e38b465118602c08-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93050/purchase?kanal=dxf",
+      "eventId": "93050",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.8,
+          "id": "tt14173636",
+          "url": "https://www.imdb.com/title/tt14173636/"
+        },
+        "letterboxd": {
+          "value": 4,
+          "url": "https://letterboxd.com/film/the-invite-2026/"
+        },
+        "tomatoes": {
+          "value": 89,
+          "url": "https://www.rottentomatoes.com/m/the_invite"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
+    },
+    {
       "id": "EDI20260087-2026-09-01T19:30:00-Kinosal",
       "title": "FJORD",
       "screen": "Kinosal",
@@ -8122,6 +8184,53 @@
       "reserved": 0,
       "capacity": 108,
       "available": 105
+    },
+    {
+      "id": "EDI20251444-2026-09-01T20:30:00-Storsal",
+      "title": "Mutiny",
+      "screen": "Storsal",
+      "start": "2026-09-01T20:30:00",
+      "end": "2026-09-01T22:15:12",
+      "dayKey": "2026-09-01",
+      "runningMinutes": null,
+      "runningLabel": null,
+      "age": null,
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Action",
+        "Crime",
+        "Thriller"
+      ],
+      "director": "Jean-François Richet",
+      "premiere": "2026-08-28",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/9b567bb823774e2e8c86dcd638d7267767871dc2-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93037/purchase?kanal=dxf",
+      "eventId": "93037",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 5.7,
+          "id": "tt32338669",
+          "url": "https://www.imdb.com/title/tt32338669/"
+        },
+        "letterboxd": {
+          "value": 2.61,
+          "url": "https://letterboxd.com/film/mutiny-2026/"
+        },
+        "tomatoes": {
+          "value": 86,
+          "url": "https://www.rottentomatoes.com/m/mutiny_2026"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
     },
     {
       "id": "EDI20251707-2026-09-02T17:00:00-Kinosal",
@@ -8166,6 +8275,54 @@
       "reserved": 0,
       "capacity": 110,
       "available": 110
+    },
+    {
+      "id": "EDI20251106-2026-09-02T17:30:00-Storsal",
+      "title": "Paw Patrol: Dinofilmen",
+      "screen": "Storsal",
+      "start": "2026-09-02T17:30:00",
+      "end": "2026-09-02T19:03:41",
+      "dayKey": "2026-09-02",
+      "runningMinutes": 88,
+      "runningLabel": "1 t. 28 min.",
+      "age": "Tillatt for alle",
+      "tags": [
+        "Norsk tale",
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "director": "Cal Brunker",
+      "premiere": "2026-08-07",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/b0c96c74829fac249da479447cb08a07a4ebf7ef-1500x2123.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93035/purchase?kanal=dxf",
+      "eventId": "93035",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 6.2,
+          "id": "tt29356163",
+          "url": "https://www.imdb.com/title/tt29356163/"
+        },
+        "letterboxd": {
+          "value": 2.87,
+          "url": "https://letterboxd.com/film/paw-patrol-the-dino-movie/"
+        },
+        "tomatoes": {
+          "value": 95,
+          "url": "https://www.rottentomatoes.com/m/paw_patrol_the_dino_movie"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
     },
     {
       "id": "EDI20251020-2026-09-02T19:30:00-Kinosal",
@@ -8242,10 +8399,312 @@
       "promoterId": "202",
       "sold": 0,
       "eventStatus": "ok",
-      "ratings": null,
+      "ratings": {
+        "letterboxd": {
+          "value": 3.15,
+          "url": "https://letterboxd.com/film/the-dog-stars/"
+        }
+      },
       "reserved": 0,
       "capacity": 286,
       "available": 286
+    },
+    {
+      "id": "EDI20251707-2026-09-03T17:00:00-Storsal",
+      "title": "Miss Moxy",
+      "screen": "Storsal",
+      "start": "2026-09-03T17:00:00",
+      "end": "2026-09-03T18:38:00",
+      "dayKey": "2026-09-03",
+      "runningMinutes": 88,
+      "runningLabel": "1 t. 28 min.",
+      "age": "6 år",
+      "tags": [
+        "Norsk tale",
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ],
+      "director": null,
+      "premiere": "2026-08-28",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/4d5263dbeed399138e364fcb76d3acce437ff9e8-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93051/purchase?kanal=dxf",
+      "eventId": "93051",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 6.9,
+          "id": "tt33996352",
+          "url": "https://www.imdb.com/title/tt33996352/"
+        },
+        "letterboxd": {
+          "value": 3.32,
+          "url": "https://letterboxd.com/film/miss-moxy/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
+    },
+    {
+      "id": "EDI20260206-2026-09-03T17:30:00-Kinosal",
+      "title": "Skolen med de magiske dyrene - Filmen",
+      "screen": "Kinosal",
+      "start": "2026-09-03T17:30:00",
+      "end": "2026-09-03T19:22:31",
+      "dayKey": "2026-09-03",
+      "runningMinutes": 102,
+      "runningLabel": "1 t. 42 min.",
+      "age": "6 år",
+      "tags": [
+        "Norsk tale",
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Adventure",
+        "Family",
+        "Fantasy"
+      ],
+      "director": "Maggie Peren, Bernhard Jasper",
+      "premiere": "2026-08-21",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/f00ce714aee93b0b1d9b9a319f0cee3be0765044-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93052/purchase?kanal=dxf",
+      "eventId": "93052",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 5.7,
+          "id": "tt35286242",
+          "url": "https://www.imdb.com/title/tt35286242/"
+        },
+        "letterboxd": {
+          "value": 3.07,
+          "url": "https://letterboxd.com/film/school-of-magical-animals-4/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20250644-2026-09-03T20:15:00-Kinosal",
+      "title": "The Dog Stars",
+      "screen": "Kinosal",
+      "start": "2026-09-03T20:15:00",
+      "end": "2026-09-03T22:23:00",
+      "dayKey": "2026-09-03",
+      "runningMinutes": 118,
+      "runningLabel": "1 t. 58 min.",
+      "age": "15 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Drama"
+      ],
+      "director": "Ridley Scott",
+      "premiere": "2026-08-28",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/c14c7820cdb60bfa7fcebf3b5ff2a11019fb6743-1440x2057.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/92977/purchase?kanal=dxf",
+      "eventId": "92977",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "letterboxd": {
+          "value": 3.15,
+          "url": "https://letterboxd.com/film/the-dog-stars/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20251707-2026-09-04T16:50:00-Storsal",
+      "title": "Miss Moxy",
+      "screen": "Storsal",
+      "start": "2026-09-04T16:50:00",
+      "end": "2026-09-04T18:28:00",
+      "dayKey": "2026-09-04",
+      "runningMinutes": 88,
+      "runningLabel": "1 t. 28 min.",
+      "age": "6 år",
+      "tags": [
+        "Norsk tale",
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ],
+      "director": null,
+      "premiere": "2026-08-28",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/4d5263dbeed399138e364fcb76d3acce437ff9e8-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/92982/purchase?kanal=dxf",
+      "eventId": "92982",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 6.9,
+          "id": "tt33996352",
+          "url": "https://www.imdb.com/title/tt33996352/"
+        },
+        "letterboxd": {
+          "value": 3.32,
+          "url": "https://letterboxd.com/film/miss-moxy/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
+    },
+    {
+      "id": "EDI20260805-2026-09-04T21:00:00-Kinosal",
+      "title": "By Any Means",
+      "screen": "Kinosal",
+      "start": "2026-09-04T21:00:00",
+      "end": "2026-09-04T22:57:00",
+      "dayKey": "2026-09-04",
+      "runningMinutes": null,
+      "runningLabel": null,
+      "age": "15 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": "Norgespremiere",
+      "kinoklubb": false,
+      "genres": [
+        "Action",
+        "Crime",
+        "Thriller"
+      ],
+      "director": "Elegance Bratton",
+      "premiere": "2026-09-04",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/b208616cca110127f0e398002fd0665af76b9271-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93032/purchase?kanal=dxf",
+      "eventId": "93032",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": null,
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "SFN20241757-2026-09-04T21:35:00-Storsal",
+      "title": "Insidious: Out of the Further",
+      "screen": "Storsal",
+      "start": "2026-09-04T21:35:00",
+      "end": "2026-09-04T23:30:44",
+      "dayKey": "2026-09-04",
+      "runningMinutes": 106,
+      "runningLabel": "1 t. 46 min.",
+      "age": "15 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Horror",
+        "Mystery",
+        "Thriller"
+      ],
+      "director": "Jacob Chase",
+      "premiere": "2026-08-21",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/a4f7d1a1d66bb11b4481cc8b70c91af769057693-1500x2104.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93030/purchase?kanal=dxf",
+      "eventId": "93030",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 6.3,
+          "id": "tt32393988",
+          "url": "https://www.imdb.com/title/tt32393988/"
+        },
+        "letterboxd": {
+          "value": 2.77,
+          "url": "https://letterboxd.com/film/insidious-out-of-the-further/"
+        },
+        "tomatoes": {
+          "value": 70,
+          "url": "https://www.rottentomatoes.com/m/insidious_out_of_the_further"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
+    },
+    {
+      "id": "EDI20251020-2026-09-08T11:15:00-Kinosal",
+      "title": "One Night Only",
+      "screen": "Kinosal",
+      "start": "2026-09-08T11:15:00",
+      "end": "2026-09-08T13:07:00",
+      "dayKey": "2026-09-08",
+      "runningMinutes": 102,
+      "runningLabel": "1 t. 42 min.",
+      "age": "12 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": "Babykino",
+      "kinoklubb": false,
+      "genres": [
+        "Comedy",
+        "Drama",
+        "Romance"
+      ],
+      "director": "Will Gluck",
+      "premiere": "2026-08-28",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/491deec41490fbd372c4f69a3b7f7f467a476c85-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93013/purchase?kanal=dxf",
+      "eventId": "93013",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 6.4,
+          "id": "tt37853455",
+          "url": "https://www.imdb.com/title/tt37853455/"
+        },
+        "letterboxd": {
+          "value": 2.83,
+          "url": "https://letterboxd.com/film/one-night-only-2026/"
+        },
+        "tomatoes": {
+          "value": 75,
+          "url": "https://www.rottentomatoes.com/m/one_night_only_2026"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
     },
     {
       "id": "EDI20251555-2026-09-15T13:00:00-Kinosal",
