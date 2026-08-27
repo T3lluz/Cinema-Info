@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-27T04:30:27.252Z",
+  "updatedAt": "2026-08-27T20:59:42.810Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -7278,7 +7278,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92997/purchase?kanal=dxf",
       "eventId": "92997",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 10,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -7291,9 +7291,9 @@
           "url": "https://letterboxd.com/film/school-of-magical-animals-4/"
         }
       },
-      "reserved": 9,
+      "reserved": 0,
       "capacity": 246,
-      "available": 237
+      "available": 236
     },
     {
       "id": "EDI20260623-2026-08-27T19:30:00-Kinosal",
@@ -7321,7 +7321,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92996/purchase?kanal=dxf",
       "eventId": "92996",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -7340,7 +7340,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 110
+      "available": 108
     },
     {
       "id": "SFN20241757-2026-08-27T20:15:00-Storsal",
@@ -7368,7 +7368,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92999/purchase?kanal=dxf",
       "eventId": "92999",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -7387,7 +7387,7 @@
       },
       "reserved": 0,
       "capacity": 246,
-      "available": 246
+      "available": 244
     },
     {
       "id": "EDI20251707-2026-08-28T17:00:00-Storsal",
@@ -7489,7 +7489,7 @@
       "dayKey": "2026-08-28",
       "runningMinutes": null,
       "runningLabel": null,
-      "age": null,
+      "age": "15 år",
       "tags": [
         "Norsk tekst"
       ],
@@ -7556,14 +7556,14 @@
       "sold": 0,
       "eventStatus": "ok",
       "ratings": {
-        "letterboxd": {
-          "value": 3,
-          "url": "https://letterboxd.com/film/the-dog-stars/"
-        },
         "imdb": {
           "value": 6.4,
           "id": "tt21285562",
           "url": "https://www.imdb.com/title/tt21285562/"
+        },
+        "letterboxd": {
+          "value": 2.99,
+          "url": "https://letterboxd.com/film/the-dog-stars/"
         }
       },
       "reserved": 0,
@@ -7781,14 +7781,14 @@
       "sold": 0,
       "eventStatus": "ok",
       "ratings": {
-        "letterboxd": {
-          "value": 3,
-          "url": "https://letterboxd.com/film/the-dog-stars/"
-        },
         "imdb": {
           "value": 6.4,
           "id": "tt21285562",
           "url": "https://www.imdb.com/title/tt21285562/"
+        },
+        "letterboxd": {
+          "value": 2.99,
+          "url": "https://letterboxd.com/film/the-dog-stars/"
         }
       },
       "reserved": 0,
@@ -7851,7 +7851,7 @@
       "dayKey": "2026-08-29",
       "runningMinutes": null,
       "runningLabel": null,
-      "age": null,
+      "age": "15 år",
       "tags": [
         "Norsk tekst"
       ],
@@ -7886,8 +7886,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 109,
-      "available": 108
+      "capacity": 110,
+      "available": 109
     },
     {
       "id": "EDI20251707-2026-08-30T15:00:00-Kinosal",
@@ -8009,14 +8009,14 @@
       "sold": 0,
       "eventStatus": "ok",
       "ratings": {
-        "letterboxd": {
-          "value": 3,
-          "url": "https://letterboxd.com/film/the-dog-stars/"
-        },
         "imdb": {
           "value": 6.4,
           "id": "tt21285562",
           "url": "https://www.imdb.com/title/tt21285562/"
+        },
+        "letterboxd": {
+          "value": 2.99,
+          "url": "https://letterboxd.com/film/the-dog-stars/"
         }
       },
       "reserved": 0,
@@ -8025,7 +8025,7 @@
     },
     {
       "id": "EDI20260087-2026-09-01T13:00:00-Kinosal",
-      "title": "FJORD",
+      "title": "Fjord",
       "screen": "Kinosal",
       "start": "2026-09-01T13:00:00",
       "end": "2026-09-01T15:29:00",
@@ -8161,7 +8161,7 @@
     },
     {
       "id": "EDI20260087-2026-09-01T19:30:00-Kinosal",
-      "title": "FJORD",
+      "title": "Fjord",
       "screen": "Kinosal",
       "start": "2026-09-01T19:30:00",
       "end": "2026-09-01T21:59:00",
@@ -8209,7 +8209,7 @@
       "dayKey": "2026-09-01",
       "runningMinutes": null,
       "runningLabel": null,
-      "age": null,
+      "age": "15 år",
       "tags": [
         "Norsk tekst"
       ],
@@ -8415,14 +8415,14 @@
       "sold": 0,
       "eventStatus": "ok",
       "ratings": {
-        "letterboxd": {
-          "value": 3,
-          "url": "https://letterboxd.com/film/the-dog-stars/"
-        },
         "imdb": {
           "value": 6.4,
           "id": "tt21285562",
           "url": "https://www.imdb.com/title/tt21285562/"
+        },
+        "letterboxd": {
+          "value": 2.99,
+          "url": "https://letterboxd.com/film/the-dog-stars/"
         }
       },
       "reserved": 0,
@@ -8518,6 +8518,53 @@
       "available": 110
     },
     {
+      "id": "EDI20251444-2026-09-03T19:30:00-Storsal",
+      "title": "Mutiny",
+      "screen": "Storsal",
+      "start": "2026-09-03T19:30:00",
+      "end": "2026-09-03T21:15:00",
+      "dayKey": "2026-09-03",
+      "runningMinutes": null,
+      "runningLabel": null,
+      "age": "15 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Action",
+        "Crime",
+        "Thriller"
+      ],
+      "director": "Jean-François Richet",
+      "premiere": "2026-08-28",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/9b567bb823774e2e8c86dcd638d7267767871dc2-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/92978/purchase?kanal=dxf",
+      "eventId": "92978",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 5.7,
+          "id": "tt32338669",
+          "url": "https://www.imdb.com/title/tt32338669/"
+        },
+        "letterboxd": {
+          "value": 2.6,
+          "url": "https://letterboxd.com/film/mutiny-2026/"
+        },
+        "tomatoes": {
+          "value": 85,
+          "url": "https://www.rottentomatoes.com/m/mutiny_2026"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
+    },
+    {
       "id": "EDI20250644-2026-09-03T20:15:00-Kinosal",
       "title": "The Dog Stars",
       "screen": "Kinosal",
@@ -8546,14 +8593,14 @@
       "sold": 0,
       "eventStatus": "ok",
       "ratings": {
-        "letterboxd": {
-          "value": 3,
-          "url": "https://letterboxd.com/film/the-dog-stars/"
-        },
         "imdb": {
           "value": 6.4,
           "id": "tt21285562",
           "url": "https://www.imdb.com/title/tt21285562/"
+        },
+        "letterboxd": {
+          "value": 2.99,
+          "url": "https://letterboxd.com/film/the-dog-stars/"
         }
       },
       "reserved": 0,
@@ -8598,6 +8645,94 @@
         "letterboxd": {
           "value": 3.32,
           "url": "https://letterboxd.com/film/miss-moxy/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
+    },
+    {
+      "id": "EDI20260087-2026-09-04T18:00:00-Kinosal",
+      "title": "Fjord",
+      "screen": "Kinosal",
+      "start": "2026-09-04T18:00:00",
+      "end": "2026-09-04T20:29:00",
+      "dayKey": "2026-09-04",
+      "runningMinutes": 139,
+      "runningLabel": "2 t. 19 min.",
+      "age": "9 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": "Norgespremiere",
+      "kinoklubb": true,
+      "genres": [
+        "Drama"
+      ],
+      "director": "Cristian Mungiu",
+      "premiere": "2026-09-04",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/c10d96b80399813584d65ea185087e216c6bd5ed-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/92981/purchase?kanal=dxf",
+      "eventId": "92981",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.8,
+          "id": "tt35410859",
+          "url": "https://www.imdb.com/title/tt35410859/"
+        },
+        "letterboxd": {
+          "value": 3.86,
+          "url": "https://letterboxd.com/film/fjord-2026/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20251020-2026-09-04T19:05:00-Storsal",
+      "title": "One Night Only",
+      "screen": "Storsal",
+      "start": "2026-09-04T19:05:00",
+      "end": "2026-09-04T20:57:00",
+      "dayKey": "2026-09-04",
+      "runningMinutes": 102,
+      "runningLabel": "1 t. 42 min.",
+      "age": "12 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Comedy",
+        "Drama",
+        "Romance"
+      ],
+      "director": "Will Gluck",
+      "premiere": "2026-08-28",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/491deec41490fbd372c4f69a3b7f7f467a476c85-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/92985/purchase?kanal=dxf",
+      "eventId": "92985",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 6.4,
+          "id": "tt37853455",
+          "url": "https://www.imdb.com/title/tt37853455/"
+        },
+        "letterboxd": {
+          "value": 2.84,
+          "url": "https://letterboxd.com/film/one-night-only-2026/"
+        },
+        "tomatoes": {
+          "value": 75,
+          "url": "https://www.rottentomatoes.com/m/one_night_only_2026"
         }
       },
       "reserved": 0,
@@ -8681,8 +8816,96 @@
         }
       },
       "reserved": 0,
+      "capacity": 246,
+      "available": 246
+    },
+    {
+      "id": "EDI20251707-2026-09-05T15:00:00-Storsal",
+      "title": "Miss Moxy",
+      "screen": "Storsal",
+      "start": "2026-09-05T15:00:00",
+      "end": "2026-09-05T16:38:00",
+      "dayKey": "2026-09-05",
+      "runningMinutes": 88,
+      "runningLabel": "1 t. 28 min.",
+      "age": "6 år",
+      "tags": [
+        "Norsk tale",
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ],
+      "director": null,
+      "premiere": "2026-08-28",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/4d5263dbeed399138e364fcb76d3acce437ff9e8-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93027/purchase?kanal=dxf",
+      "eventId": "93027",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 6.9,
+          "id": "tt33996352",
+          "url": "https://www.imdb.com/title/tt33996352/"
+        },
+        "letterboxd": {
+          "value": 3.32,
+          "url": "https://letterboxd.com/film/miss-moxy/"
+        }
+      },
+      "reserved": 0,
       "capacity": 286,
       "available": 286
+    },
+    {
+      "id": "EDI20260206-2026-09-05T15:30:00-Kinosal",
+      "title": "Skolen med de magiske dyrene - Filmen",
+      "screen": "Kinosal",
+      "start": "2026-09-05T15:30:00",
+      "end": "2026-09-05T17:22:31",
+      "dayKey": "2026-09-05",
+      "runningMinutes": 102,
+      "runningLabel": "1 t. 42 min.",
+      "age": "6 år",
+      "tags": [
+        "Norsk tale",
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Adventure",
+        "Family",
+        "Fantasy"
+      ],
+      "director": "Maggie Peren, Bernhard Jasper",
+      "premiere": "2026-08-21",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/f00ce714aee93b0b1d9b9a319f0cee3be0765044-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93028/purchase?kanal=dxf",
+      "eventId": "93028",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 5.7,
+          "id": "tt35286242",
+          "url": "https://www.imdb.com/title/tt35286242/"
+        },
+        "letterboxd": {
+          "value": 3.07,
+          "url": "https://letterboxd.com/film/school-of-magical-animals-4/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
     },
     {
       "id": "EDI20251020-2026-09-08T11:15:00-Kinosal",
@@ -8759,7 +8982,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.3,
+          "value": 6.9,
           "id": "tt31451181",
           "url": "https://www.imdb.com/title/tt31451181/"
         }
@@ -8796,7 +9019,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.3,
+          "value": 6.9,
           "id": "tt31451181",
           "url": "https://www.imdb.com/title/tt31451181/"
         }
