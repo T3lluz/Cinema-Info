@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-28T06:55:21.463Z",
+  "updatedAt": "2026-08-28T21:21:12.351Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -6307,7 +6307,7 @@
           "url": "https://www.imdb.com/title/tt32393988/"
         },
         "letterboxd": {
-          "value": 2.76,
+          "value": 2.75,
           "url": "https://letterboxd.com/film/insidious-out-of-the-further/"
         },
         "tomatoes": {
@@ -6587,7 +6587,7 @@
           "url": "https://www.imdb.com/title/tt32393988/"
         },
         "letterboxd": {
-          "value": 2.76,
+          "value": 2.75,
           "url": "https://letterboxd.com/film/insidious-out-of-the-further/"
         },
         "tomatoes": {
@@ -6820,7 +6820,7 @@
           "url": "https://www.imdb.com/title/tt32393988/"
         },
         "letterboxd": {
-          "value": 2.76,
+          "value": 2.75,
           "url": "https://letterboxd.com/film/insidious-out-of-the-further/"
         },
         "tomatoes": {
@@ -7005,7 +7005,7 @@
           "url": "https://www.imdb.com/title/tt32393988/"
         },
         "letterboxd": {
-          "value": 2.76,
+          "value": 2.75,
           "url": "https://letterboxd.com/film/insidious-out-of-the-further/"
         },
         "tomatoes": {
@@ -7191,7 +7191,7 @@
           "url": "https://www.imdb.com/title/tt32393988/"
         },
         "letterboxd": {
-          "value": 2.76,
+          "value": 2.75,
           "url": "https://letterboxd.com/film/insidious-out-of-the-further/"
         },
         "tomatoes": {
@@ -7377,7 +7377,7 @@
           "url": "https://www.imdb.com/title/tt32393988/"
         },
         "letterboxd": {
-          "value": 2.76,
+          "value": 2.75,
           "url": "https://letterboxd.com/film/insidious-out-of-the-further/"
         },
         "tomatoes": {
@@ -7416,7 +7416,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92964/purchase?kanal=dxf",
       "eventId": "92964",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 4,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -7431,7 +7431,7 @@
       },
       "reserved": 0,
       "capacity": 246,
-      "available": 246
+      "available": 242
     },
     {
       "id": "EDI20251020-2026-08-28T18:15:00-Kinosal",
@@ -7459,7 +7459,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92843/purchase?kanal=dxf",
       "eventId": "92843",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 8,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -7468,7 +7468,7 @@
           "url": "https://www.imdb.com/title/tt37853455/"
         },
         "letterboxd": {
-          "value": 2.84,
+          "value": 2.83,
           "url": "https://letterboxd.com/film/one-night-only-2026/"
         },
         "tomatoes": {
@@ -7478,7 +7478,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 110
+      "available": 102
     },
     {
       "id": "EDI20251444-2026-08-28T19:15:00-Storsal",
@@ -7515,11 +7515,11 @@
           "url": "https://www.imdb.com/title/tt32338669/"
         },
         "letterboxd": {
-          "value": 2.6,
+          "value": 2.59,
           "url": "https://letterboxd.com/film/mutiny-2026/"
         },
         "tomatoes": {
-          "value": 86,
+          "value": 85,
           "url": "https://www.rottentomatoes.com/m/mutiny_2026"
         }
       },
@@ -7562,7 +7562,7 @@
           "url": "https://www.imdb.com/title/tt21285562/"
         },
         "letterboxd": {
-          "value": 2.98,
+          "value": 2.94,
           "url": "https://letterboxd.com/film/the-dog-stars/"
         }
       },
@@ -7596,7 +7596,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92907/purchase?kanal=dxf",
       "eventId": "92907",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 6,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -7605,7 +7605,7 @@
           "url": "https://www.imdb.com/title/tt32393988/"
         },
         "letterboxd": {
-          "value": 2.76,
+          "value": 2.75,
           "url": "https://letterboxd.com/film/insidious-out-of-the-further/"
         },
         "tomatoes": {
@@ -7615,7 +7615,7 @@
       },
       "reserved": 0,
       "capacity": 246,
-      "available": 246
+      "available": 240
     },
     {
       "id": "EDI20251707-2026-08-29T15:00:00-Storsal",
@@ -7787,7 +7787,7 @@
           "url": "https://www.imdb.com/title/tt21285562/"
         },
         "letterboxd": {
-          "value": 2.98,
+          "value": 2.94,
           "url": "https://letterboxd.com/film/the-dog-stars/"
         }
       },
@@ -7830,7 +7830,7 @@
           "url": "https://www.imdb.com/title/tt37853455/"
         },
         "letterboxd": {
-          "value": 2.84,
+          "value": 2.83,
           "url": "https://letterboxd.com/film/one-night-only-2026/"
         },
         "tomatoes": {
@@ -7877,11 +7877,11 @@
           "url": "https://www.imdb.com/title/tt32338669/"
         },
         "letterboxd": {
-          "value": 2.6,
+          "value": 2.59,
           "url": "https://letterboxd.com/film/mutiny-2026/"
         },
         "tomatoes": {
-          "value": 86,
+          "value": 85,
           "url": "https://www.rottentomatoes.com/m/mutiny_2026"
         }
       },
@@ -7968,7 +7968,7 @@
           "url": "https://www.imdb.com/title/tt37853455/"
         },
         "letterboxd": {
-          "value": 2.84,
+          "value": 2.83,
           "url": "https://letterboxd.com/film/one-night-only-2026/"
         },
         "tomatoes": {
@@ -8015,7 +8015,7 @@
           "url": "https://www.imdb.com/title/tt21285562/"
         },
         "letterboxd": {
-          "value": 2.98,
+          "value": 2.94,
           "url": "https://letterboxd.com/film/the-dog-stars/"
         }
       },
@@ -8056,7 +8056,7 @@
           "url": "https://www.imdb.com/title/tt35410859/"
         },
         "letterboxd": {
-          "value": 3.86,
+          "value": 3.85,
           "url": "https://letterboxd.com/film/fjord-2026/"
         }
       },
@@ -8192,7 +8192,7 @@
           "url": "https://www.imdb.com/title/tt35410859/"
         },
         "letterboxd": {
-          "value": 3.86,
+          "value": 3.85,
           "url": "https://letterboxd.com/film/fjord-2026/"
         }
       },
@@ -8235,11 +8235,11 @@
           "url": "https://www.imdb.com/title/tt32338669/"
         },
         "letterboxd": {
-          "value": 2.6,
+          "value": 2.59,
           "url": "https://letterboxd.com/film/mutiny-2026/"
         },
         "tomatoes": {
-          "value": 86,
+          "value": 85,
           "url": "https://www.rottentomatoes.com/m/mutiny_2026"
         }
       },
@@ -8374,7 +8374,7 @@
           "url": "https://www.imdb.com/title/tt37853455/"
         },
         "letterboxd": {
-          "value": 2.84,
+          "value": 2.83,
           "url": "https://letterboxd.com/film/one-night-only-2026/"
         },
         "tomatoes": {
@@ -8421,7 +8421,7 @@
           "url": "https://www.imdb.com/title/tt21285562/"
         },
         "letterboxd": {
-          "value": 2.98,
+          "value": 2.94,
           "url": "https://letterboxd.com/film/the-dog-stars/"
         }
       },
@@ -8552,11 +8552,11 @@
           "url": "https://www.imdb.com/title/tt32338669/"
         },
         "letterboxd": {
-          "value": 2.6,
+          "value": 2.59,
           "url": "https://letterboxd.com/film/mutiny-2026/"
         },
         "tomatoes": {
-          "value": 86,
+          "value": 85,
           "url": "https://www.rottentomatoes.com/m/mutiny_2026"
         }
       },
@@ -8599,7 +8599,7 @@
           "url": "https://www.imdb.com/title/tt21285562/"
         },
         "letterboxd": {
-          "value": 2.98,
+          "value": 2.94,
           "url": "https://letterboxd.com/film/the-dog-stars/"
         }
       },
@@ -8684,7 +8684,7 @@
           "url": "https://www.imdb.com/title/tt35410859/"
         },
         "letterboxd": {
-          "value": 3.86,
+          "value": 3.85,
           "url": "https://letterboxd.com/film/fjord-2026/"
         }
       },
@@ -8727,7 +8727,7 @@
           "url": "https://www.imdb.com/title/tt37853455/"
         },
         "letterboxd": {
-          "value": 2.84,
+          "value": 2.83,
           "url": "https://letterboxd.com/film/one-night-only-2026/"
         },
         "tomatoes": {
@@ -8807,7 +8807,7 @@
           "url": "https://www.imdb.com/title/tt32393988/"
         },
         "letterboxd": {
-          "value": 2.76,
+          "value": 2.75,
           "url": "https://letterboxd.com/film/insidious-out-of-the-further/"
         },
         "tomatoes": {
@@ -8942,7 +8942,7 @@
           "url": "https://www.imdb.com/title/tt37853455/"
         },
         "letterboxd": {
-          "value": 2.84,
+          "value": 2.83,
           "url": "https://letterboxd.com/film/one-night-only-2026/"
         },
         "tomatoes": {
@@ -8982,7 +8982,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.7,
+          "value": 6.9,
           "id": "tt31451181",
           "url": "https://www.imdb.com/title/tt31451181/"
         }
@@ -9019,7 +9019,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.7,
+          "value": 6.9,
           "id": "tt31451181",
           "url": "https://www.imdb.com/title/tt31451181/"
         }
