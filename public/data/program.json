@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-30T01:14:33.600Z",
+  "updatedAt": "2026-08-30T15:19:03.459Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -7562,7 +7562,7 @@
           "url": "https://www.imdb.com/title/tt21285562/"
         },
         "letterboxd": {
-          "value": 2.91,
+          "value": 2.9,
           "url": "https://letterboxd.com/film/the-dog-stars/"
         },
         "tomatoes": {
@@ -7791,7 +7791,7 @@
           "url": "https://www.imdb.com/title/tt21285562/"
         },
         "letterboxd": {
-          "value": 2.91,
+          "value": 2.9,
           "url": "https://letterboxd.com/film/the-dog-stars/"
         },
         "tomatoes": {
@@ -7924,7 +7924,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92968/purchase?kanal=dxf",
       "eventId": "92968",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 3,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -7939,7 +7939,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 110
+      "available": 107
     },
     {
       "id": "EDI20251106-2026-08-30T16:00:00-Storsal",
@@ -7968,7 +7968,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93072/purchase?kanal=dxf",
       "eventId": "93072",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 9,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -7987,7 +7987,7 @@
       },
       "reserved": 0,
       "capacity": 246,
-      "available": 246
+      "available": 237
     },
     {
       "id": "EDI20251020-2026-08-30T17:45:00-Kinosal",
@@ -8062,7 +8062,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93071/purchase?kanal=dxf",
       "eventId": "93071",
       "promoterId": "202",
-      "sold": 2,
+      "sold": 4,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -8081,7 +8081,7 @@
       },
       "reserved": 0,
       "capacity": 246,
-      "available": 244
+      "available": 242
     },
     {
       "id": "EDI20250644-2026-08-30T20:15:00-Kinosal",
@@ -8118,7 +8118,7 @@
           "url": "https://www.imdb.com/title/tt21285562/"
         },
         "letterboxd": {
-          "value": 2.91,
+          "value": 2.9,
           "url": "https://letterboxd.com/film/the-dog-stars/"
         },
         "tomatoes": {
@@ -8154,7 +8154,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92498/purchase?kanal=dxf",
       "eventId": "92498",
       "promoterId": "202",
-      "sold": 6,
+      "sold": 7,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -8168,8 +8168,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 106,
-      "available": 100
+      "capacity": 110,
+      "available": 103
     },
     {
       "id": "EDI20251106-2026-09-01T17:00:00-Kinosal",
@@ -8528,7 +8528,7 @@
           "url": "https://www.imdb.com/title/tt21285562/"
         },
         "letterboxd": {
-          "value": 2.91,
+          "value": 2.9,
           "url": "https://letterboxd.com/film/the-dog-stars/"
         },
         "tomatoes": {
@@ -8710,7 +8710,7 @@
           "url": "https://www.imdb.com/title/tt21285562/"
         },
         "letterboxd": {
-          "value": 2.91,
+          "value": 2.9,
           "url": "https://letterboxd.com/film/the-dog-stars/"
         },
         "tomatoes": {
@@ -9097,7 +9097,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.1,
+          "value": 7.2,
           "id": "tt31451181",
           "url": "https://www.imdb.com/title/tt31451181/"
         }
@@ -9134,7 +9134,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.1,
+          "value": 7.2,
           "id": "tt31451181",
           "url": "https://www.imdb.com/title/tt31451181/"
         }
