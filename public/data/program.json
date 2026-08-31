@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-31T01:22:21.958Z",
+  "updatedAt": "2026-08-31T17:59:01.668Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -7468,7 +7468,7 @@
           "url": "https://www.imdb.com/title/tt37853455/"
         },
         "letterboxd": {
-          "value": 2.84,
+          "value": 2.83,
           "url": "https://letterboxd.com/film/one-night-only-2026/"
         },
         "tomatoes": {
@@ -7838,7 +7838,7 @@
           "url": "https://www.imdb.com/title/tt37853455/"
         },
         "letterboxd": {
-          "value": 2.84,
+          "value": 2.83,
           "url": "https://letterboxd.com/film/one-night-only-2026/"
         },
         "tomatoes": {
@@ -8024,7 +8024,7 @@
           "url": "https://www.imdb.com/title/tt37853455/"
         },
         "letterboxd": {
-          "value": 2.84,
+          "value": 2.83,
           "url": "https://letterboxd.com/film/one-night-only-2026/"
         },
         "tomatoes": {
@@ -8154,7 +8154,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92498/purchase?kanal=dxf",
       "eventId": "92498",
       "promoterId": "202",
-      "sold": 7,
+      "sold": 13,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -8168,8 +8168,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 103
+      "capacity": 108,
+      "available": 95
     },
     {
       "id": "EDI20251106-2026-09-01T17:00:00-Kinosal",
@@ -8290,7 +8290,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92499/purchase?kanal=dxf",
       "eventId": "92499",
       "promoterId": "202",
-      "sold": 8,
+      "sold": 14,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -8304,8 +8304,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 105,
-      "available": 97
+      "capacity": 108,
+      "available": 94
     },
     {
       "id": "EDI20251444-2026-09-01T20:30:00-Storsal",
@@ -8333,7 +8333,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93037/purchase?kanal=dxf",
       "eventId": "93037",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -8351,8 +8351,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 286,
-      "available": 286
+      "capacity": 284,
+      "available": 282
     },
     {
       "id": "EDI20251707-2026-09-02T17:00:00-Kinosal",
@@ -8425,7 +8425,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93035/purchase?kanal=dxf",
       "eventId": "93035",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 3,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -8444,7 +8444,7 @@
       },
       "reserved": 0,
       "capacity": 286,
-      "available": 286
+      "available": 283
     },
     {
       "id": "EDI20251020-2026-09-02T19:30:00-Kinosal",
@@ -8481,7 +8481,7 @@
           "url": "https://www.imdb.com/title/tt37853455/"
         },
         "letterboxd": {
-          "value": 2.84,
+          "value": 2.83,
           "url": "https://letterboxd.com/film/one-night-only-2026/"
         },
         "tomatoes": {
@@ -8519,7 +8519,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92974/purchase?kanal=dxf",
       "eventId": "92974",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -8537,8 +8537,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 286,
-      "available": 286
+      "capacity": 284,
+      "available": 282
     },
     {
       "id": "EDI20251707-2026-09-03T17:00:00-Storsal",
@@ -8842,7 +8842,7 @@
           "url": "https://www.imdb.com/title/tt37853455/"
         },
         "letterboxd": {
-          "value": 2.84,
+          "value": 2.83,
           "url": "https://letterboxd.com/film/one-night-only-2026/"
         },
         "tomatoes": {
@@ -9057,7 +9057,7 @@
           "url": "https://www.imdb.com/title/tt37853455/"
         },
         "letterboxd": {
-          "value": 2.84,
+          "value": 2.83,
           "url": "https://letterboxd.com/film/one-night-only-2026/"
         },
         "tomatoes": {
@@ -9066,8 +9066,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 110
+      "capacity": 55,
+      "available": 55
     },
     {
       "id": "EDI20251555-2026-09-15T13:00:00-Kinosal",
@@ -9097,7 +9097,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.2,
+          "value": 7.1,
           "id": "tt31451181",
           "url": "https://www.imdb.com/title/tt31451181/"
         }
@@ -9134,7 +9134,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.2,
+          "value": 7.1,
           "id": "tt31451181",
           "url": "https://www.imdb.com/title/tt31451181/"
         }
