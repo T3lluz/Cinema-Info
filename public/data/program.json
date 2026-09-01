@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-31T17:59:01.668Z",
+  "updatedAt": "2026-09-01T01:48:42.723Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -7425,7 +7425,7 @@
           "url": "https://www.imdb.com/title/tt33996352/"
         },
         "letterboxd": {
-          "value": 3.32,
+          "value": 3.33,
           "url": "https://letterboxd.com/film/miss-moxy/"
         }
       },
@@ -7562,7 +7562,7 @@
           "url": "https://www.imdb.com/title/tt21285562/"
         },
         "letterboxd": {
-          "value": 2.89,
+          "value": 2.88,
           "url": "https://letterboxd.com/film/the-dog-stars/"
         },
         "tomatoes": {
@@ -7657,7 +7657,7 @@
           "url": "https://www.imdb.com/title/tt33996352/"
         },
         "letterboxd": {
-          "value": 3.32,
+          "value": 3.33,
           "url": "https://letterboxd.com/film/miss-moxy/"
         }
       },
@@ -7791,7 +7791,7 @@
           "url": "https://www.imdb.com/title/tt21285562/"
         },
         "letterboxd": {
-          "value": 2.89,
+          "value": 2.88,
           "url": "https://letterboxd.com/film/the-dog-stars/"
         },
         "tomatoes": {
@@ -7933,7 +7933,7 @@
           "url": "https://www.imdb.com/title/tt33996352/"
         },
         "letterboxd": {
-          "value": 3.32,
+          "value": 3.33,
           "url": "https://letterboxd.com/film/miss-moxy/"
         }
       },
@@ -8118,7 +8118,7 @@
           "url": "https://www.imdb.com/title/tt21285562/"
         },
         "letterboxd": {
-          "value": 2.89,
+          "value": 2.88,
           "url": "https://letterboxd.com/film/the-dog-stars/"
         },
         "tomatoes": {
@@ -8154,7 +8154,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92498/purchase?kanal=dxf",
       "eventId": "92498",
       "promoterId": "202",
-      "sold": 13,
+      "sold": 18,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -8168,8 +8168,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 108,
-      "available": 95
+      "capacity": 110,
+      "available": 92
     },
     {
       "id": "EDI20251106-2026-09-01T17:00:00-Kinosal",
@@ -8290,7 +8290,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92499/purchase?kanal=dxf",
       "eventId": "92499",
       "promoterId": "202",
-      "sold": 14,
+      "sold": 16,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -8305,7 +8305,7 @@
       },
       "reserved": 0,
       "capacity": 108,
-      "available": 94
+      "available": 92
     },
     {
       "id": "EDI20251444-2026-09-01T20:30:00-Storsal",
@@ -8390,7 +8390,7 @@
           "url": "https://www.imdb.com/title/tt33996352/"
         },
         "letterboxd": {
-          "value": 3.32,
+          "value": 3.33,
           "url": "https://letterboxd.com/film/miss-moxy/"
         }
       },
@@ -8528,7 +8528,7 @@
           "url": "https://www.imdb.com/title/tt21285562/"
         },
         "letterboxd": {
-          "value": 2.89,
+          "value": 2.88,
           "url": "https://letterboxd.com/film/the-dog-stars/"
         },
         "tomatoes": {
@@ -8576,7 +8576,7 @@
           "url": "https://www.imdb.com/title/tt33996352/"
         },
         "letterboxd": {
-          "value": 3.32,
+          "value": 3.33,
           "url": "https://letterboxd.com/film/miss-moxy/"
         }
       },
@@ -8710,7 +8710,7 @@
           "url": "https://www.imdb.com/title/tt21285562/"
         },
         "letterboxd": {
-          "value": 2.89,
+          "value": 2.88,
           "url": "https://letterboxd.com/film/the-dog-stars/"
         },
         "tomatoes": {
@@ -8758,7 +8758,7 @@
           "url": "https://www.imdb.com/title/tt33996352/"
         },
         "letterboxd": {
-          "value": 3.32,
+          "value": 3.33,
           "url": "https://letterboxd.com/film/miss-moxy/"
         }
       },
@@ -8970,7 +8970,7 @@
           "url": "https://www.imdb.com/title/tt33996352/"
         },
         "letterboxd": {
-          "value": 3.32,
+          "value": 3.33,
           "url": "https://letterboxd.com/film/miss-moxy/"
         }
       },
