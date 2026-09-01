@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-01T01:48:42.723Z",
+  "updatedAt": "2026-09-01T15:27:10.027Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -7515,7 +7515,7 @@
           "url": "https://www.imdb.com/title/tt32338669/"
         },
         "letterboxd": {
-          "value": 2.58,
+          "value": 2.57,
           "url": "https://letterboxd.com/film/mutiny-2026/"
         },
         "tomatoes": {
@@ -7885,7 +7885,7 @@
           "url": "https://www.imdb.com/title/tt32338669/"
         },
         "letterboxd": {
-          "value": 2.58,
+          "value": 2.57,
           "url": "https://letterboxd.com/film/mutiny-2026/"
         },
         "tomatoes": {
@@ -8154,7 +8154,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92498/purchase?kanal=dxf",
       "eventId": "92498",
       "promoterId": "202",
-      "sold": 18,
+      "sold": 31,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -8169,7 +8169,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 92
+      "available": 79
     },
     {
       "id": "EDI20251106-2026-09-01T17:00:00-Kinosal",
@@ -8198,7 +8198,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93029/purchase?kanal=dxf",
       "eventId": "93029",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 5,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -8217,7 +8217,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 110
+      "available": 105
     },
     {
       "id": "EDI20260623-2026-09-01T18:00:00-Storsal",
@@ -8290,7 +8290,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92499/purchase?kanal=dxf",
       "eventId": "92499",
       "promoterId": "202",
-      "sold": 16,
+      "sold": 28,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -8304,8 +8304,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 108,
-      "available": 92
+      "capacity": 110,
+      "available": 82
     },
     {
       "id": "EDI20251444-2026-09-01T20:30:00-Storsal",
@@ -8342,7 +8342,7 @@
           "url": "https://www.imdb.com/title/tt32338669/"
         },
         "letterboxd": {
-          "value": 2.58,
+          "value": 2.57,
           "url": "https://letterboxd.com/film/mutiny-2026/"
         },
         "tomatoes": {
@@ -8351,8 +8351,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 284,
-      "available": 282
+      "capacity": 246,
+      "available": 244
     },
     {
       "id": "EDI20251707-2026-09-02T17:00:00-Kinosal",
@@ -8663,7 +8663,7 @@
           "url": "https://www.imdb.com/title/tt32338669/"
         },
         "letterboxd": {
-          "value": 2.58,
+          "value": 2.57,
           "url": "https://letterboxd.com/film/mutiny-2026/"
         },
         "tomatoes": {
@@ -8790,7 +8790,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92981/purchase?kanal=dxf",
       "eventId": "92981",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -8805,7 +8805,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 110
+      "available": 108
     },
     {
       "id": "EDI20251020-2026-09-04T19:05:00-Storsal",
@@ -9023,6 +9023,383 @@
       "available": 110
     },
     {
+      "id": "EDI20260087-2026-09-05T17:15:00-Storsal",
+      "title": "Fjord",
+      "screen": "Storsal",
+      "start": "2026-09-05T17:15:00",
+      "end": "2026-09-05T19:44:00",
+      "dayKey": "2026-09-05",
+      "runningMinutes": 139,
+      "runningLabel": "2 t. 19 min.",
+      "age": "9 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": true,
+      "genres": [
+        "Drama"
+      ],
+      "director": "Cristian Mungiu",
+      "premiere": "2026-09-04",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/8d4c23bc43fb6f95f060820f1fa564c899a7bd9b-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93005/purchase?kanal=dxf",
+      "eventId": "93005",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.8,
+          "id": "tt35410859",
+          "url": "https://www.imdb.com/title/tt35410859/"
+        },
+        "letterboxd": {
+          "value": 3.85,
+          "url": "https://letterboxd.com/film/fjord-2026/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
+    },
+    {
+      "id": "EDI20251020-2026-09-05T18:15:00-Kinosal",
+      "title": "One Night Only",
+      "screen": "Kinosal",
+      "start": "2026-09-05T18:15:00",
+      "end": "2026-09-05T20:07:00",
+      "dayKey": "2026-09-05",
+      "runningMinutes": 102,
+      "runningLabel": "1 t. 42 min.",
+      "age": "12 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Comedy",
+        "Drama",
+        "Romance"
+      ],
+      "director": "Will Gluck",
+      "premiere": "2026-08-28",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/491deec41490fbd372c4f69a3b7f7f467a476c85-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93006/purchase?kanal=dxf",
+      "eventId": "93006",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 6.4,
+          "id": "tt37853455",
+          "url": "https://www.imdb.com/title/tt37853455/"
+        },
+        "letterboxd": {
+          "value": 2.83,
+          "url": "https://letterboxd.com/film/one-night-only-2026/"
+        },
+        "tomatoes": {
+          "value": 75,
+          "url": "https://www.rottentomatoes.com/m/one_night_only_2026"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20260805-2026-09-05T21:00:00-Kinosal",
+      "title": "By Any Means",
+      "screen": "Kinosal",
+      "start": "2026-09-05T21:00:00",
+      "end": "2026-09-05T22:57:00",
+      "dayKey": "2026-09-05",
+      "runningMinutes": null,
+      "runningLabel": null,
+      "age": "15 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Action",
+        "Crime",
+        "Thriller"
+      ],
+      "director": "Elegance Bratton",
+      "premiere": "2026-09-04",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/b208616cca110127f0e398002fd0665af76b9271-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93055/purchase?kanal=dxf",
+      "eventId": "93055",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": null,
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20251707-2026-09-06T14:50:00-Kinosal",
+      "title": "Miss Moxy",
+      "screen": "Kinosal",
+      "start": "2026-09-06T14:50:00",
+      "end": "2026-09-06T16:28:00",
+      "dayKey": "2026-09-06",
+      "runningMinutes": 88,
+      "runningLabel": "1 t. 28 min.",
+      "age": "6 år",
+      "tags": [
+        "Norsk tale",
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ],
+      "director": null,
+      "premiere": "2026-08-28",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/4d5263dbeed399138e364fcb76d3acce437ff9e8-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93012/purchase?kanal=dxf",
+      "eventId": "93012",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 6.9,
+          "id": "tt33996352",
+          "url": "https://www.imdb.com/title/tt33996352/"
+        },
+        "letterboxd": {
+          "value": 3.33,
+          "url": "https://letterboxd.com/film/miss-moxy/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20260206-2026-09-06T15:30:00-Storsal",
+      "title": "Skolen med de magiske dyrene - Filmen",
+      "screen": "Storsal",
+      "start": "2026-09-06T15:30:00",
+      "end": "2026-09-06T17:22:31",
+      "dayKey": "2026-09-06",
+      "runningMinutes": 102,
+      "runningLabel": "1 t. 42 min.",
+      "age": "6 år",
+      "tags": [
+        "Norsk tale",
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Adventure",
+        "Family",
+        "Fantasy"
+      ],
+      "director": "Maggie Peren, Bernhard Jasper",
+      "premiere": "2026-08-21",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/f00ce714aee93b0b1d9b9a319f0cee3be0765044-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93031/purchase?kanal=dxf",
+      "eventId": "93031",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 5.7,
+          "id": "tt35286242",
+          "url": "https://www.imdb.com/title/tt35286242/"
+        },
+        "letterboxd": {
+          "value": 3.07,
+          "url": "https://letterboxd.com/film/school-of-magical-animals-4/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 246,
+      "available": 246
+    },
+    {
+      "id": "EDI20260087-2026-09-06T17:00:00-Kinosal",
+      "title": "Fjord",
+      "screen": "Kinosal",
+      "start": "2026-09-06T17:00:00",
+      "end": "2026-09-06T19:29:00",
+      "dayKey": "2026-09-06",
+      "runningMinutes": 139,
+      "runningLabel": "2 t. 19 min.",
+      "age": "9 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": true,
+      "genres": [
+        "Drama"
+      ],
+      "director": "Cristian Mungiu",
+      "premiere": "2026-09-04",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/8d4c23bc43fb6f95f060820f1fa564c899a7bd9b-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93008/purchase?kanal=dxf",
+      "eventId": "93008",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.8,
+          "id": "tt35410859",
+          "url": "https://www.imdb.com/title/tt35410859/"
+        },
+        "letterboxd": {
+          "value": 3.85,
+          "url": "https://letterboxd.com/film/fjord-2026/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20251020-2026-09-06T18:00:00-Storsal",
+      "title": "One Night Only",
+      "screen": "Storsal",
+      "start": "2026-09-06T18:00:00",
+      "end": "2026-09-06T19:52:00",
+      "dayKey": "2026-09-06",
+      "runningMinutes": 102,
+      "runningLabel": "1 t. 42 min.",
+      "age": "12 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Comedy",
+        "Drama",
+        "Romance"
+      ],
+      "director": "Will Gluck",
+      "premiere": "2026-08-28",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/491deec41490fbd372c4f69a3b7f7f467a476c85-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93011/purchase?kanal=dxf",
+      "eventId": "93011",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 6.4,
+          "id": "tt37853455",
+          "url": "https://www.imdb.com/title/tt37853455/"
+        },
+        "letterboxd": {
+          "value": 2.83,
+          "url": "https://letterboxd.com/film/one-night-only-2026/"
+        },
+        "tomatoes": {
+          "value": 75,
+          "url": "https://www.rottentomatoes.com/m/one_night_only_2026"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
+    },
+    {
+      "id": "EDI20260805-2026-09-06T20:00:00-Kinosal",
+      "title": "By Any Means",
+      "screen": "Kinosal",
+      "start": "2026-09-06T20:00:00",
+      "end": "2026-09-06T21:57:00",
+      "dayKey": "2026-09-06",
+      "runningMinutes": null,
+      "runningLabel": null,
+      "age": "15 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Action",
+        "Crime",
+        "Thriller"
+      ],
+      "director": "Elegance Bratton",
+      "premiere": "2026-09-04",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/b208616cca110127f0e398002fd0665af76b9271-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93033/purchase?kanal=dxf",
+      "eventId": "93033",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": null,
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20251444-2026-09-06T20:30:00-Storsal",
+      "title": "Mutiny",
+      "screen": "Storsal",
+      "start": "2026-09-06T20:30:00",
+      "end": "2026-09-06T22:15:00",
+      "dayKey": "2026-09-06",
+      "runningMinutes": 95,
+      "runningLabel": "1 t. 35 min.",
+      "age": "15 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Action",
+        "Crime",
+        "Thriller"
+      ],
+      "director": "Jean-François Richet",
+      "premiere": "2026-08-28",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/9b567bb823774e2e8c86dcd638d7267767871dc2-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93009/purchase?kanal=dxf",
+      "eventId": "93009",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 5.7,
+          "id": "tt32338669",
+          "url": "https://www.imdb.com/title/tt32338669/"
+        },
+        "letterboxd": {
+          "value": 2.57,
+          "url": "https://letterboxd.com/film/mutiny-2026/"
+        },
+        "tomatoes": {
+          "value": 86,
+          "url": "https://www.rottentomatoes.com/m/mutiny_2026"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
+    },
+    {
       "id": "EDI20251020-2026-09-08T11:15:00-Kinosal",
       "title": "One Night Only",
       "screen": "Kinosal",
@@ -9068,6 +9445,333 @@
       "reserved": 0,
       "capacity": 55,
       "available": 55
+    },
+    {
+      "id": "EDI20251707-2026-09-08T17:00:00-Storsal",
+      "title": "Miss Moxy",
+      "screen": "Storsal",
+      "start": "2026-09-08T17:00:00",
+      "end": "2026-09-08T18:38:00",
+      "dayKey": "2026-09-08",
+      "runningMinutes": 88,
+      "runningLabel": "1 t. 28 min.",
+      "age": "6 år",
+      "tags": [
+        "Norsk tale",
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ],
+      "director": null,
+      "premiere": "2026-08-28",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/4d5263dbeed399138e364fcb76d3acce437ff9e8-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93039/purchase?kanal=dxf",
+      "eventId": "93039",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 6.9,
+          "id": "tt33996352",
+          "url": "https://www.imdb.com/title/tt33996352/"
+        },
+        "letterboxd": {
+          "value": 3.33,
+          "url": "https://letterboxd.com/film/miss-moxy/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 246,
+      "available": 246
+    },
+    {
+      "id": "EDI20260206-2026-09-08T17:30:00-Kinosal",
+      "title": "Skolen med de magiske dyrene - Filmen",
+      "screen": "Kinosal",
+      "start": "2026-09-08T17:30:00",
+      "end": "2026-09-08T19:22:31",
+      "dayKey": "2026-09-08",
+      "runningMinutes": 102,
+      "runningLabel": "1 t. 42 min.",
+      "age": "6 år",
+      "tags": [
+        "Norsk tale",
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Adventure",
+        "Family",
+        "Fantasy"
+      ],
+      "director": "Maggie Peren, Bernhard Jasper",
+      "premiere": "2026-08-21",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/f00ce714aee93b0b1d9b9a319f0cee3be0765044-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93110/purchase?kanal=dxf",
+      "eventId": "93110",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 5.7,
+          "id": "tt35286242",
+          "url": "https://www.imdb.com/title/tt35286242/"
+        },
+        "letterboxd": {
+          "value": 3.07,
+          "url": "https://letterboxd.com/film/school-of-magical-animals-4/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20260087-2026-09-08T19:30:00-Storsal",
+      "title": "Fjord",
+      "screen": "Storsal",
+      "start": "2026-09-08T19:30:00",
+      "end": "2026-09-08T21:59:00",
+      "dayKey": "2026-09-08",
+      "runningMinutes": 139,
+      "runningLabel": "2 t. 19 min.",
+      "age": "9 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": true,
+      "genres": [
+        "Drama"
+      ],
+      "director": "Cristian Mungiu",
+      "premiere": "2026-09-04",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/8d4c23bc43fb6f95f060820f1fa564c899a7bd9b-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93044/purchase?kanal=dxf",
+      "eventId": "93044",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.8,
+          "id": "tt35410859",
+          "url": "https://www.imdb.com/title/tt35410859/"
+        },
+        "letterboxd": {
+          "value": 3.85,
+          "url": "https://letterboxd.com/film/fjord-2026/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
+    },
+    {
+      "id": "EDI20260805-2026-09-08T20:15:00-Kinosal",
+      "title": "By Any Means",
+      "screen": "Kinosal",
+      "start": "2026-09-08T20:15:00",
+      "end": "2026-09-08T22:12:00",
+      "dayKey": "2026-09-08",
+      "runningMinutes": null,
+      "runningLabel": null,
+      "age": "15 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Action",
+        "Crime",
+        "Thriller"
+      ],
+      "director": "Elegance Bratton",
+      "premiere": "2026-09-04",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/b208616cca110127f0e398002fd0665af76b9271-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93045/purchase?kanal=dxf",
+      "eventId": "93045",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": null,
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20251707-2026-09-09T17:00:00-Kinosal",
+      "title": "Miss Moxy",
+      "screen": "Kinosal",
+      "start": "2026-09-09T17:00:00",
+      "end": "2026-09-09T18:38:00",
+      "dayKey": "2026-09-09",
+      "runningMinutes": 88,
+      "runningLabel": "1 t. 28 min.",
+      "age": "6 år",
+      "tags": [
+        "Norsk tale",
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ],
+      "director": null,
+      "premiere": "2026-08-28",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/4d5263dbeed399138e364fcb76d3acce437ff9e8-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93041/purchase?kanal=dxf",
+      "eventId": "93041",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 6.9,
+          "id": "tt33996352",
+          "url": "https://www.imdb.com/title/tt33996352/"
+        },
+        "letterboxd": {
+          "value": 3.33,
+          "url": "https://letterboxd.com/film/miss-moxy/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20251020-2026-09-09T18:00:00-Storsal",
+      "title": "One Night Only",
+      "screen": "Storsal",
+      "start": "2026-09-09T18:00:00",
+      "end": "2026-09-09T19:52:28",
+      "dayKey": "2026-09-09",
+      "runningMinutes": 102,
+      "runningLabel": "1 t. 42 min.",
+      "age": "12 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Comedy",
+        "Drama",
+        "Romance"
+      ],
+      "director": "Will Gluck",
+      "premiere": "2026-08-28",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/491deec41490fbd372c4f69a3b7f7f467a476c85-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93043/purchase?kanal=dxf",
+      "eventId": "93043",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 6.4,
+          "id": "tt37853455",
+          "url": "https://www.imdb.com/title/tt37853455/"
+        },
+        "letterboxd": {
+          "value": 2.83,
+          "url": "https://letterboxd.com/film/one-night-only-2026/"
+        },
+        "tomatoes": {
+          "value": 75,
+          "url": "https://www.rottentomatoes.com/m/one_night_only_2026"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
+    },
+    {
+      "id": "EDI20260087-2026-09-09T19:30:00-Kinosal",
+      "title": "Fjord",
+      "screen": "Kinosal",
+      "start": "2026-09-09T19:30:00",
+      "end": "2026-09-09T21:59:00",
+      "dayKey": "2026-09-09",
+      "runningMinutes": 139,
+      "runningLabel": "2 t. 19 min.",
+      "age": "9 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": true,
+      "genres": [
+        "Drama"
+      ],
+      "director": "Cristian Mungiu",
+      "premiere": "2026-09-04",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/8d4c23bc43fb6f95f060820f1fa564c899a7bd9b-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93040/purchase?kanal=dxf",
+      "eventId": "93040",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.8,
+          "id": "tt35410859",
+          "url": "https://www.imdb.com/title/tt35410859/"
+        },
+        "letterboxd": {
+          "value": 3.85,
+          "url": "https://letterboxd.com/film/fjord-2026/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20260805-2026-09-09T20:30:00-Storsal",
+      "title": "By Any Means",
+      "screen": "Storsal",
+      "start": "2026-09-09T20:30:00",
+      "end": "2026-09-09T22:27:00",
+      "dayKey": "2026-09-09",
+      "runningMinutes": null,
+      "runningLabel": null,
+      "age": "15 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Action",
+        "Crime",
+        "Thriller"
+      ],
+      "director": "Elegance Bratton",
+      "premiere": "2026-09-04",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/b208616cca110127f0e398002fd0665af76b9271-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93042/purchase?kanal=dxf",
+      "eventId": "93042",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": null,
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
     },
     {
       "id": "EDI20251555-2026-09-15T13:00:00-Kinosal",
