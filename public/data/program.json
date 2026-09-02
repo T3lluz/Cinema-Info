@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-02T01:02:01.724Z",
+  "updatedAt": "2026-09-02T15:04:01.566Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -8442,9 +8442,9 @@
           "url": "https://www.rottentomatoes.com/m/paw_patrol_the_dino_movie"
         }
       },
-      "reserved": 2,
+      "reserved": 0,
       "capacity": 286,
-      "available": 281
+      "available": 283
     },
     {
       "id": "EDI20251020-2026-09-02T19:30:00-Kinosal",
@@ -8537,8 +8537,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 284,
-      "available": 282
+      "capacity": 286,
+      "available": 284
     },
     {
       "id": "EDI20251707-2026-09-03T17:00:00-Storsal",
@@ -8611,7 +8611,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93052/purchase?kanal=dxf",
       "eventId": "93052",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -8625,8 +8625,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 110
+      "capacity": 108,
+      "available": 106
     },
     {
       "id": "EDI20251444-2026-09-03T19:30:00-Storsal",
@@ -8803,9 +8803,9 @@
           "url": "https://letterboxd.com/film/fjord-2026/"
         }
       },
-      "reserved": 2,
+      "reserved": 0,
       "capacity": 110,
-      "available": 106
+      "available": 108
     },
     {
       "id": "EDI20251020-2026-09-04T19:05:00-Storsal",
@@ -8870,9 +8870,9 @@
       "showType": "Norgespremiere",
       "kinoklubb": false,
       "genres": [
+        "Action",
         "Crime",
-        "Drama",
-        "Mystery"
+        "Thriller"
       ],
       "director": "Elegance Bratton",
       "premiere": "2026-09-04",
@@ -9132,9 +9132,9 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
+        "Action",
         "Crime",
-        "Drama",
-        "Mystery"
+        "Thriller"
       ],
       "director": "Elegance Bratton",
       "premiere": "2026-09-04",
@@ -9347,9 +9347,9 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
+        "Action",
         "Crime",
-        "Drama",
-        "Mystery"
+        "Thriller"
       ],
       "director": "Elegance Bratton",
       "premiere": "2026-09-04",
@@ -9609,9 +9609,9 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
+        "Action",
         "Crime",
-        "Drama",
-        "Mystery"
+        "Thriller"
       ],
       "director": "Elegance Bratton",
       "premiere": "2026-09-04",
@@ -9780,9 +9780,9 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
+        "Action",
         "Crime",
-        "Drama",
-        "Mystery"
+        "Thriller"
       ],
       "director": "Elegance Bratton",
       "premiere": "2026-09-04",
