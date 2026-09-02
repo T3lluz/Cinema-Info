@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-01T15:27:10.027Z",
+  "updatedAt": "2026-09-02T01:02:01.724Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -7562,7 +7562,7 @@
           "url": "https://www.imdb.com/title/tt21285562/"
         },
         "letterboxd": {
-          "value": 2.88,
+          "value": 2.87,
           "url": "https://letterboxd.com/film/the-dog-stars/"
         },
         "tomatoes": {
@@ -7791,7 +7791,7 @@
           "url": "https://www.imdb.com/title/tt21285562/"
         },
         "letterboxd": {
-          "value": 2.88,
+          "value": 2.87,
           "url": "https://letterboxd.com/film/the-dog-stars/"
         },
         "tomatoes": {
@@ -8118,7 +8118,7 @@
           "url": "https://www.imdb.com/title/tt21285562/"
         },
         "letterboxd": {
-          "value": 2.88,
+          "value": 2.87,
           "url": "https://letterboxd.com/film/the-dog-stars/"
         },
         "tomatoes": {
@@ -8245,7 +8245,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93050/purchase?kanal=dxf",
       "eventId": "93050",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 3,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -8264,7 +8264,7 @@
       },
       "reserved": 0,
       "capacity": 286,
-      "available": 286
+      "available": 283
     },
     {
       "id": "EDI20260087-2026-09-01T19:30:00-Kinosal",
@@ -8290,7 +8290,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92499/purchase?kanal=dxf",
       "eventId": "92499",
       "promoterId": "202",
-      "sold": 28,
+      "sold": 38,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -8305,7 +8305,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 82
+      "available": 72
     },
     {
       "id": "EDI20251444-2026-09-01T20:30:00-Storsal",
@@ -8333,7 +8333,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93037/purchase?kanal=dxf",
       "eventId": "93037",
       "promoterId": "202",
-      "sold": 2,
+      "sold": 6,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -8352,7 +8352,7 @@
       },
       "reserved": 0,
       "capacity": 246,
-      "available": 244
+      "available": 240
     },
     {
       "id": "EDI20251707-2026-09-02T17:00:00-Kinosal",
@@ -8442,9 +8442,9 @@
           "url": "https://www.rottentomatoes.com/m/paw_patrol_the_dino_movie"
         }
       },
-      "reserved": 0,
+      "reserved": 2,
       "capacity": 286,
-      "available": 283
+      "available": 281
     },
     {
       "id": "EDI20251020-2026-09-02T19:30:00-Kinosal",
@@ -8528,7 +8528,7 @@
           "url": "https://www.imdb.com/title/tt21285562/"
         },
         "letterboxd": {
-          "value": 2.88,
+          "value": 2.87,
           "url": "https://letterboxd.com/film/the-dog-stars/"
         },
         "tomatoes": {
@@ -8710,7 +8710,7 @@
           "url": "https://www.imdb.com/title/tt21285562/"
         },
         "letterboxd": {
-          "value": 2.88,
+          "value": 2.87,
           "url": "https://letterboxd.com/film/the-dog-stars/"
         },
         "tomatoes": {
@@ -8773,8 +8773,8 @@
       "start": "2026-09-04T18:00:00",
       "end": "2026-09-04T20:29:00",
       "dayKey": "2026-09-04",
-      "runningMinutes": 139,
-      "runningLabel": "2 t. 19 min.",
+      "runningMinutes": 145,
+      "runningLabel": "2 t. 25 min.",
       "age": "9 år",
       "tags": [
         "Norsk tekst"
@@ -8803,9 +8803,9 @@
           "url": "https://letterboxd.com/film/fjord-2026/"
         }
       },
-      "reserved": 0,
+      "reserved": 2,
       "capacity": 110,
-      "available": 108
+      "available": 106
     },
     {
       "id": "EDI20251020-2026-09-04T19:05:00-Storsal",
@@ -8870,9 +8870,9 @@
       "showType": "Norgespremiere",
       "kinoklubb": false,
       "genres": [
-        "Action",
         "Crime",
-        "Thriller"
+        "Drama",
+        "Mystery"
       ],
       "director": "Elegance Bratton",
       "premiere": "2026-09-04",
@@ -8882,7 +8882,13 @@
       "promoterId": "202",
       "sold": 0,
       "eventStatus": "ok",
-      "ratings": null,
+      "ratings": {
+        "imdb": {
+          "value": 4,
+          "id": "tt4741768",
+          "url": "https://www.imdb.com/title/tt4741768/"
+        }
+      },
       "reserved": 0,
       "capacity": 110,
       "available": 110
@@ -8913,7 +8919,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93030/purchase?kanal=dxf",
       "eventId": "93030",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -8932,7 +8938,7 @@
       },
       "reserved": 0,
       "capacity": 246,
-      "available": 246
+      "available": 244
     },
     {
       "id": "EDI20251707-2026-09-05T15:00:00-Storsal",
@@ -9029,8 +9035,8 @@
       "start": "2026-09-05T17:15:00",
       "end": "2026-09-05T19:44:00",
       "dayKey": "2026-09-05",
-      "runningMinutes": 139,
-      "runningLabel": "2 t. 19 min.",
+      "runningMinutes": 145,
+      "runningLabel": "2 t. 25 min.",
       "age": "9 år",
       "tags": [
         "Norsk tekst"
@@ -9126,9 +9132,9 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Action",
         "Crime",
-        "Thriller"
+        "Drama",
+        "Mystery"
       ],
       "director": "Elegance Bratton",
       "premiere": "2026-09-04",
@@ -9138,7 +9144,13 @@
       "promoterId": "202",
       "sold": 0,
       "eventStatus": "ok",
-      "ratings": null,
+      "ratings": {
+        "imdb": {
+          "value": 4,
+          "id": "tt4741768",
+          "url": "https://www.imdb.com/title/tt4741768/"
+        }
+      },
       "reserved": 0,
       "capacity": 110,
       "available": 110
@@ -9238,8 +9250,8 @@
       "start": "2026-09-06T17:00:00",
       "end": "2026-09-06T19:29:00",
       "dayKey": "2026-09-06",
-      "runningMinutes": 139,
-      "runningLabel": "2 t. 19 min.",
+      "runningMinutes": 145,
+      "runningLabel": "2 t. 25 min.",
       "age": "9 år",
       "tags": [
         "Norsk tekst"
@@ -9335,9 +9347,9 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Action",
         "Crime",
-        "Thriller"
+        "Drama",
+        "Mystery"
       ],
       "director": "Elegance Bratton",
       "premiere": "2026-09-04",
@@ -9347,7 +9359,13 @@
       "promoterId": "202",
       "sold": 0,
       "eventStatus": "ok",
-      "ratings": null,
+      "ratings": {
+        "imdb": {
+          "value": 4,
+          "id": "tt4741768",
+          "url": "https://www.imdb.com/title/tt4741768/"
+        }
+      },
       "reserved": 0,
       "capacity": 110,
       "available": 110
@@ -9541,8 +9559,8 @@
       "start": "2026-09-08T19:30:00",
       "end": "2026-09-08T21:59:00",
       "dayKey": "2026-09-08",
-      "runningMinutes": 139,
-      "runningLabel": "2 t. 19 min.",
+      "runningMinutes": 145,
+      "runningLabel": "2 t. 25 min.",
       "age": "9 år",
       "tags": [
         "Norsk tekst"
@@ -9591,9 +9609,9 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Action",
         "Crime",
-        "Thriller"
+        "Drama",
+        "Mystery"
       ],
       "director": "Elegance Bratton",
       "premiere": "2026-09-04",
@@ -9603,7 +9621,13 @@
       "promoterId": "202",
       "sold": 0,
       "eventStatus": "ok",
-      "ratings": null,
+      "ratings": {
+        "imdb": {
+          "value": 4,
+          "id": "tt4741768",
+          "url": "https://www.imdb.com/title/tt4741768/"
+        }
+      },
       "reserved": 0,
       "capacity": 110,
       "available": 110
@@ -9706,8 +9730,8 @@
       "start": "2026-09-09T19:30:00",
       "end": "2026-09-09T21:59:00",
       "dayKey": "2026-09-09",
-      "runningMinutes": 139,
-      "runningLabel": "2 t. 19 min.",
+      "runningMinutes": 145,
+      "runningLabel": "2 t. 25 min.",
       "age": "9 år",
       "tags": [
         "Norsk tekst"
@@ -9756,9 +9780,9 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Action",
         "Crime",
-        "Thriller"
+        "Drama",
+        "Mystery"
       ],
       "director": "Elegance Bratton",
       "premiere": "2026-09-04",
@@ -9768,7 +9792,13 @@
       "promoterId": "202",
       "sold": 0,
       "eventStatus": "ok",
-      "ratings": null,
+      "ratings": {
+        "imdb": {
+          "value": 4,
+          "id": "tt4741768",
+          "url": "https://www.imdb.com/title/tt4741768/"
+        }
+      },
       "reserved": 0,
       "capacity": 286,
       "available": 286
