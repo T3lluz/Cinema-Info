@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-02T15:04:01.566Z",
+  "updatedAt": "2026-09-03T01:06:23.405Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -8519,7 +8519,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92974/purchase?kanal=dxf",
       "eventId": "92974",
       "promoterId": "202",
-      "sold": 2,
+      "sold": 4,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -8538,7 +8538,7 @@
       },
       "reserved": 0,
       "capacity": 286,
-      "available": 284
+      "available": 282
     },
     {
       "id": "EDI20251707-2026-09-03T17:00:00-Storsal",
@@ -8763,15 +8763,15 @@
         }
       },
       "reserved": 0,
-      "capacity": 286,
-      "available": 286
+      "capacity": 246,
+      "available": 246
     },
     {
       "id": "EDI20260087-2026-09-04T18:00:00-Kinosal",
       "title": "Fjord",
       "screen": "Kinosal",
       "start": "2026-09-04T18:00:00",
-      "end": "2026-09-04T20:29:00",
+      "end": "2026-09-04T20:36:00",
       "dayKey": "2026-09-04",
       "runningMinutes": 145,
       "runningLabel": "2 t. 25 min.",
@@ -8786,7 +8786,7 @@
       ],
       "director": "Cristian Mungiu",
       "premiere": "2026-09-04",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/8d4c23bc43fb6f95f060820f1fa564c899a7bd9b-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/a333853103decb5a522d8707ce1f9ad2d0bcafa8-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/92981/purchase?kanal=dxf",
       "eventId": "92981",
       "promoterId": "202",
@@ -8851,8 +8851,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 286,
-      "available": 286
+      "capacity": 246,
+      "available": 246
     },
     {
       "id": "EDI20260805-2026-09-04T21:00:00-Kinosal",
@@ -8981,8 +8981,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 286,
-      "available": 286
+      "capacity": 246,
+      "available": 246
     },
     {
       "id": "EDI20260206-2026-09-05T15:30:00-Kinosal",
@@ -9033,7 +9033,7 @@
       "title": "Fjord",
       "screen": "Storsal",
       "start": "2026-09-05T17:15:00",
-      "end": "2026-09-05T19:44:00",
+      "end": "2026-09-05T19:51:00",
       "dayKey": "2026-09-05",
       "runningMinutes": 145,
       "runningLabel": "2 t. 25 min.",
@@ -9048,7 +9048,7 @@
       ],
       "director": "Cristian Mungiu",
       "premiere": "2026-09-04",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/8d4c23bc43fb6f95f060820f1fa564c899a7bd9b-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/a333853103decb5a522d8707ce1f9ad2d0bcafa8-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93005/purchase?kanal=dxf",
       "eventId": "93005",
       "promoterId": "202",
@@ -9066,8 +9066,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 286,
-      "available": 286
+      "capacity": 246,
+      "available": 246
     },
     {
       "id": "EDI20251020-2026-09-05T18:15:00-Kinosal",
@@ -9248,7 +9248,7 @@
       "title": "Fjord",
       "screen": "Kinosal",
       "start": "2026-09-06T17:00:00",
-      "end": "2026-09-06T19:29:00",
+      "end": "2026-09-06T19:36:00",
       "dayKey": "2026-09-06",
       "runningMinutes": 145,
       "runningLabel": "2 t. 25 min.",
@@ -9263,7 +9263,7 @@
       ],
       "director": "Cristian Mungiu",
       "premiere": "2026-09-04",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/8d4c23bc43fb6f95f060820f1fa564c899a7bd9b-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/a333853103decb5a522d8707ce1f9ad2d0bcafa8-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93008/purchase?kanal=dxf",
       "eventId": "93008",
       "promoterId": "202",
@@ -9557,7 +9557,7 @@
       "title": "Fjord",
       "screen": "Storsal",
       "start": "2026-09-08T19:30:00",
-      "end": "2026-09-08T21:59:00",
+      "end": "2026-09-08T22:06:00",
       "dayKey": "2026-09-08",
       "runningMinutes": 145,
       "runningLabel": "2 t. 25 min.",
@@ -9572,7 +9572,7 @@
       ],
       "director": "Cristian Mungiu",
       "premiere": "2026-09-04",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/8d4c23bc43fb6f95f060820f1fa564c899a7bd9b-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/a333853103decb5a522d8707ce1f9ad2d0bcafa8-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93044/purchase?kanal=dxf",
       "eventId": "93044",
       "promoterId": "202",
@@ -9728,7 +9728,7 @@
       "title": "Fjord",
       "screen": "Kinosal",
       "start": "2026-09-09T19:30:00",
-      "end": "2026-09-09T21:59:00",
+      "end": "2026-09-09T22:06:00",
       "dayKey": "2026-09-09",
       "runningMinutes": 145,
       "runningLabel": "2 t. 25 min.",
@@ -9743,7 +9743,7 @@
       ],
       "director": "Cristian Mungiu",
       "premiere": "2026-09-04",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/8d4c23bc43fb6f95f060820f1fa564c899a7bd9b-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/a333853103decb5a522d8707ce1f9ad2d0bcafa8-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93040/purchase?kanal=dxf",
       "eventId": "93040",
       "promoterId": "202",
@@ -9831,7 +9831,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.1,
+          "value": 7.2,
           "id": "tt31451181",
           "url": "https://www.imdb.com/title/tt31451181/"
         }
@@ -9868,7 +9868,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.1,
+          "value": 7.2,
           "id": "tt31451181",
           "url": "https://www.imdb.com/title/tt31451181/"
         }
