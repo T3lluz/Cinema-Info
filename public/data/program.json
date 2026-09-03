@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-03T09:42:42.866Z",
+  "updatedAt": "2026-09-03T14:58:06.168Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -8654,7 +8654,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92978/purchase?kanal=dxf",
       "eventId": "92978",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -8673,7 +8673,7 @@
       },
       "reserved": 0,
       "capacity": 286,
-      "available": 286
+      "available": 284
     },
     {
       "id": "EDI20250644-2026-09-03T20:15:00-Kinosal",
@@ -8790,7 +8790,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92981/purchase?kanal=dxf",
       "eventId": "92981",
       "promoterId": "202",
-      "sold": 2,
+      "sold": 8,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -8804,8 +8804,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 108
+      "capacity": 104,
+      "available": 96
     },
     {
       "id": "EDI20251020-2026-09-04T19:05:00-Storsal",
