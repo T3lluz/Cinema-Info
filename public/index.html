@@ -267,17 +267,16 @@
       </div>
     </div>
 
-    <!-- Bridge endpoints. Leave this out to use the Supabase Edge
-         Functions baked into app.js; uncomment and fill in to point the
-         app at a Deno Deploy (or any other) host instead, without
-         editing the bundle. See deploy/deno/README.md.
+    <!-- Bridge endpoints. Both functions are self-hosted on t3lluserver
+         and published over Tailscale Funnel; app.js falls back to the
+         Supabase Edge Functions if this block is removed. Details and
+         the systemd/Funnel setup: deploy/deno/README.md. -->
     <script>
       window.CINEMA_INFO_BRIDGE = {
-        dxWebLogin: "https://YOUR-PROJECT.deno.dev/",
-        omdbLookup: "https://YOUR-OMDB-PROJECT.deno.dev/",
+        dxWebLogin: "https://t3lluserver.tail5b2262.ts.net/dx-web-login",
+        omdbLookup: "https://t3lluserver.tail5b2262.ts.net/omdb-lookup",
       };
     </script>
-    -->
     <script src="js/app.js?v=132" type="module"></script>
   </body>
 </html>
