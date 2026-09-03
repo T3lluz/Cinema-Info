@@ -1,4 +1,7 @@
-import "jsr:@supabase/functions-js/edge-runtime.d.ts";
+// Types only, and only on Supabase. Everything below is plain Deno —
+// `Deno.serve` plus `fetch` — so this same file runs unchanged on
+// Deno Deploy. See `deploy/deno/README.md`.
+/// <reference lib="deno.ns" />
 
 /**
  * Movie lookup for Cinema Info.

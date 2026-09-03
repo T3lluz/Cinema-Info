@@ -267,6 +267,17 @@
       </div>
     </div>
 
+    <!-- Bridge endpoints. Leave this out to use the Supabase Edge
+         Functions baked into app.js; uncomment and fill in to point the
+         app at a Deno Deploy (or any other) host instead, without
+         editing the bundle. See deploy/deno/README.md.
+    <script>
+      window.CINEMA_INFO_BRIDGE = {
+        dxWebLogin: "https://YOUR-PROJECT.deno.dev/",
+        omdbLookup: "https://YOUR-OMDB-PROJECT.deno.dev/",
+      };
+    </script>
+    -->
     <script src="js/app.js?v=132" type="module"></script>
   </body>
 </html>

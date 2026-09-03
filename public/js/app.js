@@ -6,9 +6,25 @@ const SEAT_MAP_KEY = "cinemaInfoSeatMaps";
 const HISTORY_KEEP_DAYS = 120;
 const DX_PARTNER_ID = "202";
 const DX_API = "https://api.dx.no/v3";
+/**
+ * Where the two bridge functions live.
+ *
+ * Both are plain `Deno.serve` handlers, so they run unchanged on
+ * Supabase Edge Functions or on Deno Deploy. Supabase applies its Fair
+ * Use restrictions to every project in an organisation at once, so a
+ * quota blown by an unrelated project takes seat maps down with it;
+ * moving the bridge to its own host is what keeps that from happening.
+ *
+ * Set `window.CINEMA_INFO_BRIDGE` before this script to point either
+ * endpoint elsewhere without editing the source — see
+ * `deploy/deno/README.md`.
+ */
+const BRIDGE = globalThis.CINEMA_INFO_BRIDGE || {};
 const DX_LOGIN_PROXY =
+  BRIDGE.dxWebLogin ||
   "https://kypeegsbfaivyqeidnqp.supabase.co/functions/v1/dx-web-login";
 const OMDB_PROXY =
+  BRIDGE.omdbLookup ||
   "https://kypeegsbfaivyqeidnqp.supabase.co/functions/v1/omdb-lookup";
 const DX_LOGIN_ANON_KEY =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt5cGVlZ3NiZmFpdnlxZWlkbnFwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUxODczMzQsImV4cCI6MjEwMDc2MzMzNH0.xUuL6dC8u_Nm6DqxS0y4KyjpMNlVn6IrxcvivSHeaaM";
@@ -159,6 +175,8 @@ const I18N = {
     seatMapHint: "{sold} av {capacity} plasser",
     seatMapLoading: "Henter salkart…",
     seatMapError: "Kunne ikke hente salkartet.",
+    seatMapBridgeDown:
+      "DX-broen er utilgjengelig akkurat nå, så salkart og skann-tall uteblir.",
     seatMapNone: "Ingen salkart for denne salen.",
     seatMapFree: "Fri plassering — ingen nummererte plasser.",
     seatMapRetry: "Prøv igjen",
@@ -371,6 +389,8 @@ const I18N = {
     seatMapHint: "{sold} of {capacity} seats",
     seatMapLoading: "Loading seat map…",
     seatMapError: "Could not load the seat map.",
+    seatMapBridgeDown:
+      "The DX bridge is unavailable right now, so seat maps and scan counts are missing.",
     seatMapNone: "No seat map for this auditorium.",
     seatMapFree: "Free seating — no numbered seats.",
     seatMapRetry: "Try again",
@@ -4325,7 +4345,7 @@ async function loadSeatChart(
       }
       throw dxError(data.error || "DX session expired", "auth");
     }
-    if (!ok) throw new Error(data.error || `bridge ${status}`);
+    if (!ok) throw bridgeFailure(status, data);
 
     if (data.token) rememberDxToken(data.token);
     if (data.locationId != null) seatHalls.set(show.screen, data.locationId);
@@ -4394,6 +4414,9 @@ async function loadSeatChart(
       paintSeatChart(show);
       return;
     }
+    // An outage is the whole bridge, not this one chart, so the DX
+    // panel in Settings must stop reporting itself as active.
+    if (err?.code === "down") dxScanStatus.error = String(err?.message || err);
     if (previous?.status === "ready") {
       // A background refresh that hiccuped must not wipe a chart that
       // was fine seconds ago; keep the old picture and retry next pass.
@@ -4403,6 +4426,7 @@ async function loadSeatChart(
       seatCharts.set(key, {
         status: "error",
         at: Date.now(),
+        code: err?.code || "",
         error: String(err?.message || err),
       });
     }
@@ -4642,7 +4666,9 @@ function renderSeatChart(show) {
   }
   if (chart.status === "error") {
     return `<div class="seat-note error">
-      <span>${escapeHtml(t("seatMapError"))}</span>
+      <span>${escapeHtml(
+        t(chart.code === "down" ? "seatMapBridgeDown" : "seatMapError")
+      )}</span>
       <button class="seat-retry" type="button" data-seat-retry="${escapeHtml(show.id)}">${escapeHtml(
         t("seatMapRetry")
       )}</button>
@@ -7594,6 +7620,19 @@ function dxError(message, code) {
   return err;
 }
 
+/**
+ * A non-ok reply from the bridge, tagged with what the caller can do
+ * about it. 402 is the Supabase gateway refusing the project itself
+ * (quota or billing), not the function failing — retrying never clears
+ * it, so it is reported as a flat outage rather than a hiccup.
+ */
+function bridgeFailure(status, data) {
+  const down = status === 402 || status === 404 || status >= 500;
+  // The gateway answers with `message`; the function itself with `error`.
+  const why = data.error || data.message || `bridge ${status}`;
+  return dxError(why, down ? "down" : "bridge");
+}
+
 /** POST to the DX bridge. Never throws on HTTP status — callers decide. */
 async function callDxProxy(body) {
   let res;
@@ -7648,7 +7687,7 @@ async function fetchScannedCounts(partnerId, eventIds, { retry = true } = {}) {
     throw dxError(data.error || "DX session expired", "auth");
   }
   if (!ok) {
-    dxScanStatus.error = data.error || `bridge ${status}`;
+    dxScanStatus.error = bridgeFailure(status, data).message;
     return null;
   }
 
