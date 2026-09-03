@@ -565,7 +565,7 @@ Deno.serve(async (req) => {
         imdbGql(COMING_SOON_QUERY, { n, d: today }),
         imdbGql(POPULAR_QUERY, { n }),
       ]);
-      const soonNodes = soonRes.status === "fulfilled"
+      const soonNodes: unknown[] = soonRes.status === "fulfilled"
         ? (Array.isArray(soonRes.value?.comingSoon?.edges)
           ? soonRes.value.comingSoon.edges
           : [])
@@ -577,7 +577,7 @@ Deno.serve(async (req) => {
           })
           .filter(Boolean)
         : [];
-      const popularNodes = popularRes.status === "fulfilled" &&
+      const popularNodes: unknown[] = popularRes.status === "fulfilled" &&
           Array.isArray(popularRes.value?.popularTitles?.titles)
         ? popularRes.value.popularTitles.titles
         : [];

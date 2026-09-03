@@ -39,6 +39,18 @@ deployctl deploy --project=cinema-info-omdb --entrypoint=supabase/functions/omdb
 Check the current flags against <https://docs.deno.com/deploy/> — the
 CLI changes faster than this file does.
 
+The first `deployctl deploy` opens a browser to authorise the CLI
+against your Deno Deploy account and waits for it; that step is yours
+and cannot be scripted. Once authorised the token is cached, so later
+deploys run unattended. Set `DENO_DEPLOY_TOKEN` from an access token
+instead if you want it non-interactive from the start (for CI).
+
+Both functions typecheck clean under `deno check` as of this commit:
+
+```bash
+deno check supabase/functions/omdb-lookup/index.ts supabase/functions/dx-web-login/index.ts
+```
+
 ## Secrets
 
 Set these in each project's dashboard under Settings → Environment
