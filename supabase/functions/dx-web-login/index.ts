@@ -1,4 +1,7 @@
-import "jsr:@supabase/functions-js/edge-runtime.d.ts";
+// Types only, and only on Supabase. Everything below is plain Deno —
+// `Deno.serve` plus `fetch` — so this same file runs unchanged on
+// Deno Deploy. See `deploy/deno/README.md`.
+/// <reference lib="deno.ns" />
 
 /**
  * DX bridge for Cinema Info.
@@ -965,7 +968,18 @@ async function fetchSeats(body: {
   );
 }
 
-Deno.serve(async (req) => {
+// Supabase and Deno Deploy assign the port themselves; a self-hosted
+// bridge runs both functions side by side, so each takes its own from
+// PORT. See `deploy/deno/README.md`.
+Deno.serve(
+  {
+    port: Number(Deno.env.get("PORT")) || 8000,
+    // Self-hosted, the only caller is the Funnel in front of it, so
+    // bind to loopback. Unset on Supabase and Deno Deploy, which
+    // need the default all-interfaces bind.
+    hostname: Deno.env.get("HOST") || undefined,
+  },
+  async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: CORS });
   if (req.method !== "POST") return json({ error: "Method not allowed" }, 405);
 
