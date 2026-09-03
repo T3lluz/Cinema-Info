@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-03T01:06:23.405Z",
+  "updatedAt": "2026-09-03T09:42:42.866Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -6307,7 +6307,7 @@
           "url": "https://www.imdb.com/title/tt32393988/"
         },
         "letterboxd": {
-          "value": 2.74,
+          "value": 2.73,
           "url": "https://letterboxd.com/film/insidious-out-of-the-further/"
         },
         "tomatoes": {
@@ -6587,7 +6587,7 @@
           "url": "https://www.imdb.com/title/tt32393988/"
         },
         "letterboxd": {
-          "value": 2.74,
+          "value": 2.73,
           "url": "https://letterboxd.com/film/insidious-out-of-the-further/"
         },
         "tomatoes": {
@@ -6820,7 +6820,7 @@
           "url": "https://www.imdb.com/title/tt32393988/"
         },
         "letterboxd": {
-          "value": 2.74,
+          "value": 2.73,
           "url": "https://letterboxd.com/film/insidious-out-of-the-further/"
         },
         "tomatoes": {
@@ -7005,7 +7005,7 @@
           "url": "https://www.imdb.com/title/tt32393988/"
         },
         "letterboxd": {
-          "value": 2.74,
+          "value": 2.73,
           "url": "https://letterboxd.com/film/insidious-out-of-the-further/"
         },
         "tomatoes": {
@@ -7191,7 +7191,7 @@
           "url": "https://www.imdb.com/title/tt32393988/"
         },
         "letterboxd": {
-          "value": 2.74,
+          "value": 2.73,
           "url": "https://letterboxd.com/film/insidious-out-of-the-further/"
         },
         "tomatoes": {
@@ -7377,7 +7377,7 @@
           "url": "https://www.imdb.com/title/tt32393988/"
         },
         "letterboxd": {
-          "value": 2.74,
+          "value": 2.73,
           "url": "https://letterboxd.com/film/insidious-out-of-the-further/"
         },
         "tomatoes": {
@@ -7562,7 +7562,7 @@
           "url": "https://www.imdb.com/title/tt21285562/"
         },
         "letterboxd": {
-          "value": 2.87,
+          "value": 2.86,
           "url": "https://letterboxd.com/film/the-dog-stars/"
         },
         "tomatoes": {
@@ -7609,7 +7609,7 @@
           "url": "https://www.imdb.com/title/tt32393988/"
         },
         "letterboxd": {
-          "value": 2.74,
+          "value": 2.73,
           "url": "https://letterboxd.com/film/insidious-out-of-the-further/"
         },
         "tomatoes": {
@@ -7791,7 +7791,7 @@
           "url": "https://www.imdb.com/title/tt21285562/"
         },
         "letterboxd": {
-          "value": 2.87,
+          "value": 2.86,
           "url": "https://letterboxd.com/film/the-dog-stars/"
         },
         "tomatoes": {
@@ -8118,7 +8118,7 @@
           "url": "https://www.imdb.com/title/tt21285562/"
         },
         "letterboxd": {
-          "value": 2.87,
+          "value": 2.86,
           "url": "https://letterboxd.com/film/the-dog-stars/"
         },
         "tomatoes": {
@@ -8528,7 +8528,7 @@
           "url": "https://www.imdb.com/title/tt21285562/"
         },
         "letterboxd": {
-          "value": 2.87,
+          "value": 2.86,
           "url": "https://letterboxd.com/film/the-dog-stars/"
         },
         "tomatoes": {
@@ -8625,8 +8625,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 108,
-      "available": 106
+      "capacity": 110,
+      "available": 108
     },
     {
       "id": "EDI20251444-2026-09-03T19:30:00-Storsal",
@@ -8710,7 +8710,7 @@
           "url": "https://www.imdb.com/title/tt21285562/"
         },
         "letterboxd": {
-          "value": 2.87,
+          "value": 2.86,
           "url": "https://letterboxd.com/film/the-dog-stars/"
         },
         "tomatoes": {
@@ -8928,7 +8928,7 @@
           "url": "https://www.imdb.com/title/tt32393988/"
         },
         "letterboxd": {
-          "value": 2.74,
+          "value": 2.73,
           "url": "https://letterboxd.com/film/insidious-out-of-the-further/"
         },
         "tomatoes": {
@@ -9115,6 +9115,53 @@
       "reserved": 0,
       "capacity": 110,
       "available": 110
+    },
+    {
+      "id": "EDI20250644-2026-09-05T20:20:00-Storsal",
+      "title": "The Dog Stars",
+      "screen": "Storsal",
+      "start": "2026-09-05T20:20:00",
+      "end": "2026-09-05T22:28:00",
+      "dayKey": "2026-09-05",
+      "runningMinutes": 118,
+      "runningLabel": "1 t. 58 min.",
+      "age": "15 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Drama"
+      ],
+      "director": "Ridley Scott",
+      "premiere": "2026-08-28",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/c14c7820cdb60bfa7fcebf3b5ff2a11019fb6743-1440x2057.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93004/purchase?kanal=dxf",
+      "eventId": "93004",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 6.5,
+          "id": "tt21285562",
+          "url": "https://www.imdb.com/title/tt21285562/"
+        },
+        "letterboxd": {
+          "value": 2.86,
+          "url": "https://letterboxd.com/film/the-dog-stars/"
+        },
+        "tomatoes": {
+          "value": 71,
+          "url": "https://www.rottentomatoes.com/m/the_dog_stars"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
     },
     {
       "id": "EDI20260805-2026-09-05T21:00:00-Kinosal",
