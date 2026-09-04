@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-04T00:57:59.943Z",
+  "updatedAt": "2026-09-04T14:55:11.457Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -7425,7 +7425,7 @@
           "url": "https://www.imdb.com/title/tt33996352/"
         },
         "letterboxd": {
-          "value": 3.33,
+          "value": 3.32,
           "url": "https://letterboxd.com/film/miss-moxy/"
         }
       },
@@ -7566,7 +7566,7 @@
           "url": "https://letterboxd.com/film/the-dog-stars/"
         },
         "tomatoes": {
-          "value": 71,
+          "value": 70,
           "url": "https://www.rottentomatoes.com/m/the_dog_stars"
         }
       },
@@ -7657,7 +7657,7 @@
           "url": "https://www.imdb.com/title/tt33996352/"
         },
         "letterboxd": {
-          "value": 3.33,
+          "value": 3.32,
           "url": "https://letterboxd.com/film/miss-moxy/"
         }
       },
@@ -7795,7 +7795,7 @@
           "url": "https://letterboxd.com/film/the-dog-stars/"
         },
         "tomatoes": {
-          "value": 71,
+          "value": 70,
           "url": "https://www.rottentomatoes.com/m/the_dog_stars"
         }
       },
@@ -7933,7 +7933,7 @@
           "url": "https://www.imdb.com/title/tt33996352/"
         },
         "letterboxd": {
-          "value": 3.33,
+          "value": 3.32,
           "url": "https://letterboxd.com/film/miss-moxy/"
         }
       },
@@ -8122,7 +8122,7 @@
           "url": "https://letterboxd.com/film/the-dog-stars/"
         },
         "tomatoes": {
-          "value": 71,
+          "value": 70,
           "url": "https://www.rottentomatoes.com/m/the_dog_stars"
         }
       },
@@ -8390,7 +8390,7 @@
           "url": "https://www.imdb.com/title/tt33996352/"
         },
         "letterboxd": {
-          "value": 3.33,
+          "value": 3.32,
           "url": "https://letterboxd.com/film/miss-moxy/"
         }
       },
@@ -8532,7 +8532,7 @@
           "url": "https://letterboxd.com/film/the-dog-stars/"
         },
         "tomatoes": {
-          "value": 71,
+          "value": 70,
           "url": "https://www.rottentomatoes.com/m/the_dog_stars"
         }
       },
@@ -8576,7 +8576,7 @@
           "url": "https://www.imdb.com/title/tt33996352/"
         },
         "letterboxd": {
-          "value": 3.33,
+          "value": 3.32,
           "url": "https://letterboxd.com/film/miss-moxy/"
         }
       },
@@ -8714,7 +8714,7 @@
           "url": "https://letterboxd.com/film/the-dog-stars/"
         },
         "tomatoes": {
-          "value": 71,
+          "value": 70,
           "url": "https://www.rottentomatoes.com/m/the_dog_stars"
         }
       },
@@ -8749,7 +8749,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92982/purchase?kanal=dxf",
       "eventId": "92982",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 8,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -8758,13 +8758,13 @@
           "url": "https://www.imdb.com/title/tt33996352/"
         },
         "letterboxd": {
-          "value": 3.33,
+          "value": 3.32,
           "url": "https://letterboxd.com/film/miss-moxy/"
         }
       },
       "reserved": 0,
       "capacity": 246,
-      "available": 246
+      "available": 238
     },
     {
       "id": "EDI20260087-2026-09-04T18:00:00-Kinosal",
@@ -8884,9 +8884,13 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7,
+          "value": 6.9,
           "id": "tt34379051",
           "url": "https://www.imdb.com/title/tt34379051/"
+        },
+        "letterboxd": {
+          "value": 3.23,
+          "url": "https://letterboxd.com/film/by-any-means-2026/"
         }
       },
       "reserved": 0,
@@ -8919,7 +8923,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93030/purchase?kanal=dxf",
       "eventId": "93030",
       "promoterId": "202",
-      "sold": 2,
+      "sold": 6,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -8938,7 +8942,7 @@
       },
       "reserved": 0,
       "capacity": 246,
-      "available": 244
+      "available": 240
     },
     {
       "id": "EDI20251707-2026-09-05T15:00:00-Storsal",
@@ -8976,7 +8980,7 @@
           "url": "https://www.imdb.com/title/tt33996352/"
         },
         "letterboxd": {
-          "value": 3.33,
+          "value": 3.32,
           "url": "https://letterboxd.com/film/miss-moxy/"
         }
       },
@@ -9155,7 +9159,7 @@
           "url": "https://letterboxd.com/film/the-dog-stars/"
         },
         "tomatoes": {
-          "value": 71,
+          "value": 70,
           "url": "https://www.rottentomatoes.com/m/the_dog_stars"
         }
       },
@@ -9193,9 +9197,13 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7,
+          "value": 6.9,
           "id": "tt34379051",
           "url": "https://www.imdb.com/title/tt34379051/"
+        },
+        "letterboxd": {
+          "value": 3.23,
+          "url": "https://letterboxd.com/film/by-any-means-2026/"
         }
       },
       "reserved": 0,
@@ -9238,7 +9246,7 @@
           "url": "https://www.imdb.com/title/tt33996352/"
         },
         "letterboxd": {
-          "value": 3.33,
+          "value": 3.32,
           "url": "https://letterboxd.com/film/miss-moxy/"
         }
       },
@@ -9328,8 +9336,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 106,
-      "available": 102
+      "capacity": 110,
+      "available": 106
     },
     {
       "id": "EDI20251020-2026-09-06T18:00:00-Storsal",
@@ -9408,9 +9416,13 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7,
+          "value": 6.9,
           "id": "tt34379051",
           "url": "https://www.imdb.com/title/tt34379051/"
+        },
+        "letterboxd": {
+          "value": 3.23,
+          "url": "https://letterboxd.com/film/by-any-means-2026/"
         }
       },
       "reserved": 0,
@@ -9547,7 +9559,7 @@
           "url": "https://www.imdb.com/title/tt33996352/"
         },
         "letterboxd": {
-          "value": 3.33,
+          "value": 3.32,
           "url": "https://letterboxd.com/film/miss-moxy/"
         }
       },
@@ -9670,9 +9682,13 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7,
+          "value": 6.9,
           "id": "tt34379051",
           "url": "https://www.imdb.com/title/tt34379051/"
+        },
+        "letterboxd": {
+          "value": 3.23,
+          "url": "https://letterboxd.com/film/by-any-means-2026/"
         }
       },
       "reserved": 0,
@@ -9715,7 +9731,7 @@
           "url": "https://www.imdb.com/title/tt33996352/"
         },
         "letterboxd": {
-          "value": 3.33,
+          "value": 3.32,
           "url": "https://letterboxd.com/film/miss-moxy/"
         }
       },
@@ -9841,14 +9857,62 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7,
+          "value": 6.9,
           "id": "tt34379051",
           "url": "https://www.imdb.com/title/tt34379051/"
+        },
+        "letterboxd": {
+          "value": 3.23,
+          "url": "https://letterboxd.com/film/by-any-means-2026/"
         }
       },
       "reserved": 0,
       "capacity": 286,
       "available": 286
+    },
+    {
+      "id": "EDI20260206-2026-09-10T17:00:00-Kinosal",
+      "title": "Skolen med de magiske dyrene - Filmen",
+      "screen": "Kinosal",
+      "start": "2026-09-10T17:00:00",
+      "end": "2026-09-10T18:52:31",
+      "dayKey": "2026-09-10",
+      "runningMinutes": 102,
+      "runningLabel": "1 t. 42 min.",
+      "age": "6 år",
+      "tags": [
+        "Norsk tale",
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Adventure",
+        "Family",
+        "Fantasy"
+      ],
+      "director": "Maggie Peren, Bernhard Jasper",
+      "premiere": "2026-08-21",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/f00ce714aee93b0b1d9b9a319f0cee3be0765044-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93109/purchase?kanal=dxf",
+      "eventId": "93109",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 5.7,
+          "id": "tt35286242",
+          "url": "https://www.imdb.com/title/tt35286242/"
+        },
+        "letterboxd": {
+          "value": 3.07,
+          "url": "https://letterboxd.com/film/school-of-magical-animals-4/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
     },
     {
       "id": "EDI20251555-2026-09-15T13:00:00-Kinosal",
@@ -9878,7 +9942,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.2,
+          "value": 7,
           "id": "tt31451181",
           "url": "https://www.imdb.com/title/tt31451181/"
         }
@@ -9915,7 +9979,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.2,
+          "value": 7,
           "id": "tt31451181",
           "url": "https://www.imdb.com/title/tt31451181/"
         }
