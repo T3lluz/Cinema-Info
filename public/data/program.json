@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-03T14:58:06.168Z",
+  "updatedAt": "2026-09-04T00:57:59.943Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -8611,7 +8611,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93052/purchase?kanal=dxf",
       "eventId": "93052",
       "promoterId": "202",
-      "sold": 2,
+      "sold": 6,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -8626,7 +8626,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 108
+      "available": 104
     },
     {
       "id": "EDI20251444-2026-09-03T19:30:00-Storsal",
@@ -8804,8 +8804,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 104,
-      "available": 96
+      "capacity": 110,
+      "available": 102
     },
     {
       "id": "EDI20251020-2026-09-04T19:05:00-Storsal",
@@ -8884,9 +8884,9 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 4,
-          "id": "tt4741768",
-          "url": "https://www.imdb.com/title/tt4741768/"
+          "value": 7,
+          "id": "tt34379051",
+          "url": "https://www.imdb.com/title/tt34379051/"
         }
       },
       "reserved": 0,
@@ -9193,9 +9193,9 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 4,
-          "id": "tt4741768",
-          "url": "https://www.imdb.com/title/tt4741768/"
+          "value": 7,
+          "id": "tt34379051",
+          "url": "https://www.imdb.com/title/tt34379051/"
         }
       },
       "reserved": 0,
@@ -9314,7 +9314,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93008/purchase?kanal=dxf",
       "eventId": "93008",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 4,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -9328,8 +9328,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 110
+      "capacity": 106,
+      "available": 102
     },
     {
       "id": "EDI20251020-2026-09-06T18:00:00-Storsal",
@@ -9408,9 +9408,9 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 4,
-          "id": "tt4741768",
-          "url": "https://www.imdb.com/title/tt4741768/"
+          "value": 7,
+          "id": "tt34379051",
+          "url": "https://www.imdb.com/title/tt34379051/"
         }
       },
       "reserved": 0,
@@ -9670,9 +9670,9 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 4,
-          "id": "tt4741768",
-          "url": "https://www.imdb.com/title/tt4741768/"
+          "value": 7,
+          "id": "tt34379051",
+          "url": "https://www.imdb.com/title/tt34379051/"
         }
       },
       "reserved": 0,
@@ -9841,9 +9841,9 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 4,
-          "id": "tt4741768",
-          "url": "https://www.imdb.com/title/tt4741768/"
+          "value": 7,
+          "id": "tt34379051",
+          "url": "https://www.imdb.com/title/tt34379051/"
         }
       },
       "reserved": 0,
