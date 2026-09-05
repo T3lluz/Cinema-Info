@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-04T14:55:11.457Z",
+  "updatedAt": "2026-09-05T00:55:58.902Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -7515,7 +7515,7 @@
           "url": "https://www.imdb.com/title/tt32338669/"
         },
         "letterboxd": {
-          "value": 2.57,
+          "value": 2.56,
           "url": "https://letterboxd.com/film/mutiny-2026/"
         },
         "tomatoes": {
@@ -7562,7 +7562,7 @@
           "url": "https://www.imdb.com/title/tt21285562/"
         },
         "letterboxd": {
-          "value": 2.86,
+          "value": 2.85,
           "url": "https://letterboxd.com/film/the-dog-stars/"
         },
         "tomatoes": {
@@ -7791,7 +7791,7 @@
           "url": "https://www.imdb.com/title/tt21285562/"
         },
         "letterboxd": {
-          "value": 2.86,
+          "value": 2.85,
           "url": "https://letterboxd.com/film/the-dog-stars/"
         },
         "tomatoes": {
@@ -7885,7 +7885,7 @@
           "url": "https://www.imdb.com/title/tt32338669/"
         },
         "letterboxd": {
-          "value": 2.57,
+          "value": 2.56,
           "url": "https://letterboxd.com/film/mutiny-2026/"
         },
         "tomatoes": {
@@ -8118,7 +8118,7 @@
           "url": "https://www.imdb.com/title/tt21285562/"
         },
         "letterboxd": {
-          "value": 2.86,
+          "value": 2.85,
           "url": "https://letterboxd.com/film/the-dog-stars/"
         },
         "tomatoes": {
@@ -8342,7 +8342,7 @@
           "url": "https://www.imdb.com/title/tt32338669/"
         },
         "letterboxd": {
-          "value": 2.57,
+          "value": 2.56,
           "url": "https://letterboxd.com/film/mutiny-2026/"
         },
         "tomatoes": {
@@ -8528,7 +8528,7 @@
           "url": "https://www.imdb.com/title/tt21285562/"
         },
         "letterboxd": {
-          "value": 2.86,
+          "value": 2.85,
           "url": "https://letterboxd.com/film/the-dog-stars/"
         },
         "tomatoes": {
@@ -8663,7 +8663,7 @@
           "url": "https://www.imdb.com/title/tt32338669/"
         },
         "letterboxd": {
-          "value": 2.57,
+          "value": 2.56,
           "url": "https://letterboxd.com/film/mutiny-2026/"
         },
         "tomatoes": {
@@ -8710,7 +8710,7 @@
           "url": "https://www.imdb.com/title/tt21285562/"
         },
         "letterboxd": {
-          "value": 2.86,
+          "value": 2.85,
           "url": "https://letterboxd.com/film/the-dog-stars/"
         },
         "tomatoes": {
@@ -8790,7 +8790,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92981/purchase?kanal=dxf",
       "eventId": "92981",
       "promoterId": "202",
-      "sold": 8,
+      "sold": 16,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -8805,7 +8805,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 102
+      "available": 94
     },
     {
       "id": "EDI20251020-2026-09-04T19:05:00-Storsal",
@@ -8889,8 +8889,12 @@
           "url": "https://www.imdb.com/title/tt34379051/"
         },
         "letterboxd": {
-          "value": 3.23,
+          "value": 3.22,
           "url": "https://letterboxd.com/film/by-any-means-2026/"
+        },
+        "tomatoes": {
+          "value": 88,
+          "url": "https://www.rottentomatoes.com/m/by_any_means_2026"
         }
       },
       "reserved": 0,
@@ -8971,7 +8975,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93027/purchase?kanal=dxf",
       "eventId": "93027",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 3,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -8986,7 +8990,7 @@
       },
       "reserved": 0,
       "capacity": 246,
-      "available": 246
+      "available": 243
     },
     {
       "id": "EDI20260206-2026-09-05T15:30:00-Kinosal",
@@ -9015,7 +9019,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93028/purchase?kanal=dxf",
       "eventId": "93028",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 7,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -9029,8 +9033,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 110
+      "capacity": 106,
+      "available": 99
     },
     {
       "id": "EDI20260087-2026-09-05T17:15:00-Storsal",
@@ -9052,7 +9056,7 @@
       ],
       "director": "Cristian Mungiu",
       "premiere": "2026-09-04",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/a333853103decb5a522d8707ce1f9ad2d0bcafa8-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/572cbda01a132cc60ef251b13a9f8ffa8101b6c5-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93005/purchase?kanal=dxf",
       "eventId": "93005",
       "promoterId": "202",
@@ -9155,7 +9159,7 @@
           "url": "https://www.imdb.com/title/tt21285562/"
         },
         "letterboxd": {
-          "value": 2.86,
+          "value": 2.85,
           "url": "https://letterboxd.com/film/the-dog-stars/"
         },
         "tomatoes": {
@@ -9202,8 +9206,12 @@
           "url": "https://www.imdb.com/title/tt34379051/"
         },
         "letterboxd": {
-          "value": 3.23,
+          "value": 3.22,
           "url": "https://letterboxd.com/film/by-any-means-2026/"
+        },
+        "tomatoes": {
+          "value": 88,
+          "url": "https://www.rottentomatoes.com/m/by_any_means_2026"
         }
       },
       "reserved": 0,
@@ -9318,7 +9326,7 @@
       ],
       "director": "Cristian Mungiu",
       "premiere": "2026-09-04",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/a333853103decb5a522d8707ce1f9ad2d0bcafa8-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/572cbda01a132cc60ef251b13a9f8ffa8101b6c5-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93008/purchase?kanal=dxf",
       "eventId": "93008",
       "promoterId": "202",
@@ -9421,8 +9429,12 @@
           "url": "https://www.imdb.com/title/tt34379051/"
         },
         "letterboxd": {
-          "value": 3.23,
+          "value": 3.22,
           "url": "https://letterboxd.com/film/by-any-means-2026/"
+        },
+        "tomatoes": {
+          "value": 88,
+          "url": "https://www.rottentomatoes.com/m/by_any_means_2026"
         }
       },
       "reserved": 0,
@@ -9464,7 +9476,7 @@
           "url": "https://www.imdb.com/title/tt32338669/"
         },
         "letterboxd": {
-          "value": 2.57,
+          "value": 2.56,
           "url": "https://letterboxd.com/film/mutiny-2026/"
         },
         "tomatoes": {
@@ -9631,7 +9643,7 @@
       ],
       "director": "Cristian Mungiu",
       "premiere": "2026-09-04",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/a333853103decb5a522d8707ce1f9ad2d0bcafa8-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/572cbda01a132cc60ef251b13a9f8ffa8101b6c5-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93044/purchase?kanal=dxf",
       "eventId": "93044",
       "promoterId": "202",
@@ -9687,8 +9699,12 @@
           "url": "https://www.imdb.com/title/tt34379051/"
         },
         "letterboxd": {
-          "value": 3.23,
+          "value": 3.22,
           "url": "https://letterboxd.com/film/by-any-means-2026/"
+        },
+        "tomatoes": {
+          "value": 88,
+          "url": "https://www.rottentomatoes.com/m/by_any_means_2026"
         }
       },
       "reserved": 0,
@@ -9806,7 +9822,7 @@
       ],
       "director": "Cristian Mungiu",
       "premiere": "2026-09-04",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/a333853103decb5a522d8707ce1f9ad2d0bcafa8-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/572cbda01a132cc60ef251b13a9f8ffa8101b6c5-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93040/purchase?kanal=dxf",
       "eventId": "93040",
       "promoterId": "202",
@@ -9862,8 +9878,12 @@
           "url": "https://www.imdb.com/title/tt34379051/"
         },
         "letterboxd": {
-          "value": 3.23,
+          "value": 3.22,
           "url": "https://letterboxd.com/film/by-any-means-2026/"
+        },
+        "tomatoes": {
+          "value": 88,
+          "url": "https://www.rottentomatoes.com/m/by_any_means_2026"
         }
       },
       "reserved": 0,
