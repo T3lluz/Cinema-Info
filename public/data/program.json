@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-05T00:55:58.902Z",
+  "updatedAt": "2026-09-05T13:50:34.475Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -8163,7 +8163,7 @@
           "url": "https://www.imdb.com/title/tt35410859/"
         },
         "letterboxd": {
-          "value": 3.85,
+          "value": 3.84,
           "url": "https://letterboxd.com/film/fjord-2026/"
         }
       },
@@ -8299,7 +8299,7 @@
           "url": "https://www.imdb.com/title/tt35410859/"
         },
         "letterboxd": {
-          "value": 3.85,
+          "value": 3.84,
           "url": "https://letterboxd.com/film/fjord-2026/"
         }
       },
@@ -8799,7 +8799,7 @@
           "url": "https://www.imdb.com/title/tt35410859/"
         },
         "letterboxd": {
-          "value": 3.85,
+          "value": 3.84,
           "url": "https://letterboxd.com/film/fjord-2026/"
         }
       },
@@ -8884,16 +8884,16 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.9,
+          "value": 6.8,
           "id": "tt34379051",
           "url": "https://www.imdb.com/title/tt34379051/"
         },
         "letterboxd": {
-          "value": 3.22,
+          "value": 3.24,
           "url": "https://letterboxd.com/film/by-any-means-2026/"
         },
         "tomatoes": {
-          "value": 88,
+          "value": 87,
           "url": "https://www.rottentomatoes.com/m/by_any_means_2026"
         }
       },
@@ -8975,7 +8975,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93027/purchase?kanal=dxf",
       "eventId": "93027",
       "promoterId": "202",
-      "sold": 3,
+      "sold": 22,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -8990,7 +8990,7 @@
       },
       "reserved": 0,
       "capacity": 246,
-      "available": 243
+      "available": 224
     },
     {
       "id": "EDI20260206-2026-09-05T15:30:00-Kinosal",
@@ -9019,7 +9019,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93028/purchase?kanal=dxf",
       "eventId": "93028",
       "promoterId": "202",
-      "sold": 7,
+      "sold": 13,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -9033,8 +9033,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 106,
-      "available": 99
+      "capacity": 110,
+      "available": 97
     },
     {
       "id": "EDI20260087-2026-09-05T17:15:00-Storsal",
@@ -9069,7 +9069,7 @@
           "url": "https://www.imdb.com/title/tt35410859/"
         },
         "letterboxd": {
-          "value": 3.85,
+          "value": 3.84,
           "url": "https://letterboxd.com/film/fjord-2026/"
         }
       },
@@ -9197,26 +9197,26 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93055/purchase?kanal=dxf",
       "eventId": "93055",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 3,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.9,
+          "value": 6.8,
           "id": "tt34379051",
           "url": "https://www.imdb.com/title/tt34379051/"
         },
         "letterboxd": {
-          "value": 3.22,
+          "value": 3.24,
           "url": "https://letterboxd.com/film/by-any-means-2026/"
         },
         "tomatoes": {
-          "value": 88,
+          "value": 87,
           "url": "https://www.rottentomatoes.com/m/by_any_means_2026"
         }
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 110
+      "available": 107
     },
     {
       "id": "EDI20251707-2026-09-06T14:50:00-Kinosal",
@@ -9330,7 +9330,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93008/purchase?kanal=dxf",
       "eventId": "93008",
       "promoterId": "202",
-      "sold": 4,
+      "sold": 12,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -9339,13 +9339,13 @@
           "url": "https://www.imdb.com/title/tt35410859/"
         },
         "letterboxd": {
-          "value": 3.85,
+          "value": 3.84,
           "url": "https://letterboxd.com/film/fjord-2026/"
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 106
+      "capacity": 108,
+      "available": 96
     },
     {
       "id": "EDI20251020-2026-09-06T18:00:00-Storsal",
@@ -9424,16 +9424,16 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.9,
+          "value": 6.8,
           "id": "tt34379051",
           "url": "https://www.imdb.com/title/tt34379051/"
         },
         "letterboxd": {
-          "value": 3.22,
+          "value": 3.24,
           "url": "https://letterboxd.com/film/by-any-means-2026/"
         },
         "tomatoes": {
-          "value": 88,
+          "value": 87,
           "url": "https://www.rottentomatoes.com/m/by_any_means_2026"
         }
       },
@@ -9606,7 +9606,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93110/purchase?kanal=dxf",
       "eventId": "93110",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 4,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -9621,7 +9621,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 110
+      "available": 106
     },
     {
       "id": "EDI20260087-2026-09-08T19:30:00-Storsal",
@@ -9656,7 +9656,7 @@
           "url": "https://www.imdb.com/title/tt35410859/"
         },
         "letterboxd": {
-          "value": 3.85,
+          "value": 3.84,
           "url": "https://letterboxd.com/film/fjord-2026/"
         }
       },
@@ -9694,16 +9694,16 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.9,
+          "value": 6.8,
           "id": "tt34379051",
           "url": "https://www.imdb.com/title/tt34379051/"
         },
         "letterboxd": {
-          "value": 3.22,
+          "value": 3.24,
           "url": "https://letterboxd.com/film/by-any-means-2026/"
         },
         "tomatoes": {
-          "value": 88,
+          "value": 87,
           "url": "https://www.rottentomatoes.com/m/by_any_means_2026"
         }
       },
@@ -9826,7 +9826,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93040/purchase?kanal=dxf",
       "eventId": "93040",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 4,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -9835,13 +9835,13 @@
           "url": "https://www.imdb.com/title/tt35410859/"
         },
         "letterboxd": {
-          "value": 3.85,
+          "value": 3.84,
           "url": "https://letterboxd.com/film/fjord-2026/"
         }
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 110
+      "available": 106
     },
     {
       "id": "EDI20260805-2026-09-09T20:30:00-Storsal",
@@ -9873,16 +9873,16 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.9,
+          "value": 6.8,
           "id": "tt34379051",
           "url": "https://www.imdb.com/title/tt34379051/"
         },
         "letterboxd": {
-          "value": 3.22,
+          "value": 3.24,
           "url": "https://letterboxd.com/film/by-any-means-2026/"
         },
         "tomatoes": {
-          "value": 88,
+          "value": 87,
           "url": "https://www.rottentomatoes.com/m/by_any_means_2026"
         }
       },
