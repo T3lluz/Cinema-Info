@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-06T00:54:57.268Z",
+  "updatedAt": "2026-09-06T14:07:46.945Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -7468,7 +7468,7 @@
           "url": "https://www.imdb.com/title/tt37853455/"
         },
         "letterboxd": {
-          "value": 2.82,
+          "value": 2.83,
           "url": "https://letterboxd.com/film/one-night-only-2026/"
         },
         "tomatoes": {
@@ -7838,7 +7838,7 @@
           "url": "https://www.imdb.com/title/tt37853455/"
         },
         "letterboxd": {
-          "value": 2.82,
+          "value": 2.83,
           "url": "https://letterboxd.com/film/one-night-only-2026/"
         },
         "tomatoes": {
@@ -8024,7 +8024,7 @@
           "url": "https://www.imdb.com/title/tt37853455/"
         },
         "letterboxd": {
-          "value": 2.82,
+          "value": 2.83,
           "url": "https://letterboxd.com/film/one-night-only-2026/"
         },
         "tomatoes": {
@@ -8163,7 +8163,7 @@
           "url": "https://www.imdb.com/title/tt35410859/"
         },
         "letterboxd": {
-          "value": 3.84,
+          "value": 3.85,
           "url": "https://letterboxd.com/film/fjord-2026/"
         }
       },
@@ -8299,7 +8299,7 @@
           "url": "https://www.imdb.com/title/tt35410859/"
         },
         "letterboxd": {
-          "value": 3.84,
+          "value": 3.85,
           "url": "https://letterboxd.com/film/fjord-2026/"
         }
       },
@@ -8481,7 +8481,7 @@
           "url": "https://www.imdb.com/title/tt37853455/"
         },
         "letterboxd": {
-          "value": 2.82,
+          "value": 2.83,
           "url": "https://letterboxd.com/film/one-night-only-2026/"
         },
         "tomatoes": {
@@ -8799,7 +8799,7 @@
           "url": "https://www.imdb.com/title/tt35410859/"
         },
         "letterboxd": {
-          "value": 3.84,
+          "value": 3.85,
           "url": "https://letterboxd.com/film/fjord-2026/"
         }
       },
@@ -8842,7 +8842,7 @@
           "url": "https://www.imdb.com/title/tt37853455/"
         },
         "letterboxd": {
-          "value": 2.82,
+          "value": 2.83,
           "url": "https://letterboxd.com/film/one-night-only-2026/"
         },
         "tomatoes": {
@@ -9069,7 +9069,7 @@
           "url": "https://www.imdb.com/title/tt35410859/"
         },
         "letterboxd": {
-          "value": 3.84,
+          "value": 3.85,
           "url": "https://letterboxd.com/film/fjord-2026/"
         }
       },
@@ -9112,7 +9112,7 @@
           "url": "https://www.imdb.com/title/tt37853455/"
         },
         "letterboxd": {
-          "value": 2.82,
+          "value": 2.83,
           "url": "https://letterboxd.com/film/one-night-only-2026/"
         },
         "tomatoes": {
@@ -9303,8 +9303,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 244,
-      "available": 242
+      "capacity": 246,
+      "available": 244
     },
     {
       "id": "EDI20260087-2026-09-06T17:00:00-Kinosal",
@@ -9330,7 +9330,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93008/purchase?kanal=dxf",
       "eventId": "93008",
       "promoterId": "202",
-      "sold": 10,
+      "sold": 19,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -9339,13 +9339,13 @@
           "url": "https://www.imdb.com/title/tt35410859/"
         },
         "letterboxd": {
-          "value": 3.84,
+          "value": 3.85,
           "url": "https://letterboxd.com/film/fjord-2026/"
         }
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 100
+      "available": 91
     },
     {
       "id": "EDI20251020-2026-09-06T18:00:00-Storsal",
@@ -9373,7 +9373,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93011/purchase?kanal=dxf",
       "eventId": "93011",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 1,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -9382,7 +9382,7 @@
           "url": "https://www.imdb.com/title/tt37853455/"
         },
         "letterboxd": {
-          "value": 2.82,
+          "value": 2.83,
           "url": "https://letterboxd.com/film/one-night-only-2026/"
         },
         "tomatoes": {
@@ -9392,7 +9392,7 @@
       },
       "reserved": 0,
       "capacity": 286,
-      "available": 286
+      "available": 285
     },
     {
       "id": "EDI20260805-2026-09-06T20:00:00-Kinosal",
@@ -9523,7 +9523,7 @@
           "url": "https://www.imdb.com/title/tt37853455/"
         },
         "letterboxd": {
-          "value": 2.82,
+          "value": 2.83,
           "url": "https://letterboxd.com/film/one-night-only-2026/"
         },
         "tomatoes": {
@@ -9656,7 +9656,7 @@
           "url": "https://www.imdb.com/title/tt35410859/"
         },
         "letterboxd": {
-          "value": 3.84,
+          "value": 3.85,
           "url": "https://letterboxd.com/film/fjord-2026/"
         }
       },
@@ -9790,7 +9790,7 @@
           "url": "https://www.imdb.com/title/tt37853455/"
         },
         "letterboxd": {
-          "value": 2.82,
+          "value": 2.83,
           "url": "https://letterboxd.com/film/one-night-only-2026/"
         },
         "tomatoes": {
@@ -9835,7 +9835,7 @@
           "url": "https://www.imdb.com/title/tt35410859/"
         },
         "letterboxd": {
-          "value": 3.84,
+          "value": 3.85,
           "url": "https://letterboxd.com/film/fjord-2026/"
         }
       },
@@ -9962,7 +9962,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7,
+          "value": 6.7,
           "id": "tt31451181",
           "url": "https://www.imdb.com/title/tt31451181/"
         }
@@ -9999,7 +9999,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7,
+          "value": 6.7,
           "id": "tt31451181",
           "url": "https://www.imdb.com/title/tt31451181/"
         }
