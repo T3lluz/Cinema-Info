@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-07T00:59:53.793Z",
+  "updatedAt": "2026-09-07T16:25:25.110Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -8163,7 +8163,7 @@
           "url": "https://www.imdb.com/title/tt35410859/"
         },
         "letterboxd": {
-          "value": 3.85,
+          "value": 3.84,
           "url": "https://letterboxd.com/film/fjord-2026/"
         }
       },
@@ -8299,7 +8299,7 @@
           "url": "https://www.imdb.com/title/tt35410859/"
         },
         "letterboxd": {
-          "value": 3.85,
+          "value": 3.84,
           "url": "https://letterboxd.com/film/fjord-2026/"
         }
       },
@@ -8799,7 +8799,7 @@
           "url": "https://www.imdb.com/title/tt35410859/"
         },
         "letterboxd": {
-          "value": 3.85,
+          "value": 3.84,
           "url": "https://letterboxd.com/film/fjord-2026/"
         }
       },
@@ -8893,7 +8893,7 @@
           "url": "https://letterboxd.com/film/by-any-means-2026/"
         },
         "tomatoes": {
-          "value": 87,
+          "value": 88,
           "url": "https://www.rottentomatoes.com/m/by_any_means_2026"
         }
       },
@@ -9069,7 +9069,7 @@
           "url": "https://www.imdb.com/title/tt35410859/"
         },
         "letterboxd": {
-          "value": 3.85,
+          "value": 3.84,
           "url": "https://letterboxd.com/film/fjord-2026/"
         }
       },
@@ -9210,7 +9210,7 @@
           "url": "https://letterboxd.com/film/by-any-means-2026/"
         },
         "tomatoes": {
-          "value": 87,
+          "value": 88,
           "url": "https://www.rottentomatoes.com/m/by_any_means_2026"
         }
       },
@@ -9339,7 +9339,7 @@
           "url": "https://www.imdb.com/title/tt35410859/"
         },
         "letterboxd": {
-          "value": 3.85,
+          "value": 3.84,
           "url": "https://letterboxd.com/film/fjord-2026/"
         }
       },
@@ -9433,7 +9433,7 @@
           "url": "https://letterboxd.com/film/by-any-means-2026/"
         },
         "tomatoes": {
-          "value": 87,
+          "value": 88,
           "url": "https://www.rottentomatoes.com/m/by_any_means_2026"
         }
       },
@@ -9656,7 +9656,7 @@
           "url": "https://www.imdb.com/title/tt35410859/"
         },
         "letterboxd": {
-          "value": 3.85,
+          "value": 3.84,
           "url": "https://letterboxd.com/film/fjord-2026/"
         }
       },
@@ -9703,7 +9703,7 @@
           "url": "https://letterboxd.com/film/by-any-means-2026/"
         },
         "tomatoes": {
-          "value": 87,
+          "value": 88,
           "url": "https://www.rottentomatoes.com/m/by_any_means_2026"
         }
       },
@@ -9835,7 +9835,7 @@
           "url": "https://www.imdb.com/title/tt35410859/"
         },
         "letterboxd": {
-          "value": 3.85,
+          "value": 3.84,
           "url": "https://letterboxd.com/film/fjord-2026/"
         }
       },
@@ -9882,7 +9882,7 @@
           "url": "https://letterboxd.com/film/by-any-means-2026/"
         },
         "tomatoes": {
-          "value": 87,
+          "value": 88,
           "url": "https://www.rottentomatoes.com/m/by_any_means_2026"
         }
       },
@@ -9967,7 +9967,7 @@
           "url": "https://www.imdb.com/title/tt35410859/"
         },
         "letterboxd": {
-          "value": 3.85,
+          "value": 3.84,
           "url": "https://letterboxd.com/film/fjord-2026/"
         }
       },
@@ -9976,11 +9976,11 @@
       "available": 110
     },
     {
-      "id": "EDI20251707-2026-09-11T16:50:00-Kinosal",
+      "id": "EDI20251707-2026-09-11T16:45:00-Kinosal",
       "title": "Miss Moxy",
       "screen": "Kinosal",
-      "start": "2026-09-11T16:50:00",
-      "end": "2026-09-11T18:28:35",
+      "start": "2026-09-11T16:45:00",
+      "end": "2026-09-11T18:23:35",
       "dayKey": "2026-09-11",
       "runningMinutes": 88,
       "runningLabel": "1 t. 28 min.",
@@ -10020,11 +10020,11 @@
       "available": 110
     },
     {
-      "id": "WAB20240290-2026-09-11T19:00:00-Kinosal",
+      "id": "WAB20240290-2026-09-11T18:45:00-Kinosal",
       "title": "Practical Magic: Family Legacy",
       "screen": "Kinosal",
-      "start": "2026-09-11T19:00:00",
-      "end": "2026-09-11T21:00:00",
+      "start": "2026-09-11T18:45:00",
+      "end": "2026-09-11T21:05:00",
       "dayKey": "2026-09-11",
       "runningMinutes": 129,
       "runningLabel": "2 t. 9 min.",
@@ -10087,8 +10087,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 109,
-      "available": 108
+      "capacity": 110,
+      "available": 109
     },
     {
       "id": "EDI20261121-2026-09-12T15:00:00-Kinosal",
@@ -10126,7 +10126,7 @@
           "url": "https://www.imdb.com/title/tt1756855/"
         },
         "letterboxd": {
-          "value": 3.87,
+          "value": 3.86,
           "url": "https://letterboxd.com/film/coyote-vs-acme/"
         },
         "tomatoes": {
@@ -10137,6 +10137,118 @@
       "reserved": 0,
       "capacity": 110,
       "available": 110
+    },
+    {
+      "id": "WAB20240290-2026-09-12T17:45:00-Kinosal",
+      "title": "Practical Magic: Family Legacy",
+      "screen": "Kinosal",
+      "start": "2026-09-12T17:45:00",
+      "end": "2026-09-12T20:05:00",
+      "dayKey": "2026-09-12",
+      "runningMinutes": 129,
+      "runningLabel": "2 t. 9 min.",
+      "age": "12 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Comedy",
+        "Drama",
+        "Fantasy"
+      ],
+      "director": "Susanne Bier",
+      "premiere": "2026-09-11",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/641d021d9fc49ace25d7dc8dc00faac506ed47c0-1500x2223.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93019/purchase?kanal=dxf",
+      "eventId": "93019",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": null,
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20260087-2026-09-12T19:00:00-Storsal",
+      "title": "Fjord",
+      "screen": "Storsal",
+      "start": "2026-09-12T19:00:00",
+      "end": "2026-09-12T21:36:00",
+      "dayKey": "2026-09-12",
+      "runningMinutes": 145,
+      "runningLabel": "2 t. 25 min.",
+      "age": "9 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": true,
+      "genres": [
+        "Drama"
+      ],
+      "director": "Cristian Mungiu",
+      "premiere": "2026-09-04",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/572cbda01a132cc60ef251b13a9f8ffa8101b6c5-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93076/purchase?kanal=dxf",
+      "eventId": "93076",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.8,
+          "id": "tt35410859",
+          "url": "https://www.imdb.com/title/tt35410859/"
+        },
+        "letterboxd": {
+          "value": 3.84,
+          "url": "https://letterboxd.com/film/fjord-2026/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
+    },
+    {
+      "id": "SFN20241749-2026-09-12T21:00:00-Kinosal",
+      "title": "En nasjon i sjakk",
+      "screen": "Kinosal",
+      "start": "2026-09-12T21:00:00",
+      "end": "2026-09-12T23:05:00",
+      "dayKey": "2026-09-12",
+      "runningMinutes": 110,
+      "runningLabel": "1 t. 50 min.",
+      "age": "15 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": true,
+      "genres": [
+        "Action",
+        "Thriller"
+      ],
+      "director": "John Andreas Andersen",
+      "premiere": "2026-09-11",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/ce797c664fa97646a09fdfdb807c5ec4668040af-1500x2103.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93020/purchase?kanal=dxf",
+      "eventId": "93020",
+      "promoterId": "202",
+      "sold": 2,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 6.6,
+          "id": "tt32375006",
+          "url": "https://www.imdb.com/title/tt32375006/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 108,
+      "available": 106
     },
     {
       "id": "EDI20251555-2026-09-15T13:00:00-Kinosal",
