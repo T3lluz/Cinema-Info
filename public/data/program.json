@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-06T14:07:46.945Z",
+  "updatedAt": "2026-09-07T00:59:53.793Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -7468,7 +7468,7 @@
           "url": "https://www.imdb.com/title/tt37853455/"
         },
         "letterboxd": {
-          "value": 2.83,
+          "value": 2.82,
           "url": "https://letterboxd.com/film/one-night-only-2026/"
         },
         "tomatoes": {
@@ -7838,7 +7838,7 @@
           "url": "https://www.imdb.com/title/tt37853455/"
         },
         "letterboxd": {
-          "value": 2.83,
+          "value": 2.82,
           "url": "https://letterboxd.com/film/one-night-only-2026/"
         },
         "tomatoes": {
@@ -8024,7 +8024,7 @@
           "url": "https://www.imdb.com/title/tt37853455/"
         },
         "letterboxd": {
-          "value": 2.83,
+          "value": 2.82,
           "url": "https://letterboxd.com/film/one-night-only-2026/"
         },
         "tomatoes": {
@@ -8481,7 +8481,7 @@
           "url": "https://www.imdb.com/title/tt37853455/"
         },
         "letterboxd": {
-          "value": 2.83,
+          "value": 2.82,
           "url": "https://letterboxd.com/film/one-night-only-2026/"
         },
         "tomatoes": {
@@ -8842,7 +8842,7 @@
           "url": "https://www.imdb.com/title/tt37853455/"
         },
         "letterboxd": {
-          "value": 2.83,
+          "value": 2.82,
           "url": "https://letterboxd.com/film/one-night-only-2026/"
         },
         "tomatoes": {
@@ -8889,7 +8889,7 @@
           "url": "https://www.imdb.com/title/tt34379051/"
         },
         "letterboxd": {
-          "value": 3.23,
+          "value": 3.22,
           "url": "https://letterboxd.com/film/by-any-means-2026/"
         },
         "tomatoes": {
@@ -9112,7 +9112,7 @@
           "url": "https://www.imdb.com/title/tt37853455/"
         },
         "letterboxd": {
-          "value": 2.83,
+          "value": 2.82,
           "url": "https://letterboxd.com/film/one-night-only-2026/"
         },
         "tomatoes": {
@@ -9206,7 +9206,7 @@
           "url": "https://www.imdb.com/title/tt34379051/"
         },
         "letterboxd": {
-          "value": 3.23,
+          "value": 3.22,
           "url": "https://letterboxd.com/film/by-any-means-2026/"
         },
         "tomatoes": {
@@ -9330,7 +9330,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93008/purchase?kanal=dxf",
       "eventId": "93008",
       "promoterId": "202",
-      "sold": 19,
+      "sold": 25,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -9345,7 +9345,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 91
+      "available": 85
     },
     {
       "id": "EDI20251020-2026-09-06T18:00:00-Storsal",
@@ -9373,7 +9373,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93011/purchase?kanal=dxf",
       "eventId": "93011",
       "promoterId": "202",
-      "sold": 1,
+      "sold": 5,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -9382,7 +9382,7 @@
           "url": "https://www.imdb.com/title/tt37853455/"
         },
         "letterboxd": {
-          "value": 2.83,
+          "value": 2.82,
           "url": "https://letterboxd.com/film/one-night-only-2026/"
         },
         "tomatoes": {
@@ -9392,7 +9392,7 @@
       },
       "reserved": 0,
       "capacity": 286,
-      "available": 285
+      "available": 281
     },
     {
       "id": "EDI20260805-2026-09-06T20:00:00-Kinosal",
@@ -9420,7 +9420,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93033/purchase?kanal=dxf",
       "eventId": "93033",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -9429,7 +9429,7 @@
           "url": "https://www.imdb.com/title/tt34379051/"
         },
         "letterboxd": {
-          "value": 3.23,
+          "value": 3.22,
           "url": "https://letterboxd.com/film/by-any-means-2026/"
         },
         "tomatoes": {
@@ -9439,7 +9439,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 110
+      "available": 108
     },
     {
       "id": "EDI20251444-2026-09-06T20:30:00-Storsal",
@@ -9467,7 +9467,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93009/purchase?kanal=dxf",
       "eventId": "93009",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -9486,7 +9486,7 @@
       },
       "reserved": 0,
       "capacity": 286,
-      "available": 286
+      "available": 284
     },
     {
       "id": "EDI20251020-2026-09-08T11:15:00-Kinosal",
@@ -9523,7 +9523,7 @@
           "url": "https://www.imdb.com/title/tt37853455/"
         },
         "letterboxd": {
-          "value": 2.83,
+          "value": 2.82,
           "url": "https://letterboxd.com/film/one-night-only-2026/"
         },
         "tomatoes": {
@@ -9699,7 +9699,7 @@
           "url": "https://www.imdb.com/title/tt34379051/"
         },
         "letterboxd": {
-          "value": 3.23,
+          "value": 3.22,
           "url": "https://letterboxd.com/film/by-any-means-2026/"
         },
         "tomatoes": {
@@ -9790,7 +9790,7 @@
           "url": "https://www.imdb.com/title/tt37853455/"
         },
         "letterboxd": {
-          "value": 2.83,
+          "value": 2.82,
           "url": "https://letterboxd.com/film/one-night-only-2026/"
         },
         "tomatoes": {
@@ -9878,7 +9878,7 @@
           "url": "https://www.imdb.com/title/tt34379051/"
         },
         "letterboxd": {
-          "value": 3.23,
+          "value": 3.22,
           "url": "https://letterboxd.com/film/by-any-means-2026/"
         },
         "tomatoes": {
@@ -9935,6 +9935,210 @@
       "available": 110
     },
     {
+      "id": "EDI20260087-2026-09-10T20:00:00-Kinosal",
+      "title": "Fjord",
+      "screen": "Kinosal",
+      "start": "2026-09-10T20:00:00",
+      "end": "2026-09-10T22:35:29",
+      "dayKey": "2026-09-10",
+      "runningMinutes": 145,
+      "runningLabel": "2 t. 25 min.",
+      "age": "9 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": true,
+      "genres": [
+        "Drama"
+      ],
+      "director": "Cristian Mungiu",
+      "premiere": "2026-09-04",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/572cbda01a132cc60ef251b13a9f8ffa8101b6c5-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93117/purchase?kanal=dxf",
+      "eventId": "93117",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.8,
+          "id": "tt35410859",
+          "url": "https://www.imdb.com/title/tt35410859/"
+        },
+        "letterboxd": {
+          "value": 3.85,
+          "url": "https://letterboxd.com/film/fjord-2026/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20251707-2026-09-11T16:50:00-Kinosal",
+      "title": "Miss Moxy",
+      "screen": "Kinosal",
+      "start": "2026-09-11T16:50:00",
+      "end": "2026-09-11T18:28:35",
+      "dayKey": "2026-09-11",
+      "runningMinutes": 88,
+      "runningLabel": "1 t. 28 min.",
+      "age": "6 år",
+      "tags": [
+        "Norsk tale",
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ],
+      "director": null,
+      "premiere": "2026-08-28",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/4d5263dbeed399138e364fcb76d3acce437ff9e8-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93111/purchase?kanal=dxf",
+      "eventId": "93111",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 6.9,
+          "id": "tt33996352",
+          "url": "https://www.imdb.com/title/tt33996352/"
+        },
+        "letterboxd": {
+          "value": 3.32,
+          "url": "https://letterboxd.com/film/miss-moxy/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "WAB20240290-2026-09-11T19:00:00-Kinosal",
+      "title": "Practical Magic: Family Legacy",
+      "screen": "Kinosal",
+      "start": "2026-09-11T19:00:00",
+      "end": "2026-09-11T21:00:00",
+      "dayKey": "2026-09-11",
+      "runningMinutes": 129,
+      "runningLabel": "2 t. 9 min.",
+      "age": "12 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": "Norgespremiere",
+      "kinoklubb": false,
+      "genres": [
+        "Comedy",
+        "Drama",
+        "Fantasy"
+      ],
+      "director": "Susanne Bier",
+      "premiere": "2026-09-11",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/641d021d9fc49ace25d7dc8dc00faac506ed47c0-1500x2223.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93016/purchase?kanal=dxf",
+      "eventId": "93016",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": null,
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "SFN20241749-2026-09-11T21:30:00-Kinosal",
+      "title": "En nasjon i sjakk",
+      "screen": "Kinosal",
+      "start": "2026-09-11T21:30:00",
+      "end": "2026-09-11T23:35:00",
+      "dayKey": "2026-09-11",
+      "runningMinutes": 110,
+      "runningLabel": "1 t. 50 min.",
+      "age": "15 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": "Norgespremiere",
+      "kinoklubb": true,
+      "genres": [
+        "Action",
+        "Thriller"
+      ],
+      "director": "John Andreas Andersen",
+      "premiere": "2026-09-11",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/ce797c664fa97646a09fdfdb807c5ec4668040af-1500x2103.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93015/purchase?kanal=dxf",
+      "eventId": "93015",
+      "promoterId": "202",
+      "sold": 1,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 6.6,
+          "id": "tt32375006",
+          "url": "https://www.imdb.com/title/tt32375006/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 109,
+      "available": 108
+    },
+    {
+      "id": "EDI20261121-2026-09-12T15:00:00-Kinosal",
+      "title": "Coyote vs. Acme - Per Ulv på saken",
+      "screen": "Kinosal",
+      "start": "2026-09-12T15:00:00",
+      "end": "2026-09-12T16:51:00",
+      "dayKey": "2026-09-12",
+      "runningMinutes": 103,
+      "runningLabel": "1 t. 43 min.",
+      "age": "9 år",
+      "tags": [
+        "Norsk tale",
+        "Utekstet"
+      ],
+      "showType": "Norgespremiere",
+      "kinoklubb": false,
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ],
+      "director": "Dave Green",
+      "premiere": "2026-09-11",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/0886770cddb5bac8d3caa9f057f96668c5b0f812-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93018/purchase?kanal=dxf",
+      "eventId": "93018",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.7,
+          "id": "tt1756855",
+          "url": "https://www.imdb.com/title/tt1756855/"
+        },
+        "letterboxd": {
+          "value": 3.87,
+          "url": "https://letterboxd.com/film/coyote-vs-acme/"
+        },
+        "tomatoes": {
+          "value": 95,
+          "url": "https://www.rottentomatoes.com/m/coyote_vs_acme"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
       "id": "EDI20251555-2026-09-15T13:00:00-Kinosal",
       "title": "Kjærast",
       "screen": "Kinosal",
@@ -9962,7 +10166,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.7,
+          "value": 6.6,
           "id": "tt31451181",
           "url": "https://www.imdb.com/title/tt31451181/"
         }
@@ -9999,7 +10203,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.7,
+          "value": 6.6,
           "id": "tt31451181",
           "url": "https://www.imdb.com/title/tt31451181/"
         }
