@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-08T01:10:52.890Z",
+  "updatedAt": "2026-09-08T15:03:32.421Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -7463,7 +7463,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.4,
+          "value": 6.3,
           "id": "tt37853455",
           "url": "https://www.imdb.com/title/tt37853455/"
         },
@@ -7833,7 +7833,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.4,
+          "value": 6.3,
           "id": "tt37853455",
           "url": "https://www.imdb.com/title/tt37853455/"
         },
@@ -8019,7 +8019,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.4,
+          "value": 6.3,
           "id": "tt37853455",
           "url": "https://www.imdb.com/title/tt37853455/"
         },
@@ -8163,7 +8163,7 @@
           "url": "https://www.imdb.com/title/tt35410859/"
         },
         "letterboxd": {
-          "value": 3.84,
+          "value": 3.85,
           "url": "https://letterboxd.com/film/fjord-2026/"
         }
       },
@@ -8299,7 +8299,7 @@
           "url": "https://www.imdb.com/title/tt35410859/"
         },
         "letterboxd": {
-          "value": 3.84,
+          "value": 3.85,
           "url": "https://letterboxd.com/film/fjord-2026/"
         }
       },
@@ -8476,7 +8476,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.4,
+          "value": 6.3,
           "id": "tt37853455",
           "url": "https://www.imdb.com/title/tt37853455/"
         },
@@ -8799,7 +8799,7 @@
           "url": "https://www.imdb.com/title/tt35410859/"
         },
         "letterboxd": {
-          "value": 3.84,
+          "value": 3.85,
           "url": "https://letterboxd.com/film/fjord-2026/"
         }
       },
@@ -8837,7 +8837,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.4,
+          "value": 6.3,
           "id": "tt37853455",
           "url": "https://www.imdb.com/title/tt37853455/"
         },
@@ -8893,7 +8893,7 @@
           "url": "https://letterboxd.com/film/by-any-means-2026/"
         },
         "tomatoes": {
-          "value": 88,
+          "value": 89,
           "url": "https://www.rottentomatoes.com/m/by_any_means_2026"
         }
       },
@@ -9069,7 +9069,7 @@
           "url": "https://www.imdb.com/title/tt35410859/"
         },
         "letterboxd": {
-          "value": 3.84,
+          "value": 3.85,
           "url": "https://letterboxd.com/film/fjord-2026/"
         }
       },
@@ -9107,7 +9107,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.4,
+          "value": 6.3,
           "id": "tt37853455",
           "url": "https://www.imdb.com/title/tt37853455/"
         },
@@ -9210,7 +9210,7 @@
           "url": "https://letterboxd.com/film/by-any-means-2026/"
         },
         "tomatoes": {
-          "value": 88,
+          "value": 89,
           "url": "https://www.rottentomatoes.com/m/by_any_means_2026"
         }
       },
@@ -9339,7 +9339,7 @@
           "url": "https://www.imdb.com/title/tt35410859/"
         },
         "letterboxd": {
-          "value": 3.84,
+          "value": 3.85,
           "url": "https://letterboxd.com/film/fjord-2026/"
         }
       },
@@ -9377,7 +9377,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.4,
+          "value": 6.3,
           "id": "tt37853455",
           "url": "https://www.imdb.com/title/tt37853455/"
         },
@@ -9433,7 +9433,7 @@
           "url": "https://letterboxd.com/film/by-any-means-2026/"
         },
         "tomatoes": {
-          "value": 88,
+          "value": 89,
           "url": "https://www.rottentomatoes.com/m/by_any_means_2026"
         }
       },
@@ -9518,7 +9518,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.4,
+          "value": 6.3,
           "id": "tt37853455",
           "url": "https://www.imdb.com/title/tt37853455/"
         },
@@ -9562,7 +9562,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93039/purchase?kanal=dxf",
       "eventId": "93039",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 6,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -9577,7 +9577,7 @@
       },
       "reserved": 0,
       "capacity": 246,
-      "available": 246
+      "available": 240
     },
     {
       "id": "EDI20260206-2026-09-08T17:30:00-Kinosal",
@@ -9606,7 +9606,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93110/purchase?kanal=dxf",
       "eventId": "93110",
       "promoterId": "202",
-      "sold": 4,
+      "sold": 7,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -9621,7 +9621,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 106
+      "available": 103
     },
     {
       "id": "EDI20260087-2026-09-08T19:30:00-Storsal",
@@ -9647,7 +9647,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93044/purchase?kanal=dxf",
       "eventId": "93044",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 1,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -9656,13 +9656,13 @@
           "url": "https://www.imdb.com/title/tt35410859/"
         },
         "letterboxd": {
-          "value": 3.84,
+          "value": 3.85,
           "url": "https://letterboxd.com/film/fjord-2026/"
         }
       },
       "reserved": 0,
-      "capacity": 286,
-      "available": 286
+      "capacity": 285,
+      "available": 284
     },
     {
       "id": "EDI20260805-2026-09-08T20:15:00-Kinosal",
@@ -9690,7 +9690,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93045/purchase?kanal=dxf",
       "eventId": "93045",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 5,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -9703,13 +9703,13 @@
           "url": "https://letterboxd.com/film/by-any-means-2026/"
         },
         "tomatoes": {
-          "value": 88,
+          "value": 89,
           "url": "https://www.rottentomatoes.com/m/by_any_means_2026"
         }
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 110
+      "available": 105
     },
     {
       "id": "EDI20251707-2026-09-09T17:00:00-Kinosal",
@@ -9785,7 +9785,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.4,
+          "value": 6.3,
           "id": "tt37853455",
           "url": "https://www.imdb.com/title/tt37853455/"
         },
@@ -9826,7 +9826,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93040/purchase?kanal=dxf",
       "eventId": "93040",
       "promoterId": "202",
-      "sold": 4,
+      "sold": 8,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -9835,13 +9835,13 @@
           "url": "https://www.imdb.com/title/tt35410859/"
         },
         "letterboxd": {
-          "value": 3.84,
+          "value": 3.85,
           "url": "https://letterboxd.com/film/fjord-2026/"
         }
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 106
+      "available": 102
     },
     {
       "id": "EDI20260805-2026-09-09T20:30:00-Storsal",
@@ -9882,7 +9882,7 @@
           "url": "https://letterboxd.com/film/by-any-means-2026/"
         },
         "tomatoes": {
-          "value": 88,
+          "value": 89,
           "url": "https://www.rottentomatoes.com/m/by_any_means_2026"
         }
       },
@@ -9967,7 +9967,7 @@
           "url": "https://www.imdb.com/title/tt35410859/"
         },
         "letterboxd": {
-          "value": 3.84,
+          "value": 3.85,
           "url": "https://letterboxd.com/film/fjord-2026/"
         }
       },
@@ -10047,7 +10047,12 @@
       "promoterId": "202",
       "sold": 0,
       "eventStatus": "ok",
-      "ratings": null,
+      "ratings": {
+        "letterboxd": {
+          "value": 3.29,
+          "url": "https://letterboxd.com/film/practical-magic-2/"
+        }
+      },
       "reserved": 0,
       "capacity": 110,
       "available": 110
@@ -10166,7 +10171,12 @@
       "promoterId": "202",
       "sold": 1,
       "eventStatus": "ok",
-      "ratings": null,
+      "ratings": {
+        "letterboxd": {
+          "value": 3.29,
+          "url": "https://letterboxd.com/film/practical-magic-2/"
+        }
+      },
       "reserved": 0,
       "capacity": 109,
       "available": 108
@@ -10195,7 +10205,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93076/purchase?kanal=dxf",
       "eventId": "93076",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 3,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -10204,13 +10214,13 @@
           "url": "https://www.imdb.com/title/tt35410859/"
         },
         "letterboxd": {
-          "value": 3.84,
+          "value": 3.85,
           "url": "https://letterboxd.com/film/fjord-2026/"
         }
       },
       "reserved": 0,
-      "capacity": 286,
-      "available": 286
+      "capacity": 285,
+      "available": 282
     },
     {
       "id": "SFN20241749-2026-09-12T21:00:00-Kinosal",
@@ -10251,6 +10261,50 @@
       "available": 106
     },
     {
+      "id": "EDI20251707-2026-09-13T14:50:00-Kinosal",
+      "title": "Miss Moxy",
+      "screen": "Kinosal",
+      "start": "2026-09-13T14:50:00",
+      "end": "2026-09-13T16:28:35",
+      "dayKey": "2026-09-13",
+      "runningMinutes": 88,
+      "runningLabel": "1 t. 28 min.",
+      "age": "6 år",
+      "tags": [
+        "Norsk tale",
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ],
+      "director": null,
+      "premiere": "2026-08-28",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/4d5263dbeed399138e364fcb76d3acce437ff9e8-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93077/purchase?kanal=dxf",
+      "eventId": "93077",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 6.9,
+          "id": "tt33996352",
+          "url": "https://www.imdb.com/title/tt33996352/"
+        },
+        "letterboxd": {
+          "value": 3.32,
+          "url": "https://letterboxd.com/film/miss-moxy/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
       "id": "EDI20260087-2026-09-13T17:00:00-Kinosal",
       "title": "Fjord",
       "screen": "Kinosal",
@@ -10283,7 +10337,7 @@
           "url": "https://www.imdb.com/title/tt35410859/"
         },
         "letterboxd": {
-          "value": 3.84,
+          "value": 3.85,
           "url": "https://letterboxd.com/film/fjord-2026/"
         }
       },
@@ -10399,6 +10453,193 @@
           "url": "https://www.imdb.com/title/tt31451181/"
         }
       },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20251817-2026-09-18T17:00:00-Kinosal",
+      "title": "Tilbake til Tottori",
+      "screen": "Kinosal",
+      "start": "2026-09-18T17:00:00",
+      "end": "2026-09-18T18:42:00",
+      "dayKey": "2026-09-18",
+      "runningMinutes": 92,
+      "runningLabel": "1 t. 32 min.",
+      "age": "6 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": "Norgespremiere",
+      "kinoklubb": false,
+      "genres": [
+        "Family"
+      ],
+      "director": "Silje Salomonsen, Arild Østin Ommundsen",
+      "premiere": "2026-09-18",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/a38b6f4229fc6c46b30656e3d04e47df476422d2-1080x1920.png?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93078/purchase?kanal=dxf",
+      "eventId": "93078",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": null,
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20251443-2026-09-18T19:15:00-Kinosal",
+      "title": "Spa Weekend",
+      "screen": "Kinosal",
+      "start": "2026-09-18T19:15:00",
+      "end": "2026-09-18T21:02:00",
+      "dayKey": "2026-09-18",
+      "runningMinutes": 97,
+      "runningLabel": "1 t. 37 min.",
+      "age": "6 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": "Norgespremiere",
+      "kinoklubb": false,
+      "genres": [
+        "Comedy"
+      ],
+      "director": "Jon Lucas, Scott Moore",
+      "premiere": "2026-09-18",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/10e873e01cd62c1bffabb7004cfc7f82b5ae6b1c-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93080/purchase?kanal=dxf",
+      "eventId": "93080",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 5.4,
+          "id": "tt33305867",
+          "url": "https://www.imdb.com/title/tt33305867/"
+        },
+        "letterboxd": {
+          "value": 2.44,
+          "url": "https://letterboxd.com/film/spa-weekend-2026/"
+        },
+        "tomatoes": {
+          "value": 73,
+          "url": "https://www.rottentomatoes.com/m/spa_weekend"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20251443-2026-09-19T18:00:00-Kinosal",
+      "title": "Spa Weekend",
+      "screen": "Kinosal",
+      "start": "2026-09-19T18:00:00",
+      "end": "2026-09-19T19:47:00",
+      "dayKey": "2026-09-19",
+      "runningMinutes": 97,
+      "runningLabel": "1 t. 37 min.",
+      "age": "6 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Comedy"
+      ],
+      "director": "Jon Lucas, Scott Moore",
+      "premiere": "2026-09-18",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/10e873e01cd62c1bffabb7004cfc7f82b5ae6b1c-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93085/purchase?kanal=dxf",
+      "eventId": "93085",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 5.4,
+          "id": "tt33305867",
+          "url": "https://www.imdb.com/title/tt33305867/"
+        },
+        "letterboxd": {
+          "value": 2.44,
+          "url": "https://letterboxd.com/film/spa-weekend-2026/"
+        },
+        "tomatoes": {
+          "value": 73,
+          "url": "https://www.rottentomatoes.com/m/spa_weekend"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20250183-2026-10-20T13:00:00-Kinosal",
+      "title": "Pensjonskuppet",
+      "screen": "Kinosal",
+      "start": "2026-10-20T13:00:00",
+      "end": "2026-10-20T14:50:00",
+      "dayKey": "2026-10-20",
+      "runningMinutes": 110,
+      "runningLabel": "1 t. 50 min.",
+      "age": "9 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": "Seniorkino",
+      "kinoklubb": false,
+      "genres": [
+        "Action",
+        "Comedy",
+        "Crime"
+      ],
+      "director": "Gunnbjörg Gunnarsdottir",
+      "premiere": "2026-10-16",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/b7c7d07d556cff3e5c9868b5e6fd02656f31e59c-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/92987/purchase?kanal=dxf",
+      "eventId": "92987",
+      "promoterId": "202",
+      "sold": 6,
+      "eventStatus": "ok",
+      "ratings": null,
+      "reserved": 0,
+      "capacity": 110,
+      "available": 104
+    },
+    {
+      "id": "EDI20250183-2026-10-20T19:30:00-Kinosal",
+      "title": "Pensjonskuppet",
+      "screen": "Kinosal",
+      "start": "2026-10-20T19:30:00",
+      "end": "2026-10-20T21:20:00",
+      "dayKey": "2026-10-20",
+      "runningMinutes": 110,
+      "runningLabel": "1 t. 50 min.",
+      "age": "9 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Action",
+        "Comedy",
+        "Crime"
+      ],
+      "director": "Gunnbjörg Gunnarsdottir",
+      "premiere": "2026-10-16",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/b7c7d07d556cff3e5c9868b5e6fd02656f31e59c-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/92986/purchase?kanal=dxf",
+      "eventId": "92986",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": null,
       "reserved": 0,
       "capacity": 110,
       "available": 110
