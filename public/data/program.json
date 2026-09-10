@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-09T15:05:15.967Z",
+  "updatedAt": "2026-09-10T01:02:42.896Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -9781,7 +9781,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93043/purchase?kanal=dxf",
       "eventId": "93043",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 4,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -9800,7 +9800,7 @@
       },
       "reserved": 0,
       "capacity": 286,
-      "available": 286
+      "available": 282
     },
     {
       "id": "EDI20260087-2026-09-09T19:30:00-Kinosal",
@@ -9826,7 +9826,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93040/purchase?kanal=dxf",
       "eventId": "93040",
       "promoterId": "202",
-      "sold": 10,
+      "sold": 19,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -9841,7 +9841,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 100
+      "available": 91
     },
     {
       "id": "EDI20260805-2026-09-09T20:30:00-Storsal",
@@ -9869,7 +9869,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93042/purchase?kanal=dxf",
       "eventId": "93042",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 1,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -9888,7 +9888,7 @@
       },
       "reserved": 0,
       "capacity": 286,
-      "available": 286
+      "available": 285
     },
     {
       "id": "EDI20260206-2026-09-10T17:00:00-Kinosal",
@@ -9931,8 +9931,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 106,
-      "available": 102
+      "capacity": 110,
+      "available": 106
     },
     {
       "id": "EDI20260087-2026-09-10T20:00:00-Kinosal",
@@ -9958,7 +9958,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93117/purchase?kanal=dxf",
       "eventId": "93117",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 7,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -9972,8 +9972,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 110
+      "capacity": 108,
+      "available": 101
     },
     {
       "id": "EDI20251707-2026-09-11T16:45:00-Kinosal",
@@ -10002,7 +10002,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93111/purchase?kanal=dxf",
       "eventId": "93111",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 5,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -10016,8 +10016,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 110
+      "capacity": 105,
+      "available": 100
     },
     {
       "id": "WAB20240290-2026-09-11T18:45:00-Kinosal",
@@ -10045,17 +10045,22 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93016/purchase?kanal=dxf",
       "eventId": "93016",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "letterboxd": {
-          "value": 3.16,
+          "value": 3.09,
           "url": "https://letterboxd.com/film/practical-magic-2/"
+        },
+        "imdb": {
+          "value": 6.3,
+          "id": "tt32588798",
+          "url": "https://www.imdb.com/title/tt32588798/"
         }
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 110
+      "available": 108
     },
     {
       "id": "SFN20241749-2026-09-11T21:30:00-Kinosal",
@@ -10082,7 +10087,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93015/purchase?kanal=dxf",
       "eventId": "93015",
       "promoterId": "202",
-      "sold": 1,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -10093,7 +10098,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 109
+      "available": 108
     },
     {
       "id": "EDI20261121-2026-09-12T15:00:00-Kinosal",
@@ -10173,8 +10178,13 @@
       "eventStatus": "ok",
       "ratings": {
         "letterboxd": {
-          "value": 3.16,
+          "value": 3.09,
           "url": "https://letterboxd.com/film/practical-magic-2/"
+        },
+        "imdb": {
+          "value": 6.3,
+          "id": "tt32588798",
+          "url": "https://www.imdb.com/title/tt32588798/"
         }
       },
       "reserved": 0,
@@ -10521,7 +10531,7 @@
           "url": "https://www.imdb.com/title/tt33305867/"
         },
         "letterboxd": {
-          "value": 2.44,
+          "value": 2.43,
           "url": "https://letterboxd.com/film/spa-weekend-2026/"
         },
         "tomatoes": {
@@ -10566,7 +10576,7 @@
           "url": "https://www.imdb.com/title/tt33305867/"
         },
         "letterboxd": {
-          "value": 2.44,
+          "value": 2.43,
           "url": "https://letterboxd.com/film/spa-weekend-2026/"
         },
         "tomatoes": {
