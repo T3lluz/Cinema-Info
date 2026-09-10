@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-10T01:02:42.896Z",
+  "updatedAt": "2026-09-10T14:57:28.932Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -9972,8 +9972,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 108,
-      "available": 101
+      "capacity": 110,
+      "available": 103
     },
     {
       "id": "EDI20251707-2026-09-11T16:45:00-Kinosal",
@@ -10016,8 +10016,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 105,
-      "available": 100
+      "capacity": 110,
+      "available": 105
     },
     {
       "id": "WAB20240290-2026-09-11T18:45:00-Kinosal",
@@ -10048,14 +10048,14 @@
       "sold": 2,
       "eventStatus": "ok",
       "ratings": {
-        "letterboxd": {
-          "value": 3.09,
-          "url": "https://letterboxd.com/film/practical-magic-2/"
-        },
         "imdb": {
           "value": 6.3,
           "id": "tt32588798",
           "url": "https://www.imdb.com/title/tt32588798/"
+        },
+        "letterboxd": {
+          "value": 3.06,
+          "url": "https://letterboxd.com/film/practical-magic-2/"
         }
       },
       "reserved": 0,
@@ -10087,7 +10087,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93015/purchase?kanal=dxf",
       "eventId": "93015",
       "promoterId": "202",
-      "sold": 2,
+      "sold": 6,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -10098,7 +10098,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 108
+      "available": 104
     },
     {
       "id": "EDI20261121-2026-09-12T15:00:00-Kinosal",
@@ -10177,19 +10177,19 @@
       "sold": 1,
       "eventStatus": "ok",
       "ratings": {
-        "letterboxd": {
-          "value": 3.09,
-          "url": "https://letterboxd.com/film/practical-magic-2/"
-        },
         "imdb": {
           "value": 6.3,
           "id": "tt32588798",
           "url": "https://www.imdb.com/title/tt32588798/"
+        },
+        "letterboxd": {
+          "value": 3.06,
+          "url": "https://letterboxd.com/film/practical-magic-2/"
         }
       },
       "reserved": 0,
-      "capacity": 109,
-      "available": 108
+      "capacity": 110,
+      "available": 109
     },
     {
       "id": "EDI20260087-2026-09-12T19:00:00-Storsal",
@@ -10315,6 +10315,54 @@
       "available": 110
     },
     {
+      "id": "EDI20261121-2026-09-13T16:00:00-Storsal",
+      "title": "Coyote vs. Acme - Per Ulv på saken",
+      "screen": "Storsal",
+      "start": "2026-09-13T16:00:00",
+      "end": "2026-09-13T17:51:00",
+      "dayKey": "2026-09-13",
+      "runningMinutes": 103,
+      "runningLabel": "1 t. 43 min.",
+      "age": "9 år",
+      "tags": [
+        "Norsk tale",
+        "Utekstet"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ],
+      "director": "Dave Green",
+      "premiere": "2026-09-11",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/0886770cddb5bac8d3caa9f057f96668c5b0f812-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93021/purchase?kanal=dxf",
+      "eventId": "93021",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.6,
+          "id": "tt1756855",
+          "url": "https://www.imdb.com/title/tt1756855/"
+        },
+        "letterboxd": {
+          "value": 3.86,
+          "url": "https://letterboxd.com/film/coyote-vs-acme/"
+        },
+        "tomatoes": {
+          "value": 95,
+          "url": "https://www.rottentomatoes.com/m/coyote_vs_acme"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
+    },
+    {
       "id": "EDI20260087-2026-09-13T17:00:00-Kinosal",
       "title": "Fjord",
       "screen": "Kinosal",
@@ -10354,6 +10402,49 @@
       "reserved": 0,
       "capacity": 110,
       "available": 110
+    },
+    {
+      "id": "WAB20240290-2026-09-13T19:00:00-Storsal",
+      "title": "Practical Magic: Family Legacy",
+      "screen": "Storsal",
+      "start": "2026-09-13T19:00:00",
+      "end": "2026-09-13T21:20:00",
+      "dayKey": "2026-09-13",
+      "runningMinutes": 129,
+      "runningLabel": "2 t. 9 min.",
+      "age": "12 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Comedy",
+        "Drama",
+        "Fantasy"
+      ],
+      "director": "Susanne Bier",
+      "premiere": "2026-09-11",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/641d021d9fc49ace25d7dc8dc00faac506ed47c0-1500x2223.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93022/purchase?kanal=dxf",
+      "eventId": "93022",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 6.3,
+          "id": "tt32588798",
+          "url": "https://www.imdb.com/title/tt32588798/"
+        },
+        "letterboxd": {
+          "value": 3.06,
+          "url": "https://letterboxd.com/film/practical-magic-2/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
     },
     {
       "id": "SFN20241749-2026-09-13T20:15:00-Kinosal",
@@ -10431,6 +10522,54 @@
       "available": 110
     },
     {
+      "id": "EDI20261121-2026-09-15T17:00:00-Kinosal",
+      "title": "Coyote vs. Acme - Per Ulv på saken",
+      "screen": "Kinosal",
+      "start": "2026-09-15T17:00:00",
+      "end": "2026-09-15T18:51:00",
+      "dayKey": "2026-09-15",
+      "runningMinutes": 103,
+      "runningLabel": "1 t. 43 min.",
+      "age": "9 år",
+      "tags": [
+        "Norsk tale",
+        "Utekstet"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ],
+      "director": "Dave Green",
+      "premiere": "2026-09-11",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/0886770cddb5bac8d3caa9f057f96668c5b0f812-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93108/purchase?kanal=dxf",
+      "eventId": "93108",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.6,
+          "id": "tt1756855",
+          "url": "https://www.imdb.com/title/tt1756855/"
+        },
+        "letterboxd": {
+          "value": 3.86,
+          "url": "https://letterboxd.com/film/coyote-vs-acme/"
+        },
+        "tomatoes": {
+          "value": 95,
+          "url": "https://www.rottentomatoes.com/m/coyote_vs_acme"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
       "id": "EDI20251555-2026-09-15T19:30:00-Kinosal",
       "title": "Kjærast",
       "screen": "Kinosal",
@@ -10466,6 +10605,44 @@
       "reserved": 0,
       "capacity": 110,
       "available": 110
+    },
+    {
+      "id": "SFN20241749-2026-09-15T20:15:00-Storsal",
+      "title": "En nasjon i sjakk",
+      "screen": "Storsal",
+      "start": "2026-09-15T20:15:00",
+      "end": "2026-09-15T22:19:44",
+      "dayKey": "2026-09-15",
+      "runningMinutes": 115,
+      "runningLabel": "1 t. 55 min.",
+      "age": "15 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": true,
+      "genres": [
+        "Action",
+        "Thriller"
+      ],
+      "director": "John Andreas Andersen",
+      "premiere": "2026-09-11",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/ce797c664fa97646a09fdfdb807c5ec4668040af-1500x2103.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93121/purchase?kanal=dxf",
+      "eventId": "93121",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 6.4,
+          "id": "tt32375006",
+          "url": "https://www.imdb.com/title/tt32375006/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
     },
     {
       "id": "EDI20251817-2026-09-18T17:00:00-Kinosal",
@@ -10653,6 +10830,39 @@
       "reserved": 0,
       "capacity": 110,
       "available": 110
+    },
+    {
+      "id": "EDI20251026-2026-12-15T20:00:00-Storsal",
+      "title": "Dune: Part Three",
+      "screen": "Storsal",
+      "start": "2026-12-15T20:00:00",
+      "end": "2026-12-15T22:35:00",
+      "dayKey": "2026-12-15",
+      "runningMinutes": null,
+      "runningLabel": null,
+      "age": null,
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": "Førpremiere",
+      "kinoklubb": false,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Drama"
+      ],
+      "director": "Denis Villeneuve",
+      "premiere": "2026-12-16",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/7cce4ebe97817cf89958fa4065f26a6b749e0a4d-1500x2223.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93119/purchase?kanal=dxf",
+      "eventId": "93119",
+      "promoterId": "202",
+      "sold": 2,
+      "eventStatus": "ok",
+      "ratings": null,
+      "reserved": 0,
+      "capacity": 284,
+      "available": 282
     }
   ]
 }
