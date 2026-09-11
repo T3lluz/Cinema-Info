@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-11T01:02:52.187Z",
+  "updatedAt": "2026-09-11T14:57:45.093Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -10049,12 +10049,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.2,
+          "value": 6.4,
           "id": "tt32588798",
           "url": "https://www.imdb.com/title/tt32588798/"
         },
         "letterboxd": {
-          "value": 3.05,
+          "value": 3.06,
           "url": "https://letterboxd.com/film/practical-magic-2/"
         }
       },
@@ -10087,17 +10087,17 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93015/purchase?kanal=dxf",
       "eventId": "93015",
       "promoterId": "202",
-      "sold": 11,
+      "sold": 13,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.3,
+          "value": 6.2,
           "id": "tt32375006",
           "url": "https://www.imdb.com/title/tt32375006/"
         }
       },
       "reserved": 0,
-      "capacity": 108,
+      "capacity": 110,
       "available": 97
     },
     {
@@ -10127,7 +10127,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93018/purchase?kanal=dxf",
       "eventId": "93018",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 9,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -10146,7 +10146,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 110
+      "available": 101
     },
     {
       "id": "WAB20240290-2026-09-12T17:45:00-Kinosal",
@@ -10178,12 +10178,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.2,
+          "value": 6.4,
           "id": "tt32588798",
           "url": "https://www.imdb.com/title/tt32588798/"
         },
         "letterboxd": {
-          "value": 3.05,
+          "value": 3.06,
           "url": "https://letterboxd.com/film/practical-magic-2/"
         }
       },
@@ -10261,7 +10261,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.3,
+          "value": 6.2,
           "id": "tt32375006",
           "url": "https://www.imdb.com/title/tt32375006/"
         }
@@ -10297,7 +10297,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93077/purchase?kanal=dxf",
       "eventId": "93077",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 5,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -10312,7 +10312,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 110
+      "available": 105
     },
     {
       "id": "EDI20261121-2026-09-13T16:00:00-Storsal",
@@ -10433,12 +10433,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.2,
+          "value": 6.4,
           "id": "tt32588798",
           "url": "https://www.imdb.com/title/tt32588798/"
         },
         "letterboxd": {
-          "value": 3.05,
+          "value": 3.06,
           "url": "https://letterboxd.com/film/practical-magic-2/"
         }
       },
@@ -10471,18 +10471,18 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93024/purchase?kanal=dxf",
       "eventId": "93024",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.3,
+          "value": 6.2,
           "id": "tt32375006",
           "url": "https://www.imdb.com/title/tt32375006/"
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 110
+      "capacity": 108,
+      "available": 106
     },
     {
       "id": "EDI20251555-2026-09-15T13:00:00-Kinosal",
@@ -10635,7 +10635,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.3,
+          "value": 6.2,
           "id": "tt32375006",
           "url": "https://www.imdb.com/title/tt32375006/"
         }
@@ -10795,8 +10795,8 @@
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
-      "capacity": 109,
-      "available": 100
+      "capacity": 110,
+      "available": 101
     },
     {
       "id": "EDI20250183-2026-10-20T19:30:00-Kinosal",
