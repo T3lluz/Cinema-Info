@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-12T01:05:10.021Z",
+  "updatedAt": "2026-09-12T14:03:13.814Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -8163,7 +8163,7 @@
           "url": "https://www.imdb.com/title/tt35410859/"
         },
         "letterboxd": {
-          "value": 3.84,
+          "value": 3.83,
           "url": "https://letterboxd.com/film/fjord-2026/"
         }
       },
@@ -8299,7 +8299,7 @@
           "url": "https://www.imdb.com/title/tt35410859/"
         },
         "letterboxd": {
-          "value": 3.84,
+          "value": 3.83,
           "url": "https://letterboxd.com/film/fjord-2026/"
         }
       },
@@ -8799,7 +8799,7 @@
           "url": "https://www.imdb.com/title/tt35410859/"
         },
         "letterboxd": {
-          "value": 3.84,
+          "value": 3.83,
           "url": "https://letterboxd.com/film/fjord-2026/"
         }
       },
@@ -9069,7 +9069,7 @@
           "url": "https://www.imdb.com/title/tt35410859/"
         },
         "letterboxd": {
-          "value": 3.84,
+          "value": 3.83,
           "url": "https://letterboxd.com/film/fjord-2026/"
         }
       },
@@ -9339,7 +9339,7 @@
           "url": "https://www.imdb.com/title/tt35410859/"
         },
         "letterboxd": {
-          "value": 3.84,
+          "value": 3.83,
           "url": "https://letterboxd.com/film/fjord-2026/"
         }
       },
@@ -9656,7 +9656,7 @@
           "url": "https://www.imdb.com/title/tt35410859/"
         },
         "letterboxd": {
-          "value": 3.84,
+          "value": 3.83,
           "url": "https://letterboxd.com/film/fjord-2026/"
         }
       },
@@ -9835,7 +9835,7 @@
           "url": "https://www.imdb.com/title/tt35410859/"
         },
         "letterboxd": {
-          "value": 3.84,
+          "value": 3.83,
           "url": "https://letterboxd.com/film/fjord-2026/"
         }
       },
@@ -9967,7 +9967,7 @@
           "url": "https://www.imdb.com/title/tt35410859/"
         },
         "letterboxd": {
-          "value": 3.84,
+          "value": 3.83,
           "url": "https://letterboxd.com/film/fjord-2026/"
         }
       },
@@ -10054,11 +10054,11 @@
           "url": "https://www.imdb.com/title/tt32588798/"
         },
         "letterboxd": {
-          "value": 3.05,
+          "value": 3.04,
           "url": "https://letterboxd.com/film/practical-magic-2/"
         },
         "tomatoes": {
-          "value": 92,
+          "value": 93,
           "url": "https://www.rottentomatoes.com/m/practical_magic_2"
         }
       },
@@ -10131,7 +10131,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93018/purchase?kanal=dxf",
       "eventId": "93018",
       "promoterId": "202",
-      "sold": 9,
+      "sold": 26,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -10150,7 +10150,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 101
+      "available": 84
     },
     {
       "id": "WAB20240290-2026-09-12T17:45:00-Kinosal",
@@ -10178,7 +10178,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93019/purchase?kanal=dxf",
       "eventId": "93019",
       "promoterId": "202",
-      "sold": 1,
+      "sold": 3,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -10187,17 +10187,17 @@
           "url": "https://www.imdb.com/title/tt32588798/"
         },
         "letterboxd": {
-          "value": 3.05,
+          "value": 3.04,
           "url": "https://letterboxd.com/film/practical-magic-2/"
         },
         "tomatoes": {
-          "value": 92,
+          "value": 93,
           "url": "https://www.rottentomatoes.com/m/practical_magic_2"
         }
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 109
+      "available": 107
     },
     {
       "id": "EDI20260087-2026-09-12T19:00:00-Storsal",
@@ -10223,7 +10223,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93076/purchase?kanal=dxf",
       "eventId": "93076",
       "promoterId": "202",
-      "sold": 3,
+      "sold": 5,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -10232,13 +10232,13 @@
           "url": "https://www.imdb.com/title/tt35410859/"
         },
         "letterboxd": {
-          "value": 3.84,
+          "value": 3.83,
           "url": "https://letterboxd.com/film/fjord-2026/"
         }
       },
       "reserved": 0,
       "capacity": 286,
-      "available": 283
+      "available": 281
     },
     {
       "id": "SFN20241749-2026-09-12T21:00:00-Kinosal",
@@ -10265,7 +10265,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93020/purchase?kanal=dxf",
       "eventId": "93020",
       "promoterId": "202",
-      "sold": 6,
+      "sold": 13,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -10276,7 +10276,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 104
+      "available": 97
     },
     {
       "id": "EDI20251707-2026-09-13T14:50:00-Kinosal",
@@ -10403,7 +10403,7 @@
           "url": "https://www.imdb.com/title/tt35410859/"
         },
         "letterboxd": {
-          "value": 3.84,
+          "value": 3.83,
           "url": "https://letterboxd.com/film/fjord-2026/"
         }
       },
@@ -10446,11 +10446,11 @@
           "url": "https://www.imdb.com/title/tt32588798/"
         },
         "letterboxd": {
-          "value": 3.05,
+          "value": 3.04,
           "url": "https://letterboxd.com/film/practical-magic-2/"
         },
         "tomatoes": {
-          "value": 92,
+          "value": 93,
           "url": "https://www.rottentomatoes.com/m/practical_magic_2"
         }
       },
@@ -10483,7 +10483,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93024/purchase?kanal=dxf",
       "eventId": "93024",
       "promoterId": "202",
-      "sold": 4,
+      "sold": 6,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -10493,7 +10493,7 @@
         }
       },
       "reserved": 0,
-      "capacity": 108,
+      "capacity": 110,
       "available": 104
     },
     {
@@ -10733,7 +10733,7 @@
           "url": "https://www.imdb.com/title/tt35410859/"
         },
         "letterboxd": {
-          "value": 3.84,
+          "value": 3.83,
           "url": "https://letterboxd.com/film/fjord-2026/"
         }
       },
@@ -10824,11 +10824,11 @@
           "url": "https://www.imdb.com/title/tt32588798/"
         },
         "letterboxd": {
-          "value": 3.05,
+          "value": 3.04,
           "url": "https://letterboxd.com/film/practical-magic-2/"
         },
         "tomatoes": {
-          "value": 92,
+          "value": 93,
           "url": "https://www.rottentomatoes.com/m/practical_magic_2"
         }
       },
@@ -10909,11 +10909,11 @@
           "url": "https://www.imdb.com/title/tt32588798/"
         },
         "letterboxd": {
-          "value": 3.05,
+          "value": 3.04,
           "url": "https://letterboxd.com/film/practical-magic-2/"
         },
         "tomatoes": {
-          "value": 92,
+          "value": 93,
           "url": "https://www.rottentomatoes.com/m/practical_magic_2"
         }
       },
@@ -11256,12 +11256,12 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92986/purchase?kanal=dxf",
       "eventId": "92986",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 3,
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
       "capacity": 110,
-      "available": 110
+      "available": 107
     },
     {
       "id": "EDI20251026-2026-12-15T20:00:00-Storsal",
