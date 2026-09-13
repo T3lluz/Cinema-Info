@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-12T14:03:13.814Z",
+  "updatedAt": "2026-09-13T00:58:30.561Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -10054,11 +10054,11 @@
           "url": "https://www.imdb.com/title/tt32588798/"
         },
         "letterboxd": {
-          "value": 3.04,
+          "value": 3.02,
           "url": "https://letterboxd.com/film/practical-magic-2/"
         },
         "tomatoes": {
-          "value": 93,
+          "value": 92,
           "url": "https://www.rottentomatoes.com/m/practical_magic_2"
         }
       },
@@ -10095,7 +10095,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.2,
+          "value": 6.1,
           "id": "tt32375006",
           "url": "https://www.imdb.com/title/tt32375006/"
         }
@@ -10144,7 +10144,7 @@
           "url": "https://letterboxd.com/film/coyote-vs-acme/"
         },
         "tomatoes": {
-          "value": 95,
+          "value": 94,
           "url": "https://www.rottentomatoes.com/m/coyote_vs_acme"
         }
       },
@@ -10187,11 +10187,11 @@
           "url": "https://www.imdb.com/title/tt32588798/"
         },
         "letterboxd": {
-          "value": 3.04,
+          "value": 3.02,
           "url": "https://letterboxd.com/film/practical-magic-2/"
         },
         "tomatoes": {
-          "value": 93,
+          "value": 92,
           "url": "https://www.rottentomatoes.com/m/practical_magic_2"
         }
       },
@@ -10223,7 +10223,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93076/purchase?kanal=dxf",
       "eventId": "93076",
       "promoterId": "202",
-      "sold": 5,
+      "sold": 6,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -10237,8 +10237,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 286,
-      "available": 281
+      "capacity": 246,
+      "available": 240
     },
     {
       "id": "SFN20241749-2026-09-12T21:00:00-Kinosal",
@@ -10265,18 +10265,18 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93020/purchase?kanal=dxf",
       "eventId": "93020",
       "promoterId": "202",
-      "sold": 13,
+      "sold": 43,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.2,
+          "value": 6.1,
           "id": "tt32375006",
           "url": "https://www.imdb.com/title/tt32375006/"
         }
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 97
+      "available": 67
     },
     {
       "id": "EDI20251707-2026-09-13T14:50:00-Kinosal",
@@ -10362,13 +10362,13 @@
           "url": "https://letterboxd.com/film/coyote-vs-acme/"
         },
         "tomatoes": {
-          "value": 95,
+          "value": 94,
           "url": "https://www.rottentomatoes.com/m/coyote_vs_acme"
         }
       },
       "reserved": 0,
-      "capacity": 286,
-      "available": 286
+      "capacity": 246,
+      "available": 246
     },
     {
       "id": "EDI20260087-2026-09-13T17:00:00-Kinosal",
@@ -10446,17 +10446,17 @@
           "url": "https://www.imdb.com/title/tt32588798/"
         },
         "letterboxd": {
-          "value": 3.04,
+          "value": 3.02,
           "url": "https://letterboxd.com/film/practical-magic-2/"
         },
         "tomatoes": {
-          "value": 93,
+          "value": 92,
           "url": "https://www.rottentomatoes.com/m/practical_magic_2"
         }
       },
       "reserved": 0,
-      "capacity": 286,
-      "available": 286
+      "capacity": 246,
+      "available": 246
     },
     {
       "id": "SFN20241749-2026-09-13T20:15:00-Kinosal",
@@ -10483,18 +10483,18 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93024/purchase?kanal=dxf",
       "eventId": "93024",
       "promoterId": "202",
-      "sold": 6,
+      "sold": 7,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.2,
+          "value": 6.1,
           "id": "tt32375006",
           "url": "https://www.imdb.com/title/tt32375006/"
         }
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 104
+      "available": 103
     },
     {
       "id": "EDI20251555-2026-09-15T13:00:00-Kinosal",
@@ -10573,7 +10573,7 @@
           "url": "https://letterboxd.com/film/coyote-vs-acme/"
         },
         "tomatoes": {
-          "value": 95,
+          "value": 94,
           "url": "https://www.rottentomatoes.com/m/coyote_vs_acme"
         }
       },
@@ -10622,8 +10622,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 286,
-      "available": 286
+      "capacity": 246,
+      "available": 246
     },
     {
       "id": "EDI20251555-2026-09-15T19:30:00-Kinosal",
@@ -10691,14 +10691,14 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.2,
+          "value": 6.1,
           "id": "tt32375006",
           "url": "https://www.imdb.com/title/tt32375006/"
         }
       },
       "reserved": 0,
-      "capacity": 286,
-      "available": 286
+      "capacity": 246,
+      "available": 246
     },
     {
       "id": "EDI20260087-2026-09-16T17:00:00-Kinosal",
@@ -10781,13 +10781,13 @@
           "url": "https://letterboxd.com/film/coyote-vs-acme/"
         },
         "tomatoes": {
-          "value": 95,
+          "value": 94,
           "url": "https://www.rottentomatoes.com/m/coyote_vs_acme"
         }
       },
       "reserved": 0,
-      "capacity": 286,
-      "available": 286
+      "capacity": 246,
+      "available": 246
     },
     {
       "id": "WAB20240290-2026-09-16T20:00:00-Storsal",
@@ -10824,17 +10824,17 @@
           "url": "https://www.imdb.com/title/tt32588798/"
         },
         "letterboxd": {
-          "value": 3.04,
+          "value": 3.02,
           "url": "https://letterboxd.com/film/practical-magic-2/"
         },
         "tomatoes": {
-          "value": 93,
+          "value": 92,
           "url": "https://www.rottentomatoes.com/m/practical_magic_2"
         }
       },
       "reserved": 0,
-      "capacity": 286,
-      "available": 286
+      "capacity": 246,
+      "available": 246
     },
     {
       "id": "SFN20241749-2026-09-16T20:30:00-Kinosal",
@@ -10865,9 +10865,57 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.2,
+          "value": 6.1,
           "id": "tt32375006",
           "url": "https://www.imdb.com/title/tt32375006/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20261121-2026-09-17T17:00:00-Kinosal",
+      "title": "Coyote vs. Acme - Per Ulv på saken",
+      "screen": "Kinosal",
+      "start": "2026-09-17T17:00:00",
+      "end": "2026-09-17T18:51:00",
+      "dayKey": "2026-09-17",
+      "runningMinutes": 103,
+      "runningLabel": "1 t. 43 min.",
+      "age": "6 år",
+      "tags": [
+        "Norsk tale",
+        "Utekstet"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ],
+      "director": "Dave Green",
+      "premiere": "2026-09-11",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/43b01f3759a4ec348c13436ec84b35c6f75e7eb3-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93131/purchase?kanal=dxf",
+      "eventId": "93131",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.6,
+          "id": "tt1756855",
+          "url": "https://www.imdb.com/title/tt1756855/"
+        },
+        "letterboxd": {
+          "value": 3.86,
+          "url": "https://letterboxd.com/film/coyote-vs-acme/"
+        },
+        "tomatoes": {
+          "value": 94,
+          "url": "https://www.rottentomatoes.com/m/coyote_vs_acme"
         }
       },
       "reserved": 0,
@@ -10909,11 +10957,11 @@
           "url": "https://www.imdb.com/title/tt32588798/"
         },
         "letterboxd": {
-          "value": 3.04,
+          "value": 3.02,
           "url": "https://letterboxd.com/film/practical-magic-2/"
         },
         "tomatoes": {
-          "value": 93,
+          "value": 92,
           "url": "https://www.rottentomatoes.com/m/practical_magic_2"
         }
       },
@@ -10950,14 +10998,14 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.2,
+          "value": 6.1,
           "id": "tt32375006",
           "url": "https://www.imdb.com/title/tt32375006/"
         }
       },
       "reserved": 0,
-      "capacity": 286,
-      "available": 286
+      "capacity": 246,
+      "available": 246
     },
     {
       "id": "EDI20251817-2026-09-18T17:00:00-Kinosal",
@@ -11101,7 +11149,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.2,
+          "value": 6.1,
           "id": "tt32375006",
           "url": "https://www.imdb.com/title/tt32375006/"
         }
@@ -11136,7 +11184,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93079/purchase?kanal=dxf",
       "eventId": "93079",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "letterboxd": {
@@ -11148,6 +11196,37 @@
           "url": "https://www.rottentomatoes.com/m/resident_evil"
         }
       },
+      "reserved": 0,
+      "capacity": 108,
+      "available": 106
+    },
+    {
+      "id": "EDI20251817-2026-09-19T15:00:00-Kinosal",
+      "title": "Tilbake til Tottori",
+      "screen": "Kinosal",
+      "start": "2026-09-19T15:00:00",
+      "end": "2026-09-19T16:42:00",
+      "dayKey": "2026-09-19",
+      "runningMinutes": 92,
+      "runningLabel": "1 t. 32 min.",
+      "age": "6 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Family"
+      ],
+      "director": "Silje Salomonsen, Arild Østin Ommundsen",
+      "premiere": "2026-09-18",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/a38b6f4229fc6c46b30656e3d04e47df476422d2-1080x1920.png?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93086/purchase?kanal=dxf",
+      "eventId": "93086",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": null,
       "reserved": 0,
       "capacity": 110,
       "available": 110
@@ -11196,6 +11275,122 @@
       "reserved": 0,
       "capacity": 110,
       "available": 110
+    },
+    {
+      "id": "EDI20251817-2026-09-20T15:00:00-Kinosal",
+      "title": "Tilbake til Tottori",
+      "screen": "Kinosal",
+      "start": "2026-09-20T15:00:00",
+      "end": "2026-09-20T16:42:00",
+      "dayKey": "2026-09-20",
+      "runningMinutes": 92,
+      "runningLabel": "1 t. 32 min.",
+      "age": "6 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Family"
+      ],
+      "director": "Silje Salomonsen, Arild Østin Ommundsen",
+      "premiere": "2026-09-18",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/a38b6f4229fc6c46b30656e3d04e47df476422d2-1080x1920.png?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93103/purchase?kanal=dxf",
+      "eventId": "93103",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": null,
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20261121-2026-09-20T17:15:00-Kinosal",
+      "title": "Coyote vs. Acme - Per Ulv på saken",
+      "screen": "Kinosal",
+      "start": "2026-09-20T17:15:00",
+      "end": "2026-09-20T19:06:00",
+      "dayKey": "2026-09-20",
+      "runningMinutes": 103,
+      "runningLabel": "1 t. 43 min.",
+      "age": "6 år",
+      "tags": [
+        "Norsk tale",
+        "Utekstet"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ],
+      "director": "Dave Green",
+      "premiere": "2026-09-11",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/43b01f3759a4ec348c13436ec84b35c6f75e7eb3-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93104/purchase?kanal=dxf",
+      "eventId": "93104",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.6,
+          "id": "tt1756855",
+          "url": "https://www.imdb.com/title/tt1756855/"
+        },
+        "letterboxd": {
+          "value": 3.86,
+          "url": "https://letterboxd.com/film/coyote-vs-acme/"
+        },
+        "tomatoes": {
+          "value": 94,
+          "url": "https://www.rottentomatoes.com/m/coyote_vs_acme"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20251555-2026-09-20T17:50:00-Storsal",
+      "title": "Kjærast",
+      "screen": "Storsal",
+      "start": "2026-09-20T17:50:00",
+      "end": "2026-09-20T19:54:00",
+      "dayKey": "2026-09-20",
+      "runningMinutes": 114,
+      "runningLabel": "1 t. 54 min.",
+      "age": "9 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Drama"
+      ],
+      "director": "Erik Poppe",
+      "premiere": "2026-09-18",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/49a3f819b818a409e32eb651dfd0286808b145d0-1500x2104.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93105/purchase?kanal=dxf",
+      "eventId": "93105",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 6.9,
+          "id": "tt31451181",
+          "url": "https://www.imdb.com/title/tt31451181/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
     },
     {
       "id": "EDI20250183-2026-10-20T13:00:00-Kinosal",
