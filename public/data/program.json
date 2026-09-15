@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-14T16:56:07.411Z",
+  "updatedAt": "2026-09-15T01:26:04.002Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -10512,7 +10512,8 @@
       "showType": "Seniorkino",
       "kinoklubb": false,
       "genres": [
-        "Drama"
+        "Drama",
+        "Romance"
       ],
       "director": "Erik Poppe",
       "premiere": "2026-09-18",
@@ -10524,14 +10525,14 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.9,
+          "value": 6.8,
           "id": "tt31451181",
           "url": "https://www.imdb.com/title/tt31451181/"
         }
       },
-      "reserved": 2,
-      "capacity": 109,
-      "available": 103
+      "reserved": 0,
+      "capacity": 110,
+      "available": 106
     },
     {
       "id": "EDI20261121-2026-09-15T17:00:00-Kinosal",
@@ -10641,7 +10642,8 @@
       "showType": "Førpremiere",
       "kinoklubb": false,
       "genres": [
-        "Drama"
+        "Drama",
+        "Romance"
       ],
       "director": "Erik Poppe",
       "premiere": "2026-09-18",
@@ -10653,7 +10655,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.9,
+          "value": 6.8,
           "id": "tt31451181",
           "url": "https://www.imdb.com/title/tt31451181/"
         }
@@ -10923,6 +10925,50 @@
       "available": 110
     },
     {
+      "id": "EDI20260206-2026-09-17T17:30:00-Storsal",
+      "title": "Skolen med de magiske dyrene - Filmen",
+      "screen": "Storsal",
+      "start": "2026-09-17T17:30:00",
+      "end": "2026-09-17T19:22:31",
+      "dayKey": "2026-09-17",
+      "runningMinutes": 102,
+      "runningLabel": "1 t. 42 min.",
+      "age": "6 år",
+      "tags": [
+        "Norsk tale",
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Adventure",
+        "Family",
+        "Fantasy"
+      ],
+      "director": "Maggie Peren, Bernhard Jasper",
+      "premiere": "2026-08-21",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/f00ce714aee93b0b1d9b9a319f0cee3be0765044-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93193/purchase?kanal=dxf",
+      "eventId": "93193",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 5.7,
+          "id": "tt35286242",
+          "url": "https://www.imdb.com/title/tt35286242/"
+        },
+        "letterboxd": {
+          "value": 3.07,
+          "url": "https://letterboxd.com/film/school-of-magical-animals-4/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
+    },
+    {
       "id": "WAB20240290-2026-09-17T19:30:00-Kinosal",
       "title": "Practical Magic: Family Legacy",
       "screen": "Kinosal",
@@ -11023,6 +11069,7 @@
       "showType": "Norgespremiere",
       "kinoklubb": false,
       "genres": [
+        "Drama",
         "Family"
       ],
       "director": "Silje Salomonsen, Arild Østin Ommundsen",
@@ -11054,7 +11101,8 @@
       "showType": "Norgespremiere",
       "kinoklubb": false,
       "genres": [
-        "Drama"
+        "Drama",
+        "Romance"
       ],
       "director": "Erik Poppe",
       "premiere": "2026-09-18",
@@ -11066,7 +11114,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.9,
+          "value": 6.8,
           "id": "tt31451181",
           "url": "https://www.imdb.com/title/tt31451181/"
         }
@@ -11216,6 +11264,7 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
+        "Drama",
         "Family"
       ],
       "director": "Silje Salomonsen, Arild Østin Ommundsen",
@@ -11277,6 +11326,48 @@
       "available": 110
     },
     {
+      "id": "EDI20260642-2026-09-19T21:00:00-Kinosal",
+      "title": "Resident Evil",
+      "screen": "Kinosal",
+      "start": "2026-09-19T21:00:00",
+      "end": "2026-09-19T22:43:42",
+      "dayKey": "2026-09-19",
+      "runningMinutes": 93,
+      "runningLabel": "1 t. 33 min.",
+      "age": "15 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Action",
+        "Horror",
+        "Sci-Fi"
+      ],
+      "director": "Zach Cregger",
+      "premiere": "2026-09-18",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/a94afcd83c9568f04609ae450a30a6dfcef4a233-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93206/purchase?kanal=dxf",
+      "eventId": "93206",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "letterboxd": {
+          "value": 2.94,
+          "url": "https://letterboxd.com/film/resident-evil/"
+        },
+        "tomatoes": {
+          "value": 67,
+          "url": "https://www.rottentomatoes.com/m/resident_evil"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
       "id": "EDI20251817-2026-09-20T15:00:00-Kinosal",
       "title": "Tilbake til Tottori",
       "screen": "Kinosal",
@@ -11292,6 +11383,7 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
+        "Drama",
         "Family"
       ],
       "director": "Silje Salomonsen, Arild Østin Ommundsen",
@@ -11371,7 +11463,8 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Drama"
+        "Drama",
+        "Romance"
       ],
       "director": "Erik Poppe",
       "premiere": "2026-09-18",
@@ -11383,9 +11476,407 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.9,
+          "value": 6.8,
           "id": "tt31451181",
           "url": "https://www.imdb.com/title/tt31451181/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
+    },
+    {
+      "id": "EDI20251443-2026-09-20T19:45:00-Kinosal",
+      "title": "Spa Weekend",
+      "screen": "Kinosal",
+      "start": "2026-09-20T19:45:00",
+      "end": "2026-09-20T21:32:00",
+      "dayKey": "2026-09-20",
+      "runningMinutes": 97,
+      "runningLabel": "1 t. 37 min.",
+      "age": "6 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Comedy"
+      ],
+      "director": "Jon Lucas, Scott Moore",
+      "premiere": "2026-09-18",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/10e873e01cd62c1bffabb7004cfc7f82b5ae6b1c-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93106/purchase?kanal=dxf",
+      "eventId": "93106",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 5.4,
+          "id": "tt33305867",
+          "url": "https://www.imdb.com/title/tt33305867/"
+        },
+        "letterboxd": {
+          "value": 2.43,
+          "url": "https://letterboxd.com/film/spa-weekend-2026/"
+        },
+        "tomatoes": {
+          "value": 74,
+          "url": "https://www.rottentomatoes.com/m/spa_weekend"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "SFN20241749-2026-09-20T20:30:00-Storsal",
+      "title": "En nasjon i sjakk",
+      "screen": "Storsal",
+      "start": "2026-09-20T20:30:00",
+      "end": "2026-09-20T22:34:44",
+      "dayKey": "2026-09-20",
+      "runningMinutes": 115,
+      "runningLabel": "1 t. 55 min.",
+      "age": "15 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": true,
+      "genres": [
+        "Action",
+        "Thriller"
+      ],
+      "director": "John Andreas Andersen",
+      "premiere": "2026-09-11",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/ce797c664fa97646a09fdfdb807c5ec4668040af-1500x2103.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93107/purchase?kanal=dxf",
+      "eventId": "93107",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 6.4,
+          "id": "tt32375006",
+          "url": "https://www.imdb.com/title/tt32375006/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
+    },
+    {
+      "id": "EDI20251817-2026-09-22T17:00:00-Storsal",
+      "title": "Tilbake til Tottori",
+      "screen": "Storsal",
+      "start": "2026-09-22T17:00:00",
+      "end": "2026-09-22T18:42:00",
+      "dayKey": "2026-09-22",
+      "runningMinutes": 92,
+      "runningLabel": "1 t. 32 min.",
+      "age": "6 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Drama",
+        "Family"
+      ],
+      "director": "Silje Salomonsen, Arild Østin Ommundsen",
+      "premiere": "2026-09-18",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/a38b6f4229fc6c46b30656e3d04e47df476422d2-1080x1920.png?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93174/purchase?kanal=dxf",
+      "eventId": "93174",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": null,
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
+    },
+    {
+      "id": "EDI20251443-2026-09-22T18:00:00-Kinosal",
+      "title": "Spa Weekend",
+      "screen": "Kinosal",
+      "start": "2026-09-22T18:00:00",
+      "end": "2026-09-22T19:47:00",
+      "dayKey": "2026-09-22",
+      "runningMinutes": 97,
+      "runningLabel": "1 t. 37 min.",
+      "age": "6 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Comedy"
+      ],
+      "director": "Jon Lucas, Scott Moore",
+      "premiere": "2026-09-18",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/10e873e01cd62c1bffabb7004cfc7f82b5ae6b1c-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93173/purchase?kanal=dxf",
+      "eventId": "93173",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 5.4,
+          "id": "tt33305867",
+          "url": "https://www.imdb.com/title/tt33305867/"
+        },
+        "letterboxd": {
+          "value": 2.43,
+          "url": "https://letterboxd.com/film/spa-weekend-2026/"
+        },
+        "tomatoes": {
+          "value": 74,
+          "url": "https://www.rottentomatoes.com/m/spa_weekend"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20260642-2026-09-22T19:45:00-Storsal",
+      "title": "Resident Evil",
+      "screen": "Storsal",
+      "start": "2026-09-22T19:45:00",
+      "end": "2026-09-22T21:28:42",
+      "dayKey": "2026-09-22",
+      "runningMinutes": 93,
+      "runningLabel": "1 t. 33 min.",
+      "age": "15 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Action",
+        "Horror",
+        "Sci-Fi"
+      ],
+      "director": "Zach Cregger",
+      "premiere": "2026-09-18",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/a94afcd83c9568f04609ae450a30a6dfcef4a233-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93176/purchase?kanal=dxf",
+      "eventId": "93176",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "letterboxd": {
+          "value": 2.94,
+          "url": "https://letterboxd.com/film/resident-evil/"
+        },
+        "tomatoes": {
+          "value": 67,
+          "url": "https://www.rottentomatoes.com/m/resident_evil"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
+    },
+    {
+      "id": "SFN20241749-2026-09-22T20:30:00-Kinosal",
+      "title": "En nasjon i sjakk",
+      "screen": "Kinosal",
+      "start": "2026-09-22T20:30:00",
+      "end": "2026-09-22T22:34:44",
+      "dayKey": "2026-09-22",
+      "runningMinutes": 115,
+      "runningLabel": "1 t. 55 min.",
+      "age": "15 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": true,
+      "genres": [
+        "Action",
+        "Thriller"
+      ],
+      "director": "John Andreas Andersen",
+      "premiere": "2026-09-11",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/ce797c664fa97646a09fdfdb807c5ec4668040af-1500x2103.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93175/purchase?kanal=dxf",
+      "eventId": "93175",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 6.4,
+          "id": "tt32375006",
+          "url": "https://www.imdb.com/title/tt32375006/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20251817-2026-09-23T17:00:00-Kinosal",
+      "title": "Tilbake til Tottori",
+      "screen": "Kinosal",
+      "start": "2026-09-23T17:00:00",
+      "end": "2026-09-23T18:42:00",
+      "dayKey": "2026-09-23",
+      "runningMinutes": 92,
+      "runningLabel": "1 t. 32 min.",
+      "age": "6 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Drama",
+        "Family"
+      ],
+      "director": "Silje Salomonsen, Arild Østin Ommundsen",
+      "premiere": "2026-09-18",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/a38b6f4229fc6c46b30656e3d04e47df476422d2-1080x1920.png?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93212/purchase?kanal=dxf",
+      "eventId": "93212",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": null,
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20251555-2026-09-23T19:30:00-Kinosal",
+      "title": "Kjærast",
+      "screen": "Kinosal",
+      "start": "2026-09-23T19:30:00",
+      "end": "2026-09-23T21:34:45",
+      "dayKey": "2026-09-23",
+      "runningMinutes": 114,
+      "runningLabel": "1 t. 54 min.",
+      "age": "9 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Drama",
+        "Romance"
+      ],
+      "director": "Erik Poppe",
+      "premiere": "2026-09-18",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/49a3f819b818a409e32eb651dfd0286808b145d0-1500x2104.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93211/purchase?kanal=dxf",
+      "eventId": "93211",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 6.8,
+          "id": "tt31451181",
+          "url": "https://www.imdb.com/title/tt31451181/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20260454-2026-09-25T16:50:00-Kinosal",
+      "title": "Spiralis",
+      "screen": "Kinosal",
+      "start": "2026-09-25T16:50:00",
+      "end": "2026-09-25T18:39:00",
+      "dayKey": "2026-09-25",
+      "runningMinutes": 99,
+      "runningLabel": "1 t. 39 min.",
+      "age": "6 år",
+      "tags": [
+        "Norsk tale",
+        "Norsk tekst"
+      ],
+      "showType": "Norgespremiere",
+      "kinoklubb": false,
+      "genres": [
+        "Adventure",
+        "Comedy",
+        "Family"
+      ],
+      "director": "Philippe Lacheau",
+      "premiere": "2026-09-25",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/4fc4bd78240864d81b5506ccb0c7e82299b9b079-1500x2139.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93088/purchase?kanal=dxf",
+      "eventId": "93088",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 6.3,
+          "id": "tt33029380",
+          "url": "https://www.imdb.com/title/tt33029380/"
+        },
+        "letterboxd": {
+          "value": 2.67,
+          "url": "https://letterboxd.com/film/marsupilami-2025/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "UIP20221470-2026-09-25T17:30:00-Storsal",
+      "title": "Glemselens øy",
+      "screen": "Storsal",
+      "start": "2026-09-25T17:30:00",
+      "end": "2026-09-25T19:29:00",
+      "dayKey": "2026-09-25",
+      "runningMinutes": 109,
+      "runningLabel": "1 t. 49 min.",
+      "age": "9 år",
+      "tags": [
+        "Norsk tale",
+        "Norsk tekst"
+      ],
+      "showType": "Norgespremiere",
+      "kinoklubb": false,
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "director": "Joel Crawford, Januel Mercado",
+      "premiere": "2026-09-25",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/d7f37b4dd10260c620949baf6caba8ba06beee0e-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93141/purchase?kanal=dxf",
+      "eventId": "93141",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.3,
+          "id": "tt36583977",
+          "url": "https://www.imdb.com/title/tt36583977/"
+        },
+        "letterboxd": {
+          "value": 3.81,
+          "url": "https://letterboxd.com/film/forgotten-island-2026/"
         }
       },
       "reserved": 0,
@@ -11429,6 +11920,51 @@
         "letterboxd": {
           "value": 4.02,
           "url": "https://letterboxd.com/film/avengers-endgame/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 108,
+      "available": 108
+    },
+    {
+      "id": "EDI20251443-2026-10-06T13:00:00-Kinosal",
+      "title": "Spa Weekend",
+      "screen": "Kinosal",
+      "start": "2026-10-06T13:00:00",
+      "end": "2026-10-06T14:47:00",
+      "dayKey": "2026-10-06",
+      "runningMinutes": 97,
+      "runningLabel": "1 t. 37 min.",
+      "age": "6 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": "Seniorkino",
+      "kinoklubb": false,
+      "genres": [
+        "Comedy"
+      ],
+      "director": "Jon Lucas, Scott Moore",
+      "premiere": "2026-09-18",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/10e873e01cd62c1bffabb7004cfc7f82b5ae6b1c-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93226/purchase?kanal=dxf",
+      "eventId": "93226",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 5.4,
+          "id": "tt33305867",
+          "url": "https://www.imdb.com/title/tt33305867/"
+        },
+        "letterboxd": {
+          "value": 2.43,
+          "url": "https://letterboxd.com/film/spa-weekend-2026/"
+        },
+        "tomatoes": {
+          "value": 74,
+          "url": "https://www.rottentomatoes.com/m/spa_weekend"
         }
       },
       "reserved": 0,
@@ -11531,8 +12067,8 @@
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
-      "capacity": 284,
-      "available": 280
+      "capacity": 244,
+      "available": 240
     }
   ]
 }
