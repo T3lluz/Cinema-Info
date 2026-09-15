@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-15T01:26:04.002Z",
+  "updatedAt": "2026-09-15T15:32:18.947Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -10054,7 +10054,7 @@
           "url": "https://www.imdb.com/title/tt32588798/"
         },
         "letterboxd": {
-          "value": 2.97,
+          "value": 2.96,
           "url": "https://letterboxd.com/film/practical-magic-2/"
         },
         "tomatoes": {
@@ -10095,7 +10095,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.4,
+          "value": 6.3,
           "id": "tt32375006",
           "url": "https://www.imdb.com/title/tt32375006/"
         }
@@ -10140,7 +10140,7 @@
           "url": "https://www.imdb.com/title/tt1756855/"
         },
         "letterboxd": {
-          "value": 3.86,
+          "value": 3.85,
           "url": "https://letterboxd.com/film/coyote-vs-acme/"
         },
         "tomatoes": {
@@ -10187,7 +10187,7 @@
           "url": "https://www.imdb.com/title/tt32588798/"
         },
         "letterboxd": {
-          "value": 2.97,
+          "value": 2.96,
           "url": "https://letterboxd.com/film/practical-magic-2/"
         },
         "tomatoes": {
@@ -10269,7 +10269,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.4,
+          "value": 6.3,
           "id": "tt32375006",
           "url": "https://www.imdb.com/title/tt32375006/"
         }
@@ -10358,7 +10358,7 @@
           "url": "https://www.imdb.com/title/tt1756855/"
         },
         "letterboxd": {
-          "value": 3.86,
+          "value": 3.85,
           "url": "https://letterboxd.com/film/coyote-vs-acme/"
         },
         "tomatoes": {
@@ -10446,7 +10446,7 @@
           "url": "https://www.imdb.com/title/tt32588798/"
         },
         "letterboxd": {
-          "value": 2.97,
+          "value": 2.96,
           "url": "https://letterboxd.com/film/practical-magic-2/"
         },
         "tomatoes": {
@@ -10487,7 +10487,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.4,
+          "value": 6.3,
           "id": "tt32375006",
           "url": "https://www.imdb.com/title/tt32375006/"
         }
@@ -10521,7 +10521,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92988/purchase?kanal=dxf",
       "eventId": "92988",
       "promoterId": "202",
-      "sold": 4,
+      "sold": 33,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -10532,7 +10532,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 106
+      "available": 77
     },
     {
       "id": "EDI20261121-2026-09-15T17:00:00-Kinosal",
@@ -10570,7 +10570,7 @@
           "url": "https://www.imdb.com/title/tt1756855/"
         },
         "letterboxd": {
-          "value": 3.86,
+          "value": 3.85,
           "url": "https://letterboxd.com/film/coyote-vs-acme/"
         },
         "tomatoes": {
@@ -10693,7 +10693,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.4,
+          "value": 6.3,
           "id": "tt32375006",
           "url": "https://www.imdb.com/title/tt32375006/"
         }
@@ -10779,7 +10779,7 @@
           "url": "https://www.imdb.com/title/tt1756855/"
         },
         "letterboxd": {
-          "value": 3.86,
+          "value": 3.85,
           "url": "https://letterboxd.com/film/coyote-vs-acme/"
         },
         "tomatoes": {
@@ -10826,7 +10826,7 @@
           "url": "https://www.imdb.com/title/tt32588798/"
         },
         "letterboxd": {
-          "value": 2.97,
+          "value": 2.96,
           "url": "https://letterboxd.com/film/practical-magic-2/"
         },
         "tomatoes": {
@@ -10863,18 +10863,18 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93124/purchase?kanal=dxf",
       "eventId": "93124",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.4,
+          "value": 6.3,
           "id": "tt32375006",
           "url": "https://www.imdb.com/title/tt32375006/"
         }
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 110
+      "available": 108
     },
     {
       "id": "EDI20261121-2026-09-17T17:00:00-Kinosal",
@@ -10912,7 +10912,7 @@
           "url": "https://www.imdb.com/title/tt1756855/"
         },
         "letterboxd": {
-          "value": 3.86,
+          "value": 3.85,
           "url": "https://letterboxd.com/film/coyote-vs-acme/"
         },
         "tomatoes": {
@@ -11003,7 +11003,7 @@
           "url": "https://www.imdb.com/title/tt32588798/"
         },
         "letterboxd": {
-          "value": 2.97,
+          "value": 2.96,
           "url": "https://letterboxd.com/film/practical-magic-2/"
         },
         "tomatoes": {
@@ -11044,7 +11044,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.4,
+          "value": 6.3,
           "id": "tt32375006",
           "url": "https://www.imdb.com/title/tt32375006/"
         }
@@ -11197,7 +11197,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.4,
+          "value": 6.3,
           "id": "tt32375006",
           "url": "https://www.imdb.com/title/tt32375006/"
         }
@@ -11435,7 +11435,7 @@
           "url": "https://www.imdb.com/title/tt1756855/"
         },
         "letterboxd": {
-          "value": 3.86,
+          "value": 3.85,
           "url": "https://letterboxd.com/film/coyote-vs-acme/"
         },
         "tomatoes": {
@@ -11555,18 +11555,18 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93107/purchase?kanal=dxf",
       "eventId": "93107",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.4,
+          "value": 6.3,
           "id": "tt32375006",
           "url": "https://www.imdb.com/title/tt32375006/"
         }
       },
       "reserved": 0,
-      "capacity": 286,
-      "available": 286
+      "capacity": 284,
+      "available": 282
     },
     {
       "id": "EDI20251817-2026-09-22T17:00:00-Storsal",
@@ -11716,7 +11716,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.4,
+          "value": 6.3,
           "id": "tt32375006",
           "url": "https://www.imdb.com/title/tt32375006/"
         }
@@ -11758,6 +11758,54 @@
       "available": 110
     },
     {
+      "id": "EDI20261121-2026-09-23T17:30:00-Storsal",
+      "title": "Coyote vs. Acme - Per Ulv på saken",
+      "screen": "Storsal",
+      "start": "2026-09-23T17:30:00",
+      "end": "2026-09-23T19:21:06",
+      "dayKey": "2026-09-23",
+      "runningMinutes": 103,
+      "runningLabel": "1 t. 43 min.",
+      "age": "6 år",
+      "tags": [
+        "Norsk tale",
+        "Utekstet"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ],
+      "director": "Dave Green",
+      "premiere": "2026-09-11",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/43b01f3759a4ec348c13436ec84b35c6f75e7eb3-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93235/purchase?kanal=dxf",
+      "eventId": "93235",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.6,
+          "id": "tt1756855",
+          "url": "https://www.imdb.com/title/tt1756855/"
+        },
+        "letterboxd": {
+          "value": 3.85,
+          "url": "https://letterboxd.com/film/coyote-vs-acme/"
+        },
+        "tomatoes": {
+          "value": 95,
+          "url": "https://www.rottentomatoes.com/m/coyote_vs_acme"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
+    },
+    {
       "id": "EDI20251555-2026-09-23T19:30:00-Kinosal",
       "title": "Kjærast",
       "screen": "Kinosal",
@@ -11794,6 +11842,83 @@
       "reserved": 0,
       "capacity": 110,
       "available": 110
+    },
+    {
+      "id": "EDI20251817-2026-09-24T17:00:00-Kinosal",
+      "title": "Tilbake til Tottori",
+      "screen": "Kinosal",
+      "start": "2026-09-24T17:00:00",
+      "end": "2026-09-24T18:42:00",
+      "dayKey": "2026-09-24",
+      "runningMinutes": 92,
+      "runningLabel": "1 t. 32 min.",
+      "age": "6 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Drama",
+        "Family"
+      ],
+      "director": "Silje Salomonsen, Arild Østin Ommundsen",
+      "premiere": "2026-09-18",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/a38b6f4229fc6c46b30656e3d04e47df476422d2-1080x1920.png?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93217/purchase?kanal=dxf",
+      "eventId": "93217",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": null,
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20251443-2026-09-24T18:00:00-Storsal",
+      "title": "Spa Weekend",
+      "screen": "Storsal",
+      "start": "2026-09-24T18:00:00",
+      "end": "2026-09-24T19:47:00",
+      "dayKey": "2026-09-24",
+      "runningMinutes": 97,
+      "runningLabel": "1 t. 37 min.",
+      "age": "6 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Comedy"
+      ],
+      "director": "Jon Lucas, Scott Moore",
+      "premiere": "2026-09-18",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/10e873e01cd62c1bffabb7004cfc7f82b5ae6b1c-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93239/purchase?kanal=dxf",
+      "eventId": "93239",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 5.4,
+          "id": "tt33305867",
+          "url": "https://www.imdb.com/title/tt33305867/"
+        },
+        "letterboxd": {
+          "value": 2.43,
+          "url": "https://letterboxd.com/film/spa-weekend-2026/"
+        },
+        "tomatoes": {
+          "value": 74,
+          "url": "https://www.rottentomatoes.com/m/spa_weekend"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
     },
     {
       "id": "EDI20260454-2026-09-25T16:50:00-Kinosal",
@@ -11870,12 +11995,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.3,
+          "value": 7.6,
           "id": "tt36583977",
           "url": "https://www.imdb.com/title/tt36583977/"
         },
         "letterboxd": {
-          "value": 3.81,
+          "value": 3.76,
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         }
       },
