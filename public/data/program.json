@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-16T01:23:32.589Z",
+  "updatedAt": "2026-09-16T15:24:25.447Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -10054,7 +10054,7 @@
           "url": "https://www.imdb.com/title/tt32588798/"
         },
         "letterboxd": {
-          "value": 2.96,
+          "value": 2.95,
           "url": "https://letterboxd.com/film/practical-magic-2/"
         },
         "tomatoes": {
@@ -10095,7 +10095,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.4,
+          "value": 6.3,
           "id": "tt32375006",
           "url": "https://www.imdb.com/title/tt32375006/"
         }
@@ -10187,7 +10187,7 @@
           "url": "https://www.imdb.com/title/tt32588798/"
         },
         "letterboxd": {
-          "value": 2.96,
+          "value": 2.95,
           "url": "https://letterboxd.com/film/practical-magic-2/"
         },
         "tomatoes": {
@@ -10269,7 +10269,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.4,
+          "value": 6.3,
           "id": "tt32375006",
           "url": "https://www.imdb.com/title/tt32375006/"
         }
@@ -10446,7 +10446,7 @@
           "url": "https://www.imdb.com/title/tt32588798/"
         },
         "letterboxd": {
-          "value": 2.96,
+          "value": 2.95,
           "url": "https://letterboxd.com/film/practical-magic-2/"
         },
         "tomatoes": {
@@ -10487,7 +10487,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.4,
+          "value": 6.3,
           "id": "tt32375006",
           "url": "https://www.imdb.com/title/tt32375006/"
         }
@@ -10693,7 +10693,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.4,
+          "value": 6.3,
           "id": "tt32375006",
           "url": "https://www.imdb.com/title/tt32375006/"
         }
@@ -10726,7 +10726,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93132/purchase?kanal=dxf",
       "eventId": "93132",
       "promoterId": "202",
-      "sold": 2,
+      "sold": 5,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -10741,7 +10741,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 108
+      "available": 105
     },
     {
       "id": "EDI20261121-2026-09-16T17:30:00-Storsal",
@@ -10826,7 +10826,7 @@
           "url": "https://www.imdb.com/title/tt32588798/"
         },
         "letterboxd": {
-          "value": 2.96,
+          "value": 2.95,
           "url": "https://letterboxd.com/film/practical-magic-2/"
         },
         "tomatoes": {
@@ -10863,18 +10863,18 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93124/purchase?kanal=dxf",
       "eventId": "93124",
       "promoterId": "202",
-      "sold": 2,
+      "sold": 6,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.4,
+          "value": 6.3,
           "id": "tt32375006",
           "url": "https://www.imdb.com/title/tt32375006/"
         }
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 108
+      "available": 104
     },
     {
       "id": "EDI20261121-2026-09-17T17:00:00-Kinosal",
@@ -11003,7 +11003,7 @@
           "url": "https://www.imdb.com/title/tt32588798/"
         },
         "letterboxd": {
-          "value": 2.96,
+          "value": 2.95,
           "url": "https://letterboxd.com/film/practical-magic-2/"
         },
         "tomatoes": {
@@ -11044,7 +11044,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.4,
+          "value": 6.3,
           "id": "tt32375006",
           "url": "https://www.imdb.com/title/tt32375006/"
         }
@@ -11197,7 +11197,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.4,
+          "value": 6.3,
           "id": "tt32375006",
           "url": "https://www.imdb.com/title/tt32375006/"
         }
@@ -11236,8 +11236,8 @@
       "eventStatus": "ok",
       "ratings": {
         "letterboxd": {
-          "value": 2.94,
-          "url": "https://letterboxd.com/film/resident-evil/"
+          "value": 3.69,
+          "url": "https://letterboxd.com/film/untitled-resident-evil-reboot/"
         },
         "tomatoes": {
           "value": 67,
@@ -11355,8 +11355,8 @@
       "eventStatus": "ok",
       "ratings": {
         "letterboxd": {
-          "value": 2.94,
-          "url": "https://letterboxd.com/film/resident-evil/"
+          "value": 3.69,
+          "url": "https://letterboxd.com/film/untitled-resident-evil-reboot/"
         },
         "tomatoes": {
           "value": 67,
@@ -11559,7 +11559,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.4,
+          "value": 6.3,
           "id": "tt32375006",
           "url": "https://www.imdb.com/title/tt32375006/"
         }
@@ -11675,8 +11675,8 @@
       "eventStatus": "ok",
       "ratings": {
         "letterboxd": {
-          "value": 2.94,
-          "url": "https://letterboxd.com/film/resident-evil/"
+          "value": 3.69,
+          "url": "https://letterboxd.com/film/untitled-resident-evil-reboot/"
         },
         "tomatoes": {
           "value": 67,
@@ -11716,7 +11716,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.4,
+          "value": 6.3,
           "id": "tt32375006",
           "url": "https://www.imdb.com/title/tt32375006/"
         }
@@ -11995,7 +11995,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.6,
+          "value": 7.5,
           "id": "tt36583977",
           "url": "https://www.imdb.com/title/tt36583977/"
         },
