@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-16T15:24:25.447Z",
+  "updatedAt": "2026-09-17T01:23:27.312Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -10054,7 +10054,7 @@
           "url": "https://www.imdb.com/title/tt32588798/"
         },
         "letterboxd": {
-          "value": 2.95,
+          "value": 2.94,
           "url": "https://letterboxd.com/film/practical-magic-2/"
         },
         "tomatoes": {
@@ -10187,7 +10187,7 @@
           "url": "https://www.imdb.com/title/tt32588798/"
         },
         "letterboxd": {
-          "value": 2.95,
+          "value": 2.94,
           "url": "https://letterboxd.com/film/practical-magic-2/"
         },
         "tomatoes": {
@@ -10446,7 +10446,7 @@
           "url": "https://www.imdb.com/title/tt32588798/"
         },
         "letterboxd": {
-          "value": 2.95,
+          "value": 2.94,
           "url": "https://letterboxd.com/film/practical-magic-2/"
         },
         "tomatoes": {
@@ -10525,7 +10525,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.8,
+          "value": 6.7,
           "id": "tt31451181",
           "url": "https://www.imdb.com/title/tt31451181/"
         }
@@ -10655,7 +10655,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.8,
+          "value": 6.7,
           "id": "tt31451181",
           "url": "https://www.imdb.com/title/tt31451181/"
         }
@@ -10817,7 +10817,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93123/purchase?kanal=dxf",
       "eventId": "93123",
       "promoterId": "202",
-      "sold": 2,
+      "sold": 4,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -10826,7 +10826,7 @@
           "url": "https://www.imdb.com/title/tt32588798/"
         },
         "letterboxd": {
-          "value": 2.95,
+          "value": 2.94,
           "url": "https://letterboxd.com/film/practical-magic-2/"
         },
         "tomatoes": {
@@ -10836,7 +10836,7 @@
       },
       "reserved": 0,
       "capacity": 246,
-      "available": 244
+      "available": 242
     },
     {
       "id": "SFN20241749-2026-09-16T20:30:00-Kinosal",
@@ -10863,7 +10863,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93124/purchase?kanal=dxf",
       "eventId": "93124",
       "promoterId": "202",
-      "sold": 6,
+      "sold": 8,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -10874,7 +10874,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 104
+      "available": 102
     },
     {
       "id": "EDI20261121-2026-09-17T17:00:00-Kinosal",
@@ -11003,7 +11003,7 @@
           "url": "https://www.imdb.com/title/tt32588798/"
         },
         "letterboxd": {
-          "value": 2.95,
+          "value": 2.94,
           "url": "https://letterboxd.com/film/practical-magic-2/"
         },
         "tomatoes": {
@@ -11040,7 +11040,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93128/purchase?kanal=dxf",
       "eventId": "93128",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -11050,8 +11050,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 246,
-      "available": 246
+      "capacity": 244,
+      "available": 242
     },
     {
       "id": "EDI20251817-2026-09-18T17:00:00-Kinosal",
@@ -11074,7 +11074,7 @@
       ],
       "director": "Silje Salomonsen, Arild Østin Ommundsen",
       "premiere": "2026-09-18",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/a38b6f4229fc6c46b30656e3d04e47df476422d2-1080x1920.png?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/f86e024b2a244f6be5f8692249f1873e6c50b020-1434x2048.png?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93078/purchase?kanal=dxf",
       "eventId": "93078",
       "promoterId": "202",
@@ -11114,7 +11114,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.8,
+          "value": 6.7,
           "id": "tt31451181",
           "url": "https://www.imdb.com/title/tt31451181/"
         }
@@ -11193,7 +11193,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93082/purchase?kanal=dxf",
       "eventId": "93082",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -11203,8 +11203,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 246,
-      "available": 246
+      "capacity": 244,
+      "available": 242
     },
     {
       "id": "EDI20260642-2026-09-18T21:45:00-Kinosal",
@@ -11236,12 +11236,17 @@
       "eventStatus": "ok",
       "ratings": {
         "letterboxd": {
-          "value": 3.69,
+          "value": 3.77,
           "url": "https://letterboxd.com/film/untitled-resident-evil-reboot/"
         },
         "tomatoes": {
           "value": 67,
           "url": "https://www.rottentomatoes.com/m/resident_evil"
+        },
+        "imdb": {
+          "value": 7.7,
+          "id": "tt35538033",
+          "url": "https://www.imdb.com/title/tt35538033/"
         }
       },
       "reserved": 0,
@@ -11269,7 +11274,7 @@
       ],
       "director": "Silje Salomonsen, Arild Østin Ommundsen",
       "premiere": "2026-09-18",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/a38b6f4229fc6c46b30656e3d04e47df476422d2-1080x1920.png?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/f86e024b2a244f6be5f8692249f1873e6c50b020-1434x2048.png?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93086/purchase?kanal=dxf",
       "eventId": "93086",
       "promoterId": "202",
@@ -11355,12 +11360,17 @@
       "eventStatus": "ok",
       "ratings": {
         "letterboxd": {
-          "value": 3.69,
+          "value": 3.77,
           "url": "https://letterboxd.com/film/untitled-resident-evil-reboot/"
         },
         "tomatoes": {
           "value": 67,
           "url": "https://www.rottentomatoes.com/m/resident_evil"
+        },
+        "imdb": {
+          "value": 7.7,
+          "id": "tt35538033",
+          "url": "https://www.imdb.com/title/tt35538033/"
         }
       },
       "reserved": 0,
@@ -11388,7 +11398,7 @@
       ],
       "director": "Silje Salomonsen, Arild Østin Ommundsen",
       "premiere": "2026-09-18",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/a38b6f4229fc6c46b30656e3d04e47df476422d2-1080x1920.png?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/f86e024b2a244f6be5f8692249f1873e6c50b020-1434x2048.png?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93103/purchase?kanal=dxf",
       "eventId": "93103",
       "promoterId": "202",
@@ -11476,7 +11486,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.8,
+          "value": 6.7,
           "id": "tt31451181",
           "url": "https://www.imdb.com/title/tt31451181/"
         }
@@ -11565,8 +11575,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 284,
-      "available": 282
+      "capacity": 286,
+      "available": 284
     },
     {
       "id": "EDI20251817-2026-09-22T17:00:00-Storsal",
@@ -11589,7 +11599,7 @@
       ],
       "director": "Silje Salomonsen, Arild Østin Ommundsen",
       "premiere": "2026-09-18",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/a38b6f4229fc6c46b30656e3d04e47df476422d2-1080x1920.png?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/f86e024b2a244f6be5f8692249f1873e6c50b020-1434x2048.png?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93174/purchase?kanal=dxf",
       "eventId": "93174",
       "promoterId": "202",
@@ -11675,12 +11685,17 @@
       "eventStatus": "ok",
       "ratings": {
         "letterboxd": {
-          "value": 3.69,
+          "value": 3.77,
           "url": "https://letterboxd.com/film/untitled-resident-evil-reboot/"
         },
         "tomatoes": {
           "value": 67,
           "url": "https://www.rottentomatoes.com/m/resident_evil"
+        },
+        "imdb": {
+          "value": 7.7,
+          "id": "tt35538033",
+          "url": "https://www.imdb.com/title/tt35538033/"
         }
       },
       "reserved": 0,
@@ -11746,7 +11761,7 @@
       ],
       "director": "Silje Salomonsen, Arild Østin Ommundsen",
       "premiere": "2026-09-18",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/a38b6f4229fc6c46b30656e3d04e47df476422d2-1080x1920.png?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/f86e024b2a244f6be5f8692249f1873e6c50b020-1434x2048.png?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93212/purchase?kanal=dxf",
       "eventId": "93212",
       "promoterId": "202",
@@ -11834,7 +11849,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.8,
+          "value": 6.7,
           "id": "tt31451181",
           "url": "https://www.imdb.com/title/tt31451181/"
         }
@@ -11864,7 +11879,7 @@
       ],
       "director": "Silje Salomonsen, Arild Østin Ommundsen",
       "premiere": "2026-09-18",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/a38b6f4229fc6c46b30656e3d04e47df476422d2-1080x1920.png?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/f86e024b2a244f6be5f8692249f1873e6c50b020-1434x2048.png?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93217/purchase?kanal=dxf",
       "eventId": "93217",
       "promoterId": "202",
@@ -12034,7 +12049,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93200/purchase?kanal=dxf",
       "eventId": "93200",
       "promoterId": "202",
-      "sold": 4,
+      "sold": 7,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -12048,8 +12063,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 108,
-      "available": 104
+      "capacity": 105,
+      "available": 98
     },
     {
       "id": "EDI20251443-2026-10-06T13:00:00-Kinosal",
