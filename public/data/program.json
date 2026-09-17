@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-17T01:23:27.312Z",
+  "updatedAt": "2026-09-17T15:31:24.454Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -10036,8 +10036,8 @@
       "kinoklubb": false,
       "genres": [
         "Comedy",
-        "Drama",
-        "Fantasy"
+        "Fantasy",
+        "Romance"
       ],
       "director": "Susanne Bier",
       "premiere": "2026-09-11",
@@ -10095,7 +10095,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.3,
+          "value": 6.2,
           "id": "tt32375006",
           "url": "https://www.imdb.com/title/tt32375006/"
         }
@@ -10169,8 +10169,8 @@
       "kinoklubb": false,
       "genres": [
         "Comedy",
-        "Drama",
-        "Fantasy"
+        "Fantasy",
+        "Romance"
       ],
       "director": "Susanne Bier",
       "premiere": "2026-09-11",
@@ -10269,7 +10269,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.3,
+          "value": 6.2,
           "id": "tt32375006",
           "url": "https://www.imdb.com/title/tt32375006/"
         }
@@ -10428,8 +10428,8 @@
       "kinoklubb": false,
       "genres": [
         "Comedy",
-        "Drama",
-        "Fantasy"
+        "Fantasy",
+        "Romance"
       ],
       "director": "Susanne Bier",
       "premiere": "2026-09-11",
@@ -10487,7 +10487,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.3,
+          "value": 6.2,
           "id": "tt32375006",
           "url": "https://www.imdb.com/title/tt32375006/"
         }
@@ -10693,7 +10693,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.3,
+          "value": 6.2,
           "id": "tt32375006",
           "url": "https://www.imdb.com/title/tt32375006/"
         }
@@ -10808,8 +10808,8 @@
       "kinoklubb": false,
       "genres": [
         "Comedy",
-        "Drama",
-        "Fantasy"
+        "Fantasy",
+        "Romance"
       ],
       "director": "Susanne Bier",
       "premiere": "2026-09-11",
@@ -10867,7 +10867,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.3,
+          "value": 6.2,
           "id": "tt32375006",
           "url": "https://www.imdb.com/title/tt32375006/"
         }
@@ -10903,7 +10903,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93131/purchase?kanal=dxf",
       "eventId": "93131",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 4,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -10922,7 +10922,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 110
+      "available": 106
     },
     {
       "id": "EDI20260206-2026-09-17T17:30:00-Storsal",
@@ -10951,7 +10951,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93193/purchase?kanal=dxf",
       "eventId": "93193",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 9,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -10966,7 +10966,7 @@
       },
       "reserved": 0,
       "capacity": 286,
-      "available": 286
+      "available": 277
     },
     {
       "id": "WAB20240290-2026-09-17T19:30:00-Kinosal",
@@ -10985,8 +10985,8 @@
       "kinoklubb": false,
       "genres": [
         "Comedy",
-        "Drama",
-        "Fantasy"
+        "Fantasy",
+        "Romance"
       ],
       "director": "Susanne Bier",
       "premiere": "2026-09-11",
@@ -10994,7 +10994,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93130/purchase?kanal=dxf",
       "eventId": "93130",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 3,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -11013,7 +11013,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 110
+      "available": 107
     },
     {
       "id": "SFN20241749-2026-09-17T20:15:00-Storsal",
@@ -11044,14 +11044,14 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.3,
+          "value": 6.2,
           "id": "tt32375006",
           "url": "https://www.imdb.com/title/tt32375006/"
         }
       },
       "reserved": 0,
-      "capacity": 244,
-      "available": 242
+      "capacity": 246,
+      "available": 244
     },
     {
       "id": "EDI20251817-2026-09-18T17:00:00-Kinosal",
@@ -11197,7 +11197,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.3,
+          "value": 6.2,
           "id": "tt32375006",
           "url": "https://www.imdb.com/title/tt32375006/"
         }
@@ -11235,18 +11235,18 @@
       "sold": 9,
       "eventStatus": "ok",
       "ratings": {
+        "imdb": {
+          "value": 7.9,
+          "id": "tt35538033",
+          "url": "https://www.imdb.com/title/tt35538033/"
+        },
         "letterboxd": {
-          "value": 3.77,
+          "value": 3.79,
           "url": "https://letterboxd.com/film/untitled-resident-evil-reboot/"
         },
         "tomatoes": {
           "value": 67,
           "url": "https://www.rottentomatoes.com/m/resident_evil"
-        },
-        "imdb": {
-          "value": 7.7,
-          "id": "tt35538033",
-          "url": "https://www.imdb.com/title/tt35538033/"
         }
       },
       "reserved": 0,
@@ -11309,7 +11309,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93085/purchase?kanal=dxf",
       "eventId": "93085",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 3,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -11327,8 +11327,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 110
+      "capacity": 107,
+      "available": 104
     },
     {
       "id": "EDI20260642-2026-09-19T21:00:00-Kinosal",
@@ -11356,26 +11356,26 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93206/purchase?kanal=dxf",
       "eventId": "93206",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 6,
       "eventStatus": "ok",
       "ratings": {
+        "imdb": {
+          "value": 7.9,
+          "id": "tt35538033",
+          "url": "https://www.imdb.com/title/tt35538033/"
+        },
         "letterboxd": {
-          "value": 3.77,
+          "value": 3.79,
           "url": "https://letterboxd.com/film/untitled-resident-evil-reboot/"
         },
         "tomatoes": {
           "value": 67,
           "url": "https://www.rottentomatoes.com/m/resident_evil"
-        },
-        "imdb": {
-          "value": 7.7,
-          "id": "tt35538033",
-          "url": "https://www.imdb.com/title/tt35538033/"
         }
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 110
+      "available": 104
     },
     {
       "id": "EDI20251817-2026-09-20T15:00:00-Kinosal",
@@ -11569,7 +11569,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.3,
+          "value": 6.2,
           "id": "tt32375006",
           "url": "https://www.imdb.com/title/tt32375006/"
         }
@@ -11684,18 +11684,18 @@
       "sold": 0,
       "eventStatus": "ok",
       "ratings": {
+        "imdb": {
+          "value": 7.9,
+          "id": "tt35538033",
+          "url": "https://www.imdb.com/title/tt35538033/"
+        },
         "letterboxd": {
-          "value": 3.77,
+          "value": 3.79,
           "url": "https://letterboxd.com/film/untitled-resident-evil-reboot/"
         },
         "tomatoes": {
           "value": 67,
           "url": "https://www.rottentomatoes.com/m/resident_evil"
-        },
-        "imdb": {
-          "value": 7.7,
-          "id": "tt35538033",
-          "url": "https://www.imdb.com/title/tt35538033/"
         }
       },
       "reserved": 0,
@@ -11731,7 +11731,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.3,
+          "value": 6.2,
           "id": "tt32375006",
           "url": "https://www.imdb.com/title/tt32375006/"
         }
@@ -11971,7 +11971,7 @@
           "url": "https://www.imdb.com/title/tt33029380/"
         },
         "letterboxd": {
-          "value": 2.67,
+          "value": 2.68,
           "url": "https://letterboxd.com/film/marsupilami-2025/"
         }
       },
@@ -12063,8 +12063,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 105,
-      "available": 98
+      "capacity": 108,
+      "available": 101
     },
     {
       "id": "EDI20251443-2026-10-06T13:00:00-Kinosal",
