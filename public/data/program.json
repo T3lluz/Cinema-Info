@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-18T01:16:27.879Z",
+  "updatedAt": "2026-09-18T14:56:16.638Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -11078,12 +11078,12 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93078/purchase?kanal=dxf",
       "eventId": "93078",
       "promoterId": "202",
-      "sold": 10,
+      "sold": 21,
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
       "capacity": 110,
-      "available": 100
+      "available": 89
     },
     {
       "id": "EDI20251555-2026-09-18T18:15:00-Storsal",
@@ -11193,7 +11193,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93082/purchase?kanal=dxf",
       "eventId": "93082",
       "promoterId": "202",
-      "sold": 2,
+      "sold": 6,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -11203,8 +11203,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 244,
-      "available": 242
+      "capacity": 246,
+      "available": 240
     },
     {
       "id": "EDI20260642-2026-09-18T21:45:00-Kinosal",
@@ -11232,7 +11232,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93079/purchase?kanal=dxf",
       "eventId": "93079",
       "promoterId": "202",
-      "sold": 11,
+      "sold": 13,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -11241,7 +11241,7 @@
           "url": "https://www.imdb.com/title/tt35538033/"
         },
         "letterboxd": {
-          "value": 3.83,
+          "value": 3.85,
           "url": "https://letterboxd.com/film/resident-evil-2026/"
         },
         "tomatoes": {
@@ -11250,7 +11250,7 @@
         }
       },
       "reserved": 0,
-      "capacity": 108,
+      "capacity": 110,
       "available": 97
     },
     {
@@ -11365,7 +11365,7 @@
           "url": "https://www.imdb.com/title/tt35538033/"
         },
         "letterboxd": {
-          "value": 3.83,
+          "value": 3.85,
           "url": "https://letterboxd.com/film/resident-evil-2026/"
         },
         "tomatoes": {
@@ -11690,7 +11690,7 @@
           "url": "https://www.imdb.com/title/tt35538033/"
         },
         "letterboxd": {
-          "value": 3.83,
+          "value": 3.85,
           "url": "https://letterboxd.com/film/resident-evil-2026/"
         },
         "tomatoes": {
@@ -12141,8 +12141,8 @@
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
-      "capacity": 108,
-      "available": 97
+      "capacity": 110,
+      "available": 99
     },
     {
       "id": "EDI20250183-2026-10-20T19:30:00-Kinosal",
