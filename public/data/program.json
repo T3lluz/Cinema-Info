@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-18T14:56:16.638Z",
+  "updatedAt": "2026-09-19T01:08:56.605Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -11110,7 +11110,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93083/purchase?kanal=dxf",
       "eventId": "93083",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 5,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -11121,7 +11121,7 @@
       },
       "reserved": 0,
       "capacity": 246,
-      "available": 246
+      "available": 241
     },
     {
       "id": "EDI20251443-2026-09-18T19:15:00-Kinosal",
@@ -11147,7 +11147,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93080/purchase?kanal=dxf",
       "eventId": "93080",
       "promoterId": "202",
-      "sold": 7,
+      "sold": 12,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -11166,7 +11166,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 103
+      "available": 98
     },
     {
       "id": "SFN20241749-2026-09-18T21:00:00-Storsal",
@@ -11193,7 +11193,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93082/purchase?kanal=dxf",
       "eventId": "93082",
       "promoterId": "202",
-      "sold": 6,
+      "sold": 10,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -11204,7 +11204,7 @@
       },
       "reserved": 0,
       "capacity": 246,
-      "available": 240
+      "available": 236
     },
     {
       "id": "EDI20260642-2026-09-18T21:45:00-Kinosal",
@@ -11232,7 +11232,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93079/purchase?kanal=dxf",
       "eventId": "93079",
       "promoterId": "202",
-      "sold": 13,
+      "sold": 23,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -11241,7 +11241,7 @@
           "url": "https://www.imdb.com/title/tt35538033/"
         },
         "letterboxd": {
-          "value": 3.85,
+          "value": 3.86,
           "url": "https://letterboxd.com/film/resident-evil-2026/"
         },
         "tomatoes": {
@@ -11251,7 +11251,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 97
+      "available": 87
     },
     {
       "id": "EDI20251817-2026-09-19T15:00:00-Kinosal",
@@ -11274,7 +11274,7 @@
       ],
       "director": "Silje Salomonsen, Arild Østin Ommundsen",
       "premiere": "2026-09-18",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/838759525b1a3b72c8fbd951355f1ebb82809f18-1434x2048.png?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/34e66ceed16510e90b883d19655fda37f01095c6-1434x2048.png?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93086/purchase?kanal=dxf",
       "eventId": "93086",
       "promoterId": "202",
@@ -11309,7 +11309,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93085/purchase?kanal=dxf",
       "eventId": "93085",
       "promoterId": "202",
-      "sold": 3,
+      "sold": 13,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -11327,8 +11327,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 107,
-      "available": 104
+      "capacity": 105,
+      "available": 92
     },
     {
       "id": "EDI20260642-2026-09-19T21:00:00-Kinosal",
@@ -11365,7 +11365,7 @@
           "url": "https://www.imdb.com/title/tt35538033/"
         },
         "letterboxd": {
-          "value": 3.85,
+          "value": 3.86,
           "url": "https://letterboxd.com/film/resident-evil-2026/"
         },
         "tomatoes": {
@@ -11374,8 +11374,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 108,
-      "available": 100
+      "capacity": 110,
+      "available": 102
     },
     {
       "id": "EDI20251817-2026-09-20T15:00:00-Kinosal",
@@ -11398,7 +11398,7 @@
       ],
       "director": "Silje Salomonsen, Arild Østin Ommundsen",
       "premiere": "2026-09-18",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/838759525b1a3b72c8fbd951355f1ebb82809f18-1434x2048.png?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/34e66ceed16510e90b883d19655fda37f01095c6-1434x2048.png?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93103/purchase?kanal=dxf",
       "eventId": "93103",
       "promoterId": "202",
@@ -11478,7 +11478,7 @@
       ],
       "director": "Erik Poppe",
       "premiere": "2026-09-18",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/49a3f819b818a409e32eb651dfd0286808b145d0-1500x2104.webp?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/6dd9d54eff588819ac86f3052872a05d74f9af4d-1500x2104.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93105/purchase?kanal=dxf",
       "eventId": "93105",
       "promoterId": "202",
@@ -11599,7 +11599,7 @@
       ],
       "director": "Silje Salomonsen, Arild Østin Ommundsen",
       "premiere": "2026-09-18",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/838759525b1a3b72c8fbd951355f1ebb82809f18-1434x2048.png?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/34e66ceed16510e90b883d19655fda37f01095c6-1434x2048.png?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93174/purchase?kanal=dxf",
       "eventId": "93174",
       "promoterId": "202",
@@ -11690,7 +11690,7 @@
           "url": "https://www.imdb.com/title/tt35538033/"
         },
         "letterboxd": {
-          "value": 3.85,
+          "value": 3.86,
           "url": "https://letterboxd.com/film/resident-evil-2026/"
         },
         "tomatoes": {
@@ -11761,7 +11761,7 @@
       ],
       "director": "Silje Salomonsen, Arild Østin Ommundsen",
       "premiere": "2026-09-18",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/838759525b1a3b72c8fbd951355f1ebb82809f18-1434x2048.png?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/34e66ceed16510e90b883d19655fda37f01095c6-1434x2048.png?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93212/purchase?kanal=dxf",
       "eventId": "93212",
       "promoterId": "202",
@@ -11841,7 +11841,7 @@
       ],
       "director": "Erik Poppe",
       "premiere": "2026-09-18",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/49a3f819b818a409e32eb651dfd0286808b145d0-1500x2104.webp?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/6dd9d54eff588819ac86f3052872a05d74f9af4d-1500x2104.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93211/purchase?kanal=dxf",
       "eventId": "93211",
       "promoterId": "202",
@@ -11879,7 +11879,7 @@
       ],
       "director": "Silje Salomonsen, Arild Østin Ommundsen",
       "premiere": "2026-09-18",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/838759525b1a3b72c8fbd951355f1ebb82809f18-1434x2048.png?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/34e66ceed16510e90b883d19655fda37f01095c6-1434x2048.png?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93217/purchase?kanal=dxf",
       "eventId": "93217",
       "promoterId": "202",
