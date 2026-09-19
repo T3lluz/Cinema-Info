@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-19T01:08:56.605Z",
+  "updatedAt": "2026-09-19T14:21:01.451Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -10525,7 +10525,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.7,
+          "value": 6.8,
           "id": "tt31451181",
           "url": "https://www.imdb.com/title/tt31451181/"
         }
@@ -10655,7 +10655,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.7,
+          "value": 6.8,
           "id": "tt31451181",
           "url": "https://www.imdb.com/title/tt31451181/"
         }
@@ -11114,7 +11114,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.7,
+          "value": 6.8,
           "id": "tt31451181",
           "url": "https://www.imdb.com/title/tt31451181/"
         }
@@ -11278,12 +11278,12 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93086/purchase?kanal=dxf",
       "eventId": "93086",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 12,
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
       "capacity": 110,
-      "available": 110
+      "available": 98
     },
     {
       "id": "EDI20251443-2026-09-19T18:00:00-Kinosal",
@@ -11327,8 +11327,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 105,
-      "available": 92
+      "capacity": 110,
+      "available": 97
     },
     {
       "id": "EDI20260642-2026-09-19T21:00:00-Kinosal",
@@ -11352,11 +11352,11 @@
       ],
       "director": "Zach Cregger",
       "premiere": "2026-09-18",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/a94afcd83c9568f04609ae450a30a6dfcef4a233-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/45979c212a0db611920323256ec3d8265789d36e-1500x2104.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93206/purchase?kanal=dxf",
       "eventId": "93206",
       "promoterId": "202",
-      "sold": 8,
+      "sold": 13,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -11375,7 +11375,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 102
+      "available": 97
     },
     {
       "id": "EDI20251817-2026-09-20T15:00:00-Kinosal",
@@ -11402,12 +11402,12 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93103/purchase?kanal=dxf",
       "eventId": "93103",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 9,
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
       "capacity": 110,
-      "available": 110
+      "available": 101
     },
     {
       "id": "EDI20261121-2026-09-20T17:15:00-Kinosal",
@@ -11482,18 +11482,18 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93105/purchase?kanal=dxf",
       "eventId": "93105",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 7,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.7,
+          "value": 6.8,
           "id": "tt31451181",
           "url": "https://www.imdb.com/title/tt31451181/"
         }
       },
       "reserved": 0,
       "capacity": 286,
-      "available": 286
+      "available": 279
     },
     {
       "id": "EDI20251443-2026-09-20T19:45:00-Kinosal",
@@ -11677,7 +11677,7 @@
       ],
       "director": "Zach Cregger",
       "premiere": "2026-09-18",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/a94afcd83c9568f04609ae450a30a6dfcef4a233-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/45979c212a0db611920323256ec3d8265789d36e-1500x2104.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93176/purchase?kanal=dxf",
       "eventId": "93176",
       "promoterId": "202",
@@ -11845,18 +11845,63 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93211/purchase?kanal=dxf",
       "eventId": "93211",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.7,
+          "value": 6.8,
           "id": "tt31451181",
           "url": "https://www.imdb.com/title/tt31451181/"
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 110
+      "capacity": 108,
+      "available": 106
+    },
+    {
+      "id": "EDI20251443-2026-09-23T20:15:00-Storsal",
+      "title": "Spa Weekend",
+      "screen": "Storsal",
+      "start": "2026-09-23T20:15:00",
+      "end": "2026-09-23T22:02:00",
+      "dayKey": "2026-09-23",
+      "runningMinutes": 97,
+      "runningLabel": "1 t. 37 min.",
+      "age": "6 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Comedy"
+      ],
+      "director": "Jon Lucas, Scott Moore",
+      "premiere": "2026-09-18",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/10e873e01cd62c1bffabb7004cfc7f82b5ae6b1c-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93213/purchase?kanal=dxf",
+      "eventId": "93213",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 5.4,
+          "id": "tt33305867",
+          "url": "https://www.imdb.com/title/tt33305867/"
+        },
+        "letterboxd": {
+          "value": 2.43,
+          "url": "https://letterboxd.com/film/spa-weekend-2026/"
+        },
+        "tomatoes": {
+          "value": 74,
+          "url": "https://www.rottentomatoes.com/m/spa_weekend"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
     },
     {
       "id": "EDI20251817-2026-09-24T17:00:00-Kinosal",
@@ -11929,6 +11974,91 @@
         "tomatoes": {
           "value": 74,
           "url": "https://www.rottentomatoes.com/m/spa_weekend"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
+    },
+    {
+      "id": "SFN20241749-2026-09-24T19:30:00-Kinosal",
+      "title": "En nasjon i sjakk",
+      "screen": "Kinosal",
+      "start": "2026-09-24T19:30:00",
+      "end": "2026-09-24T21:34:44",
+      "dayKey": "2026-09-24",
+      "runningMinutes": 115,
+      "runningLabel": "1 t. 55 min.",
+      "age": "15 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": true,
+      "genres": [
+        "Action",
+        "Thriller"
+      ],
+      "director": "John Andreas Andersen",
+      "premiere": "2026-09-11",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/ce797c664fa97646a09fdfdb807c5ec4668040af-1500x2103.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93236/purchase?kanal=dxf",
+      "eventId": "93236",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 6.2,
+          "id": "tt32375006",
+          "url": "https://www.imdb.com/title/tt32375006/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20260642-2026-09-24T20:30:00-Storsal",
+      "title": "Resident Evil",
+      "screen": "Storsal",
+      "start": "2026-09-24T20:30:00",
+      "end": "2026-09-24T22:13:42",
+      "dayKey": "2026-09-24",
+      "runningMinutes": 93,
+      "runningLabel": "1 t. 33 min.",
+      "age": "15 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Action",
+        "Horror",
+        "Sci-Fi"
+      ],
+      "director": "Zach Cregger",
+      "premiere": "2026-09-18",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/45979c212a0db611920323256ec3d8265789d36e-1500x2104.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93238/purchase?kanal=dxf",
+      "eventId": "93238",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.8,
+          "id": "tt35538033",
+          "url": "https://www.imdb.com/title/tt35538033/"
+        },
+        "letterboxd": {
+          "value": 3.86,
+          "url": "https://letterboxd.com/film/resident-evil-2026/"
+        },
+        "tomatoes": {
+          "value": 91,
+          "url": "https://www.rottentomatoes.com/m/resident_evil_2026"
         }
       },
       "reserved": 0,
@@ -12015,13 +12145,138 @@
           "url": "https://www.imdb.com/title/tt36583977/"
         },
         "letterboxd": {
-          "value": 3.76,
+          "value": 3.77,
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         }
       },
       "reserved": 0,
       "capacity": 286,
       "available": 286
+    },
+    {
+      "id": "EDI20251443-2026-09-25T19:15:00-Kinosal",
+      "title": "Spa Weekend",
+      "screen": "Kinosal",
+      "start": "2026-09-25T19:15:00",
+      "end": "2026-09-25T21:02:00",
+      "dayKey": "2026-09-25",
+      "runningMinutes": 97,
+      "runningLabel": "1 t. 37 min.",
+      "age": "6 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Comedy"
+      ],
+      "director": "Jon Lucas, Scott Moore",
+      "premiere": "2026-09-18",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/10e873e01cd62c1bffabb7004cfc7f82b5ae6b1c-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93142/purchase?kanal=dxf",
+      "eventId": "93142",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 5.4,
+          "id": "tt33305867",
+          "url": "https://www.imdb.com/title/tt33305867/"
+        },
+        "letterboxd": {
+          "value": 2.43,
+          "url": "https://letterboxd.com/film/spa-weekend-2026/"
+        },
+        "tomatoes": {
+          "value": 74,
+          "url": "https://www.rottentomatoes.com/m/spa_weekend"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20260203-2026-09-25T20:30:00-Storsal",
+      "title": "Heart of the Beast",
+      "screen": "Storsal",
+      "start": "2026-09-25T20:30:00",
+      "end": "2026-09-25T22:21:00",
+      "dayKey": "2026-09-25",
+      "runningMinutes": 101,
+      "runningLabel": "1 t. 41 min.",
+      "age": "12 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": "Norgespremiere",
+      "kinoklubb": false,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Drama"
+      ],
+      "director": "David Ayer",
+      "premiere": "2026-09-25",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/f73aa5f1d8a24cb412b69b828e2f56dcd502c171-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93143/purchase?kanal=dxf",
+      "eventId": "93143",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": null,
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
+    },
+    {
+      "id": "EDI20260642-2026-09-25T21:45:00-Kinosal",
+      "title": "Resident Evil",
+      "screen": "Kinosal",
+      "start": "2026-09-25T21:45:00",
+      "end": "2026-09-25T23:28:42",
+      "dayKey": "2026-09-25",
+      "runningMinutes": 93,
+      "runningLabel": "1 t. 33 min.",
+      "age": "15 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Action",
+        "Horror",
+        "Sci-Fi"
+      ],
+      "director": "Zach Cregger",
+      "premiere": "2026-09-18",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/45979c212a0db611920323256ec3d8265789d36e-1500x2104.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93178/purchase?kanal=dxf",
+      "eventId": "93178",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.8,
+          "id": "tt35538033",
+          "url": "https://www.imdb.com/title/tt35538033/"
+        },
+        "letterboxd": {
+          "value": 3.86,
+          "url": "https://letterboxd.com/film/resident-evil-2026/"
+        },
+        "tomatoes": {
+          "value": 91,
+          "url": "https://www.rottentomatoes.com/m/resident_evil_2026"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
     },
     {
       "id": "EDI20261232-2026-09-26T19:45:00-Kinosal",
@@ -12049,7 +12304,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93200/purchase?kanal=dxf",
       "eventId": "93200",
       "promoterId": "202",
-      "sold": 7,
+      "sold": 9,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -12063,8 +12318,167 @@
         }
       },
       "reserved": 0,
-      "capacity": 108,
-      "available": 101
+      "capacity": 106,
+      "available": 97
+    },
+    {
+      "id": "UIP20221470-2026-09-27T15:00:00-Kinosal",
+      "title": "Glemselens øy",
+      "screen": "Kinosal",
+      "start": "2026-09-27T15:00:00",
+      "end": "2026-09-27T16:59:00",
+      "dayKey": "2026-09-27",
+      "runningMinutes": 109,
+      "runningLabel": "1 t. 49 min.",
+      "age": "9 år",
+      "tags": [
+        "Norsk tale",
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "director": "Joel Crawford, Januel Mercado",
+      "premiere": "2026-09-25",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/d7f37b4dd10260c620949baf6caba8ba06beee0e-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93223/purchase?kanal=dxf",
+      "eventId": "93223",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.5,
+          "id": "tt36583977",
+          "url": "https://www.imdb.com/title/tt36583977/"
+        },
+        "letterboxd": {
+          "value": 3.77,
+          "url": "https://letterboxd.com/film/forgotten-island-2026/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20251555-2026-09-27T17:45:00-Kinosal",
+      "title": "Kjærast",
+      "screen": "Kinosal",
+      "start": "2026-09-27T17:45:00",
+      "end": "2026-09-27T19:49:45",
+      "dayKey": "2026-09-27",
+      "runningMinutes": 114,
+      "runningLabel": "1 t. 54 min.",
+      "age": "9 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Drama",
+        "Romance"
+      ],
+      "director": "Erik Poppe",
+      "premiere": "2026-09-18",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/6dd9d54eff588819ac86f3052872a05d74f9af4d-1500x2104.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93221/purchase?kanal=dxf",
+      "eventId": "93221",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 6.8,
+          "id": "tt31451181",
+          "url": "https://www.imdb.com/title/tt31451181/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20260203-2026-09-27T20:30:00-Kinosal",
+      "title": "Heart of the Beast",
+      "screen": "Kinosal",
+      "start": "2026-09-27T20:30:00",
+      "end": "2026-09-27T22:21:00",
+      "dayKey": "2026-09-27",
+      "runningMinutes": 101,
+      "runningLabel": "1 t. 41 min.",
+      "age": "12 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Drama"
+      ],
+      "director": "David Ayer",
+      "premiere": "2026-09-25",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/f73aa5f1d8a24cb412b69b828e2f56dcd502c171-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93222/purchase?kanal=dxf",
+      "eventId": "93222",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": null,
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "UIP20221470-2026-09-28T17:00:00-Kinosal",
+      "title": "Glemselens øy",
+      "screen": "Kinosal",
+      "start": "2026-09-28T17:00:00",
+      "end": "2026-09-28T18:59:00",
+      "dayKey": "2026-09-28",
+      "runningMinutes": 109,
+      "runningLabel": "1 t. 49 min.",
+      "age": "9 år",
+      "tags": [
+        "Norsk tale",
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "director": "Joel Crawford, Januel Mercado",
+      "premiere": "2026-09-25",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/d7f37b4dd10260c620949baf6caba8ba06beee0e-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93192/purchase?kanal=dxf",
+      "eventId": "93192",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.5,
+          "id": "tt36583977",
+          "url": "https://www.imdb.com/title/tt36583977/"
+        },
+        "letterboxd": {
+          "value": 3.77,
+          "url": "https://letterboxd.com/film/forgotten-island-2026/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
     },
     {
       "id": "EDI20251443-2026-10-06T13:00:00-Kinosal",
