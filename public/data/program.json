@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-20T01:05:52.242Z",
+  "updatedAt": "2026-09-20T14:40:37.928Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -10095,7 +10095,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.2,
+          "value": 6.1,
           "id": "tt32375006",
           "url": "https://www.imdb.com/title/tt32375006/"
         }
@@ -10269,7 +10269,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.2,
+          "value": 6.1,
           "id": "tt32375006",
           "url": "https://www.imdb.com/title/tt32375006/"
         }
@@ -10487,7 +10487,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.2,
+          "value": 6.1,
           "id": "tt32375006",
           "url": "https://www.imdb.com/title/tt32375006/"
         }
@@ -10693,7 +10693,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.2,
+          "value": 6.1,
           "id": "tt32375006",
           "url": "https://www.imdb.com/title/tt32375006/"
         }
@@ -10867,7 +10867,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.2,
+          "value": 6.1,
           "id": "tt32375006",
           "url": "https://www.imdb.com/title/tt32375006/"
         }
@@ -11044,7 +11044,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.2,
+          "value": 6.1,
           "id": "tt32375006",
           "url": "https://www.imdb.com/title/tt32375006/"
         }
@@ -11197,7 +11197,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.2,
+          "value": 6.1,
           "id": "tt32375006",
           "url": "https://www.imdb.com/title/tt32375006/"
         }
@@ -11236,12 +11236,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.8,
+          "value": 7.7,
           "id": "tt35538033",
           "url": "https://www.imdb.com/title/tt35538033/"
         },
         "letterboxd": {
-          "value": 3.85,
+          "value": 3.84,
           "url": "https://letterboxd.com/film/resident-evil-2026/"
         },
         "tomatoes": {
@@ -11360,12 +11360,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.8,
+          "value": 7.7,
           "id": "tt35538033",
           "url": "https://www.imdb.com/title/tt35538033/"
         },
         "letterboxd": {
-          "value": 3.85,
+          "value": 3.84,
           "url": "https://letterboxd.com/film/resident-evil-2026/"
         },
         "tomatoes": {
@@ -11402,12 +11402,12 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93103/purchase?kanal=dxf",
       "eventId": "93103",
       "promoterId": "202",
-      "sold": 9,
+      "sold": 13,
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
       "capacity": 110,
-      "available": 101
+      "available": 97
     },
     {
       "id": "EDI20261121-2026-09-20T17:15:00-Kinosal",
@@ -11436,7 +11436,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93104/purchase?kanal=dxf",
       "eventId": "93104",
       "promoterId": "202",
-      "sold": 2,
+      "sold": 14,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -11455,7 +11455,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 108
+      "available": 96
     },
     {
       "id": "EDI20251555-2026-09-20T17:50:00-Storsal",
@@ -11482,7 +11482,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93105/purchase?kanal=dxf",
       "eventId": "93105",
       "promoterId": "202",
-      "sold": 7,
+      "sold": 10,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -11493,7 +11493,7 @@
       },
       "reserved": 0,
       "capacity": 286,
-      "available": 279
+      "available": 276
     },
     {
       "id": "EDI20251443-2026-09-20T19:45:00-Kinosal",
@@ -11519,7 +11519,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93106/purchase?kanal=dxf",
       "eventId": "93106",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 3,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -11538,7 +11538,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 110
+      "available": 107
     },
     {
       "id": "SFN20241749-2026-09-20T20:30:00-Storsal",
@@ -11565,18 +11565,18 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93107/purchase?kanal=dxf",
       "eventId": "93107",
       "promoterId": "202",
-      "sold": 4,
+      "sold": 6,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.2,
+          "value": 6.1,
           "id": "tt32375006",
           "url": "https://www.imdb.com/title/tt32375006/"
         }
       },
-      "reserved": 0,
-      "capacity": 284,
-      "available": 280
+      "reserved": 2,
+      "capacity": 286,
+      "available": 278
     },
     {
       "id": "EDI20251817-2026-09-22T17:00:00-Storsal",
@@ -11685,12 +11685,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.8,
+          "value": 7.7,
           "id": "tt35538033",
           "url": "https://www.imdb.com/title/tt35538033/"
         },
         "letterboxd": {
-          "value": 3.85,
+          "value": 3.84,
           "url": "https://letterboxd.com/film/resident-evil-2026/"
         },
         "tomatoes": {
@@ -11731,7 +11731,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.2,
+          "value": 6.1,
           "id": "tt32375006",
           "url": "https://www.imdb.com/title/tt32375006/"
         }
@@ -12009,7 +12009,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.2,
+          "value": 6.1,
           "id": "tt32375006",
           "url": "https://www.imdb.com/title/tt32375006/"
         }
@@ -12048,12 +12048,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.8,
+          "value": 7.7,
           "id": "tt35538033",
           "url": "https://www.imdb.com/title/tt35538033/"
         },
         "letterboxd": {
-          "value": 3.85,
+          "value": 3.84,
           "url": "https://letterboxd.com/film/resident-evil-2026/"
         },
         "tomatoes": {
@@ -12140,12 +12140,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.5,
+          "value": 7.6,
           "id": "tt36583977",
           "url": "https://www.imdb.com/title/tt36583977/"
         },
         "letterboxd": {
-          "value": 3.77,
+          "value": 3.78,
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         }
       },
@@ -12226,7 +12226,13 @@
       "promoterId": "202",
       "sold": 0,
       "eventStatus": "ok",
-      "ratings": null,
+      "ratings": {
+        "imdb": {
+          "value": 7.7,
+          "id": "tt7526136",
+          "url": "https://www.imdb.com/title/tt7526136/"
+        }
+      },
       "reserved": 0,
       "capacity": 286,
       "available": 286
@@ -12261,12 +12267,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.8,
+          "value": 7.7,
           "id": "tt35538033",
           "url": "https://www.imdb.com/title/tt35538033/"
         },
         "letterboxd": {
-          "value": 3.85,
+          "value": 3.84,
           "url": "https://letterboxd.com/film/resident-evil-2026/"
         },
         "tomatoes": {
@@ -12277,6 +12283,187 @@
       "reserved": 0,
       "capacity": 110,
       "available": 110
+    },
+    {
+      "id": "EDI20260454-2026-09-26T14:50:00-Kinosal",
+      "title": "Spiralis",
+      "screen": "Kinosal",
+      "start": "2026-09-26T14:50:00",
+      "end": "2026-09-26T16:39:00",
+      "dayKey": "2026-09-26",
+      "runningMinutes": 99,
+      "runningLabel": "1 t. 39 min.",
+      "age": "6 år",
+      "tags": [
+        "Norsk tale",
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Adventure",
+        "Comedy",
+        "Family"
+      ],
+      "director": "Philippe Lacheau",
+      "premiere": "2026-09-25",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/4fc4bd78240864d81b5506ccb0c7e82299b9b079-1500x2139.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93203/purchase?kanal=dxf",
+      "eventId": "93203",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 6.3,
+          "id": "tt33029380",
+          "url": "https://www.imdb.com/title/tt33029380/"
+        },
+        "letterboxd": {
+          "value": 2.68,
+          "url": "https://letterboxd.com/film/marsupilami-2025/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "UIP20221470-2026-09-26T15:30:00-Storsal",
+      "title": "Glemselens øy",
+      "screen": "Storsal",
+      "start": "2026-09-26T15:30:00",
+      "end": "2026-09-26T17:29:00",
+      "dayKey": "2026-09-26",
+      "runningMinutes": 109,
+      "runningLabel": "1 t. 49 min.",
+      "age": "9 år",
+      "tags": [
+        "Norsk tale",
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "director": "Joel Crawford, Januel Mercado",
+      "premiere": "2026-09-25",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/d7f37b4dd10260c620949baf6caba8ba06beee0e-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93201/purchase?kanal=dxf",
+      "eventId": "93201",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.6,
+          "id": "tt36583977",
+          "url": "https://www.imdb.com/title/tt36583977/"
+        },
+        "letterboxd": {
+          "value": 3.78,
+          "url": "https://letterboxd.com/film/forgotten-island-2026/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
+    },
+    {
+      "id": "EDI20261121-2026-09-26T17:15:00-Kinosal",
+      "title": "Coyote vs. Acme - Per Ulv på saken",
+      "screen": "Kinosal",
+      "start": "2026-09-26T17:15:00",
+      "end": "2026-09-26T19:06:06",
+      "dayKey": "2026-09-26",
+      "runningMinutes": 103,
+      "runningLabel": "1 t. 43 min.",
+      "age": "6 år",
+      "tags": [
+        "Norsk tale",
+        "Utekstet"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ],
+      "director": "Dave Green",
+      "premiere": "2026-09-11",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/43b01f3759a4ec348c13436ec84b35c6f75e7eb3-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93255/purchase?kanal=dxf",
+      "eventId": "93255",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.6,
+          "id": "tt1756855",
+          "url": "https://www.imdb.com/title/tt1756855/"
+        },
+        "letterboxd": {
+          "value": 3.85,
+          "url": "https://letterboxd.com/film/coyote-vs-acme/"
+        },
+        "tomatoes": {
+          "value": 95,
+          "url": "https://www.rottentomatoes.com/m/coyote_vs_acme"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20251443-2026-09-26T18:30:00-Storsal",
+      "title": "Spa Weekend",
+      "screen": "Storsal",
+      "start": "2026-09-26T18:30:00",
+      "end": "2026-09-26T20:17:00",
+      "dayKey": "2026-09-26",
+      "runningMinutes": 97,
+      "runningLabel": "1 t. 37 min.",
+      "age": "6 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Comedy"
+      ],
+      "director": "Jon Lucas, Scott Moore",
+      "premiere": "2026-09-18",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/10e873e01cd62c1bffabb7004cfc7f82b5ae6b1c-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93204/purchase?kanal=dxf",
+      "eventId": "93204",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 5.4,
+          "id": "tt33305867",
+          "url": "https://www.imdb.com/title/tt33305867/"
+        },
+        "letterboxd": {
+          "value": 2.43,
+          "url": "https://letterboxd.com/film/spa-weekend-2026/"
+        },
+        "tomatoes": {
+          "value": 74,
+          "url": "https://www.rottentomatoes.com/m/spa_weekend"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
     },
     {
       "id": "EDI20261232-2026-09-26T19:45:00-Kinosal",
@@ -12322,6 +12509,45 @@
       "available": 99
     },
     {
+      "id": "EDI20260203-2026-09-26T21:00:00-Storsal",
+      "title": "Heart of the Beast",
+      "screen": "Storsal",
+      "start": "2026-09-26T21:00:00",
+      "end": "2026-09-26T22:51:00",
+      "dayKey": "2026-09-26",
+      "runningMinutes": 101,
+      "runningLabel": "1 t. 41 min.",
+      "age": "12 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Drama"
+      ],
+      "director": "David Ayer",
+      "premiere": "2026-09-25",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/f73aa5f1d8a24cb412b69b828e2f56dcd502c171-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93202/purchase?kanal=dxf",
+      "eventId": "93202",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.7,
+          "id": "tt7526136",
+          "url": "https://www.imdb.com/title/tt7526136/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
+    },
+    {
       "id": "UIP20221470-2026-09-27T15:00:00-Kinosal",
       "title": "Glemselens øy",
       "screen": "Kinosal",
@@ -12352,12 +12578,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.5,
+          "value": 7.6,
           "id": "tt36583977",
           "url": "https://www.imdb.com/title/tt36583977/"
         },
         "letterboxd": {
-          "value": 3.77,
+          "value": 3.78,
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         }
       },
@@ -12431,7 +12657,13 @@
       "promoterId": "202",
       "sold": 0,
       "eventStatus": "ok",
-      "ratings": null,
+      "ratings": {
+        "imdb": {
+          "value": 7.7,
+          "id": "tt7526136",
+          "url": "https://www.imdb.com/title/tt7526136/"
+        }
+      },
       "reserved": 0,
       "capacity": 110,
       "available": 110
@@ -12467,18 +12699,99 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.5,
+          "value": 7.6,
           "id": "tt36583977",
           "url": "https://www.imdb.com/title/tt36583977/"
         },
         "letterboxd": {
-          "value": 3.77,
+          "value": 3.78,
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         }
       },
       "reserved": 0,
       "capacity": 110,
       "available": 110
+    },
+    {
+      "id": "EDI20250794-2026-10-02T16:50:00-Kinosal",
+      "title": "Sauen Shaun - Gårdens fårbannelse",
+      "screen": "Kinosal",
+      "start": "2026-10-02T16:50:00",
+      "end": "2026-10-02T18:31:00",
+      "dayKey": "2026-10-02",
+      "runningMinutes": 81,
+      "runningLabel": "1 t. 21 min.",
+      "age": "Tillatt for alle",
+      "tags": [
+        "Norsk tale",
+        "Utekstet"
+      ],
+      "showType": "Norgespremiere",
+      "kinoklubb": false,
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ],
+      "director": "Steve Cox, Matthew Walker",
+      "premiere": "2026-10-02",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/0690cc492885fe739c3d101a3af245ffa6db81a9-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93091/purchase?kanal=dxf",
+      "eventId": "93091",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.2,
+          "id": "tt36841161",
+          "url": "https://www.imdb.com/title/tt36841161/"
+        },
+        "letterboxd": {
+          "value": 3.55,
+          "url": "https://letterboxd.com/film/shaun-the-sheep-the-beast-of-mossy-bottom/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "WAB20240252-2026-10-02T20:00:00-Storsal",
+      "title": "Digger",
+      "screen": "Storsal",
+      "start": "2026-10-02T20:00:00",
+      "end": "2026-10-02T22:18:00",
+      "dayKey": "2026-10-02",
+      "runningMinutes": 129,
+      "runningLabel": "2 t. 9 min.",
+      "age": "9 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": "Norgespremiere",
+      "kinoklubb": false,
+      "genres": [
+        "Comedy",
+        "Drama"
+      ],
+      "director": "Alejandro G. Iñárritu",
+      "premiere": "2026-10-02",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/e28d9ab7e9746d7d1f5e072dda56701815752570-1500x2223.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93092/purchase?kanal=dxf",
+      "eventId": "93092",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "tomatoes": {
+          "value": 27,
+          "url": "https://www.rottentomatoes.com/m/digger"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
     },
     {
       "id": "EDI20251443-2026-10-06T13:00:00-Kinosal",
