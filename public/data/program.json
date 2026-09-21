@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-21T01:03:39.906Z",
+  "updatedAt": "2026-09-21T16:59:49.522Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -11082,7 +11082,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.2,
+          "value": 7.7,
           "id": "tt39945194",
           "url": "https://www.imdb.com/title/tt39945194/"
         }
@@ -11288,7 +11288,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.2,
+          "value": 7.7,
           "id": "tt39945194",
           "url": "https://www.imdb.com/title/tt39945194/"
         }
@@ -11418,7 +11418,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.2,
+          "value": 7.7,
           "id": "tt39945194",
           "url": "https://www.imdb.com/title/tt39945194/"
         }
@@ -11625,7 +11625,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.2,
+          "value": 7.7,
           "id": "tt39945194",
           "url": "https://www.imdb.com/title/tt39945194/"
         }
@@ -11705,7 +11705,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93176/purchase?kanal=dxf",
       "eventId": "93176",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -11724,7 +11724,7 @@
       },
       "reserved": 0,
       "capacity": 286,
-      "available": 286
+      "available": 284
     },
     {
       "id": "SFN20241749-2026-09-22T20:30:00-Kinosal",
@@ -11793,7 +11793,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.2,
+          "value": 7.7,
           "id": "tt39945194",
           "url": "https://www.imdb.com/title/tt39945194/"
         }
@@ -11962,7 +11962,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.2,
+          "value": 7.7,
           "id": "tt39945194",
           "url": "https://www.imdb.com/title/tt39945194/"
         }
@@ -12050,9 +12050,9 @@
           "url": "https://www.imdb.com/title/tt32375006/"
         }
       },
-      "reserved": 0,
+      "reserved": 2,
       "capacity": 110,
-      "available": 110
+      "available": 108
     },
     {
       "id": "EDI20260642-2026-09-24T20:30:00-Storsal",
@@ -12181,7 +12181,7 @@
           "url": "https://www.imdb.com/title/tt36583977/"
         },
         "letterboxd": {
-          "value": 3.78,
+          "value": 3.8,
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         }
       },
@@ -12400,7 +12400,7 @@
           "url": "https://www.imdb.com/title/tt36583977/"
         },
         "letterboxd": {
-          "value": 3.78,
+          "value": 3.8,
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         }
       },
@@ -12619,7 +12619,7 @@
           "url": "https://www.imdb.com/title/tt36583977/"
         },
         "letterboxd": {
-          "value": 3.78,
+          "value": 3.8,
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         }
       },
@@ -12731,7 +12731,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93192/purchase?kanal=dxf",
       "eventId": "93192",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -12740,13 +12740,13 @@
           "url": "https://www.imdb.com/title/tt36583977/"
         },
         "letterboxd": {
-          "value": 3.78,
+          "value": 3.8,
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 110
+      "capacity": 108,
+      "available": 106
     },
     {
       "id": "EDI20250794-2026-10-02T16:50:00-Kinosal",
@@ -12784,11 +12784,11 @@
           "url": "https://www.imdb.com/title/tt36841161/"
         },
         "letterboxd": {
-          "value": 3.55,
+          "value": 3.56,
           "url": "https://letterboxd.com/film/shaun-the-sheep-the-beast-of-mossy-bottom/"
         },
         "tomatoes": {
-          "value": 95,
+          "value": 96,
           "url": "https://www.rottentomatoes.com/m/shaun_the_sheep_the_beast_of_mossy_bottom"
         }
       },
