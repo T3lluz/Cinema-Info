@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-22T15:29:40.679Z",
+  "updatedAt": "2026-09-23T01:29:20.867Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -10525,7 +10525,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.7,
+          "value": 6.6,
           "id": "tt31451181",
           "url": "https://www.imdb.com/title/tt31451181/"
         }
@@ -10655,7 +10655,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.7,
+          "value": 6.6,
           "id": "tt31451181",
           "url": "https://www.imdb.com/title/tt31451181/"
         }
@@ -11082,7 +11082,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.7,
+          "value": 8,
           "id": "tt39945194",
           "url": "https://www.imdb.com/title/tt39945194/"
         }
@@ -11120,7 +11120,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.7,
+          "value": 6.6,
           "id": "tt31451181",
           "url": "https://www.imdb.com/title/tt31451181/"
         }
@@ -11288,7 +11288,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.7,
+          "value": 8,
           "id": "tt39945194",
           "url": "https://www.imdb.com/title/tt39945194/"
         }
@@ -11418,7 +11418,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.7,
+          "value": 8,
           "id": "tt39945194",
           "url": "https://www.imdb.com/title/tt39945194/"
         }
@@ -11504,7 +11504,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.7,
+          "value": 6.6,
           "id": "tt31451181",
           "url": "https://www.imdb.com/title/tt31451181/"
         }
@@ -11625,7 +11625,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.7,
+          "value": 8,
           "id": "tt39945194",
           "url": "https://www.imdb.com/title/tt39945194/"
         }
@@ -11705,7 +11705,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93176/purchase?kanal=dxf",
       "eventId": "93176",
       "promoterId": "202",
-      "sold": 23,
+      "sold": 25,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -11724,7 +11724,7 @@
       },
       "reserved": 0,
       "capacity": 286,
-      "available": 263
+      "available": 261
     },
     {
       "id": "SFN20241749-2026-09-22T20:30:00-Kinosal",
@@ -11751,7 +11751,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93175/purchase?kanal=dxf",
       "eventId": "93175",
       "promoterId": "202",
-      "sold": 4,
+      "sold": 7,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -11762,7 +11762,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 106
+      "available": 103
     },
     {
       "id": "EDI20251817-2026-09-23T17:00:00-Kinosal",
@@ -11793,7 +11793,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.7,
+          "value": 8,
           "id": "tt39945194",
           "url": "https://www.imdb.com/title/tt39945194/"
         }
@@ -11879,7 +11879,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.7,
+          "value": 6.6,
           "id": "tt31451181",
           "url": "https://www.imdb.com/title/tt31451181/"
         }
@@ -11962,7 +11962,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.7,
+          "value": 8,
           "id": "tt39945194",
           "url": "https://www.imdb.com/title/tt39945194/"
         }
@@ -12269,7 +12269,7 @@
           "url": "https://www.imdb.com/title/tt7526136/"
         },
         "letterboxd": {
-          "value": 3.27,
+          "value": 3.29,
           "url": "https://letterboxd.com/film/heart-of-the-beast-2026/"
         }
       },
@@ -12583,7 +12583,7 @@
           "url": "https://www.imdb.com/title/tt7526136/"
         },
         "letterboxd": {
-          "value": 3.27,
+          "value": 3.29,
           "url": "https://letterboxd.com/film/heart-of-the-beast-2026/"
         }
       },
@@ -12708,7 +12708,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.7,
+          "value": 6.6,
           "id": "tt31451181",
           "url": "https://www.imdb.com/title/tt31451181/"
         }
@@ -12799,7 +12799,7 @@
           "url": "https://www.imdb.com/title/tt7526136/"
         },
         "letterboxd": {
-          "value": 3.27,
+          "value": 3.29,
           "url": "https://letterboxd.com/film/heart-of-the-beast-2026/"
         }
       },
@@ -12880,7 +12880,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.7,
+          "value": 8,
           "id": "tt39945194",
           "url": "https://www.imdb.com/title/tt39945194/"
         }
@@ -13063,6 +13063,51 @@
       "available": 110
     },
     {
+      "id": "EDI20251443-2026-09-29T19:30:00-Storsal",
+      "title": "Spa Weekend",
+      "screen": "Storsal",
+      "start": "2026-09-29T19:30:00",
+      "end": "2026-09-29T21:17:24",
+      "dayKey": "2026-09-29",
+      "runningMinutes": 97,
+      "runningLabel": "1 t. 37 min.",
+      "age": "6 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Comedy"
+      ],
+      "director": "Jon Lucas, Scott Moore",
+      "premiere": "2026-09-18",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/10e873e01cd62c1bffabb7004cfc7f82b5ae6b1c-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93273/purchase?kanal=dxf",
+      "eventId": "93273",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 5.4,
+          "id": "tt33305867",
+          "url": "https://www.imdb.com/title/tt33305867/"
+        },
+        "letterboxd": {
+          "value": 2.41,
+          "url": "https://letterboxd.com/film/spa-weekend-2026/"
+        },
+        "tomatoes": {
+          "value": 73,
+          "url": "https://www.rottentomatoes.com/m/spa_weekend"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
+    },
+    {
       "id": "EDI20260203-2026-09-29T20:15:00-Kinosal",
       "title": "Heart of the Beast",
       "screen": "Kinosal",
@@ -13097,7 +13142,7 @@
           "url": "https://www.imdb.com/title/tt7526136/"
         },
         "letterboxd": {
-          "value": 3.27,
+          "value": 3.29,
           "url": "https://letterboxd.com/film/heart-of-the-beast-2026/"
         }
       },
@@ -13134,7 +13179,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.7,
+          "value": 8,
           "id": "tt39945194",
           "url": "https://www.imdb.com/title/tt39945194/"
         }
@@ -13216,7 +13261,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.7,
+          "value": 6.6,
           "id": "tt31451181",
           "url": "https://www.imdb.com/title/tt31451181/"
         }
@@ -13265,7 +13310,7 @@
           "url": "https://letterboxd.com/film/shaun-the-sheep-the-beast-of-mossy-bottom/"
         },
         "tomatoes": {
-          "value": 94,
+          "value": 93,
           "url": "https://www.rottentomatoes.com/m/shaun_the_sheep_the_beast_of_mossy_bottom"
         }
       },
@@ -13494,39 +13539,6 @@
           "url": "https://www.rottentomatoes.com/m/spa_weekend"
         }
       },
-      "reserved": 0,
-      "capacity": 110,
-      "available": 110
-    },
-    {
-      "id": "EDI20250183-2026-10-16T19:00:00-Kinosal",
-      "title": "Pensjonskuppet",
-      "screen": "Kinosal",
-      "start": "2026-10-16T19:00:00",
-      "end": "2026-10-16T20:50:00",
-      "dayKey": "2026-10-16",
-      "runningMinutes": 110,
-      "runningLabel": "1 t. 50 min.",
-      "age": "9 år",
-      "tags": [
-        "Norsk tekst"
-      ],
-      "showType": "Norgespremiere",
-      "kinoklubb": false,
-      "genres": [
-        "Action",
-        "Comedy",
-        "Crime"
-      ],
-      "director": "Gunnbjörg Gunnarsdottir",
-      "premiere": "2026-10-16",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/b7c7d07d556cff3e5c9868b5e6fd02656f31e59c-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
-      "ticketUrl": "https://checkout.ebillett.no/202/events/93116/purchase?kanal=dxf",
-      "eventId": "93116",
-      "promoterId": "202",
-      "sold": 0,
-      "eventStatus": "ok",
-      "ratings": null,
       "reserved": 0,
       "capacity": 110,
       "available": 110
