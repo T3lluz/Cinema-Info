@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-23T15:25:49.049Z",
+  "updatedAt": "2026-09-24T01:22:24.687Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -10144,7 +10144,7 @@
           "url": "https://letterboxd.com/film/coyote-vs-acme/"
         },
         "tomatoes": {
-          "value": 95,
+          "value": 94,
           "url": "https://www.rottentomatoes.com/m/coyote_vs_acme"
         }
       },
@@ -10362,7 +10362,7 @@
           "url": "https://letterboxd.com/film/coyote-vs-acme/"
         },
         "tomatoes": {
-          "value": 95,
+          "value": 94,
           "url": "https://www.rottentomatoes.com/m/coyote_vs_acme"
         }
       },
@@ -10574,7 +10574,7 @@
           "url": "https://letterboxd.com/film/coyote-vs-acme/"
         },
         "tomatoes": {
-          "value": 95,
+          "value": 94,
           "url": "https://www.rottentomatoes.com/m/coyote_vs_acme"
         }
       },
@@ -10783,7 +10783,7 @@
           "url": "https://letterboxd.com/film/coyote-vs-acme/"
         },
         "tomatoes": {
-          "value": 95,
+          "value": 94,
           "url": "https://www.rottentomatoes.com/m/coyote_vs_acme"
         }
       },
@@ -10916,7 +10916,7 @@
           "url": "https://letterboxd.com/film/coyote-vs-acme/"
         },
         "tomatoes": {
-          "value": 95,
+          "value": 94,
           "url": "https://www.rottentomatoes.com/m/coyote_vs_acme"
         }
       },
@@ -11467,7 +11467,7 @@
           "url": "https://letterboxd.com/film/coyote-vs-acme/"
         },
         "tomatoes": {
-          "value": 95,
+          "value": 94,
           "url": "https://www.rottentomatoes.com/m/coyote_vs_acme"
         }
       },
@@ -11842,7 +11842,7 @@
           "url": "https://letterboxd.com/film/coyote-vs-acme/"
         },
         "tomatoes": {
-          "value": 95,
+          "value": 94,
           "url": "https://www.rottentomatoes.com/m/coyote_vs_acme"
         }
       },
@@ -11875,7 +11875,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93211/purchase?kanal=dxf",
       "eventId": "93211",
       "promoterId": "202",
-      "sold": 12,
+      "sold": 14,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -11886,7 +11886,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 98
+      "available": 96
     },
     {
       "id": "EDI20251443-2026-09-23T20:15:00-Storsal",
@@ -11958,7 +11958,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93217/purchase?kanal=dxf",
       "eventId": "93217",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -11968,8 +11968,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 110
+      "capacity": 108,
+      "available": 106
     },
     {
       "id": "EDI20251443-2026-09-24T18:00:00-Storsal",
@@ -12013,8 +12013,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 286,
-      "available": 286
+      "capacity": 246,
+      "available": 246
     },
     {
       "id": "SFN20241749-2026-09-24T19:30:00-Kinosal",
@@ -12098,8 +12098,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 286,
-      "available": 286
+      "capacity": 246,
+      "available": 246
     },
     {
       "id": "EDI20260454-2026-09-25T16:50:00-Kinosal",
@@ -12172,7 +12172,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93141/purchase?kanal=dxf",
       "eventId": "93141",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 5,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -12186,8 +12186,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 286,
-      "available": 286
+      "capacity": 246,
+      "available": 241
     },
     {
       "id": "EDI20251443-2026-09-25T19:15:00-Kinosal",
@@ -12269,13 +12269,13 @@
           "url": "https://www.imdb.com/title/tt7526136/"
         },
         "letterboxd": {
-          "value": 3.14,
+          "value": 3.2,
           "url": "https://letterboxd.com/film/heart-of-the-beast-2026/"
         }
       },
       "reserved": 0,
-      "capacity": 286,
-      "available": 286
+      "capacity": 246,
+      "available": 246
     },
     {
       "id": "EDI20260642-2026-09-25T21:45:00-Kinosal",
@@ -12303,7 +12303,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93178/purchase?kanal=dxf",
       "eventId": "93178",
       "promoterId": "202",
-      "sold": 2,
+      "sold": 5,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -12321,8 +12321,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 108,
-      "available": 106
+      "capacity": 110,
+      "available": 105
     },
     {
       "id": "EDI20260454-2026-09-26T14:50:00-Kinosal",
@@ -12365,8 +12365,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 108,
-      "available": 106
+      "capacity": 110,
+      "available": 108
     },
     {
       "id": "UIP20221470-2026-09-26T15:30:00-Storsal",
@@ -12409,8 +12409,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 286,
-      "available": 286
+      "capacity": 246,
+      "available": 246
     },
     {
       "id": "EDI20261121-2026-09-26T17:15:00-Kinosal",
@@ -12452,7 +12452,7 @@
           "url": "https://letterboxd.com/film/coyote-vs-acme/"
         },
         "tomatoes": {
-          "value": 95,
+          "value": 94,
           "url": "https://www.rottentomatoes.com/m/coyote_vs_acme"
         }
       },
@@ -12502,8 +12502,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 286,
-      "available": 286
+      "capacity": 246,
+      "available": 246
     },
     {
       "id": "EDI20261232-2026-09-26T19:45:00-Kinosal",
@@ -12531,7 +12531,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93200/purchase?kanal=dxf",
       "eventId": "93200",
       "promoterId": "202",
-      "sold": 11,
+      "sold": 14,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -12545,7 +12545,7 @@
         }
       },
       "reserved": 0,
-      "capacity": 107,
+      "capacity": 110,
       "available": 96
     },
     {
@@ -12583,13 +12583,13 @@
           "url": "https://www.imdb.com/title/tt7526136/"
         },
         "letterboxd": {
-          "value": 3.14,
+          "value": 3.2,
           "url": "https://letterboxd.com/film/heart-of-the-beast-2026/"
         }
       },
       "reserved": 0,
-      "capacity": 281,
-      "available": 276
+      "capacity": 246,
+      "available": 241
     },
     {
       "id": "UIP20221470-2026-09-27T15:00:00-Kinosal",
@@ -12676,8 +12676,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 286,
-      "available": 286
+      "capacity": 246,
+      "available": 246
     },
     {
       "id": "EDI20251555-2026-09-27T17:45:00-Kinosal",
@@ -12761,8 +12761,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 286,
-      "available": 286
+      "capacity": 246,
+      "available": 246
     },
     {
       "id": "EDI20260203-2026-09-27T20:30:00-Kinosal",
@@ -12799,7 +12799,7 @@
           "url": "https://www.imdb.com/title/tt7526136/"
         },
         "letterboxd": {
-          "value": 3.14,
+          "value": 3.2,
           "url": "https://letterboxd.com/film/heart-of-the-beast-2026/"
         }
       },
@@ -12914,7 +12914,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93271/purchase?kanal=dxf",
       "eventId": "93271",
       "promoterId": "202",
-      "sold": 1,
+      "sold": 3,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -12924,8 +12924,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 109,
-      "available": 108
+      "capacity": 108,
+      "available": 105
     },
     {
       "id": "EDI20260642-2026-09-28T20:30:00-Storsal",
@@ -12971,8 +12971,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 286,
-      "available": 286
+      "capacity": 246,
+      "available": 246
     },
     {
       "id": "UIP20221470-2026-09-29T17:00:00-Storsal",
@@ -13015,8 +13015,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 286,
-      "available": 286
+      "capacity": 246,
+      "available": 246
     },
     {
       "id": "EDI20260454-2026-09-29T17:30:00-Kinosal",
@@ -13104,8 +13104,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 286,
-      "available": 286
+      "capacity": 246,
+      "available": 246
     },
     {
       "id": "EDI20260203-2026-09-29T20:15:00-Kinosal",
@@ -13142,7 +13142,7 @@
           "url": "https://www.imdb.com/title/tt7526136/"
         },
         "letterboxd": {
-          "value": 3.14,
+          "value": 3.2,
           "url": "https://letterboxd.com/film/heart-of-the-beast-2026/"
         }
       },
@@ -13229,8 +13229,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 286,
-      "available": 286
+      "capacity": 246,
+      "available": 246
     },
     {
       "id": "EDI20251555-2026-09-30T19:30:00-Kinosal",
@@ -13271,11 +13271,136 @@
       "available": 110
     },
     {
+      "id": "EDI20260203-2026-09-30T20:15:00-Storsal",
+      "title": "Heart of the Beast",
+      "screen": "Storsal",
+      "start": "2026-09-30T20:15:00",
+      "end": "2026-09-30T22:06:00",
+      "dayKey": "2026-09-30",
+      "runningMinutes": 101,
+      "runningLabel": "1 t. 41 min.",
+      "age": "12 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Drama"
+      ],
+      "director": "David Ayer",
+      "premiere": "2026-09-25",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/f73aa5f1d8a24cb412b69b828e2f56dcd502c171-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93278/purchase?kanal=dxf",
+      "eventId": "93278",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.5,
+          "id": "tt7526136",
+          "url": "https://www.imdb.com/title/tt7526136/"
+        },
+        "letterboxd": {
+          "value": 3.2,
+          "url": "https://letterboxd.com/film/heart-of-the-beast-2026/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 246,
+      "available": 246
+    },
+    {
+      "id": "UIP20221470-2026-10-01T17:00:00-Kinosal",
+      "title": "Glemselens øy",
+      "screen": "Kinosal",
+      "start": "2026-10-01T17:00:00",
+      "end": "2026-10-01T18:59:00",
+      "dayKey": "2026-10-01",
+      "runningMinutes": 109,
+      "runningLabel": "1 t. 49 min.",
+      "age": "9 år",
+      "tags": [
+        "Norsk tale",
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "director": "Joel Crawford, Januel Mercado",
+      "premiere": "2026-09-25",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/d7f37b4dd10260c620949baf6caba8ba06beee0e-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93268/purchase?kanal=dxf",
+      "eventId": "93268",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.6,
+          "id": "tt36583977",
+          "url": "https://www.imdb.com/title/tt36583977/"
+        },
+        "letterboxd": {
+          "value": 3.81,
+          "url": "https://letterboxd.com/film/forgotten-island-2026/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "SFN20241749-2026-10-01T20:00:00-Kinosal",
+      "title": "En nasjon i sjakk",
+      "screen": "Kinosal",
+      "start": "2026-10-01T20:00:00",
+      "end": "2026-10-01T22:04:44",
+      "dayKey": "2026-10-01",
+      "runningMinutes": 115,
+      "runningLabel": "1 t. 55 min.",
+      "age": "15 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": true,
+      "genres": [
+        "Action",
+        "Thriller"
+      ],
+      "director": "John Andreas Andersen",
+      "premiere": "2026-09-11",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/ce797c664fa97646a09fdfdb807c5ec4668040af-1500x2103.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93275/purchase?kanal=dxf",
+      "eventId": "93275",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 6.1,
+          "id": "tt32375006",
+          "url": "https://www.imdb.com/title/tt32375006/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
       "id": "EDI20250794-2026-10-02T16:50:00-Kinosal",
       "title": "Sauen Shaun - Gårdens fårbannelse",
       "screen": "Kinosal",
       "start": "2026-10-02T16:50:00",
-      "end": "2026-10-02T18:31:00",
+      "end": "2026-10-02T18:21:00",
       "dayKey": "2026-10-02",
       "runningMinutes": 81,
       "runningLabel": "1 t. 21 min.",
@@ -13310,7 +13435,7 @@
           "url": "https://letterboxd.com/film/shaun-the-sheep-the-beast-of-mossy-bottom/"
         },
         "tomatoes": {
-          "value": 94,
+          "value": 92,
           "url": "https://www.rottentomatoes.com/m/shaun_the_sheep_the_beast_of_mossy_bottom"
         }
       },
@@ -13319,11 +13444,11 @@
       "available": 110
     },
     {
-      "id": "NOR20230682-2026-10-02T19:05:00-Kinosal",
+      "id": "NOR20230682-2026-10-02T19:00:00-Kinosal",
       "title": "Drapet på Benjamin Hermansen",
       "screen": "Kinosal",
-      "start": "2026-10-02T19:05:00",
-      "end": "2026-10-02T20:51:00",
+      "start": "2026-10-02T19:00:00",
+      "end": "2026-10-02T20:46:00",
       "dayKey": "2026-10-02",
       "runningMinutes": 96,
       "runningLabel": "1 t. 36 min.",
@@ -13396,11 +13521,11 @@
       "available": 246
     },
     {
-      "id": "EDI20260552-2026-10-02T21:25:00-Kinosal",
+      "id": "EDI20260552-2026-10-02T21:20:00-Kinosal",
       "title": "Verity",
       "screen": "Kinosal",
-      "start": "2026-10-02T21:25:00",
-      "end": "2026-10-02T23:35:00",
+      "start": "2026-10-02T21:20:00",
+      "end": "2026-10-02T23:30:00",
       "dayKey": "2026-10-02",
       "runningMinutes": 117,
       "runningLabel": "1 t. 57 min.",
@@ -13427,6 +13552,135 @@
       "reserved": 0,
       "capacity": 110,
       "available": 110
+    },
+    {
+      "id": "EDI20250794-2026-10-03T15:00:00-Storsal",
+      "title": "Sauen Shaun - Gårdens fårbannelse",
+      "screen": "Storsal",
+      "start": "2026-10-03T15:00:00",
+      "end": "2026-10-03T16:31:00",
+      "dayKey": "2026-10-03",
+      "runningMinutes": 81,
+      "runningLabel": "1 t. 21 min.",
+      "age": "Tillatt for alle",
+      "tags": [
+        "Norsk tale",
+        "Utekstet"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ],
+      "director": "Steve Cox, Matthew Walker",
+      "premiere": "2026-10-02",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/0690cc492885fe739c3d101a3af245ffa6db81a9-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93138/purchase?kanal=dxf",
+      "eventId": "93138",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.2,
+          "id": "tt36841161",
+          "url": "https://www.imdb.com/title/tt36841161/"
+        },
+        "letterboxd": {
+          "value": 3.57,
+          "url": "https://letterboxd.com/film/shaun-the-sheep-the-beast-of-mossy-bottom/"
+        },
+        "tomatoes": {
+          "value": 92,
+          "url": "https://www.rottentomatoes.com/m/shaun_the_sheep_the_beast_of_mossy_bottom"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
+    },
+    {
+      "id": "EDI20260454-2026-10-03T15:30:00-Kinosal",
+      "title": "Spiralis",
+      "screen": "Kinosal",
+      "start": "2026-10-03T15:30:00",
+      "end": "2026-10-03T17:19:00",
+      "dayKey": "2026-10-03",
+      "runningMinutes": 99,
+      "runningLabel": "1 t. 39 min.",
+      "age": "6 år",
+      "tags": [
+        "Norsk tale",
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Adventure",
+        "Comedy",
+        "Family"
+      ],
+      "director": "Philippe Lacheau",
+      "premiere": "2026-09-25",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/4fc4bd78240864d81b5506ccb0c7e82299b9b079-1500x2139.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93140/purchase?kanal=dxf",
+      "eventId": "93140",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 6.3,
+          "id": "tt33029380",
+          "url": "https://www.imdb.com/title/tt33029380/"
+        },
+        "letterboxd": {
+          "value": 2.68,
+          "url": "https://letterboxd.com/film/marsupilami-2025/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "WAB20240252-2026-10-03T20:00:00-Storsal",
+      "title": "Digger",
+      "screen": "Storsal",
+      "start": "2026-10-03T20:00:00",
+      "end": "2026-10-03T22:19:00",
+      "dayKey": "2026-10-03",
+      "runningMinutes": 129,
+      "runningLabel": "2 t. 9 min.",
+      "age": "9 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Comedy",
+        "Drama"
+      ],
+      "director": "Alejandro G. Iñárritu",
+      "premiere": "2026-10-02",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/e28d9ab7e9746d7d1f5e072dda56701815752570-1500x2223.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93137/purchase?kanal=dxf",
+      "eventId": "93137",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "tomatoes": {
+          "value": 27,
+          "url": "https://www.rottentomatoes.com/m/digger"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
     },
     {
       "id": "EDI20260552-2026-10-03T20:45:00-Kinosal",
@@ -13457,6 +13711,54 @@
       "sold": 0,
       "eventStatus": "ok",
       "ratings": null,
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20250794-2026-10-04T14:50:00-Kinosal",
+      "title": "Sauen Shaun - Gårdens fårbannelse",
+      "screen": "Kinosal",
+      "start": "2026-10-04T14:50:00",
+      "end": "2026-10-04T16:21:00",
+      "dayKey": "2026-10-04",
+      "runningMinutes": 81,
+      "runningLabel": "1 t. 21 min.",
+      "age": "Tillatt for alle",
+      "tags": [
+        "Norsk tale",
+        "Utekstet"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ],
+      "director": "Steve Cox, Matthew Walker",
+      "premiere": "2026-10-02",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/0690cc492885fe739c3d101a3af245ffa6db81a9-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93243/purchase?kanal=dxf",
+      "eventId": "93243",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.2,
+          "id": "tt36841161",
+          "url": "https://www.imdb.com/title/tt36841161/"
+        },
+        "letterboxd": {
+          "value": 3.57,
+          "url": "https://letterboxd.com/film/shaun-the-sheep-the-beast-of-mossy-bottom/"
+        },
+        "tomatoes": {
+          "value": 92,
+          "url": "https://www.rottentomatoes.com/m/shaun_the_sheep_the_beast_of_mossy_bottom"
+        }
+      },
       "reserved": 0,
       "capacity": 110,
       "available": 110
