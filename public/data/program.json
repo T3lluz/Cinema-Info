@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-24T01:22:24.687Z",
+  "updatedAt": "2026-09-24T15:48:01.921Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -11082,7 +11082,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8,
+          "value": 8.2,
           "id": "tt39945194",
           "url": "https://www.imdb.com/title/tt39945194/"
         }
@@ -11162,7 +11162,7 @@
           "url": "https://www.imdb.com/title/tt33305867/"
         },
         "letterboxd": {
-          "value": 2.41,
+          "value": 2.4,
           "url": "https://letterboxd.com/film/spa-weekend-2026/"
         },
         "tomatoes": {
@@ -11288,7 +11288,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8,
+          "value": 8.2,
           "id": "tt39945194",
           "url": "https://www.imdb.com/title/tt39945194/"
         }
@@ -11330,7 +11330,7 @@
           "url": "https://www.imdb.com/title/tt33305867/"
         },
         "letterboxd": {
-          "value": 2.41,
+          "value": 2.4,
           "url": "https://letterboxd.com/film/spa-weekend-2026/"
         },
         "tomatoes": {
@@ -11418,7 +11418,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8,
+          "value": 8.2,
           "id": "tt39945194",
           "url": "https://www.imdb.com/title/tt39945194/"
         }
@@ -11546,7 +11546,7 @@
           "url": "https://www.imdb.com/title/tt33305867/"
         },
         "letterboxd": {
-          "value": 2.41,
+          "value": 2.4,
           "url": "https://letterboxd.com/film/spa-weekend-2026/"
         },
         "tomatoes": {
@@ -11625,7 +11625,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8,
+          "value": 8.2,
           "id": "tt39945194",
           "url": "https://www.imdb.com/title/tt39945194/"
         }
@@ -11667,7 +11667,7 @@
           "url": "https://www.imdb.com/title/tt33305867/"
         },
         "letterboxd": {
-          "value": 2.41,
+          "value": 2.4,
           "url": "https://letterboxd.com/film/spa-weekend-2026/"
         },
         "tomatoes": {
@@ -11793,7 +11793,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8,
+          "value": 8.2,
           "id": "tt39945194",
           "url": "https://www.imdb.com/title/tt39945194/"
         }
@@ -11921,7 +11921,7 @@
           "url": "https://www.imdb.com/title/tt33305867/"
         },
         "letterboxd": {
-          "value": 2.41,
+          "value": 2.4,
           "url": "https://letterboxd.com/film/spa-weekend-2026/"
         },
         "tomatoes": {
@@ -11958,18 +11958,18 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93217/purchase?kanal=dxf",
       "eventId": "93217",
       "promoterId": "202",
-      "sold": 2,
+      "sold": 16,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8,
+          "value": 8.2,
           "id": "tt39945194",
           "url": "https://www.imdb.com/title/tt39945194/"
         }
       },
       "reserved": 0,
-      "capacity": 108,
-      "available": 106
+      "capacity": 110,
+      "available": 94
     },
     {
       "id": "EDI20251443-2026-09-24T18:00:00-Storsal",
@@ -12004,7 +12004,7 @@
           "url": "https://www.imdb.com/title/tt33305867/"
         },
         "letterboxd": {
-          "value": 2.41,
+          "value": 2.4,
           "url": "https://letterboxd.com/film/spa-weekend-2026/"
         },
         "tomatoes": {
@@ -12051,8 +12051,8 @@
         }
       },
       "reserved": 2,
-      "capacity": 108,
-      "available": 104
+      "capacity": 110,
+      "available": 106
     },
     {
       "id": "EDI20260642-2026-09-24T20:30:00-Storsal",
@@ -12080,7 +12080,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93238/purchase?kanal=dxf",
       "eventId": "93238",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 3,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -12099,7 +12099,7 @@
       },
       "reserved": 0,
       "capacity": 246,
-      "available": 246
+      "available": 243
     },
     {
       "id": "EDI20260454-2026-09-25T16:50:00-Kinosal",
@@ -12222,7 +12222,7 @@
           "url": "https://www.imdb.com/title/tt33305867/"
         },
         "letterboxd": {
-          "value": 2.41,
+          "value": 2.4,
           "url": "https://letterboxd.com/film/spa-weekend-2026/"
         },
         "tomatoes": {
@@ -12269,7 +12269,7 @@
           "url": "https://www.imdb.com/title/tt7526136/"
         },
         "letterboxd": {
-          "value": 3.2,
+          "value": 3.21,
           "url": "https://letterboxd.com/film/heart-of-the-beast-2026/"
         }
       },
@@ -12303,7 +12303,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93178/purchase?kanal=dxf",
       "eventId": "93178",
       "promoterId": "202",
-      "sold": 5,
+      "sold": 7,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -12321,8 +12321,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 105
+      "capacity": 108,
+      "available": 101
     },
     {
       "id": "EDI20260454-2026-09-26T14:50:00-Kinosal",
@@ -12493,7 +12493,7 @@
           "url": "https://www.imdb.com/title/tt33305867/"
         },
         "letterboxd": {
-          "value": 2.41,
+          "value": 2.4,
           "url": "https://letterboxd.com/film/spa-weekend-2026/"
         },
         "tomatoes": {
@@ -12531,7 +12531,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93200/purchase?kanal=dxf",
       "eventId": "93200",
       "promoterId": "202",
-      "sold": 14,
+      "sold": 19,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -12545,8 +12545,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 96
+      "capacity": 109,
+      "available": 90
     },
     {
       "id": "EDI20260203-2026-09-26T21:00:00-Storsal",
@@ -12583,7 +12583,7 @@
           "url": "https://www.imdb.com/title/tt7526136/"
         },
         "letterboxd": {
-          "value": 3.2,
+          "value": 3.21,
           "url": "https://letterboxd.com/film/heart-of-the-beast-2026/"
         }
       },
@@ -12799,7 +12799,7 @@
           "url": "https://www.imdb.com/title/tt7526136/"
         },
         "letterboxd": {
-          "value": 3.2,
+          "value": 3.21,
           "url": "https://letterboxd.com/film/heart-of-the-beast-2026/"
         }
       },
@@ -12834,7 +12834,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93192/purchase?kanal=dxf",
       "eventId": "93192",
       "promoterId": "202",
-      "sold": 2,
+      "sold": 0,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -12848,8 +12848,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 108,
-      "available": 106
+      "capacity": 110,
+      "available": 110
     },
     {
       "id": "EDI20251817-2026-09-28T17:30:00-Storsal",
@@ -12880,14 +12880,14 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8,
+          "value": 8.2,
           "id": "tt39945194",
           "url": "https://www.imdb.com/title/tt39945194/"
         }
       },
       "reserved": 0,
-      "capacity": 241,
-      "available": 236
+      "capacity": 246,
+      "available": 241
     },
     {
       "id": "SFN20241749-2026-09-28T19:45:00-Kinosal",
@@ -13095,7 +13095,7 @@
           "url": "https://www.imdb.com/title/tt33305867/"
         },
         "letterboxd": {
-          "value": 2.41,
+          "value": 2.4,
           "url": "https://letterboxd.com/film/spa-weekend-2026/"
         },
         "tomatoes": {
@@ -13142,7 +13142,7 @@
           "url": "https://www.imdb.com/title/tt7526136/"
         },
         "letterboxd": {
-          "value": 3.2,
+          "value": 3.21,
           "url": "https://letterboxd.com/film/heart-of-the-beast-2026/"
         }
       },
@@ -13179,7 +13179,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8,
+          "value": 8.2,
           "id": "tt39945194",
           "url": "https://www.imdb.com/title/tt39945194/"
         }
@@ -13305,7 +13305,7 @@
           "url": "https://www.imdb.com/title/tt7526136/"
         },
         "letterboxd": {
-          "value": 3.2,
+          "value": 3.21,
           "url": "https://letterboxd.com/film/heart-of-the-beast-2026/"
         }
       },
@@ -13340,7 +13340,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93268/purchase?kanal=dxf",
       "eventId": "93268",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -13355,7 +13355,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 110
+      "available": 108
     },
     {
       "id": "SFN20241749-2026-10-01T20:00:00-Kinosal",
@@ -13435,7 +13435,7 @@
           "url": "https://letterboxd.com/film/shaun-the-sheep-the-beast-of-mossy-bottom/"
         },
         "tomatoes": {
-          "value": 92,
+          "value": 93,
           "url": "https://www.rottentomatoes.com/m/shaun_the_sheep_the_beast_of_mossy_bottom"
         }
       },
@@ -13470,7 +13470,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93262/purchase?kanal=dxf",
       "eventId": "93262",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -13480,8 +13480,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 110
+      "capacity": 108,
+      "available": 106
     },
     {
       "id": "WAB20240252-2026-10-02T20:00:00-Storsal",
@@ -13593,7 +13593,7 @@
           "url": "https://letterboxd.com/film/shaun-the-sheep-the-beast-of-mossy-bottom/"
         },
         "tomatoes": {
-          "value": 92,
+          "value": 93,
           "url": "https://www.rottentomatoes.com/m/shaun_the_sheep_the_beast_of_mossy_bottom"
         }
       },
@@ -13755,7 +13755,7 @@
           "url": "https://letterboxd.com/film/shaun-the-sheep-the-beast-of-mossy-bottom/"
         },
         "tomatoes": {
-          "value": 92,
+          "value": 93,
           "url": "https://www.rottentomatoes.com/m/shaun_the_sheep_the_beast_of_mossy_bottom"
         }
       },
@@ -13833,7 +13833,7 @@
           "url": "https://www.imdb.com/title/tt33305867/"
         },
         "letterboxd": {
-          "value": 2.41,
+          "value": 2.4,
           "url": "https://letterboxd.com/film/spa-weekend-2026/"
         },
         "tomatoes": {
@@ -13904,12 +13904,12 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92986/purchase?kanal=dxf",
       "eventId": "92986",
       "promoterId": "202",
-      "sold": 3,
+      "sold": 6,
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
       "capacity": 110,
-      "available": 107
+      "available": 104
     },
     {
       "id": "EDI20251026-2026-12-15T20:00:00-Storsal",
