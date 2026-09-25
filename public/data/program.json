@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-24T15:48:01.921Z",
+  "updatedAt": "2026-09-25T01:28:00.849Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -10140,7 +10140,7 @@
           "url": "https://www.imdb.com/title/tt1756855/"
         },
         "letterboxd": {
-          "value": 3.85,
+          "value": 3.84,
           "url": "https://letterboxd.com/film/coyote-vs-acme/"
         },
         "tomatoes": {
@@ -10358,7 +10358,7 @@
           "url": "https://www.imdb.com/title/tt1756855/"
         },
         "letterboxd": {
-          "value": 3.85,
+          "value": 3.84,
           "url": "https://letterboxd.com/film/coyote-vs-acme/"
         },
         "tomatoes": {
@@ -10570,7 +10570,7 @@
           "url": "https://www.imdb.com/title/tt1756855/"
         },
         "letterboxd": {
-          "value": 3.85,
+          "value": 3.84,
           "url": "https://letterboxd.com/film/coyote-vs-acme/"
         },
         "tomatoes": {
@@ -10779,7 +10779,7 @@
           "url": "https://www.imdb.com/title/tt1756855/"
         },
         "letterboxd": {
-          "value": 3.85,
+          "value": 3.84,
           "url": "https://letterboxd.com/film/coyote-vs-acme/"
         },
         "tomatoes": {
@@ -10912,7 +10912,7 @@
           "url": "https://www.imdb.com/title/tt1756855/"
         },
         "letterboxd": {
-          "value": 3.85,
+          "value": 3.84,
           "url": "https://letterboxd.com/film/coyote-vs-acme/"
         },
         "tomatoes": {
@@ -11247,7 +11247,7 @@
           "url": "https://www.imdb.com/title/tt35538033/"
         },
         "letterboxd": {
-          "value": 3.81,
+          "value": 3.8,
           "url": "https://letterboxd.com/film/resident-evil-2026/"
         },
         "tomatoes": {
@@ -11377,7 +11377,7 @@
           "url": "https://www.imdb.com/title/tt35538033/"
         },
         "letterboxd": {
-          "value": 3.81,
+          "value": 3.8,
           "url": "https://letterboxd.com/film/resident-evil-2026/"
         },
         "tomatoes": {
@@ -11463,7 +11463,7 @@
           "url": "https://www.imdb.com/title/tt1756855/"
         },
         "letterboxd": {
-          "value": 3.85,
+          "value": 3.84,
           "url": "https://letterboxd.com/film/coyote-vs-acme/"
         },
         "tomatoes": {
@@ -11714,7 +11714,7 @@
           "url": "https://www.imdb.com/title/tt35538033/"
         },
         "letterboxd": {
-          "value": 3.81,
+          "value": 3.8,
           "url": "https://letterboxd.com/film/resident-evil-2026/"
         },
         "tomatoes": {
@@ -11838,7 +11838,7 @@
           "url": "https://www.imdb.com/title/tt1756855/"
         },
         "letterboxd": {
-          "value": 3.85,
+          "value": 3.84,
           "url": "https://letterboxd.com/film/coyote-vs-acme/"
         },
         "tomatoes": {
@@ -12041,7 +12041,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93236/purchase?kanal=dxf",
       "eventId": "93236",
       "promoterId": "202",
-      "sold": 2,
+      "sold": 4,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -12050,7 +12050,7 @@
           "url": "https://www.imdb.com/title/tt32375006/"
         }
       },
-      "reserved": 2,
+      "reserved": 0,
       "capacity": 110,
       "available": 106
     },
@@ -12089,7 +12089,7 @@
           "url": "https://www.imdb.com/title/tt35538033/"
         },
         "letterboxd": {
-          "value": 3.81,
+          "value": 3.8,
           "url": "https://letterboxd.com/film/resident-evil-2026/"
         },
         "tomatoes": {
@@ -12269,7 +12269,7 @@
           "url": "https://www.imdb.com/title/tt7526136/"
         },
         "letterboxd": {
-          "value": 3.21,
+          "value": 3.2,
           "url": "https://letterboxd.com/film/heart-of-the-beast-2026/"
         }
       },
@@ -12303,7 +12303,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93178/purchase?kanal=dxf",
       "eventId": "93178",
       "promoterId": "202",
-      "sold": 7,
+      "sold": 8,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -12312,7 +12312,7 @@
           "url": "https://www.imdb.com/title/tt35538033/"
         },
         "letterboxd": {
-          "value": 3.81,
+          "value": 3.8,
           "url": "https://letterboxd.com/film/resident-evil-2026/"
         },
         "tomatoes": {
@@ -12321,7 +12321,7 @@
         }
       },
       "reserved": 0,
-      "capacity": 108,
+      "capacity": 109,
       "available": 101
     },
     {
@@ -12439,7 +12439,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93255/purchase?kanal=dxf",
       "eventId": "93255",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -12448,7 +12448,7 @@
           "url": "https://www.imdb.com/title/tt1756855/"
         },
         "letterboxd": {
-          "value": 3.85,
+          "value": 3.84,
           "url": "https://letterboxd.com/film/coyote-vs-acme/"
         },
         "tomatoes": {
@@ -12458,7 +12458,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 110
+      "available": 108
     },
     {
       "id": "EDI20251443-2026-09-26T18:30:00-Storsal",
@@ -12531,7 +12531,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93200/purchase?kanal=dxf",
       "eventId": "93200",
       "promoterId": "202",
-      "sold": 19,
+      "sold": 23,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -12545,8 +12545,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 109,
-      "available": 90
+      "capacity": 106,
+      "available": 83
     },
     {
       "id": "EDI20260203-2026-09-26T21:00:00-Storsal",
@@ -12583,7 +12583,7 @@
           "url": "https://www.imdb.com/title/tt7526136/"
         },
         "letterboxd": {
-          "value": 3.21,
+          "value": 3.2,
           "url": "https://letterboxd.com/film/heart-of-the-beast-2026/"
         }
       },
@@ -12752,7 +12752,7 @@
           "url": "https://www.imdb.com/title/tt35538033/"
         },
         "letterboxd": {
-          "value": 3.81,
+          "value": 3.8,
           "url": "https://letterboxd.com/film/resident-evil-2026/"
         },
         "tomatoes": {
@@ -12799,7 +12799,7 @@
           "url": "https://www.imdb.com/title/tt7526136/"
         },
         "letterboxd": {
-          "value": 3.21,
+          "value": 3.2,
           "url": "https://letterboxd.com/film/heart-of-the-beast-2026/"
         }
       },
@@ -12924,8 +12924,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 108,
-      "available": 105
+      "capacity": 110,
+      "available": 107
     },
     {
       "id": "EDI20260642-2026-09-28T20:30:00-Storsal",
@@ -12962,7 +12962,7 @@
           "url": "https://www.imdb.com/title/tt35538033/"
         },
         "letterboxd": {
-          "value": 3.81,
+          "value": 3.8,
           "url": "https://letterboxd.com/film/resident-evil-2026/"
         },
         "tomatoes": {
@@ -13142,7 +13142,7 @@
           "url": "https://www.imdb.com/title/tt7526136/"
         },
         "letterboxd": {
-          "value": 3.21,
+          "value": 3.2,
           "url": "https://letterboxd.com/film/heart-of-the-beast-2026/"
         }
       },
@@ -13305,7 +13305,7 @@
           "url": "https://www.imdb.com/title/tt7526136/"
         },
         "letterboxd": {
-          "value": 3.21,
+          "value": 3.2,
           "url": "https://letterboxd.com/film/heart-of-the-beast-2026/"
         }
       },
@@ -13435,7 +13435,7 @@
           "url": "https://letterboxd.com/film/shaun-the-sheep-the-beast-of-mossy-bottom/"
         },
         "tomatoes": {
-          "value": 93,
+          "value": 92,
           "url": "https://www.rottentomatoes.com/m/shaun_the_sheep_the_beast_of_mossy_bottom"
         }
       },
@@ -13474,7 +13474,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.5,
+          "value": 6.4,
           "id": "tt36726913",
           "url": "https://www.imdb.com/title/tt36726913/"
         }
@@ -13546,12 +13546,12 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93089/purchase?kanal=dxf",
       "eventId": "93089",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 4,
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
       "capacity": 110,
-      "available": 110
+      "available": 106
     },
     {
       "id": "EDI20250794-2026-10-03T15:00:00-Storsal",
@@ -13593,7 +13593,7 @@
           "url": "https://letterboxd.com/film/shaun-the-sheep-the-beast-of-mossy-bottom/"
         },
         "tomatoes": {
-          "value": 93,
+          "value": 92,
           "url": "https://www.rottentomatoes.com/m/shaun_the_sheep_the_beast_of_mossy_bottom"
         }
       },
@@ -13644,6 +13644,50 @@
       "reserved": 0,
       "capacity": 110,
       "available": 110
+    },
+    {
+      "id": "UIP20221470-2026-10-03T17:15:00-Storsal",
+      "title": "Glemselens øy",
+      "screen": "Storsal",
+      "start": "2026-10-03T17:15:00",
+      "end": "2026-10-03T19:14:00",
+      "dayKey": "2026-10-03",
+      "runningMinutes": 109,
+      "runningLabel": "1 t. 49 min.",
+      "age": "9 år",
+      "tags": [
+        "Norsk tale",
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "director": "Joel Crawford, Januel Mercado",
+      "premiere": "2026-09-25",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/d7f37b4dd10260c620949baf6caba8ba06beee0e-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93177/purchase?kanal=dxf",
+      "eventId": "93177",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.6,
+          "id": "tt36583977",
+          "url": "https://www.imdb.com/title/tt36583977/"
+        },
+        "letterboxd": {
+          "value": 3.81,
+          "url": "https://letterboxd.com/film/forgotten-island-2026/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
     },
     {
       "id": "WAB20240252-2026-10-03T20:00:00-Storsal",
@@ -13755,7 +13799,7 @@
           "url": "https://letterboxd.com/film/shaun-the-sheep-the-beast-of-mossy-bottom/"
         },
         "tomatoes": {
-          "value": 93,
+          "value": 92,
           "url": "https://www.rottentomatoes.com/m/shaun_the_sheep_the_beast_of_mossy_bottom"
         }
       },
