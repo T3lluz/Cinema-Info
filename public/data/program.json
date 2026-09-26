@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-26T01:31:06.213Z",
+  "updatedAt": "2026-09-26T14:57:26.262Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -11242,7 +11242,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.7,
+          "value": 7.6,
           "id": "tt35538033",
           "url": "https://www.imdb.com/title/tt35538033/"
         },
@@ -11372,7 +11372,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.7,
+          "value": 7.6,
           "id": "tt35538033",
           "url": "https://www.imdb.com/title/tt35538033/"
         },
@@ -11709,7 +11709,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.7,
+          "value": 7.6,
           "id": "tt35538033",
           "url": "https://www.imdb.com/title/tt35538033/"
         },
@@ -12084,7 +12084,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.7,
+          "value": 7.6,
           "id": "tt35538033",
           "url": "https://www.imdb.com/title/tt35538033/"
         },
@@ -12181,7 +12181,7 @@
           "url": "https://www.imdb.com/title/tt36583977/"
         },
         "letterboxd": {
-          "value": 3.86,
+          "value": 3.88,
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         }
       },
@@ -12269,11 +12269,11 @@
           "url": "https://www.imdb.com/title/tt7526136/"
         },
         "letterboxd": {
-          "value": 3.25,
+          "value": 3.27,
           "url": "https://letterboxd.com/film/heart-of-the-beast-2026/"
         },
         "tomatoes": {
-          "value": 96,
+          "value": 95,
           "url": "https://www.rottentomatoes.com/m/heart_of_the_beast"
         }
       },
@@ -12311,7 +12311,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.7,
+          "value": 7.6,
           "id": "tt35538033",
           "url": "https://www.imdb.com/title/tt35538033/"
         },
@@ -12355,7 +12355,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93203/purchase?kanal=dxf",
       "eventId": "93203",
       "promoterId": "202",
-      "sold": 9,
+      "sold": 19,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -12370,7 +12370,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 101
+      "available": 91
     },
     {
       "id": "UIP20221470-2026-09-26T15:30:00-Storsal",
@@ -12399,7 +12399,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93201/purchase?kanal=dxf",
       "eventId": "93201",
       "promoterId": "202",
-      "sold": 7,
+      "sold": 21,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -12408,13 +12408,13 @@
           "url": "https://www.imdb.com/title/tt36583977/"
         },
         "letterboxd": {
-          "value": 3.86,
+          "value": 3.88,
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         }
       },
       "reserved": 0,
-      "capacity": 243,
-      "available": 236
+      "capacity": 246,
+      "available": 225
     },
     {
       "id": "EDI20261121-2026-09-26T17:15:00-Kinosal",
@@ -12443,7 +12443,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93255/purchase?kanal=dxf",
       "eventId": "93255",
       "promoterId": "202",
-      "sold": 2,
+      "sold": 6,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -12460,9 +12460,9 @@
           "url": "https://www.rottentomatoes.com/m/coyote_vs_acme"
         }
       },
-      "reserved": 0,
+      "reserved": 1,
       "capacity": 110,
-      "available": 108
+      "available": 103
     },
     {
       "id": "EDI20251443-2026-09-26T18:30:00-Storsal",
@@ -12535,7 +12535,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93200/purchase?kanal=dxf",
       "eventId": "93200",
       "promoterId": "202",
-      "sold": 28,
+      "sold": 38,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -12550,7 +12550,7 @@
       },
       "reserved": 0,
       "capacity": 108,
-      "available": 80
+      "available": 70
     },
     {
       "id": "EDI20260203-2026-09-26T21:00:00-Storsal",
@@ -12587,11 +12587,11 @@
           "url": "https://www.imdb.com/title/tt7526136/"
         },
         "letterboxd": {
-          "value": 3.25,
+          "value": 3.27,
           "url": "https://letterboxd.com/film/heart-of-the-beast-2026/"
         },
         "tomatoes": {
-          "value": 96,
+          "value": 95,
           "url": "https://www.rottentomatoes.com/m/heart_of_the_beast"
         }
       },
@@ -12635,7 +12635,7 @@
           "url": "https://www.imdb.com/title/tt36583977/"
         },
         "letterboxd": {
-          "value": 3.86,
+          "value": 3.88,
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         }
       },
@@ -12755,7 +12755,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.7,
+          "value": 7.6,
           "id": "tt35538033",
           "url": "https://www.imdb.com/title/tt35538033/"
         },
@@ -12807,11 +12807,11 @@
           "url": "https://www.imdb.com/title/tt7526136/"
         },
         "letterboxd": {
-          "value": 3.25,
+          "value": 3.27,
           "url": "https://letterboxd.com/film/heart-of-the-beast-2026/"
         },
         "tomatoes": {
-          "value": 96,
+          "value": 95,
           "url": "https://www.rottentomatoes.com/m/heart_of_the_beast"
         }
       },
@@ -12855,7 +12855,7 @@
           "url": "https://www.imdb.com/title/tt36583977/"
         },
         "letterboxd": {
-          "value": 3.86,
+          "value": 3.88,
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         }
       },
@@ -12969,7 +12969,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.7,
+          "value": 7.6,
           "id": "tt35538033",
           "url": "https://www.imdb.com/title/tt35538033/"
         },
@@ -13022,7 +13022,7 @@
           "url": "https://www.imdb.com/title/tt36583977/"
         },
         "letterboxd": {
-          "value": 3.86,
+          "value": 3.88,
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         }
       },
@@ -13154,11 +13154,11 @@
           "url": "https://www.imdb.com/title/tt7526136/"
         },
         "letterboxd": {
-          "value": 3.25,
+          "value": 3.27,
           "url": "https://letterboxd.com/film/heart-of-the-beast-2026/"
         },
         "tomatoes": {
-          "value": 96,
+          "value": 95,
           "url": "https://www.rottentomatoes.com/m/heart_of_the_beast"
         }
       },
@@ -13321,11 +13321,11 @@
           "url": "https://www.imdb.com/title/tt7526136/"
         },
         "letterboxd": {
-          "value": 3.25,
+          "value": 3.27,
           "url": "https://letterboxd.com/film/heart-of-the-beast-2026/"
         },
         "tomatoes": {
-          "value": 96,
+          "value": 95,
           "url": "https://www.rottentomatoes.com/m/heart_of_the_beast"
         }
       },
@@ -13369,7 +13369,7 @@
           "url": "https://www.imdb.com/title/tt36583977/"
         },
         "letterboxd": {
-          "value": 3.86,
+          "value": 3.88,
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         }
       },
@@ -13455,7 +13455,7 @@
           "url": "https://letterboxd.com/film/shaun-the-sheep-the-beast-of-mossy-bottom/"
         },
         "tomatoes": {
-          "value": 91,
+          "value": 92,
           "url": "https://www.rottentomatoes.com/m/shaun_the_sheep_the_beast_of_mossy_bottom"
         }
       },
@@ -13490,7 +13490,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93262/purchase?kanal=dxf",
       "eventId": "93262",
       "promoterId": "202",
-      "sold": 2,
+      "sold": 4,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -13500,8 +13500,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 108
+      "capacity": 108,
+      "available": 104
     },
     {
       "id": "WAB20240252-2026-10-02T20:00:00-Storsal",
@@ -13613,7 +13613,7 @@
           "url": "https://letterboxd.com/film/shaun-the-sheep-the-beast-of-mossy-bottom/"
         },
         "tomatoes": {
-          "value": 91,
+          "value": 92,
           "url": "https://www.rottentomatoes.com/m/shaun_the_sheep_the_beast_of_mossy_bottom"
         }
       },
@@ -13701,7 +13701,7 @@
           "url": "https://www.imdb.com/title/tt36583977/"
         },
         "letterboxd": {
-          "value": 3.86,
+          "value": 3.88,
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         }
       },
@@ -13819,7 +13819,7 @@
           "url": "https://letterboxd.com/film/shaun-the-sheep-the-beast-of-mossy-bottom/"
         },
         "tomatoes": {
-          "value": 91,
+          "value": 92,
           "url": "https://www.rottentomatoes.com/m/shaun_the_sheep_the_beast_of_mossy_bottom"
         }
       },
@@ -13935,12 +13935,12 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92987/purchase?kanal=dxf",
       "eventId": "92987",
       "promoterId": "202",
-      "sold": 17,
+      "sold": 19,
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
-      "capacity": 110,
-      "available": 93
+      "capacity": 108,
+      "available": 89
     },
     {
       "id": "EDI20250183-2026-10-20T19:30:00-Kinosal",
