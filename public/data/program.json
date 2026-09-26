@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-25T15:47:48.767Z",
+  "updatedAt": "2026-09-26T01:31:06.213Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -11166,7 +11166,7 @@
           "url": "https://letterboxd.com/film/spa-weekend-2026/"
         },
         "tomatoes": {
-          "value": 73,
+          "value": 74,
           "url": "https://www.rottentomatoes.com/m/spa_weekend"
         }
       },
@@ -11334,7 +11334,7 @@
           "url": "https://letterboxd.com/film/spa-weekend-2026/"
         },
         "tomatoes": {
-          "value": 73,
+          "value": 74,
           "url": "https://www.rottentomatoes.com/m/spa_weekend"
         }
       },
@@ -11550,7 +11550,7 @@
           "url": "https://letterboxd.com/film/spa-weekend-2026/"
         },
         "tomatoes": {
-          "value": 73,
+          "value": 74,
           "url": "https://www.rottentomatoes.com/m/spa_weekend"
         }
       },
@@ -11671,7 +11671,7 @@
           "url": "https://letterboxd.com/film/spa-weekend-2026/"
         },
         "tomatoes": {
-          "value": 73,
+          "value": 74,
           "url": "https://www.rottentomatoes.com/m/spa_weekend"
         }
       },
@@ -11925,7 +11925,7 @@
           "url": "https://letterboxd.com/film/spa-weekend-2026/"
         },
         "tomatoes": {
-          "value": 73,
+          "value": 74,
           "url": "https://www.rottentomatoes.com/m/spa_weekend"
         }
       },
@@ -12008,7 +12008,7 @@
           "url": "https://letterboxd.com/film/spa-weekend-2026/"
         },
         "tomatoes": {
-          "value": 73,
+          "value": 74,
           "url": "https://www.rottentomatoes.com/m/spa_weekend"
         }
       },
@@ -12176,12 +12176,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.6,
+          "value": 7.7,
           "id": "tt36583977",
           "url": "https://www.imdb.com/title/tt36583977/"
         },
         "letterboxd": {
-          "value": 3.85,
+          "value": 3.86,
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         }
       },
@@ -12226,13 +12226,13 @@
           "url": "https://letterboxd.com/film/spa-weekend-2026/"
         },
         "tomatoes": {
-          "value": 73,
+          "value": 74,
           "url": "https://www.rottentomatoes.com/m/spa_weekend"
         }
       },
       "reserved": 0,
-      "capacity": 107,
-      "available": 101
+      "capacity": 110,
+      "available": 104
     },
     {
       "id": "EDI20260203-2026-09-25T20:30:00-Storsal",
@@ -12260,7 +12260,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93143/purchase?kanal=dxf",
       "eventId": "93143",
       "promoterId": "202",
-      "sold": 18,
+      "sold": 20,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -12269,7 +12269,7 @@
           "url": "https://www.imdb.com/title/tt7526136/"
         },
         "letterboxd": {
-          "value": 3.24,
+          "value": 3.25,
           "url": "https://letterboxd.com/film/heart-of-the-beast-2026/"
         },
         "tomatoes": {
@@ -12278,8 +12278,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 237,
-      "available": 219
+      "capacity": 246,
+      "available": 226
     },
     {
       "id": "EDI20260642-2026-09-25T21:45:00-Kinosal",
@@ -12307,7 +12307,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93178/purchase?kanal=dxf",
       "eventId": "93178",
       "promoterId": "202",
-      "sold": 17,
+      "sold": 23,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -12325,8 +12325,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 109,
-      "available": 92
+      "capacity": 110,
+      "available": 87
     },
     {
       "id": "EDI20260454-2026-09-26T14:50:00-Kinosal",
@@ -12351,11 +12351,11 @@
       ],
       "director": "Philippe Lacheau",
       "premiere": "2026-09-25",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/4fc4bd78240864d81b5506ccb0c7e82299b9b079-1500x2139.webp?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/9f1cf85fb3bc235496b1c8317182029eea2fdc02-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93203/purchase?kanal=dxf",
       "eventId": "93203",
       "promoterId": "202",
-      "sold": 2,
+      "sold": 9,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -12370,7 +12370,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 108
+      "available": 101
     },
     {
       "id": "UIP20221470-2026-09-26T15:30:00-Storsal",
@@ -12399,22 +12399,22 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93201/purchase?kanal=dxf",
       "eventId": "93201",
       "promoterId": "202",
-      "sold": 4,
+      "sold": 7,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.6,
+          "value": 7.7,
           "id": "tt36583977",
           "url": "https://www.imdb.com/title/tt36583977/"
         },
         "letterboxd": {
-          "value": 3.85,
+          "value": 3.86,
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         }
       },
       "reserved": 0,
-      "capacity": 242,
-      "available": 238
+      "capacity": 243,
+      "available": 236
     },
     {
       "id": "EDI20261121-2026-09-26T17:15:00-Kinosal",
@@ -12501,7 +12501,7 @@
           "url": "https://letterboxd.com/film/spa-weekend-2026/"
         },
         "tomatoes": {
-          "value": 73,
+          "value": 74,
           "url": "https://www.rottentomatoes.com/m/spa_weekend"
         }
       },
@@ -12535,7 +12535,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93200/purchase?kanal=dxf",
       "eventId": "93200",
       "promoterId": "202",
-      "sold": 25,
+      "sold": 28,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -12550,7 +12550,7 @@
       },
       "reserved": 0,
       "capacity": 108,
-      "available": 83
+      "available": 80
     },
     {
       "id": "EDI20260203-2026-09-26T21:00:00-Storsal",
@@ -12587,7 +12587,7 @@
           "url": "https://www.imdb.com/title/tt7526136/"
         },
         "letterboxd": {
-          "value": 3.24,
+          "value": 3.25,
           "url": "https://letterboxd.com/film/heart-of-the-beast-2026/"
         },
         "tomatoes": {
@@ -12630,12 +12630,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.6,
+          "value": 7.7,
           "id": "tt36583977",
           "url": "https://www.imdb.com/title/tt36583977/"
         },
         "letterboxd": {
-          "value": 3.85,
+          "value": 3.86,
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         }
       },
@@ -12666,7 +12666,7 @@
       ],
       "director": "Philippe Lacheau",
       "premiere": "2026-09-25",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/4fc4bd78240864d81b5506ccb0c7e82299b9b079-1500x2139.webp?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/9f1cf85fb3bc235496b1c8317182029eea2fdc02-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93224/purchase?kanal=dxf",
       "eventId": "93224",
       "promoterId": "202",
@@ -12807,7 +12807,7 @@
           "url": "https://www.imdb.com/title/tt7526136/"
         },
         "letterboxd": {
-          "value": 3.24,
+          "value": 3.25,
           "url": "https://letterboxd.com/film/heart-of-the-beast-2026/"
         },
         "tomatoes": {
@@ -12850,12 +12850,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.6,
+          "value": 7.7,
           "id": "tt36583977",
           "url": "https://www.imdb.com/title/tt36583977/"
         },
         "letterboxd": {
-          "value": 3.85,
+          "value": 3.86,
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         }
       },
@@ -13013,22 +13013,22 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93248/purchase?kanal=dxf",
       "eventId": "93248",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 3,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.6,
+          "value": 7.7,
           "id": "tt36583977",
           "url": "https://www.imdb.com/title/tt36583977/"
         },
         "letterboxd": {
-          "value": 3.85,
+          "value": 3.86,
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         }
       },
       "reserved": 0,
-      "capacity": 246,
-      "available": 246
+      "capacity": 243,
+      "available": 240
     },
     {
       "id": "EDI20260454-2026-09-29T17:30:00-Kinosal",
@@ -13053,7 +13053,7 @@
       ],
       "director": "Philippe Lacheau",
       "premiere": "2026-09-25",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/4fc4bd78240864d81b5506ccb0c7e82299b9b079-1500x2139.webp?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/9f1cf85fb3bc235496b1c8317182029eea2fdc02-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93249/purchase?kanal=dxf",
       "eventId": "93249",
       "promoterId": "202",
@@ -13111,7 +13111,7 @@
           "url": "https://letterboxd.com/film/spa-weekend-2026/"
         },
         "tomatoes": {
-          "value": 73,
+          "value": 74,
           "url": "https://www.rottentomatoes.com/m/spa_weekend"
         }
       },
@@ -13154,7 +13154,7 @@
           "url": "https://www.imdb.com/title/tt7526136/"
         },
         "letterboxd": {
-          "value": 3.24,
+          "value": 3.25,
           "url": "https://letterboxd.com/film/heart-of-the-beast-2026/"
         },
         "tomatoes": {
@@ -13227,7 +13227,7 @@
       ],
       "director": "Philippe Lacheau",
       "premiere": "2026-09-25",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/4fc4bd78240864d81b5506ccb0c7e82299b9b079-1500x2139.webp?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/9f1cf85fb3bc235496b1c8317182029eea2fdc02-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93264/purchase?kanal=dxf",
       "eventId": "93264",
       "promoterId": "202",
@@ -13273,7 +13273,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93266/purchase?kanal=dxf",
       "eventId": "93266",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -13283,8 +13283,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 110
+      "capacity": 108,
+      "available": 106
     },
     {
       "id": "EDI20260203-2026-09-30T20:15:00-Storsal",
@@ -13321,7 +13321,7 @@
           "url": "https://www.imdb.com/title/tt7526136/"
         },
         "letterboxd": {
-          "value": 3.24,
+          "value": 3.25,
           "url": "https://letterboxd.com/film/heart-of-the-beast-2026/"
         },
         "tomatoes": {
@@ -13364,12 +13364,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.6,
+          "value": 7.7,
           "id": "tt36583977",
           "url": "https://www.imdb.com/title/tt36583977/"
         },
         "letterboxd": {
-          "value": 3.85,
+          "value": 3.86,
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         }
       },
@@ -13455,7 +13455,7 @@
           "url": "https://letterboxd.com/film/shaun-the-sheep-the-beast-of-mossy-bottom/"
         },
         "tomatoes": {
-          "value": 92,
+          "value": 91,
           "url": "https://www.rottentomatoes.com/m/shaun_the_sheep_the_beast_of_mossy_bottom"
         }
       },
@@ -13500,8 +13500,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 108,
-      "available": 106
+      "capacity": 110,
+      "available": 108
     },
     {
       "id": "WAB20240252-2026-10-02T20:00:00-Storsal",
@@ -13570,8 +13570,8 @@
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
-      "capacity": 109,
-      "available": 104
+      "capacity": 110,
+      "available": 105
     },
     {
       "id": "EDI20250794-2026-10-03T15:00:00-Storsal",
@@ -13613,7 +13613,7 @@
           "url": "https://letterboxd.com/film/shaun-the-sheep-the-beast-of-mossy-bottom/"
         },
         "tomatoes": {
-          "value": 92,
+          "value": 91,
           "url": "https://www.rottentomatoes.com/m/shaun_the_sheep_the_beast_of_mossy_bottom"
         }
       },
@@ -13644,7 +13644,7 @@
       ],
       "director": "Philippe Lacheau",
       "premiere": "2026-09-25",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/4fc4bd78240864d81b5506ccb0c7e82299b9b079-1500x2139.webp?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/9f1cf85fb3bc235496b1c8317182029eea2fdc02-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93140/purchase?kanal=dxf",
       "eventId": "93140",
       "promoterId": "202",
@@ -13696,12 +13696,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.6,
+          "value": 7.7,
           "id": "tt36583977",
           "url": "https://www.imdb.com/title/tt36583977/"
         },
         "letterboxd": {
-          "value": 3.85,
+          "value": 3.86,
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         }
       },
@@ -13819,7 +13819,7 @@
           "url": "https://letterboxd.com/film/shaun-the-sheep-the-beast-of-mossy-bottom/"
         },
         "tomatoes": {
-          "value": 92,
+          "value": 91,
           "url": "https://www.rottentomatoes.com/m/shaun_the_sheep_the_beast_of_mossy_bottom"
         }
       },
@@ -13901,7 +13901,7 @@
           "url": "https://letterboxd.com/film/spa-weekend-2026/"
         },
         "tomatoes": {
-          "value": 73,
+          "value": 74,
           "url": "https://www.rottentomatoes.com/m/spa_weekend"
         }
       },
