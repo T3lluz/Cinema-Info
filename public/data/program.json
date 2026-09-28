@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-28T01:38:13.392Z",
+  "updatedAt": "2026-09-28T18:34:30.778Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -12858,7 +12858,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93192/purchase?kanal=dxf",
       "eventId": "93192",
       "promoterId": "202",
-      "sold": 2,
+      "sold": 20,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -12877,7 +12877,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 108
+      "available": 90
     },
     {
       "id": "EDI20251817-2026-09-28T17:30:00-Storsal",
@@ -12904,7 +12904,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93257/purchase?kanal=dxf",
       "eventId": "93257",
       "promoterId": "202",
-      "sold": 5,
+      "sold": 19,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -12915,7 +12915,7 @@
       },
       "reserved": 0,
       "capacity": 246,
-      "available": 241
+      "available": 227
     },
     {
       "id": "SFN20241749-2026-09-28T19:45:00-Kinosal",
@@ -12942,7 +12942,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93271/purchase?kanal=dxf",
       "eventId": "93271",
       "promoterId": "202",
-      "sold": 7,
+      "sold": 28,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -12953,7 +12953,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 103
+      "available": 82
     },
     {
       "id": "EDI20260642-2026-09-28T20:30:00-Storsal",
@@ -12981,7 +12981,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93274/purchase?kanal=dxf",
       "eventId": "93274",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 8,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -13000,7 +13000,7 @@
       },
       "reserved": 0,
       "capacity": 246,
-      "available": 246
+      "available": 238
     },
     {
       "id": "UIP20221470-2026-09-29T17:00:00-Storsal",
@@ -13165,7 +13165,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93259/purchase?kanal=dxf",
       "eventId": "93259",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -13183,8 +13183,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 110
+      "capacity": 108,
+      "available": 106
     },
     {
       "id": "EDI20251817-2026-09-30T17:00:00-Kinosal",
@@ -13303,8 +13303,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 108,
-      "available": 106
+      "capacity": 110,
+      "available": 108
     },
     {
       "id": "EDI20260203-2026-09-30T20:15:00-Storsal",
@@ -13426,7 +13426,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93275/purchase?kanal=dxf",
       "eventId": "93275",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 6,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -13436,8 +13436,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 110
+      "capacity": 108,
+      "available": 102
     },
     {
       "id": "EDI20250794-2026-10-02T16:50:00-Kinosal",
@@ -14227,6 +14227,39 @@
           "url": "https://www.rottentomatoes.com/m/shaun_the_sheep_the_beast_of_mossy_bottom"
         }
       },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20260552-2026-10-08T20:00:00-Kinosal",
+      "title": "Verity",
+      "screen": "Kinosal",
+      "start": "2026-10-08T20:00:00",
+      "end": "2026-10-08T22:07:00",
+      "dayKey": "2026-10-08",
+      "runningMinutes": 117,
+      "runningLabel": "1 t. 57 min.",
+      "age": "15 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Crime",
+        "Drama",
+        "Mystery"
+      ],
+      "director": "Michael Showalter",
+      "premiere": "2026-10-02",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/c0244aa90fbcd342cf565324c22260fb9d82c865-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93157/purchase?kanal=dxf",
+      "eventId": "93157",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": null,
       "reserved": 0,
       "capacity": 110,
       "available": 110
