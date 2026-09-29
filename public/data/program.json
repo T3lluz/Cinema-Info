@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-28T18:34:30.778Z",
+  "updatedAt": "2026-09-29T02:34:07.431Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -12137,7 +12137,7 @@
           "url": "https://www.imdb.com/title/tt33029380/"
         },
         "letterboxd": {
-          "value": 2.68,
+          "value": 2.69,
           "url": "https://letterboxd.com/film/marsupilami-2025/"
         }
       },
@@ -12185,7 +12185,7 @@
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         },
         "tomatoes": {
-          "value": 96,
+          "value": 97,
           "url": "https://www.rottentomatoes.com/m/forgotten_island"
         }
       },
@@ -12368,7 +12368,7 @@
           "url": "https://www.imdb.com/title/tt33029380/"
         },
         "letterboxd": {
-          "value": 2.68,
+          "value": 2.69,
           "url": "https://letterboxd.com/film/marsupilami-2025/"
         }
       },
@@ -12416,7 +12416,7 @@
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         },
         "tomatoes": {
-          "value": 96,
+          "value": 97,
           "url": "https://www.rottentomatoes.com/m/forgotten_island"
         }
       },
@@ -12647,7 +12647,7 @@
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         },
         "tomatoes": {
-          "value": 96,
+          "value": 97,
           "url": "https://www.rottentomatoes.com/m/forgotten_island"
         }
       },
@@ -12691,7 +12691,7 @@
           "url": "https://www.imdb.com/title/tt33029380/"
         },
         "letterboxd": {
-          "value": 2.68,
+          "value": 2.69,
           "url": "https://letterboxd.com/film/marsupilami-2025/"
         }
       },
@@ -12871,7 +12871,7 @@
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         },
         "tomatoes": {
-          "value": 96,
+          "value": 97,
           "url": "https://www.rottentomatoes.com/m/forgotten_island"
         }
       },
@@ -13042,7 +13042,7 @@
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         },
         "tomatoes": {
-          "value": 96,
+          "value": 97,
           "url": "https://www.rottentomatoes.com/m/forgotten_island"
         }
       },
@@ -13086,7 +13086,7 @@
           "url": "https://www.imdb.com/title/tt33029380/"
         },
         "letterboxd": {
-          "value": 2.68,
+          "value": 2.69,
           "url": "https://letterboxd.com/film/marsupilami-2025/"
         }
       },
@@ -13207,11 +13207,11 @@
       ],
       "director": "Silje Salomonsen, Arild Østin Ommundsen",
       "premiere": "2026-09-18",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/34e66ceed16510e90b883d19655fda37f01095c6-1434x2048.png?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/640b196e4f89a8f07eb332a8675241f1ba449ea1-1434x2048.png?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93276/purchase?kanal=dxf",
       "eventId": "93276",
       "promoterId": "202",
-      "sold": 6,
+      "sold": 9,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -13222,7 +13222,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 104
+      "available": 101
     },
     {
       "id": "EDI20260454-2026-09-30T17:30:00-Storsal",
@@ -13260,7 +13260,7 @@
           "url": "https://www.imdb.com/title/tt33029380/"
         },
         "letterboxd": {
-          "value": 2.68,
+          "value": 2.69,
           "url": "https://letterboxd.com/film/marsupilami-2025/"
         }
       },
@@ -13393,7 +13393,7 @@
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         },
         "tomatoes": {
-          "value": 96,
+          "value": 97,
           "url": "https://www.rottentomatoes.com/m/forgotten_island"
         }
       },
@@ -13681,7 +13681,7 @@
           "url": "https://www.imdb.com/title/tt33029380/"
         },
         "letterboxd": {
-          "value": 2.68,
+          "value": 2.69,
           "url": "https://letterboxd.com/film/marsupilami-2025/"
         }
       },
@@ -13729,7 +13729,7 @@
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         },
         "tomatoes": {
-          "value": 96,
+          "value": 97,
           "url": "https://www.rottentomatoes.com/m/forgotten_island"
         }
       },
@@ -13931,7 +13931,7 @@
           "url": "https://www.imdb.com/title/tt33029380/"
         },
         "letterboxd": {
-          "value": 2.68,
+          "value": 2.69,
           "url": "https://letterboxd.com/film/marsupilami-2025/"
         }
       },
@@ -13979,7 +13979,7 @@
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         },
         "tomatoes": {
-          "value": 96,
+          "value": 97,
           "url": "https://www.rottentomatoes.com/m/forgotten_island"
         }
       },
@@ -14142,7 +14142,7 @@
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         },
         "tomatoes": {
-          "value": 96,
+          "value": 97,
           "url": "https://www.rottentomatoes.com/m/forgotten_island"
         }
       },
