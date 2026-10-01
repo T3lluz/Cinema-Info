@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-30T16:48:04.692Z",
+  "updatedAt": "2026-10-01T02:07:28.158Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -12181,7 +12181,7 @@
           "url": "https://www.imdb.com/title/tt36583977/"
         },
         "letterboxd": {
-          "value": 3.91,
+          "value": 3.92,
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         },
         "tomatoes": {
@@ -12412,7 +12412,7 @@
           "url": "https://www.imdb.com/title/tt36583977/"
         },
         "letterboxd": {
-          "value": 3.91,
+          "value": 3.92,
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         },
         "tomatoes": {
@@ -12643,7 +12643,7 @@
           "url": "https://www.imdb.com/title/tt36583977/"
         },
         "letterboxd": {
-          "value": 3.91,
+          "value": 3.92,
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         },
         "tomatoes": {
@@ -12867,7 +12867,7 @@
           "url": "https://www.imdb.com/title/tt36583977/"
         },
         "letterboxd": {
-          "value": 3.91,
+          "value": 3.92,
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         },
         "tomatoes": {
@@ -13038,7 +13038,7 @@
           "url": "https://www.imdb.com/title/tt36583977/"
         },
         "letterboxd": {
-          "value": 3.91,
+          "value": 3.92,
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         },
         "tomatoes": {
@@ -13293,7 +13293,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93266/purchase?kanal=dxf",
       "eventId": "93266",
       "promoterId": "202",
-      "sold": 2,
+      "sold": 9,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -13304,7 +13304,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 108
+      "available": 101
     },
     {
       "id": "EDI20260203-2026-09-30T20:15:00-Storsal",
@@ -13332,7 +13332,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93278/purchase?kanal=dxf",
       "eventId": "93278",
       "promoterId": "202",
-      "sold": 6,
+      "sold": 16,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -13349,9 +13349,9 @@
           "url": "https://www.rottentomatoes.com/m/heart_of_the_beast"
         }
       },
-      "reserved": 3,
+      "reserved": 0,
       "capacity": 246,
-      "available": 237
+      "available": 230
     },
     {
       "id": "UIP20221470-2026-10-01T17:00:00-Kinosal",
@@ -13380,7 +13380,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93268/purchase?kanal=dxf",
       "eventId": "93268",
       "promoterId": "202",
-      "sold": 2,
+      "sold": 4,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -13389,7 +13389,7 @@
           "url": "https://www.imdb.com/title/tt36583977/"
         },
         "letterboxd": {
-          "value": 3.91,
+          "value": 3.92,
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         },
         "tomatoes": {
@@ -13398,8 +13398,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 108
+      "capacity": 108,
+      "available": 104
     },
     {
       "id": "SFN20241749-2026-10-01T20:00:00-Kinosal",
@@ -13479,7 +13479,7 @@
           "url": "https://letterboxd.com/film/shaun-the-sheep-the-beast-of-mossy-bottom/"
         },
         "tomatoes": {
-          "value": 92,
+          "value": 91,
           "url": "https://www.rottentomatoes.com/m/shaun_the_sheep_the_beast_of_mossy_bottom"
         }
       },
@@ -13518,7 +13518,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.2,
+          "value": 6.4,
           "id": "tt36726913",
           "url": "https://www.imdb.com/title/tt36726913/"
         }
@@ -13556,12 +13556,17 @@
       "eventStatus": "ok",
       "ratings": {
         "letterboxd": {
-          "value": 3.65,
+          "value": 3.67,
           "url": "https://letterboxd.com/film/digger-2026/"
         },
         "tomatoes": {
           "value": 27,
           "url": "https://www.rottentomatoes.com/m/digger"
+        },
+        "imdb": {
+          "value": 7.2,
+          "id": "tt31450459",
+          "url": "https://www.imdb.com/title/tt31450459/"
         }
       },
       "reserved": 0,
@@ -13598,8 +13603,13 @@
       "eventStatus": "ok",
       "ratings": {
         "letterboxd": {
-          "value": 2.89,
+          "value": 2.88,
           "url": "https://letterboxd.com/film/verity-2026/"
+        },
+        "imdb": {
+          "value": 6.2,
+          "id": "tt32261958",
+          "url": "https://www.imdb.com/title/tt32261958/"
         }
       },
       "reserved": 0,
@@ -13646,7 +13656,7 @@
           "url": "https://letterboxd.com/film/shaun-the-sheep-the-beast-of-mossy-bottom/"
         },
         "tomatoes": {
-          "value": 92,
+          "value": 91,
           "url": "https://www.rottentomatoes.com/m/shaun_the_sheep_the_beast_of_mossy_bottom"
         }
       },
@@ -13734,7 +13744,7 @@
           "url": "https://www.imdb.com/title/tt36583977/"
         },
         "letterboxd": {
-          "value": 3.91,
+          "value": 3.92,
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         },
         "tomatoes": {
@@ -13777,7 +13787,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.2,
+          "value": 6.4,
           "id": "tt36726913",
           "url": "https://www.imdb.com/title/tt36726913/"
         }
@@ -13815,12 +13825,17 @@
       "eventStatus": "ok",
       "ratings": {
         "letterboxd": {
-          "value": 3.65,
+          "value": 3.67,
           "url": "https://letterboxd.com/film/digger-2026/"
         },
         "tomatoes": {
           "value": 27,
           "url": "https://www.rottentomatoes.com/m/digger"
+        },
+        "imdb": {
+          "value": 7.2,
+          "id": "tt31450459",
+          "url": "https://www.imdb.com/title/tt31450459/"
         }
       },
       "reserved": 0,
@@ -13853,17 +13868,22 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93136/purchase?kanal=dxf",
       "eventId": "93136",
       "promoterId": "202",
-      "sold": 2,
+      "sold": 4,
       "eventStatus": "ok",
       "ratings": {
         "letterboxd": {
-          "value": 2.89,
+          "value": 2.88,
           "url": "https://letterboxd.com/film/verity-2026/"
+        },
+        "imdb": {
+          "value": 6.2,
+          "id": "tt32261958",
+          "url": "https://www.imdb.com/title/tt32261958/"
         }
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 108
+      "available": 106
     },
     {
       "id": "EDI20250794-2026-10-04T14:50:00-Kinosal",
@@ -13905,7 +13925,7 @@
           "url": "https://letterboxd.com/film/shaun-the-sheep-the-beast-of-mossy-bottom/"
         },
         "tomatoes": {
-          "value": 92,
+          "value": 91,
           "url": "https://www.rottentomatoes.com/m/shaun_the_sheep_the_beast_of_mossy_bottom"
         }
       },
@@ -13993,7 +14013,7 @@
           "url": "https://www.imdb.com/title/tt36583977/"
         },
         "letterboxd": {
-          "value": 3.91,
+          "value": 3.92,
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         },
         "tomatoes": {
@@ -14081,12 +14101,17 @@
       "eventStatus": "ok",
       "ratings": {
         "letterboxd": {
-          "value": 3.65,
+          "value": 3.67,
           "url": "https://letterboxd.com/film/digger-2026/"
         },
         "tomatoes": {
           "value": 27,
           "url": "https://www.rottentomatoes.com/m/digger"
+        },
+        "imdb": {
+          "value": 7.2,
+          "id": "tt31450459",
+          "url": "https://www.imdb.com/title/tt31450459/"
         }
       },
       "reserved": 0,
@@ -14123,8 +14148,13 @@
       "eventStatus": "ok",
       "ratings": {
         "letterboxd": {
-          "value": 2.89,
+          "value": 2.88,
           "url": "https://letterboxd.com/film/verity-2026/"
+        },
+        "imdb": {
+          "value": 6.2,
+          "id": "tt32261958",
+          "url": "https://www.imdb.com/title/tt32261958/"
         }
       },
       "reserved": 0,
@@ -14212,7 +14242,7 @@
           "url": "https://www.imdb.com/title/tt36583977/"
         },
         "letterboxd": {
-          "value": 3.91,
+          "value": 3.92,
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         },
         "tomatoes": {
@@ -14254,8 +14284,13 @@
       "eventStatus": "ok",
       "ratings": {
         "letterboxd": {
-          "value": 2.89,
+          "value": 2.88,
           "url": "https://letterboxd.com/film/verity-2026/"
+        },
+        "imdb": {
+          "value": 6.2,
+          "id": "tt32261958",
+          "url": "https://www.imdb.com/title/tt32261958/"
         }
       },
       "reserved": 0,
@@ -14302,7 +14337,7 @@
           "url": "https://letterboxd.com/film/shaun-the-sheep-the-beast-of-mossy-bottom/"
         },
         "tomatoes": {
-          "value": 92,
+          "value": 91,
           "url": "https://www.rottentomatoes.com/m/shaun_the_sheep_the_beast_of_mossy_bottom"
         }
       },
@@ -14383,12 +14418,17 @@
       "eventStatus": "ok",
       "ratings": {
         "letterboxd": {
-          "value": 3.65,
+          "value": 3.67,
           "url": "https://letterboxd.com/film/digger-2026/"
         },
         "tomatoes": {
           "value": 27,
           "url": "https://www.rottentomatoes.com/m/digger"
+        },
+        "imdb": {
+          "value": 7.2,
+          "id": "tt31450459",
+          "url": "https://www.imdb.com/title/tt31450459/"
         }
       },
       "reserved": 0,
@@ -14426,7 +14466,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.2,
+          "value": 6.4,
           "id": "tt36726913",
           "url": "https://www.imdb.com/title/tt36726913/"
         }
@@ -14509,8 +14549,13 @@
       "eventStatus": "ok",
       "ratings": {
         "letterboxd": {
-          "value": 2.89,
+          "value": 2.88,
           "url": "https://letterboxd.com/film/verity-2026/"
+        },
+        "imdb": {
+          "value": 6.2,
+          "id": "tt32261958",
+          "url": "https://www.imdb.com/title/tt32261958/"
         }
       },
       "reserved": 0,
