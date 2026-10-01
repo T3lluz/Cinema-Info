@@ -2,13 +2,24 @@
   "id": "./",
   "name": "Cinema Info – Buen kino",
   "short_name": "Cinema Info",
-  "description": "Program, tider og solgte billetter for Buen kino",
+  "description": "Program, tider, solgte billetter og innslipp for Buen kino",
   "start_url": "./",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#efece8",
-  "theme_color": "#c41e2a",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "any",
+  "background_color": "#f4f2ef",
+  "theme_color": "#f4f2ef",
   "lang": "nb",
+  "dir": "ltr",
+  "categories": ["entertainment", "business", "productivity"],
   "shortcuts": [
+    {
+      "name": "I dag",
+      "short_name": "I dag",
+      "url": "./?tab=day",
+      "icons": [{ "src": "assets/icons/icon-192.png", "sizes": "192x192" }]
+    },
     {
       "name": "Filmer",
       "short_name": "Filmer",
