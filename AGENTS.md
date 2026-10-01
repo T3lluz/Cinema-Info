@@ -8,7 +8,9 @@ full product description and data model.
 ### What this is
 
 - A **static, dependency-free** vanilla-JS PWA under `public/`: `index.html`,
-  `js/app.js`, `css/styles.css`, `sw.js`, plus `data/program.json` (a committed
+  ES modules in `js/` (`app.js` entry, `core`, `data`, `ui`, `day`, `movies`,
+  `stats`, `settings`, `sheet`, `seats`, `i18n`), `css/styles.css`, `sw.js`,
+  plus `data/program.json` (a committed
   snapshot the app reads at runtime via `./data/program.json`). There is **no
   `package.json`, no build step, and no npm install** for the app itself.
 - Node scripts in `scripts/` use only Node built-ins (`node:fs`, global
@@ -53,7 +55,8 @@ full product description and data model.
 - The workflow stages `public/` into the Pages artifact; it does not
   publish `scripts/`, `supabase/`, or `.github/`.
 - Every deploy stamps a unique cache-bust token (the short commit SHA)
-  into `_site/index.html` and `_site/sw.js` via `scripts/stamp-version.mjs`.
+  into `_site/index.html`, `_site/sw.js` and every `_site/js/*.js` import
+  (`?v=dev` placeholders) via `scripts/stamp-version.mjs`.
   Do not hand-edit `?v=` or `cinema-info-v…` — a forgotten bump used to
   leave phones on the old CSS/JS after push. Local `public/` placeholders
   are enough for the local server.

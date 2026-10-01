@@ -253,7 +253,7 @@ public/                 # what you serve / what Pages publishes
   sw.js
   manifest.webmanifest
   css/styles.css
-  js/app.js
+  js/                   # ES modules, app.js is the entry
   data/program.json
   assets/               # favicon, apple-touch, PWA icons
 scripts/                # fetch snapshot, DX debug, regenerate icons
