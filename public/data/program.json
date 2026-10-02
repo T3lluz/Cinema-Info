@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-02T02:13:24.821Z",
+  "updatedAt": "2026-10-02T16:36:22.964Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -12181,7 +12181,7 @@
           "url": "https://www.imdb.com/title/tt36583977/"
         },
         "letterboxd": {
-          "value": 3.92,
+          "value": 3.91,
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         },
         "tomatoes": {
@@ -12412,7 +12412,7 @@
           "url": "https://www.imdb.com/title/tt36583977/"
         },
         "letterboxd": {
-          "value": 3.92,
+          "value": 3.91,
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         },
         "tomatoes": {
@@ -12643,7 +12643,7 @@
           "url": "https://www.imdb.com/title/tt36583977/"
         },
         "letterboxd": {
-          "value": 3.92,
+          "value": 3.91,
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         },
         "tomatoes": {
@@ -12867,7 +12867,7 @@
           "url": "https://www.imdb.com/title/tt36583977/"
         },
         "letterboxd": {
-          "value": 3.92,
+          "value": 3.91,
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         },
         "tomatoes": {
@@ -13038,7 +13038,7 @@
           "url": "https://www.imdb.com/title/tt36583977/"
         },
         "letterboxd": {
-          "value": 3.92,
+          "value": 3.91,
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         },
         "tomatoes": {
@@ -13389,7 +13389,7 @@
           "url": "https://www.imdb.com/title/tt36583977/"
         },
         "letterboxd": {
-          "value": 3.92,
+          "value": 3.91,
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         },
         "tomatoes": {
@@ -13466,7 +13466,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93091/purchase?kanal=dxf",
       "eventId": "93091",
       "promoterId": "202",
-      "sold": 3,
+      "sold": 24,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -13485,7 +13485,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 107
+      "available": 86
     },
     {
       "id": "NOR20230682-2026-10-02T19:00:00-Kinosal",
@@ -13514,7 +13514,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93262/purchase?kanal=dxf",
       "eventId": "93262",
       "promoterId": "202",
-      "sold": 10,
+      "sold": 12,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -13525,7 +13525,7 @@
       },
       "reserved": 0,
       "capacity": 108,
-      "available": 98
+      "available": 96
     },
     {
       "id": "WAB20240252-2026-10-02T20:00:00-Storsal",
@@ -13561,12 +13561,12 @@
           "url": "https://www.imdb.com/title/tt31450459/"
         },
         "letterboxd": {
-          "value": 3.7,
+          "value": 3.72,
           "url": "https://letterboxd.com/film/digger-2026/"
         },
         "tomatoes": {
-          "value": 27,
-          "url": "https://www.rottentomatoes.com/m/digger"
+          "value": 68,
+          "url": "https://www.rottentomatoes.com/m/digger_2026"
         }
       },
       "reserved": 0,
@@ -13599,7 +13599,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93089/purchase?kanal=dxf",
       "eventId": "93089",
       "promoterId": "202",
-      "sold": 13,
+      "sold": 18,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -13608,13 +13608,13 @@
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.79,
+          "value": 2.77,
           "url": "https://letterboxd.com/film/verity-2026/"
         }
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 97
+      "available": 92
     },
     {
       "id": "EDI20250794-2026-10-03T15:00:00-Storsal",
@@ -13744,7 +13744,7 @@
           "url": "https://www.imdb.com/title/tt36583977/"
         },
         "letterboxd": {
-          "value": 3.92,
+          "value": 3.91,
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         },
         "tomatoes": {
@@ -13830,12 +13830,12 @@
           "url": "https://www.imdb.com/title/tt31450459/"
         },
         "letterboxd": {
-          "value": 3.7,
+          "value": 3.72,
           "url": "https://letterboxd.com/film/digger-2026/"
         },
         "tomatoes": {
-          "value": 27,
-          "url": "https://www.rottentomatoes.com/m/digger"
+          "value": 68,
+          "url": "https://www.rottentomatoes.com/m/digger_2026"
         }
       },
       "reserved": 0,
@@ -13877,7 +13877,7 @@
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.79,
+          "value": 2.77,
           "url": "https://letterboxd.com/film/verity-2026/"
         }
       },
@@ -14013,7 +14013,7 @@
           "url": "https://www.imdb.com/title/tt36583977/"
         },
         "letterboxd": {
-          "value": 3.92,
+          "value": 3.91,
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         },
         "tomatoes": {
@@ -14106,12 +14106,12 @@
           "url": "https://www.imdb.com/title/tt31450459/"
         },
         "letterboxd": {
-          "value": 3.7,
+          "value": 3.72,
           "url": "https://letterboxd.com/film/digger-2026/"
         },
         "tomatoes": {
-          "value": 27,
-          "url": "https://www.rottentomatoes.com/m/digger"
+          "value": 68,
+          "url": "https://www.rottentomatoes.com/m/digger_2026"
         }
       },
       "reserved": 0,
@@ -14153,7 +14153,7 @@
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.79,
+          "value": 2.77,
           "url": "https://letterboxd.com/film/verity-2026/"
         }
       },
@@ -14242,7 +14242,7 @@
           "url": "https://www.imdb.com/title/tt36583977/"
         },
         "letterboxd": {
-          "value": 3.92,
+          "value": 3.91,
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         },
         "tomatoes": {
@@ -14289,7 +14289,7 @@
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.79,
+          "value": 2.77,
           "url": "https://letterboxd.com/film/verity-2026/"
         }
       },
@@ -14423,12 +14423,12 @@
           "url": "https://www.imdb.com/title/tt31450459/"
         },
         "letterboxd": {
-          "value": 3.7,
+          "value": 3.72,
           "url": "https://letterboxd.com/film/digger-2026/"
         },
         "tomatoes": {
-          "value": 27,
-          "url": "https://www.rottentomatoes.com/m/digger"
+          "value": 68,
+          "url": "https://www.rottentomatoes.com/m/digger_2026"
         }
       },
       "reserved": 0,
@@ -14554,7 +14554,7 @@
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.79,
+          "value": 2.77,
           "url": "https://letterboxd.com/film/verity-2026/"
         }
       },
