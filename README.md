@@ -17,6 +17,7 @@ Mobile-friendly schedule for **Buen kino** — same info as the KinoProgram Chro
 - Optional tap haptics (Settings → Haptics), on by default; works in Chrome on Android
 - Optional DX account connection for **admissions** — how many of the sold tickets have been scanned
 - …and a **seat map** per showing: which seats are sold, and which of those are already inside
+- **Feedback** from Settings, straight to a private hub on the server
 
 ## Staying live
 
@@ -49,6 +50,19 @@ nothing and cost nothing — and the ones that do change leave your scroll
 position, your focus and the seat you are hovering exactly where they
 were. Beats stop while the tab is in the background and pick straight up
 when you come back.
+
+### Read once, on the server
+
+All of that used to be asked of DX by every phone separately. The
+server behind t3lluz.com now does the asking: it keeps sold counts, seat
+charts and check-ins warm on the schedule above, and the app collects
+everything for today and the day on screen in one request
+(`/CinemaInfo/api/live`). Opening the app paints the seat charts from
+that first answer instead of after a dozen lookups, and ten phones at
+the box office cost DX what one does. Anything the server's answer does
+not cover, the app still reads itself, and if the server is down it
+falls back to reading everything itself. Details:
+[`deploy/server/README.md`](deploy/server/README.md).
 
 ## Admissions (scanned tickets)
 
@@ -124,15 +138,15 @@ Anyone who opens the app sees live admissions and seat maps. Workers do
 Check-in state lives in one place: `app.dx.no`'s purchase list, where
 each ticket carries `used` / `usedDateTime` once it has been scanned at
 the door, next to the `seatId` it was sold for. `app.dx.no` sends no
-CORS headers, so a browser on GitHub Pages cannot read it directly. A
-small Supabase Edge Function (`supabase/functions/dx-web-login`) holds a
-shared read-only DX session and returns just what the app draws:
+CORS headers, so a browser cannot read it directly. A small bridge
+(`supabase/functions/dx-web-login`, run by the server on t3lluz.com)
+holds a shared read-only DX session and returns just what the app draws:
 
-- **Shared login** — the Edge Function signs in with the cinema's
-  read-only DX account. Credentials live in Supabase Vault
-  (`dx_email` / `dx_password`), optionally overridden by
-  `DX_EMAIL` / `DX_PASSWORD` function secrets. They never ship in the
-  static site or in `localStorage`.
+- **Shared login** — the bridge signs in with the cinema's read-only DX
+  account, from `DX_EMAIL` / `DX_PASSWORD` in the server's environment
+  (`~/docker/cinema-info/.env`; Supabase Vault when run there). They
+  never ship in the static site, and the session itself no longer
+  reaches browsers either.
 - **Counts** (`action: "scanned"`) are fetched in batches — one call
   covers a dozen events and returns `{ eventId: { scanned, sold } }`,
   counting `used` tickets and leaving refunds out of both totals.
@@ -162,7 +176,21 @@ instead of live DX data, open the site with `?previewScanned=1`.
 
 ## Live site
 
-https://t3lluz.github.io/Cinema-Info/
+- https://t3lluz.com/CinemaInfo/ (served from t3lluserver)
+- https://t3lluz.github.io/Cinema-Info/ (GitHub Pages)
+
+Both are the same build of `main` and talk to the same server, and both
+publish on their own within a minute of a merge.
+
+## Feedback
+
+**Settings → Tilbakemelding** opens a short form: what it is about (a
+bug, an idea, something else), a few words, and a name if they want to
+give one. The app version, the tab, the day and the screen size go
+along, so a bug report can be placed. Notes land in a hub on the server
+(`server/hub.html`, at feedback.t3lluz.com) that only answers on the
+maintainer's tailnet. The form lives in its own dialog, so the five-second
+beat never wipes what someone is halfway through typing.
 
 ## Warning banner
 
@@ -307,10 +335,15 @@ public/                 # what you serve / what Pages publishes
   data/program.json
   assets/               # favicon, apple-touch, PWA icons
 scripts/                # fetch snapshot, DX debug, regenerate icons
-supabase/               # Edge Function for admissions / seat maps
+supabase/               # the DX bridge and film lookups (Deno handlers)
+server/                 # the t3lluz.com server: app, prefetch, feedback hub
+deploy/server/          # its compose file, deploy poller, public tunnel
 ```
 
-The site is published with the **Deploy GitHub Pages** workflow
+t3lluz.com publishes itself: a timer on the server polls `main` every
+minute and builds the same way (`deploy/server/update.sh`).
+
+GitHub Pages is published with the **Deploy GitHub Pages** workflow
 (`.github/workflows/deploy-pages.yml`). Each deploy stamps the commit
 SHA into the stylesheet / script URLs and the service-worker cache name,
 so a push always lands as a fresh PWA instead of a cached copy.

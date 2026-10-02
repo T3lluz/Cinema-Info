@@ -1,7 +1,8 @@
 /**
  * Settings: language and theme, the seat map's numbers, the device
  * (haptics, keeping the screen on), the DX admissions bridge with a
- * one-tap diagnosis, and the app itself — install, version, updates.
+ * one-tap diagnosis, feedback, and the app itself — install, version,
+ * updates.
  */
 import {
   S,
