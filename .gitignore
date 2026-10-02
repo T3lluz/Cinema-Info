@@ -5,3 +5,6 @@
 
 node_modules/
 .DS_Store
+
+# Local poster copies for testing the ripple (made on deploy).
+public/posters/

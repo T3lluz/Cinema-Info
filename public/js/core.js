@@ -74,6 +74,8 @@ export const S = {
   showSeatNumbers: true,
   hapticsOn: true,
   keepAwake: false,
+  /** The liquid ripple on opening and refreshing. */
+  rippleOn: true,
   /** Stats tab: "week" or "month", and which one (null = current). */
   statsPeriod: "week",
   statsAnchor: null,
@@ -107,6 +109,8 @@ export const hooks = {
   applyTheme(_theme) {},
   languageChanged() {},
   applyWakeLock() {},
+  /** Re-measure the pinned bars (after a tab switch). */
+  headerChanged() {},
   /** "available" | "ios" | "installed" | "none" */
   installState() {
     return "none";
@@ -120,10 +124,15 @@ export const hooks = {
 /** DOM references, filled in by app.js once the page is parsed. */
 export const els = {};
 
+/** The header's height, status-bar inset included. */
+export function barHeight() {
+  return els.appbar?.offsetHeight || 0;
+}
+
 /** What is pinned to the top of the screen: the header, plus the day
  * strip under it on the day tab (zero high on the others). */
 export function headerHeight() {
-  return (els.appbar?.offsetHeight || 0) + (els.dayDock?.offsetHeight || 0);
+  return barHeight() + (els.dayDock?.offsetHeight || 0);
 }
 
 /* —— Preferences ——————————————————————————————————————————————— */
@@ -150,6 +159,7 @@ export function savePrefs() {
         haptics: S.hapticsOn,
         keepAwake: S.keepAwake,
         statsPeriod: S.statsPeriod,
+        ripple: S.rippleOn,
       })
     );
   } catch {

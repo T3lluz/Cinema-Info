@@ -20,6 +20,7 @@ import {
   formatClock,
   todayKey,
   headerHeight,
+  barHeight,
   loadPrefs,
   savePrefs,
   reducedMotion,
@@ -66,6 +67,7 @@ import {
 import { renderMovies, setupMovies, focusSearch, refreshSearchLanguage } from "./movies.js?v=dev";
 import { renderStats, setupStats } from "./stats.js?v=dev";
 import { renderSettings, setupSettings } from "./settings.js?v=dev";
+import { armRipple, playRipple } from "./ripple.js?v=dev";
 import { openMovie, setupSheet, isSheetOpen, refreshSheet } from "./sheet.js?v=dev";
 
 /** A selection left longer ago than this is not restored: open on today. */
@@ -84,6 +86,7 @@ function boot() {
   S.hapticsOn = prefs.haptics !== false;
   S.keepAwake = prefs.keepAwake === true;
   S.statsPeriod = prefs.statsPeriod === "month" ? "month" : "week";
+  S.rippleOn = prefs.ripple !== false;
   if (wanted) {
     // A home-screen shortcut opened us; don't keep the tab in the URL.
     const url = new URL(location.href);
@@ -136,7 +139,13 @@ function boot() {
   start();
 }
 
+/** Resolves the first time a real page (not the skeleton) is on screen. */
+let firstPaint = null;
+const firstPainted = new Promise((resolve) => (firstPaint = resolve));
+
 async function start() {
+  // The opening ripple, once the first real page is on screen.
+  armRipple(firstPainted);
   await load({ forceLive: true });
   applyWakeLock();
   // Backfill check-in counts for every day in the background, so flipping
@@ -171,7 +180,6 @@ function collectElements() {
     sheetPanel: document.querySelector("#sheet .sheet-panel"),
     sheetBody: $("sheetBody"),
     toasts: $("toasts"),
-    ptr: $("ptr"),
     views: {
       day: $("view-day"),
       movies: $("view-movies"),
@@ -214,6 +222,8 @@ function renderActive() {
   else renderSettings();
   refreshSheet();
   syncHScroll();
+  firstPaint?.();
+  firstPaint = null;
 }
 
 function showLoadError(message) {
@@ -322,6 +332,7 @@ function setTab(tab, { initial = false } = {}) {
     });
   }
   if (!initial) window.scrollTo(0, scrollMemory[tab] || 0);
+  hooks.headerChanged();
 
   if (!S.state?.shows) return;
   if (tab === "day") {
@@ -410,10 +421,7 @@ function renderStatus() {
 }
 
 function setupStatus() {
-  els.statusBtn?.addEventListener("click", async () => {
-    if (S.busy > 0) return;
-    await load({ forceLive: true });
-  });
+  els.statusBtn?.addEventListener("click", refreshAll);
 }
 
 /* —— Theme & language ——————————————————————————————————————————————— */
@@ -446,31 +454,55 @@ function applyLanguage() {
 }
 
 /* —— Pull to refresh ————————————————————————————————————————————————
- * The browser's own is switched off (overscroll-behavior) so it cannot
- * reload the page; this one re-reads the programme and every live figure
- * and shows it is doing so.
+ * The DailyDash way: no spinner. The page under the header follows the
+ * finger, a light tick every tenth of the way, a firmer click the moment
+ * a release would refresh. Let go there and the page springs back, the
+ * programme and every live figure are read again, and the liquid ripple
+ * runs out from the header — the only sign it ran. The browser's own
+ * pull-to-refresh is switched off (overscroll-behavior) so it cannot
+ * reload the page.
  */
+const PULL_THRESHOLD = 72;
+const PULL_TICKS = 10;
+const PULL_FOLLOW = 0.6;
+
+/** Read everything again and let the ripple say so. */
+async function refreshAll() {
+  if (S.busy > 0) return;
+  const done = load({ forceLive: true });
+  playRipple();
+  await done;
+}
+
 function setupPullToRefresh() {
-  const ptr = els.ptr;
-  if (!ptr) return;
-  const label = ptr.querySelector(".ptr-label");
+  const root = document.documentElement;
   let startY = 0;
   let startX = 0;
-  let mode = "idle"; // idle | pending | pull | refreshing
+  let mode = "idle"; // idle | pending | pull
   let pull = 0;
+  let lastTick = 0;
+  let armed = false;
 
   const set = (y) => {
     pull = y;
-    ptr.style.setProperty("--pull", String(y));
-    ptr.classList.toggle("is-ready", y >= 64);
-    if (label) label.textContent = y >= 64 ? t("ptrRelease") : t("ptrPull");
+    root.style.setProperty("--pull-y", `${(y * PULL_FOLLOW).toFixed(1)}px`);
+    const fraction = y / PULL_THRESHOLD;
+    const tick = Math.min(PULL_TICKS, Math.floor(fraction * PULL_TICKS));
+    if (fraction >= 1) {
+      if (!armed) hapticTick("medium");
+      armed = true;
+    } else {
+      if (armed) armed = false;
+      if (tick > lastTick) hapticTick("light");
+    }
+    lastTick = tick;
   };
 
   document.addEventListener(
     "touchstart",
     (e) => {
-      if (mode === "refreshing" || isSheetOpen() || e.touches.length !== 1) return;
-      if (window.scrollY > 0 || e.target.closest?.(".tl-scroll, .carousel, .day-strip, .sheet")) return;
+      if (isSheetOpen() || e.touches.length !== 1) return;
+      if (window.scrollY > 0 || e.target.closest?.(".tl-scroll, .carousel, .day-strip, .cast, .sheet, .tabbar")) return;
       startY = e.touches[0].clientY;
       startX = e.touches[0].clientX;
       mode = "pending";
@@ -490,35 +522,38 @@ function setupPullToRefresh() {
         }
         if (dy < 8 || window.scrollY > 0) return;
         mode = "pull";
-        ptr.classList.add("is-pulling");
+        lastTick = 0;
+        armed = false;
+        root.classList.remove("is-pull-settling");
+        root.classList.add("is-pulling");
       }
-      set(Math.max(0, Math.min(120, (dy - 8) * 0.5)));
+      set(Math.max(0, Math.min(140, (dy - 8) * 0.5)));
     },
     { passive: true }
   );
-  const end = async () => {
+  const end = () => {
     if (mode !== "pull") {
       if (mode === "pending") mode = "idle";
       return;
     }
-    ptr.classList.remove("is-pulling");
-    if (pull >= 64) {
-      mode = "refreshing";
-      hapticTick();
-      ptr.classList.add("is-refreshing");
-      set(56);
-      try {
-        await load({ forceLive: true });
-        toast(t("refreshed"), { id: "refresh", timeout: 1600 });
-      } finally {
-        ptr.classList.remove("is-refreshing", "is-ready");
-        set(0);
-        mode = "idle";
-      }
-    } else {
-      set(0);
-      mode = "idle";
-    }
+    mode = "idle";
+    const go = armed;
+    armed = false;
+    root.classList.remove("is-pulling");
+    root.classList.add("is-pull-settling");
+    root.style.setProperty("--pull-y", "0px");
+    pull = 0;
+    const settle = reducedMotion() ? 0 : 420;
+    setTimeout(() => {
+      root.classList.remove("is-pull-settling");
+      root.style.removeProperty("--pull-y");
+    }, settle);
+    if (!go) return;
+    hapticTick("strong");
+    const done = load({ forceLive: true });
+    // The page has to be back in place before it is photographed.
+    setTimeout(() => playRipple(), settle);
+    done.catch(() => {});
   };
   document.addEventListener("touchend", end, { passive: true });
   document.addEventListener("touchcancel", end, { passive: true });
@@ -545,7 +580,7 @@ function setupKeyboard() {
     } else if (/^[1-4]$/.test(key)) {
       setTab(TAB_ORDER[Number(key) - 1]);
     } else if (key === "r" || key === "R") {
-      if (S.busy === 0) load({ forceLive: true });
+      refreshAll();
     }
   });
 }
@@ -553,26 +588,39 @@ function setupKeyboard() {
 /* —— Chrome ————————————————————————————————————————————————————————— */
 
 /**
- * The header and the day strip are two pinned bars with the warning
- * between them. Whichever is lowest on screen draws the hairline and
- * shadow, so the pair reads as one header once the strip has docked.
+ * The header is one sheet of frosted glass (#headerGlass) behind the
+ * brand row. A bar that pins under it — the day strip, or the stats
+ * period switch — drops its own glass when it docks and the sheet grows
+ * to cover it, so the two read as one panel with no seam between them.
+ * The hairline and shadow sit at the bottom of the whole panel.
  */
+function dockedBar() {
+  if (S.activeTab === "day") return els.dayDock;
+  return els.views[S.activeTab]?.querySelector(".period-bar") || null;
+}
+
 function setupAppbarShadow() {
+  const glass = document.getElementById("headerGlass");
+  const root = document.documentElement.style;
   let queued = false;
+  let joined = null;
   const update = () => {
     queued = false;
+    const bar = barHeight();
     const scrolled = window.scrollY > 4;
-    const dock = els.dayDock;
+    const dock = dockedBar();
     const docked =
-      scrolled && dock?.offsetHeight > 0 && dock.getBoundingClientRect().top <= (els.appbar?.offsetHeight || 0) + 0.5;
-    els.appbar?.classList.toggle("is-scrolled", scrolled && !docked);
-    dock?.classList.toggle("is-docked", Boolean(docked));
+      scrolled && dock?.offsetHeight > 0 && dock.getBoundingClientRect().top <= bar + 0.5 ? dock : null;
+    if (joined && joined !== docked) joined.classList.remove("is-docked");
+    docked?.classList.add("is-docked");
+    joined = docked;
+    root.setProperty("--glass-h", `${bar + (docked ? docked.offsetHeight : 0)}px`);
+    glass?.classList.toggle("is-scrolled", scrolled);
   };
   // Sticky pieces below the bars (stats period, desktop day summary, the
   // pull-to-refresh bubble) need their real heights, which change per tab.
   const measure = () => {
-    const root = document.documentElement.style;
-    root.setProperty("--bar-h", `${els.appbar?.offsetHeight || 0}px`);
+    root.setProperty("--bar-h", `${barHeight()}px`);
     root.setProperty("--appbar-h", `${headerHeight()}px`);
     update();
   };
@@ -582,6 +630,7 @@ function setupAppbarShadow() {
     if (els.dayDock) ro.observe(els.dayDock);
   }
   measure();
+  hooks.headerChanged = measure;
   window.addEventListener(
     "scroll",
     () => {
@@ -591,7 +640,6 @@ function setupAppbarShadow() {
     },
     { passive: true }
   );
-  update();
 }
 
 function setupConnectivity() {

@@ -75,6 +75,7 @@
   --shadow-md: 0 6px 20px rgba(30, 24, 18, 0.08), 0 1px 3px rgba(30, 24, 18, 0.06);
   --shadow-lg: 0 18px 50px rgba(30, 24, 18, 0.16), 0 2px 8px rgba(30, 24, 18, 0.08);
   --poster-shadow: 0 6px 18px rgba(30, 24, 18, 0.18);
+  --header-shadow: 0 1px 2px rgba(30, 24, 18, 0.06), 0 8px 24px rgba(30, 24, 18, 0.1);
 
   color-scheme: light;
 }
@@ -119,6 +120,7 @@
   --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.45);
   --shadow-lg: 0 22px 60px rgba(0, 0, 0, 0.6), 0 2px 8px rgba(0, 0, 0, 0.4);
   --poster-shadow: 0 8px 22px rgba(0, 0, 0, 0.5);
+  --header-shadow: 0 1px 0 rgba(255, 255, 255, 0.03), 0 10px 28px rgba(0, 0, 0, 0.55);
 
   color-scheme: dark;
 }
@@ -144,7 +146,11 @@ html {
 
 body {
   margin: 0;
-  min-height: 100dvh;
+  /* The large viewport, not the dynamic one: dvh changes while the
+   * browser's toolbar slides, which reflowed the page under the fixed
+   * tab bar. */
+  min-height: 100vh;
+  min-height: 100lvh;
   font-family: var(--font);
   font-size: 15px;
   line-height: 1.4;
@@ -156,9 +162,15 @@ body {
   overflow-x: clip;
 }
 
-html.sheet-open,
-html.sheet-open body {
-  overflow: hidden;
+/* Behind an open sheet the page must not scroll. On a phone that is done
+ * by the sheet itself (touch-action on the scrim, overscroll containment
+ * in the panel): taking the page's overflow away would reflow it and can
+ * move the browser's toolbar, which jolted the sheet as it slid in. */
+@media (min-width: 1024px) {
+  html.sheet-open,
+  html.sheet-open body {
+    overflow: hidden;
+  }
 }
 
 button,
@@ -279,6 +291,13 @@ p {
   }
   to {
     opacity: 1;
+  }
+}
+
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
   }
 }
 
@@ -680,6 +699,11 @@ p {
   .hs-days {
     --hs-size: 32px;
     --hs-inset: 2px;
+    --hs-y: calc(50% - 4px);
+  }
+  /* Clear of the strip’s own arrows. */
+  .day-bar {
+    --jt-inset: 44px;
   }
   .hs-tl {
     --hs-y: calc(50% - 10px);
@@ -747,6 +771,30 @@ p {
 
 /* —— App bar ———————————————————————————————————————————————————————— */
 
+/* The frosted glass behind the header. It grows to cover a bar docked
+ * under the header (day strip, stats period switch), which then drops
+ * its own glass — one blur, one panel, no seam. Hairline and shadow at
+ * the bottom of the whole panel once the page scrolls under it. */
+.header-glass {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 28;
+  height: var(--glass-h, var(--bar-h));
+  background: var(--glass);
+  -webkit-backdrop-filter: saturate(1.7) blur(22px);
+  backdrop-filter: saturate(1.7) blur(22px);
+  border-bottom: 1px solid transparent;
+  pointer-events: none;
+  transition:
+    border-color 0.25s,
+    box-shadow 0.25s;
+}
+.header-glass.is-scrolled {
+  border-bottom-color: var(--line);
+  box-shadow: var(--header-shadow);
+}
 .appbar {
   position: sticky;
   top: 0;
@@ -754,17 +802,6 @@ p {
   padding-top: var(--safe-top);
   padding-left: var(--safe-left);
   padding-right: var(--safe-right);
-  background: var(--glass);
-  -webkit-backdrop-filter: saturate(1.7) blur(22px);
-  backdrop-filter: saturate(1.7) blur(22px);
-  border-bottom: 1px solid transparent;
-  transition:
-    border-color 0.25s,
-    box-shadow 0.25s;
-}
-.appbar.is-scrolled {
-  border-bottom-color: var(--line);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
 }
 
 .appbar-row {
@@ -823,6 +860,9 @@ p {
   border-radius: 50%;
   background: var(--ink-3);
   color: var(--ink-3);
+  transition:
+    background-color 0.3s,
+    color 0.3s;
 }
 .status-btn[data-kind="live"] .status-dot {
   background: var(--live);
@@ -861,35 +901,40 @@ p {
   background: var(--glass);
   -webkit-backdrop-filter: saturate(1.7) blur(22px);
   backdrop-filter: saturate(1.7) blur(22px);
-  border-bottom: 1px solid transparent;
-  transition:
-    border-color 0.25s,
-    box-shadow 0.25s;
 }
-.day-dock.is-docked {
-  border-bottom-color: var(--line);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
+/* Docked: the header's glass covers it now. */
+.day-dock.is-docked,
+.period-bar.is-docked {
+  background: transparent;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
 }
 body:not([data-tab="day"]) .day-dock {
   display: none;
 }
 .day-bar {
+  --jt-inset: 10px;
+  position: relative;
   display: flex;
   align-items: center;
   max-width: var(--page-max);
   margin: 0 auto;
-  padding: 2px 0 10px;
 }
 
+/* "I dag" floats over the strip's edge on the side today lies, rather
+ * than taking room in the row — the days never get shoved sideways when
+ * it comes and goes. A ring of page colour lifts it off the chips. */
 .jump-today {
+  position: absolute;
+  top: 50%;
+  left: var(--jt-inset);
+  z-index: 8;
   display: inline-flex;
   align-items: center;
   gap: 3px;
-  flex: none;
   height: 34px;
-  max-width: 0;
-  margin-left: 0;
-  padding: 0;
+  margin-top: -21px;
+  padding: 0 12px 0 8px;
   border: 0;
   border-radius: 999px;
   background: var(--accent);
@@ -897,24 +942,36 @@ body:not([data-tab="day"]) .day-dock {
   font-size: 13px;
   font-weight: 700;
   white-space: nowrap;
-  overflow: hidden;
+  box-shadow:
+    0 0 0 4px var(--bg),
+    0 6px 16px color-mix(in srgb, var(--accent) 35%, transparent);
   opacity: 0;
+  visibility: hidden;
+  transform: translateX(-10px) scale(0.85);
   transition:
-    max-width 0.36s var(--ease),
-    padding 0.36s var(--ease),
-    margin 0.36s var(--ease),
-    opacity 0.2s;
+    opacity 0.2s var(--ease),
+    transform 0.32s var(--ease),
+    visibility 0s linear 0.32s;
+}
+.jump-today[data-dir="forward"] {
+  left: auto;
+  right: var(--jt-inset);
+  flex-direction: row-reverse;
+  padding: 0 8px 0 12px;
+  transform: translateX(10px) scale(0.85);
 }
 .jump-today.is-shown {
-  max-width: 110px;
-  margin-left: var(--pad);
-  padding: 0 12px 0 8px;
   opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition-delay: 0s;
+}
+.jump-today:active {
+  transform: scale(0.94);
 }
 .jump-today .icon {
   width: 16px;
   height: 16px;
-  transition: transform 0.3s var(--ease);
 }
 .jump-today[data-dir="forward"] .icon {
   transform: rotate(180deg);
@@ -941,7 +998,9 @@ body:not([data-tab="day"]) .day-dock {
   align-items: stretch;
   gap: 4px;
   width: max-content;
-  padding: 2px var(--pad);
+  /* Room above and below the chips, inside the scrolling strip, for the
+   * selected day’s glow — the strip clips whatever sticks out of it. */
+  padding: 6px var(--pad) 14px;
 }
 /* Position and size are driven from JS (slideTo in ui.js): it stretches
  * between days instead of bouncing. Only the colour eases here. */
@@ -951,7 +1010,7 @@ body:not([data-tab="day"]) .day-dock {
   left: 0;
   border-radius: 16px;
   background: var(--ink);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   opacity: 0;
   pointer-events: none;
   will-change: transform, width;
@@ -1051,7 +1110,7 @@ body:not([data-tab="day"]) .day-dock {
 .day-chip[aria-selected="true"].is-today ~ .day-indicator,
 .day-track:has(.day-chip.is-today[aria-selected="true"]) .day-indicator {
   background: var(--accent);
-  box-shadow: 0 6px 18px color-mix(in srgb, var(--accent) 35%, transparent);
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--accent) 38%, transparent);
 }
 .day-track:has(.day-chip.is-today[aria-selected="true"]) .day-chip.is-today {
   color: var(--accent-ink);
@@ -1074,56 +1133,93 @@ body:not([data-tab="day"]) .day-dock {
   }
 }
 
-/* Pull to refresh */
-.ptr {
-  --pull: 0;
+/* Pull to refresh: no spinner — everything under the header follows the
+ * finger (app.js sets --pull-y), then springs back with a touch of give,
+ * as DailyDash's does. No transform at all at rest, so the sticky bars
+ * inside keep their place in the page's stacking. */
+html.is-pulling .pull-follow,
+html.is-pull-settling .pull-follow {
+  transform: translate3d(0, var(--pull-y, 0px), 0);
+}
+html.is-pull-settling .pull-follow {
+  transition: transform 0.42s cubic-bezier(0.25, 1.1, 0.4, 1);
+}
+
+/* The liquid ripple (js/ripple.js): a photograph of the page under the
+ * header with the wave shader running over it, laid exactly over the
+ * live page and cross-faded in and out. Above the content and the docked
+ * bars, under the tab bar, the toasts and the film sheet. Top and height
+ * are set from the header's height when it plays. */
+.rip-canvas {
   position: fixed;
-  top: calc(var(--bar-h) + 6px);
-  left: 50%;
-  z-index: 25;
-  display: grid;
-  justify-items: center;
-  gap: 6px;
+  left: 0;
+  right: 0;
+  z-index: 31;
+  width: 100%;
   pointer-events: none;
-  transform: translate(-50%, calc(var(--pull) * 1px - 52px));
-  opacity: min(1, calc(var(--pull) / 48));
-  transition:
-    transform 0.32s var(--ease),
-    opacity 0.2s;
-}
-.ptr.is-pulling {
-  transition: none;
-}
-.ptr-bubble {
-  display: grid;
-  place-items: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: var(--bg-elev);
-  border: 1px solid var(--line);
-  box-shadow: var(--shadow-md);
-  color: var(--ink-3);
-}
-.ptr-icon {
-  transform: rotate(calc(var(--pull) * 4deg));
-}
-.ptr.is-ready .ptr-bubble,
-.ptr.is-refreshing .ptr-bubble {
-  color: var(--accent);
-}
-.ptr.is-refreshing .ptr-icon {
-  animation: spin 0.8s linear infinite;
-}
-.ptr-label {
-  font-size: 11.5px;
-  font-weight: 650;
-  color: var(--ink-2);
   opacity: 0;
-  transition: opacity 0.2s;
+  transition: opacity 0.14s linear;
 }
-.ptr.is-pulling .ptr-label {
+.rip-canvas.on {
   opacity: 1;
+}
+
+/* Behind the tab bar the page melts away, the way Essentials does it: a
+ * progressive blur — nothing at the top of the band, strongest at the
+ * screen's edge — under a wash of page colour, so cards slide out of
+ * sight instead of being cut off by the bar. Five backdrop blurs of
+ * doubling strength, each masked to its own slice of the band. */
+.edge-blur {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 35;
+  height: calc(var(--tabbar-h) + 44px + var(--safe-bottom));
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    color-mix(in srgb, var(--bg) 45%, transparent) 55%,
+    color-mix(in srgb, var(--bg) 78%, transparent) 100%
+  );
+}
+.edge-blur i {
+  position: absolute;
+  inset: 0;
+}
+.edge-blur i:nth-child(1) {
+  -webkit-backdrop-filter: blur(1px);
+  backdrop-filter: blur(1px);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 20%, #000 40%, transparent 60%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 20%, #000 40%, transparent 60%);
+}
+.edge-blur i:nth-child(2) {
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 20%, #000 40%, #000 60%, transparent 80%);
+  mask-image: linear-gradient(to bottom, transparent 20%, #000 40%, #000 60%, transparent 80%);
+}
+.edge-blur i:nth-child(3) {
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 40%, #000 60%, #000 80%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 40%, #000 60%, #000 80%, transparent 100%);
+}
+.edge-blur i:nth-child(4) {
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 60%, #000 80%);
+  mask-image: linear-gradient(to bottom, transparent 60%, #000 80%);
+}
+.edge-blur i:nth-child(5) {
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 80%, #000 100%);
+  mask-image: linear-gradient(to bottom, transparent 80%, #000 100%);
+}
+html.sheet-open .edge-blur {
+  opacity: 0;
 }
 
 /* —— Layout ————————————————————————————————————————————————————————— */
@@ -1132,6 +1228,11 @@ body:not([data-tab="day"]) .day-dock {
   padding-bottom: calc(var(--tabbar-h) + 34px + var(--safe-bottom));
   padding-left: var(--safe-left);
   padding-right: var(--safe-right);
+  /* A tab sliding in must never poke past the screen edge: on Android
+   * that widens the page for a moment, the browser zooms out to fit, and
+   * the fixed tab bar slips down out of view. clip, not hidden, so the
+   * sticky bars inside keep working. */
+  overflow-x: clip;
 }
 
 .page {
@@ -1143,13 +1244,19 @@ body:not([data-tab="day"]) .day-dock {
   padding: 6px var(--pad) 24px;
 }
 
-.view.is-entering {
+/* A tab's content slides in from the side its tab sits on. The content,
+ * not the tab itself: a pinned bar (the stats period switch) must stay
+ * put under the header instead of sliding along with the page. */
+.view-day.is-entering > .pager,
+.view.is-entering > .page > :not(.period-bar) {
   animation: view-in 0.36s var(--ease) both;
 }
-.view.is-entering[data-dir="next"] {
+.view-day.is-entering[data-dir="next"] > .pager,
+.view.is-entering[data-dir="next"] > .page > :not(.period-bar) {
   animation-name: view-in-next;
 }
-.view.is-entering[data-dir="prev"] {
+.view-day.is-entering[data-dir="prev"] > .pager,
+.view.is-entering[data-dir="prev"] > .page > :not(.period-bar) {
   animation-name: view-in-prev;
 }
 @keyframes view-in {
@@ -1165,7 +1272,7 @@ body:not([data-tab="day"]) .day-dock {
 @keyframes view-in-next {
   from {
     opacity: 0;
-    transform: translateX(22px);
+    transform: translateX(14px);
   }
   to {
     opacity: 1;
@@ -1175,7 +1282,7 @@ body:not([data-tab="day"]) .day-dock {
 @keyframes view-in-prev {
   from {
     opacity: 0;
-    transform: translateX(-22px);
+    transform: translateX(-14px);
   }
   to {
     opacity: 1;
@@ -1266,7 +1373,7 @@ body:not([data-tab="day"]) .day-dock {
   position: relative;
   overflow-x: clip;
   touch-action: pan-y;
-  min-height: calc(100dvh - var(--appbar-h) - var(--tabbar-h) - 40px);
+  min-height: calc(100svh - var(--appbar-h) - var(--tabbar-h) - 40px);
 }
 .pager > .page {
   min-height: inherit;
@@ -2244,6 +2351,7 @@ body:not([data-tab="day"]) .day-dock {
   display: none;
 }
 .search-clear {
+  animation: pop-in 0.22s var(--ease) both;
   display: grid;
   place-items: center;
   width: 32px;
@@ -2260,6 +2368,13 @@ body:not([data-tab="day"]) .day-dock {
 
 .search-results {
   animation: fade-in 0.2s var(--ease) both;
+}
+/* The film list fades back in when a search is cleared. */
+:where(#moviesBody) {
+  animation: fade-in 0.25s var(--ease) both;
+}
+.hits > .hit {
+  animation: rise 0.28s var(--ease) both;
 }
 .hits {
   display: grid;
@@ -2348,8 +2463,6 @@ body:not([data-tab="day"]) .day-dock {
   padding: 2px var(--pad) 8px;
   overflow-x: auto;
   overscroll-behavior-x: contain;
-  scroll-snap-type: x mandatory;
-  scroll-padding: 0 var(--pad);
   scrollbar-width: none;
 }
 .carousel::-webkit-scrollbar {
@@ -2365,7 +2478,6 @@ body:not([data-tab="day"]) .day-dock {
   background: none;
   color: var(--ink);
   text-align: left;
-  scroll-snap-align: start;
   transition: transform 0.18s var(--ease);
 }
 .up-card:active {
@@ -2583,6 +2695,7 @@ body:not([data-tab="day"]) .day-dock {
   width: 100%;
   border: 0;
   padding: 0;
+  touch-action: none;
   background: var(--scrim);
   opacity: 0;
   cursor: default;
@@ -2611,6 +2724,12 @@ body:not([data-tab="day"]) .day-dock {
   transform: translateY(105%);
   transition: transform 0.44s var(--ease-swift);
   will-change: transform;
+  contain: layout paint;
+}
+/* A film whose details are still on their way opens at the height they
+ * will need, so the sheet never grows while it slides or once they land. */
+.sheet-panel.is-full {
+  height: calc(100dvh - var(--safe-top) - 28px);
 }
 .sheet.is-open .sheet-panel {
   transform: translateY(var(--sheet-drag, 0px));
@@ -2916,13 +3035,15 @@ body:not([data-tab="day"]) .day-dock {
   overflow-x: auto;
   list-style: none;
   scrollbar-width: none;
-  scroll-snap-type: x proximity;
 }
 .cast::-webkit-scrollbar {
   display: none;
 }
 .cast:not(.is-open) .is-more {
   display: none;
+}
+.cast.is-open .is-more {
+  animation: rise 0.36s var(--ease) both;
 }
 .person {
   display: grid;
@@ -2931,7 +3052,6 @@ body:not([data-tab="day"]) .day-dock {
   gap: 3px;
   flex: 0 0 78px;
   text-align: center;
-  scroll-snap-align: start;
 }
 .person img,
 .person-fallback {
@@ -3009,7 +3129,7 @@ body:not([data-tab="day"]) .day-dock {
 .period-bar {
   position: sticky;
   top: var(--appbar-h);
-  z-index: 5;
+  z-index: 29;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -3514,32 +3634,6 @@ button.col:disabled {
   color: var(--ink-3);
 }
 
-.halls {
-  display: grid;
-  gap: 16px;
-  margin-top: 12px;
-}
-.hall-head {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 10px;
-}
-.hall-head strong {
-  font-size: 14.5px;
-  font-weight: 700;
-}
-.hall-head span {
-  font-size: 15px;
-  font-weight: 760;
-  font-variant-numeric: tabular-nums;
-}
-.hall-sub {
-  font-size: 12px;
-  color: var(--ink-3);
-  font-variant-numeric: tabular-nums;
-}
-
 .records {
   display: grid;
   gap: 8px;
@@ -3729,6 +3823,7 @@ button.col:disabled {
   color: var(--ink-2);
 }
 .dx-msg {
+  animation: rise 0.3s var(--ease) both;
   padding: 10px 12px;
   border-radius: var(--r-md);
   font-size: 13px;
@@ -3741,6 +3836,9 @@ button.col:disabled {
 .dx-msg.is-err {
   background: var(--soon-soft);
   color: var(--soon);
+}
+.dx-details[open] pre {
+  animation: rise 0.28s var(--ease) both;
 }
 .dx-details summary {
   font-size: 13px;
@@ -3784,6 +3882,7 @@ button.col:disabled {
   width: min(calc(100% - 24px), 440px);
   transform: translateX(-50%);
 }
+/* The same glass as the header, so top and bottom bars match. */
 .tabbar-inner {
   position: relative;
   display: grid;
@@ -3791,9 +3890,9 @@ button.col:disabled {
   padding: 6px;
   border-radius: 26px;
   border: 1px solid var(--line);
-  background: var(--glass-strong);
-  -webkit-backdrop-filter: saturate(1.8) blur(26px);
-  backdrop-filter: saturate(1.8) blur(26px);
+  background: var(--glass);
+  -webkit-backdrop-filter: saturate(1.7) blur(22px);
+  backdrop-filter: saturate(1.7) blur(22px);
   box-shadow: var(--shadow-lg);
 }
 /* Moved by slideTo (ui.js): stretches toward the new tab, no bounce. */
@@ -4125,6 +4224,14 @@ button.col:disabled {
   body {
     padding-left: var(--rail-space);
   }
+  .header-glass {
+    left: var(--rail-space);
+  }
+  /* No bar along the bottom here: just a short fade at the screen edge. */
+  .edge-blur {
+    left: var(--rail-space);
+    height: 56px;
+  }
   .main {
     padding-bottom: 48px;
   }
@@ -4263,6 +4370,9 @@ button.col:disabled {
   .sheet-grab {
     display: none;
   }
+  .sheet-panel.is-full {
+    height: min(900px, calc(100dvh - 64px));
+  }
 }
 
 @media (min-width: 1480px) {
@@ -4310,8 +4420,9 @@ button.col:disabled {
   .brand-name {
     font-size: 17px;
   }
-  .day-bar {
-    padding-bottom: 6px;
+  .day-track {
+    padding-top: 4px;
+    padding-bottom: 10px;
   }
   .day-chip {
     height: 48px;
@@ -4357,10 +4468,13 @@ button.col:disabled {
 }
 
 @media (prefers-reduced-transparency: reduce) {
-  .appbar,
-  .day-dock,
+  .edge-blur i {
+    display: none;
+  }
+  .header-glass,
+  .day-dock:not(.is-docked),
   .tabbar-inner,
-  .period-bar {
+  .period-bar:not(.is-docked) {
     background: var(--bg-elev);
     -webkit-backdrop-filter: none;
     backdrop-filter: none;

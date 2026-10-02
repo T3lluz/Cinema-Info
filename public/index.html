@@ -50,9 +50,13 @@
     <link rel="modulepreload" href="js/stats.js?v=dev" />
     <link rel="modulepreload" href="js/settings.js?v=dev" />
     <link rel="modulepreload" href="js/sheet.js?v=dev" />
+    <link rel="modulepreload" href="js/ripple.js?v=dev" />
   </head>
   <body data-tab="day">
     <div id="app" class="app">
+      <!-- One sheet of glass behind the header and whatever bar is docked
+           under it, so they read as a single panel. -->
+      <div id="headerGlass" class="header-glass" aria-hidden="true"></div>
       <header id="appbar" class="appbar">
         <div class="appbar-row">
           <div class="brand">
@@ -69,9 +73,9 @@
 
       <!-- The warning sits right under the header on every tab and scrolls
            away; the day strip below it sticks under the header on its own. -->
-      <section id="notice" class="notice" role="note" aria-label="Advarsel" hidden></section>
+      <section id="notice" class="notice pull-follow" role="note" aria-label="Advarsel" hidden></section>
 
-      <div id="dayDock" class="day-dock">
+      <div id="dayDock" class="day-dock pull-follow">
         <div id="dayBar" class="day-bar">
           <button id="jumpTodayBtn" class="jump-today" type="button" inert aria-hidden="true" data-i18n-aria="jumpTodayAria" aria-label="Gå til i dag">
             <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
@@ -89,14 +93,7 @@
         </div>
       </div>
 
-      <div id="ptr" class="ptr" aria-hidden="true">
-        <span class="ptr-bubble">
-          <svg class="icon ptr-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.6-6.4L21 8"/><path d="M21 3v5h-5"/></svg>
-        </span>
-        <span class="ptr-label">Dra for å oppdatere</span>
-      </div>
-
-      <main class="main">
+      <main class="main pull-follow">
         <section id="view-day" class="view view-day" aria-live="polite">
           <div id="pager" class="pager">
             <div id="dayPage" class="page">
@@ -184,6 +181,9 @@
     </div>
 
     <div id="toasts" class="toasts" aria-live="polite"></div>
+
+    <!-- The progressive blur the page fades into behind the tab bar. -->
+    <div class="edge-blur" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
 
     <!-- Bridge endpoints. Both functions are self-hosted on t3lluserver
          and published over Tailscale Funnel; the app falls back to the

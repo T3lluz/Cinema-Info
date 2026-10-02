@@ -25,6 +25,7 @@ const PRECACHE = [
   "./js/stats.js?v=dev",
   "./js/settings.js?v=dev",
   "./js/sheet.js?v=dev",
+  "./js/ripple.js?v=dev",
   "./data/program.json",
   "./assets/favicon.svg",
   "./assets/apple-touch-icon.png",

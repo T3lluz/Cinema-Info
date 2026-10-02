@@ -193,6 +193,26 @@ away with the page. The words live in `public/js/i18n.js` (`noticeTitle`,
   follows — and never bounce. Tab icons fill in and animate when chosen.
 - Stats open with the week-for-week (or month-for-month) chart as the
   period picker: tap a column and everything below shows that period.
+- The header and a bar docked under it (day strip, stats period switch)
+  share one sheet of glass, so they read as one panel; behind the tab
+  bar the page fades into a progressive blur, as in Essentials.
+
+## The ripple
+
+Opening the app, and every refresh, sends the liquid ripple from
+DailyDash and the t3lluz dashboard through the page under the header:
+Essentials’ AGSL shader ported to WebGL with its numbers unchanged,
+run over a photograph of the page (`public/js/ripple.js`). Pull to
+refresh works the DailyDash way — no spinner; the page follows the
+finger, ticks on the way, clicks once a release would refresh — and the
+ripple is the only sign it ran. Settings → Bevegelse turns it off, and
+it never plays with reduced motion.
+
+Buen’s poster CDN refuses cross-origin reads, so the photograph takes
+posters from same-origin copies the Pages deploy makes
+(`scripts/mirror-posters.mjs`, nothing committed). To see posters in the
+ripple on the dev server, run `node scripts/mirror-posters.mjs public`
+once (it fills the git-ignored `public/posters/`).
 
 ## Install on your phone
 

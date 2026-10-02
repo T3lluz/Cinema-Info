@@ -42,6 +42,7 @@ import {
   genreLine,
   statusChip,
   admissionIcon,
+  hapticTick,
   hscroll,
   syncHScroll,
 } from "./ui.js?v=dev";
@@ -54,6 +55,20 @@ const SHEET_COMMIT_FRAC = 0.22;
 let current = null;
 let opener = null;
 let closeTimer = 0;
+let inertTimer = 0;
+
+/** How long the sheet takes to slide in (the CSS transition, plus a frame). */
+const OPEN_MS = 480;
+/** The longest the slide waits for the poster to be decoded first. */
+const POSTER_WAIT_MS = 160;
+
+const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+
+/** The hero's poster decoded, so it does not paint in mid-slide. */
+function heroReady() {
+  const imgs = [...els.sheetBody.querySelectorAll(".sh-hero img")];
+  return Promise.race([Promise.allSettled(imgs.map((img) => img.decode())), wait(POSTER_WAIT_MS)]);
+}
 
 export function isSheetOpen() {
   return Boolean(current) && !els.sheet?.hidden;
@@ -87,29 +102,38 @@ export function openMovie({ title = "", imdbID = "", showId = "", row = null } =
       /* some embedded browsers refuse; Esc and the X still close */
     }
   }
-  reveal();
   // A different film starts from a clean page rather than morphing the
-  // last one into it.
+  // last one into it. Everything is laid out before the sheet moves, and
+  // a sheet whose details are still coming opens at its full height, so
+  // nothing grows, shifts or repaints while it slides in.
   els.sheetBody.replaceChildren();
   forgetPaint(els.sheetBody);
+  els.sheetPanel?.classList.toggle("is-full", Boolean(id));
   render();
   els.sheetBody.scrollTop = 0;
 
-  if (id) {
-    const token = current;
-    fetchTitle(id)
-      .then((movie) => {
-        if (current !== token) return;
-        token.omdb = movie;
-        token.omdbStatus = movie ? "ok" : "error";
-        render();
-      })
-      .catch(() => {
-        if (current !== token) return;
-        token.omdbStatus = "error";
-        render();
-      });
-  }
+  const token = current;
+  const details = id ? fetchTitle(id) : null;
+  const apply = (movie) => {
+    if (current !== token) return;
+    token.omdb = movie;
+    token.omdbStatus = movie ? "ok" : "error";
+    render();
+  };
+  details?.then(
+    (movie) => (token.opened ? token.opened.then(() => apply(movie)) : apply(movie)),
+    () => (token.opened ? token.opened.then(() => apply(null)) : apply(null))
+  );
+
+  const open = () => {
+    if (current !== token) return;
+    // From here, details that arrive wait for the slide to finish and
+    // then fade in, instead of landing under it half way up.
+    token.opened = wasOpen || reducedMotion() ? Promise.resolve() : wait(OPEN_MS);
+    reveal();
+  };
+  if (wasOpen) open();
+  else heroReady().then(open);
 }
 
 /** Close from the UI: go back in history if the sheet pushed an entry. */
@@ -122,6 +146,7 @@ export function requestCloseSheet() {
 export function closeSheet({ fromY = 0, velocity = 0 } = {}) {
   const sheet = els.sheet;
   if (!sheet || sheet.hidden || sheet.classList.contains("is-leaving")) return;
+  clearTimeout(inertTimer);
   els.app?.removeAttribute("inert");
   document.documentElement.classList.remove("sheet-open");
   const finish = () => {
@@ -157,7 +182,12 @@ function reveal() {
   sheet.classList.remove("is-leaving");
   sheet.style.removeProperty("--sheet-drag");
   document.documentElement.classList.add("sheet-open");
-  els.app?.setAttribute("inert", "");
+  // Marking the whole app inert restyles every element in it; done once
+  // the sheet has landed, so it costs the slide nothing.
+  clearTimeout(inertTimer);
+  inertTimer = setTimeout(() => {
+    if (isSheetOpen()) els.app?.setAttribute("inert", "");
+  }, reducedMotion() ? 0 : OPEN_MS);
   if (!sheet.hidden && sheet.classList.contains("is-open")) return;
   sheet.hidden = false;
   if (reducedMotion()) {
@@ -487,6 +517,7 @@ function setupDrag() {
     const height = panel.offsetHeight || 1;
     const need = height * (handle ? SHEET_COMMIT_FRAC * 0.6 : SHEET_COMMIT_FRAC);
     if (!cancelled && vy > -SHEET_FLICK && (vy > SHEET_FLICK || curY > need)) {
+      hapticTick("medium");
       // Close without waiting for history so the slide starts from here.
       if (history.state?.sheet) {
         closeSheet({ fromY: curY, velocity: vy });

@@ -1,10 +1,10 @@
 /**
- * The stats dashboard. One period at a time — a week or a month, stepped
- * with ‹ › — and everything on the page scoped to it: the headline sold
- * figure against the same point last period, attendance, sales per
- * day, the best films and each auditorium. Under that, things
- * that are not about one period: the trend, the best weekdays, what is
- * already sold for the coming showings, and the records.
+ * The stats dashboard. One period at a time — a week or a month, picked
+ * from the week-for-week (month-for-month) chart at the top or stepped
+ * with ‹ › — and everything under it scoped to that period: the headline
+ * sold figure against the same point last period, attendance, the best
+ * films and sales per day. Then two things that are not about one
+ * period: the best weekdays and the records.
  *
  * "Sold" is what a showing has sold in total, so a day's figure is the
  * tickets for that day's showings, and a future day's is presale.
@@ -172,14 +172,6 @@ function computeModel(period) {
   }
   const top = [...films.values()].filter((f) => f.sold > 0).sort((a, b) => b.sold - a.sold).slice(0, 6);
 
-  const halls = new Map();
-  for (const s of shows) {
-    const h = halls.get(s.screen) || { screen: s.screen, sold: 0, shows: 0 };
-    h.sold += soldOf(s);
-    h.shows += 1;
-    halls.set(s.screen, h);
-  }
-
   return {
     period,
     sum,
@@ -188,7 +180,6 @@ function computeModel(period) {
     future: period.start > today,
     byDay,
     top,
-    halls: [...halls.values()].sort((a, b) => a.screen.localeCompare(b.screen, "nb")),
   };
 }
 
@@ -245,14 +236,6 @@ function records() {
     .filter((s) => Number(s.scanned) > 0)
     .sort((a, b) => Number(b.scanned) - Number(a.scanned))[0];
   return { bestDay, bestShow, mostInside };
-}
-
-function presale() {
-  const now = new Date();
-  const ahead = (S.state?.shows || []).filter((s) => s.start > now && s.sold != null);
-  const sold = ahead.reduce((n, s) => n + soldOf(s), 0);
-  const top = [...ahead].sort((a, b) => soldOf(b) - soldOf(a)).filter((s) => soldOf(s) > 0).slice(0, 5);
-  return { sold, count: ahead.length, top };
 }
 
 /* —— Charts ————————————————————————————————————————————————————————
@@ -463,29 +446,6 @@ export function renderStats() {
       </section>`
     : "";
 
-  const maxHall = Math.max(...model.halls.map((h) => h.sold), 1);
-  const halls =
-    model.halls.length > 1
-      ? `<section class="card" data-key="halls">
-          <div class="section-head"><div><h2>${escapeHtml(t("halls"))}</h2><p>${escapeHtml(t("hallsSub"))}</p></div></div>
-          <div class="halls">
-            ${model.halls
-              .map(
-                (h) => `<div class="hall">
-                  <div class="hall-head"><strong>${escapeHtml(h.screen)}</strong><span>${formatCount(h.sold)}</span></div>
-                  <span class="rank-bar"><span style="width:${((h.sold / maxHall) * 100).toFixed(1)}%"></span></span>
-                  <p class="hall-sub">${escapeHtml(
-                    `${h.shows === 1 ? t("showsOne") : t("showsMany", { n: h.shows })} · ${t("avgPerShow", {
-                      n: formatCount(Math.round(h.sold / h.shows)),
-                    })}`
-                  )}</p>
-                </div>`
-              )
-              .join("")}
-          </div>
-        </section>`
-      : "";
-
   const wk = weekdayPattern();
   const bestDow = wk.reduce((b, r) => (r.avg > (b?.avg ?? -1) ? r : b), null);
   const weekdayCard = wk.some((r) => r.shows)
@@ -502,33 +462,6 @@ export function renderStats() {
           interactive: false,
           aria: (r) => `${capitalize(weekdays()[(r.dow + 1) % 7])}: ${Math.round(r.avg)} ${t("perShow")}`,
         })}
-      </section>`
-    : "";
-
-  const pre = presale();
-  const maxPre = Math.max(...pre.top.map((s) => soldOf(s)), 1);
-  const presaleCard = pre.count
-    ? `<section class="card" data-key="presale">
-        <div class="section-head"><div><h2>${escapeHtml(t("presaleTitle"))}</h2><p>${escapeHtml(
-          t("presaleTotal", { n: formatCount(pre.sold), shows: pre.count })
-        )}</p></div></div>
-        ${
-          pre.top.length
-            ? `<ol class="rank">${pre.top
-                .map((s) => {
-                  return `<li data-key="${escapeHtml(s.id)}"><button type="button" class="rank-row" data-goto-show="${escapeHtml(s.id)}">
-                    ${posterHtml(s, { w: 36, h: 54, cls: "rank-poster" })}
-                    <span class="rank-body">
-                      <span class="rank-title">${escapeHtml(s.title)}</span>
-                      <span class="rank-bar is-future"><span style="width:${((soldOf(s) / maxPre) * 100).toFixed(1)}%"></span></span>
-                      <span class="rank-sub">${escapeHtml(`${shortDayLabel(s.dayKey)} ${formatClock(s.start)} · ${s.screen}`)}</span>
-                    </span>
-                    <span class="rank-v">${formatCount(soldOf(s))}</span>
-                  </button></li>`;
-                })
-                .join("")}</ol>`
-            : ""
-        }
       </section>`
     : "";
 
@@ -576,18 +509,16 @@ export function renderStats() {
   // Cards are dealt into as many columns as the screen has room for,
   // in a fixed order per layout, so nothing hops between columns when
   // a figure changes.
+  // Sold per day always sits right above the best weekdays: the one
+  // reads into the other.
   const layout = XL_MQ.matches
-    ? [
-        [hero, dayChart],
-        [topFilms, halls],
-        [presaleCard, weekdayCard, recordsCard],
-      ]
+    ? [[hero, recordsCard], [topFilms], [dayChart, weekdayCard]]
     : WIDE_MQ.matches
       ? [
-          [hero, dayChart, halls, weekdayCard],
-          [topFilms, presaleCard, recordsCard],
+          [hero, dayChart, weekdayCard],
+          [topFilms, recordsCard],
         ]
-      : [[hero, dayChart, topFilms, halls, presaleCard, weekdayCard, recordsCard]];
+      : [[hero, topFilms, dayChart, weekdayCard, recordsCard]];
 
   paint(
     host,

@@ -114,6 +114,15 @@ export function renderSettings() {
         </section>
 
         <section class="group">
+          <h2 class="group-label">${escapeHtml(t("groupMotion"))}</h2>
+          <div class="card list">
+            ${row("sparkle", t("ripple"), t("rippleHint"), toggle("ripple", S.rippleOn, t("ripple")), {
+              attrs: 'data-row-toggle="ripple"',
+            })}
+          </div>
+        </section>
+
+        <section class="group">
           <h2 class="group-label">${escapeHtml(t("groupSeats"))}</h2>
           <div class="card list">
             ${row("seats", t("seatNumbers"), t("seatNumbersHint"), toggle("seatNumbers", S.showSeatNumbers, t("seatNumbers")), {
@@ -216,7 +225,9 @@ function setToggle(name) {
     for (const show of S.state?.shows || []) if (seatChartExpanded(show)) paintSeatChart(show);
   } else if (name === "haptics") {
     S.hapticsOn = !S.hapticsOn;
-    if (S.hapticsOn) hapticTick();
+    if (S.hapticsOn) hapticTick("medium");
+  } else if (name === "ripple") {
+    S.rippleOn = !S.rippleOn;
   } else if (name === "keepAwake") {
     S.keepAwake = !S.keepAwake;
     hooks.applyWakeLock();

@@ -906,7 +906,7 @@ export function setupDaySwipe() {
     const commit =
       (dir === 1 && (projected < -width * COMMIT_FRAC || vx < -FLICK_PX_MS) && sameWay) ||
       (dir === -1 && (projected > width * COMMIT_FRAC || vx > FLICK_PX_MS) && sameWay);
-    if (commit) hapticTick();
+    if (commit) hapticTick("medium");
     settle(commit, dir, target, vx);
   };
   host.addEventListener("pointerup", (e) => release(e, false));

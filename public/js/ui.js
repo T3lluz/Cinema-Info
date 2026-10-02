@@ -37,7 +37,7 @@ const template = document.createElement("template");
 
 /** Classes JavaScript adds (for a moment, or as live state such as a
  * scroller's arrows); a redraw must not strip them. */
-const TRANSIENT = ["is-flash", "is-picked", "is-set", "is-new", "is-entering", "can-prev", "can-next"];
+const TRANSIENT = ["is-flash", "is-picked", "is-set", "is-new", "is-entering", "can-prev", "can-next", "is-docked"];
 
 function parse(html) {
   template.innerHTML = html.trim();
@@ -501,11 +501,17 @@ export function toast(text, { action = "", onAction = null, timeout = 2800, stic
 }
 
 /* —— Haptics ——————————————————————————————————————————————————————
- * `navigator.vibrate` is always full amplitude, so a shorter pulse is a
- * lighter one; 1ms is the lightest tick a motor makes. The lock stops
- * Chrome's synthetic second click from stacking a second pulse.
+ * `navigator.vibrate` is always full amplitude, so strength is duration:
+ * a 1ms pulse is the lightest tick a motor makes, a few more ms read as a
+ * firmer click. Three steps:
+ *   light  — picking among options: a day, a period, a switch position,
+ *            a scroll arrow, a chart column, a search hit
+ *   medium — going somewhere or changing something: a tab, opening a
+ *            film, a toggle, a button, a committed day swipe
+ *   strong — a deliberate gesture landing: pull-to-refresh firing
+ * The lock stops Chrome's synthetic second click from stacking a pulse.
  */
-const HAPTIC_TICK_MS = 1;
+const HAPTIC_MS = { light: 1, medium: 6, strong: 14 };
 const HAPTIC_LOCK_MS = 70;
 let hapticLockUntil = 0;
 
@@ -516,43 +522,70 @@ function canHaptic() {
   return /Android/i.test(navigator.userAgent);
 }
 
-export function hapticTick() {
+export function hapticTick(level = "light") {
   if (!S.hapticsOn || !canHaptic()) return;
   const now = performance.now();
   if (now < hapticLockUntil) return;
   hapticLockUntil = now + HAPTIC_LOCK_MS;
   try {
-    navigator.vibrate(HAPTIC_TICK_MS);
+    navigator.vibrate(HAPTIC_MS[level] || HAPTIC_MS.light);
   } catch {
     /* some WebViews throw; a tap must never fail because of this */
   }
 }
 
-/** Only controls that mean "I picked this" — not seats, scroll or swipe. */
-const HAPTIC_SELECTOR = [
-  ".tab",
-  ".day-chip",
-  ".jump-today",
-  ".status-btn",
-  ".seg-btn",
-  ".switch",
-  ".btn",
-  ".seat-strip",
-  ".movie-card",
-  ".show-open",
-  "[data-open-show]",
-  "[data-open-movie]",
-  "[data-goto-show]",
-  "[data-stats-day]",
-  "[data-period]",
-  ".sheet-close",
-].join(", ");
+/** Controls that mean "I picked this" — not seats, scrolling or swiping. */
+const HAPTICS = [
+  [
+    "medium",
+    [
+      ".tab",
+      ".switch",
+      "[data-row-toggle]",
+      ".btn",
+      ".status-btn",
+      ".jump-today",
+      ".movie-card",
+      ".up-card",
+      ".show-main",
+      ".rank-row",
+      ".record",
+      ".nn",
+      ".sh-show",
+      ".sheet-close",
+      "[data-open-movie]",
+      "[data-goto-show]",
+      "[data-omdb-id]",
+      "[data-stats-day]",
+    ],
+  ],
+  [
+    "light",
+    [
+      ".day-chip",
+      ".seg-btn",
+      "[data-period]",
+      "[data-period-jump]",
+      ".hs-btn",
+      ".tl-bar",
+      ".hit",
+      ".seat-strip",
+      ".sh-more",
+      ".link-btn",
+      ".search-clear",
+      "[data-done-more]",
+      "[data-seat-retry]",
+    ],
+  ],
+];
+const HAPTIC_ANY = HAPTICS.flatMap(([, list]) => list).join(", ");
 
 function hapticTarget(el) {
   const node = el?.nodeType === 1 ? el : el?.parentElement;
-  const hit = node?.closest?.(HAPTIC_SELECTOR);
+  const hit = node?.closest?.(HAPTIC_ANY);
   if (!hit || hit.disabled || hit.getAttribute("aria-disabled") === "true") return null;
-  return hit;
+  const level = HAPTICS.find(([, list]) => list.some((sel) => hit.matches(sel)))?.[0] || "light";
+  return { hit, level };
 }
 
 export function setupHaptics() {
@@ -561,7 +594,7 @@ export function setupHaptics() {
   let pointerType = "mouse";
   let downX = 0;
   let downY = 0;
-  let downHit = null;
+  let down = null;
   let ticked = false;
 
   document.addEventListener(
@@ -571,7 +604,7 @@ export function setupHaptics() {
       pointerType = e.pointerType;
       downX = e.clientX;
       downY = e.clientY;
-      downHit = hapticTarget(e.target);
+      down = hapticTarget(e.target);
       ticked = false;
     },
     true
@@ -579,11 +612,11 @@ export function setupHaptics() {
   document.addEventListener(
     "pointerup",
     (e) => {
-      if (!e.isPrimary || pointerType === "mouse" || !downHit) return;
+      if (!e.isPrimary || pointerType === "mouse" || !down) return;
       if (Math.hypot(e.clientX - downX, e.clientY - downY) > 12) return;
-      if (hapticTarget(e.target) !== downHit) return;
+      if (hapticTarget(e.target)?.hit !== down.hit) return;
       ticked = true;
-      hapticTick();
+      hapticTick(down.level);
     },
     true
   );
@@ -592,7 +625,8 @@ export function setupHaptics() {
     (e) => {
       if (ticked) return;
       if (pointerType === "mouse" && e.detail !== 0) return;
-      if (hapticTarget(e.target)) hapticTick();
+      const target = hapticTarget(e.target);
+      if (target) hapticTick(target.level);
     },
     true
   );
