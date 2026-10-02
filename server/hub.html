@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Cinema Info · Feedback</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23d0202e'/%3E%3Cpath d='M9 10h14v9H15l-4 4v-4H9z' fill='white'/%3E%3C/svg%3E">
+<style>
+  :root {
+    --bg: #f4f2ef; --card: #fff; --sunk: #eeebe7; --ink: #1a1612; --ink-2: #5d5750; --ink-3: #8e877f;
+    --line: rgba(30,24,18,.09); --accent: #d0202e; --accent-soft: rgba(208,32,46,.1);
+    --bug: #d0202e; --idea: #2563eb; --other: #6b6560; --done: #138a43;
+    --shadow: 0 1px 2px rgba(30,24,18,.05), 0 6px 20px rgba(30,24,18,.06);
+    color-scheme: light dark;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0c0c0e; --card: #17171a; --sunk: #222226; --ink: #f4f4f3; --ink-2: #aaa59f; --ink-3: #77726c;
+      --line: rgba(255,255,255,.08); --accent: #ff4757; --accent-soft: rgba(255,71,87,.15);
+      --bug: #ff6b78; --idea: #6aa5ff; --other: #aaa59f; --done: #3ddc84; --shadow: none;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-size: 15px; line-height: 1.45; }
+  main { max-width: 820px; margin: 0 auto; padding: 28px 16px 60px; }
+  header { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+  h1 { margin: 0; font-size: 26px; letter-spacing: -.02em; }
+  .sub { color: var(--ink-3); font-size: 13px; margin-top: 2px; }
+  .health { font-size: 12.5px; color: var(--ink-3); text-align: right; }
+  .health b { color: var(--ink-2); font-weight: 600; }
+  .dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 6px; vertical-align: 1px; background: var(--ink-3); }
+  .dot.ok { background: var(--done); } .dot.bad { background: var(--accent); }
+  .bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+  .seg { display: inline-flex; background: var(--sunk); border-radius: 11px; padding: 3px; }
+  .seg button { border: 0; background: none; color: var(--ink-2); font: inherit; font-size: 13.5px; font-weight: 600;
+    padding: 6px 12px; border-radius: 8px; cursor: pointer; }
+  .seg button[aria-pressed="true"] { background: var(--card); color: var(--ink); box-shadow: var(--shadow); }
+  .seg .n { color: var(--ink-3); font-weight: 500; margin-left: 4px; }
+  .list { display: grid; gap: 10px; }
+  .item { background: var(--card); border-radius: 16px; padding: 14px 16px; box-shadow: var(--shadow); border: 1px solid var(--line); }
+  .item.is-done { opacity: .62; }
+  .top { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 13px; color: var(--ink-3); }
+  .kind { font-weight: 700; font-size: 11.5px; letter-spacing: .05em; text-transform: uppercase; padding: 2px 8px; border-radius: 6px; }
+  .kind.bug { color: var(--bug); background: color-mix(in srgb, var(--bug) 12%, transparent); }
+  .kind.idea { color: var(--idea); background: color-mix(in srgb, var(--idea) 12%, transparent); }
+  .kind.other { color: var(--other); background: color-mix(in srgb, var(--other) 14%, transparent); }
+  .who { color: var(--ink-2); font-weight: 600; }
+  .msg { white-space: pre-wrap; overflow-wrap: anywhere; margin: 8px 0 10px; font-size: 15.5px; }
+  .ctx { display: flex; flex-wrap: wrap; gap: 6px; font-size: 12px; color: var(--ink-3); }
+  .ctx span { background: var(--sunk); border-radius: 6px; padding: 2px 7px; }
+  .actions { display: flex; gap: 8px; margin-left: auto; }
+  .btn { border: 1px solid var(--line); background: var(--card); color: var(--ink); font: inherit; font-size: 13px; font-weight: 600;
+    padding: 5px 11px; border-radius: 9px; cursor: pointer; }
+  .btn:hover { background: var(--sunk); }
+  .btn.done { color: var(--done); }
+  .btn.del { color: var(--accent); }
+  .empty { text-align: center; color: var(--ink-3); padding: 50px 10px; }
+  .empty b { display: block; color: var(--ink-2); font-size: 17px; margin-bottom: 4px; }
+  .err { background: var(--accent-soft); color: var(--accent); padding: 10px 14px; border-radius: 12px; margin-bottom: 12px; display: none; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <div>
+      <h1>Feedback</h1>
+      <div class="sub">What staff send from Cinema Info → Settings → Feedback</div>
+    </div>
+    <div class="health" id="health"></div>
+  </header>
+  <div class="err" id="err"></div>
+  <div class="bar">
+    <div class="seg" id="statusSeg">
+      <button data-status="new" aria-pressed="true">Open<span class="n" id="nOpen"></span></button>
+      <button data-status="done" aria-pressed="false">Done<span class="n" id="nDone"></span></button>
+      <button data-status="all" aria-pressed="false">All<span class="n" id="nAll"></span></button>
+    </div>
+    <div class="seg" id="kindSeg">
+      <button data-kind="all" aria-pressed="true">Everything</button>
+      <button data-kind="bug" aria-pressed="false">Bugs</button>
+      <button data-kind="idea" aria-pressed="false">Ideas</button>
+      <button data-kind="other" aria-pressed="false">Other</button>
+    </div>
+  </div>
+  <div class="list" id="list"></div>
+</main>
+<script>
+  const KIND = { bug: "Bug", idea: "Idea", other: "Other" };
+  const SITE = { pages: "GitHub Pages", t3lluz: "t3lluz.com", local: "local" };
+  let items = [];
+  let filter = { status: "new", kind: "all" };
+
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+
+  function ago(iso) {
+    const s = (Date.now() - Date.parse(iso)) / 1000;
+    if (s < 60) return "just now";
+    if (s < 3600) return `${Math.round(s / 60)} min ago`;
+    if (s < 86400) return `${Math.round(s / 3600)} h ago`;
+    return `${Math.round(s / 86400)} d ago`;
+  }
+  const stamp = (iso) => new Date(iso).toLocaleString("en-GB", { dateStyle: "medium", timeStyle: "short" });
+
+  function render() {
+    const open = items.filter((f) => f.status === "new").length;
+    $("nOpen").textContent = open;
+    $("nDone").textContent = items.length - open;
+    $("nAll").textContent = items.length;
+    document.title = open ? `(${open}) Cinema Info · Feedback` : "Cinema Info · Feedback";
+
+    const shown = items.filter((f) =>
+      (filter.status === "all" || f.status === filter.status) && (filter.kind === "all" || f.kind === filter.kind));
+    if (!shown.length) {
+      $("list").innerHTML = `<div class="empty"><b>${filter.status === "new" ? "Inbox zero" : "Nothing here"}</b>${
+        items.length ? "Try another filter." : "Feedback from the app lands here."}</div>`;
+      return;
+    }
+    $("list").innerHTML = shown.map((f) => {
+      const c = f.context || {};
+      const ctx = [
+        c.version && `v${c.version}`,
+        c.site && (SITE[c.site] || c.site),
+        c.tab && `tab: ${c.tab}`,
+        c.day && `day: ${c.day}`,
+        c.viewport,
+        c.standalone === "yes" && "installed app",
+        c.ua,
+      ].filter(Boolean);
+      return `<article class="item ${f.status === "done" ? "is-done" : ""}">
+        <div class="top">
+          <span class="kind ${esc(f.kind)}">${esc(KIND[f.kind] || f.kind)}</span>
+          <span class="who">${esc(f.name || "Anonymous")}</span>
+          <span title="${esc(stamp(f.at))}">${esc(ago(f.at))}</span>
+          <span class="actions">
+            <button class="btn done" data-act="${f.status === "done" ? "reopen" : "done"}" data-id="${esc(f.id)}">${f.status === "done" ? "Reopen" : "Mark done"}</button>
+            <button class="btn del" data-act="delete" data-id="${esc(f.id)}">Delete</button>
+          </span>
+        </div>
+        <div class="msg">${esc(f.message)}</div>
+        <div class="ctx">${ctx.map((x) => `<span>${esc(x)}</span>`).join("")}<span title="Same code means same sender">from #${esc(f.sender)}</span></div>
+      </article>`;
+    }).join("");
+  }
+
+  function showErr(text) {
+    $("err").textContent = text;
+    $("err").style.display = text ? "block" : "none";
+  }
+
+  async function load() {
+    try {
+      const res = await fetch("api/feedback", { cache: "no-store" });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      items = (await res.json()).items || [];
+      showErr("");
+      render();
+    } catch (e) {
+      showErr(`Could not load feedback: ${e.message}`);
+    }
+  }
+
+  async function loadHealth() {
+    try {
+      const h = await (await fetch("api/health", { cache: "no-store" })).json();
+      const ok = h.lastDxOk && (!h.lastDxErrorAt || h.lastDxOk > h.lastDxErrorAt);
+      const last = h.lastDxOk ? ago(new Date(h.lastDxOk).toISOString()) : "never";
+      $("health").innerHTML =
+        `<div><span class="dot ${ok ? "ok" : "bad"}"></span>Prefetch: DX ${esc(ok ? "OK" : "failing")}, last answer ${esc(last)}</div>` +
+        `<div><b>${h.seatCharts}</b> seat charts · <b>${h.events}</b> showings · <b>${h.doorsOpen}</b> doors open</div>` +
+        (!ok && h.lastDxError ? `<div>${esc(h.lastDxError)}</div>` : "");
+    } catch {
+      $("health").textContent = "";
+    }
+  }
+
+  document.addEventListener("click", async (e) => {
+    const seg = e.target.closest(".seg button");
+    if (seg) {
+      const key = seg.dataset.status ? "status" : "kind";
+      filter[key] = seg.dataset[key];
+      for (const b of seg.parentElement.children) b.setAttribute("aria-pressed", String(b === seg));
+      render();
+      return;
+    }
+    const btn = e.target.closest("[data-act]");
+    if (!btn) return;
+    const id = btn.dataset.id;
+    if (btn.dataset.act === "delete") {
+      if (!confirm("Delete this feedback for good?")) return;
+      await fetch(`api/feedback/${id}`, { method: "DELETE" });
+    } else {
+      await fetch(`api/feedback/${id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: btn.dataset.act === "done" ? "done" : "new" }),
+      });
+    }
+    load();
+  });
+
+  load();
+  loadHealth();
+  setInterval(() => { if (!document.hidden) { load(); loadHealth(); } }, 30000);
+</script>
+</body>
+</html>

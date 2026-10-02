@@ -1,0 +1,98 @@
+# Cinema Info on t3lluz.com. See README.md next to this file.
+#
+# Run from ~/docker/cinema-info, which holds the deploy checkout (repo/),
+# the built sites (build/), the server's data (data/) and the .env:
+#
+#   docker compose -f repo/deploy/server/compose.yml --project-directory . up -d
+#
+# update.sh does exactly that after every merge to main.
+name: cinema-info
+
+services:
+  # The app, the DX bridge with its prefetch cache, film lookups, and the
+  # feedback store. :8080 is the public side (/CinemaInfo), :8081 the
+  # feedback hub, which only Caddy on the tailnet proxies to.
+  cinema-info:
+    image: denoland/deno:2.9.6
+    container_name: cinema-info
+    restart: unless-stopped
+    user: "${CINEMA_UID:-1000}:${CINEMA_GID:-1000}"
+    working_dir: /app
+    command:
+      - run
+      - --no-prompt
+      - --allow-net
+      - --allow-env
+      - --allow-read=/app,/build,/data
+      - --allow-write=/data
+      - server/main.ts
+    environment:
+      TZ: Europe/Oslo
+      DENO_DIR: /tmp/deno
+      PORT: "8080"
+      ADMIN_PORT: "8081"
+      SITE_DIR: /build/current
+      DATA_DIR: /data
+      # Caddy's address on proxynet; nothing else may open the hub.
+      ADMIN_ALLOW: "172.30.0."
+      DX_EMAIL: ${DX_EMAIL:?DX_EMAIL missing from .env}
+      DX_PASSWORD: ${DX_PASSWORD:?DX_PASSWORD missing from .env}
+      OMDB_API_KEY: ${OMDB_API_KEY:-}
+    volumes:
+      - ./repo:/app:ro
+      - ./build:/build:ro
+      - ./data:/data
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test:
+        - CMD
+        - deno
+        - eval
+        - "const r = await fetch('http://127.0.0.1:8080/CinemaInfo/api/health'); if (!r.ok) Deno.exit(1)"
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    networks:
+      # Caddy (on the tailnet) reaches it as cinema-info:8080 and :8081.
+      proxynet: {}
+      # The tunnel reaches it as cinema-info:8080, and nothing else.
+      edge: {}
+
+  # The public way in. Cloudflare sends t3lluz.com/CinemaInfo* here and
+  # answers everything else on the apex with a 404 itself; the routing
+  # lives with the tunnel in Cloudflare (set by go-public.sh). Started
+  # once .env has a TUNNEL_TOKEN and COMPOSE_PROFILES=public.
+  tunnel:
+    image: cloudflare/cloudflared:2026.9.3
+    container_name: cinema-tunnel
+    restart: unless-stopped
+    profiles:
+      - public
+    command:
+      - tunnel
+      - --no-autoupdate
+      - run
+    environment:
+      TUNNEL_TOKEN: ${TUNNEL_TOKEN:-}
+    depends_on:
+      - cinema-info
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      edge: {}
+
+networks:
+  proxynet:
+    external: true
+    name: caddy_proxynet
+  edge: {}

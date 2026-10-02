@@ -352,6 +352,7 @@ export async function refreshForTab({ force = false } = {}) {
   if (S.activeTab === "day") {
     await enrichVisibleDay({ force });
   } else if (S.activeTab === "movies" || S.activeTab === "stats") {
+    if (await hooks.pullLive()) force = false;
     await refreshLive({ all: true, force });
     S.enrichedAll = true;
     await syncScanned({ force });
@@ -684,6 +685,9 @@ function showsOnScreen() {
  */
 export async function enrichVisibleDay({ force = false } = {}) {
   if (!S.state?.shows || !S.selectedDay) return;
+  // The server has usually read the whole day already. Its answer stamps
+  // what it covered, and the passes below fetch only what it did not.
+  if (await hooks.pullLive()) force = false;
   const list = S.state.shows.filter((s) => s.dayKey === S.selectedDay && s.eventId);
   if (!list.length) return;
   await refreshLive({ shows: list, all: true, force });
@@ -810,25 +814,47 @@ async function fetchDxEvent(show) {
   return res.json();
 }
 
+/**
+ * Put one event's figures on a showing, whether this device read DX
+ * itself or the server did (`server/live.ts` sends the same fields).
+ * True when anything a card shows has moved.
+ */
+function applyEventFigures(show, f) {
+  const before = liveFigures(show);
+  if (f.status === "gone") {
+    show.eventStatus = "gone";
+    return liveFigures(show) !== before;
+  }
+  const begin = parseLocalDateTime(f.begin);
+  const end = parseLocalDateTime(f.end);
+  if (begin) show.start = begin;
+  if (end) show.end = end;
+  show.sold = Number(f.sold) || 0;
+  show.reserved = Number(f.reserved) || 0;
+  show.capacity = Number(f.capacity) || null;
+  show.available = f.available != null ? Number(f.available) : null;
+  if (f.screen) show.screen = f.screen;
+  show.eventStatus = "ok";
+  return liveFigures(show) !== before;
+}
+
 /** Read one showing from DX. */
 async function enrichOne(show) {
-  const before = liveFigures(show);
   try {
     const event = await fetchDxEvent(show);
-    const end = parseLocalDateTime(event.end);
-    const begin = parseLocalDateTime(event.begin);
-    if (begin) show.start = begin;
-    if (end) show.end = end;
     const sale = event.ticketSale || {};
-    show.sold = Number(sale.sold) || 0;
-    show.reserved = Number(sale.reserved) || 0;
-    show.capacity = Number(sale.capacity) || null;
-    show.available = sale.available != null ? Number(sale.available) : null;
-    if (event.locationName) {
-      show.screen = String(event.locationName).replace(/\s*-\s*Kino$/i, "").trim();
-    }
-    show.eventStatus = "ok";
-    return { moved: liveFigures(show) !== before, ok: true };
+    const moved = applyEventFigures(show, {
+      sold: sale.sold,
+      reserved: sale.reserved,
+      capacity: sale.capacity,
+      available: sale.available,
+      begin: event.begin,
+      end: event.end,
+      screen: event.locationName
+        ? String(event.locationName).replace(/\s*-\s*Kino$/i, "").trim()
+        : "",
+    });
+    return { moved, ok: true };
   } catch (err) {
     // A deleted event means the showing has left the programme; a
     // network hiccup means nothing, so only DX's own 404 counts.
@@ -858,6 +884,52 @@ function liveFigures(show) {
     show.start?.getTime(),
     show.end?.getTime(),
   ].join("|");
+}
+
+/**
+ * The server's bulk answer (`/api/live`): sold counts for the programme
+ * and final check-in counts for every past showing. Each showing it
+ * covers is stamped as just read, so the beat leaves it alone and only
+ * asks DX about what the server did not. Seat charts are seats.js's half.
+ */
+export function applyServerLive(body) {
+  if (!S.state?.shows) return false;
+  const now = Date.now();
+  const events = body.events || {};
+  const scanned = body.scanned || {};
+  const touched = [];
+
+  for (const show of S.state.shows) {
+    if (!show.eventId) continue;
+    const id = String(show.eventId);
+    const ev = events[id];
+    if (ev) {
+      if (applyEventFigures(show, ev)) touched.push(show);
+      show.liveAt = now;
+    }
+    const count = scanned[id];
+    if (count && typeof count.scanned === "number") {
+      if (
+        show.scanned !== count.scanned ||
+        (typeof count.sold === "number" && show.sold !== count.sold)
+      ) {
+        show.scanned = count.scanned;
+        if (typeof count.sold === "number") show.sold = count.sold;
+        touched.push(show);
+      }
+      show.scannedAt = now;
+      show.scanDone = true;
+    }
+  }
+
+  const removed = dropRemovedShows();
+  if (touched.length) persistHistory(touched.filter((s) => !removed.has(s.id)));
+  if (Object.keys(events).length) {
+    S.lastLiveAt = now;
+    setStatus("live");
+  }
+  applyPreviewScanned();
+  return touched.length > 0 || removed.size > 0;
 }
 
 /**

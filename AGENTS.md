@@ -16,9 +16,15 @@ full product description and data model.
 - Node scripts in `scripts/` use only Node built-ins (`node:fs`, global
   `fetch`), except `build-icons.mjs` which needs `sharp` (only for regenerating
   the committed PWA icons — not needed to run the app).
-- `supabase/functions/dx-web-login/index.ts` is a Deno Edge Function that
-  holds the shared DX session for always-on admissions/seat maps (credentials
-  in Supabase Vault, never in the static site).
+- `supabase/functions/dx-web-login/index.ts` and `omdb-lookup/index.ts` are
+  Deno request handlers (`export handler`) for seat maps / check-ins and film
+  lookups. Credentials never ship in the static site.
+- `server/` is the Deno server on t3lluz.com (`server/main.ts`): it serves
+  the app at `/CinemaInfo/`, mounts both handlers under `/CinemaInfo/api`,
+  prefetches live DX figures (`server/live.ts`, read by `public/js/live.js`
+  through `/api/live`) and stores staff feedback for the private hub
+  (`server/hub.html`). Typecheck with `deno check server/main.ts`.
+  Deployment: `deploy/server/README.md`.
 
 ### Running the app (primary dev workflow)
 
@@ -45,9 +51,13 @@ full product description and data model.
   shell debugging against `app.dx.no`. The PWA itself needs no per-user
   DX login — see `.cursor/skills/dx-account/SKILL.md`.
 
-### Publishing (GitHub Pages)
+### Publishing (GitHub Pages and t3lluz.com)
 
-- Production URL: `https://t3lluz.github.io/Cinema-Info/`
+- Production URLs: `https://t3lluz.com/CinemaInfo/` and
+  `https://t3lluz.github.io/Cinema-Info/`. Both publish `main` on their own:
+  t3lluz.com through a one-minute poller on the server
+  (`deploy/server/update.sh`, same staging as the Pages workflow), Pages
+  through the workflow below.
 - Publish with `.github/workflows/deploy-pages.yml` (push to `main` or
   workflow_dispatch). **Repo admin one-time setup:** Settings → Pages →
   Source must be **GitHub Actions**, not “Deploy from a branch”. Legacy

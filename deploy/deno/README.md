@@ -1,3 +1,9 @@
+> **Superseded.** The bridge now runs inside the Cinema Info server on
+> t3lluz.com; see [`../server/README.md`](../server/README.md). Funnel is
+> off for t3lluserver (it was off in the September serve config too), so
+> the setup below only answered on the tailnet. Kept for the Deno Deploy
+> notes.
+
 # Hosting the bridge
 
 Cinema Info's two server-side pieces — `dx-web-login` (seat maps and

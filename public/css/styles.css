@@ -174,7 +174,8 @@ body {
 }
 
 button,
-input {
+input,
+textarea {
   font: inherit;
   color: inherit;
 }
@@ -3759,7 +3760,8 @@ button.col:disabled {
   height: 1px;
   background: var(--line);
 }
-.row[data-row-toggle] {
+.row[data-row-toggle],
+.row[data-row-action] {
   cursor: pointer;
 }
 .row-icon {
@@ -4468,6 +4470,229 @@ button.col:disabled {
 }
 
 /* —— Motion & contrast preferences ————————————————————————————————————— */
+
+
+/* —— Feedback ——————————————————————————————————————————————————————
+ * A native <dialog>, so focus, Escape and the backdrop come for free.
+ * A sheet from the bottom on phones, a card in the middle from 700px.
+ */
+.fb {
+  width: 100%;
+  max-width: 560px;
+  max-height: calc(100dvh - var(--safe-top) - 20px);
+  margin: auto auto 0;
+  padding: 0;
+  border: 0;
+  border-radius: 26px 26px 0 0;
+  background: var(--bg-elev);
+  color: var(--ink);
+  box-shadow: 0 -12px 48px rgba(0, 0, 0, 0.28);
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+.fb[open] {
+  animation: fb-in 0.36s var(--ease-swift);
+}
+.fb.is-leaving {
+  animation: fb-out 0.18s cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+.fb::backdrop {
+  background: var(--scrim);
+  animation: fb-fade 0.3s var(--ease);
+}
+.fb.is-leaving::backdrop {
+  animation: fb-fade 0.18s reverse forwards;
+}
+@keyframes fb-in {
+  from {
+    transform: translateY(100%);
+  }
+}
+@keyframes fb-out {
+  to {
+    transform: translateY(100%);
+  }
+}
+@keyframes fb-fade {
+  from {
+    opacity: 0;
+  }
+}
+.fb-panel {
+  display: grid;
+  gap: 12px;
+  padding: 18px 18px calc(18px + var(--safe-bottom));
+}
+.fb-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.fb-icon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  flex: none;
+  border-radius: 12px;
+  background: var(--accent-soft);
+  color: var(--accent-text);
+}
+.fb-icon .icon {
+  width: 21px;
+  height: 21px;
+}
+.fb-titles {
+  flex: 1;
+  min-width: 0;
+}
+.fb-title {
+  margin: 1px 0 0;
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 750;
+  letter-spacing: -0.01em;
+}
+.fb-sub {
+  margin: 2px 0 0;
+  font-size: 13.5px;
+  color: var(--ink-3);
+}
+.fb-close {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  flex: none;
+  border: 0;
+  border-radius: 50%;
+  background: var(--bg-sunk);
+  color: var(--ink-2);
+}
+.fb-close .icon {
+  width: 16px;
+  height: 16px;
+}
+.fb-kinds {
+  display: flex;
+  gap: 8px;
+}
+.fb-kind {
+  flex: 1;
+  height: 38px;
+  border: 1px solid var(--line-strong);
+  border-radius: 11px;
+  background: var(--bg-elev);
+  font-size: 14px;
+  font-weight: 650;
+  color: var(--ink-2);
+  transition:
+    background-color 0.15s,
+    border-color 0.15s,
+    color 0.15s,
+    transform 0.15s var(--ease);
+}
+.fb-kind:active {
+  transform: scale(0.97);
+}
+.fb-kind[aria-checked="true"] {
+  border-color: transparent;
+  background: var(--ink);
+  color: var(--bg-elev);
+}
+.fb-text,
+.fb-name {
+  width: 100%;
+  border: 1px solid var(--line-strong);
+  border-radius: 13px;
+  background: var(--bg-sunk);
+  font-size: 16px;
+  outline: none;
+  transition:
+    border-color 0.15s,
+    background-color 0.15s;
+}
+.fb-text {
+  min-height: 132px;
+  padding: 12px 14px;
+  line-height: 1.45;
+  resize: vertical;
+}
+.fb-name {
+  height: 46px;
+  padding: 0 14px;
+}
+.fb-text:focus,
+.fb-name:focus {
+  border-color: var(--ink-3);
+  background: var(--bg-elev);
+}
+.fb-text::placeholder,
+.fb-name::placeholder {
+  color: var(--ink-3);
+}
+/* Bots fill every field; people never see this one. */
+.fb-hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+.fb-note {
+  margin: -2px 2px 0;
+  font-size: 12px;
+  color: var(--ink-3);
+}
+.fb-msg {
+  margin: 0 2px;
+  font-size: 13.5px;
+  font-weight: 600;
+}
+.fb-msg:empty {
+  display: none;
+}
+.fb-msg.is-err {
+  color: var(--accent-text);
+}
+.fb-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+.fb-actions .btn {
+  min-width: 96px;
+}
+
+@media (min-width: 700px) {
+  .fb {
+    margin: auto;
+    border-radius: var(--r-xl);
+    box-shadow: var(--shadow-lg);
+  }
+  .fb[open] {
+    animation-name: fb-pop;
+    animation-duration: 0.28s;
+  }
+  .fb.is-leaving {
+    animation-name: fb-drop;
+  }
+  .fb-panel {
+    padding: 22px;
+  }
+  @keyframes fb-pop {
+    from {
+      opacity: 0;
+      transform: translateY(12px) scale(0.98);
+    }
+  }
+  @keyframes fb-drop {
+    to {
+      opacity: 0;
+      transform: translateY(8px) scale(0.98);
+    }
+  }
+}
 
 @media (prefers-reduced-motion: reduce) {
   *,
