@@ -13,6 +13,11 @@ export const PREFS_KEY = "cinemaInfoPrefs";
 export const HISTORY_KEY = "cinemaInfoHistory";
 export const DX_AUTH_KEY = "cinemaInfoDxAuth";
 export const SEAT_MAP_KEY = "cinemaInfoSeatMaps";
+/**
+ * The warning at the top of every tab (words in i18n.js, `noticeTitle`
+ * and `noticeBody`). It cannot be dismissed; false takes it down.
+ */
+export const NOTICE_ON = true;
 export const HISTORY_KEEP_DAYS = 120;
 export const DX_PARTNER_ID = "202";
 export const DX_API = "https://api.dx.no/v3";
@@ -49,6 +54,8 @@ export const DARK_MQ = window.matchMedia("(prefers-color-scheme: dark)");
 export const SEATS_OPEN_MQ = window.matchMedia("(min-width: 700px)");
 /** Desktop: navigation moves to a rail and sheets become dialogs. */
 export const WIDE_MQ = window.matchMedia("(min-width: 1024px)");
+/** Big desktop screens: showings and stats spread over more columns. */
+export const XL_MQ = window.matchMedia("(min-width: 1480px)");
 const REDUCED_MQ = window.matchMedia("(prefers-reduced-motion: reduce)");
 
 export function reducedMotion() {
@@ -112,6 +119,12 @@ export const hooks = {
 
 /** DOM references, filled in by app.js once the page is parsed. */
 export const els = {};
+
+/** What is pinned to the top of the screen: the header, plus the day
+ * strip under it on the day tab (zero high on the others). */
+export function headerHeight() {
+  return (els.appbar?.offsetHeight || 0) + (els.dayDock?.offsetHeight || 0);
+}
 
 /* —— Preferences ——————————————————————————————————————————————— */
 

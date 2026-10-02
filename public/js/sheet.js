@@ -34,12 +34,16 @@ import {
   admissionOf,
 } from "./data.js?v=dev";
 import {
+  paint,
+  forgetPaint,
   posterHtml,
   ratingBadges,
   specialBadges,
   genreLine,
   statusChip,
   admissionIcon,
+  hscroll,
+  syncHScroll,
 } from "./ui.js?v=dev";
 
 /** Headshots shown before "Full cast". */
@@ -84,6 +88,10 @@ export function openMovie({ title = "", imdbID = "", showId = "", row = null } =
     }
   }
   reveal();
+  // A different film starts from a clean page rather than morphing the
+  // last one into it.
+  els.sheetBody.replaceChildren();
+  forgetPaint(els.sheetBody);
   render();
   els.sheetBody.scrollTop = 0;
 
@@ -122,6 +130,7 @@ export function closeSheet({ fromY = 0, velocity = 0 } = {}) {
     sheet.style.removeProperty("--sheet-drag");
     sheet.style.removeProperty("--sheet-leave-ms");
     els.sheetBody.innerHTML = "";
+    forgetPaint(els.sheetBody);
     current = null;
     opener?.focus?.({ preventScroll: true });
     opener = null;
@@ -190,8 +199,11 @@ function render() {
     : `<span class="tag tag-special">${escapeHtml(t("upcomingComingSoon"))}</span>`;
   const kicker = omdb?.type === "series" ? t("sheetTypeSeries") : t("sheetTypeMovie");
 
-  els.sheetBody.innerHTML = `
-    <div class="sh-hero">
+  // Morphed, not rewritten: the beat redraws an open sheet every few
+  // seconds, and the cast list must keep where it was scrolled to.
+  paint(
+    els.sheetBody,
+    `<div class="sh-hero" data-key="hero">
       ${poster ? `<div class="sh-backdrop" style="background-image:url('${escapeHtml(poster)}')"></div>` : ""}
       <div class="sh-hero-inner">
         ${posterHtml({ title, posterUrl: poster }, { w: 112, h: 168, cls: "sh-poster", eager: true })}
@@ -204,9 +216,10 @@ function render() {
         </div>
       </div>
     </div>
-    ${local ? showingsHtml(local, now) : `<section class="sh-section"><p class="sh-muted">${escapeHtml(t("sheetNoShowings"))}</p></section>`}
-    ${detailsHtml(local, omdb)}
-  `;
+    ${local ? showingsHtml(local, now) : `<section class="sh-section" data-key="none"><p class="sh-muted">${escapeHtml(t("sheetNoShowings"))}</p></section>`}
+    ${detailsHtml(local, omdb)}`
+  );
+  syncHScroll(els.sheetBody);
 }
 
 function showingsHtml(movie, now) {
@@ -214,7 +227,7 @@ function showingsHtml(movie, now) {
   const done = movie.shows.filter((s) => isDone(s, now)).reverse();
   const sold = movie.shows.reduce((n, s) => n + (Number(s.sold) || 0), 0);
   const doneOpen = current.doneOpen || !upcoming.length;
-  return `<section class="sh-section">
+  return `<section class="sh-section" data-key="shows">
     <div class="sh-sec-head">
       <h3>${escapeHtml(t("sheetShowings"))}</h3>
       <span class="sh-sec-meta">${escapeHtml(t("sheetTotals", { sold: formatCount(sold) }))}</span>
@@ -316,7 +329,7 @@ function initials(name) {
 
 function detailsHtml(local, omdb) {
   if (current.omdbStatus === "loading") {
-    return `<section class="sh-section"><div class="sh-loading">
+    return `<section class="sh-section" data-key="loading"><div class="sh-loading">
       <span class="spinner spinner-sm" aria-hidden="true"></span>${escapeHtml(t("sheetLoadingMore"))}
     </div><div class="skeleton-lines" aria-hidden="true"><i></i><i></i><i></i></div></section>`;
   }
@@ -338,7 +351,7 @@ function detailsHtml(local, omdb) {
   const imdbUrl = omdb?.imdbUrl || (current.imdbID ? `https://www.imdb.com/title/${current.imdbID}/` : "");
 
   const castHtml = cast.length
-    ? `<section class="sh-section">
+    ? `<section class="sh-section" data-key="cast">
         <div class="sh-sec-head"><h3>${escapeHtml(t("sheetCast"))}</h3>${
           cast.length > CAST_PREVIEW
             ? `<button type="button" class="link-btn" data-sheet-cast aria-expanded="${current.castOpen}">${escapeHtml(
@@ -346,7 +359,8 @@ function detailsHtml(local, omdb) {
               )}</button>`
             : ""
         }</div>
-        <ul class="cast${current.castOpen ? " is-open" : ""}">
+        ${hscroll(
+          `<ul class="cast${current.castOpen ? " is-open" : ""}" data-hs-track>
           ${cast
             .map(
               (p, i) => `<li class="person${i >= CAST_PREVIEW ? " is-more" : ""}">
@@ -360,32 +374,34 @@ function detailsHtml(local, omdb) {
               </li>`
             )
             .join("")}
-        </ul>
+        </ul>`,
+          "hs-cast"
+        )}
       </section>`
     : "";
 
   return `
     ${
       plot
-        ? `<section class="sh-section"><h3>${escapeHtml(t("sheetPlot"))}</h3><p class="sh-plot">${escapeHtml(plot)}</p></section>`
+        ? `<section class="sh-section" data-key="plot"><h3>${escapeHtml(t("sheetPlot"))}</h3><p class="sh-plot">${escapeHtml(plot)}</p></section>`
         : ""
     }
     ${castHtml}
     ${
       facts.length
-        ? `<section class="sh-section"><h3>${escapeHtml(t("sheetFacts"))}</h3><dl class="facts">${facts
+        ? `<section class="sh-section" data-key="facts"><h3>${escapeHtml(t("sheetFacts"))}</h3><dl class="facts">${facts
             .map(([k, v]) => `<div><dt>${escapeHtml(k)}</dt><dd>${escapeHtml(v)}</dd></div>`)
             .join("")}</dl></section>`
         : ""
     }
     ${
       current.omdbStatus === "error" && !local
-        ? `<section class="sh-section"><p class="sh-muted">${escapeHtml(t("sheetError"))}</p></section>`
+        ? `<section class="sh-section" data-key="error"><p class="sh-muted">${escapeHtml(t("sheetError"))}</p></section>`
         : ""
     }
     ${
       imdbUrl
-        ? `<div class="sh-actions">
+        ? `<div class="sh-actions" data-key="actions">
             <a class="btn btn-block" href="${escapeHtml(imdbUrl)}" target="_blank" rel="noopener">${icon(
               "external",
               "icon icon-sm"

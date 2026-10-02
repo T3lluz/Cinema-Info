@@ -17,7 +17,7 @@ import {
   savePrefs,
 } from "./core.js?v=dev";
 import { syncScanned, runDxScanDiagnostics, resetScanDone } from "./data.js?v=dev";
-import { paint, viewHead, hapticTick, toast } from "./ui.js?v=dev";
+import { paint, viewHead, hapticTick, toast, SEG_IND, syncSegs } from "./ui.js?v=dev";
 import { paintSeatChart, seatChartExpanded } from "./seats.js?v=dev";
 
 /** The last DX test, kept so a redraw does not wipe the verdict. */
@@ -36,7 +36,7 @@ function row(iconName, title, hint, control, { stack = false, attrs = "" } = {})
 }
 
 function seg(name, options, value) {
-  return `<span class="seg" role="radiogroup" aria-label="${escapeHtml(t(name))}">${options
+  return `<span class="seg" role="radiogroup" aria-label="${escapeHtml(t(name))}">${SEG_IND}${options
     .map(
       ([v, label]) =>
         `<button type="button" class="seg-btn" role="radio" aria-checked="${v === value}" data-set="${name}" data-value="${v}">${escapeHtml(
@@ -181,6 +181,7 @@ export function renderSettings() {
       </div>
     </div>`
   );
+  syncSegs(host);
 }
 
 async function runDxTest() {

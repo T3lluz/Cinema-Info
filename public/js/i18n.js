@@ -40,6 +40,14 @@ export const I18N = {
     emptyDay: "Ingen forestillinger denne dagen.",
     emptyDayHint: "Sveip eller velg en annen dag.",
     gap: "{n} min pause",
+    gapBefore: "{n} min pause før",
+    scrollPrev: "Rull til venstre",
+    scrollNext: "Rull til høyre",
+
+    noticeTitle: "Advarsel",
+    noticeBody:
+      "Appen har fått nytt utseende, og nettadressen til siden endres snart. Du får beskjed om den nye lenken.",
+    noticeAria: "Advarsel",
 
     now: "Nå",
     soon: "Snart",
@@ -73,6 +81,7 @@ export const I18N = {
     showsOne: "1 forestilling",
     showsMany: "{n} forestillinger",
     timelineAria: "Tidslinje for {day}",
+    timeline: "Tidslinje",
 
     sold: "solgt",
     soldOut: "Utsolgt",
@@ -195,7 +204,8 @@ export const I18N = {
     chartByDaySub: "Trykk en dag for å åpne den",
     chartTrendWeek: "Uke for uke",
     chartTrendMonth: "Måned for måned",
-    chartTrendSub: "Trykk for å velge periode",
+    trendSubWeek: "Velg en uke – alt under viser den uka",
+    trendSubMonth: "Velg en måned – alt under viser den måneden",
     chartWeekday: "Beste ukedager",
     chartWeekdaySub: "Snitt solgt per visning, alle uker",
     legendPlayed: "Spilt",
@@ -343,6 +353,14 @@ export const I18N = {
     emptyDay: "No showings on this day.",
     emptyDayHint: "Swipe or pick another day.",
     gap: "{n} min break",
+    gapBefore: "{n} min break before",
+    scrollPrev: "Scroll left",
+    scrollNext: "Scroll right",
+
+    noticeTitle: "Warning",
+    noticeBody:
+      "The app has a new look, and the address of this site will change soon. You will be told the new link.",
+    noticeAria: "Warning",
 
     now: "Now",
     soon: "Soon",
@@ -376,6 +394,7 @@ export const I18N = {
     showsOne: "1 showing",
     showsMany: "{n} showings",
     timelineAria: "Timeline for {day}",
+    timeline: "Timeline",
 
     sold: "sold",
     soldOut: "Sold out",
@@ -498,7 +517,8 @@ export const I18N = {
     chartByDaySub: "Tap a day to open it",
     chartTrendWeek: "Week by week",
     chartTrendMonth: "Month by month",
-    chartTrendSub: "Tap to pick a period",
+    trendSubWeek: "Pick a week – everything below shows that week",
+    trendSubMonth: "Pick a month – everything below shows that month",
     chartWeekday: "Best weekdays",
     chartWeekdaySub: "Average sold per showing, all weeks",
     legendPlayed: "Played",

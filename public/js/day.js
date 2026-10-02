@@ -27,6 +27,7 @@ import {
   months,
   savePrefs,
   reducedMotion,
+  headerHeight,
 } from "./core.js?v=dev";
 import {
   programDays,
@@ -49,6 +50,9 @@ import {
   admissionStrip,
   emptyState,
   hapticTick,
+  hscroll,
+  syncHScroll,
+  slideTo,
 } from "./ui.js?v=dev";
 import {
   seatChartOffered,
@@ -106,6 +110,7 @@ export function renderDayStrip() {
   requestAnimationFrame(() => {
     moveDayIndicator({ instant: true });
     centerSelectedChip("auto");
+    syncHScroll(els.dayBar);
   });
 }
 
@@ -127,13 +132,12 @@ export function moveDayIndicator({ instant = false } = {}) {
   const indicator = els.dayTabs?.querySelector(".day-indicator");
   const chip = selectedChip();
   if (!indicator || !chip || !chip.offsetWidth) return;
-  if (instant) indicator.classList.add("no-trans");
-  indicator.style.width = `${chip.offsetWidth}px`;
-  indicator.style.transform = `translateX(${chip.offsetLeft}px)`;
+  slideTo(
+    indicator,
+    { x: chip.offsetLeft, y: chip.offsetTop, w: chip.offsetWidth, h: chip.offsetHeight },
+    { instant }
+  );
   indicator.classList.add("is-placed");
-  if (instant) {
-    requestAnimationFrame(() => requestAnimationFrame(() => indicator.classList.remove("no-trans")));
-  }
 }
 
 export function centerSelectedChip(behavior = "smooth") {
@@ -173,45 +177,66 @@ function setSelectedDay(day, { persist = true } = {}) {
 
 /* —— Day page —————————————————————————————————————————————————————— */
 
-/** Everything on one day's page, as keyed pieces for patchList. */
-function dayItems(day) {
+/**
+ * Everything on one day's page, as keyed pieces for patchList: `top` is
+ * the page itself (summary, then a list holder), `cards` the showings
+ * that go in the holder. Two levels, so a wide screen can lay the
+ * showings out in columns while each card still patches on its own.
+ */
+function dayParts(day) {
   const shows = dayShows(day);
   const now = new Date();
-  const items = [];
+  const top = [];
 
   if (PREVIEW_SCANNED) {
-    items.push({
+    top.push({
       key: "preview",
       html: `<p class="banner">${escapeHtml(t("previewScannedBanner"))}</p>`,
     });
   }
-  items.push({ key: "hero", html: heroHtml(day, shows, now) });
+  top.push({ key: "hero", html: heroHtml(day, shows, now) });
 
   if (!shows.length) {
-    items.push({
+    top.push({
       key: "empty",
       html: emptyState("day", t("emptyDay"), t("emptyDayHint")),
     });
-    return items;
+    return { top, cards: null };
   }
+  top.push({ key: "tl", html: timelineHtml(day, shows, now) });
+  top.push({ key: "list", html: `<div class="day-shows"></div>` });
 
   // If DX answered for some of the day's shows, the ones it skipped are
   // worth flagging; if it answered for none, stay quiet about it.
   const gaps = shows.some((s) => s.scanned != null);
+  const cards = [];
   shows.forEach((show, i) => {
-    const prev = shows[i - 1];
-    if (prev && prev.screen === show.screen && show.end && prev.end) {
-      const gapMin = Math.round((show.start - prev.end) / 60_000);
-      if (gapMin >= 15) {
-        items.push({
-          key: `gap-${show.id}`,
-          html: `<div class="gap"><span>${escapeHtml(t("gap", { n: gapMin }))}</span></div>`,
-        });
-      }
+    let gapMin = 0;
+    // The last showing in the same hall, not just the one before it.
+    const prev = shows.slice(0, i).reverse().find((s) => s.screen === show.screen);
+    if (prev && show.end && prev.end) {
+      const mins = Math.round((show.start - prev.end) / 60_000);
+      if (mins >= 15) gapMin = mins;
     }
-    items.push({ key: show.id, html: showCardHtml(show, now, { gaps }) });
+    // Single column: a divider between cards. In columns the divider
+    // would break the grid, so the card itself carries the note.
+    if (gapMin && prev === shows[i - 1]) {
+      cards.push({
+        key: `gap-${show.id}`,
+        html: `<div class="gap"><span>${escapeHtml(t("gap", { n: gapMin }))}</span></div>`,
+      });
+    }
+    cards.push({ key: show.id, html: showCardHtml(show, now, { gaps, gapMin }) });
   });
-  return items;
+  return { top, cards };
+}
+
+/** Bring `page` in line with `day`, touching only what changed. */
+function paintDayPage(page, day) {
+  const { top, cards } = dayParts(day);
+  patchList(page, top);
+  const list = cards && page.querySelector(":scope > .day-shows");
+  if (list) patchList(list, cards);
 }
 
 function heroHtml(day, shows, now) {
@@ -269,7 +294,6 @@ function heroHtml(day, shows, now) {
     </div>
     ${kpis}
     ${isToday ? nowNextHtml(shows, now) : ""}
-    ${shows.length ? timelineHtml(day, shows, now) : ""}
   </section>`;
 }
 
@@ -323,11 +347,16 @@ function formatUntilShort(ms) {
 }
 
 /* —— Timeline ——————————————————————————————————————————————————————
- * Halls as lanes, showings as bars, a red line for now. The plot keeps a
- * minimum hour width so bars stay tappable; a long day scrolls sideways,
- * and today's opens with the now-line in view.
+ * Its own card: halls as lanes, showings as bars (start time over the
+ * title), a red line for now. On a wide screen it spans the showings'
+ * column and every title reads in full. On a phone each hour gets
+ * enough room that even the shortest showing shows a good part of its
+ * title; the day then scrolls sideways, today's opening at the now-line.
  */
-const TL_MIN_PX_PER_HOUR = 38;
+const TL_MIN_PX_PER_HOUR = 60;
+/** The shortest bar should still fit "16:50" over fifteen-odd letters. */
+const TL_MIN_BAR_PX = 128;
+const TL_MAX_PX_PER_HOUR = 150;
 const HOUR = 3_600_000;
 
 function shortScreenLabel(screen) {
@@ -344,7 +373,9 @@ function timelineHtml(day, shows, now) {
   const span = t1 - t0;
   const hours = span / HOUR;
   const pct = (ms) => ((ms - t0) / span) * 100;
-  const minWidth = Math.round(hours * TL_MIN_PX_PER_HOUR);
+  const shortest = Math.min(...shows.map((s) => showEndOf(s) - s.start)) / HOUR || 1;
+  const perHour = Math.min(TL_MAX_PX_PER_HOUR, Math.max(TL_MIN_PX_PER_HOUR, TL_MIN_BAR_PX / shortest));
+  const minWidth = Math.round(hours * perHour);
 
   const screens = [...new Set(shows.map((s) => s.screen))].sort((a, b) => a.localeCompare(b, "nb"));
   const lanes = screens
@@ -361,7 +392,7 @@ function timelineHtml(day, shows, now) {
             3
           )}%;width:${width.toFixed(3)}%" data-tl-show="${escapeHtml(s.id)}" title="${escapeHtml(
             tip
-          )}" aria-label="${escapeHtml(tip)}"><strong>${formatClock(s.start)}</strong><span>${escapeHtml(
+          )}" aria-label="${escapeHtml(tip)}"><strong>${formatClock(s.start)}</strong><span class="tl-bar-title">${escapeHtml(
             s.title
           )}</span></button>`;
         })
@@ -370,7 +401,7 @@ function timelineHtml(day, shows, now) {
     })
     .join("");
 
-  const step = hours > 10 && TL_MIN_PX_PER_HOUR < 44 ? 2 : 1;
+  const step = perHour < 44 ? 2 : 1;
   const ticks = [];
   for (let ts = t0, i = 0; ts <= t1; ts += HOUR, i++) {
     if (i % step) continue;
@@ -390,21 +421,29 @@ function timelineHtml(day, shows, now) {
     ? `<div class="tl-now${pct(nowTs) < 6 ? " is-start" : pct(nowTs) > 94 ? " is-end" : ""}" style="left:${pct(nowTs).toFixed(3)}%"><span>${formatClock(now)}</span></div>`
     : "";
 
-  return `<div class="tl" data-tl-day="${day}" ${
-    showNow ? `data-now-pct="${pct(nowTs).toFixed(2)}"` : ""
-  } aria-label="${escapeHtml(t("timelineAria", { day: formatDayLabel(day) }))}">
+  const range = `${String(new Date(t0).getHours()).padStart(2, "0")}–${String(new Date(t1).getHours()).padStart(2, "0")}`;
+  return `<section class="card tl-card" aria-label="${escapeHtml(t("timelineAria", { day: formatDayLabel(day) }))}">
+  <div class="tl-head">
+    <h3 class="tl-heading">${icon("timeline", "icon icon-sm")}${escapeHtml(t("timeline"))}</h3>
+    <span class="tl-range">${range}</span>
+  </div>
+  <div class="tl" data-tl-day="${day}" ${showNow ? `data-now-pct="${pct(nowTs).toFixed(2)}"` : ""}>
     <div class="tl-names" aria-hidden="true">${screens
       .map((s) => `<span title="${escapeHtml(s)}">${escapeHtml(shortScreenLabel(s))}</span>`)
       .join("")}</div>
-    <div class="tl-scroll" data-keep-scroll="tl" data-no-swipe>
+    ${hscroll(
+      `<div class="tl-scroll" data-hs-track data-keep-scroll="tl" data-no-swipe>
       <div class="tl-canvas" style="width:${minWidth}px">
         <div class="tl-grid" aria-hidden="true">${grid}</div>
         <div class="tl-lanes">${lanes}</div>
         ${nowLine}
         <div class="tl-hours" aria-hidden="true">${hourLabels}</div>
       </div>
-    </div>
-  </div>`;
+    </div>`,
+      "hs-tl hs-sm"
+    )}
+  </div>
+  </section>`;
 }
 
 /** Keep today's now-line in view the first time a day's timeline shows.
@@ -416,13 +455,13 @@ function syncTimelineScroll(page) {
   if (!scroller || scroller._syncedDay === tl.dataset.tlDay) return;
   scroller._syncedDay = tl.dataset.tlDay;
   const max = scroller.scrollWidth - scroller.clientWidth;
-  if (max <= 1) return;
-  const nowPct = Number(tl.dataset.nowPct);
-  if (Number.isFinite(nowPct)) {
-    scroller.scrollLeft = Math.max(0, Math.min(max, (nowPct / 100) * scroller.scrollWidth - scroller.clientWidth * 0.3));
-  } else {
-    scroller.scrollLeft = 0;
+  if (max > 1) {
+    const nowPct = Number(tl.dataset.nowPct);
+    scroller.scrollLeft = Number.isFinite(nowPct)
+      ? Math.max(0, Math.min(max, (nowPct / 100) * scroller.scrollWidth - scroller.clientWidth * 0.3))
+      : 0;
   }
+  syncHScroll(tl);
 }
 
 /* —— Show card ————————————————————————————————————————————————————— */
@@ -473,6 +512,11 @@ function showCardHtml(show, now, opts) {
             show.end ? `<span>–${formatClock(show.end)}</span>` : ""
           }</span>
           ${statusChip(show, now, { countdown: isToday })}
+          ${
+            opts.gapMin
+              ? `<span class="chip chip-quiet show-gap">${escapeHtml(t("gapBefore", { n: opts.gapMin }))}</span>`
+              : ""
+          }
         </div>
         <h3 class="show-title">${escapeHtml(show.title)}</h3>
         <p class="show-meta"><span class="show-hall">${escapeHtml(show.screen)}</span>${meta}</p>
@@ -506,11 +550,40 @@ export function renderDay() {
   if (fresh && !reducedMotion()) {
     page.classList.add("is-entering");
     clearTimeout(page._enterTimer);
-    page._enterTimer = setTimeout(() => page.classList.remove("is-entering"), 700);
+    page._enterTimer = setTimeout(() => page.classList.remove("is-entering"), 800);
   }
-  patchList(page, dayItems(S.selectedDay));
+  paintDayPage(page, S.selectedDay);
   syncTimelineScroll(page);
   observeAutoSeatCharts(page);
+  prewarmGhost();
+}
+
+/**
+ * Keep tomorrow's page built in the spare (hidden) page, refreshed in
+ * idle time with every beat, so the next swipe forward finds it ready
+ * instead of building a whole day under the finger. A swipe the other
+ * way, or a copy gone stale, is painted when the swipe starts.
+ */
+const WARM_MS = 6000;
+let warmQueued = false;
+function prewarmGhost() {
+  if (warmQueued) return;
+  warmQueued = true;
+  const idle = window.requestIdleCallback || ((fn) => setTimeout(fn, 250));
+  idle(
+    () => {
+      warmQueued = false;
+      const ghost = els.dayGhost;
+      if (pager || !ghost?.hidden || S.activeTab !== "day") return;
+      const days = programDays();
+      const next = days[days.indexOf(S.selectedDay) + 1];
+      if (!next) return;
+      ghost.dataset.day = next;
+      paintDayPage(ghost, next);
+      ghost._warmAt = Date.now();
+    },
+    { timeout: 2000 }
+  );
 }
 
 function releaseRender() {
@@ -525,25 +598,43 @@ function releaseRender() {
  * Two page elements trade places: the current one in the flow, the
  * neighbour absolutely positioned beside it while a swipe or a slide is
  * in flight. Both move with the finger 1:1, like a native pager.
+ *
+ * Nothing waits for a slide to finish: a new touch, chip tap or arrow
+ * key lands the slide in flight on the spot and starts from there, so
+ * days can be flicked through as fast as a finger moves. The slide
+ * itself is timed from the flick, a fast one lands faster.
  */
-const COMMIT_FRAC = 0.22;
-const FLICK_PX_MS = 0.32;
-const LOCK_PX = 10;
-const SETTLE_MS = 360;
+const COMMIT_FRAC = 0.2;
+const FLICK_PX_MS = 0.3;
+const LOCK_PX = 8;
+const SETTLE_MIN_MS = 150;
+const SETTLE_MAX_MS = 290;
 
+/** null, `{ mode: "drag" | "auto" }`, or `{ mode: "settling", end }`. */
 let pager = null;
+/** Where the current page is pushed sideways right now. */
+let pageX = 0;
 
 function pagerWidth() {
   return els.pager?.clientWidth || window.innerWidth || 1;
 }
 
+/** Land a slide in flight at once. False if something else holds the pager. */
+function landPager() {
+  if (!pager) return true;
+  if (pager.end) pager.end();
+  return !pager;
+}
+
 /** Fill the spare page with `day`, aligned to the top of the viewport. */
 function prepareGhost(day) {
   const ghost = els.dayGhost;
+  const warm = ghost.dataset.day === day && Date.now() - (ghost._warmAt || 0) < WARM_MS;
   ghost.dataset.day = day;
-  patchList(ghost, dayItems(day));
+  if (!warm) paintDayPage(ghost, day);
+  ghost._warmAt = 0;
   ghost.hidden = false;
-  const header = els.appbar?.offsetHeight || 0;
+  const header = headerHeight();
   const pagerTop = els.pager.getBoundingClientRect().top + window.scrollY;
   const offset = Math.max(0, window.scrollY + header - pagerTop);
   ghost.style.top = `${offset}px`;
@@ -552,6 +643,7 @@ function prepareGhost(day) {
 
 function setX(el, x) {
   el.style.transform = x ? `translate3d(${x}px,0,0)` : "";
+  if (el === els.dayPage) pageX = x;
 }
 
 function finishSwap(day, offset) {
@@ -572,7 +664,7 @@ function finishSwap(day, offset) {
   // down (the old day was scrolled), scroll so it stays exactly where it
   // was on screen.
   if (offset > 0) {
-    const header = els.appbar?.offsetHeight || 0;
+    const header = headerHeight();
     const pagerTop = els.pager.getBoundingClientRect().top + window.scrollY;
     window.scrollTo(0, Math.max(0, pagerTop - header));
   }
@@ -582,11 +674,21 @@ function finishSwap(day, offset) {
   observeAutoSeatCharts(newPage);
   pager = null;
   releaseRender();
+  prewarmGhost();
   enrichVisibleDay().catch((err) => console.warn("Day enrich failed", err));
 }
 
-/** Animate the pages to their resting place, then swap if committing. */
-function settle(commit, dir, day) {
+/** How long a slide over `distance` px takes, given the flick's speed. */
+function settleMs(distance, velocity) {
+  const speed = Math.max(Math.abs(velocity), 1.4);
+  return Math.round(Math.min(SETTLE_MAX_MS, Math.max(SETTLE_MIN_MS, distance / speed)));
+}
+
+/**
+ * Animate the pages to their resting place, then swap if committing.
+ * Until it lands, `pager.end` can land it early.
+ */
+function settle(commit, dir, day, velocity = 0) {
   const W = pagerWidth();
   const page = els.dayPage;
   const ghost = els.dayGhost;
@@ -599,23 +701,47 @@ function settle(commit, dir, day) {
     else cancelSwipe();
     return;
   }
+  const target = commit ? -dir * W : 0;
+  const ms = settleMs(Math.abs(target - pageX), velocity);
+  els.pager.style.setProperty("--settle-ms", `${ms}ms`);
   els.pager.classList.remove("is-dragging");
   els.pager.classList.add("is-settling");
   void page.offsetWidth;
-  setX(page, commit ? -dir * W : 0);
+  setX(page, target);
   setX(ghost, commit ? 0 : dir * W);
+  let done = false;
+  const onEnd = (e) => {
+    if (e.target === ghost && e.propertyName === "transform") end();
+  };
+  const end = () => {
+    if (done) return;
+    done = true;
+    clearTimeout(timer);
+    ghost.removeEventListener("transitionend", onEnd);
+    if (commit) finishSwap(day, offset);
+    else cancelSwipe();
+  };
+  const timer = setTimeout(end, ms + 40);
+  ghost.addEventListener("transitionend", onEnd);
+  pager = { mode: "settling", end };
+}
+
+/** Pulled past the first or last day: spring back, interruptibly. */
+function springBack() {
+  const ms = settleMs(Math.abs(pageX), 0);
+  els.pager.style.setProperty("--settle-ms", `${ms}ms`);
+  els.pager.classList.remove("is-dragging");
+  els.pager.classList.add("is-settling");
+  setX(els.dayPage, 0);
   let done = false;
   const end = () => {
     if (done) return;
     done = true;
     clearTimeout(timer);
-    if (commit) finishSwap(day, offset);
-    else cancelSwipe();
+    cancelSwipe();
   };
-  const timer = setTimeout(end, SETTLE_MS + 60);
-  ghost.addEventListener("transitionend", (e) => {
-    if (e.target === ghost && e.propertyName === "transform") end();
-  }, { once: true });
+  const timer = setTimeout(end, ms + 20);
+  pager = { mode: "settling", end };
 }
 
 function cancelSwipe() {
@@ -627,6 +753,7 @@ function cancelSwipe() {
   delete els.dayGhost.dataset.day;
   pager = null;
   releaseRender();
+  prewarmGhost();
 }
 
 /**
@@ -636,7 +763,7 @@ function cancelSwipe() {
  */
 export function selectDay(day, { animate = true } = {}) {
   if (!day || !S.state?.shows) return;
-  if (pager) return;
+  if (!landPager()) return;
   if (day === S.selectedDay) {
     if (S.activeTab === "day") window.scrollTo({ top: 0, behavior: reducedMotion() ? "auto" : "smooth" });
     return;
@@ -655,7 +782,10 @@ export function selectDay(day, { animate = true } = {}) {
   prepareGhost(day);
   els.pager.classList.add("is-dragging");
   setX(els.dayGhost, dir * pagerWidth());
-  requestAnimationFrame(() => settle(true, dir, day));
+  // Commit the start position, then slide — in the same task, so a
+  // second tap a moment later finds a slide it can land.
+  void els.dayGhost.offsetWidth;
+  settle(true, dir, day);
 }
 
 export function stepDay(delta) {
@@ -682,7 +812,9 @@ export function setupDaySwipe() {
   let width = 1;
 
   host.addEventListener("pointerdown", (e) => {
-    if (e.pointerType === "mouse" || !e.isPrimary || pointerId !== null || pager) return;
+    if (e.pointerType === "mouse" || !e.isPrimary || pointerId !== null) return;
+    // A finger landing mid-slide finishes it now and starts a new swipe.
+    if (!landPager()) return;
     if (e.target.closest?.("[data-no-swipe]")) {
       const sc = e.target.closest(".tl-scroll");
       // A timeline that fits needs no sideways scroll; let it page.
@@ -765,12 +897,8 @@ export function setupDaySwipe() {
     mode = "idle";
     const target = dir ? days[idx + dir] : null;
     if (!target || cancelled) {
-      if (target) settle(false, dir, target);
-      else {
-        els.pager.classList.add("is-settling");
-        setX(els.dayPage, 0);
-        setTimeout(cancelSwipe, SETTLE_MS);
-      }
+      if (target) settle(false, dir, target, vx);
+      else springBack();
       return;
     }
     const projected = dx + vx * 160;
@@ -779,7 +907,7 @@ export function setupDaySwipe() {
       (dir === 1 && (projected < -width * COMMIT_FRAC || vx < -FLICK_PX_MS) && sameWay) ||
       (dir === -1 && (projected > width * COMMIT_FRAC || vx > FLICK_PX_MS) && sameWay);
     if (commit) hapticTick();
-    settle(commit, dir, target);
+    settle(commit, dir, target, vx);
   };
   host.addEventListener("pointerup", (e) => release(e, false));
   host.addEventListener("pointercancel", (e) => release(e, true));
@@ -797,7 +925,7 @@ export function focusShow(showId) {
   const go = () => {
     const card = els.dayPage?.querySelector(`[data-show="${cssEscape(showId)}"]`);
     if (!card) return;
-    const header = els.appbar?.offsetHeight || 0;
+    const header = headerHeight();
     const top = card.getBoundingClientRect().top + window.scrollY - header - 16;
     const rect = card.getBoundingClientRect();
     const fits = rect.height < window.innerHeight - header - 120;
@@ -819,7 +947,7 @@ export function focusShow(showId) {
   }
   if (show.dayKey !== S.selectedDay) {
     selectDay(show.dayKey);
-    setTimeout(go, reducedMotion() ? 0 : SETTLE_MS + 120);
+    setTimeout(go, reducedMotion() ? 0 : SETTLE_MAX_MS + 80);
     return;
   }
   go();

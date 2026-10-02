@@ -13,6 +13,8 @@ import {
   formatUntil,
   formatCount,
   locale,
+  reducedMotion,
+  NOTICE_ON,
 } from "./core.js?v=dev";
 import {
   statusOf,
@@ -33,8 +35,9 @@ import {
 const painted = new WeakMap();
 const template = document.createElement("template");
 
-/** Classes JavaScript adds for a moment; a redraw must not strip them. */
-const TRANSIENT = ["is-flash", "is-picked", "is-set", "is-new", "is-entering"];
+/** Classes JavaScript adds (for a moment, or as live state such as a
+ * scroller's arrows); a redraw must not strip them. */
+const TRANSIENT = ["is-flash", "is-picked", "is-set", "is-new", "is-entering", "can-prev", "can-next"];
 
 function parse(html) {
   template.innerHTML = html.trim();
@@ -53,6 +56,8 @@ function morphAttrs(from, to) {
   }
   for (const { name } of [...from.attributes]) {
     if (to.hasAttribute(name) || name === "data-key") continue;
+    // Position and size that JavaScript animates (a sliding highlight).
+    if (name === "style" && from.hasAttribute("data-js-style")) continue;
     // A <details> the visitor opened stays open.
     if (name === "open" && from.tagName === "DETAILS") continue;
     if (name === "class") {
@@ -295,11 +300,21 @@ function ratingLogo(kind, score) {
 function formatRatingValue(value, digits = 1) {
   const n = Number(value);
   if (!Number.isFinite(n)) return "";
-  const rounded = Number(n.toFixed(digits));
-  return rounded.toLocaleString(locale(), {
-    minimumFractionDigits: Number.isInteger(rounded) ? 0 : 1,
+  // Scores always carry a decimal, as IMDb and Letterboxd print them: 6,0 not 6.
+  return Number(n.toFixed(digits)).toLocaleString(locale(), {
+    minimumFractionDigits: 1,
     maximumFractionDigits: digits,
   });
+}
+
+/** The IMDb logo with the score beside it, for laying over a poster. */
+export function imdbBadge(value) {
+  const n = Number.parseFloat(value);
+  if (!Number.isFinite(n) || n <= 0) return "";
+  const label = formatRatingValue(n, 1);
+  return `<span class="imdb-badge" role="img" aria-label="${escapeHtml(t("ratingImdbAria", { n: label }))}">${ratingLogo(
+    "imdb"
+  )}<span class="imdb-badge-v">${escapeHtml(label)}</span></span>`;
 }
 
 /**
@@ -588,6 +603,245 @@ export function setupMotion() {
   document.addEventListener("animationend", (e) => {
     if (e.target.classList?.contains("is-new")) e.target.classList.remove("is-new");
   });
+}
+
+/* —— Sliding selection —————————————————————————————————————————————
+ * The selected-tab squircle and the selected-day pill travel the way the
+ * DailyDash navbar's bubble does: the edge heading for the new target
+ * leads on a stiff spring and the other follows on a softer one, so it
+ * stretches a little as it sets off — and flattens a touch while it is
+ * long — then gathers up where it lands. Both springs are critically
+ * damped: it never overshoots, never bounces.
+ */
+const SPRING_LEAD = 620;
+/** The trailing edge waits on the old target a moment before it follows
+ * — that wait is what stretches it — then catches up on a stiffer spring,
+ * so the whole move lands as quickly as without the wait. */
+const SPRING_TRAIL = 310;
+const TRAIL_HOLD_MS = 60;
+
+const sliders = new WeakMap();
+
+function slider(el) {
+  let s = sliders.get(el);
+  if (s) return s;
+  s = { a: null, b: null, ka: SPRING_LEAD, kb: SPRING_LEAD, holdA: 0, holdB: 0, target: null, axis: "x", raf: 0, last: 0 };
+  sliders.set(el, s);
+  return s;
+}
+
+function drawSlider(el, s) {
+  const tg = s.target;
+  const start = Math.min(s.a.x, s.b.x);
+  const len = Math.abs(s.b.x - s.a.x);
+  const stretch = Math.max(0, len - tg.len);
+  const squash = Math.min(1, stretch / (tg.len || 1)) * 0.12 * tg.crossSize;
+  const cross = tg.crossPos + squash / 2;
+  const crossSize = tg.crossSize - squash;
+  if (s.axis === "x") {
+    el.style.transform = `translate3d(${start}px, ${cross}px, 0)`;
+    el.style.width = `${len}px`;
+    el.style.height = `${crossSize}px`;
+  } else {
+    el.style.transform = `translate3d(${cross}px, ${start}px, 0)`;
+    el.style.width = `${crossSize}px`;
+    el.style.height = `${len}px`;
+  }
+}
+
+function stepSlider(el, s, now) {
+  const dt = Math.min(0.032, Math.max(0.001, (now - s.last) / 1000));
+  s.last = now;
+  let moving = false;
+  for (const [edge, goal, k, hold] of [
+    [s.a, s.target.a, s.ka, s.holdA],
+    [s.b, s.target.b, s.kb, s.holdB],
+  ]) {
+    if (now < hold) {
+      moving = true;
+      continue;
+    }
+    // Critically damped: c = 2·√k with unit mass.
+    edge.v += (-k * (edge.x - goal) - 2 * Math.sqrt(k) * edge.v) * dt;
+    edge.x += edge.v * dt;
+    if (Math.abs(edge.x - goal) < 0.25 && Math.abs(edge.v) < 4) {
+      edge.x = goal;
+      edge.v = 0;
+    } else {
+      moving = true;
+    }
+  }
+  drawSlider(el, s);
+  s.raf = moving && el.isConnected ? requestAnimationFrame((t) => stepSlider(el, s, t)) : 0;
+}
+
+/**
+ * Move a selection highlight to `rect` ({ x, y, w, h } in its parent's
+ * coordinates) along `axis`. The first placement, a change of axis or
+ * `instant` snaps straight there.
+ */
+export function slideTo(el, rect, { axis = "x", instant = false } = {}) {
+  if (!el || !rect.w || !rect.h) return;
+  const s = slider(el);
+  const along = axis === "x";
+  const target = {
+    a: along ? rect.x : rect.y,
+    len: along ? rect.w : rect.h,
+    crossPos: along ? rect.y : rect.x,
+    crossSize: along ? rect.h : rect.w,
+  };
+  target.b = target.a + target.len;
+  const snap = !s.a || instant || s.axis !== axis || reducedMotion();
+  s.target = target;
+  s.axis = axis;
+  if (snap) {
+    cancelAnimationFrame(s.raf);
+    s.raf = 0;
+    s.a = { x: target.a, v: 0 };
+    s.b = { x: target.b, v: 0 };
+    drawSlider(el, s);
+    return;
+  }
+  // Heading right (or down), the far edge leads; heading back, the near
+  // one. The other stays put on the old target for a moment first.
+  const forward = target.a + target.b > s.a.x + s.b.x;
+  const now = performance.now();
+  s.ka = forward ? SPRING_TRAIL : SPRING_LEAD;
+  s.kb = forward ? SPRING_LEAD : SPRING_TRAIL;
+  s.holdA = forward && !s.a.v ? now + TRAIL_HOLD_MS : 0;
+  s.holdB = !forward && !s.b.v ? now + TRAIL_HOLD_MS : 0;
+  if (!s.raf) {
+    s.last = now;
+    s.raf = requestAnimationFrame((t) => stepSlider(el, s, t));
+  }
+}
+
+/** The highlight inside a segmented switch; it slides like the tab bar's. */
+export const SEG_IND = '<span class="seg-ind" data-js-style aria-hidden="true"></span>';
+
+/** Move every switch's highlight under its chosen button. */
+export function syncSegs(root = document) {
+  for (const seg of root.querySelectorAll(".seg")) {
+    const ind = seg.querySelector(":scope > .seg-ind");
+    const on = seg.querySelector(':scope > .seg-btn[aria-selected="true"], :scope > .seg-btn[aria-checked="true"]');
+    if (!ind || !on || !on.offsetWidth) continue;
+    slideTo(ind, { x: on.offsetLeft, y: on.offsetTop, w: on.offsetWidth, h: on.offsetHeight });
+    ind.classList.add("is-placed");
+  }
+}
+
+/* —— Horizontal scrollers ————————————————————————————————————————————
+ * Every sideways list (days, timeline, upcoming films, cast) sits in an
+ * `.hs` wrapper with a ‹ and › button. With a mouse they scroll the list
+ * by most of a screen, so nobody has to shift-scroll; on touch screens
+ * they are hidden and the finger does it. Each arrow only shows while
+ * there is something to scroll to on its side.
+ */
+
+/** Arrow buttons around `track` (markup with `data-hs-track` on it). */
+export function hscroll(track, cls = "") {
+  return `<div class="hs${cls ? ` ${cls}` : ""}" data-hs>
+    ${hsButtons()}
+    ${track}
+  </div>`;
+}
+
+export function hsButtons() {
+  return `<button type="button" class="hs-btn hs-prev" data-hs-dir="-1" aria-label="${escapeHtml(
+    t("scrollPrev")
+  )}">${icon("chevronLeft", "icon")}</button><button type="button" class="hs-btn hs-next" data-hs-dir="1" aria-label="${escapeHtml(
+    t("scrollNext")
+  )}">${icon("chevronRight", "icon")}</button>`;
+}
+
+function hsTrack(wrap) {
+  for (const child of wrap.children) if (child.hasAttribute("data-hs-track")) return child;
+  return null;
+}
+
+function syncOne(wrap) {
+  const track = hsTrack(wrap);
+  if (!track) return;
+  const max = track.scrollWidth - track.clientWidth;
+  const x = Math.abs(track.scrollLeft);
+  const prev = max > 2 && x > 2;
+  const next = max > 2 && x < max - 2;
+  if (wrap.classList.contains("can-prev") !== prev) wrap.classList.toggle("can-prev", prev);
+  if (wrap.classList.contains("can-next") !== next) wrap.classList.toggle("can-next", next);
+}
+
+/** Show or hide every scroller's arrows for where it is scrolled to now. */
+export function syncHScroll(root = document) {
+  for (const wrap of root.querySelectorAll("[data-hs]")) syncOne(wrap);
+}
+
+export function setupHScroll() {
+  document.addEventListener("click", (e) => {
+    const btn = e.target.closest?.("[data-hs-dir]");
+    if (!btn) return;
+    const wrap = btn.closest("[data-hs]");
+    const track = wrap && hsTrack(wrap);
+    if (!track) return;
+    const dir = Number(btn.dataset.hsDir) || 1;
+    const step = Math.max(track.clientWidth * 0.8, 120);
+    track.scrollBy({ left: dir * step, behavior: reducedMotion() ? "auto" : "smooth" });
+  });
+  // Scroll events do not bubble; catch every scroller's on the way down.
+  const queued = new Set();
+  let raf = 0;
+  document.addEventListener(
+    "scroll",
+    (e) => {
+      const wrap = e.target?.closest?.("[data-hs]");
+      if (!wrap || !e.target.hasAttribute?.("data-hs-track")) return;
+      queued.add(wrap);
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        raf = 0;
+        for (const w of queued) syncOne(w);
+        queued.clear();
+      });
+    },
+    { capture: true, passive: true }
+  );
+  let resizeTimer = 0;
+  window.addEventListener("resize", () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => syncHScroll(), 120);
+  });
+}
+
+/* —— Warning ———————————————————————————————————————————————————————
+ * A GitHub-style warning above every tab: amber rule down the left, the
+ * alert triangle and a title, then the message. It cannot be dismissed
+ * — staff need to see it every time — so it is kept short. Set
+ * NOTICE_ON to false in core.js to take it down.
+ */
+const ALERT_ICON =
+  '<svg class="notice-icon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"/></svg>';
+
+let noticeEl = null;
+
+function renderNotice() {
+  if (!noticeEl) return;
+  noticeEl.setAttribute("aria-label", t("noticeAria"));
+  noticeEl.innerHTML = `<div class="notice-box">
+      <p class="notice-title">${ALERT_ICON}${escapeHtml(t("noticeTitle"))}</p>
+      <p class="notice-body">${escapeHtml(t("noticeBody"))}</p>
+    </div>`;
+}
+
+/** Drawn at boot, in place from the first frame, so nothing jumps under it. */
+export function setupNotice() {
+  noticeEl = document.getElementById("notice");
+  if (!noticeEl || !NOTICE_ON) return;
+  renderNotice();
+  noticeEl.hidden = false;
+}
+
+/** Redraw the warning's words after a language change. */
+export function refreshNotice() {
+  if (noticeEl && !noticeEl.hidden) renderNotice();
 }
 
 /** Wire-safe clock string for a showing's start and end. */

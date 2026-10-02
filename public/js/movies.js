@@ -9,7 +9,6 @@ import {
   els,
   hooks,
   t,
-  icon,
   escapeHtml,
   formatClock,
   formatCount,
@@ -32,6 +31,8 @@ import {
   posterHtml,
   emptyState,
   viewHead,
+  hscroll,
+  imdbBadge,
 } from "./ui.js?v=dev";
 
 /** Finished films shown before "Show all". */
@@ -132,6 +133,7 @@ function upcomingCard(item) {
     return `<button type="button" class="up-card" data-key="b:${escapeHtml(movie.title)}" data-open-movie="${escapeHtml(movie.title)}">
       <span class="up-poster">${posterHtml(movie, { w: 120, h: 180 })}
         <span class="up-chip is-buen">${escapeHtml(t("upcomingOnBuen"))}</span>
+        ${imdbBadge(movie.ratings?.imdb?.value)}
       </span>
       <span class="up-title">${escapeHtml(movie.title)}</span>
       <span class="up-when">${escapeHtml(whenLabel(movie.next))}</span>
@@ -141,6 +143,7 @@ function upcomingCard(item) {
   return `<button type="button" class="up-card" data-key="i:${escapeHtml(row.imdbID || row.title)}" data-omdb-id="${escapeHtml(row.imdbID || "")}">
     <span class="up-poster">${posterHtml({ title: row.title, posterUrl: row.poster }, { w: 120, h: 180 })}
       <span class="up-chip">${escapeHtml(t("upcomingComingSoon"))}</span>
+      ${imdbBadge(row.imdbRating)}
     </span>
     <span class="up-title">${escapeHtml(row.title)}</span>
     <span class="up-when">${escapeHtml(shortReleaseLabel(item.day) || row.year || "")}</span>
@@ -151,7 +154,6 @@ function upcomingCard(item) {
 
 function movieCard(movie, now) {
   const live = movie.shows.find((s) => statusOf(s, now) === "live");
-  const imdb = Number(movie.ratings?.imdb?.value);
   // Flag a premiere only while the next showing is that premiere night.
   const premiere = movie.next?.showType && /premiere/i.test(movie.next.showType) ? movie.next.showType : "";
   let next;
@@ -182,7 +184,7 @@ function movieCard(movie, now) {
   )}" aria-label="${escapeHtml(t("openMovie", { title: movie.title }))}">
     <span class="mc-poster">
       ${posterHtml(movie, { w: 160, h: 240 })}
-      ${Number.isFinite(imdb) && imdb > 0 ? `<span class="mc-rating">${icon("star", "icon icon-xs")}${imdb.toFixed(1)}</span>` : ""}
+      ${imdbBadge(movie.ratings?.imdb?.value)}
       ${premiere ? `<span class="mc-flag">${escapeHtml(t(`showType.${premiere}`))}</span>` : ""}
     </span>
     <span class="mc-title">${escapeHtml(movie.title)}</span>
@@ -209,11 +211,14 @@ export function renderMovies() {
           <div class="section-head">
             <div><h2>${escapeHtml(t("upcomingTitle"))}</h2><p>${escapeHtml(t("upcomingSub"))}</p></div>
           </div>
-          ${
+          ${hscroll(
             feed.length
-              ? `<div class="carousel" data-keep-scroll="up">${feed.map(upcomingCard).join("")}</div>`
-              : `<div class="carousel is-loading" aria-hidden="true">${[1, 2, 3, 4].map((i) => `<span class="up-card skeleton" data-key="sk${i}"></span>`).join("")}</div>`
-          }
+              ? `<div class="carousel" data-hs-track data-keep-scroll="up">${feed.map(upcomingCard).join("")}</div>`
+              : `<div class="carousel is-loading" data-hs-track aria-hidden="true">${[1, 2, 3, 4, 5, 6]
+                  .map((i) => `<span class="up-card skeleton" data-key="sk${i}"></span>`)
+                  .join("")}</div>`,
+            "hs-posters"
+          )}
         </section>`
       : "";
 

@@ -164,6 +164,36 @@ instead of live DX data, open the site with `?previewScanned=1`.
 
 https://t3lluz.github.io/Cinema-Info/
 
+## Warning banner
+
+A GitHub-style warning (amber rule, alert triangle, *Advarsel*) sits right
+under the header on every tab, telling staff about the redesign and that
+the site's address is about to change. It cannot be dismissed and scrolls
+away with the page. The words live in `public/js/i18n.js` (`noticeTitle`,
+`noticeBody`) — update them with the new link when it is known — and
+`NOTICE_ON` in `public/js/core.js` takes it down.
+
+## Layout
+
+- **Phones**: bottom tab bar; swipe sideways between days (a new swipe
+  never waits for the last one to land).
+- **Tablets** (from 700px): seat charts open by default.
+- **Desktop** (from 1024px): the tabs become a rail centred on the left
+  edge and the page uses most of the window — the day's summary pinned
+  on the left, the timeline and showings beside it, two columns of
+  showings from 1480px and three from 2240px. Stats spread over two or
+  three columns.
+- The day strip pins under the header; the timeline is its own card,
+  start time over a two-line title in each bar.
+- On desktop every sideways list (days, timeline, upcoming films, cast)
+  has ‹ › buttons, so nothing needs shift+scroll; phones and tablets
+  swipe instead.
+- Selection highlights (tab bar, day strip, switches) slide with a
+  little stretch — the edge heading for the new choice leads, the other
+  follows — and never bounce. Tab icons fill in and animate when chosen.
+- Stats open with the week-for-week (or month-for-month) chart as the
+  period picker: tap a column and everything below shows that period.
+
 ## Install on your phone
 
 The site is a PWA with a proper app icon:

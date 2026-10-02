@@ -33,6 +33,8 @@ import {
   capitalize,
   savePrefs,
   HISTORY_KEEP_DAYS,
+  WIDE_MQ,
+  XL_MQ,
 } from "./core.js?v=dev";
 import {
   programDays,
@@ -41,7 +43,7 @@ import {
   ensureAllEnriched,
   isEnrichingAll,
 } from "./data.js?v=dev";
-import { paint, posterHtml, viewHead, emptyState } from "./ui.js?v=dev";
+import { paint, posterHtml, viewHead, emptyState, SEG_IND, syncSegs } from "./ui.js?v=dev";
 
 /* —— Periods ——————————————————————————————————————————————————————— */
 
@@ -197,8 +199,10 @@ function trend(period) {
   const first = periodOf(period.kind, days[0]);
   const last = periodOf(period.kind, days[days.length - 1]);
   const now = periodOf(period.kind, todayKey());
+  // Wider screens have room for a longer run of periods to pick from.
+  const back = XL_MQ.matches ? 19 : WIDE_MQ.matches ? 13 : 9;
   let from = now;
-  for (let i = 0; i < 9 && from.start > first.start; i++) from = shiftPeriod(from, -1);
+  for (let i = 0; i < back && from.start > first.start; i++) from = shiftPeriod(from, -1);
   let to = now;
   for (let i = 0; i < 2 && to.start < last.start; i++) to = shiftPeriod(to, 1);
   if (period.start < from.start) from = period;
@@ -332,7 +336,7 @@ export function renderStats() {
   const head = viewHead(t("statsTitle"), t("statsSub"), updating);
 
   const bar = `<div class="period-bar" data-key="bar">
-    <div class="seg" role="tablist" aria-label="${escapeHtml(t("periodWeek"))} / ${escapeHtml(t("periodMonth"))}">
+    <div class="seg" role="tablist" aria-label="${escapeHtml(t("periodWeek"))} / ${escapeHtml(t("periodMonth"))}">${SEG_IND}
       <button type="button" class="seg-btn" role="tab" data-period="week" aria-selected="${period.kind === "week"}">${escapeHtml(
         t("periodWeek")
       )}</button>
@@ -353,8 +357,34 @@ export function renderStats() {
     </div>
   </div>`;
 
+  // The run of weeks (or months) as a picker: tap one and everything
+  // below shows it. Right under the switch, so it reads as the filter.
+  const month = period.kind === "month";
+  const tr = trend(period);
+  const picker =
+    tr.length > 1
+      ? `<section class="card chart-card period-picker" data-key="trend">
+          <div class="section-head"><div><h2>${escapeHtml(
+            t(month ? "chartTrendMonth" : "chartTrendWeek")
+          )}</h2><p>${escapeHtml(t(month ? "trendSubMonth" : "trendSubWeek"))}</p></div></div>
+          ${columns(tr, {
+            max: Math.max(...tr.map((r) => r.sold), 0),
+            labelAll: false,
+            value: (r) => r.sold,
+            label: (r) => r.period.short,
+            cls: (r) =>
+              [r.selected ? "is-hl is-sel" : "", r.future ? "is-future" : "", r.current && !r.selected ? "is-current" : ""]
+                .filter(Boolean)
+                .join(" "),
+            attr: (r) => `data-period-jump="${r.period.start}" aria-pressed="${r.selected}"`,
+            aria: (r) => `${r.period.label} ${r.period.sub}: ${r.sold} ${t("sold")}`,
+          })}
+        </section>`
+      : "";
+
   if (!sum.shows) {
-    paint(host, `${head}${bar}<div data-key="empty">${emptyState("stats", t("noSoldPeriod"))}</div>`);
+    paint(host, `${head}${bar}${picker}<div data-key="empty">${emptyState("stats", t("noSoldPeriod"))}</div>`);
+    syncSegs(host);
     return;
   }
 
@@ -375,7 +405,6 @@ export function renderStats() {
   </section>`;
 
   const maxDay = Math.max(...model.byDay.map((d) => d.sold), 0);
-  const month = period.kind === "month";
   const hasFuture = model.byDay.some((d) => d.future && d.sold);
   const hasPast = model.byDay.some((d) => !d.future && d.sold);
   const dayChart = `<section class="card chart-card" data-key="days">
@@ -454,28 +483,6 @@ export function renderStats() {
               )
               .join("")}
           </div>
-        </section>`
-      : "";
-
-  const tr = trend(period);
-  const trendCard =
-    tr.length > 1
-      ? `<section class="card chart-card" data-key="trend">
-          <div class="section-head"><div><h2>${escapeHtml(
-            t(month ? "chartTrendMonth" : "chartTrendWeek")
-          )}</h2><p>${escapeHtml(t("chartTrendSub"))}</p></div></div>
-          ${columns(tr, {
-            max: Math.max(...tr.map((r) => r.sold), 0),
-            labelAll: false,
-            value: (r) => r.sold,
-            label: (r) => r.period.short,
-            cls: (r) =>
-              [r.selected ? "is-hl" : "", r.future ? "is-future" : "", r.current && !r.selected ? "is-current" : ""]
-                .filter(Boolean)
-                .join(" "),
-            attr: (r) => `data-period-jump="${r.period.start}"`,
-            aria: (r) => `${r.period.label} ${r.period.sub}: ${r.sold} ${t("sold")}`,
-          })}
         </section>`
       : "";
 
@@ -566,18 +573,30 @@ export function renderStats() {
       </section>`
     : "";
 
+  // Cards are dealt into as many columns as the screen has room for,
+  // in a fixed order per layout, so nothing hops between columns when
+  // a figure changes.
+  const layout = XL_MQ.matches
+    ? [
+        [hero, dayChart],
+        [topFilms, halls],
+        [presaleCard, weekdayCard, recordsCard],
+      ]
+    : WIDE_MQ.matches
+      ? [
+          [hero, dayChart, halls, weekdayCard],
+          [topFilms, presaleCard, recordsCard],
+        ]
+      : [[hero, dayChart, topFilms, halls, presaleCard, weekdayCard, recordsCard]];
+
   paint(
     host,
-    `${head}${bar}
-    <div class="stats-grid" data-key="g1">
-      <div class="stats-col" data-key="c1">${hero}${dayChart}${halls}</div>
-      <div class="stats-col" data-key="c2">${topFilms}${trendCard}</div>
-    </div>
-    <div class="stats-grid" data-key="g2">
-      <div class="stats-col" data-key="c3">${presaleCard}${weekdayCard}</div>
-      <div class="stats-col" data-key="c4">${recordsCard}</div>
+    `${head}${bar}${picker}
+    <div class="stats-grid cols-${layout.length}" data-key="grid">
+      ${layout.map((cards, i) => `<div class="stats-col" data-key="c${i + 1}">${cards.join("")}</div>`).join("")}
     </div>`
   );
+  syncSegs(host);
 }
 
 function setPeriod(next) {
@@ -588,6 +607,11 @@ function setPeriod(next) {
 }
 
 export function setupStats() {
+  const relayout = () => {
+    if (S.activeTab === "stats") renderStats();
+  };
+  WIDE_MQ.addEventListener?.("change", relayout);
+  XL_MQ.addEventListener?.("change", relayout);
   els.statsContent?.addEventListener("click", (e) => {
     const p = e.target.closest("[data-period]");
     if (p) {
