@@ -753,10 +753,69 @@ p {
   display: flex;
   align-items: center;
   gap: 8px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
   font-size: 14px;
   font-weight: 650;
   line-height: 1;
+  text-align: left;
   color: var(--note-fg);
+}
+/* The whole title line is the fold button: a bigger target than the
+ * chevron, and the box's padding grows it to a full finger's height. */
+.notice-title::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+.notice-title-text {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  line-height: 1.25;
+}
+.notice-short {
+  font-size: 12.5px;
+  font-weight: 650;
+  color: var(--ink-2);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.notice-chev {
+  flex: none;
+  width: 17px;
+  height: 17px;
+  transition: transform 0.3s var(--ease);
+}
+.is-folded .notice-short {
+  opacity: 1;
+}
+.is-folded .notice-chev {
+  transform: rotate(-90deg);
+}
+/* Folding animates the rows of a one-cell grid from 1fr to 0fr, which
+ * follows the content's real height without measuring it. */
+.notice-more {
+  display: grid;
+  grid-template-rows: 1fr;
+  transition: grid-template-rows 0.32s var(--ease);
+}
+.is-folded .notice-more {
+  grid-template-rows: 0fr;
+}
+.notice-inner {
+  min-height: 0;
+  overflow: hidden;
+  /* The link and the countdown stay above the title's tap layer. */
+  position: relative;
+  z-index: 1;
 }
 .notice-icon {
   flex: none;

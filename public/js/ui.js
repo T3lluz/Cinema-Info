@@ -6,6 +6,8 @@
 import {
   S,
   els,
+  hooks,
+  savePrefs,
   t,
   icon,
   escapeHtml,
@@ -965,8 +967,9 @@ export function setupHScroll() {
 /* —— Note ———————————————————————————————————————————————————————————
  * A GitHub-style note above every tab: blue rule down the left, the info
  * icon and a title, then the message. It cannot be dismissed, since
- * staff need to see it every time, so it is kept short. Set NOTICE_ON
- * to false in core.js to take it down.
+ * staff need to see it every time, but the title folds it down to one
+ * line, and each device remembers that (`noticeOpen` in the prefs). Set
+ * NOTICE_ON to false in core.js to take it down.
  *
  * It says different things on the two addresses. On the old one (GitHub
  * Pages) it links to the new one and says the old one closes on
@@ -1000,6 +1003,14 @@ function countdownHtml() {
     )}${cell(m, t("noticeMins"))}${cell(sec, t("noticeSecs"))}</span></p>`;
 }
 
+/** "29 d 10 t": what the folded note keeps of the countdown. */
+function countdownShort() {
+  const left = OLD_URL_ENDS.getTime() - Date.now();
+  if (left <= 0) return "";
+  const hours = Math.floor(left / 3_600_000);
+  return t("noticeShort", { d: Math.floor(hours / 24), h: hours % 24 });
+}
+
 function renderNotice() {
   if (!noticeEl) return;
   noticeEl.setAttribute("aria-label", t("noticeAria"));
@@ -1009,16 +1020,47 @@ function renderNotice() {
     : `<p class="notice-body">${escapeHtml(t("noticeMoved"))}
         <a class="notice-link" href="${NEW_APP_URL}">${escapeHtml(shortUrl)}</a></p>
       <p class="notice-body">${escapeHtml(t("noticeOldEnds"))}</p>`;
-  noticeEl.innerHTML = `<div class="notice-box">
-      <p class="notice-title">${INFO_ICON}${escapeHtml(t("noticeTitle"))}</p>
-      ${body}
-      <div class="notice-cd">${countdownHtml()}</div>
+  const open = S.noticeOpen;
+  noticeEl.innerHTML = `<div class="notice-box${open ? "" : " is-folded"}">
+      <button type="button" class="notice-title" data-notice-toggle aria-expanded="${open}" aria-controls="noticeMore"
+        title="${escapeHtml(t(open ? "noticeHide" : "noticeShow"))}">
+        ${INFO_ICON}<span class="notice-title-text">${escapeHtml(t("noticeTitle"))}</span>
+        <span class="notice-short">${escapeHtml(countdownShort())}</span>
+        ${icon("chevronDown", "icon notice-chev")}
+      </button>
+      <div class="notice-more" id="noticeMore"${open ? "" : " inert"}>
+        <div class="notice-inner">
+          ${body}
+          <div class="notice-cd">${countdownHtml()}</div>
+        </div>
+      </div>
     </div>`;
 }
 
+/** Fold or unfold, remember it on this device, and let the pinned bars re-measure. */
+function toggleNotice() {
+  S.noticeOpen = !S.noticeOpen;
+  savePrefs();
+  hapticTick("light");
+  const box = noticeEl.querySelector(".notice-box");
+  const btn = noticeEl.querySelector("[data-notice-toggle]");
+  const more = noticeEl.querySelector(".notice-more");
+  box.classList.toggle("is-folded", !S.noticeOpen);
+  btn.setAttribute("aria-expanded", String(S.noticeOpen));
+  btn.title = t(S.noticeOpen ? "noticeHide" : "noticeShow");
+  more.inert = !S.noticeOpen;
+  // After the fold has played (older browsers skip the animation, so no
+  // transitionend to wait for).
+  setTimeout(() => hooks.headerChanged(), 360);
+}
+
 function tickCountdown() {
-  const host = noticeEl?.querySelector(".notice-cd");
-  if (host && document.visibilityState === "visible") host.innerHTML = countdownHtml();
+  if (document.visibilityState === "visible") {
+    const host = noticeEl?.querySelector(".notice-cd");
+    if (host) host.innerHTML = countdownHtml();
+    const short = noticeEl?.querySelector(".notice-short");
+    if (short) short.textContent = countdownShort();
+  }
   if (Date.now() >= OLD_URL_ENDS.getTime()) clearInterval(countdownTimer);
 }
 
@@ -1028,6 +1070,9 @@ export function setupNotice() {
   if (!noticeEl || !NOTICE_ON) return;
   renderNotice();
   noticeEl.hidden = false;
+  noticeEl.addEventListener("click", (e) => {
+    if (e.target.closest("[data-notice-toggle]")) toggleNotice();
+  });
   countdownTimer = setInterval(tickCountdown, 1000);
 }
 

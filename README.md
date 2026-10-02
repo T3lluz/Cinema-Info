@@ -195,8 +195,7 @@ beat never wipes what someone is halfway through typing.
 ## The note at the top
 
 A GitHub-style note (blue rule, info icon, *NYTT: Helt nytt utseende*)
-sits right under the header on every tab. It cannot be dismissed and
-scrolls away with the page. It tells staff about the new address and
+sits right under the header on every tab and scrolls away with the page. It tells staff about the new address and
 counts down, a second at a time, to 1 November, when the old GitHub
 Pages address stops working:
 
@@ -204,7 +203,9 @@ Pages address stops working:
   asks people to re-add the app to their home screen from there
 - on t3lluz.com it says this is the new address
 
-The words live in `public/js/i18n.js` (`notice*`), the deadline in
+Tapping its title folds it down to that one line, with a short
+countdown (*29d 10t*) beside it; each device remembers which way it was
+left. The words live in `public/js/i18n.js` (`notice*`), the deadline in
 `OLD_URL_ENDS` and the new address in `NEW_APP_URL` (`public/js/core.js`),
 and `NOTICE_ON` takes it down.
 

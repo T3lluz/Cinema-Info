@@ -44,6 +44,18 @@ main() {
   mkdir -p "$stage"
   cp -a "$repo/public/." "$stage/"
   node "$repo/scripts/stamp-version.mjs" "$stage" "$sha"
+  # Its own app identity on t3lluz.com. A manifest id resolves against the
+  # origin, not the path, so the shared "./" would become
+  # https://t3lluz.com/, which is the dashboard's id too, and a phone with
+  # the dashboard installed takes Cinema Info for it and offers no install.
+  # Pages keeps "./", so installs from the old address are left alone.
+  node -e '
+    const fs = require("node:fs");
+    const file = process.argv[1];
+    const m = JSON.parse(fs.readFileSync(file, "utf8"));
+    m.id = "/CinemaInfo/";
+    fs.writeFileSync(file, JSON.stringify(m, null, 2) + "\n");
+  ' "$stage/manifest.webmanifest"
   # Posters are content-addressed by file name, so last build's copies
   # carry over and only new ones are downloaded.
   if [[ -d "$build/current/posters" ]]; then

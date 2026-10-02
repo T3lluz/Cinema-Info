@@ -59,6 +59,9 @@ export const I18N = {
     noticeMins: "min",
     noticeSecs: "sek",
     noticeAria: "Informasjon",
+    noticeShort: "{d}d {h}t",
+    noticeShow: "Vis mer",
+    noticeHide: "Skjul",
 
     now: "Nå",
     soon: "Snart",
@@ -402,6 +405,9 @@ export const I18N = {
     noticeMins: "min",
     noticeSecs: "sec",
     noticeAria: "Information",
+    noticeShort: "{d}d {h}h",
+    noticeShow: "Show more",
+    noticeHide: "Hide",
 
     now: "Now",
     soon: "Soon",

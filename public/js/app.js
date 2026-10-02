@@ -89,6 +89,7 @@ function boot() {
   S.keepAwake = prefs.keepAwake === true;
   S.statsPeriod = prefs.statsPeriod === "month" ? "month" : "week";
   S.rippleOn = prefs.ripple !== false;
+  S.noticeOpen = prefs.noticeOpen !== false;
   if (wanted) {
     // A home-screen shortcut opened us; don't keep the tab in the URL.
     const url = new URL(location.href);
