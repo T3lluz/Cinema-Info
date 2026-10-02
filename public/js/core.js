@@ -38,9 +38,18 @@ export const OMDB_PROXY =
 export const DX_LOGIN_ANON_KEY =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt5cGVlZ3NiZmFpdnlxZWlkbnFwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUxODczMzQsImV4cCI6MjEwMDc2MzMzNH0.xUuL6dC8u_Nm6DqxS0y4KyjpMNlVn6IrxcvivSHeaaM";
 
-/** The build this page runs, stamped into the script URL on deploy. */
+/**
+ * The release, as people read it: bump it with every change that ships
+ * (major.minor.patch — a fix is a patch, a new feature a minor).
+ */
+export const APP_RELEASE = "2.4.0";
+
+/** The build this page runs (the commit), stamped into the script URL on deploy. */
 export const APP_VERSION =
   new URL(import.meta.url).searchParams.get("v") || "dev";
+
+/** "2.4.0 (a1b2c3d)" — the release, and which build of it. */
+export const APP_VERSION_LABEL = `${APP_RELEASE} (${APP_VERSION})`;
 
 /** Example scanned counts for UI preview (`?previewScanned=1`). */
 export const PREVIEW_SCANNED = new URLSearchParams(location.search).has(

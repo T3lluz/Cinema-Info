@@ -7,7 +7,7 @@ import {
   S,
   els,
   hooks,
-  APP_VERSION,
+  APP_VERSION_LABEL,
   t,
   icon,
   escapeHtml,
@@ -180,7 +180,7 @@ export function renderSettings() {
             ${row(
               "info",
               t("version"),
-              APP_VERSION,
+              APP_VERSION_LABEL,
               `<button type="button" class="btn btn-sm" data-action="update">${escapeHtml(t("checkUpdate"))}</button>`
             )}
             ${row("day", t("programUpdated"), programFetched())}

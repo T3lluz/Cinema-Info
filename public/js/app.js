@@ -40,6 +40,7 @@ import {
 import {
   patchList,
   setupHaptics,
+  setupTapRescue,
   setupMotion,
   setupHScroll,
   syncHScroll,
@@ -102,6 +103,7 @@ function boot() {
   applyLanguage();
 
   setupHaptics();
+  setupTapRescue();
   setupMotion();
   setupHScroll();
   setupNotice();
@@ -297,13 +299,18 @@ function setTab(tab, { initial = false } = {}) {
   if (!els.views[tab]) return;
   const prev = S.activeTab;
   if (!initial && prev === tab) {
-    // Tapping the tab you are on: back to the top, then (on Days) to today.
+    // Tapping the tab you are on: on Days, straight back to today (one
+    // tap, wherever the page is scrolled); otherwise back to the top.
     popTabIcon(tab);
-    if (window.scrollY > 4) window.scrollTo({ top: 0, behavior: reducedMotion() ? "auto" : "smooth" });
-    else if (tab === "day" && S.selectedDay !== todayKey()) selectDay(todayKey());
+    const today = todayKey();
+    if (tab === "day" && S.selectedDay !== today && programDays().includes(today)) selectDay(today);
+    else if (window.scrollY > 4) window.scrollTo({ top: 0, behavior: reducedMotion() ? "auto" : "smooth" });
     return;
   }
-  if (!initial) scrollMemory[prev] = window.scrollY;
+  if (!initial) {
+    scrollMemory[prev] = window.scrollY;
+    if (prev === "day") scrollMemory.dayKey = S.selectedDay;
+  }
   S.activeTab = tab;
   savePrefs();
   document.body.dataset.tab = tab;
@@ -338,7 +345,12 @@ function setTab(tab, { initial = false } = {}) {
       syncHScroll();
     });
   }
-  if (!initial) window.scrollTo(0, scrollMemory[tab] || 0);
+  if (!initial) {
+    // Back on Days but on another day than you left (a day picked from
+    // Stats, say): its top, not wherever the old day was scrolled to.
+    const otherDay = tab === "day" && scrollMemory.dayKey !== S.selectedDay;
+    window.scrollTo(0, otherDay ? 0 : scrollMemory[tab] || 0);
+  }
   hooks.headerChanged();
 
   if (!S.state?.shows) return;
@@ -473,10 +485,18 @@ const PULL_THRESHOLD = 72;
 const PULL_TICKS = 10;
 const PULL_FOLLOW = 0.6;
 
-/** Read everything again and let the ripple say so. */
+/** One manual reload at a time; a second ask joins the one running. */
+let manualReload = null;
+function reloadAll() {
+  manualReload ||= load({ forceLive: true }).finally(() => (manualReload = null));
+  return manualReload;
+}
+
+/** Read everything again and let the ripple say so. Always answers the
+ * tap, even while a background fetch (the one a day change starts, say)
+ * is still running — that used to swallow it without a sign. */
 async function refreshAll() {
-  if (S.busy > 0) return;
-  const done = load({ forceLive: true });
+  const done = reloadAll();
   playRipple();
   await done;
 }
@@ -562,7 +582,7 @@ function setupPullToRefresh() {
     }, settle);
     if (!go) return;
     hapticTick("strong");
-    load({ forceLive: true }).catch(() => {});
+    reloadAll().catch(() => {});
   };
   document.addEventListener("touchend", end, { passive: true });
   document.addEventListener("touchcancel", end, { passive: true });

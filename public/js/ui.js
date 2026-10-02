@@ -632,6 +632,121 @@ export function setupHaptics() {
   );
 }
 
+/* —— Taps that go missing ——————————————————————————————————————————
+ * A phone browser only turns a tap into a click when it is sure it was
+ * a tap. Chrome on Android drops it now and then — the finger slid a
+ * hair, the page was still settling from the day change before, a strip
+ * was gliding somewhere — and that is what made the app want a second
+ * tap after leaving today. A tap that lifted cleanly on a control and
+ * got no click is given its click here, a moment later, as long as the
+ * finger is still on that same control; a click the browser sends after
+ * all is swallowed, so nothing ever fires twice. A tap that stops a
+ * scroll is left alone, the way the browser meant it.
+ */
+const TAP_SLOP_PX = 12;
+const TAP_MAX_MS = 650;
+const TAP_RESCUE_MS = 280;
+const TAP_LATE_MS = 900;
+const SCROLL_QUIET_MS = 120;
+const ACTIONABLE = `button, a[href], summary, label, [role="button"], [role="tab"], [role="switch"], [role="radio"], ${HAPTIC_ANY}`;
+
+function actionableAt(node) {
+  const el = node?.nodeType === 1 ? node : node?.parentElement;
+  if (!el || el.closest("input, textarea, select, [contenteditable]")) return null;
+  const hit = el.closest(ACTIONABLE);
+  if (!hit || hit.disabled || hit.closest("[inert]") || hit.getAttribute("aria-disabled") === "true") return null;
+  return hit;
+}
+
+export function setupTapRescue() {
+  let tap = null; // the finger that is down
+  let pending = null; // lifted, waiting for the browser's click
+  let rescued = null; // clicked from here; the browser's late one is dropped
+  const scrolled = new Map(); // scroller -> when it last moved
+
+  // The bars pinned to the screen do not move with a page that is still
+  // coasting, so a tap on them means the tab or the day, not "stop".
+  const pinned = (hit) => Boolean(hit.closest(".tabbar, .appbar, .day-dock, .toasts"));
+  const scrolling = (hit, now) => {
+    for (const [target, at] of scrolled) {
+      if (now - at > SCROLL_QUIET_MS) scrolled.delete(target);
+      else if (target === document ? !pinned(hit) : target.contains?.(hit)) return true;
+    }
+    return false;
+  };
+
+  document.addEventListener("scroll", (e) => scrolled.set(e.target, performance.now()), {
+    capture: true,
+    passive: true,
+  });
+  document.addEventListener(
+    "pointerdown",
+    (e) => {
+      if (e.pointerType === "mouse" || !e.isPrimary) {
+        tap = null;
+        return;
+      }
+      const now = performance.now();
+      const hit = actionableAt(e.target);
+      tap = hit && !scrolling(hit, now) ? { id: e.pointerId, hit, x: e.clientX, y: e.clientY, at: now } : null;
+    },
+    { capture: true, passive: true }
+  );
+  document.addEventListener(
+    "pointermove",
+    (e) => {
+      if (tap && e.pointerId === tap.id && Math.hypot(e.clientX - tap.x, e.clientY - tap.y) > TAP_SLOP_PX) tap = null;
+    },
+    { capture: true, passive: true }
+  );
+  document.addEventListener("pointercancel", () => (tap = null), { capture: true, passive: true });
+  document.addEventListener(
+    "pointerup",
+    (e) => {
+      if (!tap || e.pointerId !== tap.id) return;
+      const t0 = tap;
+      tap = null;
+      if (performance.now() - t0.at > TAP_MAX_MS) return;
+      if (Math.hypot(e.clientX - t0.x, e.clientY - t0.y) > TAP_SLOP_PX) return;
+      clearTimeout(pending?.timer);
+      const p = { hit: t0.hit, x: e.clientX, y: e.clientY };
+      p.timer = setTimeout(() => {
+        if (pending !== p) return;
+        pending = null;
+        if (!p.hit.isConnected || actionableAt(document.elementFromPoint(p.x, p.y)) !== p.hit) return;
+        rescued = { hit: p.hit, x: p.x, y: p.y, at: performance.now() };
+        p.hit.click();
+      }, TAP_RESCUE_MS);
+      pending = p;
+    },
+    { capture: true, passive: true }
+  );
+  window.addEventListener(
+    "click",
+    (e) => {
+      if (!e.isTrusted) return;
+      // Matched by place as well as target: by the time it comes, what the
+      // rescued tap opened (a sheet, another day) may be what it would hit.
+      const late =
+        rescued &&
+        performance.now() - rescued.at < TAP_LATE_MS &&
+        (rescued.hit.contains(e.target) || Math.hypot(e.clientX - rescued.x, e.clientY - rescued.y) <= TAP_SLOP_PX * 2);
+      if (late) {
+        rescued = null;
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        return;
+      }
+      rescued = null;
+      if (pending) {
+        clearTimeout(pending.timer);
+        pending = null;
+      }
+    },
+    true
+  );
+}
+
 /** New elements carry `is-new` only for their entrance. */
 export function setupMotion() {
   document.addEventListener("animationend", (e) => {
