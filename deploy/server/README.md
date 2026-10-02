@@ -41,8 +41,8 @@ same server, which lives on t3lluserver next to the rest of t3lluz.com.
   browsers any more.
 - **Runs film lookups** (`supabase/functions/omdb-lookup`) at
   `/CinemaInfo/api/omdb`.
-- **Takes feedback** at `/CinemaInfo/api/feedback` (6 notes per address
-  per 10 minutes) and stores it in `data/feedback.json`.
+- **Takes feedback** at `/CinemaInfo/api/feedback` (20 notes per address
+  per 10 minutes; the box office shares one) and stores it in `data/feedback.json`.
 - **Serves the feedback hub** on its admin port. Caddy proxies
   `feedback.t3lluz.com` to it, which only resolves on the tailnet, and the
   port refuses any address outside Caddy's network besides.

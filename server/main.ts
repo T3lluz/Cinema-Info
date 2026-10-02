@@ -54,6 +54,9 @@ const CORS = {
   "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
   "Access-Control-Expose-Headers": "ETag",
   "Access-Control-Max-Age": "86400",
+  // A tailnet device resolves t3lluz.com to a 100.x address, which Chrome
+  // treats as a local network when GitHub Pages calls it.
+  "Access-Control-Allow-Private-Network": "true",
 };
 
 const SECURITY = {
@@ -90,7 +93,10 @@ function clientIp(req: Request, info: Deno.ServeHandlerInfo) {
   return addr?.hostname || "unknown";
 }
 
-/** Fixed windows per address. Generous: a busy box office is one IP. */
+/**
+ * Fixed windows per address. Generous on purpose: every phone at the box
+ * office shares one public address, and so do their feedback notes.
+ */
 const buckets = new Map<string, { until: number; n: number }>();
 function limited(key: string, max: number, windowMs: number) {
   const now = Date.now();
@@ -214,7 +220,7 @@ async function api(req: Request, route: string, ip: string) {
   }
 
   if (route === "live" && (req.method === "GET" || req.method === "HEAD")) {
-    if (limited(`live:${ip}`, 240, 60_000)) return json({ error: "slow down" }, 429);
+    if (limited(`live:${ip}`, 900, 60_000)) return json({ error: "slow down" }, 429);
     const url = new URL(req.url);
     const days = (url.searchParams.get("days") || "").split(",")
       .filter((d) => /^\d{4}-\d{2}-\d{2}$/.test(d)).slice(0, 3);
@@ -247,7 +253,7 @@ async function api(req: Request, route: string, ip: string) {
   if (req.method !== "POST") return json({ error: "Method not allowed" }, 405);
 
   if (route === "dx" || route === "dx-web-login") {
-    if (limited(`dx:${ip}`, 600, 60_000)) return json({ error: "slow down" }, 429);
+    if (limited(`dx:${ip}`, 1200, 60_000)) return json({ error: "slow down" }, 429);
     let body: Record<string, unknown>;
     try {
       body = await readJson(req);
@@ -265,13 +271,13 @@ async function api(req: Request, route: string, ip: string) {
   }
 
   if (route === "omdb" || route === "omdb-lookup") {
-    if (limited(`omdb:${ip}`, 120, 60_000)) return json({ error: "slow down" }, 429);
+    if (limited(`omdb:${ip}`, 300, 60_000)) return json({ error: "slow down" }, 429);
     const res = await omdbHandler(req);
     return res;
   }
 
   if (route === "feedback") {
-    if (limited(`fb:${ip}`, 6, 10 * 60_000) || limited("fb:all", 300, 86_400_000)) {
+    if (limited(`fb:${ip}`, 20, 10 * 60_000) || limited("fb:all", 300, 86_400_000)) {
       return json({ error: "Too many messages, try again later", code: "rate" }, 429);
     }
     let body: Record<string, unknown>;

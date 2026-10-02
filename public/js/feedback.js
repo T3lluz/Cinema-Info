@@ -49,7 +49,7 @@ function context() {
   return {
     version: APP_VERSION_LABEL,
     site: siteOf(),
-    tab: S.feedbackFrom || S.activeTab,
+    tab: S.activeTab,
     day: S.selectedDay,
     lang: S.lang,
     theme: S.theme,
@@ -179,7 +179,6 @@ export function openFeedback() {
     document.body.append(dialog);
     wire(dialog);
   }
-  S.feedbackFrom = S.activeTab;
   dialog.innerHTML = markup();
   dialog.querySelector(".fb-text").value = draft.message;
   dialog.querySelector(".fb-name").value = savedName();
