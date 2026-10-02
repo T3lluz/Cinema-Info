@@ -14,10 +14,14 @@ export const HISTORY_KEY = "cinemaInfoHistory";
 export const DX_AUTH_KEY = "cinemaInfoDxAuth";
 export const SEAT_MAP_KEY = "cinemaInfoSeatMaps";
 /**
- * The warning at the top of every tab (words in i18n.js, `noticeTitle`
- * and `noticeBody`). It cannot be dismissed; false takes it down.
+ * The note at the top of every tab (words in i18n.js, `notice*`). It
+ * cannot be dismissed; false takes it down.
  */
 export const NOTICE_ON = true;
+/** The app's home from now on. */
+export const NEW_APP_URL = "https://t3lluz.com/CinemaInfo/";
+/** When the old GitHub Pages address stops working: 1 November, Oslo midnight. */
+export const OLD_URL_ENDS = new Date("2026-11-01T00:00:00+01:00");
 export const HISTORY_KEEP_DAYS = 120;
 export const DX_PARTNER_ID = "202";
 export const DX_API = "https://api.dx.no/v3";
@@ -49,7 +53,7 @@ export const DX_LOGIN_ANON_KEY =
  * The release, as people read it: bump it with every change that ships
  * (major.minor.patch — a fix is a patch, a new feature a minor).
  */
-export const APP_RELEASE = "2.5.0";
+export const APP_RELEASE = "2.5.1";
 
 /** The build this page runs (the commit), stamped into the script URL on deploy. */
 export const APP_VERSION =

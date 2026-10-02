@@ -44,10 +44,21 @@ export const I18N = {
     scrollPrev: "Rull til venstre",
     scrollNext: "Rull til høyre",
 
-    noticeTitle: "Advarsel",
-    noticeBody:
-      "Appen har fått nytt utseende, og nettadressen til siden endres snart. Du får beskjed om den nye lenken.",
-    noticeAria: "Advarsel",
+    noticeTitle: "NYTT: Helt nytt utseende",
+    noticeMoved: "Appen har også fått ny adresse:",
+    noticeOldEnds:
+      "Denne adressen slutter å virke 1. november. Åpne den nye lenken, og legg appen på hjemskjermen på nytt derfra.",
+    noticeHere:
+      "Du er på den nye adressen. Den gamle, t3lluz.github.io/Cinema-Info, slutter å virke 1. november.",
+    noticeCountdown: "Den gamle adressen stenges om",
+    noticeClosed: "Den gamle adressen er stengt.",
+    noticeDays: "dager",
+    noticeDay: "dag",
+    noticeHours: "timer",
+    noticeHour: "time",
+    noticeMins: "min",
+    noticeSecs: "sek",
+    noticeAria: "Informasjon",
 
     now: "Nå",
     soon: "Snart",
@@ -376,10 +387,21 @@ export const I18N = {
     scrollPrev: "Scroll left",
     scrollNext: "Scroll right",
 
-    noticeTitle: "Warning",
-    noticeBody:
-      "The app has a new look, and the address of this site will change soon. You will be told the new link.",
-    noticeAria: "Warning",
+    noticeTitle: "NEW: UI overhaul",
+    noticeMoved: "The app also has a new address:",
+    noticeOldEnds:
+      "This address stops working on 1 November. Open the new link and add the app to your home screen again from there.",
+    noticeHere:
+      "You're on the new address. The old one, t3lluz.github.io/Cinema-Info, stops working on 1 November.",
+    noticeCountdown: "The old address closes in",
+    noticeClosed: "The old address is closed.",
+    noticeDays: "days",
+    noticeDay: "day",
+    noticeHours: "hours",
+    noticeHour: "hour",
+    noticeMins: "min",
+    noticeSecs: "sec",
+    noticeAria: "Information",
 
     now: "Now",
     soon: "Soon",
