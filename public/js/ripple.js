@@ -390,13 +390,62 @@ function wanted() {
   return !reducedMotion() && S.rippleOn !== false && document.visibilityState === "visible";
 }
 
+/* The canvas, its WebGL context and the compiled shader are made once and
+ * kept: a context and a compile cost the first ripple a tenth of a second
+ * or more, which mid-drag would be a visible stutter. Between ripples the
+ * canvas simply is not in the page. */
+let kit = null;
+
+function glKit() {
+  if (kit && !kit.gl.isContextLost()) return kit;
+  kit = null;
+  const cv = document.createElement("canvas");
+  cv.className = "rip-canvas";
+  cv.setAttribute("aria-hidden", "true");
+  const gl = cv.getContext("webgl", { alpha: false, antialias: false, depth: false, stencil: false });
+  if (!gl) return null;
+  const prog = program(gl);
+  if (!prog) return null;
+  gl.useProgram(prog);
+  const buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+  const aPos = gl.getAttribLocation(prog, "aPos");
+  gl.enableVertexAttribArray(aPos);
+  gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
+  const tex = gl.createTexture();
+  gl.bindTexture(gl.TEXTURE_2D, tex);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+  const u = {};
+  for (const n of ["uPage", "uRes", "uTexOrigin", "uTexSize", "uOrigin", "uTime", "uAmplitude", "uFrequency", "uDecay", "uSpeed"]) {
+    u[n] = gl.getUniformLocation(prog, n);
+  }
+  gl.uniform1i(u.uPage, 0);
+  gl.uniform1f(u.uAmplitude, RIP.amp);
+  gl.uniform1f(u.uFrequency, RIP.freq);
+  gl.uniform1f(u.uDecay, RIP.decay);
+  gl.uniform1f(u.uSpeed, RIP.speed);
+  kit = { cv, gl, u };
+  return kit;
+}
+
+/** Make the canvas and compile the shader ahead, while the app is idle. */
+export function warmRipple() {
+  if (!reducedMotion()) glKit();
+}
+
 /**
  * Photograph the page and run one wave out from the header over it.
- * `settle` waits for the page to finish loading first (the opening one).
+ * `settle` waits for the page to finish loading first (the opening one);
+ * `follow` makes the picture move with the page while a pull drags it
+ * down and springs it back, so the wave can start under the finger.
  * Nothing here can leave the page worse than it found it: any failure —
  * no WebGL, a capture the browser would not draw — just means no ripple.
  */
-export async function playRipple({ settle = false, intro = false } = {}) {
+export async function playRipple({ settle = false, intro = false, follow = false } = {}) {
   if (running || !wanted()) return;
   // The opening ripple is a greeting, not something to wait for: once
   // someone has started using the app it stays out of their way rather
@@ -410,22 +459,17 @@ export async function playRipple({ settle = false, intro = false } = {}) {
     if (settle) await settled(captureBox(rippleArea()), performance.now() + RIP.wait);
     if (!wanted() || (intro && touchedSinceOpen)) return;
 
+    const k = glKit();
+    if (!k) return;
+    const { gl, u } = k;
+    cv = k.cv;
     const area = rippleArea();
     const box = captureBox(area);
     const o = origin();
-    cv = document.createElement("canvas");
-    cv.className = "rip-canvas";
-    cv.setAttribute("aria-hidden", "true");
-    const gl = cv.getContext("webgl", { alpha: false, antialias: false, depth: false, stencil: false });
-    if (!gl) return;
 
     const cap = gl.getParameter(gl.MAX_TEXTURE_SIZE);
     let dpr = Math.min(devicePixelRatio || 1, 2);
     while (dpr > 0.5 && (box.w * dpr > cap || box.h * dpr > cap)) dpr /= 2;
-    cv.width = Math.round(area.w * dpr);
-    cv.height = Math.round(area.h * dpr);
-    cv.style.top = `${area.top}px`;
-    cv.style.height = `${area.h}px`;
 
     const scrollAt = scrollY;
     const page = await capture(box, dpr);
@@ -436,39 +480,19 @@ export async function playRipple({ settle = false, intro = false } = {}) {
       return;
     }
 
-    const prog = program(gl);
-    if (!prog) return;
-    gl.useProgram(prog);
-    const buf = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
-    const aPos = gl.getAttribLocation(prog, "aPos");
-    gl.enableVertexAttribArray(aPos);
-    gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
-
-    const tex = gl.createTexture();
-    gl.bindTexture(gl.TEXTURE_2D, tex);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+    cv.width = Math.round(area.w * dpr);
+    cv.height = Math.round(area.h * dpr);
+    cv.style.top = `${area.top}px`;
+    cv.style.height = `${area.h}px`;
+    cv.classList.toggle("pull-follow", follow);
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, page);
     gl.viewport(0, 0, cv.width, cv.height);
-
     // Everything in the canvas's own space: its top left is (0, area.top).
-    const u = (n) => gl.getUniformLocation(prog, n);
-    gl.uniform1i(u("uPage"), 0);
-    gl.uniform2f(u("uRes"), area.w, area.h);
-    gl.uniform2f(u("uTexOrigin"), box.x, box.y - area.top);
-    gl.uniform2f(u("uTexSize"), box.w, box.h);
-    gl.uniform2f(u("uOrigin"), o.x, o.y - area.top);
-    gl.uniform1f(u("uAmplitude"), RIP.amp);
-    gl.uniform1f(u("uFrequency"), RIP.freq);
-    gl.uniform1f(u("uDecay"), RIP.decay);
-    gl.uniform1f(u("uSpeed"), RIP.speed);
-    const uTime = u("uTime");
-
-    gl.uniform1f(uTime, 0);
+    gl.uniform2f(u.uRes, area.w, area.h);
+    gl.uniform2f(u.uTexOrigin, box.x, box.y - area.top);
+    gl.uniform2f(u.uTexSize, box.w, box.h);
+    gl.uniform2f(u.uOrigin, o.x, o.y - area.top);
+    gl.uniform1f(u.uTime, 0);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
     document.body.append(cv);
     await frames(1);
@@ -480,27 +504,24 @@ export async function playRipple({ settle = false, intro = false } = {}) {
       endAt = Math.min(endAt, performance.now() + RIP.fade);
     };
     for (const e of quitEvents) addEventListener(e, quit, { passive: true, once: true });
-    try {
-      await new Promise((done) => {
-        const frame = (now) => {
-          if (now >= endAt) return done();
-          gl.uniform1f(uTime, (now - t0) / 1000);
-          gl.drawArrays(gl.TRIANGLES, 0, 3);
-          if (now > endAt - RIP.fade) cv.classList.remove("on");
-          requestAnimationFrame(frame);
-        };
+    await new Promise((done) => {
+      const frame = (now) => {
+        if (now >= endAt) return done();
+        gl.uniform1f(u.uTime, (now - t0) / 1000);
+        gl.drawArrays(gl.TRIANGLES, 0, 3);
+        if (now > endAt - RIP.fade) cv.classList.remove("on");
         requestAnimationFrame(frame);
-      });
-    } finally {
-      gl.deleteTexture(tex);
-      gl.deleteBuffer(buf);
-      gl.deleteProgram(prog);
-    }
+      };
+      requestAnimationFrame(frame);
+    });
   } catch (err) {
     console.warn("ripple:", err);
   } finally {
     if (quit) for (const e of quitEvents) removeEventListener(e, quit);
-    cv?.remove();
+    if (cv) {
+      cv.remove();
+      cv.classList.remove("on", "pull-follow");
+    }
     running = false;
   }
 }

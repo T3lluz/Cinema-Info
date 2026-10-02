@@ -909,8 +909,11 @@ export function setupDaySwipe() {
     if (commit) hapticTick("medium");
     settle(commit, dir, target, vx);
   };
-  host.addEventListener("pointerup", (e) => release(e, false));
-  host.addEventListener("pointercancel", (e) => release(e, true));
+  // On the window, not the pager: if the browser drops the capture, the
+  // finger lifting anywhere must still end the swipe — a swipe left
+  // "dragging" would make every later day change wait for it forever.
+  window.addEventListener("pointerup", (e) => release(e, false));
+  window.addEventListener("pointercancel", (e) => release(e, true));
   host.addEventListener("lostpointercapture", (e) => {
     if (e.target === host && pointerId === e.pointerId) release(e, false);
   });
@@ -964,6 +967,37 @@ export function goToDay(dayKey) {
   }
 }
 
+/**
+ * "I dag" acts the moment the finger lifts, not on the click the browser
+ * makes of it: Chrome on Android drops that click when the tap lands
+ * while the day strip is still gliding to the day just picked, or the
+ * finger moved a hair — which is what made it take two taps.
+ */
+function setupJumpToday() {
+  const btn = els.jumpTodayBtn;
+  if (!btn) return;
+  let down = null;
+  let firedAt = 0;
+  const go = () => {
+    firedAt = performance.now();
+    selectDay(todayKey());
+  };
+  btn.addEventListener("pointerdown", (e) => {
+    if (e.pointerType !== "mouse") down = { id: e.pointerId, x: e.clientX, y: e.clientY };
+  });
+  btn.addEventListener("pointerup", (e) => {
+    if (!down || e.pointerId !== down.id) return;
+    const moved = Math.hypot(e.clientX - down.x, e.clientY - down.y);
+    down = null;
+    if (moved <= 18) go();
+  });
+  btn.addEventListener("pointercancel", () => (down = null));
+  // Mouse, keyboard — and a touch whose click did arrive, already handled.
+  btn.addEventListener("click", () => {
+    if (performance.now() - firedAt > 700) go();
+  });
+}
+
 export function setupDayInteractions() {
   els.dayTabs?.addEventListener("click", (e) => {
     const chip = e.target.closest(".day-chip");
@@ -980,7 +1014,7 @@ export function setupDayInteractions() {
     },
     { passive: false }
   );
-  els.jumpTodayBtn?.addEventListener("click", () => selectDay(todayKey()));
+  setupJumpToday();
 
   document.addEventListener("click", (e) => {
     const bar = e.target.closest?.("[data-tl-show]");

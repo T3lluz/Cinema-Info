@@ -929,6 +929,7 @@ body:not([data-tab="day"]) .day-dock {
   top: 50%;
   left: var(--jt-inset);
   z-index: 8;
+  touch-action: manipulation;
   display: inline-flex;
   align-items: center;
   gap: 3px;
@@ -1142,7 +1143,9 @@ html.is-pull-settling .pull-follow {
   transform: translate3d(0, var(--pull-y, 0px), 0);
 }
 html.is-pull-settling .pull-follow {
-  transition: transform 0.42s cubic-bezier(0.25, 1.1, 0.4, 1);
+  transition:
+    transform 0.42s cubic-bezier(0.25, 1.1, 0.4, 1),
+    opacity 0.14s linear;
 }
 
 /* The liquid ripple (js/ripple.js): a photograph of the page under the
@@ -1244,19 +1247,28 @@ html.sheet-open .edge-blur {
   padding: 6px var(--pad) 24px;
 }
 
-/* A tab's content slides in from the side its tab sits on. The content,
- * not the tab itself: a pinned bar (the stats period switch) must stay
- * put under the header instead of sliding along with the page. */
+/* A tab's content slides in from the side its tab sits on. The page as
+ * one piece — never an element that has an entrance of its own, or that
+ * entrance would replay the moment this one ends (that was the Movies
+ * tab blinking once after it arrived). On Stats the pieces under the
+ * pinned period switch move instead, so the switch stays put under the
+ * header rather than sliding along. */
 .view-day.is-entering > .pager,
-.view.is-entering > .page > :not(.period-bar) {
+.view-movies.is-entering > .page,
+.view-settings.is-entering > .page,
+.view-stats.is-entering > .page > :not(.period-bar) {
   animation: view-in 0.36s var(--ease) both;
 }
 .view-day.is-entering[data-dir="next"] > .pager,
-.view.is-entering[data-dir="next"] > .page > :not(.period-bar) {
+.view-movies.is-entering[data-dir="next"] > .page,
+.view-settings.is-entering[data-dir="next"] > .page,
+.view-stats.is-entering[data-dir="next"] > .page > :not(.period-bar) {
   animation-name: view-in-next;
 }
 .view-day.is-entering[data-dir="prev"] > .pager,
-.view.is-entering[data-dir="prev"] > .page > :not(.period-bar) {
+.view-movies.is-entering[data-dir="prev"] > .page,
+.view-settings.is-entering[data-dir="prev"] > .page,
+.view-stats.is-entering[data-dir="prev"] > .page > :not(.period-bar) {
   animation-name: view-in-prev;
 }
 @keyframes view-in {
@@ -1289,27 +1301,23 @@ html.sheet-open .edge-blur {
     transform: none;
   }
 }
-/* Lists inside a tab follow it in, one after another. */
-.view.is-entering .movie-card,
-.view.is-entering .up-card,
+/* Cards inside a tab follow it in, one after another. (Not the poster
+ * walls: the Movies tab arrives in one piece, posters already loaded.) */
 .view.is-entering .stats-col > *,
 .view.is-entering .group {
   animation: rise 0.48s var(--ease) both;
 }
-.view.is-entering :is(.movie-card, .up-card, .stats-col > *, .group):nth-child(2) {
+.view.is-entering :is(.stats-col > *, .group):nth-child(2) {
   animation-delay: 35ms;
 }
-.view.is-entering :is(.movie-card, .up-card, .stats-col > *, .group):nth-child(3) {
+.view.is-entering :is(.stats-col > *, .group):nth-child(3) {
   animation-delay: 70ms;
 }
-.view.is-entering :is(.movie-card, .up-card, .stats-col > *, .group):nth-child(4) {
+.view.is-entering :is(.stats-col > *, .group):nth-child(4) {
   animation-delay: 100ms;
 }
-.view.is-entering :is(.movie-card, .up-card, .stats-col > *, .group):nth-child(5) {
+.view.is-entering :is(.stats-col > *, .group):nth-child(n + 5) {
   animation-delay: 130ms;
-}
-.view.is-entering :is(.movie-card, .up-card, .stats-col > *, .group):nth-child(n + 6) {
-  animation-delay: 160ms;
 }
 
 .view-head {
@@ -2369,8 +2377,8 @@ html.sheet-open .edge-blur {
 .search-results {
   animation: fade-in 0.2s var(--ease) both;
 }
-/* The film list fades back in when a search is cleared. */
-:where(#moviesBody) {
+/* The film list fades back in when a search is cleared (movies.js). */
+#moviesBody.is-back {
   animation: fade-in 0.25s var(--ease) both;
 }
 .hits > .hit {

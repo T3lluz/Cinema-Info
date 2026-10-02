@@ -17,6 +17,7 @@ import {
   toDayKey,
   weekdays,
   showsLabel,
+  reducedMotion,
 } from "./core.js?v=dev";
 import {
   groupMovies,
@@ -108,11 +109,11 @@ function ensureUpcomingRemote() {
     .then((data) => {
       upcomingRemote = Array.isArray(data?.movies) ? data.movies : [];
       upcomingRemoteStatus = "ok";
-      if (S.activeTab === "movies") renderMovies();
+      if (S.activeTab === "movies" || prerendered) renderMovies({ background: S.activeTab !== "movies" });
     })
     .catch(() => {
       upcomingRemoteStatus = "error";
-      if (S.activeTab === "movies") renderMovies();
+      if (S.activeTab === "movies" || prerendered) renderMovies({ background: S.activeTab !== "movies" });
     });
 }
 
@@ -131,7 +132,7 @@ function upcomingCard(item) {
   if (item.source === "buen") {
     const movie = item.movie;
     return `<button type="button" class="up-card" data-key="b:${escapeHtml(movie.title)}" data-open-movie="${escapeHtml(movie.title)}">
-      <span class="up-poster">${posterHtml(movie, { w: 120, h: 180 })}
+      <span class="up-poster">${posterHtml(movie, { w: 120, h: 180, eager: true })}
         <span class="up-chip is-buen">${escapeHtml(t("upcomingOnBuen"))}</span>
         ${imdbBadge(movie.ratings?.imdb?.value)}
       </span>
@@ -141,7 +142,7 @@ function upcomingCard(item) {
   }
   const row = item.row;
   return `<button type="button" class="up-card" data-key="i:${escapeHtml(row.imdbID || row.title)}" data-omdb-id="${escapeHtml(row.imdbID || "")}">
-    <span class="up-poster">${posterHtml({ title: row.title, posterUrl: row.poster }, { w: 120, h: 180 })}
+    <span class="up-poster">${posterHtml({ title: row.title, posterUrl: row.poster }, { w: 120, h: 180, eager: true })}
       <span class="up-chip">${escapeHtml(t("upcomingComingSoon"))}</span>
       ${imdbBadge(row.imdbRating)}
     </span>
@@ -183,7 +184,7 @@ function movieCard(movie, now) {
     movie.title
   )}" aria-label="${escapeHtml(t("openMovie", { title: movie.title }))}">
     <span class="mc-poster">
-      ${posterHtml(movie, { w: 160, h: 240 })}
+      ${posterHtml(movie, { w: 160, h: 240, eager: true })}
       ${imdbBadge(movie.ratings?.imdb?.value)}
       ${premiere ? `<span class="mc-flag">${escapeHtml(t(`showType.${premiere}`))}</span>` : ""}
     </span>
@@ -193,10 +194,20 @@ function movieCard(movie, now) {
   </button>`;
 }
 
-export function renderMovies() {
+/** Set once the tab has been built ahead of its first visit. */
+let prerendered = false;
+
+/**
+ * Build the tab. `background` builds it while another tab is showing —
+ * done once the app has settled, so the first visit finds every poster
+ * already loaded instead of popping them in — without the whole-programme
+ * DX read a real visit starts.
+ */
+export function renderMovies({ background = false } = {}) {
   if (!S.state?.shows || !els.moviesBody) return;
   ensureUpcomingRemote();
-  ensureAllEnriched();
+  if (background) prerendered = true;
+  else ensureAllEnriched();
   const now = new Date();
   const movies = groupMovies();
   const playing = movies.filter((m) => !m.allDone);
@@ -471,8 +482,14 @@ function renderSearch({ pin = false } = {}) {
   if (!host) return;
   const q = search.query.trim();
   const active = q.length >= 2;
+  const wasActive = !host.hidden;
   host.hidden = !active;
   els.moviesBody.hidden = active;
+  if (wasActive && !active && !reducedMotion()) {
+    els.moviesBody.classList.remove("is-back");
+    void els.moviesBody.offsetWidth;
+    els.moviesBody.classList.add("is-back");
+  }
   els.searchInput?.setAttribute("aria-expanded", String(active));
   if (!active) {
     paint(host, "");
@@ -591,6 +608,9 @@ export function refreshSearchLanguage() {
 }
 
 export function setupMovies() {
+  els.moviesBody?.addEventListener("animationend", (e) => {
+    if (e.target === els.moviesBody) els.moviesBody.classList.remove("is-back");
+  });
   const input = els.searchInput;
   input?.addEventListener("input", () => {
     search.query = input.value;

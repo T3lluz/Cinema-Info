@@ -67,7 +67,7 @@ import {
 import { renderMovies, setupMovies, focusSearch, refreshSearchLanguage } from "./movies.js?v=dev";
 import { renderStats, setupStats } from "./stats.js?v=dev";
 import { renderSettings, setupSettings } from "./settings.js?v=dev";
-import { armRipple, playRipple } from "./ripple.js?v=dev";
+import { armRipple, playRipple, warmRipple } from "./ripple.js?v=dev";
 import { openMovie, setupSheet, isSheetOpen, refreshSheet } from "./sheet.js?v=dev";
 
 /** A selection left longer ago than this is not restored: open on today. */
@@ -146,6 +146,13 @@ const firstPainted = new Promise((resolve) => (firstPaint = resolve));
 async function start() {
   // The opening ripple, once the first real page is on screen.
   armRipple(firstPainted);
+  // The Movies tab, built ahead while the app is idle, posters and all.
+  firstPainted.then(() => {
+    const idle = window.requestIdleCallback || ((fn) => setTimeout(fn, 1500));
+    idle(() => S.activeTab !== "movies" && renderMovies({ background: true }), { timeout: 4000 });
+    // And the ripple's WebGL, so the first pull does not stutter making it.
+    idle(warmRipple, { timeout: 6000 });
+  });
   await load({ forceLive: true });
   applyWakeLock();
   // Backfill check-in counts for every day in the background, so flipping
@@ -489,7 +496,12 @@ function setupPullToRefresh() {
     const fraction = y / PULL_THRESHOLD;
     const tick = Math.min(PULL_TICKS, Math.floor(fraction * PULL_TICKS));
     if (fraction >= 1) {
-      if (!armed) hapticTick("medium");
+      if (!armed) {
+        // Past the point of no return: the click, and the wave starts
+        // running out from the header under the finger, as in DailyDash.
+        hapticTick("medium");
+        playRipple({ follow: true });
+      }
       armed = true;
     } else {
       if (armed) armed = false;
@@ -550,10 +562,7 @@ function setupPullToRefresh() {
     }, settle);
     if (!go) return;
     hapticTick("strong");
-    const done = load({ forceLive: true });
-    // The page has to be back in place before it is photographed.
-    setTimeout(() => playRipple(), settle);
-    done.catch(() => {});
+    load({ forceLive: true }).catch(() => {});
   };
   document.addEventListener("touchend", end, { passive: true });
   document.addEventListener("touchcancel", end, { passive: true });
