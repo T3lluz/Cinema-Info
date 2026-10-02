@@ -33,6 +33,7 @@
   --pad: 16px;
   --tabbar-h: 66px;
   --appbar-h: 120px;
+  --bar-h: 56px;
 
   --bg: #f4f2ef;
   --bg-elev: #ffffff;
@@ -54,6 +55,11 @@
   --soon-soft: rgba(217, 119, 6, 0.14);
   --hold: #2563eb;
   --hold-soft: rgba(37, 99, 235, 0.11);
+  /* GitHub's "attention" colours, for the warning. */
+  --warn-fg: #9a6700;
+  --warn-line: #9a6700;
+  --warn-border: rgba(154, 103, 0, 0.28);
+  --warn-bg: rgba(212, 167, 44, 0.08);
   --chart: #4b453f;
   --chart-soft: #cdc7c0;
   --seat-free: rgba(30, 24, 18, 0.32);
@@ -94,6 +100,10 @@
   --soon-soft: rgba(251, 191, 36, 0.15);
   --hold: #6aa5ff;
   --hold-soft: rgba(106, 165, 255, 0.15);
+  --warn-fg: #d29922;
+  --warn-line: #9e6a03;
+  --warn-border: rgba(187, 128, 9, 0.4);
+  --warn-bg: rgba(187, 128, 9, 0.1);
   --chart: #d9d4ce;
   --chart-soft: #4f4a45;
   --seat-free: rgba(255, 255, 255, 0.3);
@@ -128,6 +138,8 @@ html {
   /* The app has its own pull-to-refresh; the browser's would reload. */
   overscroll-behavior-y: contain;
   scroll-padding-top: calc(var(--appbar-h) + 12px);
+  /* A tab short enough to need no scrollbar must not shift the layout. */
+  scrollbar-gutter: stable;
 }
 
 body {
@@ -510,6 +522,9 @@ p {
 .skeleton-card.is-short {
   height: 112px;
 }
+.skeleton-card.is-hero {
+  height: 240px;
+}
 .skeleton-card i,
 .skeleton-lines i,
 .up-card.skeleton,
@@ -590,6 +605,144 @@ p {
   color: var(--soon);
   font-size: 13px;
   font-weight: 600;
+}
+
+/* —— Sideways scrollers ————————————————————————————————————————————
+ * ‹ › buttons over every horizontal list, on desktop only: phones and
+ * tablets swipe, so there the buttons stay out of the way. Each one
+ * shows only while there is more to see on its side.
+ */
+.hs {
+  position: relative;
+  min-width: 0;
+}
+.hs-btn {
+  display: none;
+}
+@media (min-width: 1024px) and (hover: hover) {
+  .hs-btn {
+    position: absolute;
+    top: var(--hs-y, 50%);
+    z-index: 6;
+    display: grid;
+    place-items: center;
+    width: var(--hs-size, 40px);
+    height: var(--hs-size, 40px);
+    margin-top: calc(var(--hs-size, 40px) / -2);
+    padding: 0;
+    border: 1px solid var(--line-strong);
+    border-radius: 50%;
+    background: var(--glass-strong);
+    -webkit-backdrop-filter: saturate(1.6) blur(14px);
+    backdrop-filter: saturate(1.6) blur(14px);
+    color: var(--ink);
+    box-shadow: var(--shadow-md);
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.75);
+    transition:
+      opacity 0.2s var(--ease),
+      transform 0.32s var(--ease-spring),
+      background-color 0.15s,
+      visibility 0s linear 0.32s;
+  }
+  .hs-btn .icon {
+    width: calc(var(--hs-size, 40px) * 0.5);
+    height: calc(var(--hs-size, 40px) * 0.5);
+    stroke-width: 2.4;
+  }
+  .hs-prev {
+    left: var(--hs-inset, 8px);
+  }
+  .hs-next {
+    right: var(--hs-inset, 8px);
+  }
+  .hs.can-prev > .hs-prev,
+  .hs.can-next > .hs-next {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition-delay: 0s;
+  }
+  .hs.can-prev > .hs-prev:hover,
+  .hs.can-next > .hs-next:hover {
+    background: var(--bg-elev);
+    transform: scale(1.06);
+  }
+  .hs.can-prev > .hs-prev:active,
+  .hs.can-next > .hs-next:active {
+    transform: scale(0.9);
+  }
+  .hs-sm {
+    --hs-size: 30px;
+    --hs-inset: 4px;
+  }
+  .hs-days {
+    --hs-size: 32px;
+    --hs-inset: 2px;
+  }
+  .hs-tl {
+    --hs-y: calc(50% - 10px);
+  }
+  .hs-posters {
+    --hs-y: 40%;
+    --hs-inset: -6px;
+  }
+  .hs-cast {
+    --hs-size: 34px;
+    --hs-y: 36px;
+    --hs-inset: -4px;
+  }
+}
+
+/* —— Warning ————————————————————————————————————————————————————————
+ * Styled after GitHub's [!WARNING] alert: an amber rule down the left,
+ * the alert triangle and title in amber, the message in body text —
+ * here inside a box so it reads as one block on the page. Always shown.
+ */
+.notice {
+  max-width: calc(var(--page-max) + var(--safe-left) + var(--safe-right));
+  margin: 0 auto;
+  padding: 4px calc(var(--pad) + var(--safe-right)) 8px calc(var(--pad) + var(--safe-left));
+}
+.notice-box {
+  position: relative;
+  padding: 10px 14px 11px 18px;
+  overflow: hidden;
+  border: 1px solid var(--warn-border);
+  border-radius: var(--r-md);
+  background: var(--warn-bg);
+  animation: rise 0.5s var(--ease) 0.1s both;
+}
+.notice-box::before {
+  content: "";
+  position: absolute;
+  top: 8px;
+  bottom: 8px;
+  left: 7px;
+  width: 4px;
+  border-radius: 2px;
+  background: var(--warn-line);
+}
+.notice-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 650;
+  line-height: 1;
+  color: var(--warn-fg);
+}
+.notice-icon {
+  flex: none;
+  width: 16px;
+  height: 16px;
+}
+.notice-body {
+  margin-top: 7px;
+  font-size: 13.5px;
+  line-height: 1.45;
+  color: var(--ink);
 }
 
 /* —— App bar ———————————————————————————————————————————————————————— */
@@ -696,16 +849,36 @@ p {
   animation: spin 0.85s linear infinite;
 }
 
-/* Day strip — only on the day tab. */
+/* Day strip — only on the day tab. Its own pinned bar, so the warning can
+ * sit between it and the header and scroll away while the strip docks
+ * right under the header. */
+.day-dock {
+  position: sticky;
+  top: var(--bar-h, 56px);
+  z-index: 29;
+  padding-left: var(--safe-left);
+  padding-right: var(--safe-right);
+  background: var(--glass);
+  -webkit-backdrop-filter: saturate(1.7) blur(22px);
+  backdrop-filter: saturate(1.7) blur(22px);
+  border-bottom: 1px solid transparent;
+  transition:
+    border-color 0.25s,
+    box-shadow 0.25s;
+}
+.day-dock.is-docked {
+  border-bottom-color: var(--line);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
+}
+body:not([data-tab="day"]) .day-dock {
+  display: none;
+}
 .day-bar {
   display: flex;
   align-items: center;
   max-width: var(--page-max);
   margin: 0 auto;
-  padding: 0 0 10px;
-}
-body:not([data-tab="day"]) .day-bar {
-  display: none;
+  padding: 2px 0 10px;
 }
 
 .jump-today {
@@ -747,8 +920,10 @@ body:not([data-tab="day"]) .day-bar {
   transform: rotate(180deg);
 }
 
-.day-strip {
+.hs-days {
   flex: 1;
+}
+.day-strip {
   min-width: 0;
   overflow-x: auto;
   overflow-y: hidden;
@@ -768,19 +943,21 @@ body:not([data-tab="day"]) .day-bar {
   width: max-content;
   padding: 2px var(--pad);
 }
+/* Position and size are driven from JS (slideTo in ui.js): it stretches
+ * between days instead of bouncing. Only the colour eases here. */
 .day-indicator {
   position: absolute;
-  top: 2px;
+  top: 0;
   left: 0;
-  height: 58px;
   border-radius: 16px;
   background: var(--ink);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
   opacity: 0;
   pointer-events: none;
+  will-change: transform, width;
   transition:
-    transform 0.46s var(--ease-spring),
-    width 0.3s var(--ease),
+    background-color 0.25s,
+    box-shadow 0.25s,
     opacity 0.2s;
 }
 .day-indicator.is-placed {
@@ -882,6 +1059,15 @@ body:not([data-tab="day"]) .day-bar {
 .day-track:has(.day-chip.is-today[aria-selected="true"]) .day-chip.is-today .dc-wd {
   color: var(--accent-ink);
 }
+.dc-num,
+.dc-wd {
+  transition:
+    color 0.25s,
+    transform 0.2s var(--ease);
+}
+.day-chip:active .dc-num {
+  transform: scale(0.9);
+}
 @media (hover: hover) {
   .day-chip:not([aria-selected="true"]):hover {
     background: var(--bg-hover);
@@ -892,7 +1078,7 @@ body:not([data-tab="day"]) .day-bar {
 .ptr {
   --pull: 0;
   position: fixed;
-  top: calc(var(--appbar-h) + 6px);
+  top: calc(var(--bar-h) + 6px);
   left: 50%;
   z-index: 25;
   display: grid;
@@ -958,7 +1144,13 @@ body:not([data-tab="day"]) .day-bar {
 }
 
 .view.is-entering {
-  animation: view-in 0.34s var(--ease) both;
+  animation: view-in 0.36s var(--ease) both;
+}
+.view.is-entering[data-dir="next"] {
+  animation-name: view-in-next;
+}
+.view.is-entering[data-dir="prev"] {
+  animation-name: view-in-prev;
 }
 @keyframes view-in {
   from {
@@ -969,6 +1161,48 @@ body:not([data-tab="day"]) .day-bar {
     opacity: 1;
     transform: none;
   }
+}
+@keyframes view-in-next {
+  from {
+    opacity: 0;
+    transform: translateX(22px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes view-in-prev {
+  from {
+    opacity: 0;
+    transform: translateX(-22px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+/* Lists inside a tab follow it in, one after another. */
+.view.is-entering .movie-card,
+.view.is-entering .up-card,
+.view.is-entering .stats-col > *,
+.view.is-entering .group {
+  animation: rise 0.48s var(--ease) both;
+}
+.view.is-entering :is(.movie-card, .up-card, .stats-col > *, .group):nth-child(2) {
+  animation-delay: 35ms;
+}
+.view.is-entering :is(.movie-card, .up-card, .stats-col > *, .group):nth-child(3) {
+  animation-delay: 70ms;
+}
+.view.is-entering :is(.movie-card, .up-card, .stats-col > *, .group):nth-child(4) {
+  animation-delay: 100ms;
+}
+.view.is-entering :is(.movie-card, .up-card, .stats-col > *, .group):nth-child(5) {
+  animation-delay: 130ms;
+}
+.view.is-entering :is(.movie-card, .up-card, .stats-col > *, .group):nth-child(n + 6) {
+  animation-delay: 160ms;
 }
 
 .view-head {
@@ -1048,7 +1282,7 @@ body:not([data-tab="day"]) .day-bar {
   will-change: transform;
 }
 .pager.is-settling > .page {
-  transition: transform 0.36s var(--ease-swift);
+  transition: transform var(--settle-ms, 260ms) cubic-bezier(0.2, 0.8, 0.25, 1);
   will-change: transform;
 }
 .pager.is-dragging,
@@ -1060,20 +1294,39 @@ body:not([data-tab="day"]) .day-bar {
 .is-new {
   animation: rise 0.38s var(--ease) both;
 }
-.page.is-entering > * {
+.page.is-entering > :not(.day-shows),
+.page.is-entering > .day-shows > * {
   animation: rise 0.42s var(--ease) both;
 }
-.page.is-entering > :nth-child(2) {
-  animation-delay: 40ms;
+.page.is-entering > .tl-card {
+  animation-delay: 35ms;
 }
-.page.is-entering > :nth-child(3) {
-  animation-delay: 80ms;
+.page.is-entering > .day-shows > :nth-child(1) {
+  animation-delay: 50ms;
 }
-.page.is-entering > :nth-child(4) {
-  animation-delay: 110ms;
+.page.is-entering > .day-shows > :nth-child(2) {
+  animation-delay: 90ms;
 }
-.page.is-entering > :nth-child(n + 5) {
-  animation-delay: 140ms;
+.page.is-entering > .day-shows > :nth-child(3) {
+  animation-delay: 125ms;
+}
+.page.is-entering > .day-shows > :nth-child(4) {
+  animation-delay: 155ms;
+}
+.page.is-entering > .day-shows > :nth-child(n + 5) {
+  animation-delay: 180ms;
+}
+
+/* The showings under the summary: one column on phones and tablets,
+ * two or three side by side on big screens. */
+.day-shows {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+}
+.show-gap {
+  display: none;
 }
 
 /* —— Day hero ———————————————————————————————————————————————————————— */
@@ -1201,17 +1454,43 @@ body:not([data-tab="day"]) .day-bar {
 }
 
 /* Timeline */
+.tl-card {
+  padding: 14px 14px 12px;
+}
+.tl-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.tl-heading {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+  font-weight: 750;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+.tl-heading .icon {
+  color: var(--ink-3);
+}
+.tl-range {
+  font-size: 12.5px;
+  font-weight: 650;
+  color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
+}
 .tl {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
   gap: 8px;
-  margin-top: 16px;
-  padding-top: 14px;
-  border-top: 1px solid var(--line);
 }
 .tl-names {
   display: grid;
-  grid-auto-rows: 30px;
+  grid-auto-rows: 54px;
   gap: 6px;
   padding-top: 6px;
   align-items: center;
@@ -1249,31 +1528,35 @@ body:not([data-tab="day"]) .day-bar {
 .tl-lanes {
   position: relative;
   display: grid;
-  grid-auto-rows: 30px;
+  grid-auto-rows: 54px;
   gap: 6px;
 }
 .tl-lane {
   position: relative;
-  border-radius: 9px;
+  border-radius: 10px;
   background: color-mix(in srgb, var(--ink) 3.5%, transparent);
 }
+/* Start time over the title, so the title gets the bar's whole width
+ * and two lines of it. */
 .tl-bar {
   position: absolute;
   top: 0;
   bottom: 0;
   display: flex;
-  align-items: center;
-  gap: 5px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  gap: 1px;
   min-width: 0;
-  padding: 0 7px;
+  padding: 0 8px;
   overflow: hidden;
   border: 0;
-  border-radius: 9px;
+  border-radius: 10px;
   background: color-mix(in srgb, var(--ink) 13%, var(--bg-elev));
   color: var(--ink);
-  font-size: 11.5px;
+  font-size: 12px;
+  line-height: 1.18;
   text-align: left;
-  white-space: nowrap;
   transition:
     left 0.5s var(--ease),
     width 0.5s var(--ease),
@@ -1283,16 +1566,20 @@ body:not([data-tab="day"]) .day-bar {
     transform 0.15s var(--ease);
 }
 .tl-bar strong {
+  white-space: nowrap;
+  font-size: 11px;
   font-weight: 760;
   font-variant-numeric: tabular-nums;
-  flex: none;
+  opacity: 0.8;
 }
-.tl-bar span {
+.tl-bar-title {
+  display: -webkit-box;
   min-width: 0;
   overflow: hidden;
-  text-overflow: ellipsis;
-  font-weight: 550;
-  opacity: 0.85;
+  font-weight: 680;
+  overflow-wrap: break-word;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 .tl-bar:active {
   transform: scale(0.97);
@@ -1665,6 +1952,8 @@ body:not([data-tab="day"]) .day-bar {
   height: 100%;
   border-radius: 3px;
   background: var(--admit);
+  transform-origin: left;
+  animation: bar-fill 0.7s var(--ease) 0.1s both;
   transition: width 0.6s var(--ease);
 }
 .admit-label {
@@ -2172,32 +2461,37 @@ body:not([data-tab="day"]) .day-bar {
   object-fit: cover;
   transition: transform 0.4s var(--ease);
 }
+.up-poster img {
+  transition: transform 0.4s var(--ease);
+}
 @media (hover: hover) {
-  .movie-card:hover .mc-poster img {
+  .movie-card:hover .mc-poster img,
+  .up-card:hover .up-poster img {
     transform: scale(1.04);
   }
 }
-.mc-rating {
+/* IMDb's own logo with the score beside it, over the poster's corner. */
+.imdb-badge {
   position: absolute;
   right: 7px;
   bottom: 7px;
   display: inline-flex;
   align-items: center;
-  gap: 3px;
-  height: 22px;
-  padding: 0 7px;
-  border-radius: 999px;
-  background: rgba(0, 0, 0, 0.62);
+  gap: 5px;
+  height: 24px;
+  padding: 0 8px 0 4px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.66);
   color: #fff;
-  font-size: 11.5px;
+  font-size: 12px;
   font-weight: 750;
   font-variant-numeric: tabular-nums;
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
 }
-.mc-rating .icon {
-  fill: #f5c518;
-  stroke: none;
+.imdb-badge .rating-logo {
+  width: 30px;
+  height: 15px;
 }
 .mc-flag {
   position: absolute;
@@ -2727,13 +3021,38 @@ body:not([data-tab="day"]) .day-bar {
   backdrop-filter: saturate(1.6) blur(20px);
 }
 .seg {
+  position: relative;
   display: inline-flex;
   gap: 2px;
   padding: 3px;
   border-radius: 12px;
   background: var(--bg-sunk);
 }
+/* The chosen option's raised highlight is its own element, slid by
+ * slideTo (ui.js) with the same stretch as the tab bar. Until it has
+ * been placed, the chosen button carries the highlight itself. */
+.seg-ind {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 9px;
+  background: var(--bg-elev);
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.1),
+    0 1px 1px rgba(0, 0, 0, 0.04);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s;
+}
+.seg-ind.is-placed {
+  opacity: 1;
+}
+:root[data-theme="dark"] .seg-ind {
+  background: #36363c;
+}
 .seg-btn {
+  position: relative;
+  z-index: 1;
   height: 32px;
   padding: 0 14px;
   border: 0;
@@ -2744,21 +3063,26 @@ body:not([data-tab="day"]) .day-bar {
   font-weight: 650;
   white-space: nowrap;
   transition:
-    background-color 0.22s var(--ease),
     color 0.22s,
-    box-shadow 0.22s;
+    transform 0.15s var(--ease);
+}
+.seg-btn:active {
+  transform: scale(0.96);
 }
 .seg-btn[aria-selected="true"],
 .seg-btn[aria-checked="true"] {
-  background: var(--bg-elev);
   color: var(--ink);
-  box-shadow:
-    0 1px 3px rgba(0, 0, 0, 0.1),
-    0 1px 1px rgba(0, 0, 0, 0.04);
 }
-:root[data-theme="dark"] .seg-btn[aria-selected="true"],
-:root[data-theme="dark"] .seg-btn[aria-checked="true"] {
+.seg:not(:has(.seg-ind.is-placed)) .seg-btn:is([aria-selected="true"], [aria-checked="true"]) {
+  background: var(--bg-elev);
+}
+:root[data-theme="dark"] .seg:not(:has(.seg-ind.is-placed)) .seg-btn:is([aria-selected="true"], [aria-checked="true"]) {
   background: #36363c;
+}
+@media (hover: hover) {
+  .seg-btn:not([aria-selected="true"]):not([aria-checked="true"]):hover {
+    color: var(--ink);
+  }
 }
 .period-nav {
   display: flex;
@@ -2806,6 +3130,21 @@ body:not([data-tab="day"]) .day-bar {
   display: grid;
   gap: 12px;
   align-content: start;
+}
+.stats-grid {
+  align-items: start;
+}
+.stats-grid.cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px 20px;
+}
+.stats-grid.cols-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px 20px;
+}
+.stats-grid.cols-2 > .stats-col,
+.stats-grid.cols-3 > .stats-col {
+  gap: 16px;
 }
 .stats-grid > .stats-col:empty {
   display: none;
@@ -2938,9 +3277,29 @@ body:not([data-tab="day"]) .day-bar {
   height: var(--h);
   border-radius: 4px 4px 0 0;
   background: var(--chart);
+  transform-origin: bottom;
+  /* Grows from the baseline when it first appears; after that, moves. */
+  animation: bar-grow 0.62s var(--ease) both;
   transition:
     height 0.55s var(--ease),
+    background-color 0.3s,
     filter 0.15s;
+}
+.col:nth-child(2n) .col-bar {
+  animation-delay: 30ms;
+}
+.col:nth-child(3n) .col-bar {
+  animation-delay: 60ms;
+}
+@keyframes bar-grow {
+  from {
+    transform: scaleY(0);
+  }
+}
+@keyframes bar-fill {
+  from {
+    transform: scaleX(0);
+  }
 }
 .col.is-future .col-bar {
   background: var(--chart-soft);
@@ -2974,6 +3333,57 @@ button.col:disabled {
     filter: brightness(1.18);
   }
 }
+/* The week-for-week (month-for-month) chart doubles as the period
+ * picker: each column is a button, the chosen one sits on a tinted
+ * pill like a selected filter, and this period's label is marked. */
+.period-picker .cols {
+  height: 116px;
+  margin-bottom: 30px;
+}
+.period-picker .col {
+  isolation: isolate;
+  cursor: pointer;
+}
+.period-picker .col::before {
+  content: "";
+  position: absolute;
+  inset: -8px 0 -28px;
+  z-index: -1;
+  border-radius: 12px;
+  background: transparent;
+  transition: background-color 0.2s var(--ease);
+}
+.period-picker .col.is-sel::before {
+  background: var(--accent-soft);
+}
+.period-picker .col-bar {
+  width: min(30px, 60%);
+}
+.period-picker .col.is-sel .col-label {
+  color: var(--accent-text);
+  font-weight: 800;
+}
+.period-picker .col.is-current .col-label {
+  color: var(--ink);
+  font-weight: 750;
+}
+.period-picker .col.is-current .col-label::after {
+  content: "";
+  position: absolute;
+  top: calc(100% + 2px);
+  left: 50%;
+  width: 4px;
+  height: 4px;
+  margin-left: -2px;
+  border-radius: 50%;
+  background: currentColor;
+}
+@media (hover: hover) {
+  .period-picker .col:not(.is-sel):hover::before {
+    background: var(--bg-hover);
+  }
+}
+
 .legend {
   display: flex;
   flex-wrap: wrap;
@@ -3078,6 +3488,9 @@ button.col:disabled {
   height: 100%;
   border-radius: 3px;
   background: var(--chart);
+  transform-origin: left;
+  animation: bar-fill 0.7s var(--ease) 0.08s both;
+  transition: width 0.55s var(--ease);
 }
 .rank-bar.is-future > span {
   background: var(--chart-soft);
@@ -3258,7 +3671,7 @@ button.col:disabled {
 }
 .row-text {
   display: grid;
-  flex: 1 1 120px;
+  flex: 1 1 80px;
   min-width: 0;
 }
 .row-title {
@@ -3383,6 +3796,7 @@ button.col:disabled {
   backdrop-filter: saturate(1.8) blur(26px);
   box-shadow: var(--shadow-lg);
 }
+/* Moved by slideTo (ui.js): stretches toward the new tab, no bounce. */
 .tab-indicator {
   position: absolute;
   top: 0;
@@ -3391,11 +3805,8 @@ button.col:disabled {
   background: var(--accent-soft);
   opacity: 0;
   pointer-events: none;
-  transition:
-    transform 0.46s var(--ease-spring),
-    width 0.3s var(--ease),
-    height 0.3s var(--ease),
-    opacity 0.2s;
+  will-change: transform, width, height;
+  transition: opacity 0.2s;
 }
 .tab-indicator.is-placed {
   opacity: 1;
@@ -3422,6 +3833,8 @@ button.col:disabled {
 .tab .icon {
   width: 23px;
   height: 23px;
+  overflow: visible;
+  transition: transform 0.35s var(--ease);
 }
 .tab-label {
   max-width: 100%;
@@ -3430,16 +3843,121 @@ button.col:disabled {
   font-weight: 650;
   text-overflow: ellipsis;
   white-space: nowrap;
+  transition: transform 0.35s var(--ease);
 }
 .tab[aria-selected="true"] {
   color: var(--accent-text);
 }
 .tab[aria-selected="true"] .icon {
-  stroke-width: 2.3;
+  stroke-width: 2.2;
 }
 @media (hover: hover) {
   .tab:not([aria-selected="true"]):hover {
     color: var(--ink);
+  }
+  .tab:not([aria-selected="true"]):hover .icon {
+    transform: translateY(-1px);
+  }
+}
+
+/* Nav icons, after the Play Store's bar: unselected they are outlines;
+ * selected they fill in and play a small motion of their own — the
+ * calendar's date pops in, the clapperboard claps, the bars grow, the
+ * gear turns. Deselected, the fill drains away again. */
+.nav-icon * {
+  transform-box: fill-box;
+}
+.nav-icon .ni-fill {
+  fill: currentColor;
+  fill-opacity: 0;
+  transition: fill-opacity 0.3s var(--ease);
+}
+.tab[aria-selected="true"] .ni-fill {
+  fill-opacity: 0.2;
+}
+.nav-icon .ni-date {
+  fill: currentColor;
+  fill-opacity: 0;
+  transform-origin: 50% 50%;
+  transition: fill-opacity 0.3s var(--ease);
+}
+.tab[aria-selected="true"] .ni-date {
+  fill-opacity: 1;
+}
+.nav-icon .ni-clap {
+  transform-box: view-box;
+  transform-origin: 4px 11px;
+}
+.nav-icon .ni-bar {
+  transform-origin: 50% 100%;
+}
+.nav-icon .ni-gear {
+  transform-box: view-box;
+  transform-origin: 12px 12px;
+}
+
+.tab.is-pop .ni-date {
+  animation: ni-pop 0.5s var(--ease) both;
+}
+.tab.is-pop .ni-rings {
+  animation: ni-hop 0.45s var(--ease) both;
+}
+.tab.is-pop .ni-clap {
+  animation: ni-clap 0.62s var(--ease) both;
+}
+.tab.is-pop .ni-bar {
+  animation: ni-grow 0.5s var(--ease) both;
+}
+.tab.is-pop .ni-b2 {
+  animation-delay: 60ms;
+}
+.tab.is-pop .ni-b3 {
+  animation-delay: 120ms;
+}
+.tab.is-pop .ni-gear {
+  animation: ni-turn 0.7s var(--ease) both;
+}
+@keyframes ni-pop {
+  0% {
+    transform: scale(0.2);
+  }
+  60% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: none;
+  }
+}
+@keyframes ni-hop {
+  40% {
+    transform: translateY(-2px);
+  }
+}
+@keyframes ni-clap {
+  0% {
+    transform: none;
+  }
+  30% {
+    transform: rotate(-24deg);
+  }
+  58% {
+    transform: rotate(0);
+  }
+  76% {
+    transform: rotate(-7deg);
+  }
+  100% {
+    transform: none;
+  }
+}
+@keyframes ni-grow {
+  from {
+    transform: scaleY(0.15);
+  }
+}
+@keyframes ni-turn {
+  from {
+    transform: rotate(-120deg);
   }
 }
 
@@ -3590,81 +4108,128 @@ button.col:disabled {
   }
 }
 
-/* —— Desktop: rail on the left, two columns ——————————————————————————— */
+/* —— Desktop: rail on the left, the page uses the screen ———————————————
+ * The navigation becomes a rail, centred on the left edge. The page is
+ * allowed most of the window: the day's summary pinned on the left and
+ * the showings beside it (two or three columns on big screens), stats
+ * dealt into columns, posters filling the row.
+ */
 
 @media (min-width: 1024px) {
   :root {
-    --page-max: 1180px;
-    --pad: 28px;
+    --page-max: 1840px;
+    --pad: 32px;
+    --rail-w: 84px;
+    --rail-space: calc(var(--rail-w) + 22px);
   }
   body {
-    padding-left: 104px;
+    padding-left: var(--rail-space);
   }
   .main {
     padding-bottom: 48px;
   }
   .tabbar {
-    left: 16px;
-    top: calc(var(--safe-top) + 74px);
+    left: 14px;
+    top: 50%;
     bottom: auto;
-    width: 80px;
-    transform: none;
+    width: var(--rail-w);
+    transform: translateY(-50%);
+    animation: rail-in 0.5s var(--ease) both;
+  }
+  @keyframes rail-in {
+    from {
+      opacity: 0;
+      transform: translate(-14px, -50%);
+    }
   }
   .tabbar-inner {
     grid-template-columns: minmax(0, 1fr);
     gap: 4px;
     padding: 8px;
-    border-radius: 24px;
+    border-radius: 26px;
   }
   .tab {
-    gap: 4px;
-    padding: 12px 2px 10px;
-    border-radius: 18px;
+    gap: 5px;
+    padding: 13px 2px 11px;
+    border-radius: 19px;
   }
   .tab-indicator {
-    border-radius: 18px;
+    border-radius: 19px;
   }
   .toasts {
+    left: calc(50% + var(--rail-space) / 2);
     bottom: 28px;
   }
 
   /* Day: summary pinned on the left, showings on the right. */
   .view-day .page {
     display: grid;
-    grid-template-columns: minmax(340px, 400px) minmax(0, 1fr);
-    column-gap: 24px;
-    row-gap: 0;
+    grid-template-columns: minmax(320px, 380px) minmax(0, 1fr);
+    gap: 16px 24px;
     align-items: start;
   }
   .view-day .page > * {
     grid-column: 2;
-    margin-bottom: 14px;
+    min-width: 0;
   }
-  .view-day .page > .day-hero {
+  /* The summary spans both rows on the right (timeline, then showings),
+   * so it stays pinned all the way down the list. */
+  .view-day .page > .day-hero,
+  .view-day .page > .skeleton-card.is-hero {
     position: sticky;
-    top: calc(var(--appbar-h) + 12px);
+    top: calc(var(--appbar-h) + 6px);
     grid-column: 1;
-    grid-row: 1 / span 40;
+    grid-row: span 2;
+  }
+  .view-day .page > .skeleton-card.is-hero {
+    height: 420px;
   }
   .view-day .page > .banner {
     grid-column: 1 / -1;
   }
-  .view-day .page > .skeleton-card:first-child {
-    grid-column: 1;
-    grid-row: 1 / span 4;
+  .day-shows {
+    gap: 14px;
   }
   .nownext.is-pair {
     grid-template-columns: minmax(0, 1fr);
   }
-
-  .movie-grid {
-    grid-template-columns: repeat(auto-fill, minmax(156px, 1fr));
-    gap: 22px 16px;
+  .show {
+    transition:
+      border-color 0.3s,
+      box-shadow 0.3s;
   }
-  .stats-grid,
+  @media (hover: hover) {
+    .show:not(.is-live):hover {
+      box-shadow: var(--shadow-md);
+    }
+  }
+
+  /* Movies */
+  .view-movies .search {
+    max-width: 760px;
+  }
+  .hits {
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    column-gap: 10px;
+  }
+  .hits > .hits-label,
+  .hits > .hits-status,
+  .hits > .empty {
+    grid-column: 1 / -1;
+  }
+  .movie-grid {
+    grid-template-columns: repeat(auto-fill, minmax(164px, 1fr));
+    gap: 24px 18px;
+  }
+  .up-card {
+    flex-basis: 156px;
+  }
+
+  /* Settings stay readable rather than stretched. */
   .settings-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 16px 20px;
+    gap: 16px 24px;
+    max-width: 1280px;
   }
   .settings-col {
     align-content: start;
@@ -3676,8 +4241,8 @@ button.col:disabled {
     bottom: auto;
     left: 50%;
     right: auto;
-    width: min(760px, calc(100vw - 64px));
-    max-height: min(880px, calc(100dvh - 64px));
+    width: min(880px, calc(100vw - 64px));
+    max-height: min(900px, calc(100dvh - 64px));
     border-radius: 24px;
     box-shadow: var(--shadow-lg);
     opacity: 0;
@@ -3700,9 +4265,81 @@ button.col:disabled {
   }
 }
 
-@media (min-width: 1400px) {
+@media (min-width: 1480px) {
+  .view-day .page {
+    grid-template-columns: 400px minmax(0, 1fr);
+  }
+  /* Showings side by side. A divider between two cards would break the
+   * grid, so each card carries its own "pause before" note instead. */
+  .day-shows {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .day-shows > .gap {
+    display: none;
+  }
+  .show-gap {
+    display: inline-flex;
+  }
+}
+
+@media (min-width: 2240px) {
   .view-day .page {
     grid-template-columns: 420px minmax(0, 1fr);
+  }
+  .day-shows {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* —— Phones on their side ——————————————————————————————————————————————
+ * Little height to spare: a slimmer header and an icon-only tab bar, so
+ * the showings are not squeezed between the two.
+ */
+@media (orientation: landscape) and (max-height: 520px) and (max-width: 1023px) {
+  :root {
+    --tabbar-h: 50px;
+  }
+  .appbar-row {
+    height: 46px;
+  }
+  .brand-mark {
+    width: 26px;
+    height: 26px;
+  }
+  .brand-name {
+    font-size: 17px;
+  }
+  .day-bar {
+    padding-bottom: 6px;
+  }
+  .day-chip {
+    height: 48px;
+    grid-template-rows: auto auto 6px;
+  }
+  .dc-num {
+    font-size: 17px;
+  }
+  .tabbar {
+    width: min(calc(100% - 24px), 300px);
+    bottom: max(8px, var(--safe-bottom));
+  }
+  .tabbar-inner {
+    padding: 4px;
+    border-radius: 22px;
+  }
+  .tab {
+    padding: 8px 2px;
+  }
+  .tab-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+  .seat-svg {
+    max-height: 72vh;
   }
 }
 
@@ -3721,6 +4358,7 @@ button.col:disabled {
 
 @media (prefers-reduced-transparency: reduce) {
   .appbar,
+  .day-dock,
   .tabbar-inner,
   .period-bar {
     background: var(--bg-elev);
@@ -3731,7 +4369,8 @@ button.col:disabled {
 
 @media (forced-colors: active) {
   .day-indicator,
-  .tab-indicator {
+  .tab-indicator,
+  .seg-ind {
     outline: 2px solid CanvasText;
   }
 }

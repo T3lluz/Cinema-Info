@@ -356,7 +356,9 @@ export async function refreshForTab({ force = false } = {}) {
     S.enrichedAll = true;
     await syncScanned({ force });
   } else {
-    await syncScanned();
+    // Settings shows no showings, but the header chip should still say
+    // "Live" here as on every other tab: read the selected day.
+    await enrichVisibleDay({ force });
   }
 }
 

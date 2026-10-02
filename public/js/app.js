@@ -13,11 +13,13 @@ import {
   TAB_ORDER,
   DARK_MQ,
   SEATS_OPEN_MQ,
+  WIDE_MQ,
   t,
   icon,
   escapeHtml,
   formatClock,
   todayKey,
+  headerHeight,
   loadPrefs,
   savePrefs,
   reducedMotion,
@@ -34,7 +36,18 @@ import {
   programDays,
   setStatus,
 } from "./data.js?v=dev";
-import { patchList, setupHaptics, setupMotion, toast, hapticTick } from "./ui.js?v=dev";
+import {
+  patchList,
+  setupHaptics,
+  setupMotion,
+  setupHScroll,
+  syncHScroll,
+  setupNotice,
+  refreshNotice,
+  slideTo,
+  toast,
+  hapticTick,
+} from "./ui.js?v=dev";
 import { setupSeatCharts, refreshOpenSeatCharts } from "./seats.js?v=dev";
 import {
   renderDay,
@@ -87,6 +100,8 @@ function boot() {
 
   setupHaptics();
   setupMotion();
+  setupHScroll();
+  setupNotice();
   setupSeatCharts();
   setupDayInteractions();
   setupDaySwipe();
@@ -136,6 +151,7 @@ function collectElements() {
     appbar: $("appbar"),
     statusBtn: $("statusBtn"),
     statusText: $("statusText"),
+    dayDock: $("dayDock"),
     dayBar: $("dayBar"),
     dayTabs: $("dayTabs"),
     jumpTodayBtn: $("jumpTodayBtn"),
@@ -179,6 +195,7 @@ function wireHooks() {
     applyLanguage();
     renderDayStrip();
     refreshSearchLanguage();
+    refreshNotice();
     renderActive();
   };
   hooks.applyWakeLock = applyWakeLock;
@@ -196,6 +213,7 @@ function renderActive() {
   else if (S.activeTab === "stats") renderStats();
   else renderSettings();
   refreshSheet();
+  syncHScroll();
 }
 
 function showLoadError(message) {
@@ -263,6 +281,7 @@ function setTab(tab, { initial = false } = {}) {
   const prev = S.activeTab;
   if (!initial && prev === tab) {
     // Tapping the tab you are on: back to the top, then (on Days) to today.
+    popTabIcon(tab);
     if (window.scrollY > 4) window.scrollTo({ top: 0, behavior: reducedMotion() ? "auto" : "smooth" });
     else if (tab === "day" && S.selectedDay !== todayKey()) selectDay(todayKey());
     return;
@@ -279,14 +298,17 @@ function setTab(tab, { initial = false } = {}) {
     btn.tabIndex = on ? 0 : -1;
   }
   moveTabIndicator({ instant: initial });
+  if (!initial) popTabIcon(tab);
 
   const view = els.views[tab];
   if (!initial && !reducedMotion()) {
+    // Slide in from the side the tab sits on, the way the indicator moves.
+    view.dataset.dir = TAB_ORDER.indexOf(tab) > TAB_ORDER.indexOf(prev) ? "next" : "prev";
     view.classList.remove("is-entering");
     void view.offsetWidth;
     view.classList.add("is-entering");
     clearTimeout(view._enter);
-    view._enter = setTimeout(() => view.classList.remove("is-entering"), 400);
+    view._enter = setTimeout(() => view.classList.remove("is-entering"), 700);
   }
 
   renderActive();
@@ -296,6 +318,7 @@ function setTab(tab, { initial = false } = {}) {
       moveDayIndicator({ instant: true });
       centerSelectedChip("auto");
       updateJumpToday();
+      syncHScroll();
     });
   }
   if (!initial) window.scrollTo(0, scrollMemory[tab] || 0);
@@ -313,12 +336,25 @@ function moveTabIndicator({ instant = false } = {}) {
   const ind = els.tabIndicator;
   const btn = els.tabbar?.querySelector('.tab[aria-selected="true"]');
   if (!ind || !btn) return;
-  if (instant) ind.classList.add("no-trans");
-  ind.style.width = `${btn.offsetWidth}px`;
-  ind.style.height = `${btn.offsetHeight}px`;
-  ind.style.transform = `translate(${btn.offsetLeft}px, ${btn.offsetTop}px)`;
+  slideTo(
+    ind,
+    { x: btn.offsetLeft, y: btn.offsetTop, w: btn.offsetWidth, h: btn.offsetHeight },
+    // The bar is a row on phones and a column (the rail) on desktop.
+    { axis: WIDE_MQ.matches ? "y" : "x", instant }
+  );
   ind.classList.add("is-placed");
-  if (instant) requestAnimationFrame(() => requestAnimationFrame(() => ind.classList.remove("no-trans")));
+}
+
+/** The tab's icon plays its little animation (and again on a re-tap). */
+function popTabIcon(tab) {
+  if (reducedMotion()) return;
+  const btn = els.tabbar?.querySelector(`.tab[data-tab="${tab}"]`);
+  if (!btn) return;
+  btn.classList.remove("is-pop");
+  void btn.offsetWidth;
+  btn.classList.add("is-pop");
+  clearTimeout(btn._pop);
+  btn._pop = setTimeout(() => btn.classList.remove("is-pop"), 900);
 }
 
 function setupTabs() {
@@ -516,19 +552,36 @@ function setupKeyboard() {
 
 /* —— Chrome ————————————————————————————————————————————————————————— */
 
+/**
+ * The header and the day strip are two pinned bars with the warning
+ * between them. Whichever is lowest on screen draws the hairline and
+ * shadow, so the pair reads as one header once the strip has docked.
+ */
 function setupAppbarShadow() {
   let queued = false;
   const update = () => {
     queued = false;
-    els.appbar?.classList.toggle("is-scrolled", window.scrollY > 4);
+    const scrolled = window.scrollY > 4;
+    const dock = els.dayDock;
+    const docked =
+      scrolled && dock?.offsetHeight > 0 && dock.getBoundingClientRect().top <= (els.appbar?.offsetHeight || 0) + 0.5;
+    els.appbar?.classList.toggle("is-scrolled", scrolled && !docked);
+    dock?.classList.toggle("is-docked", Boolean(docked));
   };
-  // Sticky pieces below the bar (stats period, desktop day summary, the
-  // pull-to-refresh bubble) need its real height, which changes per tab.
+  // Sticky pieces below the bars (stats period, desktop day summary, the
+  // pull-to-refresh bubble) need their real heights, which change per tab.
+  const measure = () => {
+    const root = document.documentElement.style;
+    root.setProperty("--bar-h", `${els.appbar?.offsetHeight || 0}px`);
+    root.setProperty("--appbar-h", `${headerHeight()}px`);
+    update();
+  };
   if ("ResizeObserver" in window && els.appbar) {
-    new ResizeObserver(() => {
-      document.documentElement.style.setProperty("--appbar-h", `${els.appbar.offsetHeight}px`);
-    }).observe(els.appbar);
+    const ro = new ResizeObserver(measure);
+    ro.observe(els.appbar);
+    if (els.dayDock) ro.observe(els.dayDock);
   }
+  measure();
   window.addEventListener(
     "scroll",
     () => {
