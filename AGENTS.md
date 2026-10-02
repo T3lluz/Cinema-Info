@@ -60,3 +60,7 @@ full product description and data model.
   Do not hand-edit `?v=` or `cinema-info-v…` — a forgotten bump used to
   leave phones on the old CSS/JS after push. Local `public/` placeholders
   are enough for the local server.
+- The version people see (Settings → Version, e.g. `2.4.0 (a1b2c3d)`) is
+  `APP_RELEASE` in `public/js/core.js` plus that build token. Bump
+  `APP_RELEASE` with every change that ships: patch for fixes, minor for
+  features. Snapshot-only deploys keep the release and change the build.

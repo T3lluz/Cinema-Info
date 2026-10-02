@@ -140,10 +140,29 @@ export function moveDayIndicator({ instant = false } = {}) {
   indicator.classList.add("is-placed");
 }
 
-export function centerSelectedChip(behavior = "smooth") {
+/**
+ * Bring the selected day to the middle of the strip. With `ifNeeded` a
+ * day already well in view (clear of the strip's edges and of "I dag")
+ * stays put: the strip does not slide away from under the finger on every
+ * tap or swipe, only when the day nears an edge.
+ */
+export function centerSelectedChip(behavior = "smooth", { ifNeeded = false } = {}) {
   const strip = els.dayTabs;
   const chip = selectedChip();
   if (!strip || !chip) return;
+  if (ifNeeded) {
+    const s = strip.getBoundingClientRect();
+    let roomLeft = 44;
+    let roomRight = 44;
+    const jump = els.jumpTodayBtn;
+    if (jump?.classList.contains("is-shown")) {
+      const j = jump.getBoundingClientRect();
+      if (jump.dataset.dir === "back") roomLeft = Math.max(roomLeft, j.right - s.left + 8);
+      else roomRight = Math.max(roomRight, s.right - j.left + 8);
+    }
+    const x = chip.offsetLeft - strip.scrollLeft;
+    if (x >= roomLeft && x + chip.offsetWidth <= strip.clientWidth - roomRight) return;
+  }
   const left = chip.offsetLeft - (strip.clientWidth - chip.offsetWidth) / 2;
   strip.scrollTo({ left: Math.max(0, left), behavior: reducedMotion() ? "auto" : behavior });
 }
@@ -155,8 +174,11 @@ export function updateJumpToday() {
   const today = todayKey();
   const hasToday = programDays().includes(today);
   const away = hasToday && S.selectedDay && S.selectedDay !== today;
+  // Not inert while it fades: a quick second tap must land on the fading
+  // button (and do nothing), not fall through to the day under it. Once
+  // faded it is visibility: hidden, which no tap reaches.
   btn.classList.toggle("is-shown", Boolean(away));
-  btn.toggleAttribute("inert", !away);
+  btn.tabIndex = away ? 0 : -1;
   btn.setAttribute("aria-hidden", String(!away));
   btn.dataset.dir = S.selectedDay > today ? "back" : "forward";
 }
@@ -171,7 +193,7 @@ function setSelectedDay(day, { persist = true } = {}) {
   });
   updateJumpToday();
   moveDayIndicator();
-  centerSelectedChip("smooth");
+  centerSelectedChip("smooth", { ifNeeded: true });
   return true;
 }
 
@@ -651,9 +673,11 @@ function finishSwap(day, offset) {
   const newPage = els.dayGhost;
   els.pager.classList.remove("is-settling", "is-dragging");
   newPage.classList.remove("is-ghost");
+  newPage.removeAttribute("aria-hidden");
   newPage.style.top = "";
   setX(newPage, 0);
   oldPage.classList.add("is-ghost");
+  oldPage.setAttribute("aria-hidden", "true");
   oldPage.hidden = true;
   setX(oldPage, 0);
   oldPage.replaceChildren();
@@ -967,37 +991,6 @@ export function goToDay(dayKey) {
   }
 }
 
-/**
- * "I dag" acts the moment the finger lifts, not on the click the browser
- * makes of it: Chrome on Android drops that click when the tap lands
- * while the day strip is still gliding to the day just picked, or the
- * finger moved a hair — which is what made it take two taps.
- */
-function setupJumpToday() {
-  const btn = els.jumpTodayBtn;
-  if (!btn) return;
-  let down = null;
-  let firedAt = 0;
-  const go = () => {
-    firedAt = performance.now();
-    selectDay(todayKey());
-  };
-  btn.addEventListener("pointerdown", (e) => {
-    if (e.pointerType !== "mouse") down = { id: e.pointerId, x: e.clientX, y: e.clientY };
-  });
-  btn.addEventListener("pointerup", (e) => {
-    if (!down || e.pointerId !== down.id) return;
-    const moved = Math.hypot(e.clientX - down.x, e.clientY - down.y);
-    down = null;
-    if (moved <= 18) go();
-  });
-  btn.addEventListener("pointercancel", () => (down = null));
-  // Mouse, keyboard — and a touch whose click did arrive, already handled.
-  btn.addEventListener("click", () => {
-    if (performance.now() - firedAt > 700) go();
-  });
-}
-
 export function setupDayInteractions() {
   els.dayTabs?.addEventListener("click", (e) => {
     const chip = e.target.closest(".day-chip");
@@ -1014,7 +1007,12 @@ export function setupDayInteractions() {
     },
     { passive: false }
   );
-  setupJumpToday();
+  // A plain click: it lands on the button before the button hides. (Acting
+  // on the finger lifting hid it first, and the click went through to the
+  // day under it.) A click the phone drops is given back by the tap rescue.
+  els.jumpTodayBtn?.addEventListener("click", () => {
+    if (els.jumpTodayBtn.classList.contains("is-shown")) selectDay(todayKey());
+  });
 
   document.addEventListener("click", (e) => {
     const bar = e.target.closest?.("[data-tl-show]");

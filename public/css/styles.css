@@ -2697,6 +2697,11 @@ html.sheet-open .edge-blur {
   inset: 0;
   z-index: 60;
 }
+/* A sheet on its way out no longer catches taps: the page under it
+ * answers at once instead of the first tap landing on the fading scrim. */
+.sheet.is-leaving {
+  pointer-events: none;
+}
 .sheet-backdrop {
   position: absolute;
   inset: 0;
