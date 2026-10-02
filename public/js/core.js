@@ -35,6 +35,13 @@ export const DX_LOGIN_PROXY =
 export const OMDB_PROXY =
   BRIDGE.omdbLookup ||
   "https://kypeegsbfaivyqeidnqp.supabase.co/functions/v1/omdb-lookup";
+/**
+ * Everything live in one GET, prefetched by the server on t3lluz.com
+ * (`server/live.ts`), and where staff feedback goes. Empty when the page
+ * runs without the self-hosted bridge; the app then reads DX per showing.
+ */
+export const LIVE_URL = BRIDGE.live || "";
+export const FEEDBACK_URL = BRIDGE.feedback || "";
 export const DX_LOGIN_ANON_KEY =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt5cGVlZ3NiZmFpdnlxZWlkbnFwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUxODczMzQsImV4cCI6MjEwMDc2MzMzNH0.xUuL6dC8u_Nm6DqxS0y4KyjpMNlVn6IrxcvivSHeaaM";
 
@@ -42,7 +49,7 @@ export const DX_LOGIN_ANON_KEY =
  * The release, as people read it: bump it with every change that ships
  * (major.minor.patch — a fix is a patch, a new feature a minor).
  */
-export const APP_RELEASE = "2.4.0";
+export const APP_RELEASE = "2.5.0";
 
 /** The build this page runs (the commit), stamped into the script URL on deploy. */
 export const APP_VERSION =
@@ -126,6 +133,10 @@ export const hooks = {
   },
   install() {},
   checkUpdate() {
+    return Promise.resolve(false);
+  },
+  /** Take the server's prefetched figures; resolves true when it answered. */
+  pullLive() {
     return Promise.resolve(false);
   },
 };
@@ -430,6 +441,7 @@ export const ICONS = {
   star: '<path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.3l-5.6 2.9 1.1-6.2L3 9.6l6.2-.9L12 3Z"/>',
   trend: '<path d="m22 7-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/>',
   link: '<path d="M9 17H7A5 5 0 0 1 7 7h2M15 7h2a5 5 0 0 1 0 10h-2M8 12h8"/>',
+  chat: '<path d="M21 11.5a8.4 8.4 0 0 1-12.2 7.5L3 21l2-5.6A8.5 8.5 0 1 1 21 11.5Z"/><path d="M8.5 11.5h.01M12 11.5h.01M15.5 11.5h.01"/>',
   sparkle: '<path d="M12 3l1.9 5.6L19.5 10l-5.6 1.9L12 17.5l-1.9-5.6L4.5 10l5.6-1.4L12 3Z"/>',
   timeline: '<path d="M3 6h10M7 12h12M5 18h8"/>',
   users:

@@ -1,0 +1,9 @@
+[Unit]
+Description=Publish Cinema Info's main branch to t3lluz.com/CinemaInfo
+After=network-online.target docker.service
+
+[Service]
+Type=oneshot
+ExecStart=%h/docker/cinema-info/repo/deploy/server/update.sh
+# A slow poster mirror must not pile up behind itself.
+TimeoutStartSec=10min

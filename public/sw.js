@@ -26,6 +26,8 @@ const PRECACHE = [
   "./js/settings.js?v=dev",
   "./js/sheet.js?v=dev",
   "./js/ripple.js?v=dev",
+  "./js/live.js?v=dev",
+  "./js/feedback.js?v=dev",
   "./data/program.json",
   "./assets/favicon.svg",
   "./assets/apple-touch-icon.png",
@@ -76,6 +78,10 @@ self.addEventListener("fetch", (event) => {
   const req = event.request;
   if (req.method !== "GET") return;
   const url = new URL(req.url);
+
+  // The server's own API (live feed, bridge, feedback) is never cached,
+  // whether it is same-origin (t3lluz.com) or not (GitHub Pages).
+  if (url.pathname.includes("/api/")) return;
 
   if (
     LIVE_HOSTS.includes(url.hostname) ||

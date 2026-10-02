@@ -156,52 +156,9 @@ export async function loadSeatChart(show, { force = false, retry = true, quiet =
     if (!ok) throw bridgeFailure(status, data);
 
     if (data.token) rememberDxToken(data.token);
-    if (data.locationId != null) seatHalls.set(show.screen, data.locationId);
-    if (data.layout) rememberSeatLayout(partnerId, data.locationId, data.layout);
-
-    const layout = seatLayoutOf(show, data.locationId);
-    const empty = Boolean(data.freeSeating) || !layout;
-    const capacity = Number(data.capacity) || 0;
-    const fresh = {
-      status: empty ? "empty" : "ready",
-      reason: data.freeSeating ? "free" : layout ? "" : "noMap",
-      at: Date.now(),
-      locationId: data.locationId,
-      capacity: capacity || show.capacity || 0,
-      reserved: capacity ? Number(data.reserved) || 0 : 0,
-      sold: Number(data.sold) || 0,
-      scanned: Number(data.scanned) || 0,
-      unseated: Number(data.unseated) || 0,
-      seats: data.seats || {},
-    };
-    charts.set(key, fresh);
-    if (S.dxScanStatus.error) S.dxScanStatus.error = "";
-
-    skipPaint =
-      previous?.status === "ready" &&
-      fresh.status === "ready" &&
-      previous.sold === fresh.sold &&
-      previous.scanned === fresh.scanned &&
-      previous.capacity === fresh.capacity &&
-      previous.reserved === fresh.reserved &&
-      JSON.stringify(previous.seats) === JSON.stringify(fresh.seats);
-
-    // The same answer carries the freshest sold/scanned/reserved, so the
-    // card above the chart stays in step with the squares below it.
-    if (typeof data.sold === "number" && show.sold !== data.sold) {
-      show.sold = data.sold;
-      cardChanged = true;
-    }
-    if (typeof data.scanned === "number" && show.scanned !== data.scanned) {
-      show.scanned = data.scanned;
-      show.scannedAt = Date.now();
-      cardChanged = true;
-    }
-    if (typeof data.reserved === "number" && show.reserved !== data.reserved) {
-      show.reserved = data.reserved;
-      cardChanged = true;
-    }
-    if (cardChanged) persistHistory([show]);
+    const applied = applySeatAnswer(show, data, previous);
+    cardChanged = applied.card;
+    skipPaint = !applied.chart;
   } catch (err) {
     if (err?.code === "auth") {
       console.warn("DX bridge session failed", err);
@@ -231,6 +188,103 @@ export async function loadSeatChart(show, { force = false, retry = true, quiet =
 
   if (cardChanged) hooks.render();
   else if (!skipPaint) paintSeatChart(show);
+}
+
+/**
+ * One hall's answer, from the bridge or from the server's bulk feed, onto
+ * the chart and the card above it. `previous` is the chart as it was
+ * before this read began. Says whether the card's figures moved and
+ * whether the chart itself did.
+ */
+function applySeatAnswer(show, data, previous) {
+  const key = String(show.eventId);
+  if (data.locationId != null) seatHalls.set(show.screen, data.locationId);
+  if (data.layout) rememberSeatLayout(partnerOf(show), data.locationId, data.layout);
+
+  const layout = seatLayoutOf(show, data.locationId);
+  const empty = Boolean(data.freeSeating) || !layout;
+  const capacity = Number(data.capacity) || 0;
+  const fresh = {
+    status: empty ? "empty" : "ready",
+    reason: data.freeSeating ? "free" : layout ? "" : "noMap",
+    at: Date.now(),
+    locationId: data.locationId,
+    capacity: capacity || show.capacity || 0,
+    reserved: capacity ? Number(data.reserved) || 0 : 0,
+    sold: Number(data.sold) || 0,
+    scanned: Number(data.scanned) || 0,
+    unseated: Number(data.unseated) || 0,
+    seats: data.seats || {},
+  };
+  charts.set(key, fresh);
+  if (S.dxScanStatus.error) S.dxScanStatus.error = "";
+
+  const same =
+    previous?.status === "ready" &&
+    fresh.status === "ready" &&
+    previous.sold === fresh.sold &&
+    previous.scanned === fresh.scanned &&
+    previous.capacity === fresh.capacity &&
+    previous.reserved === fresh.reserved &&
+    JSON.stringify(previous.seats) === JSON.stringify(fresh.seats);
+
+  // The same answer carries the freshest sold/scanned/reserved, so the
+  // card above the chart stays in step with the squares below it.
+  let card = false;
+  if (typeof data.sold === "number" && show.sold !== data.sold) {
+    show.sold = data.sold;
+    card = true;
+  }
+  if (typeof data.scanned === "number" && show.scanned !== data.scanned) {
+    show.scanned = data.scanned;
+    card = true;
+  }
+  if (typeof data.scanned === "number") show.scannedAt = Date.now();
+  if (typeof data.reserved === "number" && show.reserved !== data.reserved) {
+    show.reserved = data.reserved;
+    card = true;
+  }
+  if (card) persistHistory([show]);
+  return { card, chart: !same };
+}
+
+/** Halls this device already has drawn, so the server can leave them out. */
+export function knownHallKeys() {
+  return Object.keys(seatLayouts);
+}
+
+/**
+ * The seat half of the server's bulk answer: new hall layouts, then every
+ * chart it sent. A chart this device is reading itself right now is left
+ * to that read. True when a card's figures moved and the day needs a redraw.
+ */
+export function applyServerSeats(body) {
+  if (PREVIEW_SCANNED || !S.state?.shows) return false;
+  const halls = Object.entries(body.layouts || {});
+  halls.forEach(([hall, layout], i) => {
+    const [partnerId, locationId] = hall.split(":");
+    rememberSeatLayout(partnerId, locationId, layout, { persist: i === halls.length - 1 });
+  });
+
+  const answers = body.seats || {};
+  if (!Object.keys(answers).length) return false;
+  let cardChanged = false;
+  for (const show of S.state.shows) {
+    const data = show.eventId ? answers[String(show.eventId)] : null;
+    if (!data) continue;
+    const previous = charts.get(String(show.eventId));
+    if (previous?.status === "loading") continue;
+    const applied = applySeatAnswer(show, data, previous);
+    // A hall with no chart says so again every beat; nothing to redraw.
+    const stillEmpty =
+      previous?.status === "empty" && charts.get(String(show.eventId))?.status === "empty";
+    if (applied.card) cardChanged = true;
+    else if (applied.chart && !stillEmpty) paintSeatChart(show);
+  }
+  S.dxScanStatus.at = Date.now();
+  S.dxScanStatus.source = "t3lluz.com";
+  S.dxScanStatus.error = "";
+  return cardChanged;
 }
 
 /** Replace just this show's chart, so opening one never reflows the day. */

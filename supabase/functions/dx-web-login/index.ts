@@ -968,18 +968,12 @@ async function fetchSeats(body: {
   );
 }
 
-// Supabase and Deno Deploy assign the port themselves; a self-hosted
-// bridge runs both functions side by side, so each takes its own from
-// PORT. See `deploy/deno/README.md`.
-Deno.serve(
-  {
-    port: Number(Deno.env.get("PORT")) || 8000,
-    // Self-hosted, the only caller is the Funnel in front of it, so
-    // bind to loopback. Unset on Supabase and Deno Deploy, which
-    // need the default all-interfaces bind.
-    hostname: Deno.env.get("HOST") || undefined,
-  },
-  async (req) => {
+/**
+ * The whole function as one request handler. Run directly it serves
+ * itself (below); the Cinema Info server (`server/main.ts`) imports
+ * it instead and mounts it under /CinemaInfo/api.
+ */
+export async function handler(req: Request): Promise<Response> {
   if (req.method === "OPTIONS") return new Response("ok", { headers: CORS });
   if (req.method !== "POST") return json({ error: "Method not allowed" }, 405);
 
@@ -1066,4 +1060,20 @@ Deno.serve(
   }
 
   return json({ error: "Unknown action" }, 400);
-});
+}
+
+// Supabase and Deno Deploy assign the port themselves; a self-hosted
+// bridge runs both functions side by side, so each takes its own from
+// PORT. See `deploy/deno/README.md`.
+if (import.meta.main) {
+  Deno.serve(
+    {
+      port: Number(Deno.env.get("PORT")) || 8000,
+      // Self-hosted, the only caller is the Funnel in front of it, so
+      // bind to loopback. Unset on Supabase and Deno Deploy, which
+      // need the default all-interfaces bind.
+      hostname: Deno.env.get("HOST") || undefined,
+    },
+    handler,
+  );
+}

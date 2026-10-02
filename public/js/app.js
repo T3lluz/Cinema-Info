@@ -51,6 +51,7 @@ import {
   hapticTick,
 } from "./ui.js?v=dev";
 import { setupSeatCharts, refreshOpenSeatCharts } from "./seats.js?v=dev";
+import { pullServerLive } from "./live.js?v=dev";
 import {
   renderDay,
   renderDayStrip,
@@ -219,6 +220,7 @@ function wireHooks() {
   hooks.installState = installState;
   hooks.install = promptInstall;
   hooks.checkUpdate = checkUpdate;
+  hooks.pullLive = pullServerLive;
 }
 
 /* —— Rendering ———————————————————————————————————————————————————— */
@@ -274,9 +276,12 @@ function liveBeat() {
     if (Date.now() - S.lastProgramAt < PROGRAM_RECHECK_MS) return;
     await reloadProgramIfChanged();
   });
-  beatJob("live", () => refreshLive({ quiet: true }));
-  beatJob("scan", () => syncScanned({ quiet: true }));
-  beatJob("seats", () => refreshOpenSeatCharts({ quiet: true }));
+  // The server's answer first: whatever it covered is stamped fresh, so
+  // the three reads below only go to DX for what it left out.
+  const pulled = pullServerLive();
+  beatJob("live", () => pulled.then(() => refreshLive({ quiet: true })));
+  beatJob("scan", () => pulled.then(() => syncScanned({ quiet: true })));
+  beatJob("seats", () => pulled.then(() => refreshOpenSeatCharts({ quiet: true })));
 }
 
 let sessionDay = todayKey();

@@ -19,6 +19,7 @@ import {
 import { syncScanned, runDxScanDiagnostics, resetScanDone } from "./data.js?v=dev";
 import { paint, viewHead, hapticTick, toast, SEG_IND, syncSegs } from "./ui.js?v=dev";
 import { paintSeatChart, seatChartExpanded } from "./seats.js?v=dev";
+import { feedbackAvailable, openFeedback } from "./feedback.js?v=dev";
 
 /** The last DX test, kept so a redraw does not wipe the verdict. */
 let dxTest = null;
@@ -173,6 +174,23 @@ export function renderSettings() {
           </div>
         </section>
 
+        ${
+          feedbackAvailable()
+            ? `<section class="group">
+          <h2 class="group-label">${escapeHtml(t("groupFeedback"))}</h2>
+          <div class="card list">
+            ${row(
+              "chat",
+              t("feedbackRow"),
+              t("feedbackHint"),
+              `<button type="button" class="btn btn-sm btn-primary" data-action="feedback">${escapeHtml(t("feedbackOpen"))}</button>`,
+              { attrs: 'data-row-action="feedback"' }
+            )}
+          </div>
+        </section>`
+            : ""
+        }
+
         <section class="group">
           <h2 class="group-label">${escapeHtml(t("groupApp"))}</h2>
           <div class="card list">
@@ -263,8 +281,13 @@ export function setupSettings() {
       setToggle(rowToggle.dataset.rowToggle);
       return;
     }
-    const action = e.target.closest("[data-action]")?.dataset.action;
-    if (action === "dx-test") runDxTest();
+    const action =
+      e.target.closest("[data-action]")?.dataset.action ||
+      e.target.closest("[data-row-action]")?.dataset.rowAction;
+    if (action === "feedback") {
+      hapticTick("medium");
+      openFeedback();
+    } else if (action === "dx-test") runDxTest();
     else if (action === "dx-refresh") {
       dxBusy = "refresh";
       renderSettings();
