@@ -351,6 +351,12 @@ async function adminHandler(req: Request, info: Deno.ServeHandlerInfo) {
   const path = url.pathname.replace(/\/+$/, "") || "/";
   const noStore = { "Cache-Control": "no-store", ...SECURITY };
 
+  // The dashboard probes with HEAD. Falling through to 404 "Not found"
+  // advertises a 9-byte body and then sends none, which HTTP/2 treats as
+  // a truncated response, so the tile shows down even though GET is fine.
+  if (path === "/" && req.method === "HEAD") {
+    return new Response(null, { status: 200, headers: noStore });
+  }
   if (path === "/" && req.method === "GET") {
     return new Response(await Deno.readTextFile(HUB_HTML), {
       headers: { ...noStore, "Content-Type": "text/html; charset=utf-8" },
