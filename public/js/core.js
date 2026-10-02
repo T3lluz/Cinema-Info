@@ -53,7 +53,7 @@ export const DX_LOGIN_ANON_KEY =
  * The release, as people read it: bump it with every change that ships
  * (major.minor.patch — a fix is a patch, a new feature a minor).
  */
-export const APP_RELEASE = "2.5.1";
+export const APP_RELEASE = "2.5.2";
 
 /** The build this page runs (the commit), stamped into the script URL on deploy. */
 export const APP_VERSION =
@@ -96,6 +96,8 @@ export const S = {
   keepAwake: false,
   /** The liquid ripple on opening and refreshing. */
   rippleOn: true,
+  /** The note at the top: open, or folded down to its title line. */
+  noticeOpen: true,
   /** Stats tab: "week" or "month", and which one (null = current). */
   statsPeriod: "week",
   statsAnchor: null,
@@ -184,6 +186,7 @@ export function savePrefs() {
         keepAwake: S.keepAwake,
         statsPeriod: S.statsPeriod,
         ripple: S.rippleOn,
+        noticeOpen: S.noticeOpen,
       })
     );
   } catch {
