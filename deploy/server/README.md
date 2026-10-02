@@ -99,4 +99,6 @@ Cloudflare Tunnel, Edit). `go-public.sh --rollback` undoes the DNS change.
 Deno services behind Tailscale Funnel. Funnel is off for that node, so
 the bridge only answered on the tailnet and staff off it got no seat
 maps. The server
-above replaces it; `cinema-dx` and `cinema-omdb` are stopped and disabled.
+above replaces it. Once this release is on GitHub Pages nothing calls the
+old services any more, and they can go:
+`systemctl --user disable --now cinema-dx cinema-omdb`.

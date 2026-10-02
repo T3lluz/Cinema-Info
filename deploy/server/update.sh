@@ -30,6 +30,13 @@ main() {
     exit 0
   fi
 
+  # A main from before this deploy existed would take the server's own
+  # code away from under it. Wait for one that has it.
+  if ! git -C "$repo" cat-file -e "$new:deploy/server/compose.yml" 2>/dev/null; then
+    echo "origin/$branch ($sha) has no deploy/server yet; leaving $current in place"
+    exit 0
+  fi
+
   git -C "$repo" reset --quiet --hard "$new"
 
   local stage="$build/.site-$sha.tmp"
