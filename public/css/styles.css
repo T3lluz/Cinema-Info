@@ -55,11 +55,11 @@
   --soon-soft: rgba(217, 119, 6, 0.14);
   --hold: #2563eb;
   --hold-soft: rgba(37, 99, 235, 0.11);
-  /* GitHub's "attention" colours, for the warning. */
-  --warn-fg: #9a6700;
-  --warn-line: #9a6700;
-  --warn-border: rgba(154, 103, 0, 0.28);
-  --warn-bg: rgba(212, 167, 44, 0.08);
+  /* GitHub's "note" colours, for the note above every tab. */
+  --note-fg: #0969da;
+  --note-line: #0969da;
+  --note-border: rgba(9, 105, 218, 0.26);
+  --note-bg: rgba(9, 105, 218, 0.06);
   --chart: #4b453f;
   --chart-soft: #cdc7c0;
   --seat-free: rgba(30, 24, 18, 0.32);
@@ -101,10 +101,10 @@
   --soon-soft: rgba(251, 191, 36, 0.15);
   --hold: #6aa5ff;
   --hold-soft: rgba(106, 165, 255, 0.15);
-  --warn-fg: #d29922;
-  --warn-line: #9e6a03;
-  --warn-border: rgba(187, 128, 9, 0.4);
-  --warn-bg: rgba(187, 128, 9, 0.1);
+  --note-fg: #4493f8;
+  --note-line: #1f6feb;
+  --note-border: rgba(31, 111, 235, 0.4);
+  --note-bg: rgba(31, 111, 235, 0.1);
   --chart: #d9d4ce;
   --chart-soft: #4f4a45;
   --seat-free: rgba(255, 255, 255, 0.3);
@@ -734,9 +734,9 @@ p {
   position: relative;
   padding: 10px 14px 11px 18px;
   overflow: hidden;
-  border: 1px solid var(--warn-border);
+  border: 1px solid var(--note-border);
   border-radius: var(--r-md);
-  background: var(--warn-bg);
+  background: var(--note-bg);
   animation: rise 0.5s var(--ease) 0.1s both;
 }
 .notice-box::before {
@@ -747,7 +747,7 @@ p {
   left: 7px;
   width: 4px;
   border-radius: 2px;
-  background: var(--warn-line);
+  background: var(--note-line);
 }
 .notice-title {
   display: flex;
@@ -756,7 +756,7 @@ p {
   font-size: 14px;
   font-weight: 650;
   line-height: 1;
-  color: var(--warn-fg);
+  color: var(--note-fg);
 }
 .notice-icon {
   flex: none;
@@ -768,6 +768,49 @@ p {
   font-size: 13.5px;
   line-height: 1.45;
   color: var(--ink);
+}
+.notice-body + .notice-body {
+  margin-top: 4px;
+}
+.notice-link {
+  font-weight: 650;
+  color: var(--note-fg);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  overflow-wrap: anywhere;
+}
+.notice-count {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+  margin-top: 9px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ink-2);
+}
+.cd {
+  display: inline-flex;
+  gap: 5px;
+}
+.cd-cell {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 3px;
+  padding: 3px 7px;
+  border-radius: 7px;
+  background: var(--note-border);
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.cd-cell b {
+  font-size: 14px;
+  font-weight: 750;
+}
+.cd-cell small {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ink-2);
 }
 
 /* —— App bar ———————————————————————————————————————————————————————— */

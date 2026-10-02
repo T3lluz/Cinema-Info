@@ -192,14 +192,21 @@ along, so a bug report can be placed. Notes land in a hub on the server
 maintainer's tailnet. The form lives in its own dialog, so the five-second
 beat never wipes what someone is halfway through typing.
 
-## Warning banner
+## The note at the top
 
-A GitHub-style warning (amber rule, alert triangle, *Advarsel*) sits right
-under the header on every tab, telling staff about the redesign and that
-the site's address is about to change. It cannot be dismissed and scrolls
-away with the page. The words live in `public/js/i18n.js` (`noticeTitle`,
-`noticeBody`) — update them with the new link when it is known — and
-`NOTICE_ON` in `public/js/core.js` takes it down.
+A GitHub-style note (blue rule, info icon, *NYTT: Helt nytt utseende*)
+sits right under the header on every tab. It cannot be dismissed and
+scrolls away with the page. It tells staff about the new address and
+counts down, a second at a time, to 1 November, when the old GitHub
+Pages address stops working:
+
+- on the old address it links to https://t3lluz.com/CinemaInfo/ and
+  asks people to re-add the app to their home screen from there
+- on t3lluz.com it says this is the new address
+
+The words live in `public/js/i18n.js` (`notice*`), the deadline in
+`OLD_URL_ENDS` and the new address in `NEW_APP_URL` (`public/js/core.js`),
+and `NOTICE_ON` takes it down.
 
 ## Layout
 
