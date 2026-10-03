@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-03T01:55:21.073Z",
+  "updatedAt": "2026-10-03T15:07:49.175Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -13518,7 +13518,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.3,
+          "value": 6.4,
           "id": "tt36726913",
           "url": "https://www.imdb.com/title/tt36726913/"
         }
@@ -13561,11 +13561,11 @@
           "url": "https://www.imdb.com/title/tt31450459/"
         },
         "letterboxd": {
-          "value": 3.73,
+          "value": 3.77,
           "url": "https://letterboxd.com/film/digger-2026/"
         },
         "tomatoes": {
-          "value": 72,
+          "value": 71,
           "url": "https://www.rottentomatoes.com/m/digger_2026"
         }
       },
@@ -13608,8 +13608,12 @@
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.76,
+          "value": 2.73,
           "url": "https://letterboxd.com/film/verity-2026/"
+        },
+        "tomatoes": {
+          "value": 70,
+          "url": "https://www.rottentomatoes.com/m/verity"
         }
       },
       "reserved": 0,
@@ -13643,7 +13647,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93138/purchase?kanal=dxf",
       "eventId": "93138",
       "promoterId": "202",
-      "sold": 2,
+      "sold": 13,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -13662,7 +13666,7 @@
       },
       "reserved": 0,
       "capacity": 286,
-      "available": 284
+      "available": 273
     },
     {
       "id": "EDI20260454-2026-10-03T15:30:00-Kinosal",
@@ -13691,7 +13695,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93140/purchase?kanal=dxf",
       "eventId": "93140",
       "promoterId": "202",
-      "sold": 3,
+      "sold": 16,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -13705,8 +13709,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 107,
-      "available": 104
+      "capacity": 110,
+      "available": 94
     },
     {
       "id": "UIP20221470-2026-10-03T17:15:00-Storsal",
@@ -13735,7 +13739,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93177/purchase?kanal=dxf",
       "eventId": "93177",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 7,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -13754,7 +13758,7 @@
       },
       "reserved": 0,
       "capacity": 286,
-      "available": 286
+      "available": 279
     },
     {
       "id": "NOR20230682-2026-10-03T18:15:00-Kinosal",
@@ -13787,14 +13791,14 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.3,
+          "value": 6.4,
           "id": "tt36726913",
           "url": "https://www.imdb.com/title/tt36726913/"
         }
       },
-      "reserved": 0,
+      "reserved": 2,
       "capacity": 110,
-      "available": 110
+      "available": 108
     },
     {
       "id": "WAB20240252-2026-10-03T20:00:00-Storsal",
@@ -13821,7 +13825,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93137/purchase?kanal=dxf",
       "eventId": "93137",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 3,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -13830,17 +13834,17 @@
           "url": "https://www.imdb.com/title/tt31450459/"
         },
         "letterboxd": {
-          "value": 3.73,
+          "value": 3.77,
           "url": "https://letterboxd.com/film/digger-2026/"
         },
         "tomatoes": {
-          "value": 72,
+          "value": 71,
           "url": "https://www.rottentomatoes.com/m/digger_2026"
         }
       },
       "reserved": 0,
       "capacity": 286,
-      "available": 286
+      "available": 283
     },
     {
       "id": "EDI20260552-2026-10-03T20:45:00-Kinosal",
@@ -13868,7 +13872,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93136/purchase?kanal=dxf",
       "eventId": "93136",
       "promoterId": "202",
-      "sold": 12,
+      "sold": 18,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -13877,13 +13881,17 @@
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.76,
+          "value": 2.73,
           "url": "https://letterboxd.com/film/verity-2026/"
+        },
+        "tomatoes": {
+          "value": 70,
+          "url": "https://www.rottentomatoes.com/m/verity"
         }
       },
-      "reserved": 0,
+      "reserved": 2,
       "capacity": 110,
-      "available": 98
+      "available": 90
     },
     {
       "id": "EDI20250794-2026-10-04T14:50:00-Kinosal",
@@ -14106,11 +14114,11 @@
           "url": "https://www.imdb.com/title/tt31450459/"
         },
         "letterboxd": {
-          "value": 3.73,
+          "value": 3.77,
           "url": "https://letterboxd.com/film/digger-2026/"
         },
         "tomatoes": {
-          "value": 72,
+          "value": 71,
           "url": "https://www.rottentomatoes.com/m/digger_2026"
         }
       },
@@ -14153,8 +14161,12 @@
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.76,
+          "value": 2.73,
           "url": "https://letterboxd.com/film/verity-2026/"
+        },
+        "tomatoes": {
+          "value": 70,
+          "url": "https://www.rottentomatoes.com/m/verity"
         }
       },
       "reserved": 0,
@@ -14289,8 +14301,12 @@
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.76,
+          "value": 2.73,
           "url": "https://letterboxd.com/film/verity-2026/"
+        },
+        "tomatoes": {
+          "value": 70,
+          "url": "https://www.rottentomatoes.com/m/verity"
         }
       },
       "reserved": 0,
@@ -14423,11 +14439,11 @@
           "url": "https://www.imdb.com/title/tt31450459/"
         },
         "letterboxd": {
-          "value": 3.73,
+          "value": 3.77,
           "url": "https://letterboxd.com/film/digger-2026/"
         },
         "tomatoes": {
-          "value": 72,
+          "value": 71,
           "url": "https://www.rottentomatoes.com/m/digger_2026"
         }
       },
@@ -14466,7 +14482,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.3,
+          "value": 6.4,
           "id": "tt36726913",
           "url": "https://www.imdb.com/title/tt36726913/"
         }
@@ -14554,8 +14570,12 @@
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.76,
+          "value": 2.73,
           "url": "https://letterboxd.com/film/verity-2026/"
+        },
+        "tomatoes": {
+          "value": 70,
+          "url": "https://www.rottentomatoes.com/m/verity"
         }
       },
       "reserved": 0,
