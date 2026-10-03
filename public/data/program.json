@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-02T16:36:22.964Z",
+  "updatedAt": "2026-10-03T01:55:21.073Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -13514,18 +13514,18 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93262/purchase?kanal=dxf",
       "eventId": "93262",
       "promoterId": "202",
-      "sold": 12,
+      "sold": 16,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6,
+          "value": 6.3,
           "id": "tt36726913",
           "url": "https://www.imdb.com/title/tt36726913/"
         }
       },
       "reserved": 0,
-      "capacity": 108,
-      "available": 96
+      "capacity": 110,
+      "available": 94
     },
     {
       "id": "WAB20240252-2026-10-02T20:00:00-Storsal",
@@ -13561,11 +13561,11 @@
           "url": "https://www.imdb.com/title/tt31450459/"
         },
         "letterboxd": {
-          "value": 3.72,
+          "value": 3.73,
           "url": "https://letterboxd.com/film/digger-2026/"
         },
         "tomatoes": {
-          "value": 68,
+          "value": 72,
           "url": "https://www.rottentomatoes.com/m/digger_2026"
         }
       },
@@ -13608,7 +13608,7 @@
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.77,
+          "value": 2.76,
           "url": "https://letterboxd.com/film/verity-2026/"
         }
       },
@@ -13691,7 +13691,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93140/purchase?kanal=dxf",
       "eventId": "93140",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 3,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -13705,8 +13705,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 110
+      "capacity": 107,
+      "available": 104
     },
     {
       "id": "UIP20221470-2026-10-03T17:15:00-Storsal",
@@ -13779,7 +13779,7 @@
       ],
       "director": "Ingvild Søderlind",
       "premiere": "2026-10-02",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/c7c0a3d390d2643e6d972667f3c58cca7aca4b61-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/eb4b617f94d0ff88352912d08252a7d22ada253a-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93277/purchase?kanal=dxf",
       "eventId": "93277",
       "promoterId": "202",
@@ -13787,7 +13787,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6,
+          "value": 6.3,
           "id": "tt36726913",
           "url": "https://www.imdb.com/title/tt36726913/"
         }
@@ -13830,11 +13830,11 @@
           "url": "https://www.imdb.com/title/tt31450459/"
         },
         "letterboxd": {
-          "value": 3.72,
+          "value": 3.73,
           "url": "https://letterboxd.com/film/digger-2026/"
         },
         "tomatoes": {
-          "value": 68,
+          "value": 72,
           "url": "https://www.rottentomatoes.com/m/digger_2026"
         }
       },
@@ -13877,7 +13877,7 @@
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.77,
+          "value": 2.76,
           "url": "https://letterboxd.com/film/verity-2026/"
         }
       },
@@ -14106,11 +14106,11 @@
           "url": "https://www.imdb.com/title/tt31450459/"
         },
         "letterboxd": {
-          "value": 3.72,
+          "value": 3.73,
           "url": "https://letterboxd.com/film/digger-2026/"
         },
         "tomatoes": {
-          "value": 68,
+          "value": 72,
           "url": "https://www.rottentomatoes.com/m/digger_2026"
         }
       },
@@ -14153,7 +14153,7 @@
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.77,
+          "value": 2.76,
           "url": "https://letterboxd.com/film/verity-2026/"
         }
       },
@@ -14289,7 +14289,7 @@
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.77,
+          "value": 2.76,
           "url": "https://letterboxd.com/film/verity-2026/"
         }
       },
@@ -14423,11 +14423,11 @@
           "url": "https://www.imdb.com/title/tt31450459/"
         },
         "letterboxd": {
-          "value": 3.72,
+          "value": 3.73,
           "url": "https://letterboxd.com/film/digger-2026/"
         },
         "tomatoes": {
-          "value": 68,
+          "value": 72,
           "url": "https://www.rottentomatoes.com/m/digger_2026"
         }
       },
@@ -14458,7 +14458,7 @@
       ],
       "director": "Ingvild Søderlind",
       "premiere": "2026-10-02",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/c7c0a3d390d2643e6d972667f3c58cca7aca4b61-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/eb4b617f94d0ff88352912d08252a7d22ada253a-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93292/purchase?kanal=dxf",
       "eventId": "93292",
       "promoterId": "202",
@@ -14466,7 +14466,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6,
+          "value": 6.3,
           "id": "tt36726913",
           "url": "https://www.imdb.com/title/tt36726913/"
         }
@@ -14554,7 +14554,7 @@
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.77,
+          "value": 2.76,
           "url": "https://letterboxd.com/film/verity-2026/"
         }
       },
