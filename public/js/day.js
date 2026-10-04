@@ -250,7 +250,9 @@ function dayParts(day) {
         key: `gap-${show.id}`,
         html: `<div class="gap${tight}" title="${escapeHtml(
           t("turnaroundTip", { n: Math.max(0, turn), time: formatClock(adsStartOf(show)) })
-        )}"><span>${escapeHtml(t("gap", { n: Math.max(0, turn) }))} · ${escapeHtml(show.screen)}</span></div>`,
+        )}"><span>${icon("broom", "icon icon-xs")}${escapeHtml(
+          t("turnLabel", { n: Math.max(0, turn), hall: show.screen })
+        )}</span></div>`,
       });
     }
     cards.push({ key: show.id, html: showCardHtml(show, now, { gaps, gapMin }) });
@@ -292,10 +294,9 @@ function heroHtml(day, shows, now) {
 }
 
 /**
- * Today's "playing now" and "up next", the two things the door asks, as
- * rows on a board: listed time on the left, the film and its hall in the
- * middle, how long on the right. While ads run, the row says when the
- * film itself starts.
+ * Today's "playing now" and "next", the two things the door asks. Each
+ * is a small show card: poster, times and status chip, the hall, and
+ * when the film itself starts after the ads.
  */
 function nowNextHtml(shows, now) {
   const live = shows.filter((s) => statusOf(s, now) === "live");
@@ -308,50 +309,43 @@ function nowNextHtml(shows, now) {
   const rows = live.map((show) => {
     const end = showEndOf(show);
     const film = filmStartOf(show);
-    const span = end - show.start || 1;
-    const at = (ts) => Math.min(100, Math.max(0, ((ts - show.start) / span) * 100));
+    const pct = Math.min(100, Math.max(0, ((now - show.start) / (end - show.start || 1)) * 100));
     const left = Math.max(0, Math.round((end - now) / 60_000));
-    const inAds = now < film;
-    const sub = inAds
-      ? [show.screen, t("adsNow"), t("filmAt", { time: formatClock(film) })]
-      : [show.screen, t("endsAt", { time: formatClock(end) })];
-    return `<button type="button" class="nn nn-live${inAds ? " is-ads" : ""}" data-goto-show="${escapeHtml(show.id)}">
-        <span class="nn-time">${formatClock(show.start)}</span>
-        <span class="nn-body">
-          <span class="nn-title">${escapeHtml(show.title)}</span>
-          <span class="nn-sub">${escapeHtml(sub.join(" · "))}</span>
-        </span>
-        <span class="nn-state"><span class="pulse" aria-hidden="true"></span>${escapeHtml(
-          inAds ? t("adsShort") : t("minLeft", { n: left })
-        )}</span>
-        <span class="nn-track" aria-hidden="true"><span style="width:${at(now).toFixed(1)}%"></span></span>
-      </button>`;
+    const label = now < film ? `${t("adsShort")} · ${t("filmAt", { time: formatClock(film) })}` : t("minLeft", { n: left });
+    return nnTile(show, now, {
+      sub: [show.screen],
+      extra: `<span class="nn-progress"><span class="progress" aria-hidden="true"><span style="width:${pct.toFixed(
+        1
+      )}%"></span></span><span class="nn-left">${escapeHtml(label)}</span></span>`,
+    });
   });
 
   if (next) {
     const film = filmStartOf(next);
-    const adsOn = now >= adsStartOf(next);
     const sold = next.sold != null ? `${formatCount(next.sold)} ${t("sold")}` : "";
-    const sub = [next.screen, adsOn ? t("adsNow") : "", t("filmAt", { time: formatClock(film) }), sold];
-    const soon = statusOf(next, now) === "soon";
-    rows.push(`<button type="button" class="nn nn-next${soon ? " is-soon" : ""}" data-goto-show="${escapeHtml(next.id)}">
-        <span class="nn-time">${formatClock(next.start)}</span>
-        <span class="nn-body">
-          <span class="nn-title">${escapeHtml(next.title)}</span>
-          <span class="nn-sub">${escapeHtml(sub.filter(Boolean).join(" · "))}</span>
-        </span>
-        <span class="nn-state">${escapeHtml(formatUntilShort(next.start - now))}</span>
-      </button>`);
+    rows.push(
+      nnTile(next, now, {
+        sub: [next.screen, now >= adsStartOf(next) ? t("adsNow") : "", t("filmAt", { time: formatClock(film) }), sold],
+      })
+    );
   }
   return `<div class="nownext">${rows.join("")}</div>`;
 }
 
-function formatUntilShort(ms) {
-  const mins = Math.max(1, Math.round(ms / 60_000));
-  if (mins < 60) return t("inMin", { n: mins });
-  const h = Math.floor(mins / 60);
-  const m = mins % 60;
-  return m ? t("inHours", { h, m }) : t("inHoursFlat", { h });
+/** One showing on the today card. */
+function nnTile(show, now, { sub, extra = "" }) {
+  const status = statusOf(show, now);
+  return `<button type="button" class="nn is-${status}" data-goto-show="${escapeHtml(show.id)}">
+      <span class="nn-poster">${posterHtml(show, { w: 44, h: 66 })}</span>
+      <span class="nn-body">
+        <span class="nn-when"><span class="show-time"><strong>${formatClock(show.start)}</strong><span>–${endLabel(
+          show
+        )}</span></span>${statusChip(show, now)}</span>
+        <span class="nn-title">${escapeHtml(show.title)}</span>
+        <span class="nn-sub">${escapeHtml(sub.filter(Boolean).join(" · "))}</span>
+        ${extra}
+      </span>
+    </button>`;
 }
 
 /* —— Timeline ——————————————————————————————————————————————————————
@@ -368,6 +362,9 @@ const TL_MIN_PX_PER_HOUR = 60;
 const TL_MAX_PX_PER_HOUR = 240;
 /** Bar padding plus a little air, so a measured title never just clips. */
 const TL_BAR_SLACK_PX = 22;
+/** A cleaning arrow wants this much to show "29 min"; never at any cost. */
+const TL_BREAK_MIN_PX = 62;
+const TL_BREAK_MAX_PX_PER_HOUR = 150;
 const TL_TITLE_FONT = "680 12.5px";
 const TL_TIME_FONT = "760 11px";
 const HOUR = 3_600_000;
@@ -445,6 +442,14 @@ function timelineHtml(day, shows, now) {
     const h = (showEndOf(s) - s.start) / HOUR || 1;
     perHour = Math.max(perHour, need / h);
   }
+  // And room for each cleaning arrow to carry its minutes.
+  for (const screen of new Set(shows.map((s) => s.screen))) {
+    const inHall = shows.filter((s) => s.screen === screen);
+    for (let i = 1; i < inHall.length; i++) {
+      const h = (adsStartOf(inHall[i]) - showEndOf(inHall[i - 1])) / HOUR;
+      if (h > 0) perHour = Math.max(perHour, Math.min(TL_BREAK_MAX_PX_PER_HOUR, TL_BREAK_MIN_PX / h));
+    }
+  }
   perHour = Math.min(TL_MAX_PX_PER_HOUR, Math.ceil(perHour));
   const minWidth = Math.round(hours * perHour);
   const px = (ms) => (ms / HOUR) * perHour;
@@ -466,18 +471,23 @@ function timelineHtml(day, shows, now) {
         let html = "";
         const prev = inHall[i - 1];
         const turn = turnaroundMin(prev, s);
-        if (turn != null) {
+        if (turn != null && turn > 0) {
+          // The cleaning window: one showing out, to the next one's ads.
           const from = showEndOf(prev).getTime();
-          const to = Math.max(from, start);
-          const room = px(to - from);
-          const n = Math.max(0, turn);
+          const room = px(adsFrom - from);
           const tight = turn < TIGHT_TURNAROUND_MIN ? " is-tight" : "";
-          if (room >= 40) {
+          const label =
+            room >= 96
+              ? `${icon("broom", "icon")}${escapeHtml(t("breakShort", { n: turn }))}`
+              : room >= 58
+                ? escapeHtml(t("breakShort", { n: turn }))
+                : room >= 34
+                  ? String(turn)
+                  : "";
+          if (room >= 20) {
             html += `<span class="tl-break${tight}" style="left:${fx(pct(from))}%;width:${fx(
-              pct(to) - pct(from)
-            )}%" title="${escapeHtml(t("turnaroundTip", { n, time: formatClock(adsStartOf(s)) }))}">${escapeHtml(
-              t("breakShort", { n })
-            )}</span>`;
+              pct(adsFrom) - pct(from)
+            )}%" title="${escapeHtml(t("turnaroundTip", { n: turn, time: formatClock(adsStartOf(s)) }))}"><span>${label}</span></span>`;
           }
         }
 
@@ -500,6 +510,9 @@ function timelineHtml(day, shows, now) {
   const nowTs = now.getTime();
   const showNow = day === todayKey() && nowTs >= t0 && nowTs <= t1;
   const nowPct = pct(nowTs);
+  // Open where what is playing starts, so its title is in view too.
+  const liveStarts = shows.filter((s) => statusOf(s, now) === "live").map((s) => pct(s.start.getTime()));
+  const focusPct = showNow ? Math.min(nowPct, ...liveStarts) : null;
 
   const step = perHour < 44 ? 2 : 1;
   const ticks = [];
@@ -526,9 +539,13 @@ function timelineHtml(day, shows, now) {
   return `<section class="card tl-card" aria-label="${escapeHtml(t("timelineAria", { day: formatDayLabel(day) }))}">
   <div class="tl-head">
     <h3 class="tl-heading">${escapeHtml(t("timeline"))}</h3>
-    <span class="tl-legend" aria-hidden="true"><i></i>${escapeHtml(t("tlAds"))}</span>
+    <span class="tl-legend" aria-hidden="true"><span class="tl-key"><i class="tl-key-clean"></i>${escapeHtml(
+      t("tlClean")
+    )}</span><span class="tl-key"><i class="tl-key-ads"></i>${escapeHtml(t("tlAds"))}</span></span>
   </div>
-  <div class="tl" data-tl-day="${day}" ${showNow ? `data-now-pct="${nowPct.toFixed(2)}"` : ""}>
+  <div class="tl" data-tl-day="${day}" ${
+    showNow ? `data-now-pct="${nowPct.toFixed(2)}" data-focus-pct="${focusPct.toFixed(2)}"` : ""
+  }>
     <div class="tl-names" aria-hidden="true">${screens
       .map((s) => `<span title="${escapeHtml(s)}">${escapeHtml(shortScreenLabel(s))}</span>`)
       .join("")}</div>
@@ -558,9 +575,15 @@ function syncTimelineScroll(page) {
   const max = scroller.scrollWidth - scroller.clientWidth;
   if (max > 1) {
     const nowPct = Number(tl.dataset.nowPct);
-    scroller.scrollLeft = Number.isFinite(nowPct)
-      ? Math.max(0, Math.min(max, (nowPct / 100) * scroller.scrollWidth - scroller.clientWidth * 0.3))
-      : 0;
+    const focusPct = Number(tl.dataset.focusPct);
+    let left = 0;
+    if (Number.isFinite(nowPct)) {
+      const nowX = (nowPct / 100) * scroller.scrollWidth;
+      const focusX = (focusPct / 100) * scroller.scrollWidth - 12;
+      // The start of what is playing, unless that would push now out of view.
+      left = nowX - focusX < scroller.clientWidth * 0.8 ? focusX : nowX - scroller.clientWidth * 0.3;
+    }
+    scroller.scrollLeft = Math.max(0, Math.min(max, left));
   }
   syncHScroll(tl);
 }
@@ -618,7 +641,9 @@ function showCardHtml(show, now, opts) {
           ${statusChip(show, now, { countdown: isToday })}
           ${
             opts.gapMin
-              ? `<span class="chip chip-quiet show-gap">${escapeHtml(t("gapBefore", { n: opts.gapMin }))}</span>`
+              ? `<span class="chip chip-turn show-gap">${icon("broom", "icon icon-xs")}${escapeHtml(
+                  t("gapBefore", { n: opts.gapMin })
+                )}</span>`
               : ""
           }
         </div>

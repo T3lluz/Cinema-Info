@@ -55,6 +55,8 @@
   --soon-soft: rgba(217, 119, 6, 0.14);
   --hold: #2563eb;
   --hold-soft: rgba(37, 99, 235, 0.11);
+  --turn: #7c3aed;
+  --turn-soft: rgba(124, 58, 237, 0.12);
   /* GitHub's "note" colours, for the note above every tab. */
   --note-fg: #0969da;
   --note-line: #0969da;
@@ -101,6 +103,8 @@
   --soon-soft: rgba(251, 191, 36, 0.15);
   --hold: #6aa5ff;
   --hold-soft: rgba(106, 165, 255, 0.15);
+  --turn: #b69cff;
+  --turn-soft: rgba(182, 156, 255, 0.16);
   --note-fg: #4493f8;
   --note-line: #1f6feb;
   --note-border: rgba(31, 111, 235, 0.4);
@@ -1579,45 +1583,71 @@ html.sheet-open .edge-blur {
 
 .nownext {
   display: grid;
+  gap: 8px;
+  padding-bottom: 10px;
 }
+/* Each row a small show card: poster, times, the same chips, and the
+ * same green / amber ring a live or imminent showing gets below. */
 .nn {
   display: grid;
-  grid-template-columns: 50px minmax(0, 1fr) auto;
-  align-items: baseline;
+  grid-template-columns: 44px minmax(0, 1fr);
+  align-items: center;
   column-gap: 12px;
-  width: calc(100% + 16px);
+  width: 100%;
   min-width: 0;
-  margin: 0 -8px;
-  padding: 12px 8px;
+  padding: 10px 12px 10px 10px;
   border: 0;
-  border-top: 1px solid var(--line);
-  border-radius: 0;
-  background: none;
+  border-radius: var(--r-lg);
+  background: var(--bg-sunk);
   color: var(--ink);
   text-align: left;
-  transition: background-color 0.15s;
+  transition:
+    background-color 0.15s,
+    transform 0.15s var(--ease);
 }
 .nn:active {
-  background: var(--bg-hover);
+  transform: scale(0.985);
 }
-.nn-time {
-  font-size: 16px;
-  font-weight: 760;
-  line-height: 1.25;
-  font-variant-numeric: tabular-nums;
-  color: var(--ink-2);
+.nn.is-live {
+  background: color-mix(in srgb, var(--live) 8%, var(--bg-sunk));
+  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--live) 55%, transparent);
 }
-.nn-live .nn-time {
-  color: var(--live);
+.nn.is-soon {
+  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--soon) 45%, transparent);
+}
+.nn-poster img,
+.nn-poster .poster-fallback {
+  display: block;
+  width: 44px;
+  height: 66px;
+  border-radius: 8px;
+  object-fit: cover;
+  background: var(--bg-elev);
+  box-shadow: var(--poster-shadow);
+}
+.nn-poster .poster-fallback {
+  font-size: 18px;
 }
 .nn-body {
   display: grid;
-  gap: 1px;
+  gap: 2px;
   min-width: 0;
+}
+.nn-when {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+.nn-when .show-time strong {
+  font-size: 17px;
+}
+.nn-when .show-time span {
+  font-size: 13px;
 }
 .nn-title {
   overflow: hidden;
-  font-size: 16px;
+  font-size: 15.5px;
   font-weight: 700;
   letter-spacing: -0.01em;
   line-height: 1.25;
@@ -1625,44 +1655,31 @@ html.sheet-open .edge-blur {
   white-space: nowrap;
 }
 .nn-sub {
+  overflow: hidden;
   font-size: 13px;
   color: var(--ink-2);
-  font-variant-numeric: tabular-nums;
-}
-.nn-state {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--ink-2);
+  text-overflow: ellipsis;
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
 }
-.nn-live .nn-state {
+.nn-progress {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 4px;
+}
+.nn-progress .progress {
+  flex: 1;
+}
+.nn-left {
+  font-size: 12.5px;
+  font-weight: 700;
   color: var(--live);
-}
-.nn-next.is-soon .nn-state {
-  color: var(--soon);
-}
-.nn-track {
-  grid-column: 2 / -1;
-  height: 4px;
-  margin-top: 9px;
-  border-radius: 2px;
-  background: color-mix(in srgb, var(--live) 18%, transparent);
-  overflow: hidden;
-}
-.nn-track > span {
-  display: block;
-  height: 100%;
-  border-radius: inherit;
-  background: var(--live);
-  transition: width 1s linear;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
 .nn-empty {
-  padding: 12px 0 10px;
-  border-top: 1px solid var(--line);
+  padding: 2px 0 12px;
   font-size: 14px;
   color: var(--ink-2);
 }
@@ -1689,13 +1706,26 @@ html.sheet-open .edge-blur {
 .tl-legend {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 12px;
   font-size: 12px;
   font-weight: 600;
   color: var(--ink-3);
 }
-.tl-legend i {
+.tl-key {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.tl-key i {
   display: block;
+}
+.tl-key-clean {
+  width: 20px;
+  height: 10px;
+  background: var(--turn);
+  clip-path: polygon(0 50%, 5px 0, calc(100% - 5px) 0, 100% 50%, calc(100% - 5px) 100%, 5px 100%);
+}
+.tl-key-ads {
   width: 16px;
   height: 4px;
   border-radius: 2px;
@@ -1853,22 +1883,35 @@ html.sheet-open .edge-blur {
 .tl-ads.is-done {
   opacity: 0.4;
 }
-/* The turnaround, as a number in the gap. */
+/* Cleaning: a double-headed arrow spanning exactly the time from one
+ * showing letting out to the next one's ads and doors. */
 .tl-break {
   position: absolute;
-  top: 0;
-  height: var(--tl-block);
-  display: grid;
-  place-items: center;
+  top: calc((var(--tl-block) - 24px) / 2);
+  height: 24px;
+  padding: 0 3px;
+  color: var(--turn);
+}
+.tl-break > span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  height: 100%;
+  padding: 0 9px;
+  background: color-mix(in srgb, currentColor 20%, var(--bg-elev));
+  clip-path: polygon(0 50%, 8px 0, calc(100% - 8px) 0, 100% 50%, calc(100% - 8px) 100%, 8px 100%);
   font-size: 11.5px;
-  font-weight: 650;
-  color: var(--ink-3);
+  font-weight: 760;
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
 }
+.tl-break .icon {
+  width: 13px;
+  height: 13px;
+}
 .tl-break.is-tight {
   color: var(--soon);
-  font-weight: 750;
 }
 /* Now: a dot on top, a line down, the time on the hour row under it. */
 .tl-now {
@@ -1947,8 +1990,8 @@ html.sheet-open .edge-blur {
   .tl-bar:hover {
     filter: brightness(1.06) saturate(1.1);
   }
-  .nn:hover {
-    background: var(--bg-hover);
+  .nn:not(.is-live):hover {
+    background: color-mix(in srgb, var(--ink) 5%, var(--bg-sunk));
   }
 }
 
@@ -2454,24 +2497,41 @@ html.sheet-open .edge-blur {
 }
 
 /* Gap between showings in a hall */
+/* Cleaning time between two showings in a hall. */
 .gap {
+  --gap-c: var(--turn);
   display: flex;
   align-items: center;
   gap: 10px;
   padding: 0 8px;
-  font-size: 12px;
-  font-weight: 650;
-  color: var(--ink-3);
 }
 .gap.is-tight {
-  color: var(--soon);
+  --gap-c: var(--soon);
 }
 .gap::before,
 .gap::after {
   content: "";
   flex: 1;
-  height: 1px;
-  background: var(--line-strong);
+  height: 1.5px;
+  border-radius: 1px;
+  background: color-mix(in srgb, var(--gap-c) 35%, transparent);
+}
+.gap > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 24px;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--gap-c) 14%, transparent);
+  color: var(--gap-c);
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.chip-turn {
+  background: var(--turn-soft);
+  color: var(--turn);
 }
 
 /* —— Movies ——————————————————————————————————————————————————————————— */

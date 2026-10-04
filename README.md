@@ -226,11 +226,14 @@ and `NOTICE_ON` takes it down.
   showings from 1480px and three from 2240px. Stats spread over two or
   three columns.
 - The day strip pins under the header. Under it a card with the date,
-  and today a now/next board. The timeline card reads like a TV guide:
-  plain blocks with start and end over the full title (each hour gets as
-  much room as the tightest title needs, and a block scrolled half away
-  keeps its text in view), a thin rail under each block for the ads, the
-  turnaround as a number in the gap.
+  and today what is playing and what is next, each as a small show card
+  (poster, times, status chip, when the film starts). The timeline card
+  reads like a TV guide: plain blocks with start and end over the full
+  title (each hour gets as much room as the tightest title needs, and a
+  block scrolled half away keeps its text in view), a thin rail under
+  each block for the ads, and a purple double-headed arrow over the
+  cleaning window between two showings in a hall (amber under 15 min).
+  It opens at the start of what is playing.
 - On desktop every sideways list (days, timeline, upcoming films, cast)
   has ‹ › buttons, so nothing needs shift+scroll; phones and tablets
   swipe instead.
