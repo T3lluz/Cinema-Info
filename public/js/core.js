@@ -53,7 +53,7 @@ export const DX_LOGIN_ANON_KEY =
  * The release, as people read it: bump it with every change that ships
  * (major.minor.patch — a fix is a patch, a new feature a minor).
  */
-export const APP_RELEASE = "2.6.2";
+export const APP_RELEASE = "2.6.3";
 
 /** The build this page runs (the commit), stamped into the script URL on deploy. */
 export const APP_VERSION =
@@ -451,7 +451,7 @@ export const ICONS = {
   chat: '<path d="M21 11.5a8.4 8.4 0 0 1-12.2 7.5L3 21l2-5.6A8.5 8.5 0 1 1 21 11.5Z"/><path d="M8.5 11.5h.01M12 11.5h.01M15.5 11.5h.01"/>',
   sparkle: '<path d="M12 3l1.9 5.6L19.5 10l-5.6 1.9L12 17.5l-1.9-5.6L4.5 10l5.6-1.4L12 3Z"/>',
   timeline: '<path d="M3 6h10M7 12h12M5 18h8"/>',
-  broom: '<path d="m21 3-8.5 8.5"/><path d="M10.5 9.5 14.5 13.5 12 21c-3.6 0-7-1.4-9-4l7.5-7.5Z"/><path d="m6.5 19.6 2.2-2.6M9.6 20.8l1.4-2.3"/>',
+  gap: '<path d="M4 5v14M20 5v14"/><path d="M8 12h8"/><path d="m10.5 9-3 3 3 3M13.5 9l3 3-3 3"/>',
   users:
     '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/>',
   play: '<path d="M7 4.5v15l12-7.5-12-7.5Z"/>',

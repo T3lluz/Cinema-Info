@@ -55,8 +55,8 @@
   --soon-soft: rgba(217, 119, 6, 0.14);
   --hold: #2563eb;
   --hold-soft: rgba(37, 99, 235, 0.11);
-  --turn: #7c3aed;
-  --turn-soft: rgba(124, 58, 237, 0.12);
+  --gap-ink: #7c3aed;
+  --gap-soft: rgba(124, 58, 237, 0.12);
   /* GitHub's "note" colours, for the note above every tab. */
   --note-fg: #0969da;
   --note-line: #0969da;
@@ -103,8 +103,8 @@
   --soon-soft: rgba(251, 191, 36, 0.15);
   --hold: #6aa5ff;
   --hold-soft: rgba(106, 165, 255, 0.15);
-  --turn: #b69cff;
-  --turn-soft: rgba(182, 156, 255, 0.16);
+  --gap-ink: #b69cff;
+  --gap-soft: rgba(182, 156, 255, 0.16);
   --note-fg: #4493f8;
   --note-line: #1f6feb;
   --note-border: rgba(31, 111, 235, 0.4);
@@ -1706,26 +1706,13 @@ html.sheet-open .edge-blur {
 .tl-legend {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
+  gap: 6px;
   font-size: 12px;
   font-weight: 600;
   color: var(--ink-3);
 }
-.tl-key {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-.tl-key i {
+.tl-legend i {
   display: block;
-}
-.tl-key-clean {
-  width: 20px;
-  height: 10px;
-  background: var(--turn);
-  clip-path: polygon(0 50%, 5px 0, calc(100% - 5px) 0, 100% 50%, calc(100% - 5px) 100%, 5px 100%);
-}
-.tl-key-ads {
   width: 16px;
   height: 4px;
   border-radius: 2px;
@@ -1883,14 +1870,14 @@ html.sheet-open .edge-blur {
 .tl-ads.is-done {
   opacity: 0.4;
 }
-/* Cleaning: a double-headed arrow spanning exactly the time from one
- * showing letting out to the next one's ads and doors. */
+/* The gap in a hall: a double-headed arrow spanning exactly the time
+ * from one showing letting out to the next one's ads, with its length. */
 .tl-break {
   position: absolute;
   top: calc((var(--tl-block) - 24px) / 2);
   height: 24px;
   padding: 0 3px;
-  color: var(--turn);
+  color: var(--gap-ink);
 }
 .tl-break > span {
   display: flex;
@@ -1905,10 +1892,6 @@ html.sheet-open .edge-blur {
   font-weight: 760;
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
-}
-.tl-break .icon {
-  width: 13px;
-  height: 13px;
 }
 .tl-break.is-tight {
   color: var(--soon);
@@ -2117,6 +2100,51 @@ html.sheet-open .edge-blur {
   content: "·";
   margin-right: 6px;
   color: var(--ink-3);
+}
+/* Ads, then film: the two times the timeline draws, in its colours. */
+.timing {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px 12px;
+  margin-top: 5px;
+  font-size: 12.5px;
+  font-weight: 650;
+  color: var(--ink-2);
+  font-variant-numeric: tabular-nums;
+}
+.timing > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+.timing-ads i {
+  display: block;
+  width: 14px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--ink-3);
+}
+.timing.is-soon .timing-ads i {
+  background: var(--soon);
+}
+.timing.is-live .timing-ads i {
+  background: var(--live);
+}
+.timing-film .icon {
+  width: 11px;
+  height: 11px;
+  color: var(--ink-3);
+}
+.timing.is-ads.is-soon .timing-ads {
+  color: var(--soon);
+}
+.timing.is-ads.is-live .timing-ads {
+  color: var(--live);
+}
+.timing.is-ads .timing-film {
+  color: var(--ink);
 }
 .show-hall {
   font-weight: 650;
@@ -2497,9 +2525,9 @@ html.sheet-open .edge-blur {
 }
 
 /* Gap between showings in a hall */
-/* Cleaning time between two showings in a hall. */
+/* The gap between two showings in a hall. */
 .gap {
-  --gap-c: var(--turn);
+  --gap-c: var(--gap-ink);
   display: flex;
   align-items: center;
   gap: 10px;
@@ -2529,9 +2557,9 @@ html.sheet-open .edge-blur {
   font-weight: 700;
   white-space: nowrap;
 }
-.chip-turn {
-  background: var(--turn-soft);
-  color: var(--turn);
+.chip-gap {
+  background: var(--gap-soft);
+  color: var(--gap-ink);
 }
 
 /* —— Movies ——————————————————————————————————————————————————————————— */
