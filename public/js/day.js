@@ -18,6 +18,7 @@ import {
   cssEscape,
   formatClock,
   formatCount,
+  formatUntil,
   formatRunning,
   formatDayLabel,
   relativeDayLabel,
@@ -221,7 +222,7 @@ function dayParts(day) {
       html: `<p class="banner">${escapeHtml(t("previewScannedBanner"))}</p>`,
     });
   }
-  top.push({ key: "hero", html: heroHtml(day, shows, now) });
+  top.push({ key: "day", html: dayCardHtml(day, shows, now) });
 
   if (!shows.length) {
     top.push({
@@ -230,7 +231,6 @@ function dayParts(day) {
     });
     return { top, cards: null };
   }
-  top.push({ key: "tl", html: timelineHtml(day, shows, now) });
   top.push({ key: "list", html: `<div class="day-shows"></div>` });
 
   // If DX answered for some of the day's shows, the ones it skipped are
@@ -267,63 +267,71 @@ function paintDayPage(page, day) {
   if (list) patchList(list, cards);
 }
 
-function heroHtml(day, shows, now) {
-  const isToday = day === todayKey();
+/**
+ * The day in one card: the date, then the halls on a timeline. Today
+ * each hall's row is captioned with what is on in it right now (or next,
+ * with the ads and film times), so the card answers what the door asks
+ * without a summary of its own.
+ */
+function dayCardHtml(day, shows, now) {
   const progress = doneProgress(shows, now);
   const pill = progress.all
     ? `<span class="pill pill-done">${icon("check", "icon icon-xs")}${escapeHtml(t("dayAllDone"))}</span>`
     : progress.done
       ? `<span class="pill">${escapeHtml(t("doneCount", { n: progress.done, total: progress.total }))}</span>`
       : "";
-
-  // No figures here: sold and admitted live on the stats tab. The top of
-  // the day answers what the door asks: what is on, and what is next.
-  return `<section class="card day-hero${isToday ? " is-today" : ""}${
-    progress.all ? " is-done" : ""
-  }" aria-label="${escapeHtml(formatDayLabel(day))}">
-    <div class="hero-head">
-      <div class="hero-heading">
+  return `<section class="card day-card tl-card${day === todayKey() ? " is-today" : ""}" aria-label="${escapeHtml(
+    formatDayLabel(day)
+  )}">
+    <div class="day-head">
+      <div class="day-heading">
         <p class="eyebrow">${escapeHtml(relativeDayLabel(day))}</p>
-        <h2 class="hero-title">${escapeHtml(formatDayLabel(day))}</h2>
+        <h2 class="day-title">${escapeHtml(formatDayLabel(day))}</h2>
       </div>
-      ${pill}
+      <div class="day-side">${pill}${
+        shows.length ? `<span class="tl-legend" aria-hidden="true"><i></i>${escapeHtml(t("tlAds"))}</span>` : ""
+      }</div>
     </div>
-    ${isToday ? nowNextHtml(shows, now) : ""}
+    ${shows.length ? timelineHtml(day, shows, now) : ""}
   </section>`;
 }
 
 /**
- * Today's "playing now" and "next", the two things the door asks. Each
- * is a small show card: poster, times and status chip, the hall, and
- * when the film itself starts after the ads.
+ * A hall's row caption: what is on in it now, or next, or that it is
+ * done. Captions sit in a layer over the scrolling day, not in it, so
+ * they stay put however far the day is panned.
  */
-function nowNextHtml(shows, now) {
-  const live = shows.filter((s) => statusOf(s, now) === "live");
-  const next = shows.find((s) => s.start > now);
-  if (!live.length && !next) {
-    if (doneProgress(shows, now).all) return "";
-    return `<p class="nn-empty">${escapeHtml(t("noMoreToday"))}</p>`;
+function hallCaptionHtml(screen, inHall, day, now) {
+  const hall = `<span class="tl-cap-hall">${escapeHtml(screen)}</span>`;
+  if (day !== todayKey()) {
+    const n = inHall.length;
+    return `<div class="tl-cap">${hall}<span class="tl-cap-state">${escapeHtml(
+      n === 1 ? t("showsOne") : t("showsMany", { n })
+    )}</span></div>`;
   }
-
-  const rows = live.map((show) => {
-    const end = showEndOf(show);
-    const film = filmStartOf(show);
-    const pct = Math.min(100, Math.max(0, ((now - show.start) / (end - show.start || 1)) * 100));
-    const left = Math.max(0, Math.round((end - now) / 60_000));
-    const label = now < film ? `${t("adsShort")} · ${t("filmAt", { time: formatClock(film) })}` : t("minLeft", { n: left });
-    return nnTile(show, now, {
-      sub: [show.screen],
-      extra: `<span class="nn-progress"><span class="progress" aria-hidden="true"><span style="width:${pct.toFixed(
-        1
-      )}%"></span></span><span class="nn-left">${escapeHtml(label)}</span></span>`,
-    });
-  });
-
-  if (next) {
-    const sold = next.sold != null ? `${formatCount(next.sold)} ${t("sold")}` : "";
-    rows.push(nnTile(next, now, { sub: [next.screen, sold], extra: timingHtml(next, now) }));
+  const live = inHall.find((s) => statusOf(s, now) === "live");
+  const next = inHall.find((s) => s.start > now);
+  const show = live || next;
+  if (!show) {
+    return `<div class="tl-cap is-done">${hall}<span class="tl-cap-state">${escapeHtml(t("hallDone"))}</span></div>`;
   }
-  return `<div class="nownext">${rows.join("")}</div>`;
+  const film = filmStartOf(show);
+  let cls = "";
+  let bits;
+  if (live) {
+    cls = "is-live";
+    bits =
+      now < film
+        ? [t("adsOn"), t("filmAt", { time: formatClock(film) })]
+        : [t("minLeft", { n: Math.max(0, Math.round((showEndOf(show) - now) / 60_000)) })];
+  } else {
+    const adsOn = now >= adsStartOf(show);
+    if (adsOn || statusOf(show, now) === "soon") cls = "is-soon";
+    bits = [adsOn ? t("adsOn") : formatUntil(show.start - now), t("filmAt", { time: formatClock(film) })];
+  }
+  return `<button type="button" class="tl-cap ${cls}" data-goto-show="${escapeHtml(show.id)}">${hall}<span class="tl-cap-state">${
+    live ? `<span class="pulse" aria-hidden="true"></span>` : ""
+  }<strong>${escapeHtml(show.title)}</strong> · ${escapeHtml(bits.join(" · "))}</span></button>`;
 }
 
 /**
@@ -349,24 +357,9 @@ function gapTip(prev, show) {
   return t("gapTip", { n, from: formatClock(showEndOf(prev)), to: formatClock(adsStartOf(show)) });
 }
 
-/** One showing on the today card. */
-function nnTile(show, now, { sub, extra = "" }) {
-  const status = statusOf(show, now);
-  return `<button type="button" class="nn is-${status}" data-goto-show="${escapeHtml(show.id)}">
-      <span class="nn-poster">${posterHtml(show, { w: 44, h: 66 })}</span>
-      <span class="nn-body">
-        <span class="nn-when"><span class="show-time"><strong>${formatClock(show.start)}</strong><span>–${endLabel(
-          show
-        )}</span></span>${statusChip(show, now)}</span>
-        <span class="nn-title">${escapeHtml(show.title)}</span>
-        <span class="nn-sub">${escapeHtml(sub.filter(Boolean).join(" · "))}</span>
-        ${extra}
-      </span>
-    </button>`;
-}
-
 /* —— Timeline ——————————————————————————————————————————————————————
- * Read like a TV guide: halls as rows, showings as plain solid blocks
+ * Read like a TV guide: halls as rows, each with a caption saying what
+ * is on in it now, showings as plain solid blocks
  * (times over the full title), nothing drawn inside them. Under each
  * block a thin rail marks the ads, from the loop before the listed time
  * to the film starting. In the gap between two blocks, the minutes staff
@@ -428,12 +421,6 @@ function twoLineWidth(title) {
     else lo = mid;
   }
   return hi;
-}
-
-function shortScreenLabel(screen) {
-  const name = String(screen || "").trim();
-  if (/sal$/i.test(name) && name.length > 4) return name.slice(0, -3);
-  return name;
 }
 
 function endLabel(show) {
@@ -518,7 +505,7 @@ function timelineHtml(day, shows, now) {
         )}%" aria-hidden="true"></i>`;
         return html;
       });
-      return `<div class="tl-lane">${parts.join("")}</div>`;
+      return `<div class="tl-cap-space"></div><div class="tl-lane">${parts.join("")}</div>`;
     })
     .join("");
 
@@ -551,16 +538,11 @@ function timelineHtml(day, shows, now) {
       )}%"><span>${formatClock(now)}</span></div>`
     : "";
 
-  return `<section class="card tl-card" aria-label="${escapeHtml(t("timelineAria", { day: formatDayLabel(day) }))}">
-  <div class="tl-head">
-    <h3 class="tl-heading">${escapeHtml(t("timeline"))}</h3>
-    <span class="tl-legend" aria-hidden="true"><i></i>${escapeHtml(t("tlAds"))}</span>
-  </div>
-  <div class="tl" data-tl-day="${day}" ${
+  return `<div class="tl" data-tl-day="${day}" ${
     showNow ? `data-now-pct="${nowPct.toFixed(2)}" data-focus-pct="${focusPct.toFixed(2)}"` : ""
-  }>
-    <div class="tl-names" aria-hidden="true">${screens
-      .map((s) => `<span title="${escapeHtml(s)}">${escapeHtml(shortScreenLabel(s))}</span>`)
+  } aria-label="${escapeHtml(t("timelineAria", { day: formatDayLabel(day) }))}">
+    <div class="tl-caps">${screens
+      .map((screen) => `<div class="tl-cap-row">${hallCaptionHtml(screen, shows.filter((s) => s.screen === screen), day, now)}</div>`)
       .join("")}</div>
     ${hscroll(
       `<div class="tl-scroll" data-hs-track data-keep-scroll="tl" data-no-swipe>
@@ -573,8 +555,7 @@ function timelineHtml(day, shows, now) {
     </div>`,
       "hs-tl hs-sm"
     )}
-  </div>
-  </section>`;
+  </div>`;
 }
 
 /** Keep today's now-line in view the first time a day's timeline shows.

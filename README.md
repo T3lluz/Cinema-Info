@@ -221,23 +221,23 @@ and `NOTICE_ON` takes it down.
   never waits for the last one to land).
 - **Tablets** (from 700px): seat charts open by default.
 - **Desktop** (from 1024px): the tabs become a rail centred on the left
-  edge and the page uses most of the window — the day's summary pinned
-  on the left, the timeline and showings beside it, two columns of
-  showings from 1480px and three from 2240px. Stats spread over two or
-  three columns.
-- The day strip pins under the header. Under it a card with the date,
-  and today what is playing and what is next, each as a small show card
-  (poster, times, status chip, when the film starts). The timeline card
-  reads like a TV guide: plain blocks with start and end over the full
-  title (each hour gets as much room as the tightest title needs, and a
-  block scrolled half away keeps its text in view), a thin rail under
-  each block for the ads, and a purple double-headed arrow with the
-  minutes over the gap between two showings in a hall (one letting out
-  to the next one's ads; amber under 15 min). It opens at the start of
-  what is playing.
-- Every showing still to come (cards and the next-up tile) has a line
-  with when its ads start and when the film does, in the timeline's
-  colours. While the ads run it reads "Ads on".
+  edge and the page uses most of the window. The day card runs across
+  the top with the whole day's timeline in view; the showings sit under
+  it, two columns side by side, three from 1480px and four from 2240px.
+  Stats spread over two or three columns.
+- The day strip pins under the header. Under it one card per day: the
+  date over a timeline that reads like a TV guide, one row per hall.
+  Today each row is captioned with what is on in that hall (playing,
+  with minutes left; or next, with the countdown and film start; or
+  done), so there is no separate summary. The blocks are plain, start
+  and end over the full title (each hour gets as much room as the
+  tightest title needs), a thin rail under each for the ads, and a
+  purple double-headed arrow with the minutes over the gap between two
+  showings in a hall (one letting out to the next one's ads; amber under
+  15 min). It opens at the start of what is playing.
+- Every showing still to come has a line with when its ads start and
+  when the film does, in the timeline's colours. While the ads run it
+  reads "Ads on".
 - On desktop every sideways list (days, timeline, upcoming films, cast)
   has ‹ › buttons, so nothing needs shift+scroll; phones and tablets
   swipe instead.

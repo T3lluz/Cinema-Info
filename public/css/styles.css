@@ -547,7 +547,7 @@ p {
   height: 112px;
 }
 .skeleton-card.is-hero {
-  height: 170px;
+  height: 230px;
 }
 .skeleton-card i,
 .skeleton-lines i,
@@ -1551,28 +1551,27 @@ html.sheet-open .edge-blur {
   display: none;
 }
 
-/* —— Day summary ——————————————————————————————————————————————————————
- * The date, and today the two rows the door asks about: what is playing
- * and what is next. Each row reads left to right like a departures
- * board: listed time, then the film and its hall, then how long. */
+/* —— Day card ——————————————————————————————————————————————————————————
+ * The date over the halls' timeline. No separate summary: today each
+ * hall's row is captioned with what is on in it. */
 
-.day-hero {
-  padding: 16px 16px 6px;
+.day-card {
+  padding: 16px 14px 10px;
 }
-.day-hero.is-today .eyebrow {
-  color: var(--accent-text);
-}
-.hero-head {
+.day-head {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   gap: 10px;
-  padding-bottom: 10px;
+  padding: 0 2px 12px;
 }
-.hero-heading {
+.day-heading {
   min-width: 0;
 }
-.hero-title {
+.day-card.is-today .eyebrow {
+  color: var(--accent-text);
+}
+.day-title {
   margin-top: 2px;
   font-family: var(--font-display);
   font-size: 22px;
@@ -1580,129 +1579,17 @@ html.sheet-open .edge-blur {
   letter-spacing: -0.02em;
   line-height: 1.2;
 }
-
-.nownext {
+.day-side {
   display: grid;
+  justify-items: end;
   gap: 8px;
-  padding-bottom: 10px;
-}
-/* Each row a small show card: poster, times, the same chips, and the
- * same green / amber ring a live or imminent showing gets below. */
-.nn {
-  display: grid;
-  grid-template-columns: 44px minmax(0, 1fr);
-  align-items: center;
-  column-gap: 12px;
-  width: 100%;
-  min-width: 0;
-  padding: 10px 12px 10px 10px;
-  border: 0;
-  border-radius: var(--r-lg);
-  background: var(--bg-sunk);
-  color: var(--ink);
-  text-align: left;
-  transition:
-    background-color 0.15s,
-    transform 0.15s var(--ease);
-}
-.nn:active {
-  transform: scale(0.985);
-}
-.nn.is-live {
-  background: color-mix(in srgb, var(--live) 8%, var(--bg-sunk));
-  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--live) 55%, transparent);
-}
-.nn.is-soon {
-  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--soon) 45%, transparent);
-}
-.nn-poster img,
-.nn-poster .poster-fallback {
-  display: block;
-  width: 44px;
-  height: 66px;
-  border-radius: 8px;
-  object-fit: cover;
-  background: var(--bg-elev);
-  box-shadow: var(--poster-shadow);
-}
-.nn-poster .poster-fallback {
-  font-size: 18px;
-}
-.nn-body {
-  display: grid;
-  gap: 2px;
-  min-width: 0;
-}
-.nn-when {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  min-width: 0;
-}
-.nn-when .show-time strong {
-  font-size: 17px;
-}
-.nn-when .show-time span {
-  font-size: 13px;
-}
-.nn-title {
-  overflow: hidden;
-  font-size: 15.5px;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  line-height: 1.25;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.nn-sub {
-  overflow: hidden;
-  font-size: 13px;
-  color: var(--ink-2);
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  font-variant-numeric: tabular-nums;
-}
-.nn-progress {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 4px;
-}
-.nn-progress .progress {
-  flex: 1;
-}
-.nn-left {
-  font-size: 12.5px;
-  font-weight: 700;
-  color: var(--live);
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
-}
-.nn-empty {
-  padding: 2px 0 12px;
-  font-size: 14px;
-  color: var(--ink-2);
+  flex: none;
 }
 
 /* —— Timeline ————————————————————————————————————————————————————————
  * A TV guide for the halls. Blocks are plain and opaque, so nothing
  * shows through them; the ads are a thin rail under each block; the
  * turnaround is a number in the gap. */
-.tl-card {
-  padding: 14px 14px 10px;
-}
-.tl-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  margin-bottom: 10px;
-}
-.tl-heading {
-  font-size: 15px;
-  font-weight: 720;
-  letter-spacing: -0.01em;
-}
 .tl-legend {
   display: inline-flex;
   align-items: center;
@@ -1721,23 +1608,8 @@ html.sheet-open .edge-blur {
 .tl {
   --tl-block: 46px;
   --tl-row: 58px;
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: 8px;
-}
-.tl-names {
-  display: grid;
-  grid-auto-rows: var(--tl-row);
-  gap: 6px;
-  padding-top: 4px;
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--ink-2);
-}
-.tl-names span {
-  display: flex;
-  align-items: center;
-  height: var(--tl-block);
+  --tl-cap: 26px;
+  position: relative;
 }
 .tl-scroll {
   overflow-x: auto;
@@ -1751,11 +1623,11 @@ html.sheet-open .edge-blur {
 .tl-canvas {
   position: relative;
   min-width: 100%;
-  padding: 4px 0 24px;
+  padding: 0 0 24px;
 }
 .tl-grid {
   position: absolute;
-  inset: 4px 0 24px;
+  inset: 0 0 24px;
   pointer-events: none;
 }
 .tl-grid i {
@@ -1768,11 +1640,81 @@ html.sheet-open .edge-blur {
 .tl-lanes {
   position: relative;
   display: grid;
-  grid-auto-rows: var(--tl-row);
-  gap: 6px;
 }
 .tl-lane {
   position: relative;
+  height: var(--tl-row);
+}
+.tl-cap-space {
+  height: var(--tl-cap);
+}
+.tl-lane + .tl-cap-space {
+  margin-top: 4px;
+}
+/* A hall's caption: its name, then what is on in it. A layer over the
+ * scrolling day, one row per hall, lined up with the lanes under it. */
+.tl-caps {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+.tl-cap-row {
+  height: calc(var(--tl-cap) + var(--tl-row));
+}
+.tl-cap-row + .tl-cap-row {
+  margin-top: 4px;
+}
+.tl-cap {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  width: fit-content;
+  max-width: 100%;
+  min-width: 0;
+  padding: 0 10px 0 2px;
+  pointer-events: auto;
+  border: 0;
+  border-radius: 0 8px 8px 0;
+  background: var(--bg-elev);
+  color: var(--ink-2);
+  font-size: 13px;
+  line-height: 20px;
+  text-align: left;
+  white-space: nowrap;
+}
+.tl-cap-hall {
+  flex: none;
+  font-weight: 760;
+  color: var(--ink);
+}
+.tl-cap-state {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-variant-numeric: tabular-nums;
+}
+.tl-cap-state strong {
+  font-weight: 700;
+  color: var(--ink);
+}
+.tl-cap-state .pulse {
+  margin-right: 6px;
+  vertical-align: 1px;
+}
+.tl-cap.is-live .tl-cap-state {
+  color: var(--live);
+}
+.tl-cap.is-soon .tl-cap-state {
+  color: var(--soon);
+}
+.tl-cap.is-done .tl-cap-state {
+  color: var(--ink-3);
+}
+button.tl-cap:active {
+  opacity: 0.7;
 }
 .tl-bar {
   --tl-ink: var(--ink);
@@ -1896,7 +1838,7 @@ html.sheet-open .edge-blur {
 .tl-break.is-tight {
   color: var(--soon);
 }
-/* Now: a dot on top, a line down, the time on the hour row under it. */
+/* Now: a line down, the time on the hour row under it. */
 .tl-now {
   position: absolute;
   top: 0;
@@ -1908,17 +1850,6 @@ html.sheet-open .edge-blur {
   background: var(--accent);
   pointer-events: none;
   transition: left 1s linear;
-}
-.tl-now::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 8px;
-  height: 8px;
-  margin-left: -4px;
-  border-radius: 50%;
-  background: var(--accent);
 }
 .tl-now span {
   position: absolute;
@@ -1972,9 +1903,6 @@ html.sheet-open .edge-blur {
 @media (hover: hover) {
   .tl-bar:hover {
     filter: brightness(1.06) saturate(1.1);
-  }
-  .nn:not(.is-live):hover {
-    background: color-mix(in srgb, var(--ink) 5%, var(--bg-sunk));
   }
 }
 
@@ -4423,10 +4351,10 @@ button.col:disabled {
     margin-left: 16px;
     margin-right: 16px;
   }
-  .day-hero {
-    padding: 20px 20px 8px;
+  .day-card {
+    padding: 20px 18px 12px;
   }
-  .hero-title {
+  .day-title {
     font-size: 25px;
   }
   .movie-grid {
@@ -4523,34 +4451,21 @@ button.col:disabled {
     bottom: 28px;
   }
 
-  /* Day: summary pinned on the left, showings on the right. */
+  /* Day: the day card across the top, the whole day's timeline in view;
+   * the showings under it, side by side. A divider between two cards
+   * would break the grid, so each card carries its own gap note. */
   .view-day .page {
-    display: grid;
-    grid-template-columns: minmax(320px, 380px) minmax(0, 1fr);
-    gap: 16px 24px;
-    align-items: start;
-  }
-  .view-day .page > * {
-    grid-column: 2;
-    min-width: 0;
-  }
-  /* The summary spans both rows on the right (timeline, then showings),
-   * so it stays pinned all the way down the list. */
-  .view-day .page > .day-hero,
-  .view-day .page > .skeleton-card.is-hero {
-    position: sticky;
-    top: calc(var(--appbar-h) + 6px);
-    grid-column: 1;
-    grid-row: span 2;
-  }
-  .view-day .page > .skeleton-card.is-hero {
-    height: 240px;
-  }
-  .view-day .page > .banner {
-    grid-column: 1 / -1;
+    gap: 16px;
   }
   .day-shows {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 14px;
+  }
+  .day-shows > .gap {
+    display: none;
+  }
+  .show-gap {
+    display: inline-flex;
   }
   .show {
     transition:
@@ -4628,29 +4543,15 @@ button.col:disabled {
 }
 
 @media (min-width: 1480px) {
-  .view-day .page {
-    grid-template-columns: 400px minmax(0, 1fr);
-  }
-  /* Showings side by side. A divider between two cards would break the
-   * grid, so each card carries its own "pause before" note instead. */
   .day-shows {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 16px;
-  }
-  .day-shows > .gap {
-    display: none;
-  }
-  .show-gap {
-    display: inline-flex;
   }
 }
 
 @media (min-width: 2240px) {
-  .view-day .page {
-    grid-template-columns: 420px minmax(0, 1fr);
-  }
   .day-shows {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
 

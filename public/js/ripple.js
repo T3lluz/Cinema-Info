@@ -80,7 +80,7 @@ const RIP_VERT = `
 const CHROME_REMOVE = "script, .rip-canvas, .header-glass, .tabbar, .toasts, .sheet, .edge-blur";
 const CHROME_HIDE = ".appbar";
 /** Bars that stick; in the clone they go where they are on screen. */
-const STICKY = ".day-dock, .period-bar, .day-hero";
+const STICKY = ".day-dock, .period-bar";
 /** Sideways lists; a clone does not keep where they were scrolled to. */
 const SCROLLERS = "[data-hs-track]";
 
