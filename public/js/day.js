@@ -248,11 +248,10 @@ function dayParts(day) {
       const tight = turn < TIGHT_TURNAROUND_MIN ? " is-tight" : "";
       cards.push({
         key: `gap-${show.id}`,
-        html: `<div class="gap${tight}" title="${escapeHtml(
-          t("turnaroundTip", { n: Math.max(0, turn), time: formatClock(adsStartOf(show)) })
-        )}"><span>${icon("broom", "icon icon-xs")}${escapeHtml(
-          t("turnLabel", { n: Math.max(0, turn), hall: show.screen })
-        )}</span></div>`,
+        html: `<div class="gap${tight}" title="${escapeHtml(gapTip(prev, show))}"><span>${icon(
+          "gap",
+          "icon icon-xs"
+        )}${escapeHtml(t("gapLabel", { n: Math.max(0, turn), hall: show.screen }))}</span></div>`,
       });
     }
     cards.push({ key: show.id, html: showCardHtml(show, now, { gaps, gapMin }) });
@@ -321,15 +320,33 @@ function nowNextHtml(shows, now) {
   });
 
   if (next) {
-    const film = filmStartOf(next);
     const sold = next.sold != null ? `${formatCount(next.sold)} ${t("sold")}` : "";
-    rows.push(
-      nnTile(next, now, {
-        sub: [next.screen, now >= adsStartOf(next) ? t("adsNow") : "", t("filmAt", { time: formatClock(film) }), sold],
-      })
-    );
+    rows.push(nnTile(next, now, { sub: [next.screen, sold], extra: timingHtml(next, now) }));
   }
   return `<div class="nownext">${rows.join("")}</div>`;
+}
+
+/**
+ * When the ads start and when the film does: the same two times the
+ * timeline draws, in the same colours. While the ads run, that half
+ * lights up.
+ */
+function timingHtml(show, now) {
+  const ads = adsStartOf(show);
+  const film = filmStartOf(show);
+  const adsOn = now >= ads && now < film;
+  return `<span class="timing is-${statusOf(show, now)}${adsOn ? " is-ads" : ""}">
+      <span class="timing-ads">${
+        adsOn ? `<span class="pulse" aria-hidden="true"></span>` : `<i aria-hidden="true"></i>`
+      }${escapeHtml(adsOn ? t("adsOn") : t("adsAt", { time: formatClock(ads) }))}</span>
+      <span class="timing-film">${icon("play", "icon")}${escapeHtml(t("filmAt", { time: formatClock(film) }))}</span>
+    </span>`;
+}
+
+/** The gap in a hall: one showing out, to the next one's ads. */
+function gapTip(prev, show) {
+  const n = Math.max(0, turnaroundMin(prev, show));
+  return t("gapTip", { n, from: formatClock(showEndOf(prev)), to: formatClock(adsStartOf(show)) });
 }
 
 /** One showing on the today card. */
@@ -477,9 +494,7 @@ function timelineHtml(day, shows, now) {
           const room = px(adsFrom - from);
           const tight = turn < TIGHT_TURNAROUND_MIN ? " is-tight" : "";
           const label =
-            room >= 96
-              ? `${icon("broom", "icon")}${escapeHtml(t("breakShort", { n: turn }))}`
-              : room >= 58
+            room >= 58
                 ? escapeHtml(t("breakShort", { n: turn }))
                 : room >= 34
                   ? String(turn)
@@ -487,7 +502,7 @@ function timelineHtml(day, shows, now) {
           if (room >= 20) {
             html += `<span class="tl-break${tight}" style="left:${fx(pct(from))}%;width:${fx(
               pct(adsFrom) - pct(from)
-            )}%" title="${escapeHtml(t("turnaroundTip", { n: turn, time: formatClock(adsStartOf(s)) }))}"><span>${label}</span></span>`;
+            )}%" title="${escapeHtml(gapTip(prev, s))}"><span>${label}</span></span>`;
           }
         }
 
@@ -539,9 +554,7 @@ function timelineHtml(day, shows, now) {
   return `<section class="card tl-card" aria-label="${escapeHtml(t("timelineAria", { day: formatDayLabel(day) }))}">
   <div class="tl-head">
     <h3 class="tl-heading">${escapeHtml(t("timeline"))}</h3>
-    <span class="tl-legend" aria-hidden="true"><span class="tl-key"><i class="tl-key-clean"></i>${escapeHtml(
-      t("tlClean")
-    )}</span><span class="tl-key"><i class="tl-key-ads"></i>${escapeHtml(t("tlAds"))}</span></span>
+    <span class="tl-legend" aria-hidden="true"><i></i>${escapeHtml(t("tlAds"))}</span>
   </div>
   <div class="tl" data-tl-day="${day}" ${
     showNow ? `data-now-pct="${nowPct.toFixed(2)}" data-focus-pct="${focusPct.toFixed(2)}"` : ""
@@ -641,7 +654,7 @@ function showCardHtml(show, now, opts) {
           ${statusChip(show, now, { countdown: isToday })}
           ${
             opts.gapMin
-              ? `<span class="chip chip-turn show-gap">${icon("broom", "icon icon-xs")}${escapeHtml(
+              ? `<span class="chip chip-gap show-gap">${icon("gap", "icon icon-xs")}${escapeHtml(
                   t("gapBefore", { n: opts.gapMin })
                 )}</span>`
               : ""
@@ -649,6 +662,7 @@ function showCardHtml(show, now, opts) {
         </div>
         <h3 class="show-title">${escapeHtml(show.title)}</h3>
         <p class="show-meta"><span class="show-hall">${escapeHtml(show.screen)}</span>${meta}</p>
+        ${status !== "done" ? timingHtml(show, now) : ""}
         ${tags ? `<div class="tags">${tags}</div>` : ""}
       </div>
       ${ticketBlock(show)}
