@@ -418,16 +418,16 @@ export function filmStartOf(show) {
 }
 
 /**
- * Minutes staff have to turn a hall around: from the end of `prev` to
- * the ads starting for `show` in the same hall. Null across halls.
+ * The gap in a hall: minutes from the end of `prev` to the listed start
+ * of `show` in the same hall. Null across halls.
  */
 export function turnaroundMin(prev, show) {
   if (!prev || !show || prev.screen !== show.screen) return null;
-  return Math.round((adsStartOf(show) - showEndOf(prev)) / 60_000);
+  return Math.round((show.start - showEndOf(prev)) / 60_000);
 }
 
-/** Under this, a turnaround is flagged as tight. */
-export const TIGHT_TURNAROUND_MIN = 15;
+/** Under this, a gap is flagged as tight: under ten minutes before the ads. */
+export const TIGHT_TURNAROUND_MIN = ADS_BEFORE_MIN + 10;
 
 export function statusOf(show, now = new Date()) {
   if (show.end && now >= show.start && now < show.end) return "live";

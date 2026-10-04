@@ -12,8 +12,8 @@ Mobile-friendly schedule for **Buen kino** — same info as the KinoProgram Chro
   minutes after the listed time. The app shows that block, plus the ten
   minute ad loop before the listed time, and says when the film itself
   starts. Neither is a field in DX; both are read off its end time.
-- The gap in a hall: minutes between one showing ending and the ads
-  starting for the next, amber under 15 min
+- The gap in a hall: minutes between one showing ending and the next
+  one's listed start, amber under 20 min
 - Sales statistics (per day, per week, top movies)
 - Filter by day — past days stay scrollable as history accumulates
 - Finished showings are ticked off and struck through, so a day, a film,
@@ -232,9 +232,8 @@ and `NOTICE_ON` takes it down.
   done), so there is no separate summary. The blocks are plain, start
   and end over the full title (each hour gets as much room as the
   tightest title needs), a thin rail under each for the ads, and a
-  purple double-headed arrow with the minutes over the gap between two
-  showings in a hall (one letting out to the next one's ads; amber under
-  15 min). It opens at the start of what is playing.
+  purple double-headed arrow filling the gap between two showings in a
+  hall, its minutes centred in it (amber under 20 min). It opens at the start of what is playing.
 - Every showing still to come has a line with when its ads start and
   when the film does, in the timeline's colours. While the ads run it
   reads "Ads on".
