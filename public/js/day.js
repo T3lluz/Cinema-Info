@@ -277,7 +277,7 @@ function heroHtml(day, shows, now) {
 
   // No figures here: sold and admitted live on the stats tab. The top of
   // the day answers what the door asks: what is on, and what is next.
-  return `<section class="day-hero${isToday ? " is-today" : ""}${
+  return `<section class="card day-hero${isToday ? " is-today" : ""}${
     progress.all ? " is-done" : ""
   }" aria-label="${escapeHtml(formatDayLabel(day))}">
     <div class="hero-head">
@@ -324,9 +324,7 @@ function nowNextHtml(shows, now) {
         <span class="nn-state"><span class="pulse" aria-hidden="true"></span>${escapeHtml(
           inAds ? t("adsShort") : t("minLeft", { n: left })
         )}</span>
-        <span class="nn-track" aria-hidden="true"><span style="width:${at(now).toFixed(1)}%"></span><i style="left:${at(
-          film
-        ).toFixed(1)}%"></i></span>
+        <span class="nn-track" aria-hidden="true"><span style="width:${at(now).toFixed(1)}%"></span></span>
       </button>`;
   });
 
@@ -357,12 +355,14 @@ function formatUntilShort(ms) {
 }
 
 /* —— Timeline ——————————————————————————————————————————————————————
- * Halls as lanes, showings as bars: listed time and end over the title.
- * Each bar starts with the ads (striped), and a faint lead-in before it
- * marks the ad loop people walk in to. Between two showings in a hall a
- * bracket gives the minutes staff have to turn it around. A red line for
- * now. Every hour gets enough room that each title reads in full on two
- * lines; on a phone the day then scrolls sideways, opening at now.
+ * Read like a TV guide: halls as rows, showings as plain solid blocks
+ * (times over the full title), nothing drawn inside them. Under each
+ * block a thin rail marks the ads, from the loop before the listed time
+ * to the film starting. In the gap between two blocks, the minutes staff
+ * have to turn the hall around. A red line for now. Every hour gets
+ * enough room for each title to read in full on two lines; a block half
+ * scrolled away keeps its text in view. On a phone the day scrolls
+ * sideways, opening at now.
  */
 const TL_MIN_PX_PER_HOUR = 60;
 const TL_MAX_PX_PER_HOUR = 240;
@@ -463,35 +463,34 @@ function timelineHtml(day, shows, now) {
           from: formatClock(adsStartOf(s)),
           film: formatClock(filmStartOf(s)),
         })}`;
-        const adsPct = Math.min(100, Math.max(0, ((film - start) / (end - start || 1)) * 100));
-
-        let html = `<i class="tl-pre is-${status}" style="left:${fx(pct(adsFrom))}%;width:calc(${fx(
-          pct(start) - pct(adsFrom)
-        )}% + 6px)" aria-hidden="true"></i>`;
-
+        let html = "";
         const prev = inHall[i - 1];
         const turn = turnaroundMin(prev, s);
         if (turn != null) {
           const from = showEndOf(prev).getTime();
-          const to = Math.max(from, adsFrom);
+          const to = Math.max(from, start);
           const room = px(to - from);
           const n = Math.max(0, turn);
-          const label = room >= 48 ? t("breakShort", { n }) : room >= 22 ? String(n) : "";
           const tight = turn < TIGHT_TURNAROUND_MIN ? " is-tight" : "";
-          html += `<span class="tl-break${tight}" style="left:${fx(pct(from))}%;width:${fx(
-            pct(to) - pct(from)
-          )}%" title="${escapeHtml(t("turnaroundTip", { n, time: formatClock(adsStartOf(s)) }))}">${
-            label ? `<b>${escapeHtml(label)}</b>` : ""
-          }</span>`;
+          if (room >= 40) {
+            html += `<span class="tl-break${tight}" style="left:${fx(pct(from))}%;width:${fx(
+              pct(to) - pct(from)
+            )}%" title="${escapeHtml(t("turnaroundTip", { n, time: formatClock(adsStartOf(s)) }))}">${escapeHtml(
+              t("breakShort", { n })
+            )}</span>`;
+          }
         }
 
         html += `<button type="button" class="tl-bar is-${status}" style="left:${fx(pct(start))}%;width:${fx(
           Math.max(pct(end) - pct(start), 1)
-        )}%;--ads:${adsPct.toFixed(2)}%" data-tl-show="${escapeHtml(s.id)}" title="${escapeHtml(
+        )}%" data-tl-show="${escapeHtml(s.id)}" title="${escapeHtml(tip)}" aria-label="${escapeHtml(
           tip
-        )}" aria-label="${escapeHtml(tip)}"><span class="tl-bar-time"><strong>${formatClock(
+        )}"><span class="tl-bar-in"><span class="tl-bar-time"><strong>${formatClock(
           s.start
-        )}</strong>–${endLabel(s)}</span><span class="tl-bar-title">${escapeHtml(s.title)}</span></button>`;
+        )}</strong>–${endLabel(s)}</span><span class="tl-bar-title">${escapeHtml(s.title)}</span></span></button>`;
+        html += `<i class="tl-ads is-${status}" style="left:${fx(pct(adsFrom))}%;width:${fx(
+          pct(film) - pct(adsFrom)
+        )}%" aria-hidden="true"></i>`;
         return html;
       });
       return `<div class="tl-lane">${parts.join("")}</div>`;
@@ -524,12 +523,10 @@ function timelineHtml(day, shows, now) {
       )}%"><span>${formatClock(now)}</span></div>`
     : "";
 
-  return `<section class="tl-card" aria-label="${escapeHtml(t("timelineAria", { day: formatDayLabel(day) }))}">
+  return `<section class="card tl-card" aria-label="${escapeHtml(t("timelineAria", { day: formatDayLabel(day) }))}">
   <div class="tl-head">
     <h3 class="tl-heading">${escapeHtml(t("timeline"))}</h3>
-    <span class="tl-legend" aria-hidden="true"><span class="tl-key"><i class="tl-key-ads"></i>${escapeHtml(
-      t("tlAds")
-    )}</span><span class="tl-key"><i class="tl-key-break"></i>${escapeHtml(t("tlBreak"))}</span></span>
+    <span class="tl-legend" aria-hidden="true"><i></i>${escapeHtml(t("tlAds"))}</span>
   </div>
   <div class="tl" data-tl-day="${day}" ${showNow ? `data-now-pct="${nowPct.toFixed(2)}"` : ""}>
     <div class="tl-names" aria-hidden="true">${screens

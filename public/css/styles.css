@@ -543,7 +543,7 @@ p {
   height: 112px;
 }
 .skeleton-card.is-hero {
-  height: 150px;
+  height: 170px;
 }
 .skeleton-card i,
 .skeleton-lines i,
@@ -1547,22 +1547,23 @@ html.sheet-open .edge-blur {
   display: none;
 }
 
-/* —— Day heading and the now/next board ————————————————————————————
- * No card: the date reads as the page's title, and today's "playing
- * now" and "next" sit under it as rows on a board, ruled like a
- * departures list. */
+/* —— Day summary ——————————————————————————————————————————————————————
+ * The date, and today the two rows the door asks about: what is playing
+ * and what is next. Each row reads left to right like a departures
+ * board: listed time, then the film and its hall, then how long. */
 
 .day-hero {
-  padding: 8px 2px 2px;
+  padding: 16px 16px 6px;
 }
 .day-hero.is-today .eyebrow {
   color: var(--accent-text);
 }
 .hero-head {
   display: flex;
-  align-items: flex-end;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 10px;
+  padding-bottom: 10px;
 }
 .hero-heading {
   min-width: 0;
@@ -1570,27 +1571,26 @@ html.sheet-open .edge-blur {
 .hero-title {
   margin-top: 2px;
   font-family: var(--font-display);
-  font-size: 26px;
-  font-weight: 780;
-  letter-spacing: -0.026em;
-  line-height: 1.12;
+  font-size: 22px;
+  font-weight: 760;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
 }
 
 .nownext {
   display: grid;
-  margin-top: 14px;
-  border-top: 1.5px solid var(--ink);
 }
 .nn {
   display: grid;
-  grid-template-columns: 54px minmax(0, 1fr) auto;
+  grid-template-columns: 50px minmax(0, 1fr) auto;
   align-items: baseline;
   column-gap: 12px;
-  width: 100%;
+  width: calc(100% + 16px);
   min-width: 0;
-  padding: 11px 2px 12px;
+  margin: 0 -8px;
+  padding: 12px 8px;
   border: 0;
-  border-bottom: 1px solid var(--line-strong);
+  border-top: 1px solid var(--line);
   border-radius: 0;
   background: none;
   color: var(--ink);
@@ -1601,19 +1601,18 @@ html.sheet-open .edge-blur {
   background: var(--bg-hover);
 }
 .nn-time {
-  font-family: var(--font-display);
-  font-size: 19px;
-  font-weight: 780;
-  letter-spacing: -0.02em;
-  line-height: 1.2;
+  font-size: 16px;
+  font-weight: 760;
+  line-height: 1.25;
   font-variant-numeric: tabular-nums;
+  color: var(--ink-2);
 }
 .nn-live .nn-time {
   color: var(--live);
 }
 .nn-body {
   display: grid;
-  gap: 2px;
+  gap: 1px;
   min-width: 0;
 }
 .nn-title {
@@ -1646,14 +1645,13 @@ html.sheet-open .edge-blur {
 .nn-next.is-soon .nn-state {
   color: var(--soon);
 }
-/* How far in, with a tick where the film starts after the ads. */
 .nn-track {
-  position: relative;
   grid-column: 2 / -1;
-  height: 3px;
+  height: 4px;
   margin-top: 9px;
   border-radius: 2px;
-  background: color-mix(in srgb, var(--live) 20%, transparent);
+  background: color-mix(in srgb, var(--live) 18%, transparent);
+  overflow: hidden;
 }
 .nn-track > span {
   display: block;
@@ -1662,35 +1660,26 @@ html.sheet-open .edge-blur {
   background: var(--live);
   transition: width 1s linear;
 }
-.nn-track > i {
-  position: absolute;
-  top: -3px;
-  bottom: -3px;
-  width: 2px;
-  margin-left: -1px;
-  border-radius: 1px;
-  background: var(--ink-3);
-}
 .nn-empty {
-  margin-top: 12px;
+  padding: 12px 0 10px;
+  border-top: 1px solid var(--line);
   font-size: 14px;
   color: var(--ink-2);
 }
 
 /* —— Timeline ————————————————————————————————————————————————————————
- * On the page, not in a card. Bars carry the ads as stripes at their
- * head; a faint striped lead-in before each bar is the ad loop people
- * walk in to; a bracket between two bars is the hall's turnaround. */
+ * A TV guide for the halls. Blocks are plain and opaque, so nothing
+ * shows through them; the ads are a thin rail under each block; the
+ * turnaround is a number in the gap. */
 .tl-card {
-  padding-top: 4px;
+  padding: 14px 14px 10px;
 }
 .tl-head {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
   gap: 10px;
-  margin-bottom: 8px;
-  padding: 0 2px;
+  margin-bottom: 10px;
 }
 .tl-heading {
   font-size: 15px;
@@ -1698,50 +1687,40 @@ html.sheet-open .edge-blur {
   letter-spacing: -0.01em;
 }
 .tl-legend {
-  display: flex;
-  gap: 12px;
-  font-size: 11.5px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
   font-weight: 600;
   color: var(--ink-3);
 }
-.tl-key {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-}
-.tl-key i {
+.tl-legend i {
   display: block;
-  width: 15px;
-  height: 9px;
-}
-.tl-key-ads {
+  width: 16px;
+  height: 4px;
   border-radius: 2px;
-  background: repeating-linear-gradient(
-    135deg,
-    currentColor 0 1.5px,
-    transparent 1.5px 4.5px
-  );
-}
-.tl-key-break {
-  border: 1.5px solid currentColor;
-  border-top: 0;
-  border-bottom: 0;
-  background: linear-gradient(currentColor, currentColor) center / 100% 1.5px no-repeat;
+  background: var(--ink-3);
 }
 .tl {
+  --tl-block: 46px;
+  --tl-row: 58px;
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
   gap: 8px;
 }
 .tl-names {
   display: grid;
-  grid-auto-rows: 56px;
-  gap: 8px;
-  padding-top: 6px;
-  align-items: center;
-  font-size: 11.5px;
+  grid-auto-rows: var(--tl-row);
+  gap: 6px;
+  padding-top: 4px;
+  font-size: 12px;
   font-weight: 700;
   color: var(--ink-2);
+}
+.tl-names span {
+  display: flex;
+  align-items: center;
+  height: var(--tl-block);
 }
 .tl-scroll {
   overflow-x: auto;
@@ -1755,46 +1734,44 @@ html.sheet-open .edge-blur {
 .tl-canvas {
   position: relative;
   min-width: 100%;
-  padding: 6px 0 24px;
+  padding: 4px 0 24px;
 }
 .tl-grid {
   position: absolute;
-  inset: 6px 0 24px;
+  inset: 4px 0 24px;
   pointer-events: none;
 }
 .tl-grid i {
   position: absolute;
   top: 0;
   bottom: 0;
-  border-left: 1px dashed var(--line-strong);
+  width: 1px;
+  background: var(--line);
 }
 .tl-lanes {
   position: relative;
   display: grid;
-  grid-auto-rows: 56px;
-  gap: 8px;
+  grid-auto-rows: var(--tl-row);
+  gap: 6px;
 }
 .tl-lane {
   position: relative;
 }
-/* Listed time and end on one line, the title in full on two. */
 .tl-bar {
   --tl-ink: var(--ink);
   position: absolute;
   top: 0;
-  bottom: 0;
+  height: var(--tl-block);
   z-index: 1;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: stretch;
-  gap: 2px;
+  align-items: center;
   min-width: 0;
   padding: 0 8px;
   overflow: hidden;
+  overflow: clip;
   border: 0;
-  border-radius: 6px;
-  background: color-mix(in srgb, var(--ink) 12%, var(--bg));
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--ink) 13%, var(--bg-elev));
   color: var(--tl-ink);
   font-size: 12.5px;
   line-height: 1.18;
@@ -1807,28 +1784,23 @@ html.sheet-open .edge-blur {
     filter 0.15s,
     transform 0.15s var(--ease);
 }
-/* The ads and trailers between the listed time and the film. */
-.tl-bar::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  z-index: -1;
-  width: var(--ads, 0%);
-  border-right: 1px solid color-mix(in srgb, var(--tl-ink) 30%, transparent);
-  background: repeating-linear-gradient(
-    135deg,
-    color-mix(in srgb, var(--tl-ink) 16%, transparent) 0 2px,
-    transparent 2px 6px
-  );
+/* Scrolled half out of view, the text slides along and stays readable. */
+.tl-bar-in {
+  position: sticky;
+  left: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: fit-content;
+  max-width: 100%;
+  min-width: 0;
 }
 .tl-bar-time {
   white-space: nowrap;
   font-size: 11px;
   font-weight: 600;
   font-variant-numeric: tabular-nums;
-  color: color-mix(in srgb, var(--tl-ink) 70%, transparent);
+  color: color-mix(in srgb, var(--tl-ink) 72%, transparent);
 }
 .tl-bar-time strong {
   font-weight: 800;
@@ -1838,7 +1810,7 @@ html.sheet-open .edge-blur {
   display: -webkit-box;
   min-width: 0;
   overflow: hidden;
-  font-weight: 680;
+  font-weight: 700;
   overflow-wrap: break-word;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -1852,78 +1824,51 @@ html.sheet-open .edge-blur {
 }
 .tl-bar.is-soon {
   --tl-ink: var(--soon);
-  background: var(--soon-soft);
-  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--soon) 60%, transparent);
+  background: color-mix(in srgb, var(--soon) 16%, var(--bg-elev));
+  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--soon) 70%, transparent);
 }
 .tl-bar.is-done {
   --tl-ink: var(--ink-3);
-  background: color-mix(in srgb, var(--ink) 5%, var(--bg));
+  background: color-mix(in srgb, var(--ink) 6%, var(--bg-elev));
 }
 .tl-bar.is-done strong {
   text-decoration: line-through;
   text-decoration-thickness: 1.5px;
 }
-/* The ad loop before the listed time, fading in from the left. */
-.tl-pre {
+/* Ads: from the loop before the listed time to the film starting. */
+.tl-ads {
   position: absolute;
-  top: 9px;
-  bottom: 9px;
-  color: var(--ink-3);
-  border-radius: 6px 0 0 6px;
-  background: repeating-linear-gradient(
-    135deg,
-    color-mix(in srgb, currentColor 45%, transparent) 0 2px,
-    transparent 2px 6px
-  );
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 75%);
-  mask-image: linear-gradient(90deg, transparent, #000 75%);
+  top: calc(var(--tl-block) + 4px);
+  height: 4px;
+  border-radius: 2px;
+  background: var(--ink-3);
   pointer-events: none;
 }
-.tl-pre.is-live {
-  color: var(--live);
+.tl-ads.is-live {
+  background: var(--live);
 }
-.tl-pre.is-soon {
-  color: var(--soon);
+.tl-ads.is-soon {
+  background: var(--soon);
 }
-.tl-pre.is-done {
-  opacity: 0.45;
+.tl-ads.is-done {
+  opacity: 0.4;
 }
-/* A dimension line across the gap: minutes to turn the hall around. */
+/* The turnaround, as a number in the gap. */
 .tl-break {
   position: absolute;
   top: 0;
-  bottom: 0;
+  height: var(--tl-block);
   display: grid;
   place-items: center;
+  font-size: 11.5px;
+  font-weight: 650;
   color: var(--ink-3);
-}
-.tl-break::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 4px;
-  right: 4px;
-  height: 10px;
-  margin-top: -5px;
-  border: 1.5px solid currentColor;
-  border-top: 0;
-  border-bottom: 0;
-  background: linear-gradient(currentColor, currentColor) center / 100% 1.5px no-repeat;
-  opacity: 0.6;
-}
-.tl-break b {
-  position: relative;
-  padding: 0 4px;
-  border-radius: 4px;
-  background: var(--bg);
-  font-size: 10.5px;
-  font-weight: 750;
-  line-height: 14px;
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
 }
 .tl-break.is-tight {
   color: var(--soon);
+  font-weight: 750;
 }
 /* Now: a dot on top, a line down, the time on the hour row under it. */
 .tl-now {
@@ -4390,8 +4335,11 @@ button.col:disabled {
     margin-left: 16px;
     margin-right: 16px;
   }
+  .day-hero {
+    padding: 20px 20px 8px;
+  }
   .hero-title {
-    font-size: 28px;
+    font-size: 25px;
   }
   .movie-grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
