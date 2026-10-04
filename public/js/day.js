@@ -329,9 +329,10 @@ function hallCaptionHtml(screen, inHall, day, now) {
     if (adsOn || statusOf(show, now) === "soon") cls = "is-soon";
     bits = [adsOn ? t("adsOn") : formatUntil(show.start - now), t("filmAt", { time: formatClock(film) })];
   }
-  return `<button type="button" class="tl-cap ${cls}" data-goto-show="${escapeHtml(show.id)}">${hall}<span class="tl-cap-state">${
+  // The pulse sits outside the text, which clips: its ring needs room.
+  return `<button type="button" class="tl-cap ${cls}" data-goto-show="${escapeHtml(show.id)}">${hall}${
     live ? `<span class="pulse" aria-hidden="true"></span>` : ""
-  }<strong>${escapeHtml(show.title)}</strong> · ${escapeHtml(bits.join(" · "))}</span></button>`;
+  }<span class="tl-cap-state"><strong>${escapeHtml(show.title)}</strong> · ${escapeHtml(bits.join(" · "))}</span></button>`;
 }
 
 /**
