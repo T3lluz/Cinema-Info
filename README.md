@@ -8,6 +8,12 @@ Mobile-friendly schedule for **Buen kino** — same info as the KinoProgram Chro
 - Real start / end times (from eBillett)
 - Live sold / capacity / occupancy per show, with sold-out and few-left flags
 - Progress bar + minutes left for shows playing right now
+- Ads: DX books each showing as runtime + 10 min, so the film starts ten
+  minutes after the listed time. The app shows that block, plus the ten
+  minute ad loop before the listed time, and says when the film itself
+  starts. Neither is a field in DX; both are read off its end time.
+- Hall turnaround: minutes between one showing ending and the ads
+  starting for the next in the same hall, amber under 15 min
 - Sales statistics (per day, per week, top movies)
 - Filter by day — past days stay scrollable as history accumulates
 - Finished showings are ticked off and struck through, so a day, a film,
@@ -219,8 +225,11 @@ and `NOTICE_ON` takes it down.
   on the left, the timeline and showings beside it, two columns of
   showings from 1480px and three from 2240px. Stats spread over two or
   three columns.
-- The day strip pins under the header; the timeline is its own card,
-  start time over a two-line title in each bar.
+- The day strip pins under the header. Under it the date, and today a
+  now/next board. The timeline sits on the page, not in a card: start and
+  end over the full title in each bar (each hour gets as much room as the
+  tightest title needs), ads striped at the head of the bar, the
+  turnaround bracketed between bars.
 - On desktop every sideways list (days, timeline, upcoming films, cast)
   has ‹ › buttons, so nothing needs shift+scroll; phones and tablets
   swipe instead.

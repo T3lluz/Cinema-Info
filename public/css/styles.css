@@ -543,7 +543,7 @@ p {
   height: 112px;
 }
 .skeleton-card.is-hero {
-  height: 240px;
+  height: 150px;
 }
 .skeleton-card i,
 .skeleton-lines i,
@@ -1547,22 +1547,20 @@ html.sheet-open .edge-blur {
   display: none;
 }
 
-/* —— Day hero ———————————————————————————————————————————————————————— */
+/* —— Day heading and the now/next board ————————————————————————————
+ * No card: the date reads as the page's title, and today's "playing
+ * now" and "next" sit under it as rows on a board, ruled like a
+ * departures list. */
 
 .day-hero {
-  padding: 16px 16px 14px;
-}
-.day-hero.is-today {
-  background:
-    radial-gradient(120% 90% at 100% 0%, color-mix(in srgb, var(--accent) 9%, transparent) 0%, transparent 60%),
-    var(--bg-elev);
+  padding: 8px 2px 2px;
 }
 .day-hero.is-today .eyebrow {
   color: var(--accent-text);
 }
 .hero-head {
   display: flex;
-  align-items: flex-start;
+  align-items: flex-end;
   justify-content: space-between;
   gap: 10px;
 }
@@ -1572,88 +1570,58 @@ html.sheet-open .edge-blur {
 .hero-title {
   margin-top: 2px;
   font-family: var(--font-display);
-  font-size: 22px;
-  font-weight: 760;
-  letter-spacing: -0.02em;
-  line-height: 1.2;
-}
-
-.kpis {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  margin-top: 14px;
-}
-.kpi {
-  display: grid;
-  gap: 1px;
-  min-width: 0;
-}
-.kpi + .kpi {
-  padding-left: 14px;
-  border-left: 1px solid var(--line);
-}
-.kpi-v {
-  font-family: var(--font-display);
   font-size: 26px;
-  font-weight: 760;
-  letter-spacing: -0.025em;
-  line-height: 1.15;
-  white-space: nowrap;
-}
-.kpi-v small {
-  font-size: 15px;
-  font-weight: 650;
-  color: var(--ink-3);
-  letter-spacing: 0;
-}
-.kpi-l {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--ink-2);
+  font-weight: 780;
+  letter-spacing: -0.026em;
+  line-height: 1.12;
 }
 
 .nownext {
   display: grid;
-  gap: 8px;
   margin-top: 14px;
+  border-top: 1.5px solid var(--ink);
 }
 .nn {
   display: grid;
-  gap: 4px;
+  grid-template-columns: 54px minmax(0, 1fr) auto;
+  align-items: baseline;
+  column-gap: 12px;
   width: 100%;
   min-width: 0;
-  padding: 12px 14px;
+  padding: 11px 2px 12px;
   border: 0;
-  border-radius: var(--r-lg);
-  background: var(--bg-sunk);
+  border-bottom: 1px solid var(--line-strong);
+  border-radius: 0;
+  background: none;
   color: var(--ink);
   text-align: left;
-  transition: transform 0.15s var(--ease);
+  transition: background-color 0.15s;
 }
 .nn:active {
-  transform: scale(0.985);
+  background: var(--bg-hover);
 }
-.nn-live {
-  background: var(--live-soft);
+.nn-time {
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 780;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
 }
-.nn-label {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 11.5px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--ink-2);
-}
-.nn-live .nn-label {
+.nn-live .nn-time {
   color: var(--live);
+}
+.nn-body {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
 }
 .nn-title {
   overflow: hidden;
   font-size: 16px;
   font-weight: 700;
   letter-spacing: -0.01em;
+  line-height: 1.25;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -1662,8 +1630,46 @@ html.sheet-open .edge-blur {
   color: var(--ink-2);
   font-variant-numeric: tabular-nums;
 }
-.nn .progress {
-  margin: 4px 0 2px;
+.nn-state {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink-2);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.nn-live .nn-state {
+  color: var(--live);
+}
+.nn-next.is-soon .nn-state {
+  color: var(--soon);
+}
+/* How far in, with a tick where the film starts after the ads. */
+.nn-track {
+  position: relative;
+  grid-column: 2 / -1;
+  height: 3px;
+  margin-top: 9px;
+  border-radius: 2px;
+  background: color-mix(in srgb, var(--live) 20%, transparent);
+}
+.nn-track > span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--live);
+  transition: width 1s linear;
+}
+.nn-track > i {
+  position: absolute;
+  top: -3px;
+  bottom: -3px;
+  width: 2px;
+  margin-left: -1px;
+  border-radius: 1px;
+  background: var(--ink-3);
 }
 .nn-empty {
   margin-top: 12px;
@@ -1671,35 +1677,56 @@ html.sheet-open .edge-blur {
   color: var(--ink-2);
 }
 
-/* Timeline */
+/* —— Timeline ————————————————————————————————————————————————————————
+ * On the page, not in a card. Bars carry the ads as stripes at their
+ * head; a faint striped lead-in before each bar is the ad loop people
+ * walk in to; a bracket between two bars is the hall's turnaround. */
 .tl-card {
-  padding: 14px 14px 12px;
+  padding-top: 4px;
 }
 .tl-head {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   justify-content: space-between;
   gap: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
+  padding: 0 2px;
 }
 .tl-heading {
+  font-size: 15px;
+  font-weight: 720;
+  letter-spacing: -0.01em;
+}
+.tl-legend {
   display: flex;
+  gap: 12px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--ink-3);
+}
+.tl-key {
+  display: inline-flex;
   align-items: center;
-  gap: 7px;
-  font-size: 13px;
-  font-weight: 750;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--ink-2);
+  gap: 5px;
 }
-.tl-heading .icon {
-  color: var(--ink-3);
+.tl-key i {
+  display: block;
+  width: 15px;
+  height: 9px;
 }
-.tl-range {
-  font-size: 12.5px;
-  font-weight: 650;
-  color: var(--ink-3);
-  font-variant-numeric: tabular-nums;
+.tl-key-ads {
+  border-radius: 2px;
+  background: repeating-linear-gradient(
+    135deg,
+    currentColor 0 1.5px,
+    transparent 1.5px 4.5px
+  );
+}
+.tl-key-break {
+  border: 1.5px solid currentColor;
+  border-top: 0;
+  border-bottom: 0;
+  background: linear-gradient(currentColor, currentColor) center / 100% 1.5px no-repeat;
 }
 .tl {
   display: grid;
@@ -1708,8 +1735,8 @@ html.sheet-open .edge-blur {
 }
 .tl-names {
   display: grid;
-  grid-auto-rows: 54px;
-  gap: 6px;
+  grid-auto-rows: 56px;
+  gap: 8px;
   padding-top: 6px;
   align-items: center;
   font-size: 11.5px;
@@ -1721,7 +1748,6 @@ html.sheet-open .edge-blur {
   overflow-y: hidden;
   scrollbar-width: none;
   overscroll-behavior-x: contain;
-  border-radius: 10px;
 }
 .tl-scroll::-webkit-scrollbar {
   display: none;
@@ -1729,50 +1755,48 @@ html.sheet-open .edge-blur {
 .tl-canvas {
   position: relative;
   min-width: 100%;
-  padding: 6px 0 26px;
+  padding: 6px 0 24px;
 }
 .tl-grid {
   position: absolute;
-  inset: 6px 0 26px;
+  inset: 6px 0 24px;
   pointer-events: none;
 }
 .tl-grid i {
   position: absolute;
   top: 0;
   bottom: 0;
-  width: 1px;
-  background: var(--line);
+  border-left: 1px dashed var(--line-strong);
 }
 .tl-lanes {
   position: relative;
   display: grid;
-  grid-auto-rows: 54px;
-  gap: 6px;
+  grid-auto-rows: 56px;
+  gap: 8px;
 }
 .tl-lane {
   position: relative;
-  border-radius: 10px;
-  background: color-mix(in srgb, var(--ink) 3.5%, transparent);
 }
-/* Start time over the title, so the title gets the bar's whole width
- * and two lines of it. */
+/* Listed time and end on one line, the title in full on two. */
 .tl-bar {
+  --tl-ink: var(--ink);
   position: absolute;
   top: 0;
   bottom: 0;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: stretch;
-  gap: 1px;
+  gap: 2px;
   min-width: 0;
   padding: 0 8px;
   overflow: hidden;
   border: 0;
-  border-radius: 10px;
-  background: color-mix(in srgb, var(--ink) 13%, var(--bg-elev));
-  color: var(--ink);
-  font-size: 12px;
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--ink) 12%, var(--bg));
+  color: var(--tl-ink);
+  font-size: 12.5px;
   line-height: 1.18;
   text-align: left;
   transition:
@@ -1783,12 +1807,32 @@ html.sheet-open .edge-blur {
     filter 0.15s,
     transform 0.15s var(--ease);
 }
-.tl-bar strong {
+/* The ads and trailers between the listed time and the film. */
+.tl-bar::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  width: var(--ads, 0%);
+  border-right: 1px solid color-mix(in srgb, var(--tl-ink) 30%, transparent);
+  background: repeating-linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--tl-ink) 16%, transparent) 0 2px,
+    transparent 2px 6px
+  );
+}
+.tl-bar-time {
   white-space: nowrap;
   font-size: 11px;
-  font-weight: 760;
+  font-weight: 600;
   font-variant-numeric: tabular-nums;
-  opacity: 0.8;
+  color: color-mix(in srgb, var(--tl-ink) 70%, transparent);
+}
+.tl-bar-time strong {
+  font-weight: 800;
+  color: var(--tl-ink);
 }
 .tl-bar-title {
   display: -webkit-box;
@@ -1803,33 +1847,96 @@ html.sheet-open .edge-blur {
   transform: scale(0.97);
 }
 .tl-bar.is-live {
+  --tl-ink: var(--live-ink);
   background: var(--live);
-  color: var(--live-ink);
 }
 .tl-bar.is-soon {
+  --tl-ink: var(--soon);
   background: var(--soon-soft);
-  color: var(--soon);
   box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--soon) 60%, transparent);
 }
 .tl-bar.is-done {
-  background: color-mix(in srgb, var(--ink) 6%, var(--bg-elev));
-  color: var(--ink-3);
+  --tl-ink: var(--ink-3);
+  background: color-mix(in srgb, var(--ink) 5%, var(--bg));
 }
 .tl-bar.is-done strong {
   text-decoration: line-through;
   text-decoration-thickness: 1.5px;
 }
+/* The ad loop before the listed time, fading in from the left. */
+.tl-pre {
+  position: absolute;
+  top: 9px;
+  bottom: 9px;
+  color: var(--ink-3);
+  border-radius: 6px 0 0 6px;
+  background: repeating-linear-gradient(
+    135deg,
+    color-mix(in srgb, currentColor 45%, transparent) 0 2px,
+    transparent 2px 6px
+  );
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 75%);
+  mask-image: linear-gradient(90deg, transparent, #000 75%);
+  pointer-events: none;
+}
+.tl-pre.is-live {
+  color: var(--live);
+}
+.tl-pre.is-soon {
+  color: var(--soon);
+}
+.tl-pre.is-done {
+  opacity: 0.45;
+}
+/* A dimension line across the gap: minutes to turn the hall around. */
+.tl-break {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  display: grid;
+  place-items: center;
+  color: var(--ink-3);
+}
+.tl-break::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 4px;
+  right: 4px;
+  height: 10px;
+  margin-top: -5px;
+  border: 1.5px solid currentColor;
+  border-top: 0;
+  border-bottom: 0;
+  background: linear-gradient(currentColor, currentColor) center / 100% 1.5px no-repeat;
+  opacity: 0.6;
+}
+.tl-break b {
+  position: relative;
+  padding: 0 4px;
+  border-radius: 4px;
+  background: var(--bg);
+  font-size: 10.5px;
+  font-weight: 750;
+  line-height: 14px;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.tl-break.is-tight {
+  color: var(--soon);
+}
+/* Now: a dot on top, a line down, the time on the hour row under it. */
 .tl-now {
   position: absolute;
-  top: 2px;
-  bottom: 26px;
-  transition: left 1s linear;
+  top: 0;
+  bottom: 20px;
   z-index: 2;
   width: 2px;
   margin-left: -1px;
   border-radius: 1px;
   background: var(--accent);
   pointer-events: none;
+  transition: left 1s linear;
 }
 .tl-now::before {
   content: "";
@@ -1844,18 +1951,27 @@ html.sheet-open .edge-blur {
 }
 .tl-now span {
   position: absolute;
-  top: calc(100% + 4px);
+  top: 100%;
   left: 50%;
   transform: translateX(-50%);
   padding: 1px 6px;
   line-height: 15px;
-  border-radius: 6px;
+  border-radius: 5px;
   background: var(--accent);
   color: #fff;
-  font-size: 10px;
-  font-weight: 750;
+  font-size: 10.5px;
+  font-weight: 760;
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
+}
+.tl-now.is-start span {
+  left: -3px;
+  transform: none;
+}
+.tl-now.is-end span {
+  left: auto;
+  right: -3px;
+  transform: none;
 }
 .tl-hours {
   position: absolute;
@@ -1869,17 +1985,9 @@ html.sheet-open .edge-blur {
   transform: translateX(-50%);
   font-size: 10.5px;
   font-weight: 650;
+  line-height: 15px;
   color: var(--ink-3);
   font-variant-numeric: tabular-nums;
-}
-.tl-now.is-start span {
-  left: -3px;
-  transform: none;
-}
-.tl-now.is-end span {
-  left: auto;
-  right: -3px;
-  transform: none;
 }
 .tl-hour.is-first {
   transform: none;
@@ -1887,15 +1995,15 @@ html.sheet-open .edge-blur {
 .tl-hour.is-last {
   transform: translateX(-100%);
 }
+.tl-hour.is-covered {
+  visibility: hidden;
+}
 @media (hover: hover) {
   .tl-bar:hover {
     filter: brightness(1.06) saturate(1.1);
   }
   .nn:hover {
-    background: color-mix(in srgb, var(--ink) 7%, var(--bg-elev));
-  }
-  .nn-live:hover {
-    background: color-mix(in srgb, var(--live) 18%, var(--bg-elev));
+    background: var(--bg-hover);
   }
 }
 
@@ -2409,6 +2517,9 @@ html.sheet-open .edge-blur {
   font-size: 12px;
   font-weight: 650;
   color: var(--ink-3);
+}
+.gap.is-tight {
+  color: var(--soon);
 }
 .gap::before,
 .gap::after {
@@ -4244,9 +4355,6 @@ button.col:disabled {
 /* —— Wider phones & tablets ————————————————————————————————————————— */
 
 @media (min-width: 520px) {
-  .nownext.is-pair {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
   .tiles {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
@@ -4282,14 +4390,8 @@ button.col:disabled {
     margin-left: 16px;
     margin-right: 16px;
   }
-  .day-hero {
-    padding: 20px;
-  }
   .hero-title {
-    font-size: 25px;
-  }
-  .kpi-v {
-    font-size: 30px;
+    font-size: 28px;
   }
   .movie-grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -4406,16 +4508,13 @@ button.col:disabled {
     grid-row: span 2;
   }
   .view-day .page > .skeleton-card.is-hero {
-    height: 420px;
+    height: 240px;
   }
   .view-day .page > .banner {
     grid-column: 1 / -1;
   }
   .day-shows {
     gap: 14px;
-  }
-  .nownext.is-pair {
-    grid-template-columns: minmax(0, 1fr);
   }
   .show {
     transition:
