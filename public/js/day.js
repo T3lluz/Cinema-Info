@@ -351,10 +351,15 @@ function timingHtml(show, now) {
     </span>`;
 }
 
-/** The gap in a hall: one showing out, to the next one's ads. */
+/** The gap in a hall: one showing out, to the next one in. */
 function gapTip(prev, show) {
   const n = Math.max(0, turnaroundMin(prev, show));
-  return t("gapTip", { n, from: formatClock(showEndOf(prev)), to: formatClock(adsStartOf(show)) });
+  return t("gapTip", {
+    n,
+    from: formatClock(showEndOf(prev)),
+    to: formatClock(show.start),
+    ads: formatClock(adsStartOf(show)),
+  });
 }
 
 /* —— Timeline ——————————————————————————————————————————————————————
@@ -450,7 +455,7 @@ function timelineHtml(day, shows, now) {
   for (const screen of new Set(shows.map((s) => s.screen))) {
     const inHall = shows.filter((s) => s.screen === screen);
     for (let i = 1; i < inHall.length; i++) {
-      const h = (adsStartOf(inHall[i]) - showEndOf(inHall[i - 1])) / HOUR;
+      const h = (inHall[i].start - showEndOf(inHall[i - 1])) / HOUR;
       if (h > 0) perHour = Math.max(perHour, Math.min(TL_BREAK_MAX_PX_PER_HOUR, TL_BREAK_MIN_PX / h));
     }
   }
@@ -476,9 +481,9 @@ function timelineHtml(day, shows, now) {
         const prev = inHall[i - 1];
         const turn = turnaroundMin(prev, s);
         if (turn != null && turn > 0) {
-          // The cleaning window: one showing out, to the next one's ads.
+          // Fills the space between the two blocks, with its length.
           const from = showEndOf(prev).getTime();
-          const room = px(adsFrom - from);
+          const room = px(start - from);
           const tight = turn < TIGHT_TURNAROUND_MIN ? " is-tight" : "";
           const label =
             room >= 58
@@ -488,7 +493,7 @@ function timelineHtml(day, shows, now) {
                   : "";
           if (room >= 20) {
             html += `<span class="tl-break${tight}" style="left:${fx(pct(from))}%;width:${fx(
-              pct(adsFrom) - pct(from)
+              pct(start) - pct(from)
             )}%" title="${escapeHtml(gapTip(prev, s))}"><span>${label}</span></span>`;
           }
         }
