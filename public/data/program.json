@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-03T15:07:49.175Z",
+  "updatedAt": "2026-10-04T02:35:46.422Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -13475,7 +13475,7 @@
           "url": "https://www.imdb.com/title/tt36841161/"
         },
         "letterboxd": {
-          "value": 3.58,
+          "value": 3.59,
           "url": "https://letterboxd.com/film/shaun-the-sheep-the-beast-of-mossy-bottom/"
         },
         "tomatoes": {
@@ -13518,7 +13518,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.4,
+          "value": 6.3,
           "id": "tt36726913",
           "url": "https://www.imdb.com/title/tt36726913/"
         }
@@ -13561,11 +13561,11 @@
           "url": "https://www.imdb.com/title/tt31450459/"
         },
         "letterboxd": {
-          "value": 3.77,
+          "value": 3.79,
           "url": "https://letterboxd.com/film/digger-2026/"
         },
         "tomatoes": {
-          "value": 71,
+          "value": 72,
           "url": "https://www.rottentomatoes.com/m/digger_2026"
         }
       },
@@ -13608,11 +13608,11 @@
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.73,
+          "value": 2.72,
           "url": "https://letterboxd.com/film/verity-2026/"
         },
         "tomatoes": {
-          "value": 70,
+          "value": 69,
           "url": "https://www.rottentomatoes.com/m/verity"
         }
       },
@@ -13656,7 +13656,7 @@
           "url": "https://www.imdb.com/title/tt36841161/"
         },
         "letterboxd": {
-          "value": 3.58,
+          "value": 3.59,
           "url": "https://letterboxd.com/film/shaun-the-sheep-the-beast-of-mossy-bottom/"
         },
         "tomatoes": {
@@ -13787,18 +13787,18 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93277/purchase?kanal=dxf",
       "eventId": "93277",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 20,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.4,
+          "value": 6.3,
           "id": "tt36726913",
           "url": "https://www.imdb.com/title/tt36726913/"
         }
       },
-      "reserved": 2,
+      "reserved": 0,
       "capacity": 110,
-      "available": 108
+      "available": 90
     },
     {
       "id": "WAB20240252-2026-10-03T20:00:00-Storsal",
@@ -13825,7 +13825,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93137/purchase?kanal=dxf",
       "eventId": "93137",
       "promoterId": "202",
-      "sold": 3,
+      "sold": 5,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -13834,17 +13834,17 @@
           "url": "https://www.imdb.com/title/tt31450459/"
         },
         "letterboxd": {
-          "value": 3.77,
+          "value": 3.79,
           "url": "https://letterboxd.com/film/digger-2026/"
         },
         "tomatoes": {
-          "value": 71,
+          "value": 72,
           "url": "https://www.rottentomatoes.com/m/digger_2026"
         }
       },
       "reserved": 0,
       "capacity": 286,
-      "available": 283
+      "available": 281
     },
     {
       "id": "EDI20260552-2026-10-03T20:45:00-Kinosal",
@@ -13872,7 +13872,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93136/purchase?kanal=dxf",
       "eventId": "93136",
       "promoterId": "202",
-      "sold": 18,
+      "sold": 27,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -13881,17 +13881,17 @@
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.73,
+          "value": 2.72,
           "url": "https://letterboxd.com/film/verity-2026/"
         },
         "tomatoes": {
-          "value": 70,
+          "value": 69,
           "url": "https://www.rottentomatoes.com/m/verity"
         }
       },
-      "reserved": 2,
+      "reserved": 0,
       "capacity": 110,
-      "available": 90
+      "available": 83
     },
     {
       "id": "EDI20250794-2026-10-04T14:50:00-Kinosal",
@@ -13920,7 +13920,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93243/purchase?kanal=dxf",
       "eventId": "93243",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -13929,7 +13929,7 @@
           "url": "https://www.imdb.com/title/tt36841161/"
         },
         "letterboxd": {
-          "value": 3.58,
+          "value": 3.59,
           "url": "https://letterboxd.com/film/shaun-the-sheep-the-beast-of-mossy-bottom/"
         },
         "tomatoes": {
@@ -13938,8 +13938,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 110
+      "capacity": 108,
+      "available": 106
     },
     {
       "id": "EDI20260454-2026-10-04T15:20:00-Storsal",
@@ -13968,7 +13968,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93244/purchase?kanal=dxf",
       "eventId": "93244",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 3,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -13983,7 +13983,7 @@
       },
       "reserved": 0,
       "capacity": 286,
-      "available": 286
+      "available": 283
     },
     {
       "id": "UIP20221470-2026-10-04T17:00:00-Kinosal",
@@ -14114,17 +14114,17 @@
           "url": "https://www.imdb.com/title/tt31450459/"
         },
         "letterboxd": {
-          "value": 3.77,
+          "value": 3.79,
           "url": "https://letterboxd.com/film/digger-2026/"
         },
         "tomatoes": {
-          "value": 71,
+          "value": 72,
           "url": "https://www.rottentomatoes.com/m/digger_2026"
         }
       },
       "reserved": 0,
-      "capacity": 108,
-      "available": 106
+      "capacity": 110,
+      "available": 108
     },
     {
       "id": "EDI20260552-2026-10-04T20:20:00-Storsal",
@@ -14161,11 +14161,11 @@
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.73,
+          "value": 2.72,
           "url": "https://letterboxd.com/film/verity-2026/"
         },
         "tomatoes": {
-          "value": 70,
+          "value": 69,
           "url": "https://www.rottentomatoes.com/m/verity"
         }
       },
@@ -14292,7 +14292,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93208/purchase?kanal=dxf",
       "eventId": "93208",
       "promoterId": "202",
-      "sold": 3,
+      "sold": 6,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -14301,17 +14301,17 @@
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.73,
+          "value": 2.72,
           "url": "https://letterboxd.com/film/verity-2026/"
         },
         "tomatoes": {
-          "value": 70,
+          "value": 69,
           "url": "https://www.rottentomatoes.com/m/verity"
         }
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 107
+      "available": 104
     },
     {
       "id": "EDI20250794-2026-10-07T17:00:00-Kinosal",
@@ -14349,7 +14349,7 @@
           "url": "https://www.imdb.com/title/tt36841161/"
         },
         "letterboxd": {
-          "value": 3.58,
+          "value": 3.59,
           "url": "https://letterboxd.com/film/shaun-the-sheep-the-beast-of-mossy-bottom/"
         },
         "tomatoes": {
@@ -14439,11 +14439,11 @@
           "url": "https://www.imdb.com/title/tt31450459/"
         },
         "letterboxd": {
-          "value": 3.77,
+          "value": 3.79,
           "url": "https://letterboxd.com/film/digger-2026/"
         },
         "tomatoes": {
-          "value": 71,
+          "value": 72,
           "url": "https://www.rottentomatoes.com/m/digger_2026"
         }
       },
@@ -14482,7 +14482,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.4,
+          "value": 6.3,
           "id": "tt36726913",
           "url": "https://www.imdb.com/title/tt36726913/"
         }
@@ -14570,12 +14570,54 @@
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.73,
+          "value": 2.72,
           "url": "https://letterboxd.com/film/verity-2026/"
         },
         "tomatoes": {
-          "value": 70,
+          "value": 69,
           "url": "https://www.rottentomatoes.com/m/verity"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20251787-2026-10-09T18:00:00-Kinosal",
+      "title": "Sense and Sensibility",
+      "screen": "Kinosal",
+      "start": "2026-10-09T18:00:00",
+      "end": "2026-10-09T20:22:00",
+      "dayKey": "2026-10-09",
+      "runningMinutes": 132,
+      "runningLabel": "2 t. 12 min.",
+      "age": "Tillatt for alle",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": "Norgespremiere",
+      "kinoklubb": true,
+      "genres": [
+        "Drama",
+        "Romance"
+      ],
+      "director": "Georgia Oakley",
+      "premiere": "2026-10-09",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/08c062fc034ea81b413d46721ded439a550abcb4-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93186/purchase?kanal=dxf",
+      "eventId": "93186",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.2,
+          "id": "tt13609648",
+          "url": "https://www.imdb.com/title/tt13609648/"
+        },
+        "letterboxd": {
+          "value": 3.94,
+          "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         }
       },
       "reserved": 0,
