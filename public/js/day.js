@@ -36,7 +36,10 @@ import {
   statusOf,
   doneProgress,
   showEndOf,
-  soldOf,
+  adsStartOf,
+  filmStartOf,
+  turnaroundMin,
+  TIGHT_TURNAROUND_MIN,
   spokenLanguage,
   formatAge,
   enrichVisibleDay,
@@ -180,7 +183,9 @@ export function updateJumpToday() {
   btn.classList.toggle("is-shown", Boolean(away));
   btn.tabIndex = away ? 0 : -1;
   btn.setAttribute("aria-hidden", String(!away));
-  btn.dataset.dir = S.selectedDay > today ? "back" : "forward";
+  // Only while it shows. Landing on today itself would flip it to the
+  // other edge mid-fade, and it flashed there for a frame.
+  if (away) btn.dataset.dir = S.selectedDay > today ? "back" : "forward";
 }
 
 /** Point the app at `day` and bring the strip along (not the page). */
@@ -233,19 +238,19 @@ function dayParts(day) {
   const gaps = shows.some((s) => s.scanned != null);
   const cards = [];
   shows.forEach((show, i) => {
-    let gapMin = 0;
     // The last showing in the same hall, not just the one before it.
     const prev = shows.slice(0, i).reverse().find((s) => s.screen === show.screen);
-    if (prev && show.end && prev.end) {
-      const mins = Math.round((show.start - prev.end) / 60_000);
-      if (mins >= 15) gapMin = mins;
-    }
+    const turn = turnaroundMin(prev, show);
+    const gapMin = turn != null && turn > 0 ? turn : 0;
     // Single column: a divider between cards. In columns the divider
     // would break the grid, so the card itself carries the note.
-    if (gapMin && prev === shows[i - 1]) {
+    if (turn != null && prev === shows[i - 1]) {
+      const tight = turn < TIGHT_TURNAROUND_MIN ? " is-tight" : "";
       cards.push({
         key: `gap-${show.id}`,
-        html: `<div class="gap"><span>${escapeHtml(t("gap", { n: gapMin }))}</span></div>`,
+        html: `<div class="gap${tight}" title="${escapeHtml(
+          t("turnaroundTip", { n: Math.max(0, turn), time: formatClock(adsStartOf(show)) })
+        )}"><span>${escapeHtml(t("gap", { n: Math.max(0, turn) }))} · ${escapeHtml(show.screen)}</span></div>`,
       });
     }
     cards.push({ key: show.id, html: showCardHtml(show, now, { gaps, gapMin }) });
@@ -262,49 +267,17 @@ function paintDayPage(page, day) {
 }
 
 function heroHtml(day, shows, now) {
-  const today = todayKey();
-  const isToday = day === today;
-  const future = day > today;
+  const isToday = day === todayKey();
   const progress = doneProgress(shows, now);
-
-  const withSold = shows.filter((s) => s.sold != null);
-  const sold = shows.reduce((n, s) => n + soldOf(s), 0);
-  const scanShows = shows.filter((s) => s.scanned != null && s.sold != null);
-  const scanned = scanShows.reduce((n, s) => n + Math.min(Number(s.scanned) || 0, soldOf(s)), 0);
-  const scanSold = scanShows.reduce((n, s) => n + soldOf(s), 0);
-  const showDoors = scanShows.length > 0 && !future;
-
   const pill = progress.all
     ? `<span class="pill pill-done">${icon("check", "icon icon-xs")}${escapeHtml(t("dayAllDone"))}</span>`
     : progress.done
       ? `<span class="pill">${escapeHtml(t("doneCount", { n: progress.done, total: progress.total }))}</span>`
       : "";
 
-  const kpis = shows.length
-    ? `<div class="kpis">
-        <div class="kpi">
-          <span class="kpi-v"${withSold.length ? ` data-count="${sold}"` : ""}>${withSold.length ? formatCount(sold) : "–"}</span>
-          <span class="kpi-l">${escapeHtml(t(future ? "kpiPresold" : "kpiSold"))}</span>
-        </div>
-        ${
-          showDoors
-            ? `<div class="kpi">
-          <span class="kpi-v">${formatCount(scanned)}<small>/${formatCount(scanSold)}</small></span>
-          <span class="kpi-l">${escapeHtml(t("kpiInside"))}</span>
-        </div>`
-            : `<div class="kpi">
-          <span class="kpi-v">${formatClock(shows[0].start)}</span>
-          <span class="kpi-l">${escapeHtml(t("kpiFirst"))}</span>
-        </div>`
-        }
-        <div class="kpi">
-          <span class="kpi-v">${shows.length}</span>
-          <span class="kpi-l">${escapeHtml(t(shows.length === 1 ? "kpiShow" : "kpiShows"))}</span>
-        </div>
-      </div>`
-    : "";
-
-  return `<section class="card day-hero${isToday ? " is-today" : ""}${
+  // No figures here: sold and admitted live on the stats tab. The top of
+  // the day answers what the door asks: what is on, and what is next.
+  return `<section class="day-hero${isToday ? " is-today" : ""}${
     progress.all ? " is-done" : ""
   }" aria-label="${escapeHtml(formatDayLabel(day))}">
     <div class="hero-head">
@@ -314,12 +287,16 @@ function heroHtml(day, shows, now) {
       </div>
       ${pill}
     </div>
-    ${kpis}
     ${isToday ? nowNextHtml(shows, now) : ""}
   </section>`;
 }
 
-/** Today's "playing now" and "up next", the two things the door asks. */
+/**
+ * Today's "playing now" and "up next", the two things the door asks, as
+ * rows on a board: listed time on the left, the film and its hall in the
+ * middle, how long on the right. While ads run, the row says when the
+ * film itself starts.
+ */
 function nowNextHtml(shows, now) {
   const live = shows.filter((s) => statusOf(s, now) === "live");
   const next = shows.find((s) => s.start > now);
@@ -328,36 +305,47 @@ function nowNextHtml(shows, now) {
     return `<p class="nn-empty">${escapeHtml(t("noMoreToday"))}</p>`;
   }
 
-  const items = live.map((show) => {
+  const rows = live.map((show) => {
     const end = showEndOf(show);
+    const film = filmStartOf(show);
     const span = end - show.start || 1;
-    const pct = Math.min(100, Math.max(0, Math.round(((now - show.start) / span) * 100)));
+    const at = (ts) => Math.min(100, Math.max(0, ((ts - show.start) / span) * 100));
     const left = Math.max(0, Math.round((end - now) / 60_000));
-    return `<button type="button" class="nn nn-live" data-goto-show="${escapeHtml(show.id)}">
-        <span class="nn-label"><span class="pulse" aria-hidden="true"></span>${escapeHtml(
-          t("nowPlaying")
-        )} · ${escapeHtml(show.screen)}</span>
-        <span class="nn-title">${escapeHtml(show.title)}</span>
-        <span class="progress" aria-hidden="true"><span style="width:${pct}%"></span></span>
-        <span class="nn-sub">${escapeHtml(t("minLeft", { n: left }))} · ${escapeHtml(
-          t("endsAt", { time: formatClock(end) })
+    const inAds = now < film;
+    const sub = inAds
+      ? [show.screen, t("adsNow"), t("filmAt", { time: formatClock(film) })]
+      : [show.screen, t("endsAt", { time: formatClock(end) })];
+    return `<button type="button" class="nn nn-live${inAds ? " is-ads" : ""}" data-goto-show="${escapeHtml(show.id)}">
+        <span class="nn-time">${formatClock(show.start)}</span>
+        <span class="nn-body">
+          <span class="nn-title">${escapeHtml(show.title)}</span>
+          <span class="nn-sub">${escapeHtml(sub.join(" · "))}</span>
+        </span>
+        <span class="nn-state"><span class="pulse" aria-hidden="true"></span>${escapeHtml(
+          inAds ? t("adsShort") : t("minLeft", { n: left })
         )}</span>
+        <span class="nn-track" aria-hidden="true"><span style="width:${at(now).toFixed(1)}%"></span><i style="left:${at(
+          film
+        ).toFixed(1)}%"></i></span>
       </button>`;
   });
 
   if (next) {
+    const film = filmStartOf(next);
+    const adsOn = now >= adsStartOf(next);
     const sold = next.sold != null ? `${formatCount(next.sold)} ${t("sold")}` : "";
-    items.push(`<button type="button" class="nn nn-next" data-goto-show="${escapeHtml(next.id)}">
-        <span class="nn-label">${icon("clock", "icon icon-xs")}${escapeHtml(t("upNext"))} · ${escapeHtml(
-          formatUntilShort(next.start - now)
-        )}</span>
-        <span class="nn-title">${escapeHtml(next.title)}</span>
-        <span class="nn-sub">${escapeHtml(
-          [formatClock(next.start), next.screen, sold].filter(Boolean).join(" · ")
-        )}</span>
+    const sub = [next.screen, adsOn ? t("adsNow") : "", t("filmAt", { time: formatClock(film) }), sold];
+    const soon = statusOf(next, now) === "soon";
+    rows.push(`<button type="button" class="nn nn-next${soon ? " is-soon" : ""}" data-goto-show="${escapeHtml(next.id)}">
+        <span class="nn-time">${formatClock(next.start)}</span>
+        <span class="nn-body">
+          <span class="nn-title">${escapeHtml(next.title)}</span>
+          <span class="nn-sub">${escapeHtml(sub.filter(Boolean).join(" · "))}</span>
+        </span>
+        <span class="nn-state">${escapeHtml(formatUntilShort(next.start - now))}</span>
       </button>`);
   }
-  return `<div class="nownext${items.length > 1 ? " is-pair" : ""}">${items.join("")}</div>`;
+  return `<div class="nownext">${rows.join("")}</div>`;
 }
 
 function formatUntilShort(ms) {
@@ -369,17 +357,64 @@ function formatUntilShort(ms) {
 }
 
 /* —— Timeline ——————————————————————————————————————————————————————
- * Its own card: halls as lanes, showings as bars (start time over the
- * title), a red line for now. On a wide screen it spans the showings'
- * column and every title reads in full. On a phone each hour gets
- * enough room that even the shortest showing shows a good part of its
- * title; the day then scrolls sideways, today's opening at the now-line.
+ * Halls as lanes, showings as bars: listed time and end over the title.
+ * Each bar starts with the ads (striped), and a faint lead-in before it
+ * marks the ad loop people walk in to. Between two showings in a hall a
+ * bracket gives the minutes staff have to turn it around. A red line for
+ * now. Every hour gets enough room that each title reads in full on two
+ * lines; on a phone the day then scrolls sideways, opening at now.
  */
 const TL_MIN_PX_PER_HOUR = 60;
-/** The shortest bar should still fit "16:50" over fifteen-odd letters. */
-const TL_MIN_BAR_PX = 128;
-const TL_MAX_PX_PER_HOUR = 150;
+const TL_MAX_PX_PER_HOUR = 240;
+/** Bar padding plus a little air, so a measured title never just clips. */
+const TL_BAR_SLACK_PX = 22;
+const TL_TITLE_FONT = "680 12.5px";
+const TL_TIME_FONT = "760 11px";
 const HOUR = 3_600_000;
+
+let measureCtx = null;
+const measured = new Map();
+function textWidth(text, font) {
+  const key = `${font}|${text}`;
+  let w = measured.get(key);
+  if (w == null) {
+    measureCtx ||= document.createElement("canvas").getContext("2d");
+    measureCtx.font = `${font} ${getComputedStyle(document.body).fontFamily}`;
+    w = measureCtx.measureText(text).width;
+    measured.set(key, w);
+  }
+  return w;
+}
+
+/** The narrowest width at which `title` wraps to at most two lines. */
+function twoLineWidth(title) {
+  const words = String(title || "").split(/\s+/).filter(Boolean);
+  if (!words.length) return 0;
+  const widths = words.map((w) => textWidth(w, TL_TITLE_FONT));
+  const space = textWidth(" ", TL_TITLE_FONT);
+  const lines = (max) => {
+    let n = 1;
+    let line = 0;
+    for (const w of widths) {
+      if (!line) line = w;
+      else if (line + space + w <= max) line += space + w;
+      else {
+        n++;
+        line = w;
+      }
+    }
+    return n;
+  };
+  let lo = Math.max(...widths);
+  let hi = widths.reduce((a, w) => a + w + space, 0);
+  if (lines(lo) <= 2) return lo;
+  while (hi - lo > 1) {
+    const mid = (lo + hi) / 2;
+    if (lines(mid) <= 2) hi = mid;
+    else lo = mid;
+  }
+  return hi;
+}
 
 function shortScreenLabel(screen) {
   const name = String(screen || "").trim();
@@ -387,69 +422,116 @@ function shortScreenLabel(screen) {
   return name;
 }
 
+function endLabel(show) {
+  return show.end ? formatClock(show.end) : `~${formatClock(showEndOf(show))}`;
+}
+
 function timelineHtml(day, shows, now) {
-  let t0 = Math.min(...shows.map((s) => s.start.getTime()));
+  let t0 = Math.min(...shows.map((s) => adsStartOf(s).getTime()));
   let t1 = Math.max(...shows.map((s) => showEndOf(s).getTime()));
-  t0 = Math.floor((t0 - 15 * 60_000) / HOUR) * HOUR;
+  t0 = Math.floor((t0 - 5 * 60_000) / HOUR) * HOUR;
   t1 = Math.ceil((t1 + 10 * 60_000) / HOUR) * HOUR;
   const span = t1 - t0;
   const hours = span / HOUR;
   const pct = (ms) => ((ms - t0) / span) * 100;
-  const shortest = Math.min(...shows.map((s) => showEndOf(s) - s.start)) / HOUR || 1;
-  const perHour = Math.min(TL_MAX_PX_PER_HOUR, Math.max(TL_MIN_PX_PER_HOUR, TL_MIN_BAR_PX / shortest));
+  const fx = (n) => n.toFixed(3);
+
+  // Wide enough per hour that the tightest bar holds its title in full.
+  let perHour = TL_MIN_PX_PER_HOUR;
+  for (const s of shows) {
+    const need =
+      Math.max(twoLineWidth(s.title), textWidth(`${formatClock(s.start)}–${endLabel(s)}`, TL_TIME_FONT)) +
+      TL_BAR_SLACK_PX;
+    const h = (showEndOf(s) - s.start) / HOUR || 1;
+    perHour = Math.max(perHour, need / h);
+  }
+  perHour = Math.min(TL_MAX_PX_PER_HOUR, Math.ceil(perHour));
   const minWidth = Math.round(hours * perHour);
+  const px = (ms) => (ms / HOUR) * perHour;
 
   const screens = [...new Set(shows.map((s) => s.screen))].sort((a, b) => a.localeCompare(b, "nb"));
   const lanes = screens
     .map((screen) => {
-      const bars = shows
-        .filter((s) => s.screen === screen)
-        .map((s) => {
-          const left = pct(s.start.getTime());
-          const width = Math.max(pct(showEndOf(s).getTime()) - left, 1);
-          const status = statusOf(s, now);
-          const end = s.end ? formatClock(s.end) : `~${formatClock(showEndOf(s))}`;
-          const tip = `${s.title} · ${formatClock(s.start)}–${end}`;
-          return `<button type="button" class="tl-bar is-${status}" style="left:${left.toFixed(
-            3
-          )}%;width:${width.toFixed(3)}%" data-tl-show="${escapeHtml(s.id)}" title="${escapeHtml(
-            tip
-          )}" aria-label="${escapeHtml(tip)}"><strong>${formatClock(s.start)}</strong><span class="tl-bar-title">${escapeHtml(
-            s.title
-          )}</span></button>`;
-        })
-        .join("");
-      return `<div class="tl-lane">${bars}</div>`;
-    })
-    .join("");
+      const inHall = shows.filter((s) => s.screen === screen);
+      const parts = inHall.map((s, i) => {
+        const start = s.start.getTime();
+        const end = showEndOf(s).getTime();
+        const adsFrom = adsStartOf(s).getTime();
+        const film = filmStartOf(s).getTime();
+        const status = statusOf(s, now);
+        const tip = `${s.title} · ${formatClock(s.start)}–${endLabel(s)} · ${t("tlAdsTip", {
+          from: formatClock(adsStartOf(s)),
+          film: formatClock(filmStartOf(s)),
+        })}`;
+        const adsPct = Math.min(100, Math.max(0, ((film - start) / (end - start || 1)) * 100));
 
-  const step = perHour < 44 ? 2 : 1;
-  const ticks = [];
-  for (let ts = t0, i = 0; ts <= t1; ts += HOUR, i++) {
-    if (i % step) continue;
-    ticks.push({ pct: pct(ts), label: String(new Date(ts).getHours()).padStart(2, "0") });
-  }
-  const grid = ticks.map((k) => `<i style="left:${k.pct.toFixed(3)}%"></i>`).join("");
-  const hourLabels = ticks
-    .map((k, i) => {
-      const edge = i === 0 ? " is-first" : i === ticks.length - 1 ? " is-last" : "";
-      return `<span class="tl-hour${edge}" style="left:${k.pct.toFixed(3)}%">${k.label}</span>`;
+        let html = `<i class="tl-pre is-${status}" style="left:${fx(pct(adsFrom))}%;width:calc(${fx(
+          pct(start) - pct(adsFrom)
+        )}% + 6px)" aria-hidden="true"></i>`;
+
+        const prev = inHall[i - 1];
+        const turn = turnaroundMin(prev, s);
+        if (turn != null) {
+          const from = showEndOf(prev).getTime();
+          const to = Math.max(from, adsFrom);
+          const room = px(to - from);
+          const n = Math.max(0, turn);
+          const label = room >= 48 ? t("breakShort", { n }) : room >= 22 ? String(n) : "";
+          const tight = turn < TIGHT_TURNAROUND_MIN ? " is-tight" : "";
+          html += `<span class="tl-break${tight}" style="left:${fx(pct(from))}%;width:${fx(
+            pct(to) - pct(from)
+          )}%" title="${escapeHtml(t("turnaroundTip", { n, time: formatClock(adsStartOf(s)) }))}">${
+            label ? `<b>${escapeHtml(label)}</b>` : ""
+          }</span>`;
+        }
+
+        html += `<button type="button" class="tl-bar is-${status}" style="left:${fx(pct(start))}%;width:${fx(
+          Math.max(pct(end) - pct(start), 1)
+        )}%;--ads:${adsPct.toFixed(2)}%" data-tl-show="${escapeHtml(s.id)}" title="${escapeHtml(
+          tip
+        )}" aria-label="${escapeHtml(tip)}"><span class="tl-bar-time"><strong>${formatClock(
+          s.start
+        )}</strong>–${endLabel(s)}</span><span class="tl-bar-title">${escapeHtml(s.title)}</span></button>`;
+        return html;
+      });
+      return `<div class="tl-lane">${parts.join("")}</div>`;
     })
     .join("");
 
   const nowTs = now.getTime();
   const showNow = day === todayKey() && nowTs >= t0 && nowTs <= t1;
+  const nowPct = pct(nowTs);
+
+  const step = perHour < 44 ? 2 : 1;
+  const ticks = [];
+  for (let ts = t0, i = 0; ts <= t1; ts += HOUR, i++) {
+    if (i % step) continue;
+    ticks.push({ ts, pct: pct(ts), label: String(new Date(ts).getHours()).padStart(2, "0") });
+  }
+  const grid = ticks.map((k) => `<i style="left:${fx(k.pct)}%"></i>`).join("");
+  const hourLabels = ticks
+    .map((k, i) => {
+      const edge = i === 0 ? " is-first" : i === ticks.length - 1 ? " is-last" : "";
+      // The now-pill sits on the hour row; an hour under it stays quiet.
+      const hidden = showNow && Math.abs(px(k.ts - nowTs)) < 30 ? " is-covered" : "";
+      return `<span class="tl-hour${edge}${hidden}" style="left:${fx(k.pct)}%">${k.label}</span>`;
+    })
+    .join("");
+
   const nowLine = showNow
-    ? `<div class="tl-now${pct(nowTs) < 6 ? " is-start" : pct(nowTs) > 94 ? " is-end" : ""}" style="left:${pct(nowTs).toFixed(3)}%"><span>${formatClock(now)}</span></div>`
+    ? `<div class="tl-now${nowPct < 6 ? " is-start" : nowPct > 94 ? " is-end" : ""}" style="left:${fx(
+        nowPct
+      )}%"><span>${formatClock(now)}</span></div>`
     : "";
 
-  const range = `${String(new Date(t0).getHours()).padStart(2, "0")}–${String(new Date(t1).getHours()).padStart(2, "0")}`;
-  return `<section class="card tl-card" aria-label="${escapeHtml(t("timelineAria", { day: formatDayLabel(day) }))}">
+  return `<section class="tl-card" aria-label="${escapeHtml(t("timelineAria", { day: formatDayLabel(day) }))}">
   <div class="tl-head">
-    <h3 class="tl-heading">${icon("timeline", "icon icon-sm")}${escapeHtml(t("timeline"))}</h3>
-    <span class="tl-range">${range}</span>
+    <h3 class="tl-heading">${escapeHtml(t("timeline"))}</h3>
+    <span class="tl-legend" aria-hidden="true"><span class="tl-key"><i class="tl-key-ads"></i>${escapeHtml(
+      t("tlAds")
+    )}</span><span class="tl-key"><i class="tl-key-break"></i>${escapeHtml(t("tlBreak"))}</span></span>
   </div>
-  <div class="tl" data-tl-day="${day}" ${showNow ? `data-now-pct="${pct(nowTs).toFixed(2)}"` : ""}>
+  <div class="tl" data-tl-day="${day}" ${showNow ? `data-now-pct="${nowPct.toFixed(2)}"` : ""}>
     <div class="tl-names" aria-hidden="true">${screens
       .map((s) => `<span title="${escapeHtml(s)}">${escapeHtml(shortScreenLabel(s))}</span>`)
       .join("")}</div>
@@ -501,9 +583,12 @@ function showCardHtml(show, now, opts) {
     const end = showEndOf(show);
     const pct = Math.min(100, Math.max(0, Math.round(((now - show.start) / (end - show.start || 1)) * 100)));
     const left = Math.max(0, Math.round((end - now) / 60_000));
+    const film = filmStartOf(show);
+    const label =
+      now < film ? `${t("adsShort")} · ${t("filmAt", { time: formatClock(film) })}` : t("minLeft", { n: left });
     progress = `<div class="show-progress">
         <span class="progress" aria-hidden="true"><span style="width:${pct}%"></span></span>
-        <span class="show-progress-label">${escapeHtml(t("minLeft", { n: left }))}</span>
+        <span class="show-progress-label">${escapeHtml(label)}</span>
       </div>`;
   }
 

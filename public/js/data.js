@@ -392,6 +392,43 @@ export function showEndOf(show) {
   return new Date(show.start.getTime() + (mins + 15) * 60_000);
 }
 
+/*
+ * Ads. DX books every showing as runtime + 10 minutes from the listed
+ * time, so the film itself starts ten minutes in: ads and trailers fill
+ * the gap. The hall's ad loop also runs for about ten minutes before the
+ * listed time while people find their seats. Neither is in the data as
+ * such; both are read off DX's end time or, failing that, assumed.
+ */
+export const ADS_BEFORE_MIN = 10;
+const ADS_AFTER_MIN = 10;
+
+/** When the ad loop starts, ahead of the listed time. */
+export function adsStartOf(show) {
+  return new Date(show.start.getTime() - ADS_BEFORE_MIN * 60_000);
+}
+
+/** When the film itself starts: DX's end minus the runtime, if that adds up. */
+export function filmStartOf(show) {
+  const mins = Number(show.runningMinutes);
+  if (show.end && mins > 0) {
+    const lead = show.end.getTime() - mins * 60_000 - show.start.getTime();
+    if (lead >= 0 && lead <= 30 * 60_000) return new Date(show.start.getTime() + lead);
+  }
+  return new Date(show.start.getTime() + ADS_AFTER_MIN * 60_000);
+}
+
+/**
+ * Minutes staff have to turn a hall around: from the end of `prev` to
+ * the ads starting for `show` in the same hall. Null across halls.
+ */
+export function turnaroundMin(prev, show) {
+  if (!prev || !show || prev.screen !== show.screen) return null;
+  return Math.round((adsStartOf(show) - showEndOf(prev)) / 60_000);
+}
+
+/** Under this, a turnaround is flagged as tight. */
+export const TIGHT_TURNAROUND_MIN = 15;
+
 export function statusOf(show, now = new Date()) {
   if (show.end && now >= show.start && now < show.end) return "live";
   if (!show.end && now >= show.start && now - show.start < 3 * 60 * 60_000) return "live";
