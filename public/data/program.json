@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-04T15:46:34.496Z",
+  "updatedAt": "2026-10-05T01:57:56.743Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -12181,7 +12181,7 @@
           "url": "https://www.imdb.com/title/tt36583977/"
         },
         "letterboxd": {
-          "value": 3.91,
+          "value": 3.92,
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         },
         "tomatoes": {
@@ -12412,7 +12412,7 @@
           "url": "https://www.imdb.com/title/tt36583977/"
         },
         "letterboxd": {
-          "value": 3.91,
+          "value": 3.92,
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         },
         "tomatoes": {
@@ -12643,7 +12643,7 @@
           "url": "https://www.imdb.com/title/tt36583977/"
         },
         "letterboxd": {
-          "value": 3.91,
+          "value": 3.92,
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         },
         "tomatoes": {
@@ -12867,7 +12867,7 @@
           "url": "https://www.imdb.com/title/tt36583977/"
         },
         "letterboxd": {
-          "value": 3.91,
+          "value": 3.92,
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         },
         "tomatoes": {
@@ -13038,7 +13038,7 @@
           "url": "https://www.imdb.com/title/tt36583977/"
         },
         "letterboxd": {
-          "value": 3.91,
+          "value": 3.92,
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         },
         "tomatoes": {
@@ -13389,7 +13389,7 @@
           "url": "https://www.imdb.com/title/tt36583977/"
         },
         "letterboxd": {
-          "value": 3.91,
+          "value": 3.92,
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         },
         "tomatoes": {
@@ -13479,7 +13479,7 @@
           "url": "https://letterboxd.com/film/shaun-the-sheep-the-beast-of-mossy-bottom/"
         },
         "tomatoes": {
-          "value": 91,
+          "value": 90,
           "url": "https://www.rottentomatoes.com/m/shaun_the_sheep_the_beast_of_mossy_bottom"
         }
       },
@@ -13518,7 +13518,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.3,
+          "value": 6.4,
           "id": "tt36726913",
           "url": "https://www.imdb.com/title/tt36726913/"
         }
@@ -13608,7 +13608,7 @@
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.72,
+          "value": 2.71,
           "url": "https://letterboxd.com/film/verity-2026/"
         },
         "tomatoes": {
@@ -13660,7 +13660,7 @@
           "url": "https://letterboxd.com/film/shaun-the-sheep-the-beast-of-mossy-bottom/"
         },
         "tomatoes": {
-          "value": 91,
+          "value": 90,
           "url": "https://www.rottentomatoes.com/m/shaun_the_sheep_the_beast_of_mossy_bottom"
         }
       },
@@ -13748,7 +13748,7 @@
           "url": "https://www.imdb.com/title/tt36583977/"
         },
         "letterboxd": {
-          "value": 3.91,
+          "value": 3.92,
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         },
         "tomatoes": {
@@ -13791,7 +13791,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.3,
+          "value": 6.4,
           "id": "tt36726913",
           "url": "https://www.imdb.com/title/tt36726913/"
         }
@@ -13881,7 +13881,7 @@
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.72,
+          "value": 2.71,
           "url": "https://letterboxd.com/film/verity-2026/"
         },
         "tomatoes": {
@@ -13933,7 +13933,7 @@
           "url": "https://letterboxd.com/film/shaun-the-sheep-the-beast-of-mossy-bottom/"
         },
         "tomatoes": {
-          "value": 91,
+          "value": 90,
           "url": "https://www.rottentomatoes.com/m/shaun_the_sheep_the_beast_of_mossy_bottom"
         }
       },
@@ -14021,7 +14021,7 @@
           "url": "https://www.imdb.com/title/tt36583977/"
         },
         "letterboxd": {
-          "value": 3.91,
+          "value": 3.92,
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         },
         "tomatoes": {
@@ -14059,7 +14059,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93305/purchase?kanal=dxf",
       "eventId": "93305",
       "promoterId": "202",
-      "sold": 8,
+      "sold": 10,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -14078,7 +14078,7 @@
       },
       "reserved": 0,
       "capacity": 286,
-      "available": 278
+      "available": 276
     },
     {
       "id": "WAB20240252-2026-10-04T19:45:00-Kinosal",
@@ -14105,7 +14105,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93241/purchase?kanal=dxf",
       "eventId": "93241",
       "promoterId": "202",
-      "sold": 2,
+      "sold": 4,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -14124,7 +14124,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 108
+      "available": 106
     },
     {
       "id": "EDI20260552-2026-10-04T20:20:00-Storsal",
@@ -14152,7 +14152,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93242/purchase?kanal=dxf",
       "eventId": "93242",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -14161,7 +14161,7 @@
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.72,
+          "value": 2.71,
           "url": "https://letterboxd.com/film/verity-2026/"
         },
         "tomatoes": {
@@ -14171,7 +14171,7 @@
       },
       "reserved": 0,
       "capacity": 286,
-      "available": 286
+      "available": 284
     },
     {
       "id": "EDI20251443-2026-10-06T13:00:00-Kinosal",
@@ -14197,7 +14197,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93226/purchase?kanal=dxf",
       "eventId": "93226",
       "promoterId": "202",
-      "sold": 4,
+      "sold": 6,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -14216,7 +14216,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 106
+      "available": 104
     },
     {
       "id": "UIP20221470-2026-10-06T17:00:00-Kinosal",
@@ -14254,7 +14254,7 @@
           "url": "https://www.imdb.com/title/tt36583977/"
         },
         "letterboxd": {
-          "value": 3.91,
+          "value": 3.92,
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         },
         "tomatoes": {
@@ -14292,7 +14292,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93208/purchase?kanal=dxf",
       "eventId": "93208",
       "promoterId": "202",
-      "sold": 6,
+      "sold": 8,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -14301,7 +14301,7 @@
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.72,
+          "value": 2.71,
           "url": "https://letterboxd.com/film/verity-2026/"
         },
         "tomatoes": {
@@ -14311,7 +14311,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 104
+      "available": 102
     },
     {
       "id": "EDI20250794-2026-10-07T17:00:00-Kinosal",
@@ -14353,7 +14353,7 @@
           "url": "https://letterboxd.com/film/shaun-the-sheep-the-beast-of-mossy-bottom/"
         },
         "tomatoes": {
-          "value": 91,
+          "value": 90,
           "url": "https://www.rottentomatoes.com/m/shaun_the_sheep_the_beast_of_mossy_bottom"
         }
       },
@@ -14482,7 +14482,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.3,
+          "value": 6.4,
           "id": "tt36726913",
           "url": "https://www.imdb.com/title/tt36726913/"
         }
@@ -14570,7 +14570,7 @@
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.72,
+          "value": 2.71,
           "url": "https://letterboxd.com/film/verity-2026/"
         },
         "tomatoes": {
@@ -14583,11 +14583,59 @@
       "available": 110
     },
     {
-      "id": "EDI20251787-2026-10-09T18:00:00-Kinosal",
+      "id": "EDI20250794-2026-10-09T16:50:00-Storsal",
+      "title": "Sauen Shaun - Gårdens fårbannelse",
+      "screen": "Storsal",
+      "start": "2026-10-09T16:50:00",
+      "end": "2026-10-09T18:21:00",
+      "dayKey": "2026-10-09",
+      "runningMinutes": 81,
+      "runningLabel": "1 t. 21 min.",
+      "age": "Tillatt for alle",
+      "tags": [
+        "Norsk tale",
+        "Utekstet"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ],
+      "director": "Steve Cox, Matthew Walker",
+      "premiere": "2026-10-02",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/0690cc492885fe739c3d101a3af245ffa6db81a9-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93187/purchase?kanal=dxf",
+      "eventId": "93187",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.2,
+          "id": "tt36841161",
+          "url": "https://www.imdb.com/title/tt36841161/"
+        },
+        "letterboxd": {
+          "value": 3.59,
+          "url": "https://letterboxd.com/film/shaun-the-sheep-the-beast-of-mossy-bottom/"
+        },
+        "tomatoes": {
+          "value": 90,
+          "url": "https://www.rottentomatoes.com/m/shaun_the_sheep_the_beast_of_mossy_bottom"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
+    },
+    {
+      "id": "EDI20251787-2026-10-09T17:45:00-Kinosal",
       "title": "Sense and Sensibility",
       "screen": "Kinosal",
-      "start": "2026-10-09T18:00:00",
-      "end": "2026-10-09T20:22:00",
+      "start": "2026-10-09T17:45:00",
+      "end": "2026-10-09T20:07:00",
       "dayKey": "2026-10-09",
       "runningMinutes": 132,
       "runningLabel": "2 t. 12 min.",
@@ -14618,6 +14666,303 @@
         "letterboxd": {
           "value": 3.95,
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "NOR20230682-2026-10-09T19:00:00-Storsal",
+      "title": "Drapet på Benjamin Hermansen",
+      "screen": "Storsal",
+      "start": "2026-10-09T19:00:00",
+      "end": "2026-10-09T20:46:00",
+      "dayKey": "2026-10-09",
+      "runningMinutes": 96,
+      "runningLabel": "1 t. 36 min.",
+      "age": "15 år",
+      "tags": [
+        "Norsk tale",
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Biography",
+        "Crime",
+        "Drama"
+      ],
+      "director": "Ingvild Søderlind",
+      "premiere": "2026-10-02",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/eb4b617f94d0ff88352912d08252a7d22ada253a-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93279/purchase?kanal=dxf",
+      "eventId": "93279",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 6.4,
+          "id": "tt36726913",
+          "url": "https://www.imdb.com/title/tt36726913/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
+    },
+    {
+      "id": "EDI20260643-2026-10-09T20:45:00-Kinosal",
+      "title": "The Social Reckoning",
+      "screen": "Kinosal",
+      "start": "2026-10-09T20:45:00",
+      "end": "2026-10-09T22:47:00",
+      "dayKey": "2026-10-09",
+      "runningMinutes": 112,
+      "runningLabel": "1 t. 52 min.",
+      "age": "12 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": "Norgespremiere",
+      "kinoklubb": false,
+      "genres": [
+        "Biography",
+        "Drama",
+        "Thriller"
+      ],
+      "director": "Aaron Sorkin",
+      "premiere": "2026-10-09",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/62b63fd3e7a70091599387b2b1fb2ffbc511ac7b-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93318/purchase?kanal=dxf",
+      "eventId": "93318",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": null,
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20260552-2026-10-09T21:25:00-Storsal",
+      "title": "Verity",
+      "screen": "Storsal",
+      "start": "2026-10-09T21:25:00",
+      "end": "2026-10-09T23:32:00",
+      "dayKey": "2026-10-09",
+      "runningMinutes": 117,
+      "runningLabel": "1 t. 57 min.",
+      "age": "15 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Crime",
+        "Drama",
+        "Mystery"
+      ],
+      "director": "Michael Showalter",
+      "premiere": "2026-10-02",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/c0244aa90fbcd342cf565324c22260fb9d82c865-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93280/purchase?kanal=dxf",
+      "eventId": "93280",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 6.1,
+          "id": "tt32261958",
+          "url": "https://www.imdb.com/title/tt32261958/"
+        },
+        "letterboxd": {
+          "value": 2.71,
+          "url": "https://letterboxd.com/film/verity-2026/"
+        },
+        "tomatoes": {
+          "value": 70,
+          "url": "https://www.rottentomatoes.com/m/verity"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
+    },
+    {
+      "id": "EDI20250794-2026-10-10T15:00:00-Kinosal",
+      "title": "Sauen Shaun - Gårdens fårbannelse",
+      "screen": "Kinosal",
+      "start": "2026-10-10T15:00:00",
+      "end": "2026-10-10T16:30:43",
+      "dayKey": "2026-10-10",
+      "runningMinutes": 81,
+      "runningLabel": "1 t. 21 min.",
+      "age": "Tillatt for alle",
+      "tags": [
+        "Norsk tale",
+        "Utekstet"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ],
+      "director": "Steve Cox, Matthew Walker",
+      "premiere": "2026-10-02",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/0690cc492885fe739c3d101a3af245ffa6db81a9-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93335/purchase?kanal=dxf",
+      "eventId": "93335",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.2,
+          "id": "tt36841161",
+          "url": "https://www.imdb.com/title/tt36841161/"
+        },
+        "letterboxd": {
+          "value": 3.59,
+          "url": "https://letterboxd.com/film/shaun-the-sheep-the-beast-of-mossy-bottom/"
+        },
+        "tomatoes": {
+          "value": 90,
+          "url": "https://www.rottentomatoes.com/m/shaun_the_sheep_the_beast_of_mossy_bottom"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20250794-2026-10-11T15:00:00-Kinosal",
+      "title": "Sauen Shaun - Gårdens fårbannelse",
+      "screen": "Kinosal",
+      "start": "2026-10-11T15:00:00",
+      "end": "2026-10-11T16:30:43",
+      "dayKey": "2026-10-11",
+      "runningMinutes": 81,
+      "runningLabel": "1 t. 21 min.",
+      "age": "Tillatt for alle",
+      "tags": [
+        "Norsk tale",
+        "Utekstet"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ],
+      "director": "Steve Cox, Matthew Walker",
+      "premiere": "2026-10-02",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/0690cc492885fe739c3d101a3af245ffa6db81a9-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93306/purchase?kanal=dxf",
+      "eventId": "93306",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.2,
+          "id": "tt36841161",
+          "url": "https://www.imdb.com/title/tt36841161/"
+        },
+        "letterboxd": {
+          "value": 3.59,
+          "url": "https://letterboxd.com/film/shaun-the-sheep-the-beast-of-mossy-bottom/"
+        },
+        "tomatoes": {
+          "value": 90,
+          "url": "https://www.rottentomatoes.com/m/shaun_the_sheep_the_beast_of_mossy_bottom"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20251787-2026-10-11T17:15:00-Kinosal",
+      "title": "Sense and Sensibility",
+      "screen": "Kinosal",
+      "start": "2026-10-11T17:15:00",
+      "end": "2026-10-11T19:37:00",
+      "dayKey": "2026-10-11",
+      "runningMinutes": 132,
+      "runningLabel": "2 t. 12 min.",
+      "age": "Tillatt for alle",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": true,
+      "genres": [
+        "Drama",
+        "Romance"
+      ],
+      "director": "Georgia Oakley",
+      "premiere": "2026-10-09",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/08c062fc034ea81b413d46721ded439a550abcb4-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93188/purchase?kanal=dxf",
+      "eventId": "93188",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.2,
+          "id": "tt13609648",
+          "url": "https://www.imdb.com/title/tt13609648/"
+        },
+        "letterboxd": {
+          "value": 3.95,
+          "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20250084-2026-10-16T16:55:00-Kinosal",
+      "title": "Mysteriepakken",
+      "screen": "Kinosal",
+      "start": "2026-10-16T16:55:00",
+      "end": "2026-10-16T18:35:00",
+      "dayKey": "2026-10-16",
+      "runningMinutes": 86,
+      "runningLabel": "1 t. 26 min.",
+      "age": "Tillatt for alle",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Documentary",
+        "Adventure",
+        "Family"
+      ],
+      "director": "Silje Evensmo Jacobsen",
+      "premiere": "2026-10-16",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/446bf6188268628f566d7703f4983d1e1aae30ce-1500x2222.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93158/purchase?kanal=dxf",
+      "eventId": "93158",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 8.3,
+          "id": "tt38673337",
+          "url": "https://www.imdb.com/title/tt38673337/"
         }
       },
       "reserved": 0,
@@ -14722,6 +15067,39 @@
       "reserved": 0,
       "capacity": 246,
       "available": 242
+    },
+    {
+      "id": "BVI20200545-2026-12-16T20:00:00-Kinosal",
+      "title": "Avengers: Doomsday",
+      "screen": "Kinosal",
+      "start": "2026-12-16T20:00:00",
+      "end": "2026-12-16T22:55:00",
+      "dayKey": "2026-12-16",
+      "runningMinutes": 165,
+      "runningLabel": "2 t. 45 min.",
+      "age": null,
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": "Norgespremiere",
+      "kinoklubb": false,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Sci-Fi"
+      ],
+      "director": "Joe Russo, Anthony Russo",
+      "premiere": "2026-12-16",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/f58adb08dfef8ec012865e3c1b39d61c5c45f4b7-1440x2057.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93227/purchase?kanal=dxf",
+      "eventId": "93227",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": null,
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
     }
   ]
 }
