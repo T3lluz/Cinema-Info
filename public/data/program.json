@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-05T01:57:56.743Z",
+  "updatedAt": "2026-10-06T02:56:42.681Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -12137,7 +12137,7 @@
           "url": "https://www.imdb.com/title/tt33029380/"
         },
         "letterboxd": {
-          "value": 2.69,
+          "value": 2.68,
           "url": "https://letterboxd.com/film/marsupilami-2025/"
         }
       },
@@ -12368,7 +12368,7 @@
           "url": "https://www.imdb.com/title/tt33029380/"
         },
         "letterboxd": {
-          "value": 2.69,
+          "value": 2.68,
           "url": "https://letterboxd.com/film/marsupilami-2025/"
         }
       },
@@ -12691,7 +12691,7 @@
           "url": "https://www.imdb.com/title/tt33029380/"
         },
         "letterboxd": {
-          "value": 2.69,
+          "value": 2.68,
           "url": "https://letterboxd.com/film/marsupilami-2025/"
         }
       },
@@ -13086,7 +13086,7 @@
           "url": "https://www.imdb.com/title/tt33029380/"
         },
         "letterboxd": {
-          "value": 2.69,
+          "value": 2.68,
           "url": "https://letterboxd.com/film/marsupilami-2025/"
         }
       },
@@ -13260,7 +13260,7 @@
           "url": "https://www.imdb.com/title/tt33029380/"
         },
         "letterboxd": {
-          "value": 2.69,
+          "value": 2.68,
           "url": "https://letterboxd.com/film/marsupilami-2025/"
         }
       },
@@ -13518,7 +13518,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.4,
+          "value": 6.3,
           "id": "tt36726913",
           "url": "https://www.imdb.com/title/tt36726913/"
         }
@@ -13561,7 +13561,7 @@
           "url": "https://www.imdb.com/title/tt31450459/"
         },
         "letterboxd": {
-          "value": 3.8,
+          "value": 3.82,
           "url": "https://letterboxd.com/film/digger-2026/"
         },
         "tomatoes": {
@@ -13603,12 +13603,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.1,
+          "value": 6,
           "id": "tt32261958",
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.71,
+          "value": 2.68,
           "url": "https://letterboxd.com/film/verity-2026/"
         },
         "tomatoes": {
@@ -13704,7 +13704,7 @@
           "url": "https://www.imdb.com/title/tt33029380/"
         },
         "letterboxd": {
-          "value": 2.69,
+          "value": 2.68,
           "url": "https://letterboxd.com/film/marsupilami-2025/"
         }
       },
@@ -13791,7 +13791,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.4,
+          "value": 6.3,
           "id": "tt36726913",
           "url": "https://www.imdb.com/title/tt36726913/"
         }
@@ -13834,7 +13834,7 @@
           "url": "https://www.imdb.com/title/tt31450459/"
         },
         "letterboxd": {
-          "value": 3.8,
+          "value": 3.82,
           "url": "https://letterboxd.com/film/digger-2026/"
         },
         "tomatoes": {
@@ -13876,12 +13876,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.1,
+          "value": 6,
           "id": "tt32261958",
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.71,
+          "value": 2.68,
           "url": "https://letterboxd.com/film/verity-2026/"
         },
         "tomatoes": {
@@ -13977,7 +13977,7 @@
           "url": "https://www.imdb.com/title/tt33029380/"
         },
         "letterboxd": {
-          "value": 2.69,
+          "value": 2.68,
           "url": "https://letterboxd.com/film/marsupilami-2025/"
         }
       },
@@ -14114,7 +14114,7 @@
           "url": "https://www.imdb.com/title/tt31450459/"
         },
         "letterboxd": {
-          "value": 3.8,
+          "value": 3.82,
           "url": "https://letterboxd.com/film/digger-2026/"
         },
         "tomatoes": {
@@ -14156,12 +14156,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.1,
+          "value": 6,
           "id": "tt32261958",
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.71,
+          "value": 2.68,
           "url": "https://letterboxd.com/film/verity-2026/"
         },
         "tomatoes": {
@@ -14197,7 +14197,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93226/purchase?kanal=dxf",
       "eventId": "93226",
       "promoterId": "202",
-      "sold": 6,
+      "sold": 11,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -14215,8 +14215,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 104
+      "capacity": 109,
+      "available": 98
     },
     {
       "id": "UIP20221470-2026-10-06T17:00:00-Kinosal",
@@ -14292,16 +14292,16 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93208/purchase?kanal=dxf",
       "eventId": "93208",
       "promoterId": "202",
-      "sold": 8,
+      "sold": 16,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.1,
+          "value": 6,
           "id": "tt32261958",
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.71,
+          "value": 2.68,
           "url": "https://letterboxd.com/film/verity-2026/"
         },
         "tomatoes": {
@@ -14311,7 +14311,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 102
+      "available": 94
     },
     {
       "id": "EDI20250794-2026-10-07T17:00:00-Kinosal",
@@ -14340,7 +14340,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93154/purchase?kanal=dxf",
       "eventId": "93154",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 7,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -14358,8 +14358,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 110
+      "capacity": 103,
+      "available": 96
     },
     {
       "id": "EDI20260454-2026-10-07T17:30:00-Storsal",
@@ -14397,7 +14397,7 @@
           "url": "https://www.imdb.com/title/tt33029380/"
         },
         "letterboxd": {
-          "value": 2.69,
+          "value": 2.68,
           "url": "https://letterboxd.com/film/marsupilami-2025/"
         }
       },
@@ -14439,7 +14439,7 @@
           "url": "https://www.imdb.com/title/tt31450459/"
         },
         "letterboxd": {
-          "value": 3.8,
+          "value": 3.82,
           "url": "https://letterboxd.com/film/digger-2026/"
         },
         "tomatoes": {
@@ -14478,18 +14478,18 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93292/purchase?kanal=dxf",
       "eventId": "93292",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.4,
+          "value": 6.3,
           "id": "tt36726913",
           "url": "https://www.imdb.com/title/tt36726913/"
         }
       },
       "reserved": 0,
-      "capacity": 286,
-      "available": 286
+      "capacity": 284,
+      "available": 282
     },
     {
       "id": "EDI20260454-2026-10-08T17:00:00-Kinosal",
@@ -14527,7 +14527,7 @@
           "url": "https://www.imdb.com/title/tt33029380/"
         },
         "letterboxd": {
-          "value": 2.69,
+          "value": 2.68,
           "url": "https://letterboxd.com/film/marsupilami-2025/"
         }
       },
@@ -14561,16 +14561,16 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93157/purchase?kanal=dxf",
       "eventId": "93157",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 4,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.1,
+          "value": 6,
           "id": "tt32261958",
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.71,
+          "value": 2.68,
           "url": "https://letterboxd.com/film/verity-2026/"
         },
         "tomatoes": {
@@ -14580,7 +14580,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 110
+      "available": 106
     },
     {
       "id": "EDI20250794-2026-10-09T16:50:00-Storsal",
@@ -14664,7 +14664,7 @@
           "url": "https://www.imdb.com/title/tt13609648/"
         },
         "letterboxd": {
-          "value": 3.95,
+          "value": 3.92,
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         }
       },
@@ -14703,7 +14703,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.4,
+          "value": 6.3,
           "id": "tt36726913",
           "url": "https://www.imdb.com/title/tt36726913/"
         }
@@ -14775,12 +14775,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.1,
+          "value": 6,
           "id": "tt32261958",
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.71,
+          "value": 2.68,
           "url": "https://letterboxd.com/film/verity-2026/"
         },
         "tomatoes": {
@@ -14839,6 +14839,215 @@
       "reserved": 0,
       "capacity": 110,
       "available": 110
+    },
+    {
+      "id": "UIP20221470-2026-10-10T15:30:00-Storsal",
+      "title": "Glemselens øy",
+      "screen": "Storsal",
+      "start": "2026-10-10T15:30:00",
+      "end": "2026-10-10T17:29:13",
+      "dayKey": "2026-10-10",
+      "runningMinutes": 109,
+      "runningLabel": "1 t. 49 min.",
+      "age": "9 år",
+      "tags": [
+        "Norsk tale",
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "director": "Joel Crawford, Januel Mercado",
+      "premiere": "2026-09-25",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/d7f37b4dd10260c620949baf6caba8ba06beee0e-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93363/purchase?kanal=dxf",
+      "eventId": "93363",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.7,
+          "id": "tt36583977",
+          "url": "https://www.imdb.com/title/tt36583977/"
+        },
+        "letterboxd": {
+          "value": 3.92,
+          "url": "https://letterboxd.com/film/forgotten-island-2026/"
+        },
+        "tomatoes": {
+          "value": 96,
+          "url": "https://www.rottentomatoes.com/m/forgotten_island"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
+    },
+    {
+      "id": "EDI20251787-2026-10-10T17:15:00-Kinosal",
+      "title": "Sense and Sensibility",
+      "screen": "Kinosal",
+      "start": "2026-10-10T17:15:00",
+      "end": "2026-10-10T19:37:00",
+      "dayKey": "2026-10-10",
+      "runningMinutes": 132,
+      "runningLabel": "2 t. 12 min.",
+      "age": "Tillatt for alle",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": true,
+      "genres": [
+        "Drama",
+        "Romance"
+      ],
+      "director": "Georgia Oakley",
+      "premiere": "2026-10-09",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/08c062fc034ea81b413d46721ded439a550abcb4-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93348/purchase?kanal=dxf",
+      "eventId": "93348",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.2,
+          "id": "tt13609648",
+          "url": "https://www.imdb.com/title/tt13609648/"
+        },
+        "letterboxd": {
+          "value": 3.92,
+          "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "WAB20240252-2026-10-10T18:05:00-Storsal",
+      "title": "Digger",
+      "screen": "Storsal",
+      "start": "2026-10-10T18:05:00",
+      "end": "2026-10-10T20:23:55",
+      "dayKey": "2026-10-10",
+      "runningMinutes": 129,
+      "runningLabel": "2 t. 9 min.",
+      "age": "9 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Comedy",
+        "Drama"
+      ],
+      "director": "Alejandro G. Iñárritu",
+      "premiere": "2026-10-02",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/e28d9ab7e9746d7d1f5e072dda56701815752570-1500x2223.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93351/purchase?kanal=dxf",
+      "eventId": "93351",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.3,
+          "id": "tt31450459",
+          "url": "https://www.imdb.com/title/tt31450459/"
+        },
+        "letterboxd": {
+          "value": 3.82,
+          "url": "https://letterboxd.com/film/digger-2026/"
+        },
+        "tomatoes": {
+          "value": 71,
+          "url": "https://www.rottentomatoes.com/m/digger_2026"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
+    },
+    {
+      "id": "NOR20230682-2026-10-10T20:15:00-Kinosal",
+      "title": "Drapet på Benjamin Hermansen",
+      "screen": "Kinosal",
+      "start": "2026-10-10T20:15:00",
+      "end": "2026-10-10T22:01:33",
+      "dayKey": "2026-10-10",
+      "runningMinutes": 96,
+      "runningLabel": "1 t. 36 min.",
+      "age": "15 år",
+      "tags": [
+        "Norsk tale",
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Biography",
+        "Crime",
+        "Drama"
+      ],
+      "director": "Ingvild Søderlind",
+      "premiere": "2026-10-02",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/eb4b617f94d0ff88352912d08252a7d22ada253a-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93336/purchase?kanal=dxf",
+      "eventId": "93336",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 6.3,
+          "id": "tt36726913",
+          "url": "https://www.imdb.com/title/tt36726913/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20260643-2026-10-10T21:00:00-Storsal",
+      "title": "The Social Reckoning",
+      "screen": "Storsal",
+      "start": "2026-10-10T21:00:00",
+      "end": "2026-10-10T23:02:00",
+      "dayKey": "2026-10-10",
+      "runningMinutes": 112,
+      "runningLabel": "1 t. 52 min.",
+      "age": "12 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Biography",
+        "Drama",
+        "Thriller"
+      ],
+      "director": "Aaron Sorkin",
+      "premiere": "2026-10-09",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/62b63fd3e7a70091599387b2b1fb2ffbc511ac7b-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93340/purchase?kanal=dxf",
+      "eventId": "93340",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": null,
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
     },
     {
       "id": "EDI20250794-2026-10-11T15:00:00-Kinosal",
@@ -14922,7 +15131,7 @@
           "url": "https://www.imdb.com/title/tt13609648/"
         },
         "letterboxd": {
-          "value": 3.95,
+          "value": 3.92,
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         }
       },
@@ -14931,11 +15140,58 @@
       "available": 110
     },
     {
-      "id": "EDI20250084-2026-10-16T16:55:00-Kinosal",
+      "id": "EDI20260552-2026-10-11T20:15:00-Kinosal",
+      "title": "Verity",
+      "screen": "Kinosal",
+      "start": "2026-10-11T20:15:00",
+      "end": "2026-10-11T22:22:00",
+      "dayKey": "2026-10-11",
+      "runningMinutes": 117,
+      "runningLabel": "1 t. 57 min.",
+      "age": "15 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Crime",
+        "Drama",
+        "Mystery"
+      ],
+      "director": "Michael Showalter",
+      "premiere": "2026-10-02",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/c0244aa90fbcd342cf565324c22260fb9d82c865-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93190/purchase?kanal=dxf",
+      "eventId": "93190",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 6,
+          "id": "tt32261958",
+          "url": "https://www.imdb.com/title/tt32261958/"
+        },
+        "letterboxd": {
+          "value": 2.68,
+          "url": "https://letterboxd.com/film/verity-2026/"
+        },
+        "tomatoes": {
+          "value": 70,
+          "url": "https://www.rottentomatoes.com/m/verity"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20250084-2026-10-16T16:50:00-Kinosal",
       "title": "Mysteriepakken",
       "screen": "Kinosal",
-      "start": "2026-10-16T16:55:00",
-      "end": "2026-10-16T18:35:00",
+      "start": "2026-10-16T16:50:00",
+      "end": "2026-10-16T18:30:00",
       "dayKey": "2026-10-16",
       "runningMinutes": 86,
       "runningLabel": "1 t. 26 min.",
@@ -14965,6 +15221,39 @@
           "url": "https://www.imdb.com/title/tt38673337/"
         }
       },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20250183-2026-10-16T19:00:00-Kinosal",
+      "title": "Pensjonskuppet",
+      "screen": "Kinosal",
+      "start": "2026-10-16T19:00:00",
+      "end": "2026-10-16T20:50:00",
+      "dayKey": "2026-10-16",
+      "runningMinutes": 110,
+      "runningLabel": "1 t. 50 min.",
+      "age": "9 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": "Norgespremiere",
+      "kinoklubb": false,
+      "genres": [
+        "Action",
+        "Comedy",
+        "Crime"
+      ],
+      "director": "Gunnbjörg Gunnarsdottir",
+      "premiere": "2026-10-16",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/b7c7d07d556cff3e5c9868b5e6fd02656f31e59c-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93116/purchase?kanal=dxf",
+      "eventId": "93116",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": null,
       "reserved": 0,
       "capacity": 110,
       "available": 110
@@ -15094,12 +15383,111 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93227/purchase?kanal=dxf",
       "eventId": "93227",
       "promoterId": "202",
+      "sold": 5,
+      "eventStatus": "ok",
+      "ratings": null,
+      "reserved": 0,
+      "capacity": 110,
+      "available": 105
+    },
+    {
+      "id": "BVI20200545-2026-12-17T19:15:00-Kinosal",
+      "title": "Avengers: Doomsday",
+      "screen": "Kinosal",
+      "start": "2026-12-17T19:15:00",
+      "end": "2026-12-17T22:10:00",
+      "dayKey": "2026-12-17",
+      "runningMinutes": 165,
+      "runningLabel": "2 t. 45 min.",
+      "age": null,
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Sci-Fi"
+      ],
+      "director": "Joe Russo, Anthony Russo",
+      "premiere": "2026-12-16",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/f58adb08dfef8ec012865e3c1b39d61c5c45f4b7-1440x2057.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93230/purchase?kanal=dxf",
+      "eventId": "93230",
+      "promoterId": "202",
       "sold": 0,
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
       "capacity": 110,
       "available": 110
+    },
+    {
+      "id": "BVI20200545-2026-12-18T17:00:00-Kinosal",
+      "title": "Avengers: Doomsday",
+      "screen": "Kinosal",
+      "start": "2026-12-18T17:00:00",
+      "end": "2026-12-18T19:55:00",
+      "dayKey": "2026-12-18",
+      "runningMinutes": 165,
+      "runningLabel": "2 t. 45 min.",
+      "age": null,
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Sci-Fi"
+      ],
+      "director": "Joe Russo, Anthony Russo",
+      "premiere": "2026-12-16",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/f58adb08dfef8ec012865e3c1b39d61c5c45f4b7-1440x2057.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93329/purchase?kanal=dxf",
+      "eventId": "93329",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": null,
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "BVI20200545-2026-12-18T20:00:00-Storsal",
+      "title": "Avengers: Doomsday",
+      "screen": "Storsal",
+      "start": "2026-12-18T20:00:00",
+      "end": "2026-12-18T22:55:00",
+      "dayKey": "2026-12-18",
+      "runningMinutes": 165,
+      "runningLabel": "2 t. 45 min.",
+      "age": null,
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Sci-Fi"
+      ],
+      "director": "Joe Russo, Anthony Russo",
+      "premiere": "2026-12-16",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/f58adb08dfef8ec012865e3c1b39d61c5c45f4b7-1440x2057.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93231/purchase?kanal=dxf",
+      "eventId": "93231",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": null,
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
     }
   ]
 }
