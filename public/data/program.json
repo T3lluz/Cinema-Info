@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-06T02:56:42.681Z",
+  "updatedAt": "2026-10-06T17:09:10.390Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -13479,7 +13479,7 @@
           "url": "https://letterboxd.com/film/shaun-the-sheep-the-beast-of-mossy-bottom/"
         },
         "tomatoes": {
-          "value": 90,
+          "value": 91,
           "url": "https://www.rottentomatoes.com/m/shaun_the_sheep_the_beast_of_mossy_bottom"
         }
       },
@@ -13565,7 +13565,7 @@
           "url": "https://letterboxd.com/film/digger-2026/"
         },
         "tomatoes": {
-          "value": 71,
+          "value": 72,
           "url": "https://www.rottentomatoes.com/m/digger_2026"
         }
       },
@@ -13660,7 +13660,7 @@
           "url": "https://letterboxd.com/film/shaun-the-sheep-the-beast-of-mossy-bottom/"
         },
         "tomatoes": {
-          "value": 90,
+          "value": 91,
           "url": "https://www.rottentomatoes.com/m/shaun_the_sheep_the_beast_of_mossy_bottom"
         }
       },
@@ -13838,7 +13838,7 @@
           "url": "https://letterboxd.com/film/digger-2026/"
         },
         "tomatoes": {
-          "value": 71,
+          "value": 72,
           "url": "https://www.rottentomatoes.com/m/digger_2026"
         }
       },
@@ -13933,7 +13933,7 @@
           "url": "https://letterboxd.com/film/shaun-the-sheep-the-beast-of-mossy-bottom/"
         },
         "tomatoes": {
-          "value": 90,
+          "value": 91,
           "url": "https://www.rottentomatoes.com/m/shaun_the_sheep_the_beast_of_mossy_bottom"
         }
       },
@@ -14118,7 +14118,7 @@
           "url": "https://letterboxd.com/film/digger-2026/"
         },
         "tomatoes": {
-          "value": 71,
+          "value": 72,
           "url": "https://www.rottentomatoes.com/m/digger_2026"
         }
       },
@@ -14197,7 +14197,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93226/purchase?kanal=dxf",
       "eventId": "93226",
       "promoterId": "202",
-      "sold": 11,
+      "sold": 25,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -14215,8 +14215,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 109,
-      "available": 98
+      "capacity": 110,
+      "available": 85
     },
     {
       "id": "UIP20221470-2026-10-06T17:00:00-Kinosal",
@@ -14245,7 +14245,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93290/purchase?kanal=dxf",
       "eventId": "93290",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 3,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -14264,7 +14264,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 110
+      "available": 107
     },
     {
       "id": "EDI20260552-2026-10-06T20:00:00-Kinosal",
@@ -14353,7 +14353,7 @@
           "url": "https://letterboxd.com/film/shaun-the-sheep-the-beast-of-mossy-bottom/"
         },
         "tomatoes": {
-          "value": 90,
+          "value": 91,
           "url": "https://www.rottentomatoes.com/m/shaun_the_sheep_the_beast_of_mossy_bottom"
         }
       },
@@ -14414,7 +14414,7 @@
       "dayKey": "2026-10-07",
       "runningMinutes": 129,
       "runningLabel": "2 t. 9 min.",
-      "age": "9 år",
+      "age": "12 år",
       "tags": [
         "Norsk tekst"
       ],
@@ -14443,7 +14443,7 @@
           "url": "https://letterboxd.com/film/digger-2026/"
         },
         "tomatoes": {
-          "value": 71,
+          "value": 72,
           "url": "https://www.rottentomatoes.com/m/digger_2026"
         }
       },
@@ -14488,8 +14488,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 284,
-      "available": 282
+      "capacity": 286,
+      "available": 284
     },
     {
       "id": "EDI20260454-2026-10-08T17:00:00-Kinosal",
@@ -14622,7 +14622,7 @@
           "url": "https://letterboxd.com/film/shaun-the-sheep-the-beast-of-mossy-bottom/"
         },
         "tomatoes": {
-          "value": 90,
+          "value": 91,
           "url": "https://www.rottentomatoes.com/m/shaun_the_sheep_the_beast_of_mossy_bottom"
         }
       },
@@ -14664,7 +14664,7 @@
           "url": "https://www.imdb.com/title/tt13609648/"
         },
         "letterboxd": {
-          "value": 3.92,
+          "value": 3.88,
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         }
       },
@@ -14832,7 +14832,7 @@
           "url": "https://letterboxd.com/film/shaun-the-sheep-the-beast-of-mossy-bottom/"
         },
         "tomatoes": {
-          "value": 90,
+          "value": 91,
           "url": "https://www.rottentomatoes.com/m/shaun_the_sheep_the_beast_of_mossy_bottom"
         }
       },
@@ -14913,7 +14913,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93348/purchase?kanal=dxf",
       "eventId": "93348",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 1,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -14922,13 +14922,13 @@
           "url": "https://www.imdb.com/title/tt13609648/"
         },
         "letterboxd": {
-          "value": 3.92,
+          "value": 3.88,
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 110
+      "capacity": 109,
+      "available": 108
     },
     {
       "id": "WAB20240252-2026-10-10T18:05:00-Storsal",
@@ -14939,7 +14939,7 @@
       "dayKey": "2026-10-10",
       "runningMinutes": 129,
       "runningLabel": "2 t. 9 min.",
-      "age": "9 år",
+      "age": "12 år",
       "tags": [
         "Norsk tekst"
       ],
@@ -14968,7 +14968,7 @@
           "url": "https://letterboxd.com/film/digger-2026/"
         },
         "tomatoes": {
-          "value": 71,
+          "value": 72,
           "url": "https://www.rottentomatoes.com/m/digger_2026"
         }
       },
@@ -15089,7 +15089,7 @@
           "url": "https://letterboxd.com/film/shaun-the-sheep-the-beast-of-mossy-bottom/"
         },
         "tomatoes": {
-          "value": 90,
+          "value": 91,
           "url": "https://www.rottentomatoes.com/m/shaun_the_sheep_the_beast_of_mossy_bottom"
         }
       },
@@ -15131,7 +15131,7 @@
           "url": "https://www.imdb.com/title/tt13609648/"
         },
         "letterboxd": {
-          "value": 3.92,
+          "value": 3.88,
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         }
       },
@@ -15284,12 +15284,12 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92987/purchase?kanal=dxf",
       "eventId": "92987",
       "promoterId": "202",
-      "sold": 27,
+      "sold": 29,
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
       "capacity": 110,
-      "available": 83
+      "available": 81
     },
     {
       "id": "EDI20250183-2026-10-20T19:30:00-Kinosal",
@@ -15383,12 +15383,12 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93227/purchase?kanal=dxf",
       "eventId": "93227",
       "promoterId": "202",
-      "sold": 5,
+      "sold": 10,
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
       "capacity": 110,
-      "available": 105
+      "available": 100
     },
     {
       "id": "BVI20200545-2026-12-17T19:15:00-Kinosal",
