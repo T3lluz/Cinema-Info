@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-07T02:21:23.616Z",
+  "updatedAt": "2026-10-07T17:46:52.957Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -12137,7 +12137,7 @@
           "url": "https://www.imdb.com/title/tt33029380/"
         },
         "letterboxd": {
-          "value": 2.68,
+          "value": 2.69,
           "url": "https://letterboxd.com/film/marsupilami-2025/"
         }
       },
@@ -12181,7 +12181,7 @@
           "url": "https://www.imdb.com/title/tt36583977/"
         },
         "letterboxd": {
-          "value": 3.92,
+          "value": 3.91,
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         },
         "tomatoes": {
@@ -12368,7 +12368,7 @@
           "url": "https://www.imdb.com/title/tt33029380/"
         },
         "letterboxd": {
-          "value": 2.68,
+          "value": 2.69,
           "url": "https://letterboxd.com/film/marsupilami-2025/"
         }
       },
@@ -12412,7 +12412,7 @@
           "url": "https://www.imdb.com/title/tt36583977/"
         },
         "letterboxd": {
-          "value": 3.92,
+          "value": 3.91,
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         },
         "tomatoes": {
@@ -12643,7 +12643,7 @@
           "url": "https://www.imdb.com/title/tt36583977/"
         },
         "letterboxd": {
-          "value": 3.92,
+          "value": 3.91,
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         },
         "tomatoes": {
@@ -12691,7 +12691,7 @@
           "url": "https://www.imdb.com/title/tt33029380/"
         },
         "letterboxd": {
-          "value": 2.68,
+          "value": 2.69,
           "url": "https://letterboxd.com/film/marsupilami-2025/"
         }
       },
@@ -12867,7 +12867,7 @@
           "url": "https://www.imdb.com/title/tt36583977/"
         },
         "letterboxd": {
-          "value": 3.92,
+          "value": 3.91,
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         },
         "tomatoes": {
@@ -13038,7 +13038,7 @@
           "url": "https://www.imdb.com/title/tt36583977/"
         },
         "letterboxd": {
-          "value": 3.92,
+          "value": 3.91,
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         },
         "tomatoes": {
@@ -13086,7 +13086,7 @@
           "url": "https://www.imdb.com/title/tt33029380/"
         },
         "letterboxd": {
-          "value": 2.68,
+          "value": 2.69,
           "url": "https://letterboxd.com/film/marsupilami-2025/"
         }
       },
@@ -13260,7 +13260,7 @@
           "url": "https://www.imdb.com/title/tt33029380/"
         },
         "letterboxd": {
-          "value": 2.68,
+          "value": 2.69,
           "url": "https://letterboxd.com/film/marsupilami-2025/"
         }
       },
@@ -13389,7 +13389,7 @@
           "url": "https://www.imdb.com/title/tt36583977/"
         },
         "letterboxd": {
-          "value": 3.92,
+          "value": 3.91,
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         },
         "tomatoes": {
@@ -13556,16 +13556,16 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.3,
+          "value": 7.4,
           "id": "tt31450459",
           "url": "https://www.imdb.com/title/tt31450459/"
         },
         "letterboxd": {
-          "value": 3.83,
+          "value": 3.84,
           "url": "https://letterboxd.com/film/digger-2026/"
         },
         "tomatoes": {
-          "value": 72,
+          "value": 73,
           "url": "https://www.rottentomatoes.com/m/digger_2026"
         }
       },
@@ -13608,11 +13608,11 @@
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.67,
+          "value": 2.68,
           "url": "https://letterboxd.com/film/verity-2026/"
         },
         "tomatoes": {
-          "value": 70,
+          "value": 71,
           "url": "https://www.rottentomatoes.com/m/verity"
         }
       },
@@ -13704,7 +13704,7 @@
           "url": "https://www.imdb.com/title/tt33029380/"
         },
         "letterboxd": {
-          "value": 2.68,
+          "value": 2.69,
           "url": "https://letterboxd.com/film/marsupilami-2025/"
         }
       },
@@ -13748,7 +13748,7 @@
           "url": "https://www.imdb.com/title/tt36583977/"
         },
         "letterboxd": {
-          "value": 3.92,
+          "value": 3.91,
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         },
         "tomatoes": {
@@ -13829,16 +13829,16 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.3,
+          "value": 7.4,
           "id": "tt31450459",
           "url": "https://www.imdb.com/title/tt31450459/"
         },
         "letterboxd": {
-          "value": 3.83,
+          "value": 3.84,
           "url": "https://letterboxd.com/film/digger-2026/"
         },
         "tomatoes": {
-          "value": 72,
+          "value": 73,
           "url": "https://www.rottentomatoes.com/m/digger_2026"
         }
       },
@@ -13881,11 +13881,11 @@
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.67,
+          "value": 2.68,
           "url": "https://letterboxd.com/film/verity-2026/"
         },
         "tomatoes": {
-          "value": 70,
+          "value": 71,
           "url": "https://www.rottentomatoes.com/m/verity"
         }
       },
@@ -13977,7 +13977,7 @@
           "url": "https://www.imdb.com/title/tt33029380/"
         },
         "letterboxd": {
-          "value": 2.68,
+          "value": 2.69,
           "url": "https://letterboxd.com/film/marsupilami-2025/"
         }
       },
@@ -14021,7 +14021,7 @@
           "url": "https://www.imdb.com/title/tt36583977/"
         },
         "letterboxd": {
-          "value": 3.92,
+          "value": 3.91,
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         },
         "tomatoes": {
@@ -14109,16 +14109,16 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.3,
+          "value": 7.4,
           "id": "tt31450459",
           "url": "https://www.imdb.com/title/tt31450459/"
         },
         "letterboxd": {
-          "value": 3.83,
+          "value": 3.84,
           "url": "https://letterboxd.com/film/digger-2026/"
         },
         "tomatoes": {
-          "value": 72,
+          "value": 73,
           "url": "https://www.rottentomatoes.com/m/digger_2026"
         }
       },
@@ -14161,11 +14161,11 @@
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.67,
+          "value": 2.68,
           "url": "https://letterboxd.com/film/verity-2026/"
         },
         "tomatoes": {
-          "value": 70,
+          "value": 71,
           "url": "https://www.rottentomatoes.com/m/verity"
         }
       },
@@ -14254,7 +14254,7 @@
           "url": "https://www.imdb.com/title/tt36583977/"
         },
         "letterboxd": {
-          "value": 3.92,
+          "value": 3.91,
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         },
         "tomatoes": {
@@ -14301,11 +14301,11 @@
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.67,
+          "value": 2.68,
           "url": "https://letterboxd.com/film/verity-2026/"
         },
         "tomatoes": {
-          "value": 70,
+          "value": 71,
           "url": "https://www.rottentomatoes.com/m/verity"
         }
       },
@@ -14340,7 +14340,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93154/purchase?kanal=dxf",
       "eventId": "93154",
       "promoterId": "202",
-      "sold": 7,
+      "sold": 10,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -14358,8 +14358,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 103,
-      "available": 96
+      "capacity": 110,
+      "available": 100
     },
     {
       "id": "EDI20260454-2026-10-07T17:30:00-Storsal",
@@ -14388,7 +14388,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93291/purchase?kanal=dxf",
       "eventId": "93291",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 9,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -14397,13 +14397,13 @@
           "url": "https://www.imdb.com/title/tt33029380/"
         },
         "letterboxd": {
-          "value": 2.68,
+          "value": 2.69,
           "url": "https://letterboxd.com/film/marsupilami-2025/"
         }
       },
       "reserved": 0,
       "capacity": 286,
-      "available": 286
+      "available": 277
     },
     {
       "id": "WAB20240252-2026-10-07T19:30:00-Kinosal",
@@ -14430,26 +14430,26 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93153/purchase?kanal=dxf",
       "eventId": "93153",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 1,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.3,
+          "value": 7.4,
           "id": "tt31450459",
           "url": "https://www.imdb.com/title/tt31450459/"
         },
         "letterboxd": {
-          "value": 3.83,
+          "value": 3.84,
           "url": "https://letterboxd.com/film/digger-2026/"
         },
         "tomatoes": {
-          "value": 72,
+          "value": 73,
           "url": "https://www.rottentomatoes.com/m/digger_2026"
         }
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 110
+      "available": 109
     },
     {
       "id": "NOR20230682-2026-10-07T20:15:00-Storsal",
@@ -14478,7 +14478,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93292/purchase?kanal=dxf",
       "eventId": "93292",
       "promoterId": "202",
-      "sold": 2,
+      "sold": 12,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -14489,7 +14489,7 @@
       },
       "reserved": 0,
       "capacity": 286,
-      "available": 284
+      "available": 274
     },
     {
       "id": "EDI20260454-2026-10-08T17:00:00-Kinosal",
@@ -14527,7 +14527,7 @@
           "url": "https://www.imdb.com/title/tt33029380/"
         },
         "letterboxd": {
-          "value": 2.68,
+          "value": 2.69,
           "url": "https://letterboxd.com/film/marsupilami-2025/"
         }
       },
@@ -14570,11 +14570,11 @@
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.67,
+          "value": 2.68,
           "url": "https://letterboxd.com/film/verity-2026/"
         },
         "tomatoes": {
-          "value": 70,
+          "value": 71,
           "url": "https://www.rottentomatoes.com/m/verity"
         }
       },
@@ -14655,7 +14655,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93186/purchase?kanal=dxf",
       "eventId": "93186",
       "promoterId": "202",
-      "sold": 2,
+      "sold": 4,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -14670,7 +14670,7 @@
       },
       "reserved": 0,
       "capacity": 108,
-      "available": 106
+      "available": 104
     },
     {
       "id": "NOR20230682-2026-10-09T19:00:00-Storsal",
@@ -14740,7 +14740,12 @@
       "promoterId": "202",
       "sold": 0,
       "eventStatus": "ok",
-      "ratings": null,
+      "ratings": {
+        "letterboxd": {
+          "value": 3.3,
+          "url": "https://letterboxd.com/film/the-social-reckoning/"
+        }
+      },
       "reserved": 0,
       "capacity": 110,
       "available": 110
@@ -14780,11 +14785,11 @@
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.67,
+          "value": 2.68,
           "url": "https://letterboxd.com/film/verity-2026/"
         },
         "tomatoes": {
-          "value": 70,
+          "value": 71,
           "url": "https://www.rottentomatoes.com/m/verity"
         }
       },
@@ -14876,7 +14881,7 @@
           "url": "https://www.imdb.com/title/tt36583977/"
         },
         "letterboxd": {
-          "value": 3.92,
+          "value": 3.91,
           "url": "https://letterboxd.com/film/forgotten-island-2026/"
         },
         "tomatoes": {
@@ -14927,8 +14932,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 109,
-      "available": 108
+      "capacity": 110,
+      "available": 109
     },
     {
       "id": "WAB20240252-2026-10-10T18:05:00-Storsal",
@@ -14959,16 +14964,16 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.3,
+          "value": 7.4,
           "id": "tt31450459",
           "url": "https://www.imdb.com/title/tt31450459/"
         },
         "letterboxd": {
-          "value": 3.83,
+          "value": 3.84,
           "url": "https://letterboxd.com/film/digger-2026/"
         },
         "tomatoes": {
-          "value": 72,
+          "value": 73,
           "url": "https://www.rottentomatoes.com/m/digger_2026"
         }
       },
@@ -15044,7 +15049,12 @@
       "promoterId": "202",
       "sold": 0,
       "eventStatus": "ok",
-      "ratings": null,
+      "ratings": {
+        "letterboxd": {
+          "value": 3.3,
+          "url": "https://letterboxd.com/film/the-social-reckoning/"
+        }
+      },
       "reserved": 0,
       "capacity": 286,
       "available": 286
@@ -15165,7 +15175,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93190/purchase?kanal=dxf",
       "eventId": "93190",
       "promoterId": "202",
-      "sold": 3,
+      "sold": 7,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -15174,17 +15184,17 @@
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.67,
+          "value": 2.68,
           "url": "https://letterboxd.com/film/verity-2026/"
         },
         "tomatoes": {
-          "value": 70,
+          "value": 71,
           "url": "https://www.rottentomatoes.com/m/verity"
         }
       },
       "reserved": 0,
-      "capacity": 107,
-      "available": 104
+      "capacity": 110,
+      "available": 103
     },
     {
       "id": "EDI20250084-2026-10-16T16:50:00-Kinosal",
@@ -15230,7 +15240,7 @@
       "title": "Pensjonskuppet",
       "screen": "Kinosal",
       "start": "2026-10-16T19:00:00",
-      "end": "2026-10-16T20:50:00",
+      "end": "2026-10-16T21:01:00",
       "dayKey": "2026-10-16",
       "runningMinutes": 110,
       "runningLabel": "1 t. 50 min.",
@@ -15255,15 +15265,15 @@
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
-      "capacity": 108,
-      "available": 106
+      "capacity": 110,
+      "available": 108
     },
     {
       "id": "EDI20250183-2026-10-20T13:00:00-Kinosal",
       "title": "Pensjonskuppet",
       "screen": "Kinosal",
       "start": "2026-10-20T13:00:00",
-      "end": "2026-10-20T14:50:00",
+      "end": "2026-10-20T15:01:00",
       "dayKey": "2026-10-20",
       "runningMinutes": 110,
       "runningLabel": "1 t. 50 min.",
@@ -15284,19 +15294,19 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92987/purchase?kanal=dxf",
       "eventId": "92987",
       "promoterId": "202",
-      "sold": 29,
+      "sold": 41,
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
       "capacity": 110,
-      "available": 81
+      "available": 69
     },
     {
       "id": "EDI20250183-2026-10-20T19:30:00-Kinosal",
       "title": "Pensjonskuppet",
       "screen": "Kinosal",
       "start": "2026-10-20T19:30:00",
-      "end": "2026-10-20T21:20:00",
+      "end": "2026-10-20T21:31:00",
       "dayKey": "2026-10-20",
       "runningMinutes": 110,
       "runningLabel": "1 t. 50 min.",
@@ -15350,12 +15360,12 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93119/purchase?kanal=dxf",
       "eventId": "93119",
       "promoterId": "202",
-      "sold": 4,
+      "sold": 7,
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
-      "capacity": 246,
-      "available": 242
+      "capacity": 243,
+      "available": 236
     },
     {
       "id": "BVI20200545-2026-12-16T20:00:00-Kinosal",
@@ -15383,12 +15393,12 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93227/purchase?kanal=dxf",
       "eventId": "93227",
       "promoterId": "202",
-      "sold": 10,
+      "sold": 13,
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
       "capacity": 110,
-      "available": 100
+      "available": 97
     },
     {
       "id": "BVI20200545-2026-12-17T19:15:00-Kinosal",
