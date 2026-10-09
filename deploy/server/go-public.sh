@@ -10,7 +10,8 @@
 #      public DNS cannot take the dashboard away from them
 #   2. creates the Cloudflare tunnel "t3lluz-public" if it is missing, and
 #      routes t3lluz.com/CinemaInfo* to cinema-info:8080 and every other
-#      path on the apex to a 404
+#      path on the apex to a 404 (keeping routes other apps added, such as
+#      YTMQ's /ytmq*)
 #   3. puts the tunnel token in ~/docker/cinema-info/.env and starts the
 #      tunnel container
 #   4. points public DNS for t3lluz.com at the tunnel (proxied CNAME);
@@ -97,12 +98,19 @@ main() {
   else
     echo "tunnel: $tunnel_name ($tunnel)"
   fi
+  # Other apps share this tunnel (YTMQ adds /ytmq* with its own
+  # go-public.sh), so keep every rule that is not ours or the catch-all.
+  local others
+  others=$(cf GET "/accounts/$account/cfd_tunnel/$tunnel/configurations" |
+    jq -c --arg svc "$service" '[(.result.config.ingress // [])[]
+      | select(.service != $svc and has("hostname"))]')
   cf PUT "/accounts/$account/cfd_tunnel/$tunnel/configurations" "$(jq -nc \
-    --arg host "$zone_name" --arg svc "$service" '{config: {ingress: [
-      {hostname: $host, path: "(?i)^/cinemainfo(/.*)?$", service: $svc},
-      {service: "http_status:404"}
-    ]}}')" >/dev/null
-  echo "tunnel: $zone_name/CinemaInfo* -> $service, everything else 404"
+    --arg host "$zone_name" --arg svc "$service" --argjson others "$others" '{config: {ingress: (
+      [{hostname: $host, path: "(?i)^/cinemainfo(/.*)?$", service: $svc}]
+      + $others
+      + [{service: "http_status:404"}]
+    )}}')" >/dev/null
+  echo "tunnel: $zone_name/CinemaInfo* -> $service, $(jq length <<<"$others") other route(s) kept, everything else 404"
 
   # 3. Token into .env, tunnel up.
   local tunnel_token
