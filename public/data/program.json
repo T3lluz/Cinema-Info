@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-09T02:55:53.514Z",
+  "updatedAt": "2026-10-09T17:25:06.799Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -13518,7 +13518,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.5,
+          "value": 6.6,
           "id": "tt36726913",
           "url": "https://www.imdb.com/title/tt36726913/"
         }
@@ -13608,7 +13608,7 @@
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.67,
+          "value": 2.66,
           "url": "https://letterboxd.com/film/verity-2026/"
         },
         "tomatoes": {
@@ -13791,7 +13791,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.5,
+          "value": 6.6,
           "id": "tt36726913",
           "url": "https://www.imdb.com/title/tt36726913/"
         }
@@ -13881,7 +13881,7 @@
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.67,
+          "value": 2.66,
           "url": "https://letterboxd.com/film/verity-2026/"
         },
         "tomatoes": {
@@ -14161,7 +14161,7 @@
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.67,
+          "value": 2.66,
           "url": "https://letterboxd.com/film/verity-2026/"
         },
         "tomatoes": {
@@ -14301,7 +14301,7 @@
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.67,
+          "value": 2.66,
           "url": "https://letterboxd.com/film/verity-2026/"
         },
         "tomatoes": {
@@ -14482,7 +14482,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.5,
+          "value": 6.6,
           "id": "tt36726913",
           "url": "https://www.imdb.com/title/tt36726913/"
         }
@@ -14570,7 +14570,7 @@
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.67,
+          "value": 2.66,
           "url": "https://letterboxd.com/film/verity-2026/"
         },
         "tomatoes": {
@@ -14609,7 +14609,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93187/purchase?kanal=dxf",
       "eventId": "93187",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 14,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -14628,7 +14628,7 @@
       },
       "reserved": 0,
       "capacity": 246,
-      "available": 246
+      "available": 232
     },
     {
       "id": "EDI20251787-2026-10-09T17:45:00-Kinosal",
@@ -14655,7 +14655,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93186/purchase?kanal=dxf",
       "eventId": "93186",
       "promoterId": "202",
-      "sold": 14,
+      "sold": 16,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -14669,8 +14669,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 106,
-      "available": 92
+      "capacity": 110,
+      "available": 94
     },
     {
       "id": "NOR20230682-2026-10-09T19:00:00-Storsal",
@@ -14699,18 +14699,18 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93279/purchase?kanal=dxf",
       "eventId": "93279",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 11,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.5,
+          "value": 6.6,
           "id": "tt36726913",
           "url": "https://www.imdb.com/title/tt36726913/"
         }
       },
       "reserved": 0,
       "capacity": 246,
-      "available": 246
+      "available": 235
     },
     {
       "id": "EDI20260643-2026-10-09T20:45:00-Kinosal",
@@ -14734,7 +14734,7 @@
       ],
       "director": "Aaron Sorkin",
       "premiere": "2026-10-09",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/62b63fd3e7a70091599387b2b1fb2ffbc511ac7b-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/0fcd90f6ecbf7524a9f39d1df9cc4479415d15d6-1500x2104.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93318/purchase?kanal=dxf",
       "eventId": "93318",
       "promoterId": "202",
@@ -14742,18 +14742,18 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.8,
+          "value": 6.7,
           "id": "tt37510326",
           "url": "https://www.imdb.com/title/tt37510326/"
         },
         "letterboxd": {
-          "value": 3.16,
+          "value": 3.12,
           "url": "https://letterboxd.com/film/the-social-reckoning/"
         }
       },
       "reserved": 0,
-      "capacity": 108,
-      "available": 106
+      "capacity": 110,
+      "available": 108
     },
     {
       "id": "EDI20260552-2026-10-09T21:25:00-Storsal",
@@ -14790,7 +14790,7 @@
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.67,
+          "value": 2.66,
           "url": "https://letterboxd.com/film/verity-2026/"
         },
         "tomatoes": {
@@ -14829,7 +14829,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93335/purchase?kanal=dxf",
       "eventId": "93335",
       "promoterId": "202",
-      "sold": 10,
+      "sold": 13,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -14847,8 +14847,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 100,
-      "available": 90
+      "capacity": 110,
+      "available": 97
     },
     {
       "id": "UIP20221470-2026-10-10T15:30:00-Storsal",
@@ -14965,7 +14965,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93351/purchase?kanal=dxf",
       "eventId": "93351",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 3,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -14983,8 +14983,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 246,
-      "available": 246
+      "capacity": 243,
+      "available": 240
     },
     {
       "id": "NOR20230682-2026-10-10T20:15:00-Kinosal",
@@ -15017,7 +15017,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.5,
+          "value": 6.6,
           "id": "tt36726913",
           "url": "https://www.imdb.com/title/tt36726913/"
         }
@@ -15048,7 +15048,7 @@
       ],
       "director": "Aaron Sorkin",
       "premiere": "2026-10-09",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/62b63fd3e7a70091599387b2b1fb2ffbc511ac7b-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/0fcd90f6ecbf7524a9f39d1df9cc4479415d15d6-1500x2104.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93340/purchase?kanal=dxf",
       "eventId": "93340",
       "promoterId": "202",
@@ -15056,12 +15056,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.8,
+          "value": 6.7,
           "id": "tt37510326",
           "url": "https://www.imdb.com/title/tt37510326/"
         },
         "letterboxd": {
-          "value": 3.16,
+          "value": 3.12,
           "url": "https://letterboxd.com/film/the-social-reckoning/"
         }
       },
@@ -15185,7 +15185,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93190/purchase?kanal=dxf",
       "eventId": "93190",
       "promoterId": "202",
-      "sold": 7,
+      "sold": 9,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -15194,7 +15194,7 @@
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.67,
+          "value": 2.66,
           "url": "https://letterboxd.com/film/verity-2026/"
         },
         "tomatoes": {
@@ -15203,8 +15203,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 103
+      "capacity": 108,
+      "available": 99
     },
     {
       "id": "EDI20250794-2026-10-13T17:00:00-Kinosal",
@@ -15362,7 +15362,7 @@
       ],
       "director": "Aaron Sorkin",
       "premiere": "2026-10-09",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/62b63fd3e7a70091599387b2b1fb2ffbc511ac7b-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/0fcd90f6ecbf7524a9f39d1df9cc4479415d15d6-1500x2104.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93366/purchase?kanal=dxf",
       "eventId": "93366",
       "promoterId": "202",
@@ -15370,12 +15370,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.8,
+          "value": 6.7,
           "id": "tt37510326",
           "url": "https://www.imdb.com/title/tt37510326/"
         },
         "letterboxd": {
-          "value": 3.16,
+          "value": 3.12,
           "url": "https://letterboxd.com/film/the-social-reckoning/"
         }
       },
@@ -15462,7 +15462,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.5,
+          "value": 6.6,
           "id": "tt36726913",
           "url": "https://www.imdb.com/title/tt36726913/"
         }
@@ -15535,26 +15535,26 @@
       ],
       "director": "Aaron Sorkin",
       "premiere": "2026-10-09",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/62b63fd3e7a70091599387b2b1fb2ffbc511ac7b-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/0fcd90f6ecbf7524a9f39d1df9cc4479415d15d6-1500x2104.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93389/purchase?kanal=dxf",
       "eventId": "93389",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.8,
+          "value": 6.7,
           "id": "tt37510326",
           "url": "https://www.imdb.com/title/tt37510326/"
         },
         "letterboxd": {
-          "value": 3.16,
+          "value": 3.12,
           "url": "https://letterboxd.com/film/the-social-reckoning/"
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 110
+      "capacity": 108,
+      "available": 106
     },
     {
       "id": "EDI20250794-2026-10-15T17:00:00-Kinosal",
@@ -15828,7 +15828,7 @@
       ],
       "director": "Aaron Sorkin",
       "premiere": "2026-10-09",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/62b63fd3e7a70091599387b2b1fb2ffbc511ac7b-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/0fcd90f6ecbf7524a9f39d1df9cc4479415d15d6-1500x2104.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93352/purchase?kanal=dxf",
       "eventId": "93352",
       "promoterId": "202",
@@ -15836,12 +15836,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.8,
+          "value": 6.7,
           "id": "tt37510326",
           "url": "https://www.imdb.com/title/tt37510326/"
         },
         "letterboxd": {
-          "value": 3.16,
+          "value": 3.12,
           "url": "https://letterboxd.com/film/the-social-reckoning/"
         }
       },
@@ -15908,12 +15908,12 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92987/purchase?kanal=dxf",
       "eventId": "92987",
       "promoterId": "202",
-      "sold": 41,
+      "sold": 43,
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
       "capacity": 110,
-      "available": 69
+      "available": 67
     },
     {
       "id": "EDI20250183-2026-10-20T19:30:00-Kinosal",
