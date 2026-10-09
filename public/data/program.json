@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-08T17:50:51.325Z",
+  "updatedAt": "2026-10-09T02:55:53.514Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -12137,7 +12137,7 @@
           "url": "https://www.imdb.com/title/tt33029380/"
         },
         "letterboxd": {
-          "value": 2.69,
+          "value": 2.68,
           "url": "https://letterboxd.com/film/marsupilami-2025/"
         }
       },
@@ -12368,7 +12368,7 @@
           "url": "https://www.imdb.com/title/tt33029380/"
         },
         "letterboxd": {
-          "value": 2.69,
+          "value": 2.68,
           "url": "https://letterboxd.com/film/marsupilami-2025/"
         }
       },
@@ -12691,7 +12691,7 @@
           "url": "https://www.imdb.com/title/tt33029380/"
         },
         "letterboxd": {
-          "value": 2.69,
+          "value": 2.68,
           "url": "https://letterboxd.com/film/marsupilami-2025/"
         }
       },
@@ -13086,7 +13086,7 @@
           "url": "https://www.imdb.com/title/tt33029380/"
         },
         "letterboxd": {
-          "value": 2.69,
+          "value": 2.68,
           "url": "https://letterboxd.com/film/marsupilami-2025/"
         }
       },
@@ -13260,7 +13260,7 @@
           "url": "https://www.imdb.com/title/tt33029380/"
         },
         "letterboxd": {
-          "value": 2.69,
+          "value": 2.68,
           "url": "https://letterboxd.com/film/marsupilami-2025/"
         }
       },
@@ -13518,7 +13518,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.4,
+          "value": 6.5,
           "id": "tt36726913",
           "url": "https://www.imdb.com/title/tt36726913/"
         }
@@ -13704,7 +13704,7 @@
           "url": "https://www.imdb.com/title/tt33029380/"
         },
         "letterboxd": {
-          "value": 2.69,
+          "value": 2.68,
           "url": "https://letterboxd.com/film/marsupilami-2025/"
         }
       },
@@ -13791,7 +13791,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.4,
+          "value": 6.5,
           "id": "tt36726913",
           "url": "https://www.imdb.com/title/tt36726913/"
         }
@@ -13977,7 +13977,7 @@
           "url": "https://www.imdb.com/title/tt33029380/"
         },
         "letterboxd": {
-          "value": 2.69,
+          "value": 2.68,
           "url": "https://letterboxd.com/film/marsupilami-2025/"
         }
       },
@@ -14397,7 +14397,7 @@
           "url": "https://www.imdb.com/title/tt33029380/"
         },
         "letterboxd": {
-          "value": 2.69,
+          "value": 2.68,
           "url": "https://letterboxd.com/film/marsupilami-2025/"
         }
       },
@@ -14482,7 +14482,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.4,
+          "value": 6.5,
           "id": "tt36726913",
           "url": "https://www.imdb.com/title/tt36726913/"
         }
@@ -14527,7 +14527,7 @@
           "url": "https://www.imdb.com/title/tt33029380/"
         },
         "letterboxd": {
-          "value": 2.69,
+          "value": 2.68,
           "url": "https://letterboxd.com/film/marsupilami-2025/"
         }
       },
@@ -14561,7 +14561,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93157/purchase?kanal=dxf",
       "eventId": "93157",
       "promoterId": "202",
-      "sold": 15,
+      "sold": 26,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -14578,9 +14578,9 @@
           "url": "https://www.rottentomatoes.com/m/verity"
         }
       },
-      "reserved": 2,
+      "reserved": 0,
       "capacity": 110,
-      "available": 93
+      "available": 84
     },
     {
       "id": "EDI20250794-2026-10-09T16:50:00-Storsal",
@@ -14655,7 +14655,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93186/purchase?kanal=dxf",
       "eventId": "93186",
       "promoterId": "202",
-      "sold": 8,
+      "sold": 14,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -14669,8 +14669,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 102
+      "capacity": 106,
+      "available": 92
     },
     {
       "id": "NOR20230682-2026-10-09T19:00:00-Storsal",
@@ -14703,7 +14703,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.4,
+          "value": 6.5,
           "id": "tt36726913",
           "url": "https://www.imdb.com/title/tt36726913/"
         }
@@ -14738,22 +14738,22 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93318/purchase?kanal=dxf",
       "eventId": "93318",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.7,
+          "value": 6.8,
           "id": "tt37510326",
           "url": "https://www.imdb.com/title/tt37510326/"
         },
         "letterboxd": {
-          "value": 3.2,
+          "value": 3.16,
           "url": "https://letterboxd.com/film/the-social-reckoning/"
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 110
+      "capacity": 108,
+      "available": 106
     },
     {
       "id": "EDI20260552-2026-10-09T21:25:00-Storsal",
@@ -14829,7 +14829,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93335/purchase?kanal=dxf",
       "eventId": "93335",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 10,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -14847,8 +14847,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 110
+      "capacity": 100,
+      "available": 90
     },
     {
       "id": "UIP20221470-2026-10-10T15:30:00-Storsal",
@@ -15017,7 +15017,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.4,
+          "value": 6.5,
           "id": "tt36726913",
           "url": "https://www.imdb.com/title/tt36726913/"
         }
@@ -15056,12 +15056,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.7,
+          "value": 6.8,
           "id": "tt37510326",
           "url": "https://www.imdb.com/title/tt37510326/"
         },
         "letterboxd": {
-          "value": 3.2,
+          "value": 3.16,
           "url": "https://letterboxd.com/film/the-social-reckoning/"
         }
       },
@@ -15290,7 +15290,7 @@
           "url": "https://www.imdb.com/title/tt33029380/"
         },
         "letterboxd": {
-          "value": 2.69,
+          "value": 2.68,
           "url": "https://letterboxd.com/film/marsupilami-2025/"
         }
       },
@@ -15370,12 +15370,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.7,
+          "value": 6.8,
           "id": "tt37510326",
           "url": "https://www.imdb.com/title/tt37510326/"
         },
         "letterboxd": {
-          "value": 3.2,
+          "value": 3.16,
           "url": "https://letterboxd.com/film/the-social-reckoning/"
         }
       },
@@ -15462,7 +15462,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.4,
+          "value": 6.5,
           "id": "tt36726913",
           "url": "https://www.imdb.com/title/tt36726913/"
         }
@@ -15543,12 +15543,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.7,
+          "value": 6.8,
           "id": "tt37510326",
           "url": "https://www.imdb.com/title/tt37510326/"
         },
         "letterboxd": {
-          "value": 3.2,
+          "value": 3.16,
           "url": "https://letterboxd.com/film/the-social-reckoning/"
         }
       },
@@ -15836,12 +15836,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.7,
+          "value": 6.8,
           "id": "tt37510326",
           "url": "https://www.imdb.com/title/tt37510326/"
         },
         "letterboxd": {
-          "value": 3.2,
+          "value": 3.16,
           "url": "https://letterboxd.com/film/the-social-reckoning/"
         }
       },
