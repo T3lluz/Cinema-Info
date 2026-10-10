@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-09T17:25:06.799Z",
+  "updatedAt": "2026-10-10T02:18:31.737Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -13561,7 +13561,7 @@
           "url": "https://www.imdb.com/title/tt31450459/"
         },
         "letterboxd": {
-          "value": 3.85,
+          "value": 3.86,
           "url": "https://letterboxd.com/film/digger-2026/"
         },
         "tomatoes": {
@@ -13834,7 +13834,7 @@
           "url": "https://www.imdb.com/title/tt31450459/"
         },
         "letterboxd": {
-          "value": 3.85,
+          "value": 3.86,
           "url": "https://letterboxd.com/film/digger-2026/"
         },
         "tomatoes": {
@@ -14114,7 +14114,7 @@
           "url": "https://www.imdb.com/title/tt31450459/"
         },
         "letterboxd": {
-          "value": 3.85,
+          "value": 3.86,
           "url": "https://letterboxd.com/film/digger-2026/"
         },
         "tomatoes": {
@@ -14439,7 +14439,7 @@
           "url": "https://www.imdb.com/title/tt31450459/"
         },
         "letterboxd": {
-          "value": 3.85,
+          "value": 3.86,
           "url": "https://letterboxd.com/film/digger-2026/"
         },
         "tomatoes": {
@@ -14742,13 +14742,17 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.7,
+          "value": 6.8,
           "id": "tt37510326",
           "url": "https://www.imdb.com/title/tt37510326/"
         },
         "letterboxd": {
-          "value": 3.12,
+          "value": 3.1,
           "url": "https://letterboxd.com/film/the-social-reckoning/"
+        },
+        "tomatoes": {
+          "value": 74,
+          "url": "https://www.rottentomatoes.com/m/the_social_reckoning"
         }
       },
       "reserved": 0,
@@ -14877,7 +14881,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93363/purchase?kanal=dxf",
       "eventId": "93363",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -14895,8 +14899,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 246,
-      "available": 246
+      "capacity": 244,
+      "available": 242
     },
     {
       "id": "EDI20251787-2026-10-10T17:15:00-Kinosal",
@@ -14974,7 +14978,7 @@
           "url": "https://www.imdb.com/title/tt31450459/"
         },
         "letterboxd": {
-          "value": 3.85,
+          "value": 3.86,
           "url": "https://letterboxd.com/film/digger-2026/"
         },
         "tomatoes": {
@@ -15013,7 +15017,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93336/purchase?kanal=dxf",
       "eventId": "93336",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -15024,7 +15028,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 110
+      "available": 108
     },
     {
       "id": "EDI20260643-2026-10-10T21:00:00-Storsal",
@@ -15056,13 +15060,17 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.7,
+          "value": 6.8,
           "id": "tt37510326",
           "url": "https://www.imdb.com/title/tt37510326/"
         },
         "letterboxd": {
-          "value": 3.12,
+          "value": 3.1,
           "url": "https://letterboxd.com/film/the-social-reckoning/"
+        },
+        "tomatoes": {
+          "value": 74,
+          "url": "https://www.rottentomatoes.com/m/the_social_reckoning"
         }
       },
       "reserved": 0,
@@ -15096,7 +15104,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93306/purchase?kanal=dxf",
       "eventId": "93306",
       "promoterId": "202",
-      "sold": 3,
+      "sold": 5,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -15114,8 +15122,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 107
+      "capacity": 108,
+      "available": 103
     },
     {
       "id": "EDI20251787-2026-10-11T17:15:00-Kinosal",
@@ -15185,7 +15193,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93190/purchase?kanal=dxf",
       "eventId": "93190",
       "promoterId": "202",
-      "sold": 9,
+      "sold": 10,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -15203,8 +15211,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 108,
-      "available": 99
+      "capacity": 110,
+      "available": 100
     },
     {
       "id": "EDI20250794-2026-10-13T17:00:00-Kinosal",
@@ -15370,13 +15378,17 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.7,
+          "value": 6.8,
           "id": "tt37510326",
           "url": "https://www.imdb.com/title/tt37510326/"
         },
         "letterboxd": {
-          "value": 3.12,
+          "value": 3.1,
           "url": "https://letterboxd.com/film/the-social-reckoning/"
+        },
+        "tomatoes": {
+          "value": 74,
+          "url": "https://www.rottentomatoes.com/m/the_social_reckoning"
         }
       },
       "reserved": 0,
@@ -15543,13 +15555,17 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.7,
+          "value": 6.8,
           "id": "tt37510326",
           "url": "https://www.imdb.com/title/tt37510326/"
         },
         "letterboxd": {
-          "value": 3.12,
+          "value": 3.1,
           "url": "https://letterboxd.com/film/the-social-reckoning/"
+        },
+        "tomatoes": {
+          "value": 74,
+          "url": "https://www.rottentomatoes.com/m/the_social_reckoning"
         }
       },
       "reserved": 0,
@@ -15836,13 +15852,17 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.7,
+          "value": 6.8,
           "id": "tt37510326",
           "url": "https://www.imdb.com/title/tt37510326/"
         },
         "letterboxd": {
-          "value": 3.12,
+          "value": 3.1,
           "url": "https://letterboxd.com/film/the-social-reckoning/"
+        },
+        "tomatoes": {
+          "value": 74,
+          "url": "https://www.rottentomatoes.com/m/the_social_reckoning"
         }
       },
       "reserved": 0,
@@ -15908,12 +15928,12 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92987/purchase?kanal=dxf",
       "eventId": "92987",
       "promoterId": "202",
-      "sold": 43,
+      "sold": 45,
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
       "capacity": 110,
-      "available": 67
+      "available": 65
     },
     {
       "id": "EDI20250183-2026-10-20T19:30:00-Kinosal",
@@ -15978,8 +15998,8 @@
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
-      "capacity": 243,
-      "available": 236
+      "capacity": 246,
+      "available": 239
     },
     {
       "id": "BVI20200545-2026-12-16T20:00:00-Kinosal",
@@ -16007,12 +16027,12 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93227/purchase?kanal=dxf",
       "eventId": "93227",
       "promoterId": "202",
-      "sold": 13,
+      "sold": 15,
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
-      "capacity": 110,
-      "available": 97
+      "capacity": 108,
+      "available": 93
     },
     {
       "id": "BVI20200545-2026-12-17T19:15:00-Kinosal",
