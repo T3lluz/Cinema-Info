@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-11T01:50:35.857Z",
+  "updatedAt": "2026-10-11T16:37:35.080Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -12137,7 +12137,7 @@
           "url": "https://www.imdb.com/title/tt33029380/"
         },
         "letterboxd": {
-          "value": 2.68,
+          "value": 2.67,
           "url": "https://letterboxd.com/film/marsupilami-2025/"
         }
       },
@@ -12368,7 +12368,7 @@
           "url": "https://www.imdb.com/title/tt33029380/"
         },
         "letterboxd": {
-          "value": 2.68,
+          "value": 2.67,
           "url": "https://letterboxd.com/film/marsupilami-2025/"
         }
       },
@@ -12691,7 +12691,7 @@
           "url": "https://www.imdb.com/title/tt33029380/"
         },
         "letterboxd": {
-          "value": 2.68,
+          "value": 2.67,
           "url": "https://letterboxd.com/film/marsupilami-2025/"
         }
       },
@@ -13086,7 +13086,7 @@
           "url": "https://www.imdb.com/title/tt33029380/"
         },
         "letterboxd": {
-          "value": 2.68,
+          "value": 2.67,
           "url": "https://letterboxd.com/film/marsupilami-2025/"
         }
       },
@@ -13260,7 +13260,7 @@
           "url": "https://www.imdb.com/title/tt33029380/"
         },
         "letterboxd": {
-          "value": 2.68,
+          "value": 2.67,
           "url": "https://letterboxd.com/film/marsupilami-2025/"
         }
       },
@@ -13704,7 +13704,7 @@
           "url": "https://www.imdb.com/title/tt33029380/"
         },
         "letterboxd": {
-          "value": 2.68,
+          "value": 2.67,
           "url": "https://letterboxd.com/film/marsupilami-2025/"
         }
       },
@@ -13977,7 +13977,7 @@
           "url": "https://www.imdb.com/title/tt33029380/"
         },
         "letterboxd": {
-          "value": 2.68,
+          "value": 2.67,
           "url": "https://letterboxd.com/film/marsupilami-2025/"
         }
       },
@@ -14397,7 +14397,7 @@
           "url": "https://www.imdb.com/title/tt33029380/"
         },
         "letterboxd": {
-          "value": 2.68,
+          "value": 2.67,
           "url": "https://letterboxd.com/film/marsupilami-2025/"
         }
       },
@@ -14527,7 +14527,7 @@
           "url": "https://www.imdb.com/title/tt33029380/"
         },
         "letterboxd": {
-          "value": 2.68,
+          "value": 2.67,
           "url": "https://letterboxd.com/film/marsupilami-2025/"
         }
       },
@@ -14664,7 +14664,7 @@
           "url": "https://www.imdb.com/title/tt13609648/"
         },
         "letterboxd": {
-          "value": 3.87,
+          "value": 3.88,
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         }
       },
@@ -14751,7 +14751,7 @@
           "url": "https://letterboxd.com/film/the-social-reckoning/"
         },
         "tomatoes": {
-          "value": 71,
+          "value": 72,
           "url": "https://www.rottentomatoes.com/m/the_social_reckoning"
         }
       },
@@ -14936,7 +14936,7 @@
           "url": "https://www.imdb.com/title/tt13609648/"
         },
         "letterboxd": {
-          "value": 3.87,
+          "value": 3.88,
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         }
       },
@@ -15069,7 +15069,7 @@
           "url": "https://letterboxd.com/film/the-social-reckoning/"
         },
         "tomatoes": {
-          "value": 71,
+          "value": 72,
           "url": "https://www.rottentomatoes.com/m/the_social_reckoning"
         }
       },
@@ -15104,7 +15104,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93306/purchase?kanal=dxf",
       "eventId": "93306",
       "promoterId": "202",
-      "sold": 5,
+      "sold": 13,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -15123,7 +15123,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 105
+      "available": 97
     },
     {
       "id": "EDI20251787-2026-10-11T17:15:00-Kinosal",
@@ -15150,7 +15150,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93188/purchase?kanal=dxf",
       "eventId": "93188",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 3,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -15159,13 +15159,13 @@
           "url": "https://www.imdb.com/title/tt13609648/"
         },
         "letterboxd": {
-          "value": 3.87,
+          "value": 3.88,
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         }
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 110
+      "available": 107
     },
     {
       "id": "EDI20260552-2026-10-11T20:15:00-Kinosal",
@@ -15193,7 +15193,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93190/purchase?kanal=dxf",
       "eventId": "93190",
       "promoterId": "202",
-      "sold": 14,
+      "sold": 38,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -15211,8 +15211,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 104,
-      "available": 90
+      "capacity": 110,
+      "available": 72
     },
     {
       "id": "EDI20250794-2026-10-13T17:00:00-Kinosal",
@@ -15298,7 +15298,7 @@
           "url": "https://www.imdb.com/title/tt33029380/"
         },
         "letterboxd": {
-          "value": 2.68,
+          "value": 2.67,
           "url": "https://letterboxd.com/film/marsupilami-2025/"
         }
       },
@@ -15340,7 +15340,7 @@
           "url": "https://www.imdb.com/title/tt13609648/"
         },
         "letterboxd": {
-          "value": 3.87,
+          "value": 3.88,
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         }
       },
@@ -15387,7 +15387,7 @@
           "url": "https://letterboxd.com/film/the-social-reckoning/"
         },
         "tomatoes": {
-          "value": 71,
+          "value": 72,
           "url": "https://www.rottentomatoes.com/m/the_social_reckoning"
         }
       },
@@ -15517,7 +15517,7 @@
           "url": "https://www.imdb.com/title/tt13609648/"
         },
         "letterboxd": {
-          "value": 3.87,
+          "value": 3.88,
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         }
       },
@@ -15564,7 +15564,7 @@
           "url": "https://letterboxd.com/film/the-social-reckoning/"
         },
         "tomatoes": {
-          "value": 71,
+          "value": 72,
           "url": "https://www.rottentomatoes.com/m/the_social_reckoning"
         }
       },
@@ -15702,7 +15702,7 @@
           "url": "https://www.imdb.com/title/tt13609648/"
         },
         "letterboxd": {
-          "value": 3.87,
+          "value": 3.88,
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         }
       },
@@ -15740,7 +15740,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.6,
+          "value": 8.5,
           "id": "tt38673337",
           "url": "https://www.imdb.com/title/tt38673337/"
         }
@@ -15775,12 +15775,12 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93116/purchase?kanal=dxf",
       "eventId": "93116",
       "promoterId": "202",
-      "sold": 4,
+      "sold": 9,
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
       "capacity": 110,
-      "available": 106
+      "available": 101
     },
     {
       "id": "EDI20251333-2026-10-16T20:45:00-Storsal",
@@ -15861,7 +15861,7 @@
           "url": "https://letterboxd.com/film/the-social-reckoning/"
         },
         "tomatoes": {
-          "value": 71,
+          "value": 72,
           "url": "https://www.rottentomatoes.com/m/the_social_reckoning"
         }
       },
@@ -15895,12 +15895,12 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93164/purchase?kanal=dxf",
       "eventId": "93164",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 4,
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
       "capacity": 110,
-      "available": 110
+      "available": 106
     },
     {
       "id": "EDI20250183-2026-10-20T13:00:00-Kinosal",
