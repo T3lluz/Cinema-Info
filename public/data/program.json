@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-10T16:12:36.876Z",
+  "updatedAt": "2026-10-11T01:50:35.857Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -15017,7 +15017,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93336/purchase?kanal=dxf",
       "eventId": "93336",
       "promoterId": "202",
-      "sold": 4,
+      "sold": 10,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -15028,7 +15028,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 106
+      "available": 100
     },
     {
       "id": "EDI20260643-2026-10-10T21:00:00-Storsal",
@@ -15193,7 +15193,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93190/purchase?kanal=dxf",
       "eventId": "93190",
       "promoterId": "202",
-      "sold": 10,
+      "sold": 14,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -15211,8 +15211,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 108,
-      "available": 98
+      "capacity": 104,
+      "available": 90
     },
     {
       "id": "EDI20250794-2026-10-13T17:00:00-Kinosal",
@@ -15740,7 +15740,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.5,
+          "value": 8.6,
           "id": "tt38673337",
           "url": "https://www.imdb.com/title/tt38673337/"
         }
