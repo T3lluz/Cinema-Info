@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-13T03:31:29.182Z",
+  "updatedAt": "2026-10-13T18:11:24.623Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -13518,7 +13518,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.7,
+          "value": 6.6,
           "id": "tt36726913",
           "url": "https://www.imdb.com/title/tt36726913/"
         }
@@ -13791,7 +13791,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.7,
+          "value": 6.6,
           "id": "tt36726913",
           "url": "https://www.imdb.com/title/tt36726913/"
         }
@@ -14482,7 +14482,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.7,
+          "value": 6.6,
           "id": "tt36726913",
           "url": "https://www.imdb.com/title/tt36726913/"
         }
@@ -14703,7 +14703,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.7,
+          "value": 6.6,
           "id": "tt36726913",
           "url": "https://www.imdb.com/title/tt36726913/"
         }
@@ -14747,11 +14747,11 @@
           "url": "https://www.imdb.com/title/tt37510326/"
         },
         "letterboxd": {
-          "value": 3.06,
+          "value": 3.05,
           "url": "https://letterboxd.com/film/the-social-reckoning/"
         },
         "tomatoes": {
-          "value": 74,
+          "value": 73,
           "url": "https://www.rottentomatoes.com/m/the_social_reckoning"
         }
       },
@@ -15021,7 +15021,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.7,
+          "value": 6.6,
           "id": "tt36726913",
           "url": "https://www.imdb.com/title/tt36726913/"
         }
@@ -15065,11 +15065,11 @@
           "url": "https://www.imdb.com/title/tt37510326/"
         },
         "letterboxd": {
-          "value": 3.06,
+          "value": 3.05,
           "url": "https://letterboxd.com/film/the-social-reckoning/"
         },
         "tomatoes": {
-          "value": 74,
+          "value": 73,
           "url": "https://www.rottentomatoes.com/m/the_social_reckoning"
         }
       },
@@ -15241,7 +15241,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93364/purchase?kanal=dxf",
       "eventId": "93364",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -15260,7 +15260,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 110
+      "available": 108
     },
     {
       "id": "EDI20260454-2026-10-13T17:30:00-Storsal",
@@ -15331,7 +15331,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93365/purchase?kanal=dxf",
       "eventId": "93365",
       "promoterId": "202",
-      "sold": 1,
+      "sold": 15,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -15346,7 +15346,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 109
+      "available": 95
     },
     {
       "id": "EDI20260643-2026-10-13T20:15:00-Storsal",
@@ -15383,11 +15383,11 @@
           "url": "https://www.imdb.com/title/tt37510326/"
         },
         "letterboxd": {
-          "value": 3.06,
+          "value": 3.05,
           "url": "https://letterboxd.com/film/the-social-reckoning/"
         },
         "tomatoes": {
-          "value": 74,
+          "value": 73,
           "url": "https://www.rottentomatoes.com/m/the_social_reckoning"
         }
       },
@@ -15440,8 +15440,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 283,
-      "available": 280
+      "capacity": 286,
+      "available": 283
     },
     {
       "id": "NOR20230682-2026-10-14T18:00:00-Kinosal",
@@ -15474,7 +15474,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.7,
+          "value": 6.6,
           "id": "tt36726913",
           "url": "https://www.imdb.com/title/tt36726913/"
         }
@@ -15551,7 +15551,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93389/purchase?kanal=dxf",
       "eventId": "93389",
       "promoterId": "202",
-      "sold": 2,
+      "sold": 4,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -15560,17 +15560,17 @@
           "url": "https://www.imdb.com/title/tt37510326/"
         },
         "letterboxd": {
-          "value": 3.06,
+          "value": 3.05,
           "url": "https://letterboxd.com/film/the-social-reckoning/"
         },
         "tomatoes": {
-          "value": 74,
+          "value": 73,
           "url": "https://www.rottentomatoes.com/m/the_social_reckoning"
         }
       },
       "reserved": 0,
       "capacity": 108,
-      "available": 106
+      "available": 104
     },
     {
       "id": "EDI20250794-2026-10-15T17:00:00-Kinosal",
@@ -15864,12 +15864,12 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93116/purchase?kanal=dxf",
       "eventId": "93116",
       "promoterId": "202",
-      "sold": 23,
+      "sold": 28,
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
       "capacity": 110,
-      "available": 87
+      "available": 82
     },
     {
       "id": "EDI20251333-2026-10-16T20:45:00-Storsal",
@@ -15951,11 +15951,11 @@
           "url": "https://www.imdb.com/title/tt37510326/"
         },
         "letterboxd": {
-          "value": 3.06,
+          "value": 3.05,
           "url": "https://letterboxd.com/film/the-social-reckoning/"
         },
         "tomatoes": {
-          "value": 74,
+          "value": 73,
           "url": "https://www.rottentomatoes.com/m/the_social_reckoning"
         }
       },
@@ -15964,11 +15964,11 @@
       "available": 110
     },
     {
-      "id": "EDI20250794-2026-10-17T13:50:00-Kinosal",
+      "id": "EDI20250794-2026-10-17T15:00:00-Storsal",
       "title": "Sauen Shaun - Gårdens fårbannelse",
-      "screen": "Kinosal",
-      "start": "2026-10-17T13:50:00",
-      "end": "2026-10-17T15:20:43",
+      "screen": "Storsal",
+      "start": "2026-10-17T15:00:00",
+      "end": "2026-10-17T16:30:43",
       "dayKey": "2026-10-17",
       "runningMinutes": 81,
       "runningLabel": "1 t. 21 min.",
@@ -16008,15 +16008,15 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 110
+      "capacity": 286,
+      "available": 286
     },
     {
-      "id": "EDI20250084-2026-10-17T16:00:00-Kinosal",
+      "id": "EDI20250084-2026-10-17T15:30:00-Kinosal",
       "title": "Mysteriepakken",
       "screen": "Kinosal",
-      "start": "2026-10-17T16:00:00",
-      "end": "2026-10-17T17:26:00",
+      "start": "2026-10-17T15:30:00",
+      "end": "2026-10-17T16:56:00",
       "dayKey": "2026-10-17",
       "runningMinutes": 86,
       "runningLabel": "1 t. 26 min.",
@@ -16051,44 +16051,53 @@
       "available": 110
     },
     {
-      "id": "EDI20250183-2026-10-17T18:00:00-Kinosal",
-      "title": "Pensjonskuppet",
-      "screen": "Kinosal",
-      "start": "2026-10-17T18:00:00",
-      "end": "2026-10-17T20:01:00",
+      "id": "EDI20251787-2026-10-17T17:15:00-Storsal",
+      "title": "Sense and Sensibility",
+      "screen": "Storsal",
+      "start": "2026-10-17T17:15:00",
+      "end": "2026-10-17T19:37:11",
       "dayKey": "2026-10-17",
-      "runningMinutes": 110,
-      "runningLabel": "1 t. 50 min.",
-      "age": "9 år",
+      "runningMinutes": 132,
+      "runningLabel": "2 t. 12 min.",
+      "age": "Tillatt for alle",
       "tags": [
         "Norsk tekst"
       ],
       "showType": null,
-      "kinoklubb": false,
+      "kinoklubb": true,
       "genres": [
-        "Action",
-        "Comedy",
-        "Crime"
+        "Drama",
+        "Romance"
       ],
-      "director": "Gunnbjörg Gunnarsdottir",
-      "premiere": "2026-10-16",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/b7c7d07d556cff3e5c9868b5e6fd02656f31e59c-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
-      "ticketUrl": "https://checkout.ebillett.no/202/events/93162/purchase?kanal=dxf",
-      "eventId": "93162",
+      "director": "Georgia Oakley",
+      "premiere": "2026-10-09",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/08c062fc034ea81b413d46721ded439a550abcb4-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93423/purchase?kanal=dxf",
+      "eventId": "93423",
       "promoterId": "202",
       "sold": 0,
       "eventStatus": "ok",
-      "ratings": null,
+      "ratings": {
+        "imdb": {
+          "value": 7.2,
+          "id": "tt13609648",
+          "url": "https://www.imdb.com/title/tt13609648/"
+        },
+        "letterboxd": {
+          "value": 3.89,
+          "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
+        }
+      },
       "reserved": 0,
-      "capacity": 110,
-      "available": 110
+      "capacity": 286,
+      "available": 286
     },
     {
-      "id": "EDI20251333-2026-10-17T20:45:00-Kinosal",
+      "id": "EDI20251333-2026-10-17T17:50:00-Kinosal",
       "title": "Street Fighter",
       "screen": "Kinosal",
-      "start": "2026-10-17T20:45:00",
-      "end": "2026-10-17T22:55:00",
+      "start": "2026-10-17T17:50:00",
+      "end": "2026-10-17T20:00:00",
       "dayKey": "2026-10-17",
       "runningMinutes": 119,
       "runningLabel": "1 t. 59 min.",
@@ -16127,6 +16136,86 @@
       "reserved": 0,
       "capacity": 110,
       "available": 110
+    },
+    {
+      "id": "EDI20250183-2026-10-17T20:30:00-Kinosal",
+      "title": "Pensjonskuppet",
+      "screen": "Kinosal",
+      "start": "2026-10-17T20:30:00",
+      "end": "2026-10-17T22:31:00",
+      "dayKey": "2026-10-17",
+      "runningMinutes": 110,
+      "runningLabel": "1 t. 50 min.",
+      "age": "9 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Action",
+        "Comedy",
+        "Crime"
+      ],
+      "director": "Gunnbjörg Gunnarsdottir",
+      "premiere": "2026-10-16",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/b7c7d07d556cff3e5c9868b5e6fd02656f31e59c-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93162/purchase?kanal=dxf",
+      "eventId": "93162",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": null,
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20260643-2026-10-17T21:00:00-Storsal",
+      "title": "The Social Reckoning",
+      "screen": "Storsal",
+      "start": "2026-10-17T21:00:00",
+      "end": "2026-10-17T23:02:28",
+      "dayKey": "2026-10-17",
+      "runningMinutes": 112,
+      "runningLabel": "1 t. 52 min.",
+      "age": "12 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Biography",
+        "Drama",
+        "Thriller"
+      ],
+      "director": "Aaron Sorkin",
+      "premiere": "2026-10-09",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/0fcd90f6ecbf7524a9f39d1df9cc4479415d15d6-1500x2104.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93422/purchase?kanal=dxf",
+      "eventId": "93422",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 6.7,
+          "id": "tt37510326",
+          "url": "https://www.imdb.com/title/tt37510326/"
+        },
+        "letterboxd": {
+          "value": 3.05,
+          "url": "https://letterboxd.com/film/the-social-reckoning/"
+        },
+        "tomatoes": {
+          "value": 73,
+          "url": "https://www.rottentomatoes.com/m/the_social_reckoning"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
     },
     {
       "id": "EDI20250084-2026-10-18T15:00:00-Kinosal",
@@ -16271,12 +16360,12 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92987/purchase?kanal=dxf",
       "eventId": "92987",
       "promoterId": "202",
-      "sold": 56,
+      "sold": 58,
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
-      "capacity": 109,
-      "available": 53
+      "capacity": 108,
+      "available": 50
     },
     {
       "id": "EDI20250084-2026-10-20T17:00:00-Kinosal",
@@ -16351,6 +16440,45 @@
       "available": 92
     },
     {
+      "id": "EDI20250084-2026-10-21T17:00:00-Kinosal",
+      "title": "Mysteriepakken",
+      "screen": "Kinosal",
+      "start": "2026-10-21T17:00:00",
+      "end": "2026-10-21T18:26:00",
+      "dayKey": "2026-10-21",
+      "runningMinutes": 86,
+      "runningLabel": "1 t. 26 min.",
+      "age": "Tillatt for alle",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Documentary",
+        "Adventure",
+        "Family"
+      ],
+      "director": "Silje Evensmo Jacobsen",
+      "premiere": "2026-10-16",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/bea5d2f75ba7e7ee77b5ae7035c351b133d49009-1500x2667.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93184/purchase?kanal=dxf",
+      "eventId": "93184",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 8.5,
+          "id": "tt38673337",
+          "url": "https://www.imdb.com/title/tt38673337/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
       "id": "EDI20250183-2026-10-21T20:00:00-Kinosal",
       "title": "Pensjonskuppet",
       "screen": "Kinosal",
@@ -16379,6 +16507,90 @@
       "sold": 0,
       "eventStatus": "ok",
       "ratings": null,
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20260975-2026-10-23T17:00:00-Kinosal",
+      "title": "Lille spøkelset Laban skøyer igjen",
+      "screen": "Kinosal",
+      "start": "2026-10-23T17:00:00",
+      "end": "2026-10-23T18:11:00",
+      "dayKey": "2026-10-23",
+      "runningMinutes": 61,
+      "runningLabel": "1 t. 1 min.",
+      "age": "Tillatt for alle",
+      "tags": [
+        "Norsk tale",
+        "Utekstet"
+      ],
+      "showType": "Norgespremiere",
+      "kinoklubb": false,
+      "genres": [
+        "Animation",
+        "Family"
+      ],
+      "director": "Alexander Gustavson",
+      "premiere": "2026-10-23",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/9af456586f2b90f0e08d670bdedef2f96e4ee48d-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93374/purchase?kanal=dxf",
+      "eventId": "93374",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 9.4,
+          "id": "tt43714599",
+          "url": "https://www.imdb.com/title/tt43714599/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20251333-2026-10-23T18:45:00-Kinosal",
+      "title": "Street Fighter",
+      "screen": "Kinosal",
+      "start": "2026-10-23T18:45:00",
+      "end": "2026-10-23T20:55:00",
+      "dayKey": "2026-10-23",
+      "runningMinutes": 119,
+      "runningLabel": "1 t. 59 min.",
+      "age": "12 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Action"
+      ],
+      "director": "Kitao Sakurai",
+      "premiere": "2026-10-16",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/118b91932835d0bc0b4d237194dc60e93a805a50-1500x2121.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93372/purchase?kanal=dxf",
+      "eventId": "93372",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 4.2,
+          "id": "tt0111301",
+          "url": "https://www.imdb.com/title/tt0111301/"
+        },
+        "letterboxd": {
+          "value": 2.2,
+          "url": "https://letterboxd.com/film/street-fighter/"
+        },
+        "tomatoes": {
+          "value": 81,
+          "url": "https://www.rottentomatoes.com/m/street_fighter"
+        }
+      },
       "reserved": 0,
       "capacity": 110,
       "available": 110
@@ -16475,12 +16687,12 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93227/purchase?kanal=dxf",
       "eventId": "93227",
       "promoterId": "202",
-      "sold": 16,
+      "sold": 18,
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
       "capacity": 110,
-      "available": 94
+      "available": 92
     },
     {
       "id": "BVI20200545-2026-12-17T19:15:00-Kinosal",
