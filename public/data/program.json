@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-13T18:11:24.623Z",
+  "updatedAt": "2026-10-14T01:53:18.577Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -14751,7 +14751,7 @@
           "url": "https://letterboxd.com/film/the-social-reckoning/"
         },
         "tomatoes": {
-          "value": 73,
+          "value": 72,
           "url": "https://www.rottentomatoes.com/m/the_social_reckoning"
         }
       },
@@ -15069,7 +15069,7 @@
           "url": "https://letterboxd.com/film/the-social-reckoning/"
         },
         "tomatoes": {
-          "value": 73,
+          "value": 72,
           "url": "https://www.rottentomatoes.com/m/the_social_reckoning"
         }
       },
@@ -15387,7 +15387,7 @@
           "url": "https://letterboxd.com/film/the-social-reckoning/"
         },
         "tomatoes": {
-          "value": 73,
+          "value": 72,
           "url": "https://www.rottentomatoes.com/m/the_social_reckoning"
         }
       },
@@ -15564,7 +15564,7 @@
           "url": "https://letterboxd.com/film/the-social-reckoning/"
         },
         "tomatoes": {
-          "value": 73,
+          "value": 72,
           "url": "https://www.rottentomatoes.com/m/the_social_reckoning"
         }
       },
@@ -15864,12 +15864,12 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93116/purchase?kanal=dxf",
       "eventId": "93116",
       "promoterId": "202",
-      "sold": 28,
+      "sold": 33,
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
       "capacity": 110,
-      "available": 82
+      "available": 77
     },
     {
       "id": "EDI20251333-2026-10-16T20:45:00-Storsal",
@@ -15904,8 +15904,8 @@
           "url": "https://www.imdb.com/title/tt0111301/"
         },
         "letterboxd": {
-          "value": 2.2,
-          "url": "https://letterboxd.com/film/street-fighter/"
+          "value": 3.23,
+          "url": "https://letterboxd.com/film/street-fighter-2026/"
         },
         "tomatoes": {
           "value": 81,
@@ -15955,7 +15955,7 @@
           "url": "https://letterboxd.com/film/the-social-reckoning/"
         },
         "tomatoes": {
-          "value": 73,
+          "value": 72,
           "url": "https://www.rottentomatoes.com/m/the_social_reckoning"
         }
       },
@@ -16125,8 +16125,8 @@
           "url": "https://www.imdb.com/title/tt0111301/"
         },
         "letterboxd": {
-          "value": 2.2,
-          "url": "https://letterboxd.com/film/street-fighter/"
+          "value": 3.23,
+          "url": "https://letterboxd.com/film/street-fighter-2026/"
         },
         "tomatoes": {
           "value": 81,
@@ -16209,7 +16209,7 @@
           "url": "https://letterboxd.com/film/the-social-reckoning/"
         },
         "tomatoes": {
-          "value": 73,
+          "value": 72,
           "url": "https://www.rottentomatoes.com/m/the_social_reckoning"
         }
       },
@@ -16322,8 +16322,8 @@
           "url": "https://www.imdb.com/title/tt0111301/"
         },
         "letterboxd": {
-          "value": 2.2,
-          "url": "https://letterboxd.com/film/street-fighter/"
+          "value": 3.23,
+          "url": "https://letterboxd.com/film/street-fighter-2026/"
         },
         "tomatoes": {
           "value": 81,
@@ -16583,8 +16583,8 @@
           "url": "https://www.imdb.com/title/tt0111301/"
         },
         "letterboxd": {
-          "value": 2.2,
-          "url": "https://letterboxd.com/film/street-fighter/"
+          "value": 3.23,
+          "url": "https://letterboxd.com/film/street-fighter-2026/"
         },
         "tomatoes": {
           "value": 81,
