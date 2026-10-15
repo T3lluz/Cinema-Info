@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-14T15:48:08.364Z",
+  "updatedAt": "2026-10-15T01:26:38.642Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -15508,7 +15508,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93387/purchase?kanal=dxf",
       "eventId": "93387",
       "promoterId": "202",
-      "sold": 2,
+      "sold": 4,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -15523,7 +15523,7 @@
       },
       "reserved": 0,
       "capacity": 286,
-      "available": 284
+      "available": 282
     },
     {
       "id": "EDI20260643-2026-10-14T20:20:00-Kinosal",
@@ -15864,12 +15864,12 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93116/purchase?kanal=dxf",
       "eventId": "93116",
       "promoterId": "202",
-      "sold": 35,
+      "sold": 41,
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
-      "capacity": 110,
-      "available": 75
+      "capacity": 108,
+      "available": 67
     },
     {
       "id": "EDI20251333-2026-10-16T20:45:00-Storsal",
@@ -15899,13 +15899,13 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 4.2,
-          "id": "tt0111301",
-          "url": "https://www.imdb.com/title/tt0111301/"
+          "value": 5.9,
+          "id": "tt27419420",
+          "url": "https://www.imdb.com/title/tt27419420/"
         },
         "letterboxd": {
-          "value": 2.2,
-          "url": "https://letterboxd.com/film/street-fighter/"
+          "value": 2.92,
+          "url": "https://letterboxd.com/film/street-fighter-2026/"
         },
         "tomatoes": {
           "value": 81,
@@ -16120,13 +16120,13 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 4.2,
-          "id": "tt0111301",
-          "url": "https://www.imdb.com/title/tt0111301/"
+          "value": 5.9,
+          "id": "tt27419420",
+          "url": "https://www.imdb.com/title/tt27419420/"
         },
         "letterboxd": {
-          "value": 2.2,
-          "url": "https://letterboxd.com/film/street-fighter/"
+          "value": 2.92,
+          "url": "https://letterboxd.com/film/street-fighter-2026/"
         },
         "tomatoes": {
           "value": 81,
@@ -16317,13 +16317,13 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 4.2,
-          "id": "tt0111301",
-          "url": "https://www.imdb.com/title/tt0111301/"
+          "value": 5.9,
+          "id": "tt27419420",
+          "url": "https://www.imdb.com/title/tt27419420/"
         },
         "letterboxd": {
-          "value": 2.2,
-          "url": "https://letterboxd.com/film/street-fighter/"
+          "value": 2.92,
+          "url": "https://letterboxd.com/film/street-fighter-2026/"
         },
         "tomatoes": {
           "value": 81,
@@ -16360,12 +16360,12 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92987/purchase?kanal=dxf",
       "eventId": "92987",
       "promoterId": "202",
-      "sold": 63,
+      "sold": 71,
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
       "capacity": 110,
-      "available": 47
+      "available": 39
     },
     {
       "id": "EDI20250084-2026-10-20T17:00:00-Kinosal",
@@ -16432,12 +16432,12 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92986/purchase?kanal=dxf",
       "eventId": "92986",
       "promoterId": "202",
-      "sold": 14,
+      "sold": 15,
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
       "capacity": 110,
-      "available": 96
+      "available": 95
     },
     {
       "id": "EDI20250084-2026-10-21T17:00:00-Kinosal",
@@ -16551,6 +16551,45 @@
       "available": 110
     },
     {
+      "id": "EDI20250084-2026-10-23T17:30:00-Storsal",
+      "title": "Mysteriepakken",
+      "screen": "Storsal",
+      "start": "2026-10-23T17:30:00",
+      "end": "2026-10-23T18:56:00",
+      "dayKey": "2026-10-23",
+      "runningMinutes": 86,
+      "runningLabel": "1 t. 26 min.",
+      "age": "Tillatt for alle",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Documentary",
+        "Adventure",
+        "Family"
+      ],
+      "director": "Silje Evensmo Jacobsen",
+      "premiere": "2026-10-16",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/bea5d2f75ba7e7ee77b5ae7035c351b133d49009-1500x2667.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93370/purchase?kanal=dxf",
+      "eventId": "93370",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 8.6,
+          "id": "tt38673337",
+          "url": "https://www.imdb.com/title/tt38673337/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
+    },
+    {
       "id": "EDI20251333-2026-10-23T18:45:00-Kinosal",
       "title": "Street Fighter",
       "screen": "Kinosal",
@@ -16578,13 +16617,13 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 4.2,
-          "id": "tt0111301",
-          "url": "https://www.imdb.com/title/tt0111301/"
+          "value": 5.9,
+          "id": "tt27419420",
+          "url": "https://www.imdb.com/title/tt27419420/"
         },
         "letterboxd": {
-          "value": 2.2,
-          "url": "https://letterboxd.com/film/street-fighter/"
+          "value": 2.92,
+          "url": "https://letterboxd.com/film/street-fighter-2026/"
         },
         "tomatoes": {
           "value": 81,
