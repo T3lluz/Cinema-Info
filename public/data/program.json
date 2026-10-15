@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-15T01:26:38.642Z",
+  "updatedAt": "2026-10-15T15:34:05.761Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -14664,7 +14664,7 @@
           "url": "https://www.imdb.com/title/tt13609648/"
         },
         "letterboxd": {
-          "value": 3.89,
+          "value": 3.93,
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         }
       },
@@ -14747,7 +14747,7 @@
           "url": "https://www.imdb.com/title/tt37510326/"
         },
         "letterboxd": {
-          "value": 3.04,
+          "value": 3.03,
           "url": "https://letterboxd.com/film/the-social-reckoning/"
         },
         "tomatoes": {
@@ -14936,7 +14936,7 @@
           "url": "https://www.imdb.com/title/tt13609648/"
         },
         "letterboxd": {
-          "value": 3.89,
+          "value": 3.93,
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         }
       },
@@ -15065,7 +15065,7 @@
           "url": "https://www.imdb.com/title/tt37510326/"
         },
         "letterboxd": {
-          "value": 3.04,
+          "value": 3.03,
           "url": "https://letterboxd.com/film/the-social-reckoning/"
         },
         "tomatoes": {
@@ -15159,7 +15159,7 @@
           "url": "https://www.imdb.com/title/tt13609648/"
         },
         "letterboxd": {
-          "value": 3.89,
+          "value": 3.93,
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         }
       },
@@ -15340,7 +15340,7 @@
           "url": "https://www.imdb.com/title/tt13609648/"
         },
         "letterboxd": {
-          "value": 3.89,
+          "value": 3.93,
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         }
       },
@@ -15383,7 +15383,7 @@
           "url": "https://www.imdb.com/title/tt37510326/"
         },
         "letterboxd": {
-          "value": 3.04,
+          "value": 3.03,
           "url": "https://letterboxd.com/film/the-social-reckoning/"
         },
         "tomatoes": {
@@ -15517,7 +15517,7 @@
           "url": "https://www.imdb.com/title/tt13609648/"
         },
         "letterboxd": {
-          "value": 3.89,
+          "value": 3.93,
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         }
       },
@@ -15560,7 +15560,7 @@
           "url": "https://www.imdb.com/title/tt37510326/"
         },
         "letterboxd": {
-          "value": 3.04,
+          "value": 3.03,
           "url": "https://letterboxd.com/film/the-social-reckoning/"
         },
         "tomatoes": {
@@ -15599,7 +15599,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93394/purchase?kanal=dxf",
       "eventId": "93394",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 4,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -15618,7 +15618,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 110
+      "available": 106
     },
     {
       "id": "UIP20221470-2026-10-15T17:30:00-Storsal",
@@ -15647,7 +15647,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93399/purchase?kanal=dxf",
       "eventId": "93399",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 4,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -15666,7 +15666,7 @@
       },
       "reserved": 0,
       "capacity": 286,
-      "available": 286
+      "available": 282
     },
     {
       "id": "EDI20251787-2026-10-15T19:30:00-Kinosal",
@@ -15702,7 +15702,7 @@
           "url": "https://www.imdb.com/title/tt13609648/"
         },
         "letterboxd": {
-          "value": 3.89,
+          "value": 3.93,
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         }
       },
@@ -15830,7 +15830,7 @@
           "url": "https://www.imdb.com/title/tt13609648/"
         },
         "letterboxd": {
-          "value": 3.89,
+          "value": 3.93,
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         }
       },
@@ -15864,12 +15864,12 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93116/purchase?kanal=dxf",
       "eventId": "93116",
       "promoterId": "202",
-      "sold": 41,
+      "sold": 50,
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
-      "capacity": 108,
-      "available": 67
+      "capacity": 110,
+      "available": 60
     },
     {
       "id": "EDI20251333-2026-10-16T20:45:00-Storsal",
@@ -15895,16 +15895,16 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93381/purchase?kanal=dxf",
       "eventId": "93381",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 5.9,
+          "value": 6.1,
           "id": "tt27419420",
           "url": "https://www.imdb.com/title/tt27419420/"
         },
         "letterboxd": {
-          "value": 2.92,
+          "value": 2.96,
           "url": "https://letterboxd.com/film/street-fighter-2026/"
         },
         "tomatoes": {
@@ -15914,7 +15914,7 @@
       },
       "reserved": 0,
       "capacity": 246,
-      "available": 246
+      "available": 244
     },
     {
       "id": "EDI20260643-2026-10-16T21:35:00-Kinosal",
@@ -15951,7 +15951,7 @@
           "url": "https://www.imdb.com/title/tt37510326/"
         },
         "letterboxd": {
-          "value": 3.04,
+          "value": 3.03,
           "url": "https://letterboxd.com/film/the-social-reckoning/"
         },
         "tomatoes": {
@@ -16084,7 +16084,7 @@
           "url": "https://www.imdb.com/title/tt13609648/"
         },
         "letterboxd": {
-          "value": 3.89,
+          "value": 3.93,
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         }
       },
@@ -16120,12 +16120,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 5.9,
+          "value": 6.1,
           "id": "tt27419420",
           "url": "https://www.imdb.com/title/tt27419420/"
         },
         "letterboxd": {
-          "value": 2.92,
+          "value": 2.96,
           "url": "https://letterboxd.com/film/street-fighter-2026/"
         },
         "tomatoes": {
@@ -16163,12 +16163,12 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93162/purchase?kanal=dxf",
       "eventId": "93162",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 5,
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
       "capacity": 110,
-      "available": 110
+      "available": 105
     },
     {
       "id": "EDI20260643-2026-10-17T21:00:00-Storsal",
@@ -16205,7 +16205,7 @@
           "url": "https://www.imdb.com/title/tt37510326/"
         },
         "letterboxd": {
-          "value": 3.04,
+          "value": 3.03,
           "url": "https://letterboxd.com/film/the-social-reckoning/"
         },
         "tomatoes": {
@@ -16282,12 +16282,12 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93164/purchase?kanal=dxf",
       "eventId": "93164",
       "promoterId": "202",
-      "sold": 4,
+      "sold": 8,
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
       "capacity": 110,
-      "available": 106
+      "available": 102
     },
     {
       "id": "EDI20251333-2026-10-18T20:15:00-Kinosal",
@@ -16317,12 +16317,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 5.9,
+          "value": 6.1,
           "id": "tt27419420",
           "url": "https://www.imdb.com/title/tt27419420/"
         },
         "letterboxd": {
-          "value": 2.92,
+          "value": 2.96,
           "url": "https://letterboxd.com/film/street-fighter-2026/"
         },
         "tomatoes": {
@@ -16360,12 +16360,12 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92987/purchase?kanal=dxf",
       "eventId": "92987",
       "promoterId": "202",
-      "sold": 71,
+      "sold": 93,
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
-      "capacity": 110,
-      "available": 39
+      "capacity": 108,
+      "available": 15
     },
     {
       "id": "EDI20250084-2026-10-20T17:00:00-Kinosal",
@@ -16432,12 +16432,12 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92986/purchase?kanal=dxf",
       "eventId": "92986",
       "promoterId": "202",
-      "sold": 15,
+      "sold": 24,
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
       "capacity": 110,
-      "available": 95
+      "available": 86
     },
     {
       "id": "EDI20250084-2026-10-21T17:00:00-Kinosal",
@@ -16617,12 +16617,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 5.9,
+          "value": 6.1,
           "id": "tt27419420",
           "url": "https://www.imdb.com/title/tt27419420/"
         },
         "letterboxd": {
-          "value": 2.92,
+          "value": 2.96,
           "url": "https://letterboxd.com/film/street-fighter-2026/"
         },
         "tomatoes": {
@@ -16633,6 +16633,39 @@
       "reserved": 13,
       "capacity": 110,
       "available": 97
+    },
+    {
+      "id": "EDI20250183-2026-10-23T20:15:00-Storsal",
+      "title": "Pensjonskuppet",
+      "screen": "Storsal",
+      "start": "2026-10-23T20:15:00",
+      "end": "2026-10-23T22:15:11",
+      "dayKey": "2026-10-23",
+      "runningMinutes": 110,
+      "runningLabel": "1 t. 50 min.",
+      "age": "9 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Action",
+        "Comedy",
+        "Crime"
+      ],
+      "director": "Gunnbjörg Gunnarsdottir",
+      "premiere": "2026-10-16",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/b7c7d07d556cff3e5c9868b5e6fd02656f31e59c-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93373/purchase?kanal=dxf",
+      "eventId": "93373",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": null,
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
     },
     {
       "id": "WAB20240262-2026-10-23T21:30:00-Kinosal",
@@ -16659,6 +16692,160 @@
       "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/22ed50ebf0c5bc8143fe7606704caead1ff02875-1500x2223.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93369/purchase?kanal=dxf",
       "eventId": "93369",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": null,
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20260975-2026-10-24T15:00:00-Storsal",
+      "title": "Lille spøkelset Laban skøyer igjen",
+      "screen": "Storsal",
+      "start": "2026-10-24T15:00:00",
+      "end": "2026-10-24T16:11:00",
+      "dayKey": "2026-10-24",
+      "runningMinutes": 61,
+      "runningLabel": "1 t. 1 min.",
+      "age": "Tillatt for alle",
+      "tags": [
+        "Norsk tale",
+        "Utekstet"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Animation",
+        "Family"
+      ],
+      "director": "Alexander Gustavson",
+      "premiere": "2026-10-23",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/9af456586f2b90f0e08d670bdedef2f96e4ee48d-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93375/purchase?kanal=dxf",
+      "eventId": "93375",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 9.4,
+          "id": "tt43714599",
+          "url": "https://www.imdb.com/title/tt43714599/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
+    },
+    {
+      "id": "EDI20260513-2026-10-24T15:30:00-Kinosal",
+      "title": "Monster Mia",
+      "screen": "Kinosal",
+      "start": "2026-10-24T15:30:00",
+      "end": "2026-10-24T17:02:57",
+      "dayKey": "2026-10-24",
+      "runningMinutes": 81,
+      "runningLabel": "1 t. 21 min.",
+      "age": "6 år",
+      "tags": [
+        "Norsk tale",
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ],
+      "director": "Verena Fels",
+      "premiere": "2026-10-16",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/fb974225041180a11d91ebb046cc249f344995ac-1500x2250.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93377/purchase?kanal=dxf",
+      "eventId": "93377",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.6,
+          "id": "tt38807889",
+          "url": "https://www.imdb.com/title/tt38807889/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20260632-2026-11-03T13:00:00-Kinosal",
+      "title": "Siri Hustvedt - Dansen rundt selvet",
+      "screen": "Kinosal",
+      "start": "2026-11-03T13:00:00",
+      "end": "2026-11-03T15:00:00",
+      "dayKey": "2026-11-03",
+      "runningMinutes": 110,
+      "runningLabel": "1 t. 50 min.",
+      "age": "Tillatt for alle",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": "Seniorkino",
+      "kinoklubb": false,
+      "genres": [
+        "Documentary"
+      ],
+      "director": "Sabine Lidl",
+      "premiere": "2026-08-28",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/30f8bc7bb3157ee264cf154405a2a76bf8fd1563-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93426/purchase?kanal=dxf",
+      "eventId": "93426",
+      "promoterId": "202",
+      "sold": 4,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.5,
+          "id": "tt39368552",
+          "url": "https://www.imdb.com/title/tt39368552/"
+        },
+        "letterboxd": {
+          "value": 3.66,
+          "url": "https://letterboxd.com/film/siri-hustvedt-dance-around-the-self/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 106,
+      "available": 102
+    },
+    {
+      "id": "NOR20240691-2026-11-06T17:00:00-Kinosal",
+      "title": "Julenissens verksted",
+      "screen": "Kinosal",
+      "start": "2026-11-06T17:00:00",
+      "end": "2026-11-06T18:25:00",
+      "dayKey": "2026-11-06",
+      "runningMinutes": 73,
+      "runningLabel": "1 t. 13 min.",
+      "age": "Tillatt for alle",
+      "tags": [
+        "Norsk tale",
+        "Norsk tekst"
+      ],
+      "showType": "Norgespremiere",
+      "kinoklubb": false,
+      "genres": [
+        "Animation",
+        "Comedy",
+        "Family"
+      ],
+      "director": "Rasmus A. Sivertsen, Mette Tange",
+      "premiere": "2026-11-06",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/48e8411522836146104d015dc86ab395cacf0345-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93285/purchase?kanal=dxf",
+      "eventId": "93285",
       "promoterId": "202",
       "sold": 0,
       "eventStatus": "ok",
@@ -16726,12 +16913,12 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93227/purchase?kanal=dxf",
       "eventId": "93227",
       "promoterId": "202",
-      "sold": 18,
+      "sold": 20,
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
       "capacity": 110,
-      "available": 92
+      "available": 90
     },
     {
       "id": "BVI20200545-2026-12-17T19:15:00-Kinosal",
