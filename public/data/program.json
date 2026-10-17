@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-16T15:21:12.332Z",
+  "updatedAt": "2026-10-17T01:17:12.868Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -13518,7 +13518,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.5,
+          "value": 6.6,
           "id": "tt36726913",
           "url": "https://www.imdb.com/title/tt36726913/"
         }
@@ -13791,7 +13791,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.5,
+          "value": 6.6,
           "id": "tt36726913",
           "url": "https://www.imdb.com/title/tt36726913/"
         }
@@ -14482,7 +14482,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.5,
+          "value": 6.6,
           "id": "tt36726913",
           "url": "https://www.imdb.com/title/tt36726913/"
         }
@@ -14703,7 +14703,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.5,
+          "value": 6.6,
           "id": "tt36726913",
           "url": "https://www.imdb.com/title/tt36726913/"
         }
@@ -14751,7 +14751,7 @@
           "url": "https://letterboxd.com/film/the-social-reckoning/"
         },
         "tomatoes": {
-          "value": 71,
+          "value": 72,
           "url": "https://www.rottentomatoes.com/m/the_social_reckoning"
         }
       },
@@ -15021,7 +15021,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.5,
+          "value": 6.6,
           "id": "tt36726913",
           "url": "https://www.imdb.com/title/tt36726913/"
         }
@@ -15069,7 +15069,7 @@
           "url": "https://letterboxd.com/film/the-social-reckoning/"
         },
         "tomatoes": {
-          "value": 71,
+          "value": 72,
           "url": "https://www.rottentomatoes.com/m/the_social_reckoning"
         }
       },
@@ -15387,7 +15387,7 @@
           "url": "https://letterboxd.com/film/the-social-reckoning/"
         },
         "tomatoes": {
-          "value": 71,
+          "value": 72,
           "url": "https://www.rottentomatoes.com/m/the_social_reckoning"
         }
       },
@@ -15474,7 +15474,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.5,
+          "value": 6.6,
           "id": "tt36726913",
           "url": "https://www.imdb.com/title/tt36726913/"
         }
@@ -15564,7 +15564,7 @@
           "url": "https://letterboxd.com/film/the-social-reckoning/"
         },
         "tomatoes": {
-          "value": 71,
+          "value": 72,
           "url": "https://www.rottentomatoes.com/m/the_social_reckoning"
         }
       },
@@ -15864,12 +15864,18 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93116/purchase?kanal=dxf",
       "eventId": "93116",
       "promoterId": "202",
-      "sold": 62,
+      "sold": 69,
       "eventStatus": "ok",
-      "ratings": null,
+      "ratings": {
+        "imdb": {
+          "value": 8.6,
+          "id": "tt39453840",
+          "url": "https://www.imdb.com/title/tt39453840/"
+        }
+      },
       "reserved": 0,
       "capacity": 110,
-      "available": 48
+      "available": 41
     },
     {
       "id": "EDI20251333-2026-10-16T20:45:00-Storsal",
@@ -15895,7 +15901,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93381/purchase?kanal=dxf",
       "eventId": "93381",
       "promoterId": "202",
-      "sold": 4,
+      "sold": 9,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -15904,17 +15910,17 @@
           "url": "https://www.imdb.com/title/tt27419420/"
         },
         "letterboxd": {
-          "value": 2.9,
+          "value": 2.88,
           "url": "https://letterboxd.com/film/street-fighter-2026/"
         },
         "tomatoes": {
-          "value": 82,
+          "value": 79,
           "url": "https://www.rottentomatoes.com/m/street_fighter_2026"
         }
       },
       "reserved": 0,
       "capacity": 246,
-      "available": 242
+      "available": 237
     },
     {
       "id": "EDI20260643-2026-10-16T21:35:00-Kinosal",
@@ -15955,7 +15961,7 @@
           "url": "https://letterboxd.com/film/the-social-reckoning/"
         },
         "tomatoes": {
-          "value": 71,
+          "value": 72,
           "url": "https://www.rottentomatoes.com/m/the_social_reckoning"
         }
       },
@@ -16125,11 +16131,11 @@
           "url": "https://www.imdb.com/title/tt27419420/"
         },
         "letterboxd": {
-          "value": 2.9,
+          "value": 2.88,
           "url": "https://letterboxd.com/film/street-fighter-2026/"
         },
         "tomatoes": {
-          "value": 82,
+          "value": 79,
           "url": "https://www.rottentomatoes.com/m/street_fighter_2026"
         }
       },
@@ -16163,12 +16169,18 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93162/purchase?kanal=dxf",
       "eventId": "93162",
       "promoterId": "202",
-      "sold": 11,
+      "sold": 20,
       "eventStatus": "ok",
-      "ratings": null,
+      "ratings": {
+        "imdb": {
+          "value": 8.6,
+          "id": "tt39453840",
+          "url": "https://www.imdb.com/title/tt39453840/"
+        }
+      },
       "reserved": 0,
       "capacity": 110,
-      "available": 99
+      "available": 90
     },
     {
       "id": "EDI20260643-2026-10-17T21:00:00-Storsal",
@@ -16209,7 +16221,7 @@
           "url": "https://letterboxd.com/film/the-social-reckoning/"
         },
         "tomatoes": {
-          "value": 71,
+          "value": 72,
           "url": "https://www.rottentomatoes.com/m/the_social_reckoning"
         }
       },
@@ -16284,10 +16296,16 @@
       "promoterId": "202",
       "sold": 19,
       "eventStatus": "ok",
-      "ratings": null,
+      "ratings": {
+        "imdb": {
+          "value": 8.6,
+          "id": "tt39453840",
+          "url": "https://www.imdb.com/title/tt39453840/"
+        }
+      },
       "reserved": 2,
-      "capacity": 107,
-      "available": 86
+      "capacity": 110,
+      "available": 89
     },
     {
       "id": "EDI20251333-2026-10-18T20:15:00-Kinosal",
@@ -16322,11 +16340,11 @@
           "url": "https://www.imdb.com/title/tt27419420/"
         },
         "letterboxd": {
-          "value": 2.9,
+          "value": 2.88,
           "url": "https://letterboxd.com/film/street-fighter-2026/"
         },
         "tomatoes": {
-          "value": 82,
+          "value": 79,
           "url": "https://www.rottentomatoes.com/m/street_fighter_2026"
         }
       },
@@ -16360,12 +16378,18 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92987/purchase?kanal=dxf",
       "eventId": "92987",
       "promoterId": "202",
-      "sold": 96,
+      "sold": 98,
       "eventStatus": "ok",
-      "ratings": null,
+      "ratings": {
+        "imdb": {
+          "value": 8.6,
+          "id": "tt39453840",
+          "url": "https://www.imdb.com/title/tt39453840/"
+        }
+      },
       "reserved": 2,
-      "capacity": 110,
-      "available": 12
+      "capacity": 108,
+      "available": 8
     },
     {
       "id": "EDI20250084-2026-10-20T17:00:00-Kinosal",
@@ -16439,11 +16463,11 @@
           "url": "https://www.imdb.com/title/tt27419420/"
         },
         "letterboxd": {
-          "value": 2.9,
+          "value": 2.88,
           "url": "https://letterboxd.com/film/street-fighter-2026/"
         },
         "tomatoes": {
-          "value": 82,
+          "value": 79,
           "url": "https://www.rottentomatoes.com/m/street_fighter_2026"
         }
       },
@@ -16479,7 +16503,13 @@
       "promoterId": "202",
       "sold": 32,
       "eventStatus": "ok",
-      "ratings": null,
+      "ratings": {
+        "imdb": {
+          "value": 8.6,
+          "id": "tt39453840",
+          "url": "https://www.imdb.com/title/tt39453840/"
+        }
+      },
       "reserved": 0,
       "capacity": 107,
       "available": 75
@@ -16515,7 +16545,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.5,
+          "value": 6.6,
           "id": "tt36726913",
           "url": "https://www.imdb.com/title/tt36726913/"
         }
@@ -16591,7 +16621,13 @@
       "promoterId": "202",
       "sold": 2,
       "eventStatus": "ok",
-      "ratings": null,
+      "ratings": {
+        "imdb": {
+          "value": 8.6,
+          "id": "tt39453840",
+          "url": "https://www.imdb.com/title/tt39453840/"
+        }
+      },
       "reserved": 0,
       "capacity": 110,
       "available": 108
@@ -16711,7 +16747,13 @@
       "promoterId": "202",
       "sold": 0,
       "eventStatus": "ok",
-      "ratings": null,
+      "ratings": {
+        "imdb": {
+          "value": 8.6,
+          "id": "tt39453840",
+          "url": "https://www.imdb.com/title/tt39453840/"
+        }
+      },
       "reserved": 0,
       "capacity": 96,
       "available": 96
@@ -16749,11 +16791,11 @@
           "url": "https://www.imdb.com/title/tt27419420/"
         },
         "letterboxd": {
-          "value": 2.9,
+          "value": 2.88,
           "url": "https://letterboxd.com/film/street-fighter-2026/"
         },
         "tomatoes": {
-          "value": 82,
+          "value": 79,
           "url": "https://www.rottentomatoes.com/m/street_fighter_2026"
         }
       },
@@ -16791,7 +16833,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 9.1,
+          "value": 7.9,
           "id": "tt43714599",
           "url": "https://www.imdb.com/title/tt43714599/"
         }
@@ -16872,11 +16914,11 @@
           "url": "https://www.imdb.com/title/tt27419420/"
         },
         "letterboxd": {
-          "value": 2.9,
+          "value": 2.88,
           "url": "https://letterboxd.com/film/street-fighter-2026/"
         },
         "tomatoes": {
-          "value": 82,
+          "value": 79,
           "url": "https://www.rottentomatoes.com/m/street_fighter_2026"
         }
       },
@@ -16912,7 +16954,13 @@
       "promoterId": "202",
       "sold": 2,
       "eventStatus": "ok",
-      "ratings": null,
+      "ratings": {
+        "imdb": {
+          "value": 8.6,
+          "id": "tt39453840",
+          "url": "https://www.imdb.com/title/tt39453840/"
+        }
+      },
       "reserved": 0,
       "capacity": 244,
       "available": 242
@@ -16980,7 +17028,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 9.1,
+          "value": 7.9,
           "id": "tt43714599",
           "url": "https://www.imdb.com/title/tt43714599/"
         }
@@ -17096,7 +17144,13 @@
       "promoterId": "202",
       "sold": 0,
       "eventStatus": "ok",
-      "ratings": null,
+      "ratings": {
+        "imdb": {
+          "value": 8.6,
+          "id": "tt39453840",
+          "url": "https://www.imdb.com/title/tt39453840/"
+        }
+      },
       "reserved": 0,
       "capacity": 110,
       "available": 110
@@ -17164,7 +17218,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 9.1,
+          "value": 7.9,
           "id": "tt43714599",
           "url": "https://www.imdb.com/title/tt43714599/"
         }
@@ -17283,7 +17337,13 @@
       "promoterId": "202",
       "sold": 0,
       "eventStatus": "ok",
-      "ratings": null,
+      "ratings": {
+        "imdb": {
+          "value": 8.6,
+          "id": "tt39453840",
+          "url": "https://www.imdb.com/title/tt39453840/"
+        }
+      },
       "reserved": 0,
       "capacity": 110,
       "available": 110
@@ -17321,11 +17381,11 @@
           "url": "https://www.imdb.com/title/tt27419420/"
         },
         "letterboxd": {
-          "value": 2.9,
+          "value": 2.88,
           "url": "https://letterboxd.com/film/street-fighter-2026/"
         },
         "tomatoes": {
-          "value": 82,
+          "value": 79,
           "url": "https://www.rottentomatoes.com/m/street_fighter_2026"
         }
       },
@@ -17394,7 +17454,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.5,
+          "value": 7.4,
           "id": "tt39368552",
           "url": "https://www.imdb.com/title/tt39368552/"
         },
