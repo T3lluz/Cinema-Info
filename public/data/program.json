@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-17T14:10:37.674Z",
+  "updatedAt": "2026-10-18T01:00:11.886Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -11162,11 +11162,11 @@
           "url": "https://www.imdb.com/title/tt33305867/"
         },
         "letterboxd": {
-          "value": 2.38,
+          "value": 2.37,
           "url": "https://letterboxd.com/film/spa-weekend-2026/"
         },
         "tomatoes": {
-          "value": 74,
+          "value": 73,
           "url": "https://www.rottentomatoes.com/m/spa_weekend"
         }
       },
@@ -11330,11 +11330,11 @@
           "url": "https://www.imdb.com/title/tt33305867/"
         },
         "letterboxd": {
-          "value": 2.38,
+          "value": 2.37,
           "url": "https://letterboxd.com/film/spa-weekend-2026/"
         },
         "tomatoes": {
-          "value": 74,
+          "value": 73,
           "url": "https://www.rottentomatoes.com/m/spa_weekend"
         }
       },
@@ -11546,11 +11546,11 @@
           "url": "https://www.imdb.com/title/tt33305867/"
         },
         "letterboxd": {
-          "value": 2.38,
+          "value": 2.37,
           "url": "https://letterboxd.com/film/spa-weekend-2026/"
         },
         "tomatoes": {
-          "value": 74,
+          "value": 73,
           "url": "https://www.rottentomatoes.com/m/spa_weekend"
         }
       },
@@ -11667,11 +11667,11 @@
           "url": "https://www.imdb.com/title/tt33305867/"
         },
         "letterboxd": {
-          "value": 2.38,
+          "value": 2.37,
           "url": "https://letterboxd.com/film/spa-weekend-2026/"
         },
         "tomatoes": {
-          "value": 74,
+          "value": 73,
           "url": "https://www.rottentomatoes.com/m/spa_weekend"
         }
       },
@@ -11921,11 +11921,11 @@
           "url": "https://www.imdb.com/title/tt33305867/"
         },
         "letterboxd": {
-          "value": 2.38,
+          "value": 2.37,
           "url": "https://letterboxd.com/film/spa-weekend-2026/"
         },
         "tomatoes": {
-          "value": 74,
+          "value": 73,
           "url": "https://www.rottentomatoes.com/m/spa_weekend"
         }
       },
@@ -12004,11 +12004,11 @@
           "url": "https://www.imdb.com/title/tt33305867/"
         },
         "letterboxd": {
-          "value": 2.38,
+          "value": 2.37,
           "url": "https://letterboxd.com/film/spa-weekend-2026/"
         },
         "tomatoes": {
-          "value": 74,
+          "value": 73,
           "url": "https://www.rottentomatoes.com/m/spa_weekend"
         }
       },
@@ -12226,11 +12226,11 @@
           "url": "https://www.imdb.com/title/tt33305867/"
         },
         "letterboxd": {
-          "value": 2.38,
+          "value": 2.37,
           "url": "https://letterboxd.com/film/spa-weekend-2026/"
         },
         "tomatoes": {
-          "value": 74,
+          "value": 73,
           "url": "https://www.rottentomatoes.com/m/spa_weekend"
         }
       },
@@ -12505,11 +12505,11 @@
           "url": "https://www.imdb.com/title/tt33305867/"
         },
         "letterboxd": {
-          "value": 2.38,
+          "value": 2.37,
           "url": "https://letterboxd.com/film/spa-weekend-2026/"
         },
         "tomatoes": {
-          "value": 74,
+          "value": 73,
           "url": "https://www.rottentomatoes.com/m/spa_weekend"
         }
       },
@@ -13127,11 +13127,11 @@
           "url": "https://www.imdb.com/title/tt33305867/"
         },
         "letterboxd": {
-          "value": 2.38,
+          "value": 2.37,
           "url": "https://letterboxd.com/film/spa-weekend-2026/"
         },
         "tomatoes": {
-          "value": 74,
+          "value": 73,
           "url": "https://www.rottentomatoes.com/m/spa_weekend"
         }
       },
@@ -14206,11 +14206,11 @@
           "url": "https://www.imdb.com/title/tt33305867/"
         },
         "letterboxd": {
-          "value": 2.38,
+          "value": 2.37,
           "url": "https://letterboxd.com/film/spa-weekend-2026/"
         },
         "tomatoes": {
-          "value": 74,
+          "value": 73,
           "url": "https://www.rottentomatoes.com/m/spa_weekend"
         }
       },
@@ -15896,7 +15896,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.8,
+          "value": 8.9,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         }
@@ -15938,7 +15938,7 @@
           "url": "https://www.imdb.com/title/tt27419420/"
         },
         "letterboxd": {
-          "value": 2.86,
+          "value": 2.85,
           "url": "https://letterboxd.com/film/street-fighter-2026/"
         },
         "tomatoes": {
@@ -16109,7 +16109,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93423/purchase?kanal=dxf",
       "eventId": "93423",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 1,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -16128,7 +16128,7 @@
       },
       "reserved": 0,
       "capacity": 286,
-      "available": 286
+      "available": 285
     },
     {
       "id": "EDI20251333-2026-10-17T17:50:00-Kinosal",
@@ -16154,7 +16154,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93163/purchase?kanal=dxf",
       "eventId": "93163",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -16163,7 +16163,7 @@
           "url": "https://www.imdb.com/title/tt27419420/"
         },
         "letterboxd": {
-          "value": 2.86,
+          "value": 2.85,
           "url": "https://letterboxd.com/film/street-fighter-2026/"
         },
         "tomatoes": {
@@ -16173,7 +16173,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 110
+      "available": 108
     },
     {
       "id": "EDI20250183-2026-10-17T20:30:00-Kinosal",
@@ -16201,18 +16201,18 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93162/purchase?kanal=dxf",
       "eventId": "93162",
       "promoterId": "202",
-      "sold": 22,
+      "sold": 36,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.8,
+          "value": 8.9,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         }
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 88
+      "available": 74
     },
     {
       "id": "EDI20260643-2026-10-17T21:00:00-Storsal",
@@ -16326,18 +16326,18 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93164/purchase?kanal=dxf",
       "eventId": "93164",
       "promoterId": "202",
-      "sold": 23,
+      "sold": 30,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.8,
+          "value": 8.9,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         }
       },
       "reserved": 2,
-      "capacity": 108,
-      "available": 83
+      "capacity": 110,
+      "available": 78
     },
     {
       "id": "EDI20251333-2026-10-18T20:15:00-Kinosal",
@@ -16372,7 +16372,7 @@
           "url": "https://www.imdb.com/title/tt27419420/"
         },
         "letterboxd": {
-          "value": 2.86,
+          "value": 2.85,
           "url": "https://letterboxd.com/film/street-fighter-2026/"
         },
         "tomatoes": {
@@ -16414,7 +16414,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.8,
+          "value": 8.9,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         }
@@ -16495,7 +16495,7 @@
           "url": "https://www.imdb.com/title/tt27419420/"
         },
         "letterboxd": {
-          "value": 2.86,
+          "value": 2.85,
           "url": "https://letterboxd.com/film/street-fighter-2026/"
         },
         "tomatoes": {
@@ -16533,18 +16533,18 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92986/purchase?kanal=dxf",
       "eventId": "92986",
       "promoterId": "202",
-      "sold": 32,
+      "sold": 38,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.8,
+          "value": 8.9,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         }
       },
       "reserved": 0,
-      "capacity": 107,
-      "available": 75
+      "capacity": 110,
+      "available": 72
     },
     {
       "id": "NOR20230682-2026-10-20T20:40:00-Storsal",
@@ -16655,7 +16655,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.8,
+          "value": 8.9,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         }
@@ -16781,7 +16781,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.8,
+          "value": 8.9,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         }
@@ -16823,7 +16823,7 @@
           "url": "https://www.imdb.com/title/tt27419420/"
         },
         "letterboxd": {
-          "value": 2.86,
+          "value": 2.85,
           "url": "https://letterboxd.com/film/street-fighter-2026/"
         },
         "tomatoes": {
@@ -16865,7 +16865,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.8,
+          "value": 7.4,
           "id": "tt43714599",
           "url": "https://www.imdb.com/title/tt43714599/"
         }
@@ -16946,7 +16946,7 @@
           "url": "https://www.imdb.com/title/tt27419420/"
         },
         "letterboxd": {
-          "value": 2.86,
+          "value": 2.85,
           "url": "https://letterboxd.com/film/street-fighter-2026/"
         },
         "tomatoes": {
@@ -16988,7 +16988,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.8,
+          "value": 8.9,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         }
@@ -17060,7 +17060,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.8,
+          "value": 7.4,
           "id": "tt43714599",
           "url": "https://www.imdb.com/title/tt43714599/"
         }
@@ -17178,7 +17178,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.8,
+          "value": 8.9,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         }
@@ -17250,7 +17250,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.8,
+          "value": 7.4,
           "id": "tt43714599",
           "url": "https://www.imdb.com/title/tt43714599/"
         }
@@ -17375,7 +17375,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.8,
+          "value": 8.9,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         }
@@ -17417,7 +17417,7 @@
           "url": "https://www.imdb.com/title/tt27419420/"
         },
         "letterboxd": {
-          "value": 2.86,
+          "value": 2.85,
           "url": "https://letterboxd.com/film/street-fighter-2026/"
         },
         "tomatoes": {
@@ -17463,6 +17463,90 @@
       "available": 110
     },
     {
+      "id": "EDI20250183-2026-10-27T13:00:00-Kinosal",
+      "title": "Pensjonskuppet",
+      "screen": "Kinosal",
+      "start": "2026-10-27T13:00:00",
+      "end": "2026-10-27T15:00:11",
+      "dayKey": "2026-10-27",
+      "runningMinutes": 110,
+      "runningLabel": "1 t. 50 min.",
+      "age": "9 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": "Seniorkino",
+      "kinoklubb": false,
+      "genres": [
+        "Action",
+        "Comedy",
+        "Crime"
+      ],
+      "director": "Gunnbjörg Gunnarsdottir",
+      "premiere": "2026-10-16",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/b7c7d07d556cff3e5c9868b5e6fd02656f31e59c-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93454/purchase?kanal=dxf",
+      "eventId": "93454",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 8.9,
+          "id": "tt39453840",
+          "url": "https://www.imdb.com/title/tt39453840/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20251443-2026-10-27T18:00:00-Kinosal",
+      "title": "Spa Weekend",
+      "screen": "Kinosal",
+      "start": "2026-10-27T18:00:00",
+      "end": "2026-10-27T19:47:24",
+      "dayKey": "2026-10-27",
+      "runningMinutes": 97,
+      "runningLabel": "1 t. 37 min.",
+      "age": "6 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": "Strikkekino",
+      "kinoklubb": false,
+      "genres": [
+        "Comedy"
+      ],
+      "director": "Jon Lucas, Scott Moore",
+      "premiere": "2026-09-18",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/10e873e01cd62c1bffabb7004cfc7f82b5ae6b1c-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93471/purchase?kanal=dxf",
+      "eventId": "93471",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 5.4,
+          "id": "tt33305867",
+          "url": "https://www.imdb.com/title/tt33305867/"
+        },
+        "letterboxd": {
+          "value": 2.37,
+          "url": "https://letterboxd.com/film/spa-weekend-2026/"
+        },
+        "tomatoes": {
+          "value": 73,
+          "url": "https://www.rottentomatoes.com/m/spa_weekend"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
       "id": "EDI20260632-2026-11-03T13:00:00-Kinosal",
       "title": "Siri Hustvedt - Dansen rundt selvet",
       "screen": "Kinosal",
@@ -17500,8 +17584,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 106,
-      "available": 102
+      "capacity": 110,
+      "available": 106
     },
     {
       "id": "NOR20240691-2026-11-06T17:00:00-Kinosal",
