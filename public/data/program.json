@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-18T01:00:11.886Z",
+  "updatedAt": "2026-10-18T14:31:53.709Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -14664,11 +14664,11 @@
           "url": "https://www.imdb.com/title/tt13609648/"
         },
         "letterboxd": {
-          "value": 3.98,
+          "value": 3.99,
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 89,
+          "value": 90,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -14940,11 +14940,11 @@
           "url": "https://www.imdb.com/title/tt13609648/"
         },
         "letterboxd": {
-          "value": 3.98,
+          "value": 3.99,
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 89,
+          "value": 90,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -15167,11 +15167,11 @@
           "url": "https://www.imdb.com/title/tt13609648/"
         },
         "letterboxd": {
-          "value": 3.98,
+          "value": 3.99,
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 89,
+          "value": 90,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -15352,11 +15352,11 @@
           "url": "https://www.imdb.com/title/tt13609648/"
         },
         "letterboxd": {
-          "value": 3.98,
+          "value": 3.99,
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 89,
+          "value": 90,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -15533,11 +15533,11 @@
           "url": "https://www.imdb.com/title/tt13609648/"
         },
         "letterboxd": {
-          "value": 3.98,
+          "value": 3.99,
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 89,
+          "value": 90,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -15722,11 +15722,11 @@
           "url": "https://www.imdb.com/title/tt13609648/"
         },
         "letterboxd": {
-          "value": 3.98,
+          "value": 3.99,
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 89,
+          "value": 90,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -15854,11 +15854,11 @@
           "url": "https://www.imdb.com/title/tt13609648/"
         },
         "letterboxd": {
-          "value": 3.98,
+          "value": 3.99,
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 89,
+          "value": 90,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -15896,7 +15896,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.9,
+          "value": 8.5,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         }
@@ -15938,7 +15938,7 @@
           "url": "https://www.imdb.com/title/tt27419420/"
         },
         "letterboxd": {
-          "value": 2.85,
+          "value": 2.84,
           "url": "https://letterboxd.com/film/street-fighter-2026/"
         },
         "tomatoes": {
@@ -16118,11 +16118,11 @@
           "url": "https://www.imdb.com/title/tt13609648/"
         },
         "letterboxd": {
-          "value": 3.98,
+          "value": 3.99,
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 89,
+          "value": 90,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -16163,7 +16163,7 @@
           "url": "https://www.imdb.com/title/tt27419420/"
         },
         "letterboxd": {
-          "value": 2.85,
+          "value": 2.84,
           "url": "https://letterboxd.com/film/street-fighter-2026/"
         },
         "tomatoes": {
@@ -16205,7 +16205,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.9,
+          "value": 8.5,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         }
@@ -16287,7 +16287,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93165/purchase?kanal=dxf",
       "eventId": "93165",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 4,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -16298,7 +16298,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 110
+      "available": 106
     },
     {
       "id": "EDI20250183-2026-10-18T17:30:00-Kinosal",
@@ -16326,18 +16326,18 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93164/purchase?kanal=dxf",
       "eventId": "93164",
       "promoterId": "202",
-      "sold": 30,
+      "sold": 61,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.9,
+          "value": 8.5,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         }
       },
       "reserved": 2,
-      "capacity": 110,
-      "available": 78
+      "capacity": 109,
+      "available": 46
     },
     {
       "id": "EDI20251333-2026-10-18T20:15:00-Kinosal",
@@ -16372,7 +16372,7 @@
           "url": "https://www.imdb.com/title/tt27419420/"
         },
         "letterboxd": {
-          "value": 2.85,
+          "value": 2.84,
           "url": "https://letterboxd.com/film/street-fighter-2026/"
         },
         "tomatoes": {
@@ -16410,18 +16410,18 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92987/purchase?kanal=dxf",
       "eventId": "92987",
       "promoterId": "202",
-      "sold": 98,
+      "sold": 105,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.9,
+          "value": 8.5,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         }
       },
-      "reserved": 2,
+      "reserved": 3,
       "capacity": 110,
-      "available": 10
+      "available": 2
     },
     {
       "id": "EDI20250084-2026-10-20T17:00:00-Kinosal",
@@ -16495,7 +16495,7 @@
           "url": "https://www.imdb.com/title/tt27419420/"
         },
         "letterboxd": {
-          "value": 2.85,
+          "value": 2.84,
           "url": "https://letterboxd.com/film/street-fighter-2026/"
         },
         "tomatoes": {
@@ -16533,18 +16533,18 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92986/purchase?kanal=dxf",
       "eventId": "92986",
       "promoterId": "202",
-      "sold": 38,
+      "sold": 44,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.9,
+          "value": 8.5,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         }
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 72
+      "available": 66
     },
     {
       "id": "NOR20230682-2026-10-20T20:40:00-Storsal",
@@ -16655,7 +16655,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.9,
+          "value": 8.5,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         }
@@ -16781,7 +16781,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.9,
+          "value": 8.5,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         }
@@ -16823,7 +16823,7 @@
           "url": "https://www.imdb.com/title/tt27419420/"
         },
         "letterboxd": {
-          "value": 2.85,
+          "value": 2.84,
           "url": "https://letterboxd.com/film/street-fighter-2026/"
         },
         "tomatoes": {
@@ -16946,7 +16946,7 @@
           "url": "https://www.imdb.com/title/tt27419420/"
         },
         "letterboxd": {
-          "value": 2.85,
+          "value": 2.84,
           "url": "https://letterboxd.com/film/street-fighter-2026/"
         },
         "tomatoes": {
@@ -16988,7 +16988,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.9,
+          "value": 8.5,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         }
@@ -17178,7 +17178,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.9,
+          "value": 8.5,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         }
@@ -17333,11 +17333,11 @@
           "url": "https://www.imdb.com/title/tt13609648/"
         },
         "letterboxd": {
-          "value": 3.98,
+          "value": 3.99,
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 89,
+          "value": 90,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -17375,7 +17375,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.9,
+          "value": 8.5,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         }
@@ -17417,7 +17417,7 @@
           "url": "https://www.imdb.com/title/tt27419420/"
         },
         "letterboxd": {
-          "value": 2.85,
+          "value": 2.84,
           "url": "https://letterboxd.com/film/street-fighter-2026/"
         },
         "tomatoes": {
@@ -17488,18 +17488,18 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93454/purchase?kanal=dxf",
       "eventId": "93454",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 4,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.9,
+          "value": 8.5,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         }
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 110
+      "available": 106
     },
     {
       "id": "EDI20251443-2026-10-27T18:00:00-Kinosal",
@@ -17579,7 +17579,7 @@
           "url": "https://www.imdb.com/title/tt39368552/"
         },
         "letterboxd": {
-          "value": 3.66,
+          "value": 3.67,
           "url": "https://letterboxd.com/film/siri-hustvedt-dance-around-the-self/"
         }
       },
