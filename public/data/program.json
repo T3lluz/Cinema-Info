@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-19T01:13:09.502Z",
+  "updatedAt": "2026-10-19T17:26:22.156Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -14668,7 +14668,7 @@
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 89,
+          "value": 88,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -14944,7 +14944,7 @@
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 89,
+          "value": 88,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -15171,7 +15171,7 @@
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 89,
+          "value": 88,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -15356,7 +15356,7 @@
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 89,
+          "value": 88,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -15537,7 +15537,7 @@
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 89,
+          "value": 88,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -15726,7 +15726,7 @@
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 89,
+          "value": 88,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -15858,7 +15858,7 @@
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 89,
+          "value": 88,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -15938,11 +15938,11 @@
           "url": "https://www.imdb.com/title/tt27419420/"
         },
         "letterboxd": {
-          "value": 2.84,
+          "value": 2.83,
           "url": "https://letterboxd.com/film/street-fighter-2026/"
         },
         "tomatoes": {
-          "value": 80,
+          "value": 79,
           "url": "https://www.rottentomatoes.com/m/street_fighter_2026"
         }
       },
@@ -16122,7 +16122,7 @@
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 89,
+          "value": 88,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -16163,11 +16163,11 @@
           "url": "https://www.imdb.com/title/tt27419420/"
         },
         "letterboxd": {
-          "value": 2.84,
+          "value": 2.83,
           "url": "https://letterboxd.com/film/street-fighter-2026/"
         },
         "tomatoes": {
-          "value": 80,
+          "value": 79,
           "url": "https://www.rottentomatoes.com/m/street_fighter_2026"
         }
       },
@@ -16372,11 +16372,11 @@
           "url": "https://www.imdb.com/title/tt27419420/"
         },
         "letterboxd": {
-          "value": 2.84,
+          "value": 2.83,
           "url": "https://letterboxd.com/film/street-fighter-2026/"
         },
         "tomatoes": {
-          "value": 80,
+          "value": 79,
           "url": "https://www.rottentomatoes.com/m/street_fighter_2026"
         }
       },
@@ -16445,11 +16445,11 @@
       ],
       "director": "Silje Evensmo Jacobsen",
       "premiere": "2026-10-16",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/bea5d2f75ba7e7ee77b5ae7035c351b133d49009-1500x2667.webp?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/e796551111af9fba503fffcbd45d77f4a13d0521-1080x1527.png?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93181/purchase?kanal=dxf",
       "eventId": "93181",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 5,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -16459,8 +16459,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 110
+      "capacity": 108,
+      "available": 103
     },
     {
       "id": "EDI20251333-2026-10-20T18:00:00-Storsal",
@@ -16495,11 +16495,11 @@
           "url": "https://www.imdb.com/title/tt27419420/"
         },
         "letterboxd": {
-          "value": 2.84,
+          "value": 2.83,
           "url": "https://letterboxd.com/film/street-fighter-2026/"
         },
         "tomatoes": {
-          "value": 80,
+          "value": 79,
           "url": "https://www.rottentomatoes.com/m/street_fighter_2026"
         }
       },
@@ -16533,7 +16533,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92986/purchase?kanal=dxf",
       "eventId": "92986",
       "promoterId": "202",
-      "sold": 51,
+      "sold": 61,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -16544,7 +16544,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 59
+      "available": 49
     },
     {
       "id": "NOR20230682-2026-10-20T20:40:00-Storsal",
@@ -16608,7 +16608,7 @@
       ],
       "director": "Silje Evensmo Jacobsen",
       "premiere": "2026-10-16",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/bea5d2f75ba7e7ee77b5ae7035c351b133d49009-1500x2667.webp?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/e796551111af9fba503fffcbd45d77f4a13d0521-1080x1527.png?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93184/purchase?kanal=dxf",
       "eventId": "93184",
       "promoterId": "202",
@@ -16651,7 +16651,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93185/purchase?kanal=dxf",
       "eventId": "93185",
       "promoterId": "202",
-      "sold": 2,
+      "sold": 5,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -16661,8 +16661,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 108
+      "capacity": 107,
+      "available": 102
     },
     {
       "id": "EDI20250084-2026-10-22T17:00:00-Kinosal",
@@ -16686,7 +16686,7 @@
       ],
       "director": "Silje Evensmo Jacobsen",
       "premiere": "2026-10-16",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/bea5d2f75ba7e7ee77b5ae7035c351b133d49009-1500x2667.webp?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/e796551111af9fba503fffcbd45d77f4a13d0521-1080x1527.png?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93425/purchase?kanal=dxf",
       "eventId": "93425",
       "promoterId": "202",
@@ -16777,7 +16777,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93408/purchase?kanal=dxf",
       "eventId": "93408",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -16786,9 +16786,9 @@
           "url": "https://www.imdb.com/title/tt39453840/"
         }
       },
-      "reserved": 0,
-      "capacity": 96,
-      "available": 96
+      "reserved": 20,
+      "capacity": 110,
+      "available": 88
     },
     {
       "id": "EDI20251333-2026-10-22T20:15:00-Storsal",
@@ -16823,11 +16823,11 @@
           "url": "https://www.imdb.com/title/tt27419420/"
         },
         "letterboxd": {
-          "value": 2.84,
+          "value": 2.83,
           "url": "https://letterboxd.com/film/street-fighter-2026/"
         },
         "tomatoes": {
-          "value": 80,
+          "value": 79,
           "url": "https://www.rottentomatoes.com/m/street_fighter_2026"
         }
       },
@@ -16896,7 +16896,7 @@
       ],
       "director": "Silje Evensmo Jacobsen",
       "premiere": "2026-10-16",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/bea5d2f75ba7e7ee77b5ae7035c351b133d49009-1500x2667.webp?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/e796551111af9fba503fffcbd45d77f4a13d0521-1080x1527.png?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93370/purchase?kanal=dxf",
       "eventId": "93370",
       "promoterId": "202",
@@ -16946,11 +16946,11 @@
           "url": "https://www.imdb.com/title/tt27419420/"
         },
         "letterboxd": {
-          "value": 2.84,
+          "value": 2.83,
           "url": "https://letterboxd.com/film/street-fighter-2026/"
         },
         "tomatoes": {
-          "value": 80,
+          "value": 79,
           "url": "https://www.rottentomatoes.com/m/street_fighter_2026"
         }
       },
@@ -17002,7 +17002,7 @@
       "title": "Clayface",
       "screen": "Kinosal",
       "start": "2026-10-23T21:30:00",
-      "end": "2026-10-23T23:40:00",
+      "end": "2026-10-23T23:29:00",
       "dayKey": "2026-10-23",
       "runningMinutes": 108,
       "runningLabel": "1 t. 48 min.",
@@ -17131,7 +17131,7 @@
       ],
       "director": "Silje Evensmo Jacobsen",
       "premiere": "2026-10-16",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/bea5d2f75ba7e7ee77b5ae7035c351b133d49009-1500x2667.webp?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/e796551111af9fba503fffcbd45d77f4a13d0521-1080x1527.png?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93376/purchase?kanal=dxf",
       "eventId": "93376",
       "promoterId": "202",
@@ -17192,7 +17192,7 @@
       "title": "Clayface",
       "screen": "Kinosal",
       "start": "2026-10-24T20:45:00",
-      "end": "2026-10-24T22:55:00",
+      "end": "2026-10-24T22:44:00",
       "dayKey": "2026-10-24",
       "runningMinutes": 108,
       "runningLabel": "1 t. 48 min.",
@@ -17337,7 +17337,7 @@
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 89,
+          "value": 88,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -17371,7 +17371,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93403/purchase?kanal=dxf",
       "eventId": "93403",
       "promoterId": "202",
-      "sold": 4,
+      "sold": 6,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -17382,7 +17382,7 @@
       },
       "reserved": 0,
       "capacity": 108,
-      "available": 104
+      "available": 102
     },
     {
       "id": "EDI20251333-2026-10-25T19:45:00-Storsal",
@@ -17417,11 +17417,11 @@
           "url": "https://www.imdb.com/title/tt27419420/"
         },
         "letterboxd": {
-          "value": 2.84,
+          "value": 2.83,
           "url": "https://letterboxd.com/film/street-fighter-2026/"
         },
         "tomatoes": {
-          "value": 80,
+          "value": 79,
           "url": "https://www.rottentomatoes.com/m/street_fighter_2026"
         }
       },
@@ -17434,7 +17434,7 @@
       "title": "Clayface",
       "screen": "Kinosal",
       "start": "2026-10-25T20:30:00",
-      "end": "2026-10-25T22:40:00",
+      "end": "2026-10-25T22:29:00",
       "dayKey": "2026-10-25",
       "runningMinutes": 108,
       "runningLabel": "1 t. 48 min.",
@@ -17488,7 +17488,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93454/purchase?kanal=dxf",
       "eventId": "93454",
       "promoterId": "202",
-      "sold": 5,
+      "sold": 19,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -17498,8 +17498,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 105
+      "capacity": 108,
+      "available": 89
     },
     {
       "id": "EDI20251443-2026-10-27T18:00:00-Kinosal",
@@ -17586,40 +17586,6 @@
       "reserved": 0,
       "capacity": 110,
       "available": 106
-    },
-    {
-      "id": "NOR20240691-2026-11-06T17:00:00-Kinosal",
-      "title": "Julenissens verksted",
-      "screen": "Kinosal",
-      "start": "2026-11-06T17:00:00",
-      "end": "2026-11-06T18:25:00",
-      "dayKey": "2026-11-06",
-      "runningMinutes": 73,
-      "runningLabel": "1 t. 13 min.",
-      "age": "Tillatt for alle",
-      "tags": [
-        "Norsk tale",
-        "Norsk tekst"
-      ],
-      "showType": "Norgespremiere",
-      "kinoklubb": false,
-      "genres": [
-        "Animation",
-        "Comedy",
-        "Family"
-      ],
-      "director": "Rasmus A. Sivertsen, Mette Tange",
-      "premiere": "2026-11-06",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/48e8411522836146104d015dc86ab395cacf0345-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
-      "ticketUrl": "https://checkout.ebillett.no/202/events/93285/purchase?kanal=dxf",
-      "eventId": "93285",
-      "promoterId": "202",
-      "sold": 2,
-      "eventStatus": "ok",
-      "ratings": null,
-      "reserved": 0,
-      "capacity": 110,
-      "available": 108
     },
     {
       "id": "EDI20251399-2026-11-17T13:00:00-Kinosal",
