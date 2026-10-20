@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-20T01:48:13.600Z",
+  "updatedAt": "2026-10-20T15:37:41.736Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -15938,7 +15938,7 @@
           "url": "https://www.imdb.com/title/tt27419420/"
         },
         "letterboxd": {
-          "value": 2.83,
+          "value": 2.82,
           "url": "https://letterboxd.com/film/street-fighter-2026/"
         },
         "tomatoes": {
@@ -16163,7 +16163,7 @@
           "url": "https://www.imdb.com/title/tt27419420/"
         },
         "letterboxd": {
-          "value": 2.83,
+          "value": 2.82,
           "url": "https://letterboxd.com/film/street-fighter-2026/"
         },
         "tomatoes": {
@@ -16372,7 +16372,7 @@
           "url": "https://www.imdb.com/title/tt27419420/"
         },
         "letterboxd": {
-          "value": 2.83,
+          "value": 2.82,
           "url": "https://letterboxd.com/film/street-fighter-2026/"
         },
         "tomatoes": {
@@ -16410,7 +16410,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92987/purchase?kanal=dxf",
       "eventId": "92987",
       "promoterId": "202",
-      "sold": 108,
+      "sold": 110,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -16419,7 +16419,7 @@
           "url": "https://www.imdb.com/title/tt39453840/"
         }
       },
-      "reserved": 2,
+      "reserved": 0,
       "capacity": 110,
       "available": 0
     },
@@ -16459,8 +16459,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 108,
-      "available": 103
+      "capacity": 110,
+      "available": 105
     },
     {
       "id": "EDI20251333-2026-10-20T18:00:00-Storsal",
@@ -16495,7 +16495,7 @@
           "url": "https://www.imdb.com/title/tt27419420/"
         },
         "letterboxd": {
-          "value": 2.83,
+          "value": 2.82,
           "url": "https://letterboxd.com/film/street-fighter-2026/"
         },
         "tomatoes": {
@@ -16533,7 +16533,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/92986/purchase?kanal=dxf",
       "eventId": "92986",
       "promoterId": "202",
-      "sold": 74,
+      "sold": 100,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -16542,9 +16542,9 @@
           "url": "https://www.imdb.com/title/tt39453840/"
         }
       },
-      "reserved": 0,
-      "capacity": 108,
-      "available": 34
+      "reserved": 1,
+      "capacity": 110,
+      "available": 9
     },
     {
       "id": "NOR20230682-2026-10-20T20:40:00-Storsal",
@@ -16651,7 +16651,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93185/purchase?kanal=dxf",
       "eventId": "93185",
       "promoterId": "202",
-      "sold": 10,
+      "sold": 26,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -16662,7 +16662,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 100
+      "available": 84
     },
     {
       "id": "EDI20250084-2026-10-22T17:00:00-Kinosal",
@@ -16777,7 +16777,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93408/purchase?kanal=dxf",
       "eventId": "93408",
       "promoterId": "202",
-      "sold": 4,
+      "sold": 16,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -16787,8 +16787,8 @@
         }
       },
       "reserved": 20,
-      "capacity": 110,
-      "available": 86
+      "capacity": 108,
+      "available": 72
     },
     {
       "id": "EDI20251333-2026-10-22T20:15:00-Storsal",
@@ -16823,7 +16823,7 @@
           "url": "https://www.imdb.com/title/tt27419420/"
         },
         "letterboxd": {
-          "value": 2.83,
+          "value": 2.82,
           "url": "https://letterboxd.com/film/street-fighter-2026/"
         },
         "tomatoes": {
@@ -16946,7 +16946,7 @@
           "url": "https://www.imdb.com/title/tt27419420/"
         },
         "letterboxd": {
-          "value": 2.83,
+          "value": 2.82,
           "url": "https://letterboxd.com/film/street-fighter-2026/"
         },
         "tomatoes": {
@@ -16994,8 +16994,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 242,
-      "available": 234
+      "capacity": 246,
+      "available": 238
     },
     {
       "id": "WAB20240262-2026-10-23T21:30:00-Kinosal",
@@ -17023,12 +17023,17 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93369/purchase?kanal=dxf",
       "eventId": "93369",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
-      "ratings": null,
+      "ratings": {
+        "letterboxd": {
+          "value": 3.7,
+          "url": "https://letterboxd.com/film/clayface/"
+        }
+      },
       "reserved": 0,
       "capacity": 110,
-      "available": 110
+      "available": 108
     },
     {
       "id": "EDI20260975-2026-10-24T15:00:00-Storsal",
@@ -17100,7 +17105,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.5,
+          "value": 7.4,
           "id": "tt38807889",
           "url": "https://www.imdb.com/title/tt38807889/"
         }
@@ -17174,7 +17179,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93379/purchase?kanal=dxf",
       "eventId": "93379",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -17184,8 +17189,53 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 110
+      "capacity": 108,
+      "available": 106
+    },
+    {
+      "id": "EDI20251333-2026-10-24T19:30:00-Storsal",
+      "title": "Street Fighter",
+      "screen": "Storsal",
+      "start": "2026-10-24T19:30:00",
+      "end": "2026-10-24T21:40:00",
+      "dayKey": "2026-10-24",
+      "runningMinutes": 119,
+      "runningLabel": "1 t. 59 min.",
+      "age": "12 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Action"
+      ],
+      "director": "Kitao Sakurai",
+      "premiere": "2026-10-16",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/118b91932835d0bc0b4d237194dc60e93a805a50-1500x2121.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93378/purchase?kanal=dxf",
+      "eventId": "93378",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 6.2,
+          "id": "tt27419420",
+          "url": "https://www.imdb.com/title/tt27419420/"
+        },
+        "letterboxd": {
+          "value": 2.82,
+          "url": "https://letterboxd.com/film/street-fighter-2026/"
+        },
+        "tomatoes": {
+          "value": 79,
+          "url": "https://www.rottentomatoes.com/m/street_fighter_2026"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
     },
     {
       "id": "WAB20240262-2026-10-24T20:45:00-Kinosal",
@@ -17215,7 +17265,12 @@
       "promoterId": "202",
       "sold": 0,
       "eventStatus": "ok",
-      "ratings": null,
+      "ratings": {
+        "letterboxd": {
+          "value": 3.7,
+          "url": "https://letterboxd.com/film/clayface/"
+        }
+      },
       "reserved": 0,
       "capacity": 110,
       "available": 110
@@ -17290,7 +17345,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.5,
+          "value": 7.4,
           "id": "tt38807889",
           "url": "https://www.imdb.com/title/tt38807889/"
         }
@@ -17371,7 +17426,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93403/purchase?kanal=dxf",
       "eventId": "93403",
       "promoterId": "202",
-      "sold": 8,
+      "sold": 14,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -17381,8 +17436,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 102
+      "capacity": 108,
+      "available": 94
     },
     {
       "id": "EDI20251333-2026-10-25T19:45:00-Storsal",
@@ -17417,7 +17472,7 @@
           "url": "https://www.imdb.com/title/tt27419420/"
         },
         "letterboxd": {
-          "value": 2.83,
+          "value": 2.82,
           "url": "https://letterboxd.com/film/street-fighter-2026/"
         },
         "tomatoes": {
@@ -17457,7 +17512,12 @@
       "promoterId": "202",
       "sold": 0,
       "eventStatus": "ok",
-      "ratings": null,
+      "ratings": {
+        "letterboxd": {
+          "value": 3.7,
+          "url": "https://letterboxd.com/film/clayface/"
+        }
+      },
       "reserved": 0,
       "capacity": 110,
       "available": 110
@@ -17488,7 +17548,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93454/purchase?kanal=dxf",
       "eventId": "93454",
       "promoterId": "202",
-      "sold": 20,
+      "sold": 38,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -17498,8 +17558,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 90
+      "capacity": 108,
+      "available": 70
     },
     {
       "id": "EDI20251443-2026-10-27T18:00:00-Kinosal",
@@ -17525,7 +17585,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93471/purchase?kanal=dxf",
       "eventId": "93471",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 1,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -17543,8 +17603,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 110
+      "capacity": 109,
+      "available": 108
     },
     {
       "id": "EDI20260632-2026-11-03T13:00:00-Kinosal",
@@ -17570,7 +17630,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93426/purchase?kanal=dxf",
       "eventId": "93426",
       "promoterId": "202",
-      "sold": 4,
+      "sold": 8,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -17585,7 +17645,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 106
+      "available": 102
     },
     {
       "id": "EDI20251399-2026-11-17T13:00:00-Kinosal",
@@ -17621,8 +17681,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 109,
-      "available": 106
+      "capacity": 110,
+      "available": 107
     },
     {
       "id": "EDI20251026-2026-12-15T20:00:00-Storsal",
