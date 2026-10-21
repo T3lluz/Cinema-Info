@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-21T01:32:35.588Z",
+  "updatedAt": "2026-10-21T15:55:20.506Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -15811,7 +15811,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.6,
+          "value": 8.7,
           "id": "tt38673337",
           "url": "https://www.imdb.com/title/tt38673337/"
         }
@@ -16075,7 +16075,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.6,
+          "value": 8.7,
           "id": "tt38673337",
           "url": "https://www.imdb.com/title/tt38673337/"
         }
@@ -16291,7 +16291,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.6,
+          "value": 8.7,
           "id": "tt38673337",
           "url": "https://www.imdb.com/title/tt38673337/"
         }
@@ -16453,7 +16453,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.6,
+          "value": 8.7,
           "id": "tt38673337",
           "url": "https://www.imdb.com/title/tt38673337/"
         }
@@ -16616,7 +16616,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.6,
+          "value": 8.7,
           "id": "tt38673337",
           "url": "https://www.imdb.com/title/tt38673337/"
         }
@@ -16651,7 +16651,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93185/purchase?kanal=dxf",
       "eventId": "93185",
       "promoterId": "202",
-      "sold": 32,
+      "sold": 52,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -16661,8 +16661,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 108,
-      "available": 76
+      "capacity": 110,
+      "available": 58
     },
     {
       "id": "EDI20250084-2026-10-22T17:00:00-Kinosal",
@@ -16694,7 +16694,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.6,
+          "value": 8.7,
           "id": "tt38673337",
           "url": "https://www.imdb.com/title/tt38673337/"
         }
@@ -16777,7 +16777,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93408/purchase?kanal=dxf",
       "eventId": "93408",
       "promoterId": "202",
-      "sold": 18,
+      "sold": 39,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -16788,7 +16788,7 @@
       },
       "reserved": 20,
       "capacity": 110,
-      "available": 72
+      "available": 51
     },
     {
       "id": "EDI20251333-2026-10-22T20:15:00-Storsal",
@@ -16904,7 +16904,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.6,
+          "value": 8.7,
           "id": "tt38673337",
           "url": "https://www.imdb.com/title/tt38673337/"
         }
@@ -16984,7 +16984,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93373/purchase?kanal=dxf",
       "eventId": "93373",
       "promoterId": "202",
-      "sold": 8,
+      "sold": 10,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -16995,7 +16995,7 @@
       },
       "reserved": 0,
       "capacity": 246,
-      "available": 238
+      "available": 236
     },
     {
       "id": "WAB20240262-2026-10-23T21:30:00-Kinosal",
@@ -17105,7 +17105,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.4,
+          "value": 7.3,
           "id": "tt38807889",
           "url": "https://www.imdb.com/title/tt38807889/"
         }
@@ -17144,7 +17144,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.6,
+          "value": 8.7,
           "id": "tt38673337",
           "url": "https://www.imdb.com/title/tt38673337/"
         }
@@ -17179,7 +17179,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93379/purchase?kanal=dxf",
       "eventId": "93379",
       "promoterId": "202",
-      "sold": 4,
+      "sold": 6,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -17190,7 +17190,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 106
+      "available": 104
     },
     {
       "id": "EDI20251333-2026-10-24T19:30:00-Storsal",
@@ -17345,7 +17345,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.4,
+          "value": 7.3,
           "id": "tt38807889",
           "url": "https://www.imdb.com/title/tt38807889/"
         }
@@ -17426,7 +17426,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93403/purchase?kanal=dxf",
       "eventId": "93403",
       "promoterId": "202",
-      "sold": 14,
+      "sold": 16,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -17437,7 +17437,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 96
+      "available": 94
     },
     {
       "id": "EDI20251333-2026-10-25T19:45:00-Storsal",
@@ -17548,7 +17548,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93454/purchase?kanal=dxf",
       "eventId": "93454",
       "promoterId": "202",
-      "sold": 40,
+      "sold": 43,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -17558,8 +17558,48 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 70
+      "capacity": 109,
+      "available": 66
+    },
+    {
+      "id": "EDI20260513-2026-10-27T17:15:00-Storsal",
+      "title": "Monster Mia",
+      "screen": "Storsal",
+      "start": "2026-10-27T17:15:00",
+      "end": "2026-10-27T18:47:57",
+      "dayKey": "2026-10-27",
+      "runningMinutes": 81,
+      "runningLabel": "1 t. 21 min.",
+      "age": "6 år",
+      "tags": [
+        "Norsk tale",
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ],
+      "director": "Verena Fels",
+      "premiere": "2026-10-16",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/fb974225041180a11d91ebb046cc249f344995ac-1500x2250.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93457/purchase?kanal=dxf",
+      "eventId": "93457",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.3,
+          "id": "tt38807889",
+          "url": "https://www.imdb.com/title/tt38807889/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
     },
     {
       "id": "EDI20251443-2026-10-27T18:00:00-Kinosal",
@@ -17607,6 +17647,122 @@
       "available": 107
     },
     {
+      "id": "EDI20250183-2026-10-27T19:30:00-Storsal",
+      "title": "Pensjonskuppet",
+      "screen": "Storsal",
+      "start": "2026-10-27T19:30:00",
+      "end": "2026-10-27T21:30:11",
+      "dayKey": "2026-10-27",
+      "runningMinutes": 110,
+      "runningLabel": "1 t. 50 min.",
+      "age": "9 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Action",
+        "Comedy",
+        "Crime"
+      ],
+      "director": "Gunnbjörg Gunnarsdottir",
+      "premiere": "2026-10-16",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/b7c7d07d556cff3e5c9868b5e6fd02656f31e59c-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93473/purchase?kanal=dxf",
+      "eventId": "93473",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.9,
+          "id": "tt39453840",
+          "url": "https://www.imdb.com/title/tt39453840/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
+    },
+    {
+      "id": "WAB20240262-2026-10-27T20:25:00-Kinosal",
+      "title": "Clayface",
+      "screen": "Kinosal",
+      "start": "2026-10-27T20:25:00",
+      "end": "2026-10-27T22:23:20",
+      "dayKey": "2026-10-27",
+      "runningMinutes": 108,
+      "runningLabel": "1 t. 48 min.",
+      "age": "15 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Horror",
+        "Sci-Fi",
+        "Thriller"
+      ],
+      "director": "James Watkins",
+      "premiere": "2026-10-23",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/22ed50ebf0c5bc8143fe7606704caead1ff02875-1500x2223.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93497/purchase?kanal=dxf",
+      "eventId": "93497",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "letterboxd": {
+          "value": 3.7,
+          "url": "https://letterboxd.com/film/clayface/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20250183-2026-10-28T19:30:00-Kinosal",
+      "title": "Pensjonskuppet",
+      "screen": "Kinosal",
+      "start": "2026-10-28T19:30:00",
+      "end": "2026-10-28T21:30:11",
+      "dayKey": "2026-10-28",
+      "runningMinutes": 110,
+      "runningLabel": "1 t. 50 min.",
+      "age": "9 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Action",
+        "Comedy",
+        "Crime"
+      ],
+      "director": "Gunnbjörg Gunnarsdottir",
+      "premiere": "2026-10-16",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/b7c7d07d556cff3e5c9868b5e6fd02656f31e59c-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93524/purchase?kanal=dxf",
+      "eventId": "93524",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.9,
+          "id": "tt39453840",
+          "url": "https://www.imdb.com/title/tt39453840/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
       "id": "EDI20260632-2026-11-03T13:00:00-Kinosal",
       "title": "Siri Hustvedt - Dansen rundt selvet",
       "screen": "Kinosal",
@@ -17648,6 +17804,47 @@
       "available": 102
     },
     {
+      "id": "EDI20260632-2026-11-03T19:30:00-Kinosal",
+      "title": "Siri Hustvedt - Dansen rundt selvet",
+      "screen": "Kinosal",
+      "start": "2026-11-03T19:30:00",
+      "end": "2026-11-03T21:30:00",
+      "dayKey": "2026-11-03",
+      "runningMinutes": 110,
+      "runningLabel": "1 t. 50 min.",
+      "age": "Tillatt for alle",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Documentary"
+      ],
+      "director": "Sabine Lidl",
+      "premiere": "2026-08-28",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/30f8bc7bb3157ee264cf154405a2a76bf8fd1563-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93427/purchase?kanal=dxf",
+      "eventId": "93427",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.4,
+          "id": "tt39368552",
+          "url": "https://www.imdb.com/title/tt39368552/"
+        },
+        "letterboxd": {
+          "value": 3.66,
+          "url": "https://letterboxd.com/film/siri-hustvedt-dance-around-the-self/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
       "id": "EDI20251399-2026-11-17T13:00:00-Kinosal",
       "title": "Markens grøde",
       "screen": "Kinosal",
@@ -17671,7 +17868,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93253/purchase?kanal=dxf",
       "eventId": "93253",
       "promoterId": "202",
-      "sold": 3,
+      "sold": 5,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -17682,7 +17879,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 107
+      "available": 105
     },
     {
       "id": "EDI20251026-2026-12-15T20:00:00-Storsal",
@@ -17706,7 +17903,7 @@
       ],
       "director": "Denis Villeneuve",
       "premiere": "2026-12-16",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/7cce4ebe97817cf89958fa4065f26a6b749e0a4d-1500x2223.webp?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/60f17591576db88a8201bc6a130f653291bf2b32-1500x2223.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93119/purchase?kanal=dxf",
       "eventId": "93119",
       "promoterId": "202",
