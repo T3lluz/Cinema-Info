@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-22T15:51:46.132Z",
+  "updatedAt": "2026-10-23T01:28:03.923Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -1660,23 +1660,22 @@
       "available": 1,
       "ratings": {
         "imdb": {
-          "value": 8.1,
+          "value": 8,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
         "letterboxd": {
-          "value": 4.06,
+          "value": 4.03,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
-          "value": 98,
+          "value": 97,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
         }
       },
       "genres": [
         "Action",
-        "Adventure",
-        "Sci-Fi"
+        "Adventure"
       ]
     },
     {
@@ -1703,23 +1702,22 @@
       "available": 93,
       "ratings": {
         "imdb": {
-          "value": 8.1,
+          "value": 8,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
         "letterboxd": {
-          "value": 4.06,
+          "value": 4.03,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
-          "value": 98,
+          "value": 97,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
         }
       },
       "genres": [
         "Action",
-        "Adventure",
-        "Sci-Fi"
+        "Adventure"
       ]
     },
     {
@@ -1834,23 +1832,22 @@
       "available": 5,
       "ratings": {
         "imdb": {
-          "value": 8.1,
+          "value": 8,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
         "letterboxd": {
-          "value": 4.06,
+          "value": 4.03,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
-          "value": 98,
+          "value": 97,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
         }
       },
       "genres": [
         "Action",
-        "Adventure",
-        "Sci-Fi"
+        "Adventure"
       ]
     },
     {
@@ -1877,23 +1874,22 @@
       "available": 173,
       "ratings": {
         "imdb": {
-          "value": 8.1,
+          "value": 8,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
         "letterboxd": {
-          "value": 4.06,
+          "value": 4.03,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
-          "value": 98,
+          "value": 97,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
         }
       },
       "genres": [
         "Action",
-        "Adventure",
-        "Sci-Fi"
+        "Adventure"
       ]
     },
     {
@@ -1964,23 +1960,22 @@
       "available": 31,
       "ratings": {
         "imdb": {
-          "value": 8.1,
+          "value": 8,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
         "letterboxd": {
-          "value": 4.06,
+          "value": 4.03,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
-          "value": 98,
+          "value": 97,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
         }
       },
       "genres": [
         "Action",
-        "Adventure",
-        "Sci-Fi"
+        "Adventure"
       ]
     },
     {
@@ -2007,23 +2002,22 @@
       "available": 166,
       "ratings": {
         "imdb": {
-          "value": 8.1,
+          "value": 8,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
         "letterboxd": {
-          "value": 4.06,
+          "value": 4.03,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
-          "value": 98,
+          "value": 97,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
         }
       },
       "genres": [
         "Action",
-        "Adventure",
-        "Sci-Fi"
+        "Adventure"
       ]
     },
     {
@@ -2181,23 +2175,22 @@
       "available": 59,
       "ratings": {
         "imdb": {
-          "value": 8.1,
+          "value": 8,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
         "letterboxd": {
-          "value": 4.06,
+          "value": 4.03,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
-          "value": 98,
+          "value": 97,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
         }
       },
       "genres": [
         "Action",
-        "Adventure",
-        "Sci-Fi"
+        "Adventure"
       ]
     },
     {
@@ -2267,23 +2260,22 @@
       "available": 37,
       "ratings": {
         "imdb": {
-          "value": 8.1,
+          "value": 8,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
         "letterboxd": {
-          "value": 4.06,
+          "value": 4.03,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
-          "value": 98,
+          "value": 97,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
         }
       },
       "genres": [
         "Action",
-        "Adventure",
-        "Sci-Fi"
+        "Adventure"
       ]
     },
     {
@@ -2354,23 +2346,22 @@
       "available": 43,
       "ratings": {
         "imdb": {
-          "value": 8.1,
+          "value": 8,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
         "letterboxd": {
-          "value": 4.06,
+          "value": 4.03,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
-          "value": 98,
+          "value": 97,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
         }
       },
       "genres": [
         "Action",
-        "Adventure",
-        "Sci-Fi"
+        "Adventure"
       ]
     },
     {
@@ -2484,23 +2475,22 @@
       "available": 178,
       "ratings": {
         "imdb": {
-          "value": 8.1,
+          "value": 8,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
         "letterboxd": {
-          "value": 4.06,
+          "value": 4.03,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
-          "value": 98,
+          "value": 97,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
         }
       },
       "genres": [
         "Action",
-        "Adventure",
-        "Sci-Fi"
+        "Adventure"
       ]
     },
     {
@@ -2658,23 +2648,22 @@
       "available": 155,
       "ratings": {
         "imdb": {
-          "value": 8.1,
+          "value": 8,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
         "letterboxd": {
-          "value": 4.06,
+          "value": 4.03,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
-          "value": 98,
+          "value": 97,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
         }
       },
       "genres": [
         "Action",
-        "Adventure",
-        "Sci-Fi"
+        "Adventure"
       ]
     },
     {
@@ -2790,8 +2779,7 @@
       "kinoklubb": false,
       "genres": [
         "Action",
-        "Adventure",
-        "Sci-Fi"
+        "Adventure"
       ],
       "director": "Destin Daniel Cretton",
       "premiere": "2026-07-29",
@@ -2806,16 +2794,16 @@
       "available": 8,
       "ratings": {
         "imdb": {
-          "value": 8.1,
+          "value": 8,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
         "letterboxd": {
-          "value": 4.06,
+          "value": 4.03,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
-          "value": 98,
+          "value": 97,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
         }
       }
@@ -3025,8 +3013,7 @@
       "kinoklubb": false,
       "genres": [
         "Action",
-        "Adventure",
-        "Sci-Fi"
+        "Adventure"
       ],
       "director": "Destin Daniel Cretton",
       "premiere": "2026-07-29",
@@ -3041,16 +3028,16 @@
       "available": 172,
       "ratings": {
         "imdb": {
-          "value": 8.1,
+          "value": 8,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
         "letterboxd": {
-          "value": 4.06,
+          "value": 4.03,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
-          "value": 98,
+          "value": 97,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
         }
       }
@@ -3168,8 +3155,7 @@
       "kinoklubb": false,
       "genres": [
         "Action",
-        "Adventure",
-        "Sci-Fi"
+        "Adventure"
       ],
       "director": "Destin Daniel Cretton",
       "premiere": "2026-07-29",
@@ -3181,16 +3167,16 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.1,
+          "value": 8,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
         "letterboxd": {
-          "value": 4.06,
+          "value": 4.03,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
-          "value": 98,
+          "value": 97,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
         }
       },
@@ -3403,8 +3389,7 @@
       "kinoklubb": false,
       "genres": [
         "Action",
-        "Adventure",
-        "Sci-Fi"
+        "Adventure"
       ],
       "director": "Destin Daniel Cretton",
       "premiere": "2026-07-29",
@@ -3416,16 +3401,16 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.1,
+          "value": 8,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
         "letterboxd": {
-          "value": 4.06,
+          "value": 4.03,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
-          "value": 98,
+          "value": 97,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
         }
       },
@@ -3641,8 +3626,7 @@
       "kinoklubb": false,
       "genres": [
         "Action",
-        "Adventure",
-        "Sci-Fi"
+        "Adventure"
       ],
       "director": "Destin Daniel Cretton",
       "premiere": "2026-07-29",
@@ -3654,16 +3638,16 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.1,
+          "value": 8,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
         "letterboxd": {
-          "value": 4.06,
+          "value": 4.03,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
-          "value": 98,
+          "value": 97,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
         }
       },
@@ -3879,8 +3863,7 @@
       "kinoklubb": false,
       "genres": [
         "Action",
-        "Adventure",
-        "Sci-Fi"
+        "Adventure"
       ],
       "director": "Destin Daniel Cretton",
       "premiere": "2026-07-29",
@@ -3892,16 +3875,16 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.1,
+          "value": 8,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
         "letterboxd": {
-          "value": 4.06,
+          "value": 4.03,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
-          "value": 98,
+          "value": 97,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
         }
       },
@@ -4069,8 +4052,7 @@
       "kinoklubb": false,
       "genres": [
         "Action",
-        "Adventure",
-        "Sci-Fi"
+        "Adventure"
       ],
       "director": "Destin Daniel Cretton",
       "premiere": "2026-07-29",
@@ -4082,16 +4064,16 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.1,
+          "value": 8,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
         "letterboxd": {
-          "value": 4.06,
+          "value": 4.03,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
-          "value": 98,
+          "value": 97,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
         }
       },
@@ -4306,8 +4288,7 @@
       "kinoklubb": false,
       "genres": [
         "Action",
-        "Adventure",
-        "Sci-Fi"
+        "Adventure"
       ],
       "director": "Destin Daniel Cretton",
       "premiere": "2026-07-29",
@@ -4319,16 +4300,16 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.1,
+          "value": 8,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
         "letterboxd": {
-          "value": 4.06,
+          "value": 4.03,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
-          "value": 98,
+          "value": 97,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
         }
       },
@@ -4496,8 +4477,7 @@
       "kinoklubb": false,
       "genres": [
         "Action",
-        "Adventure",
-        "Sci-Fi"
+        "Adventure"
       ],
       "director": "Destin Daniel Cretton",
       "premiere": "2026-07-29",
@@ -4509,16 +4489,16 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.1,
+          "value": 8,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
         "letterboxd": {
-          "value": 4.06,
+          "value": 4.03,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
-          "value": 98,
+          "value": 97,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
         }
       },
@@ -4686,8 +4666,7 @@
       "kinoklubb": false,
       "genres": [
         "Action",
-        "Adventure",
-        "Sci-Fi"
+        "Adventure"
       ],
       "director": "Destin Daniel Cretton",
       "premiere": "2026-07-29",
@@ -4699,16 +4678,16 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.1,
+          "value": 8,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
         "letterboxd": {
-          "value": 4.06,
+          "value": 4.03,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
-          "value": 98,
+          "value": 97,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
         }
       },
@@ -4875,8 +4854,7 @@
       "kinoklubb": false,
       "genres": [
         "Action",
-        "Adventure",
-        "Sci-Fi"
+        "Adventure"
       ],
       "director": "Destin Daniel Cretton",
       "premiere": "2026-07-29",
@@ -4888,16 +4866,16 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.1,
+          "value": 8,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
         "letterboxd": {
-          "value": 4.06,
+          "value": 4.03,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
-          "value": 98,
+          "value": 97,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
         }
       },
@@ -5204,8 +5182,7 @@
       "kinoklubb": false,
       "genres": [
         "Action",
-        "Adventure",
-        "Sci-Fi"
+        "Adventure"
       ],
       "director": "Destin Daniel Cretton",
       "premiere": "2026-07-29",
@@ -5217,16 +5194,16 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.1,
+          "value": 8,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
         "letterboxd": {
-          "value": 4.06,
+          "value": 4.03,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
-          "value": 98,
+          "value": 97,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
         }
       },
@@ -5347,8 +5324,7 @@
       "kinoklubb": false,
       "genres": [
         "Action",
-        "Adventure",
-        "Sci-Fi"
+        "Adventure"
       ],
       "director": "Destin Daniel Cretton",
       "premiere": "2026-07-29",
@@ -5360,16 +5336,16 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.1,
+          "value": 8,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
         "letterboxd": {
-          "value": 4.06,
+          "value": 4.03,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
-          "value": 98,
+          "value": 97,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
         }
       },
@@ -5820,8 +5796,7 @@
       "kinoklubb": false,
       "genres": [
         "Action",
-        "Adventure",
-        "Sci-Fi"
+        "Adventure"
       ],
       "director": "Destin Daniel Cretton",
       "premiere": "2026-07-29",
@@ -5833,16 +5808,16 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.1,
+          "value": 8,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
         "letterboxd": {
-          "value": 4.06,
+          "value": 4.03,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
-          "value": 98,
+          "value": 97,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
         }
       },
@@ -5962,8 +5937,7 @@
       "kinoklubb": false,
       "genres": [
         "Action",
-        "Adventure",
-        "Sci-Fi"
+        "Adventure"
       ],
       "director": "Destin Daniel Cretton",
       "premiere": "2026-07-29",
@@ -5975,16 +5949,16 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.1,
+          "value": 8,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
         "letterboxd": {
-          "value": 4.06,
+          "value": 4.03,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
-          "value": 98,
+          "value": 97,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
         }
       },
@@ -6242,8 +6216,7 @@
       "kinoklubb": false,
       "genres": [
         "Action",
-        "Adventure",
-        "Sci-Fi"
+        "Adventure"
       ],
       "director": "Destin Daniel Cretton",
       "premiere": "2026-07-29",
@@ -6255,16 +6228,16 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.1,
+          "value": 8,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
         "letterboxd": {
-          "value": 4.06,
+          "value": 4.03,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
-          "value": 98,
+          "value": 97,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
         }
       },
@@ -6428,8 +6401,7 @@
       "kinoklubb": false,
       "genres": [
         "Action",
-        "Adventure",
-        "Sci-Fi"
+        "Adventure"
       ],
       "director": "Destin Daniel Cretton",
       "premiere": "2026-07-29",
@@ -6441,16 +6413,16 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.1,
+          "value": 8,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
         "letterboxd": {
-          "value": 4.06,
+          "value": 4.03,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
-          "value": 98,
+          "value": 97,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
         }
       },
@@ -6708,8 +6680,7 @@
       "kinoklubb": false,
       "genres": [
         "Action",
-        "Adventure",
-        "Sci-Fi"
+        "Adventure"
       ],
       "director": "Destin Daniel Cretton",
       "premiere": "2026-07-29",
@@ -6721,16 +6692,16 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.1,
+          "value": 8,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
         "letterboxd": {
-          "value": 4.06,
+          "value": 4.03,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
-          "value": 98,
+          "value": 97,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
         }
       },
@@ -7126,8 +7097,7 @@
       "kinoklubb": false,
       "genres": [
         "Action",
-        "Adventure",
-        "Sci-Fi"
+        "Adventure"
       ],
       "director": "Destin Daniel Cretton",
       "premiere": "2026-07-29",
@@ -7139,16 +7109,16 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.1,
+          "value": 8,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
         "letterboxd": {
-          "value": 4.06,
+          "value": 4.03,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
-          "value": 98,
+          "value": 97,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
         }
       },
@@ -7726,8 +7696,7 @@
       "kinoklubb": false,
       "genres": [
         "Action",
-        "Adventure",
-        "Sci-Fi"
+        "Adventure"
       ],
       "director": "Destin Daniel Cretton",
       "premiere": "2026-07-29",
@@ -7739,16 +7708,16 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.1,
+          "value": 8,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
         "letterboxd": {
-          "value": 4.06,
+          "value": 4.03,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
-          "value": 98,
+          "value": 97,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
         }
       },
@@ -8053,8 +8022,7 @@
       "kinoklubb": false,
       "genres": [
         "Action",
-        "Adventure",
-        "Sci-Fi"
+        "Adventure"
       ],
       "director": "Destin Daniel Cretton",
       "premiere": "2026-07-29",
@@ -8066,16 +8034,16 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.1,
+          "value": 8,
           "id": "tt22084616",
           "url": "https://www.imdb.com/title/tt22084616/"
         },
         "letterboxd": {
-          "value": 4.06,
+          "value": 4.03,
           "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
         },
         "tomatoes": {
-          "value": 98,
+          "value": 97,
           "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
         }
       },
@@ -13603,7 +13571,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6,
+          "value": 6.1,
           "id": "tt32261958",
           "url": "https://www.imdb.com/title/tt32261958/"
         },
@@ -13876,7 +13844,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6,
+          "value": 6.1,
           "id": "tt32261958",
           "url": "https://www.imdb.com/title/tt32261958/"
         },
@@ -14156,7 +14124,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6,
+          "value": 6.1,
           "id": "tt32261958",
           "url": "https://www.imdb.com/title/tt32261958/"
         },
@@ -14296,7 +14264,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6,
+          "value": 6.1,
           "id": "tt32261958",
           "url": "https://www.imdb.com/title/tt32261958/"
         },
@@ -14565,7 +14533,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6,
+          "value": 6.1,
           "id": "tt32261958",
           "url": "https://www.imdb.com/title/tt32261958/"
         },
@@ -14668,7 +14636,7 @@
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 89,
+          "value": 88,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -14793,7 +14761,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6,
+          "value": 6.1,
           "id": "tt32261958",
           "url": "https://www.imdb.com/title/tt32261958/"
         },
@@ -14944,7 +14912,7 @@
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 89,
+          "value": 88,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -15171,7 +15139,7 @@
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 89,
+          "value": 88,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -15209,7 +15177,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6,
+          "value": 6.1,
           "id": "tt32261958",
           "url": "https://www.imdb.com/title/tt32261958/"
         },
@@ -15356,7 +15324,7 @@
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 89,
+          "value": 88,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -15537,7 +15505,7 @@
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 89,
+          "value": 88,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -15726,7 +15694,7 @@
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 89,
+          "value": 88,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -15764,7 +15732,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6,
+          "value": 6.1,
           "id": "tt32261958",
           "url": "https://www.imdb.com/title/tt32261958/"
         },
@@ -15858,7 +15826,7 @@
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 89,
+          "value": 88,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -16122,7 +16090,7 @@
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 89,
+          "value": 88,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -16777,7 +16745,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93408/purchase?kanal=dxf",
       "eventId": "93408",
       "promoterId": "202",
-      "sold": 60,
+      "sold": 87,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -16786,9 +16754,9 @@
           "url": "https://www.imdb.com/title/tt39453840/"
         }
       },
-      "reserved": 20,
+      "reserved": 0,
       "capacity": 110,
-      "available": 30
+      "available": 23
     },
     {
       "id": "EDI20251333-2026-10-22T20:15:00-Storsal",
@@ -16861,7 +16829,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93374/purchase?kanal=dxf",
       "eventId": "93374",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -16871,8 +16839,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 110
+      "capacity": 108,
+      "available": 106
     },
     {
       "id": "EDI20250084-2026-10-23T17:30:00-Storsal",
@@ -16984,7 +16952,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93373/purchase?kanal=dxf",
       "eventId": "93373",
       "promoterId": "202",
-      "sold": 21,
+      "sold": 28,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -16995,7 +16963,7 @@
       },
       "reserved": 0,
       "capacity": 246,
-      "available": 225
+      "available": 218
     },
     {
       "id": "WAB20240262-2026-10-23T21:30:00-Kinosal",
@@ -17184,7 +17152,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93379/purchase?kanal=dxf",
       "eventId": "93379",
       "promoterId": "202",
-      "sold": 11,
+      "sold": 15,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -17195,7 +17163,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 99
+      "available": 95
     },
     {
       "id": "EDI20251333-2026-10-24T19:30:00-Storsal",
@@ -17402,7 +17370,7 @@
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 89,
+          "value": 88,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -17436,7 +17404,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93403/purchase?kanal=dxf",
       "eventId": "93403",
       "promoterId": "202",
-      "sold": 21,
+      "sold": 29,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -17446,8 +17414,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 89
+      "capacity": 108,
+      "available": 79
     },
     {
       "id": "EDI20251333-2026-10-25T19:45:00-Storsal",
@@ -17563,7 +17531,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93454/purchase?kanal=dxf",
       "eventId": "93454",
       "promoterId": "202",
-      "sold": 59,
+      "sold": 64,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -17574,7 +17542,7 @@
       },
       "reserved": 0,
       "capacity": 109,
-      "available": 50
+      "available": 45
     },
     {
       "id": "EDI20260513-2026-10-27T17:15:00-Storsal",
@@ -17904,6 +17872,499 @@
       "available": 110
     },
     {
+      "id": "EDI20260975-2026-11-07T10:00:00-Kinosal",
+      "title": "Lille spøkelset Laban skøyer igjen",
+      "screen": "Kinosal",
+      "start": "2026-11-07T10:00:00",
+      "end": "2026-11-07T11:13:00",
+      "dayKey": "2026-11-07",
+      "runningMinutes": 61,
+      "runningLabel": "1 t. 1 min.",
+      "age": "Tillatt for alle",
+      "tags": [
+        "Norsk tale",
+        "Utekstet"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Animation",
+        "Family"
+      ],
+      "director": "Alexander Gustavson",
+      "premiere": "2026-10-23",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/9af456586f2b90f0e08d670bdedef2f96e4ee48d-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93412/purchase?kanal=dxf",
+      "eventId": "93412",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 6.8,
+          "id": "tt43714599",
+          "url": "https://www.imdb.com/title/tt43714599/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20250794-2026-11-07T10:30:00-Storsal",
+      "title": "Sauen Shaun - Gårdens fårbannelse",
+      "screen": "Storsal",
+      "start": "2026-11-07T10:30:00",
+      "end": "2026-11-07T12:00:43",
+      "dayKey": "2026-11-07",
+      "runningMinutes": 81,
+      "runningLabel": "1 t. 21 min.",
+      "age": "Tillatt for alle",
+      "tags": [
+        "Norsk tale",
+        "Utekstet"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ],
+      "director": "Steve Cox, Matthew Walker",
+      "premiere": "2026-10-02",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/0690cc492885fe739c3d101a3af245ffa6db81a9-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93491/purchase?kanal=dxf",
+      "eventId": "93491",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.2,
+          "id": "tt36841161",
+          "url": "https://www.imdb.com/title/tt36841161/"
+        },
+        "letterboxd": {
+          "value": 3.59,
+          "url": "https://letterboxd.com/film/shaun-the-sheep-the-beast-of-mossy-bottom/"
+        },
+        "tomatoes": {
+          "value": 91,
+          "url": "https://www.rottentomatoes.com/m/shaun_the_sheep_the_beast_of_mossy_bottom"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
+    },
+    {
+      "id": "NOR20240691-2026-11-07T12:00:00-Kinosal",
+      "title": "Julenissens verksted",
+      "screen": "Kinosal",
+      "start": "2026-11-07T12:00:00",
+      "end": "2026-11-07T13:25:00",
+      "dayKey": "2026-11-07",
+      "runningMinutes": 73,
+      "runningLabel": "1 t. 13 min.",
+      "age": "Tillatt for alle",
+      "tags": [
+        "Norsk tale",
+        "Norsk tekst"
+      ],
+      "showType": "Norgespremiere",
+      "kinoklubb": false,
+      "genres": [
+        "Animation",
+        "Comedy",
+        "Family"
+      ],
+      "director": "Rasmus A. Sivertsen, Mette Tange",
+      "premiere": "2026-11-06",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/48e8411522836146104d015dc86ab395cacf0345-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93286/purchase?kanal=dxf",
+      "eventId": "93286",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": null,
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20250084-2026-11-07T12:45:00-Storsal",
+      "title": "Mysteriepakken",
+      "screen": "Storsal",
+      "start": "2026-11-07T12:45:00",
+      "end": "2026-11-07T14:10:44",
+      "dayKey": "2026-11-07",
+      "runningMinutes": 86,
+      "runningLabel": "1 t. 26 min.",
+      "age": "Tillatt for alle",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Documentary",
+        "Adventure",
+        "Family"
+      ],
+      "director": "Silje Evensmo Jacobsen",
+      "premiere": "2026-10-16",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/e796551111af9fba503fffcbd45d77f4a13d0521-1080x1527.png?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93413/purchase?kanal=dxf",
+      "eventId": "93413",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 8.7,
+          "id": "tt38673337",
+          "url": "https://www.imdb.com/title/tt38673337/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
+    },
+    {
+      "id": "EDI20261109-2026-11-07T14:00:00-Kinosal",
+      "title": "Katten med hatten",
+      "screen": "Kinosal",
+      "start": "2026-11-07T14:00:00",
+      "end": "2026-11-07T15:57:00",
+      "dayKey": "2026-11-07",
+      "runningMinutes": 107,
+      "runningLabel": "1 t. 47 min.",
+      "age": "6 år",
+      "tags": [
+        "Norsk tale",
+        "Utekstet"
+      ],
+      "showType": "Førpremiere",
+      "kinoklubb": false,
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ],
+      "director": "Alessandro Carloni, Erica Rivinoja",
+      "premiere": "2026-12-04",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/051358c6db07b7d5eb86cc8bc9374ff3715237ec-1500x2223.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93411/purchase?kanal=dxf",
+      "eventId": "93411",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "letterboxd": {
+          "value": 3.33,
+          "url": "https://letterboxd.com/film/the-cat-in-the-hat/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20260513-2026-11-07T14:45:00-Storsal",
+      "title": "Monster Mia",
+      "screen": "Storsal",
+      "start": "2026-11-07T14:45:00",
+      "end": "2026-11-07T16:17:57",
+      "dayKey": "2026-11-07",
+      "runningMinutes": 81,
+      "runningLabel": "1 t. 21 min.",
+      "age": "6 år",
+      "tags": [
+        "Norsk tale",
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ],
+      "director": "Verena Fels",
+      "premiere": "2026-10-16",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/fb974225041180a11d91ebb046cc249f344995ac-1500x2250.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93353/purchase?kanal=dxf",
+      "eventId": "93353",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.3,
+          "id": "tt38807889",
+          "url": "https://www.imdb.com/title/tt38807889/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
+    },
+    {
+      "id": "EDI20240688-2026-11-07T16:35:00-Kinosal",
+      "title": "Spider-Man: Brand New Day",
+      "screen": "Kinosal",
+      "start": "2026-11-07T16:35:00",
+      "end": "2026-11-07T19:09:49",
+      "dayKey": "2026-11-07",
+      "runningMinutes": 145,
+      "runningLabel": "2 t. 25 min.",
+      "age": "12 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Action",
+        "Adventure"
+      ],
+      "director": "Destin Daniel Cretton",
+      "premiere": "2026-07-29",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/13bdf9c085531b0bb6c3b7506e847f46643782b6-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93417/purchase?kanal=dxf",
+      "eventId": "93417",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 8,
+          "id": "tt22084616",
+          "url": "https://www.imdb.com/title/tt22084616/"
+        },
+        "letterboxd": {
+          "value": 4.03,
+          "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
+        },
+        "tomatoes": {
+          "value": 97,
+          "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "NOR20240691-2026-11-07T17:00:00-Storsal",
+      "title": "Julenissens verksted",
+      "screen": "Storsal",
+      "start": "2026-11-07T17:00:00",
+      "end": "2026-11-07T18:25:00",
+      "dayKey": "2026-11-07",
+      "runningMinutes": 73,
+      "runningLabel": "1 t. 13 min.",
+      "age": "Tillatt for alle",
+      "tags": [
+        "Norsk tale",
+        "Norsk tekst"
+      ],
+      "showType": "Norgespremiere",
+      "kinoklubb": false,
+      "genres": [
+        "Animation",
+        "Comedy",
+        "Family"
+      ],
+      "director": "Rasmus A. Sivertsen, Mette Tange",
+      "premiere": "2026-11-06",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/48e8411522836146104d015dc86ab395cacf0345-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93287/purchase?kanal=dxf",
+      "eventId": "93287",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": null,
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
+    },
+    {
+      "id": "EDI20250183-2026-11-07T19:00:00-Storsal",
+      "title": "Pensjonskuppet",
+      "screen": "Storsal",
+      "start": "2026-11-07T19:00:00",
+      "end": "2026-11-07T21:00:11",
+      "dayKey": "2026-11-07",
+      "runningMinutes": 110,
+      "runningLabel": "1 t. 50 min.",
+      "age": "9 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Action",
+        "Comedy",
+        "Crime"
+      ],
+      "director": "Gunnbjörg Gunnarsdottir",
+      "premiere": "2026-10-16",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/b7c7d07d556cff3e5c9868b5e6fd02656f31e59c-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93414/purchase?kanal=dxf",
+      "eventId": "93414",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.8,
+          "id": "tt39453840",
+          "url": "https://www.imdb.com/title/tt39453840/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
+    },
+    {
+      "id": "EDI20260973-2026-11-07T19:45:00-Kinosal",
+      "title": "Charlie Harper",
+      "screen": "Kinosal",
+      "start": "2026-11-07T19:45:00",
+      "end": "2026-11-07T21:37:00",
+      "dayKey": "2026-11-07",
+      "runningMinutes": 101,
+      "runningLabel": "1 t. 41 min.",
+      "age": "12 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": "Førpremiere",
+      "kinoklubb": false,
+      "genres": [
+        "Romance"
+      ],
+      "director": "Tom Dean",
+      "premiere": "2026-11-13",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/de52c99e5eb90a6bcef6cc32f925048845e6dd8d-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93418/purchase?kanal=dxf",
+      "eventId": "93418",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.8,
+          "id": "tt27739255",
+          "url": "https://www.imdb.com/title/tt27739255/"
+        },
+        "letterboxd": {
+          "value": 3.35,
+          "url": "https://letterboxd.com/film/charlie-harper/"
+        },
+        "tomatoes": {
+          "value": 84,
+          "url": "https://www.rottentomatoes.com/m/charlie_harper"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20260552-2026-11-07T21:35:00-Storsal",
+      "title": "Verity",
+      "screen": "Storsal",
+      "start": "2026-11-07T21:35:00",
+      "end": "2026-11-07T23:41:57",
+      "dayKey": "2026-11-07",
+      "runningMinutes": 117,
+      "runningLabel": "1 t. 57 min.",
+      "age": "15 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Crime",
+        "Drama",
+        "Mystery"
+      ],
+      "director": "Michael Showalter",
+      "premiere": "2026-10-02",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/c0244aa90fbcd342cf565324c22260fb9d82c865-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93520/purchase?kanal=dxf",
+      "eventId": "93520",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 6.1,
+          "id": "tt32261958",
+          "url": "https://www.imdb.com/title/tt32261958/"
+        },
+        "letterboxd": {
+          "value": 2.65,
+          "url": "https://letterboxd.com/film/verity-2026/"
+        },
+        "tomatoes": {
+          "value": 71,
+          "url": "https://www.rottentomatoes.com/m/verity"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
+    },
+    {
+      "id": "WAB20240262-2026-11-07T22:15:00-Kinosal",
+      "title": "Clayface",
+      "screen": "Kinosal",
+      "start": "2026-11-07T22:15:00",
+      "end": "2026-11-08T00:14:00",
+      "dayKey": "2026-11-07",
+      "runningMinutes": 108,
+      "runningLabel": "1 t. 48 min.",
+      "age": "15 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Horror",
+        "Sci-Fi",
+        "Thriller"
+      ],
+      "director": "James Watkins",
+      "premiere": "2026-10-23",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/22ed50ebf0c5bc8143fe7606704caead1ff02875-1500x2223.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93415/purchase?kanal=dxf",
+      "eventId": "93415",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.5,
+          "id": "tt34890576",
+          "url": "https://www.imdb.com/title/tt34890576/"
+        },
+        "letterboxd": {
+          "value": 3.71,
+          "url": "https://letterboxd.com/film/clayface/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
       "id": "EDI20251399-2026-11-17T13:00:00-Kinosal",
       "title": "Markens grøde",
       "screen": "Kinosal",
@@ -17999,12 +18460,12 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93227/purchase?kanal=dxf",
       "eventId": "93227",
       "promoterId": "202",
-      "sold": 20,
+      "sold": 24,
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
-      "capacity": 110,
-      "available": 90
+      "capacity": 106,
+      "available": 82
     },
     {
       "id": "BVI20200545-2026-12-17T19:15:00-Kinosal",
