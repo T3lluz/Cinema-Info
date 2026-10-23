@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-23T01:28:03.923Z",
+  "updatedAt": "2026-10-23T15:43:36.287Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -14636,7 +14636,7 @@
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 88,
+          "value": 89,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -14912,7 +14912,7 @@
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 88,
+          "value": 89,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -15139,7 +15139,7 @@
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 88,
+          "value": 89,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -15324,7 +15324,7 @@
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 88,
+          "value": 89,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -15505,7 +15505,7 @@
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 88,
+          "value": 89,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -15694,7 +15694,7 @@
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 88,
+          "value": 89,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -15826,7 +15826,7 @@
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 88,
+          "value": 89,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -16090,7 +16090,7 @@
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 88,
+          "value": 89,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -16829,7 +16829,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93374/purchase?kanal=dxf",
       "eventId": "93374",
       "promoterId": "202",
-      "sold": 2,
+      "sold": 4,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -16839,7 +16839,7 @@
         }
       },
       "reserved": 0,
-      "capacity": 108,
+      "capacity": 110,
       "available": 106
     },
     {
@@ -16868,7 +16868,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93370/purchase?kanal=dxf",
       "eventId": "93370",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 7,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -16879,7 +16879,7 @@
       },
       "reserved": 0,
       "capacity": 286,
-      "available": 286
+      "available": 279
     },
     {
       "id": "EDI20251333-2026-10-23T18:45:00-Kinosal",
@@ -16905,7 +16905,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93372/purchase?kanal=dxf",
       "eventId": "93372",
       "promoterId": "202",
-      "sold": 4,
+      "sold": 9,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -16924,7 +16924,7 @@
       },
       "reserved": 13,
       "capacity": 110,
-      "available": 93
+      "available": 88
     },
     {
       "id": "EDI20250183-2026-10-23T20:15:00-Storsal",
@@ -16952,7 +16952,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93373/purchase?kanal=dxf",
       "eventId": "93373",
       "promoterId": "202",
-      "sold": 28,
+      "sold": 31,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -16963,7 +16963,7 @@
       },
       "reserved": 0,
       "capacity": 246,
-      "available": 218
+      "available": 215
     },
     {
       "id": "WAB20240262-2026-10-23T21:30:00-Kinosal",
@@ -17000,8 +17000,12 @@
           "url": "https://www.imdb.com/title/tt34890576/"
         },
         "letterboxd": {
-          "value": 3.71,
+          "value": 3.72,
           "url": "https://letterboxd.com/film/clayface/"
+        },
+        "tomatoes": {
+          "value": 94,
+          "url": "https://www.rottentomatoes.com/m/clayface"
         }
       },
       "reserved": 0,
@@ -17152,7 +17156,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93379/purchase?kanal=dxf",
       "eventId": "93379",
       "promoterId": "202",
-      "sold": 15,
+      "sold": 23,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -17163,7 +17167,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 95
+      "available": 87
     },
     {
       "id": "EDI20251333-2026-10-24T19:30:00-Storsal",
@@ -17245,8 +17249,12 @@
           "url": "https://www.imdb.com/title/tt34890576/"
         },
         "letterboxd": {
-          "value": 3.71,
+          "value": 3.72,
           "url": "https://letterboxd.com/film/clayface/"
+        },
+        "tomatoes": {
+          "value": 94,
+          "url": "https://www.rottentomatoes.com/m/clayface"
         }
       },
       "reserved": 0,
@@ -17370,7 +17378,7 @@
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 88,
+          "value": 89,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -17404,7 +17412,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93403/purchase?kanal=dxf",
       "eventId": "93403",
       "promoterId": "202",
-      "sold": 29,
+      "sold": 44,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -17414,8 +17422,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 108,
-      "available": 79
+      "capacity": 110,
+      "available": 66
     },
     {
       "id": "EDI20251333-2026-10-25T19:45:00-Storsal",
@@ -17497,8 +17505,12 @@
           "url": "https://www.imdb.com/title/tt34890576/"
         },
         "letterboxd": {
-          "value": 3.71,
+          "value": 3.72,
           "url": "https://letterboxd.com/film/clayface/"
+        },
+        "tomatoes": {
+          "value": 94,
+          "url": "https://www.rottentomatoes.com/m/clayface"
         }
       },
       "reserved": 0,
@@ -17531,7 +17543,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93454/purchase?kanal=dxf",
       "eventId": "93454",
       "promoterId": "202",
-      "sold": 64,
+      "sold": 73,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -17542,7 +17554,7 @@
       },
       "reserved": 0,
       "capacity": 109,
-      "available": 45
+      "available": 36
     },
     {
       "id": "EDI20260513-2026-10-27T17:15:00-Storsal",
@@ -17665,8 +17677,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 283,
-      "available": 278
+      "capacity": 286,
+      "available": 281
     },
     {
       "id": "WAB20240262-2026-10-27T20:25:00-Kinosal",
@@ -17703,8 +17715,12 @@
           "url": "https://www.imdb.com/title/tt34890576/"
         },
         "letterboxd": {
-          "value": 3.71,
+          "value": 3.72,
           "url": "https://letterboxd.com/film/clayface/"
+        },
+        "tomatoes": {
+          "value": 94,
+          "url": "https://www.rottentomatoes.com/m/clayface"
         }
       },
       "reserved": 0,
@@ -17747,8 +17763,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 107,
-      "available": 104
+      "capacity": 110,
+      "available": 107
     },
     {
       "id": "EDI20250183-2026-10-30T18:35:00-Kinosal",
@@ -17813,7 +17829,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93426/purchase?kanal=dxf",
       "eventId": "93426",
       "promoterId": "202",
-      "sold": 8,
+      "sold": 9,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -17828,7 +17844,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 102
+      "available": 101
     },
     {
       "id": "EDI20260632-2026-11-03T19:30:00-Kinosal",
@@ -17937,7 +17953,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93491/purchase?kanal=dxf",
       "eventId": "93491",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -17956,7 +17972,7 @@
       },
       "reserved": 0,
       "capacity": 286,
-      "available": 286
+      "available": 284
     },
     {
       "id": "NOR20240691-2026-11-07T12:00:00-Kinosal",
@@ -18356,8 +18372,12 @@
           "url": "https://www.imdb.com/title/tt34890576/"
         },
         "letterboxd": {
-          "value": 3.71,
+          "value": 3.72,
           "url": "https://letterboxd.com/film/clayface/"
+        },
+        "tomatoes": {
+          "value": 94,
+          "url": "https://www.rottentomatoes.com/m/clayface"
         }
       },
       "reserved": 0,
@@ -18388,7 +18408,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93253/purchase?kanal=dxf",
       "eventId": "93253",
       "promoterId": "202",
-      "sold": 10,
+      "sold": 16,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -18398,8 +18418,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 100
+      "capacity": 108,
+      "available": 92
     },
     {
       "id": "EDI20251026-2026-12-15T20:00:00-Storsal",
