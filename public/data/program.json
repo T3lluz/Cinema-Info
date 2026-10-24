@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-23T15:43:36.287Z",
+  "updatedAt": "2026-10-24T01:33:31.745Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -14636,7 +14636,7 @@
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 89,
+          "value": 88,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -14912,7 +14912,7 @@
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 89,
+          "value": 88,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -15139,7 +15139,7 @@
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 89,
+          "value": 88,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -15324,7 +15324,7 @@
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 89,
+          "value": 88,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -15505,7 +15505,7 @@
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 89,
+          "value": 88,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -15694,7 +15694,7 @@
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 89,
+          "value": 88,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -15826,7 +15826,7 @@
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 89,
+          "value": 88,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -15864,7 +15864,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.8,
+          "value": 7.7,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         }
@@ -16090,7 +16090,7 @@
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 89,
+          "value": 88,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -16173,7 +16173,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.8,
+          "value": 7.7,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         }
@@ -16298,7 +16298,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.8,
+          "value": 7.7,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         }
@@ -16382,7 +16382,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.8,
+          "value": 7.7,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         }
@@ -16505,7 +16505,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.8,
+          "value": 7.7,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         }
@@ -16623,7 +16623,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.8,
+          "value": 7.7,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         }
@@ -16749,7 +16749,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.8,
+          "value": 7.7,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         }
@@ -16905,7 +16905,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93372/purchase?kanal=dxf",
       "eventId": "93372",
       "promoterId": "202",
-      "sold": 9,
+      "sold": 24,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -16922,9 +16922,9 @@
           "url": "https://www.rottentomatoes.com/m/street_fighter_2026"
         }
       },
-      "reserved": 13,
+      "reserved": 0,
       "capacity": 110,
-      "available": 88
+      "available": 86
     },
     {
       "id": "EDI20250183-2026-10-23T20:15:00-Storsal",
@@ -16952,18 +16952,18 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93373/purchase?kanal=dxf",
       "eventId": "93373",
       "promoterId": "202",
-      "sold": 31,
+      "sold": 48,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.8,
+          "value": 7.7,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         }
       },
       "reserved": 0,
       "capacity": 246,
-      "available": 215
+      "available": 198
     },
     {
       "id": "WAB20240262-2026-10-23T21:30:00-Kinosal",
@@ -16991,11 +16991,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93369/purchase?kanal=dxf",
       "eventId": "93369",
       "promoterId": "202",
-      "sold": 5,
+      "sold": 7,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.5,
+          "value": 7.6,
           "id": "tt34890576",
           "url": "https://www.imdb.com/title/tt34890576/"
         },
@@ -17004,13 +17004,13 @@
           "url": "https://letterboxd.com/film/clayface/"
         },
         "tomatoes": {
-          "value": 94,
+          "value": 93,
           "url": "https://www.rottentomatoes.com/m/clayface"
         }
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 105
+      "available": 103
     },
     {
       "id": "EDI20260975-2026-10-24T15:00:00-Storsal",
@@ -17156,18 +17156,18 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93379/purchase?kanal=dxf",
       "eventId": "93379",
       "promoterId": "202",
-      "sold": 23,
+      "sold": 31,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.8,
+          "value": 7.7,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         }
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 87
+      "available": 79
     },
     {
       "id": "EDI20251333-2026-10-24T19:30:00-Storsal",
@@ -17244,7 +17244,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.5,
+          "value": 7.6,
           "id": "tt34890576",
           "url": "https://www.imdb.com/title/tt34890576/"
         },
@@ -17253,7 +17253,7 @@
           "url": "https://letterboxd.com/film/clayface/"
         },
         "tomatoes": {
-          "value": 94,
+          "value": 93,
           "url": "https://www.rottentomatoes.com/m/clayface"
         }
       },
@@ -17349,7 +17349,7 @@
       "dayKey": "2026-10-25",
       "runningMinutes": 132,
       "runningLabel": "2 t. 12 min.",
-      "age": "Tillatt for alle",
+      "age": "9 år",
       "tags": [
         "Norsk tekst"
       ],
@@ -17378,7 +17378,7 @@
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 89,
+          "value": 88,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -17412,18 +17412,18 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93403/purchase?kanal=dxf",
       "eventId": "93403",
       "promoterId": "202",
-      "sold": 44,
+      "sold": 47,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.8,
+          "value": 7.7,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         }
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 66
+      "available": 63
     },
     {
       "id": "EDI20251333-2026-10-25T19:45:00-Storsal",
@@ -17500,7 +17500,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.5,
+          "value": 7.6,
           "id": "tt34890576",
           "url": "https://www.imdb.com/title/tt34890576/"
         },
@@ -17509,7 +17509,7 @@
           "url": "https://letterboxd.com/film/clayface/"
         },
         "tomatoes": {
-          "value": 94,
+          "value": 93,
           "url": "https://www.rottentomatoes.com/m/clayface"
         }
       },
@@ -17543,17 +17543,17 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93454/purchase?kanal=dxf",
       "eventId": "93454",
       "promoterId": "202",
-      "sold": 73,
+      "sold": 74,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.8,
+          "value": 7.7,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         }
       },
       "reserved": 0,
-      "capacity": 109,
+      "capacity": 110,
       "available": 36
     },
     {
@@ -17671,7 +17671,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.8,
+          "value": 7.7,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         }
@@ -17710,7 +17710,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.5,
+          "value": 7.6,
           "id": "tt34890576",
           "url": "https://www.imdb.com/title/tt34890576/"
         },
@@ -17719,13 +17719,91 @@
           "url": "https://letterboxd.com/film/clayface/"
         },
         "tomatoes": {
-          "value": 94,
+          "value": 93,
           "url": "https://www.rottentomatoes.com/m/clayface"
         }
       },
       "reserved": 0,
       "capacity": 110,
       "available": 110
+    },
+    {
+      "id": "EDI20260975-2026-10-28T17:00:00-Kinosal",
+      "title": "Lille spøkelset Laban skøyer igjen",
+      "screen": "Kinosal",
+      "start": "2026-10-28T17:00:00",
+      "end": "2026-10-28T18:13:00",
+      "dayKey": "2026-10-28",
+      "runningMinutes": 61,
+      "runningLabel": "1 t. 1 min.",
+      "age": "Tillatt for alle",
+      "tags": [
+        "Norsk tale",
+        "Utekstet"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Animation",
+        "Family"
+      ],
+      "director": "Alexander Gustavson",
+      "premiere": "2026-10-23",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/9af456586f2b90f0e08d670bdedef2f96e4ee48d-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93528/purchase?kanal=dxf",
+      "eventId": "93528",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 6.8,
+          "id": "tt43714599",
+          "url": "https://www.imdb.com/title/tt43714599/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20250084-2026-10-28T17:30:00-Storsal",
+      "title": "Mysteriepakken",
+      "screen": "Storsal",
+      "start": "2026-10-28T17:30:00",
+      "end": "2026-10-28T18:55:44",
+      "dayKey": "2026-10-28",
+      "runningMinutes": 86,
+      "runningLabel": "1 t. 26 min.",
+      "age": "Tillatt for alle",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Documentary",
+        "Adventure",
+        "Family"
+      ],
+      "director": "Silje Evensmo Jacobsen",
+      "premiere": "2026-10-16",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/e796551111af9fba503fffcbd45d77f4a13d0521-1080x1527.png?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93525/purchase?kanal=dxf",
+      "eventId": "93525",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 8.7,
+          "id": "tt38673337",
+          "url": "https://www.imdb.com/title/tt38673337/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
     },
     {
       "id": "EDI20250183-2026-10-28T19:30:00-Kinosal",
@@ -17757,7 +17835,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.8,
+          "value": 7.7,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         }
@@ -17765,6 +17843,92 @@
       "reserved": 0,
       "capacity": 110,
       "available": 107
+    },
+    {
+      "id": "WAB20240262-2026-10-28T20:15:00-Storsal",
+      "title": "Clayface",
+      "screen": "Storsal",
+      "start": "2026-10-28T20:15:00",
+      "end": "2026-10-28T22:14:00",
+      "dayKey": "2026-10-28",
+      "runningMinutes": 108,
+      "runningLabel": "1 t. 48 min.",
+      "age": "15 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Horror",
+        "Sci-Fi",
+        "Thriller"
+      ],
+      "director": "James Watkins",
+      "premiere": "2026-10-23",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/22ed50ebf0c5bc8143fe7606704caead1ff02875-1500x2223.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93475/purchase?kanal=dxf",
+      "eventId": "93475",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.6,
+          "id": "tt34890576",
+          "url": "https://www.imdb.com/title/tt34890576/"
+        },
+        "letterboxd": {
+          "value": 3.72,
+          "url": "https://letterboxd.com/film/clayface/"
+        },
+        "tomatoes": {
+          "value": 93,
+          "url": "https://www.rottentomatoes.com/m/clayface"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
+    },
+    {
+      "id": "EDI20250183-2026-10-29T19:30:00-Kinosal",
+      "title": "Pensjonskuppet",
+      "screen": "Kinosal",
+      "start": "2026-10-29T19:30:00",
+      "end": "2026-10-29T21:30:11",
+      "dayKey": "2026-10-29",
+      "runningMinutes": 110,
+      "runningLabel": "1 t. 50 min.",
+      "age": "9 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Action",
+        "Comedy",
+        "Crime"
+      ],
+      "director": "Gunnbjörg Gunnarsdottir",
+      "premiere": "2026-10-16",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/b7c7d07d556cff3e5c9868b5e6fd02656f31e59c-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93523/purchase?kanal=dxf",
+      "eventId": "93523",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.7,
+          "id": "tt39453840",
+          "url": "https://www.imdb.com/title/tt39453840/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
     },
     {
       "id": "EDI20250183-2026-10-30T18:35:00-Kinosal",
@@ -17796,7 +17960,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.8,
+          "value": 7.7,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         }
@@ -18236,7 +18400,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.8,
+          "value": 7.7,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         }
@@ -18367,7 +18531,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.5,
+          "value": 7.6,
           "id": "tt34890576",
           "url": "https://www.imdb.com/title/tt34890576/"
         },
@@ -18376,7 +18540,7 @@
           "url": "https://letterboxd.com/film/clayface/"
         },
         "tomatoes": {
-          "value": 94,
+          "value": 93,
           "url": "https://www.rottentomatoes.com/m/clayface"
         }
       },
@@ -18484,8 +18648,8 @@
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
-      "capacity": 106,
-      "available": 82
+      "capacity": 110,
+      "available": 86
     },
     {
       "id": "BVI20200545-2026-12-17T19:15:00-Kinosal",
