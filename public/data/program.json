@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-26T01:07:48.057Z",
+  "updatedAt": "2026-10-26T17:18:12.706Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -13580,7 +13580,7 @@
           "url": "https://letterboxd.com/film/verity-2026/"
         },
         "tomatoes": {
-          "value": 71,
+          "value": 72,
           "url": "https://www.rottentomatoes.com/m/verity"
         }
       },
@@ -13853,7 +13853,7 @@
           "url": "https://letterboxd.com/film/verity-2026/"
         },
         "tomatoes": {
-          "value": 71,
+          "value": 72,
           "url": "https://www.rottentomatoes.com/m/verity"
         }
       },
@@ -14133,7 +14133,7 @@
           "url": "https://letterboxd.com/film/verity-2026/"
         },
         "tomatoes": {
-          "value": 71,
+          "value": 72,
           "url": "https://www.rottentomatoes.com/m/verity"
         }
       },
@@ -14273,7 +14273,7 @@
           "url": "https://letterboxd.com/film/verity-2026/"
         },
         "tomatoes": {
-          "value": 71,
+          "value": 72,
           "url": "https://www.rottentomatoes.com/m/verity"
         }
       },
@@ -14542,7 +14542,7 @@
           "url": "https://letterboxd.com/film/verity-2026/"
         },
         "tomatoes": {
-          "value": 71,
+          "value": 72,
           "url": "https://www.rottentomatoes.com/m/verity"
         }
       },
@@ -14770,7 +14770,7 @@
           "url": "https://letterboxd.com/film/verity-2026/"
         },
         "tomatoes": {
-          "value": 71,
+          "value": 72,
           "url": "https://www.rottentomatoes.com/m/verity"
         }
       },
@@ -15186,7 +15186,7 @@
           "url": "https://letterboxd.com/film/verity-2026/"
         },
         "tomatoes": {
-          "value": 71,
+          "value": 72,
           "url": "https://www.rottentomatoes.com/m/verity"
         }
       },
@@ -15741,7 +15741,7 @@
           "url": "https://letterboxd.com/film/verity-2026/"
         },
         "tomatoes": {
-          "value": 71,
+          "value": 72,
           "url": "https://www.rottentomatoes.com/m/verity"
         }
       },
@@ -15864,7 +15864,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.5,
+          "value": 7.4,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         },
@@ -16177,7 +16177,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.5,
+          "value": 7.4,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         },
@@ -16306,7 +16306,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.5,
+          "value": 7.4,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         },
@@ -16394,7 +16394,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.5,
+          "value": 7.4,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         },
@@ -16521,7 +16521,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.5,
+          "value": 7.4,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         },
@@ -16643,7 +16643,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.5,
+          "value": 7.4,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         },
@@ -16773,7 +16773,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.5,
+          "value": 7.4,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         },
@@ -16984,7 +16984,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.5,
+          "value": 7.4,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         },
@@ -17117,6 +17117,10 @@
           "value": 7.1,
           "id": "tt38807889",
           "url": "https://www.imdb.com/title/tt38807889/"
+        },
+        "letterboxd": {
+          "value": 3.18,
+          "url": "https://letterboxd.com/film/monster-mia/"
         }
       },
       "reserved": 0,
@@ -17192,7 +17196,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.5,
+          "value": 7.4,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         },
@@ -17370,6 +17374,10 @@
           "value": 7.1,
           "id": "tt38807889",
           "url": "https://www.imdb.com/title/tt38807889/"
+        },
+        "letterboxd": {
+          "value": 3.18,
+          "url": "https://letterboxd.com/film/monster-mia/"
         }
       },
       "reserved": 0,
@@ -17452,7 +17460,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.5,
+          "value": 7.4,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         },
@@ -17583,11 +17591,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93454/purchase?kanal=dxf",
       "eventId": "93454",
       "promoterId": "202",
-      "sold": 96,
+      "sold": 105,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.5,
+          "value": 7.4,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         },
@@ -17598,7 +17606,50 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 14
+      "available": 5
+    },
+    {
+      "id": "EDI20250183-2026-10-27T13:15:00-Storsal",
+      "title": "Pensjonskuppet",
+      "screen": "Storsal",
+      "start": "2026-10-27T13:15:00",
+      "end": "2026-10-27T15:15:11",
+      "dayKey": "2026-10-27",
+      "runningMinutes": 110,
+      "runningLabel": "1 t. 50 min.",
+      "age": "9 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": "Seniorkino",
+      "kinoklubb": false,
+      "genres": [
+        "Action",
+        "Comedy",
+        "Crime"
+      ],
+      "director": "Gunnbjörg Gunnarsdottir",
+      "premiere": "2026-10-16",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/b7c7d07d556cff3e5c9868b5e6fd02656f31e59c-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93558/purchase?kanal=dxf",
+      "eventId": "93558",
+      "promoterId": "202",
+      "sold": 4,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.4,
+          "id": "tt39453840",
+          "url": "https://www.imdb.com/title/tt39453840/"
+        },
+        "letterboxd": {
+          "value": 3.37,
+          "url": "https://letterboxd.com/film/the-pension-heist/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 246,
+      "available": 242
     },
     {
       "id": "EDI20260513-2026-10-27T17:15:00-Storsal",
@@ -17634,6 +17685,10 @@
           "value": 7.1,
           "id": "tt38807889",
           "url": "https://www.imdb.com/title/tt38807889/"
+        },
+        "letterboxd": {
+          "value": 3.18,
+          "url": "https://letterboxd.com/film/monster-mia/"
         }
       },
       "reserved": 0,
@@ -17664,7 +17719,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93471/purchase?kanal=dxf",
       "eventId": "93471",
       "promoterId": "202",
-      "sold": 18,
+      "sold": 20,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -17683,7 +17738,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 92
+      "available": 90
     },
     {
       "id": "EDI20250183-2026-10-27T19:30:00-Storsal",
@@ -17711,11 +17766,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93473/purchase?kanal=dxf",
       "eventId": "93473",
       "promoterId": "202",
-      "sold": 12,
+      "sold": 17,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.5,
+          "value": 7.4,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         },
@@ -17725,8 +17780,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 286,
-      "available": 274
+      "capacity": 283,
+      "available": 266
     },
     {
       "id": "WAB20240262-2026-10-27T20:25:00-Kinosal",
@@ -17879,11 +17934,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93524/purchase?kanal=dxf",
       "eventId": "93524",
       "promoterId": "202",
-      "sold": 8,
+      "sold": 23,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.5,
+          "value": 7.4,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         },
@@ -17894,7 +17949,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 102
+      "available": 87
     },
     {
       "id": "WAB20240262-2026-10-28T20:15:00-Storsal",
@@ -18016,6 +18071,10 @@
           "value": 7.1,
           "id": "tt38807889",
           "url": "https://www.imdb.com/title/tt38807889/"
+        },
+        "letterboxd": {
+          "value": 3.18,
+          "url": "https://letterboxd.com/film/monster-mia/"
         }
       },
       "reserved": 0,
@@ -18052,7 +18111,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.5,
+          "value": 7.4,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         },
@@ -18181,7 +18240,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.5,
+          "value": 7.4,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         },
@@ -18191,8 +18250,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 108,
-      "available": 106
+      "capacity": 110,
+      "available": 108
     },
     {
       "id": "WAB20240262-2026-10-30T21:30:00-Kinosal",
@@ -18240,6 +18299,89 @@
       "reserved": 0,
       "capacity": 110,
       "available": 110
+    },
+    {
+      "id": "EDI20250084-2026-10-31T15:00:00-Kinosal",
+      "title": "Mysteriepakken",
+      "screen": "Kinosal",
+      "start": "2026-10-31T15:00:00",
+      "end": "2026-10-31T16:25:44",
+      "dayKey": "2026-10-31",
+      "runningMinutes": 86,
+      "runningLabel": "1 t. 26 min.",
+      "age": "Tillatt for alle",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Documentary",
+        "Adventure",
+        "Family"
+      ],
+      "director": "Silje Evensmo Jacobsen",
+      "premiere": "2026-10-16",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/e796551111af9fba503fffcbd45d77f4a13d0521-1080x1527.png?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93477/purchase?kanal=dxf",
+      "eventId": "93477",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 8.6,
+          "id": "tt38673337",
+          "url": "https://www.imdb.com/title/tt38673337/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20260513-2026-10-31T15:30:00-Storsal",
+      "title": "Monster Mia",
+      "screen": "Storsal",
+      "start": "2026-10-31T15:30:00",
+      "end": "2026-10-31T17:02:57",
+      "dayKey": "2026-10-31",
+      "runningMinutes": 81,
+      "runningLabel": "1 t. 21 min.",
+      "age": "6 år",
+      "tags": [
+        "Norsk tale",
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ],
+      "director": "Verena Fels",
+      "premiere": "2026-10-16",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/fb974225041180a11d91ebb046cc249f344995ac-1500x2250.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93464/purchase?kanal=dxf",
+      "eventId": "93464",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.1,
+          "id": "tt38807889",
+          "url": "https://www.imdb.com/title/tt38807889/"
+        },
+        "letterboxd": {
+          "value": 3.18,
+          "url": "https://letterboxd.com/film/monster-mia/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
     },
     {
       "id": "EDI20251399-2026-10-31T17:00:00-Kinosal",
@@ -18308,7 +18450,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.5,
+          "value": 7.4,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         },
@@ -18416,6 +18558,86 @@
       "available": 286
     },
     {
+      "id": "EDI20250183-2026-11-01T17:10:00-Kinosal",
+      "title": "Pensjonskuppet",
+      "screen": "Kinosal",
+      "start": "2026-11-01T17:10:00",
+      "end": "2026-11-01T19:10:11",
+      "dayKey": "2026-11-01",
+      "runningMinutes": 110,
+      "runningLabel": "1 t. 50 min.",
+      "age": "9 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Action",
+        "Comedy",
+        "Crime"
+      ],
+      "director": "Gunnbjörg Gunnarsdottir",
+      "premiere": "2026-10-16",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/b7c7d07d556cff3e5c9868b5e6fd02656f31e59c-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93542/purchase?kanal=dxf",
+      "eventId": "93542",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.4,
+          "id": "tt39453840",
+          "url": "https://www.imdb.com/title/tt39453840/"
+        },
+        "letterboxd": {
+          "value": 3.37,
+          "url": "https://letterboxd.com/film/the-pension-heist/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20251399-2026-11-01T19:50:00-Kinosal",
+      "title": "Markens grøde",
+      "screen": "Kinosal",
+      "start": "2026-11-01T19:50:00",
+      "end": "2026-11-01T22:35:27",
+      "dayKey": "2026-11-01",
+      "runningMinutes": 155,
+      "runningLabel": "2 t. 35 min.",
+      "age": "12 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": true,
+      "genres": [
+        "Drama"
+      ],
+      "director": "Hans Petter Moland",
+      "premiere": "2026-10-30",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/6d58c7d892dafa154f135a003ae5006be05290f1-1500x2250.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93465/purchase?kanal=dxf",
+      "eventId": "93465",
+      "promoterId": "202",
+      "sold": 2,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 6.5,
+          "id": "tt0011440",
+          "url": "https://www.imdb.com/title/tt0011440/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 108
+    },
+    {
       "id": "EDI20260632-2026-11-03T13:00:00-Kinosal",
       "title": "Siri Hustvedt - Dansen rundt selvet",
       "screen": "Kinosal",
@@ -18439,7 +18661,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93426/purchase?kanal=dxf",
       "eventId": "93426",
       "promoterId": "202",
-      "sold": 9,
+      "sold": 13,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -18454,7 +18676,94 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 101
+      "available": 97
+    },
+    {
+      "id": "EDI20260513-2026-11-03T17:00:00-Kinosal",
+      "title": "Monster Mia",
+      "screen": "Kinosal",
+      "start": "2026-11-03T17:00:00",
+      "end": "2026-11-03T18:32:57",
+      "dayKey": "2026-11-03",
+      "runningMinutes": 81,
+      "runningLabel": "1 t. 21 min.",
+      "age": "6 år",
+      "tags": [
+        "Norsk tale",
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ],
+      "director": "Verena Fels",
+      "premiere": "2026-10-16",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/fb974225041180a11d91ebb046cc249f344995ac-1500x2250.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93568/purchase?kanal=dxf",
+      "eventId": "93568",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.1,
+          "id": "tt38807889",
+          "url": "https://www.imdb.com/title/tt38807889/"
+        },
+        "letterboxd": {
+          "value": 3.18,
+          "url": "https://letterboxd.com/film/monster-mia/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20250183-2026-11-03T17:45:00-Storsal",
+      "title": "Pensjonskuppet",
+      "screen": "Storsal",
+      "start": "2026-11-03T17:45:00",
+      "end": "2026-11-03T19:45:11",
+      "dayKey": "2026-11-03",
+      "runningMinutes": 110,
+      "runningLabel": "1 t. 50 min.",
+      "age": "9 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Action",
+        "Comedy",
+        "Crime"
+      ],
+      "director": "Gunnbjörg Gunnarsdottir",
+      "premiere": "2026-10-16",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/b7c7d07d556cff3e5c9868b5e6fd02656f31e59c-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93604/purchase?kanal=dxf",
+      "eventId": "93604",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.4,
+          "id": "tt39453840",
+          "url": "https://www.imdb.com/title/tt39453840/"
+        },
+        "letterboxd": {
+          "value": 3.37,
+          "url": "https://letterboxd.com/film/the-pension-heist/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
     },
     {
       "id": "EDI20260632-2026-11-03T19:30:00-Kinosal",
@@ -18491,6 +18800,90 @@
         "letterboxd": {
           "value": 3.66,
           "url": "https://letterboxd.com/film/siri-hustvedt-dance-around-the-self/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20261396-2026-11-03T20:20:00-Storsal",
+      "title": "Young Washington",
+      "screen": "Storsal",
+      "start": "2026-11-03T20:20:00",
+      "end": "2026-11-03T22:31:00",
+      "dayKey": "2026-11-03",
+      "runningMinutes": 130,
+      "runningLabel": "2 t. 10 min.",
+      "age": "15 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Biography"
+      ],
+      "director": "Jon Erwin",
+      "premiere": "2026-10-30",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/1d40712b1d04ac26e16396f5a012bb4832f43703-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93567/purchase?kanal=dxf",
+      "eventId": "93567",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 6.9,
+          "id": "tt32104007",
+          "url": "https://www.imdb.com/title/tt32104007/"
+        },
+        "letterboxd": {
+          "value": 2.7,
+          "url": "https://letterboxd.com/film/young-washington/"
+        },
+        "tomatoes": {
+          "value": 92,
+          "url": "https://www.rottentomatoes.com/m/young_washington"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
+    },
+    {
+      "id": "EDI20251399-2026-11-04T19:30:00-Kinosal",
+      "title": "Markens grøde",
+      "screen": "Kinosal",
+      "start": "2026-11-04T19:30:00",
+      "end": "2026-11-04T22:15:27",
+      "dayKey": "2026-11-04",
+      "runningMinutes": 155,
+      "runningLabel": "2 t. 35 min.",
+      "age": "12 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": true,
+      "genres": [
+        "Drama"
+      ],
+      "director": "Hans Petter Moland",
+      "premiere": "2026-10-30",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/6d58c7d892dafa154f135a003ae5006be05290f1-1500x2250.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93531/purchase?kanal=dxf",
+      "eventId": "93531",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 6.5,
+          "id": "tt0011440",
+          "url": "https://www.imdb.com/title/tt0011440/"
         }
       },
       "reserved": 0,
@@ -18611,12 +19004,12 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93286/purchase?kanal=dxf",
       "eventId": "93286",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 3,
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
-      "capacity": 110,
-      "available": 110
+      "capacity": 107,
+      "available": 104
     },
     {
       "id": "EDI20250084-2026-11-07T12:45:00-Storsal",
@@ -18730,6 +19123,10 @@
           "value": 7.1,
           "id": "tt38807889",
           "url": "https://www.imdb.com/title/tt38807889/"
+        },
+        "letterboxd": {
+          "value": 3.18,
+          "url": "https://letterboxd.com/film/monster-mia/"
         }
       },
       "reserved": 0,
@@ -18846,7 +19243,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.5,
+          "value": 7.4,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         },
@@ -18943,7 +19340,7 @@
           "url": "https://letterboxd.com/film/verity-2026/"
         },
         "tomatoes": {
-          "value": 71,
+          "value": 72,
           "url": "https://www.rottentomatoes.com/m/verity"
         }
       },
@@ -19170,6 +19567,39 @@
       "reserved": 0,
       "capacity": 109,
       "available": 103
+    },
+    {
+      "id": "EDI20251026-2026-12-17T20:00:00-Storsal",
+      "title": "Dune: Part Three",
+      "screen": "Storsal",
+      "start": "2026-12-17T20:00:00",
+      "end": "2026-12-17T22:40:00",
+      "dayKey": "2026-12-17",
+      "runningMinutes": null,
+      "runningLabel": null,
+      "age": null,
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": "Norgespremiere",
+      "kinoklubb": false,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Drama"
+      ],
+      "director": "Denis Villeneuve",
+      "premiere": "2026-12-16",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/60f17591576db88a8201bc6a130f653291bf2b32-1500x2223.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93228/purchase?kanal=dxf",
+      "eventId": "93228",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": null,
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
     },
     {
       "id": "BVI20200545-2026-12-18T17:00:00-Kinosal",
