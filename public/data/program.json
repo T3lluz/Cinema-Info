@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-25T14:56:00.419Z",
+  "updatedAt": "2026-10-26T01:07:48.057Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -15779,7 +15779,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.5,
+          "value": 8.6,
           "id": "tt38673337",
           "url": "https://www.imdb.com/title/tt38673337/"
         }
@@ -16047,7 +16047,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.5,
+          "value": 8.6,
           "id": "tt38673337",
           "url": "https://www.imdb.com/title/tt38673337/"
         }
@@ -16267,7 +16267,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.5,
+          "value": 8.6,
           "id": "tt38673337",
           "url": "https://www.imdb.com/title/tt38673337/"
         }
@@ -16437,7 +16437,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.5,
+          "value": 8.6,
           "id": "tt38673337",
           "url": "https://www.imdb.com/title/tt38673337/"
         }
@@ -16604,7 +16604,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.5,
+          "value": 8.6,
           "id": "tt38673337",
           "url": "https://www.imdb.com/title/tt38673337/"
         }
@@ -16686,7 +16686,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.5,
+          "value": 8.6,
           "id": "tt38673337",
           "url": "https://www.imdb.com/title/tt38673337/"
         }
@@ -16900,7 +16900,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.5,
+          "value": 8.6,
           "id": "tt38673337",
           "url": "https://www.imdb.com/title/tt38673337/"
         }
@@ -17114,7 +17114,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.2,
+          "value": 7.1,
           "id": "tt38807889",
           "url": "https://www.imdb.com/title/tt38807889/"
         }
@@ -17153,7 +17153,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.5,
+          "value": 8.6,
           "id": "tt38673337",
           "url": "https://www.imdb.com/title/tt38673337/"
         }
@@ -17367,7 +17367,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.2,
+          "value": 7.1,
           "id": "tt38807889",
           "url": "https://www.imdb.com/title/tt38807889/"
         }
@@ -17401,7 +17401,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93432/purchase?kanal=dxf",
       "eventId": "93432",
       "promoterId": "202",
-      "sold": 3,
+      "sold": 10,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -17420,7 +17420,7 @@
       },
       "reserved": 0,
       "capacity": 286,
-      "available": 283
+      "available": 276
     },
     {
       "id": "EDI20250183-2026-10-25T17:45:00-Kinosal",
@@ -17448,7 +17448,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93403/purchase?kanal=dxf",
       "eventId": "93403",
       "promoterId": "202",
-      "sold": 98,
+      "sold": 109,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -17461,9 +17461,9 @@
           "url": "https://letterboxd.com/film/the-pension-heist/"
         }
       },
-      "reserved": 4,
+      "reserved": 0,
       "capacity": 110,
-      "available": 8
+      "available": 1
     },
     {
       "id": "EDI20251333-2026-10-25T19:45:00-Storsal",
@@ -17489,7 +17489,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93431/purchase?kanal=dxf",
       "eventId": "93431",
       "promoterId": "202",
-      "sold": 2,
+      "sold": 4,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -17507,8 +17507,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 285,
-      "available": 283
+      "capacity": 286,
+      "available": 282
     },
     {
       "id": "WAB20240262-2026-10-25T20:30:00-Kinosal",
@@ -17536,7 +17536,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93404/purchase?kanal=dxf",
       "eventId": "93404",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 4,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -17555,7 +17555,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 110
+      "available": 106
     },
     {
       "id": "EDI20250183-2026-10-27T13:00:00-Kinosal",
@@ -17583,7 +17583,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93454/purchase?kanal=dxf",
       "eventId": "93454",
       "promoterId": "202",
-      "sold": 90,
+      "sold": 96,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -17596,9 +17596,9 @@
           "url": "https://letterboxd.com/film/the-pension-heist/"
         }
       },
-      "reserved": 2,
+      "reserved": 0,
       "capacity": 110,
-      "available": 18
+      "available": 14
     },
     {
       "id": "EDI20260513-2026-10-27T17:15:00-Storsal",
@@ -17631,7 +17631,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.2,
+          "value": 7.1,
           "id": "tt38807889",
           "url": "https://www.imdb.com/title/tt38807889/"
         }
@@ -17664,7 +17664,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93471/purchase?kanal=dxf",
       "eventId": "93471",
       "promoterId": "202",
-      "sold": 15,
+      "sold": 18,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -17683,7 +17683,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 95
+      "available": 92
     },
     {
       "id": "EDI20250183-2026-10-27T19:30:00-Storsal",
@@ -17711,7 +17711,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93473/purchase?kanal=dxf",
       "eventId": "93473",
       "promoterId": "202",
-      "sold": 10,
+      "sold": 12,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -17724,7 +17724,7 @@
           "url": "https://letterboxd.com/film/the-pension-heist/"
         }
       },
-      "reserved": 2,
+      "reserved": 0,
       "capacity": 286,
       "available": 274
     },
@@ -17844,7 +17844,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.5,
+          "value": 8.6,
           "id": "tt38673337",
           "url": "https://www.imdb.com/title/tt38673337/"
         }
@@ -17879,7 +17879,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93524/purchase?kanal=dxf",
       "eventId": "93524",
       "promoterId": "202",
-      "sold": 7,
+      "sold": 8,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -17893,8 +17893,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 106,
-      "available": 99
+      "capacity": 110,
+      "available": 102
     },
     {
       "id": "WAB20240262-2026-10-28T20:15:00-Storsal",
@@ -17973,7 +17973,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.5,
+          "value": 8.6,
           "id": "tt38673337",
           "url": "https://www.imdb.com/title/tt38673337/"
         }
@@ -18013,7 +18013,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.2,
+          "value": 7.1,
           "id": "tt38807889",
           "url": "https://www.imdb.com/title/tt38807889/"
         }
@@ -18048,7 +18048,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93523/purchase?kanal=dxf",
       "eventId": "93523",
       "promoterId": "202",
-      "sold": 3,
+      "sold": 10,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -18061,9 +18061,9 @@
           "url": "https://letterboxd.com/film/the-pension-heist/"
         }
       },
-      "reserved": 2,
+      "reserved": 0,
       "capacity": 110,
-      "available": 105
+      "available": 100
     },
     {
       "id": "WAB20240262-2026-10-29T20:15:00-Storsal",
@@ -18177,7 +18177,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93461/purchase?kanal=dxf",
       "eventId": "93461",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -18191,8 +18191,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 110
+      "capacity": 108,
+      "available": 106
     },
     {
       "id": "WAB20240262-2026-10-30T21:30:00-Kinosal",
@@ -18648,7 +18648,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 8.5,
+          "value": 8.6,
           "id": "tt38673337",
           "url": "https://www.imdb.com/title/tt38673337/"
         }
@@ -18727,7 +18727,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.2,
+          "value": 7.1,
           "id": "tt38807889",
           "url": "https://www.imdb.com/title/tt38807889/"
         }
@@ -19022,7 +19022,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93253/purchase?kanal=dxf",
       "eventId": "93253",
       "promoterId": "202",
-      "sold": 19,
+      "sold": 20,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -19032,8 +19032,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 107,
-      "available": 88
+      "capacity": 110,
+      "available": 90
     },
     {
       "id": "EDI20251399-2026-11-17T19:30:00-Kinosal",
@@ -19059,7 +19059,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93254/purchase?kanal=dxf",
       "eventId": "93254",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -19069,8 +19069,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 110
+      "capacity": 108,
+      "available": 106
     },
     {
       "id": "EDI20251026-2026-12-15T20:00:00-Storsal",
@@ -19098,12 +19098,12 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93119/purchase?kanal=dxf",
       "eventId": "93119",
       "promoterId": "202",
-      "sold": 7,
+      "sold": 8,
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
-      "capacity": 246,
-      "available": 239
+      "capacity": 245,
+      "available": 237
     },
     {
       "id": "BVI20200545-2026-12-16T20:00:00-Kinosal",
@@ -19164,12 +19164,12 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93230/purchase?kanal=dxf",
       "eventId": "93230",
       "promoterId": "202",
-      "sold": 5,
+      "sold": 6,
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
-      "capacity": 110,
-      "available": 105
+      "capacity": 109,
+      "available": 103
     },
     {
       "id": "BVI20200545-2026-12-18T17:00:00-Kinosal",
