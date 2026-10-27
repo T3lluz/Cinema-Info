@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-26T17:18:12.706Z",
+  "updatedAt": "2026-10-27T02:02:43.309Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -15869,7 +15869,7 @@
           "url": "https://www.imdb.com/title/tt39453840/"
         },
         "letterboxd": {
-          "value": 3.37,
+          "value": 3.36,
           "url": "https://letterboxd.com/film/the-pension-heist/"
         }
       },
@@ -16182,7 +16182,7 @@
           "url": "https://www.imdb.com/title/tt39453840/"
         },
         "letterboxd": {
-          "value": 3.37,
+          "value": 3.36,
           "url": "https://letterboxd.com/film/the-pension-heist/"
         }
       },
@@ -16311,7 +16311,7 @@
           "url": "https://www.imdb.com/title/tt39453840/"
         },
         "letterboxd": {
-          "value": 3.37,
+          "value": 3.36,
           "url": "https://letterboxd.com/film/the-pension-heist/"
         }
       },
@@ -16399,7 +16399,7 @@
           "url": "https://www.imdb.com/title/tt39453840/"
         },
         "letterboxd": {
-          "value": 3.37,
+          "value": 3.36,
           "url": "https://letterboxd.com/film/the-pension-heist/"
         }
       },
@@ -16526,7 +16526,7 @@
           "url": "https://www.imdb.com/title/tt39453840/"
         },
         "letterboxd": {
-          "value": 3.37,
+          "value": 3.36,
           "url": "https://letterboxd.com/film/the-pension-heist/"
         }
       },
@@ -16648,7 +16648,7 @@
           "url": "https://www.imdb.com/title/tt39453840/"
         },
         "letterboxd": {
-          "value": 3.37,
+          "value": 3.36,
           "url": "https://letterboxd.com/film/the-pension-heist/"
         }
       },
@@ -16778,7 +16778,7 @@
           "url": "https://www.imdb.com/title/tt39453840/"
         },
         "letterboxd": {
-          "value": 3.37,
+          "value": 3.36,
           "url": "https://letterboxd.com/film/the-pension-heist/"
         }
       },
@@ -16989,7 +16989,7 @@
           "url": "https://www.imdb.com/title/tt39453840/"
         },
         "letterboxd": {
-          "value": 3.37,
+          "value": 3.36,
           "url": "https://letterboxd.com/film/the-pension-heist/"
         }
       },
@@ -17201,7 +17201,7 @@
           "url": "https://www.imdb.com/title/tt39453840/"
         },
         "letterboxd": {
-          "value": 3.37,
+          "value": 3.36,
           "url": "https://letterboxd.com/film/the-pension-heist/"
         }
       },
@@ -17465,7 +17465,7 @@
           "url": "https://www.imdb.com/title/tt39453840/"
         },
         "letterboxd": {
-          "value": 3.37,
+          "value": 3.36,
           "url": "https://letterboxd.com/film/the-pension-heist/"
         }
       },
@@ -17591,7 +17591,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93454/purchase?kanal=dxf",
       "eventId": "93454",
       "promoterId": "202",
-      "sold": 105,
+      "sold": 108,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -17600,13 +17600,13 @@
           "url": "https://www.imdb.com/title/tt39453840/"
         },
         "letterboxd": {
-          "value": 3.37,
+          "value": 3.36,
           "url": "https://letterboxd.com/film/the-pension-heist/"
         }
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 5
+      "available": 2
     },
     {
       "id": "EDI20250183-2026-10-27T13:15:00-Storsal",
@@ -17634,7 +17634,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93558/purchase?kanal=dxf",
       "eventId": "93558",
       "promoterId": "202",
-      "sold": 4,
+      "sold": 8,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -17643,13 +17643,13 @@
           "url": "https://www.imdb.com/title/tt39453840/"
         },
         "letterboxd": {
-          "value": 3.37,
+          "value": 3.36,
           "url": "https://letterboxd.com/film/the-pension-heist/"
         }
       },
       "reserved": 0,
-      "capacity": 246,
-      "available": 242
+      "capacity": 244,
+      "available": 236
     },
     {
       "id": "EDI20260513-2026-10-27T17:15:00-Storsal",
@@ -17766,7 +17766,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93473/purchase?kanal=dxf",
       "eventId": "93473",
       "promoterId": "202",
-      "sold": 17,
+      "sold": 21,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -17775,13 +17775,13 @@
           "url": "https://www.imdb.com/title/tt39453840/"
         },
         "letterboxd": {
-          "value": 3.37,
+          "value": 3.36,
           "url": "https://letterboxd.com/film/the-pension-heist/"
         }
       },
       "reserved": 0,
-      "capacity": 283,
-      "available": 266
+      "capacity": 286,
+      "available": 265
     },
     {
       "id": "WAB20240262-2026-10-27T20:25:00-Kinosal",
@@ -17943,7 +17943,7 @@
           "url": "https://www.imdb.com/title/tt39453840/"
         },
         "letterboxd": {
-          "value": 3.37,
+          "value": 3.36,
           "url": "https://letterboxd.com/film/the-pension-heist/"
         }
       },
@@ -18107,7 +18107,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93523/purchase?kanal=dxf",
       "eventId": "93523",
       "promoterId": "202",
-      "sold": 10,
+      "sold": 14,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -18116,13 +18116,13 @@
           "url": "https://www.imdb.com/title/tt39453840/"
         },
         "letterboxd": {
-          "value": 3.37,
+          "value": 3.36,
           "url": "https://letterboxd.com/film/the-pension-heist/"
         }
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 100
+      "available": 96
     },
     {
       "id": "WAB20240262-2026-10-29T20:15:00-Storsal",
@@ -18245,7 +18245,7 @@
           "url": "https://www.imdb.com/title/tt39453840/"
         },
         "letterboxd": {
-          "value": 3.37,
+          "value": 3.36,
           "url": "https://letterboxd.com/film/the-pension-heist/"
         }
       },
@@ -18455,7 +18455,7 @@
           "url": "https://www.imdb.com/title/tt39453840/"
         },
         "letterboxd": {
-          "value": 3.37,
+          "value": 3.36,
           "url": "https://letterboxd.com/film/the-pension-heist/"
         }
       },
@@ -18592,7 +18592,7 @@
           "url": "https://www.imdb.com/title/tt39453840/"
         },
         "letterboxd": {
-          "value": 3.37,
+          "value": 3.36,
           "url": "https://letterboxd.com/film/the-pension-heist/"
         }
       },
@@ -18757,7 +18757,7 @@
           "url": "https://www.imdb.com/title/tt39453840/"
         },
         "letterboxd": {
-          "value": 3.37,
+          "value": 3.36,
           "url": "https://letterboxd.com/film/the-pension-heist/"
         }
       },
@@ -19248,7 +19248,7 @@
           "url": "https://www.imdb.com/title/tt39453840/"
         },
         "letterboxd": {
-          "value": 3.37,
+          "value": 3.36,
           "url": "https://letterboxd.com/film/the-pension-heist/"
         }
       },
@@ -19499,8 +19499,8 @@
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
-      "capacity": 245,
-      "available": 237
+      "capacity": 246,
+      "available": 238
     },
     {
       "id": "BVI20200545-2026-12-16T20:00:00-Kinosal",
@@ -19565,8 +19565,8 @@
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
-      "capacity": 109,
-      "available": 103
+      "capacity": 110,
+      "available": 104
     },
     {
       "id": "EDI20251026-2026-12-17T20:00:00-Storsal",
@@ -19627,12 +19627,12 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93329/purchase?kanal=dxf",
       "eventId": "93329",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 5,
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
-      "capacity": 110,
-      "available": 110
+      "capacity": 105,
+      "available": 100
     },
     {
       "id": "BVI20200545-2026-12-18T20:00:00-Storsal",
