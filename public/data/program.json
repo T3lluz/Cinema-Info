@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-27T02:02:43.309Z",
+  "updatedAt": "2026-10-27T16:30:13.081Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -15864,7 +15864,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.4,
+          "value": 7.3,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         },
@@ -16177,7 +16177,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.4,
+          "value": 7.3,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         },
@@ -16306,7 +16306,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.4,
+          "value": 7.3,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         },
@@ -16394,7 +16394,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.4,
+          "value": 7.3,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         },
@@ -16521,7 +16521,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.4,
+          "value": 7.3,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         },
@@ -16643,7 +16643,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.4,
+          "value": 7.3,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         },
@@ -16773,7 +16773,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.4,
+          "value": 7.3,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         },
@@ -16984,7 +16984,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.4,
+          "value": 7.3,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         },
@@ -17119,7 +17119,7 @@
           "url": "https://www.imdb.com/title/tt38807889/"
         },
         "letterboxd": {
-          "value": 3.18,
+          "value": 3.17,
           "url": "https://letterboxd.com/film/monster-mia/"
         }
       },
@@ -17196,7 +17196,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.4,
+          "value": 7.3,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         },
@@ -17376,7 +17376,7 @@
           "url": "https://www.imdb.com/title/tt38807889/"
         },
         "letterboxd": {
-          "value": 3.18,
+          "value": 3.17,
           "url": "https://letterboxd.com/film/monster-mia/"
         }
       },
@@ -17460,7 +17460,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.4,
+          "value": 7.3,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         },
@@ -17591,11 +17591,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93454/purchase?kanal=dxf",
       "eventId": "93454",
       "promoterId": "202",
-      "sold": 108,
+      "sold": 110,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.4,
+          "value": 7.3,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         },
@@ -17606,7 +17606,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 2
+      "available": 0
     },
     {
       "id": "EDI20250183-2026-10-27T13:15:00-Storsal",
@@ -17634,11 +17634,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93558/purchase?kanal=dxf",
       "eventId": "93558",
       "promoterId": "202",
-      "sold": 8,
+      "sold": 35,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.4,
+          "value": 7.3,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         },
@@ -17648,8 +17648,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 244,
-      "available": 236
+      "capacity": 246,
+      "available": 211
     },
     {
       "id": "EDI20260513-2026-10-27T17:15:00-Storsal",
@@ -17678,7 +17678,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93457/purchase?kanal=dxf",
       "eventId": "93457",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 5,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -17687,13 +17687,13 @@
           "url": "https://www.imdb.com/title/tt38807889/"
         },
         "letterboxd": {
-          "value": 3.18,
+          "value": 3.17,
           "url": "https://letterboxd.com/film/monster-mia/"
         }
       },
       "reserved": 0,
       "capacity": 286,
-      "available": 286
+      "available": 281
     },
     {
       "id": "EDI20251443-2026-10-27T18:00:00-Kinosal",
@@ -17719,7 +17719,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93471/purchase?kanal=dxf",
       "eventId": "93471",
       "promoterId": "202",
-      "sold": 20,
+      "sold": 35,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -17738,7 +17738,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 90
+      "available": 75
     },
     {
       "id": "EDI20250183-2026-10-27T19:30:00-Storsal",
@@ -17766,11 +17766,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93473/purchase?kanal=dxf",
       "eventId": "93473",
       "promoterId": "202",
-      "sold": 21,
+      "sold": 33,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.4,
+          "value": 7.3,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         },
@@ -17781,7 +17781,7 @@
       },
       "reserved": 0,
       "capacity": 286,
-      "available": 265
+      "available": 253
     },
     {
       "id": "WAB20240262-2026-10-27T20:25:00-Kinosal",
@@ -17934,11 +17934,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93524/purchase?kanal=dxf",
       "eventId": "93524",
       "promoterId": "202",
-      "sold": 23,
+      "sold": 39,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.4,
+          "value": 7.3,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         },
@@ -17948,8 +17948,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 87
+      "capacity": 108,
+      "available": 69
     },
     {
       "id": "WAB20240262-2026-10-28T20:15:00-Storsal",
@@ -18073,7 +18073,7 @@
           "url": "https://www.imdb.com/title/tt38807889/"
         },
         "letterboxd": {
-          "value": 3.18,
+          "value": 3.17,
           "url": "https://letterboxd.com/film/monster-mia/"
         }
       },
@@ -18111,7 +18111,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.4,
+          "value": 7.3,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         },
@@ -18197,7 +18197,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93459/purchase?kanal=dxf",
       "eventId": "93459",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 3,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -18207,8 +18207,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 110
+      "capacity": 107,
+      "available": 104
     },
     {
       "id": "EDI20250183-2026-10-30T18:35:00-Kinosal",
@@ -18240,7 +18240,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.4,
+          "value": 7.3,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         },
@@ -18375,7 +18375,7 @@
           "url": "https://www.imdb.com/title/tt38807889/"
         },
         "letterboxd": {
-          "value": 3.18,
+          "value": 3.17,
           "url": "https://letterboxd.com/film/monster-mia/"
         }
       },
@@ -18446,11 +18446,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93469/purchase?kanal=dxf",
       "eventId": "93469",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 4,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.4,
+          "value": 7.3,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         },
@@ -18460,8 +18460,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 286,
-      "available": 286
+      "capacity": 282,
+      "available": 278
     },
     {
       "id": "EDI20261396-2026-10-31T20:30:00-Kinosal",
@@ -18583,11 +18583,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93542/purchase?kanal=dxf",
       "eventId": "93542",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 3,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.4,
+          "value": 7.3,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         },
@@ -18598,7 +18598,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 110
+      "available": 107
     },
     {
       "id": "EDI20251399-2026-11-01T19:50:00-Kinosal",
@@ -18624,7 +18624,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93465/purchase?kanal=dxf",
       "eventId": "93465",
       "promoterId": "202",
-      "sold": 2,
+      "sold": 6,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -18635,7 +18635,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 108
+      "available": 104
     },
     {
       "id": "EDI20260632-2026-11-03T13:00:00-Kinosal",
@@ -18661,7 +18661,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93426/purchase?kanal=dxf",
       "eventId": "93426",
       "promoterId": "202",
-      "sold": 13,
+      "sold": 11,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -18676,7 +18676,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 97
+      "available": 99
     },
     {
       "id": "EDI20260513-2026-11-03T17:00:00-Kinosal",
@@ -18714,7 +18714,7 @@
           "url": "https://www.imdb.com/title/tt38807889/"
         },
         "letterboxd": {
-          "value": 3.18,
+          "value": 3.17,
           "url": "https://letterboxd.com/film/monster-mia/"
         }
       },
@@ -18752,7 +18752,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.4,
+          "value": 7.3,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         },
@@ -18877,7 +18877,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93531/purchase?kanal=dxf",
       "eventId": "93531",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -18888,7 +18888,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 110
+      "available": 108
     },
     {
       "id": "EDI20260975-2026-11-07T10:00:00-Kinosal",
@@ -19008,8 +19008,8 @@
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
-      "capacity": 107,
-      "available": 104
+      "capacity": 110,
+      "available": 107
     },
     {
       "id": "EDI20250084-2026-11-07T12:45:00-Storsal",
@@ -19125,7 +19125,7 @@
           "url": "https://www.imdb.com/title/tt38807889/"
         },
         "letterboxd": {
-          "value": 3.18,
+          "value": 3.17,
           "url": "https://letterboxd.com/film/monster-mia/"
         }
       },
@@ -19243,7 +19243,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.4,
+          "value": 7.3,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         },
@@ -19293,7 +19293,7 @@
           "url": "https://letterboxd.com/film/charlie-harper/"
         },
         "tomatoes": {
-          "value": 84,
+          "value": 83,
           "url": "https://www.rottentomatoes.com/m/charlie_harper"
         }
       },
@@ -19456,7 +19456,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93254/purchase?kanal=dxf",
       "eventId": "93254",
       "promoterId": "202",
-      "sold": 2,
+      "sold": 6,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -19466,8 +19466,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 108,
-      "available": 106
+      "capacity": 106,
+      "available": 100
     },
     {
       "id": "EDI20251026-2026-12-15T20:00:00-Storsal",
@@ -19627,12 +19627,12 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93329/purchase?kanal=dxf",
       "eventId": "93329",
       "promoterId": "202",
-      "sold": 5,
+      "sold": 7,
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
-      "capacity": 105,
-      "available": 100
+      "capacity": 110,
+      "available": 103
     },
     {
       "id": "BVI20200545-2026-12-18T20:00:00-Storsal",
