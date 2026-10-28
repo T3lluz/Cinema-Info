@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-27T16:30:13.081Z",
+  "updatedAt": "2026-10-28T02:12:12.828Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -17032,7 +17032,7 @@
           "url": "https://www.imdb.com/title/tt34890576/"
         },
         "letterboxd": {
-          "value": 3.75,
+          "value": 3.74,
           "url": "https://letterboxd.com/film/clayface/"
         },
         "tomatoes": {
@@ -17289,7 +17289,7 @@
           "url": "https://www.imdb.com/title/tt34890576/"
         },
         "letterboxd": {
-          "value": 3.75,
+          "value": 3.74,
           "url": "https://letterboxd.com/film/clayface/"
         },
         "tomatoes": {
@@ -17553,7 +17553,7 @@
           "url": "https://www.imdb.com/title/tt34890576/"
         },
         "letterboxd": {
-          "value": 3.75,
+          "value": 3.74,
           "url": "https://letterboxd.com/film/clayface/"
         },
         "tomatoes": {
@@ -17719,7 +17719,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93471/purchase?kanal=dxf",
       "eventId": "93471",
       "promoterId": "202",
-      "sold": 35,
+      "sold": 38,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -17738,7 +17738,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 75
+      "available": 72
     },
     {
       "id": "EDI20250183-2026-10-27T19:30:00-Storsal",
@@ -17766,7 +17766,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93473/purchase?kanal=dxf",
       "eventId": "93473",
       "promoterId": "202",
-      "sold": 33,
+      "sold": 55,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -17781,7 +17781,7 @@
       },
       "reserved": 0,
       "capacity": 286,
-      "available": 253
+      "available": 231
     },
     {
       "id": "WAB20240262-2026-10-27T20:25:00-Kinosal",
@@ -17809,7 +17809,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93497/purchase?kanal=dxf",
       "eventId": "93497",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -17818,7 +17818,7 @@
           "url": "https://www.imdb.com/title/tt34890576/"
         },
         "letterboxd": {
-          "value": 3.75,
+          "value": 3.74,
           "url": "https://letterboxd.com/film/clayface/"
         },
         "tomatoes": {
@@ -17828,7 +17828,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 110
+      "available": 108
     },
     {
       "id": "EDI20260975-2026-10-28T17:00:00-Kinosal",
@@ -17856,7 +17856,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93528/purchase?kanal=dxf",
       "eventId": "93528",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -17866,8 +17866,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 110
+      "capacity": 108,
+      "available": 106
     },
     {
       "id": "EDI20250084-2026-10-28T17:30:00-Storsal",
@@ -17934,7 +17934,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93524/purchase?kanal=dxf",
       "eventId": "93524",
       "promoterId": "202",
-      "sold": 39,
+      "sold": 48,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -17948,8 +17948,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 108,
-      "available": 69
+      "capacity": 110,
+      "available": 62
     },
     {
       "id": "WAB20240262-2026-10-28T20:15:00-Storsal",
@@ -17986,7 +17986,7 @@
           "url": "https://www.imdb.com/title/tt34890576/"
         },
         "letterboxd": {
-          "value": 3.75,
+          "value": 3.74,
           "url": "https://letterboxd.com/film/clayface/"
         },
         "tomatoes": {
@@ -18107,7 +18107,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93523/purchase?kanal=dxf",
       "eventId": "93523",
       "promoterId": "202",
-      "sold": 14,
+      "sold": 18,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -18121,8 +18121,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 96
+      "capacity": 108,
+      "available": 90
     },
     {
       "id": "WAB20240262-2026-10-29T20:15:00-Storsal",
@@ -18159,7 +18159,7 @@
           "url": "https://www.imdb.com/title/tt34890576/"
         },
         "letterboxd": {
-          "value": 3.75,
+          "value": 3.74,
           "url": "https://letterboxd.com/film/clayface/"
         },
         "tomatoes": {
@@ -18236,7 +18236,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93461/purchase?kanal=dxf",
       "eventId": "93461",
       "promoterId": "202",
-      "sold": 2,
+      "sold": 4,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -18250,8 +18250,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 108
+      "capacity": 108,
+      "available": 104
     },
     {
       "id": "WAB20240262-2026-10-30T21:30:00-Kinosal",
@@ -18279,7 +18279,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93460/purchase?kanal=dxf",
       "eventId": "93460",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -18288,7 +18288,7 @@
           "url": "https://www.imdb.com/title/tt34890576/"
         },
         "letterboxd": {
-          "value": 3.75,
+          "value": 3.74,
           "url": "https://letterboxd.com/film/clayface/"
         },
         "tomatoes": {
@@ -18297,8 +18297,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 110
+      "capacity": 108,
+      "available": 106
     },
     {
       "id": "EDI20250084-2026-10-31T15:00:00-Kinosal",
@@ -18446,7 +18446,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93469/purchase?kanal=dxf",
       "eventId": "93469",
       "promoterId": "202",
-      "sold": 4,
+      "sold": 6,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -18460,8 +18460,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 282,
-      "available": 278
+      "capacity": 286,
+      "available": 280
     },
     {
       "id": "EDI20261396-2026-10-31T20:30:00-Kinosal",
@@ -18545,7 +18545,7 @@
           "url": "https://www.imdb.com/title/tt34890576/"
         },
         "letterboxd": {
-          "value": 3.75,
+          "value": 3.74,
           "url": "https://letterboxd.com/film/clayface/"
         },
         "tomatoes": {
@@ -18877,7 +18877,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93531/purchase?kanal=dxf",
       "eventId": "93531",
       "promoterId": "202",
-      "sold": 2,
+      "sold": 4,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -18887,8 +18887,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 108
+      "capacity": 108,
+      "available": 104
     },
     {
       "id": "EDI20260975-2026-11-07T10:00:00-Kinosal",
@@ -19383,7 +19383,7 @@
           "url": "https://www.imdb.com/title/tt34890576/"
         },
         "letterboxd": {
-          "value": 3.75,
+          "value": 3.74,
           "url": "https://letterboxd.com/film/clayface/"
         },
         "tomatoes": {
