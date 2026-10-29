@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-28T17:08:14.814Z",
+  "updatedAt": "2026-10-29T02:24:30.718Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -17934,7 +17934,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93524/purchase?kanal=dxf",
       "eventId": "93524",
       "promoterId": "202",
-      "sold": 78,
+      "sold": 90,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -17949,7 +17949,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 32
+      "available": 20
     },
     {
       "id": "WAB20240262-2026-10-28T20:15:00-Storsal",
@@ -17977,7 +17977,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93475/purchase?kanal=dxf",
       "eventId": "93475",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 6,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -17994,9 +17994,9 @@
           "url": "https://www.rottentomatoes.com/m/clayface"
         }
       },
-      "reserved": 2,
+      "reserved": 0,
       "capacity": 286,
-      "available": 284
+      "available": 280
     },
     {
       "id": "EDI20250084-2026-10-29T17:00:00-Kinosal",
@@ -18107,7 +18107,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93523/purchase?kanal=dxf",
       "eventId": "93523",
       "promoterId": "202",
-      "sold": 32,
+      "sold": 36,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -18121,8 +18121,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 108,
-      "available": 76
+      "capacity": 110,
+      "available": 74
     },
     {
       "id": "WAB20240262-2026-10-29T20:15:00-Storsal",
@@ -18150,7 +18150,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93530/purchase?kanal=dxf",
       "eventId": "93530",
       "promoterId": "202",
-      "sold": 4,
+      "sold": 7,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -18167,9 +18167,9 @@
           "url": "https://www.rottentomatoes.com/m/clayface"
         }
       },
-      "reserved": 2,
+      "reserved": 0,
       "capacity": 286,
-      "available": 280
+      "available": 279
     },
     {
       "id": "EDI20260975-2026-10-30T16:50:00-Kinosal",
@@ -18250,8 +18250,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 108,
-      "available": 102
+      "capacity": 110,
+      "available": 104
     },
     {
       "id": "WAB20240262-2026-10-30T21:30:00-Kinosal",
@@ -18407,7 +18407,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93463/purchase?kanal=dxf",
       "eventId": "93463",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -18418,7 +18418,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 110
+      "available": 108
     },
     {
       "id": "EDI20250183-2026-10-31T18:00:00-Storsal",
@@ -19037,7 +19037,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93413/purchase?kanal=dxf",
       "eventId": "93413",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 6,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -19048,7 +19048,7 @@
       },
       "reserved": 0,
       "capacity": 286,
-      "available": 286
+      "available": 280
     },
     {
       "id": "EDI20261109-2026-11-07T14:00:00-Kinosal",
@@ -19327,7 +19327,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93520/purchase?kanal=dxf",
       "eventId": "93520",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 6,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -19346,7 +19346,7 @@
       },
       "reserved": 0,
       "capacity": 286,
-      "available": 286
+      "available": 280
     },
     {
       "id": "WAB20240262-2026-11-07T22:15:00-Kinosal",
@@ -19419,7 +19419,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93253/purchase?kanal=dxf",
       "eventId": "93253",
       "promoterId": "202",
-      "sold": 26,
+      "sold": 28,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -19429,8 +19429,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 84
+      "capacity": 108,
+      "available": 80
     },
     {
       "id": "EDI20251399-2026-11-17T19:30:00-Kinosal",
