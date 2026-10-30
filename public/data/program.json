@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-30T02:34:37.375Z",
+  "updatedAt": "2026-10-30T16:59:33.855Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -15864,7 +15864,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.3,
+          "value": 7.2,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         },
@@ -16177,7 +16177,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.3,
+          "value": 7.2,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         },
@@ -16306,7 +16306,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.3,
+          "value": 7.2,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         },
@@ -16394,7 +16394,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.3,
+          "value": 7.2,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         },
@@ -16521,7 +16521,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.3,
+          "value": 7.2,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         },
@@ -16643,7 +16643,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.3,
+          "value": 7.2,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         },
@@ -16773,7 +16773,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.3,
+          "value": 7.2,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         },
@@ -16984,7 +16984,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.3,
+          "value": 7.2,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         },
@@ -17196,7 +17196,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.3,
+          "value": 7.2,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         },
@@ -17460,7 +17460,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.3,
+          "value": 7.2,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         },
@@ -17595,7 +17595,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.3,
+          "value": 7.2,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         },
@@ -17638,7 +17638,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.3,
+          "value": 7.2,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         },
@@ -17770,7 +17770,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.3,
+          "value": 7.2,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         },
@@ -17938,7 +17938,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.3,
+          "value": 7.2,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         },
@@ -18111,7 +18111,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.3,
+          "value": 7.2,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         },
@@ -18197,7 +18197,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93459/purchase?kanal=dxf",
       "eventId": "93459",
       "promoterId": "202",
-      "sold": 3,
+      "sold": 5,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -18208,7 +18208,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 107
+      "available": 105
     },
     {
       "id": "EDI20250183-2026-10-30T18:35:00-Kinosal",
@@ -18236,11 +18236,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93461/purchase?kanal=dxf",
       "eventId": "93461",
       "promoterId": "202",
-      "sold": 14,
+      "sold": 34,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.3,
+          "value": 7.2,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         },
@@ -18250,8 +18250,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 108,
-      "available": 94
+      "capacity": 110,
+      "available": 76
     },
     {
       "id": "WAB20240262-2026-10-30T21:30:00-Kinosal",
@@ -18279,7 +18279,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93460/purchase?kanal=dxf",
       "eventId": "93460",
       "promoterId": "202",
-      "sold": 5,
+      "sold": 12,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -18298,7 +18298,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 105
+      "available": 98
     },
     {
       "id": "EDI20250084-2026-10-31T15:00:00-Kinosal",
@@ -18407,7 +18407,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93463/purchase?kanal=dxf",
       "eventId": "93463",
       "promoterId": "202",
-      "sold": 8,
+      "sold": 13,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -18417,8 +18417,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 109,
-      "available": 101
+      "capacity": 110,
+      "available": 97
     },
     {
       "id": "EDI20250183-2026-10-31T18:00:00-Storsal",
@@ -18450,7 +18450,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.3,
+          "value": 7.2,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         },
@@ -18489,7 +18489,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93565/purchase?kanal=dxf",
       "eventId": "93565",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -18507,8 +18507,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 110
+      "capacity": 108,
+      "available": 106
     },
     {
       "id": "WAB20240262-2026-10-31T21:00:00-Storsal",
@@ -18622,11 +18622,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93542/purchase?kanal=dxf",
       "eventId": "93542",
       "promoterId": "202",
-      "sold": 7,
+      "sold": 13,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.3,
+          "value": 7.2,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         },
@@ -18637,7 +18637,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 103
+      "available": 97
     },
     {
       "id": "EDI20251399-2026-11-01T19:50:00-Kinosal",
@@ -18663,7 +18663,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93465/purchase?kanal=dxf",
       "eventId": "93465",
       "promoterId": "202",
-      "sold": 20,
+      "sold": 27,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -18673,8 +18673,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 106,
-      "available": 86
+      "capacity": 110,
+      "available": 83
     },
     {
       "id": "EDI20260632-2026-11-03T13:00:00-Kinosal",
@@ -18700,7 +18700,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93426/purchase?kanal=dxf",
       "eventId": "93426",
       "promoterId": "202",
-      "sold": 13,
+      "sold": 17,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -18714,8 +18714,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 109,
-      "available": 96
+      "capacity": 110,
+      "available": 93
     },
     {
       "id": "EDI20260513-2026-11-03T17:00:00-Kinosal",
@@ -18787,11 +18787,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93604/purchase?kanal=dxf",
       "eventId": "93604",
       "promoterId": "202",
-      "sold": 3,
+      "sold": 5,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.3,
+          "value": 7.2,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         },
@@ -18801,8 +18801,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 286,
-      "available": 283
+      "capacity": 284,
+      "available": 279
     },
     {
       "id": "EDI20260632-2026-11-03T19:30:00-Kinosal",
@@ -19326,7 +19326,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.3,
+          "value": 7.2,
           "id": "tt39453840",
           "url": "https://www.imdb.com/title/tt39453840/"
         },
@@ -19536,7 +19536,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93253/purchase?kanal=dxf",
       "eventId": "93253",
       "promoterId": "202",
-      "sold": 29,
+      "sold": 35,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -19547,7 +19547,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 81
+      "available": 75
     },
     {
       "id": "EDI20251399-2026-11-17T19:30:00-Kinosal",
@@ -19573,7 +19573,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93254/purchase?kanal=dxf",
       "eventId": "93254",
       "promoterId": "202",
-      "sold": 8,
+      "sold": 13,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -19583,8 +19583,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 108,
-      "available": 100
+      "capacity": 105,
+      "available": 92
     },
     {
       "id": "EDI20251026-2026-12-15T20:00:00-Storsal",
