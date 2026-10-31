@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-31T02:19:44.748Z",
+  "updatedAt": "2026-10-31T16:02:09.300Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -18407,7 +18407,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93463/purchase?kanal=dxf",
       "eventId": "93463",
       "promoterId": "202",
-      "sold": 13,
+      "sold": 35,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -18418,7 +18418,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 97
+      "available": 75
     },
     {
       "id": "EDI20250183-2026-10-31T18:00:00-Storsal",
@@ -18446,7 +18446,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93469/purchase?kanal=dxf",
       "eventId": "93469",
       "promoterId": "202",
-      "sold": 15,
+      "sold": 21,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -18461,7 +18461,7 @@
       },
       "reserved": 0,
       "capacity": 246,
-      "available": 231
+      "available": 225
     },
     {
       "id": "EDI20261396-2026-10-31T20:30:00-Kinosal",
@@ -18507,8 +18507,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 108,
-      "available": 106
+      "capacity": 110,
+      "available": 108
     },
     {
       "id": "WAB20240262-2026-10-31T21:00:00-Storsal",
@@ -18536,7 +18536,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93573/purchase?kanal=dxf",
       "eventId": "93573",
       "promoterId": "202",
-      "sold": 2,
+      "sold": 4,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -18553,9 +18553,9 @@
           "url": "https://www.rottentomatoes.com/m/clayface"
         }
       },
-      "reserved": 0,
+      "reserved": 2,
       "capacity": 246,
-      "available": 244
+      "available": 240
     },
     {
       "id": "EDI20250084-2026-11-01T15:00:00-Kinosal",
@@ -18583,7 +18583,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93608/purchase?kanal=dxf",
       "eventId": "93608",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 3,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -18594,7 +18594,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 110
+      "available": 107
     },
     {
       "id": "EDI20250183-2026-11-01T17:10:00-Kinosal",
@@ -18622,7 +18622,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93542/purchase?kanal=dxf",
       "eventId": "93542",
       "promoterId": "202",
-      "sold": 20,
+      "sold": 31,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -18637,7 +18637,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 90
+      "available": 79
     },
     {
       "id": "EDI20251399-2026-11-01T19:50:00-Kinosal",
@@ -18663,7 +18663,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93465/purchase?kanal=dxf",
       "eventId": "93465",
       "promoterId": "202",
-      "sold": 27,
+      "sold": 36,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -18674,7 +18674,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 83
+      "available": 74
     },
     {
       "id": "EDI20260632-2026-11-03T13:00:00-Kinosal",
@@ -18700,7 +18700,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93426/purchase?kanal=dxf",
       "eventId": "93426",
       "promoterId": "202",
-      "sold": 17,
+      "sold": 19,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -18715,7 +18715,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 93
+      "available": 91
     },
     {
       "id": "EDI20260513-2026-11-03T17:00:00-Kinosal",
@@ -18972,6 +18972,86 @@
       "reserved": 0,
       "capacity": 108,
       "available": 96
+    },
+    {
+      "id": "EDI20250183-2026-11-05T17:00:00-Kinosal",
+      "title": "Pensjonskuppet",
+      "screen": "Kinosal",
+      "start": "2026-11-05T17:00:00",
+      "end": "2026-11-05T19:00:11",
+      "dayKey": "2026-11-05",
+      "runningMinutes": 110,
+      "runningLabel": "1 t. 50 min.",
+      "age": "9 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Action",
+        "Comedy",
+        "Crime"
+      ],
+      "director": "Gunnbjörg Gunnarsdottir",
+      "premiere": "2026-10-16",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/b7c7d07d556cff3e5c9868b5e6fd02656f31e59c-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93535/purchase?kanal=dxf",
+      "eventId": "93535",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.2,
+          "id": "tt39453840",
+          "url": "https://www.imdb.com/title/tt39453840/"
+        },
+        "letterboxd": {
+          "value": 3.36,
+          "url": "https://letterboxd.com/film/the-pension-heist/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20251399-2026-11-05T19:45:00-Kinosal",
+      "title": "Markens grøde",
+      "screen": "Kinosal",
+      "start": "2026-11-05T19:45:00",
+      "end": "2026-11-05T22:30:27",
+      "dayKey": "2026-11-05",
+      "runningMinutes": 155,
+      "runningLabel": "2 t. 35 min.",
+      "age": "12 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": true,
+      "genres": [
+        "Drama"
+      ],
+      "director": "Hans Petter Moland",
+      "premiere": "2026-10-30",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/0054744e1f36936a0b20e8ec95cf475d967bb7a6-1080x1514.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93636/purchase?kanal=dxf",
+      "eventId": "93636",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 6.5,
+          "id": "tt0011440",
+          "url": "https://www.imdb.com/title/tt0011440/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
     },
     {
       "id": "EDI20260975-2026-11-07T10:00:00-Kinosal",
@@ -19289,11 +19369,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93287/purchase?kanal=dxf",
       "eventId": "93287",
       "promoterId": "202",
-      "sold": 4,
+      "sold": 6,
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
-      "capacity": 242,
+      "capacity": 244,
       "available": 238
     },
     {
@@ -19536,7 +19616,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93253/purchase?kanal=dxf",
       "eventId": "93253",
       "promoterId": "202",
-      "sold": 35,
+      "sold": 37,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -19546,8 +19626,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 75
+      "capacity": 108,
+      "available": 71
     },
     {
       "id": "EDI20251399-2026-11-17T19:30:00-Kinosal",
