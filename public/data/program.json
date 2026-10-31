@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-30T16:59:33.855Z",
+  "updatedAt": "2026-10-31T02:19:44.748Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -13576,7 +13576,7 @@
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.65,
+          "value": 2.64,
           "url": "https://letterboxd.com/film/verity-2026/"
         },
         "tomatoes": {
@@ -13849,7 +13849,7 @@
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.65,
+          "value": 2.64,
           "url": "https://letterboxd.com/film/verity-2026/"
         },
         "tomatoes": {
@@ -14129,7 +14129,7 @@
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.65,
+          "value": 2.64,
           "url": "https://letterboxd.com/film/verity-2026/"
         },
         "tomatoes": {
@@ -14269,7 +14269,7 @@
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.65,
+          "value": 2.64,
           "url": "https://letterboxd.com/film/verity-2026/"
         },
         "tomatoes": {
@@ -14538,7 +14538,7 @@
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.65,
+          "value": 2.64,
           "url": "https://letterboxd.com/film/verity-2026/"
         },
         "tomatoes": {
@@ -14766,7 +14766,7 @@
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.65,
+          "value": 2.64,
           "url": "https://letterboxd.com/film/verity-2026/"
         },
         "tomatoes": {
@@ -15182,7 +15182,7 @@
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.65,
+          "value": 2.64,
           "url": "https://letterboxd.com/film/verity-2026/"
         },
         "tomatoes": {
@@ -15737,7 +15737,7 @@
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.65,
+          "value": 2.64,
           "url": "https://letterboxd.com/film/verity-2026/"
         },
         "tomatoes": {
@@ -18236,7 +18236,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93461/purchase?kanal=dxf",
       "eventId": "93461",
       "promoterId": "202",
-      "sold": 34,
+      "sold": 42,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -18251,7 +18251,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 76
+      "available": 68
     },
     {
       "id": "WAB20240262-2026-10-30T21:30:00-Kinosal",
@@ -18279,7 +18279,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93460/purchase?kanal=dxf",
       "eventId": "93460",
       "promoterId": "202",
-      "sold": 12,
+      "sold": 16,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -18298,7 +18298,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 98
+      "available": 94
     },
     {
       "id": "EDI20250084-2026-10-31T15:00:00-Kinosal",
@@ -18403,7 +18403,7 @@
       ],
       "director": "Hans Petter Moland",
       "premiere": "2026-10-30",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/6d58c7d892dafa154f135a003ae5006be05290f1-1500x2250.webp?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/0054744e1f36936a0b20e8ec95cf475d967bb7a6-1080x1514.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93463/purchase?kanal=dxf",
       "eventId": "93463",
       "promoterId": "202",
@@ -18446,7 +18446,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93469/purchase?kanal=dxf",
       "eventId": "93469",
       "promoterId": "202",
-      "sold": 11,
+      "sold": 15,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -18461,7 +18461,7 @@
       },
       "reserved": 0,
       "capacity": 246,
-      "available": 235
+      "available": 231
     },
     {
       "id": "EDI20261396-2026-10-31T20:30:00-Kinosal",
@@ -18536,7 +18536,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93573/purchase?kanal=dxf",
       "eventId": "93573",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -18555,7 +18555,7 @@
       },
       "reserved": 0,
       "capacity": 246,
-      "available": 246
+      "available": 244
     },
     {
       "id": "EDI20250084-2026-11-01T15:00:00-Kinosal",
@@ -18622,7 +18622,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93542/purchase?kanal=dxf",
       "eventId": "93542",
       "promoterId": "202",
-      "sold": 13,
+      "sold": 20,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -18637,7 +18637,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 97
+      "available": 90
     },
     {
       "id": "EDI20251399-2026-11-01T19:50:00-Kinosal",
@@ -18659,7 +18659,7 @@
       ],
       "director": "Hans Petter Moland",
       "premiere": "2026-10-30",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/6d58c7d892dafa154f135a003ae5006be05290f1-1500x2250.webp?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/0054744e1f36936a0b20e8ec95cf475d967bb7a6-1080x1514.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93465/purchase?kanal=dxf",
       "eventId": "93465",
       "promoterId": "202",
@@ -18787,7 +18787,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93604/purchase?kanal=dxf",
       "eventId": "93604",
       "promoterId": "202",
-      "sold": 5,
+      "sold": 7,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -18801,7 +18801,7 @@
         }
       },
       "reserved": 0,
-      "capacity": 284,
+      "capacity": 286,
       "available": 279
     },
     {
@@ -18956,7 +18956,7 @@
       ],
       "director": "Hans Petter Moland",
       "premiere": "2026-10-30",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/6d58c7d892dafa154f135a003ae5006be05290f1-1500x2250.webp?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/0054744e1f36936a0b20e8ec95cf475d967bb7a6-1080x1514.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93531/purchase?kanal=dxf",
       "eventId": "93531",
       "promoterId": "202",
@@ -18999,7 +18999,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93412/purchase?kanal=dxf",
       "eventId": "93412",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 4,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -19009,8 +19009,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 110
+      "capacity": 106,
+      "available": 102
     },
     {
       "id": "EDI20250794-2026-11-07T10:30:00-Storsal",
@@ -19289,12 +19289,12 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93287/purchase?kanal=dxf",
       "eventId": "93287",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 4,
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
-      "capacity": 246,
-      "available": 246
+      "capacity": 242,
+      "available": 238
     },
     {
       "id": "EDI20250183-2026-11-07T19:00:00-Storsal",
@@ -19419,7 +19419,7 @@
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.65,
+          "value": 2.64,
           "url": "https://letterboxd.com/film/verity-2026/"
         },
         "tomatoes": {
@@ -19532,7 +19532,7 @@
       ],
       "director": "Hans Petter Moland",
       "premiere": "2026-10-30",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/6d58c7d892dafa154f135a003ae5006be05290f1-1500x2250.webp?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/0054744e1f36936a0b20e8ec95cf475d967bb7a6-1080x1514.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93253/purchase?kanal=dxf",
       "eventId": "93253",
       "promoterId": "202",
@@ -19569,7 +19569,7 @@
       ],
       "director": "Hans Petter Moland",
       "premiere": "2026-10-30",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/6d58c7d892dafa154f135a003ae5006be05290f1-1500x2250.webp?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/0054744e1f36936a0b20e8ec95cf475d967bb7a6-1080x1514.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93254/purchase?kanal=dxf",
       "eventId": "93254",
       "promoterId": "202",
@@ -19583,8 +19583,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 105,
-      "available": 92
+      "capacity": 110,
+      "available": 97
     },
     {
       "id": "EDI20251026-2026-12-15T20:00:00-Storsal",
@@ -19595,7 +19595,7 @@
       "dayKey": "2026-12-15",
       "runningMinutes": null,
       "runningLabel": null,
-      "age": null,
+      "age": "15 år",
       "tags": [
         "Norsk tekst"
       ],
@@ -19694,7 +19694,7 @@
       "dayKey": "2026-12-17",
       "runningMinutes": null,
       "runningLabel": null,
-      "age": null,
+      "age": "15 år",
       "tags": [
         "Norsk tekst"
       ],
