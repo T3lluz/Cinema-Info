@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-02T20:43:37.502Z",
+  "updatedAt": "2026-11-03T03:55:11.702Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -13443,7 +13443,7 @@
           "url": "https://www.imdb.com/title/tt36841161/"
         },
         "letterboxd": {
-          "value": 3.59,
+          "value": 3.58,
           "url": "https://letterboxd.com/film/shaun-the-sheep-the-beast-of-mossy-bottom/"
         },
         "tomatoes": {
@@ -13624,7 +13624,7 @@
           "url": "https://www.imdb.com/title/tt36841161/"
         },
         "letterboxd": {
-          "value": 3.59,
+          "value": 3.58,
           "url": "https://letterboxd.com/film/shaun-the-sheep-the-beast-of-mossy-bottom/"
         },
         "tomatoes": {
@@ -13897,7 +13897,7 @@
           "url": "https://www.imdb.com/title/tt36841161/"
         },
         "letterboxd": {
-          "value": 3.59,
+          "value": 3.58,
           "url": "https://letterboxd.com/film/shaun-the-sheep-the-beast-of-mossy-bottom/"
         },
         "tomatoes": {
@@ -14317,7 +14317,7 @@
           "url": "https://www.imdb.com/title/tt36841161/"
         },
         "letterboxd": {
-          "value": 3.59,
+          "value": 3.58,
           "url": "https://letterboxd.com/film/shaun-the-sheep-the-beast-of-mossy-bottom/"
         },
         "tomatoes": {
@@ -14586,7 +14586,7 @@
           "url": "https://www.imdb.com/title/tt36841161/"
         },
         "letterboxd": {
-          "value": 3.59,
+          "value": 3.58,
           "url": "https://letterboxd.com/film/shaun-the-sheep-the-beast-of-mossy-bottom/"
         },
         "tomatoes": {
@@ -14814,7 +14814,7 @@
           "url": "https://www.imdb.com/title/tt36841161/"
         },
         "letterboxd": {
-          "value": 3.59,
+          "value": 3.58,
           "url": "https://letterboxd.com/film/shaun-the-sheep-the-beast-of-mossy-bottom/"
         },
         "tomatoes": {
@@ -15089,7 +15089,7 @@
           "url": "https://www.imdb.com/title/tt36841161/"
         },
         "letterboxd": {
-          "value": 3.59,
+          "value": 3.58,
           "url": "https://letterboxd.com/film/shaun-the-sheep-the-beast-of-mossy-bottom/"
         },
         "tomatoes": {
@@ -15230,7 +15230,7 @@
           "url": "https://www.imdb.com/title/tt36841161/"
         },
         "letterboxd": {
-          "value": 3.59,
+          "value": 3.58,
           "url": "https://letterboxd.com/film/shaun-the-sheep-the-beast-of-mossy-bottom/"
         },
         "tomatoes": {
@@ -15415,7 +15415,7 @@
           "url": "https://www.imdb.com/title/tt36841161/"
         },
         "letterboxd": {
-          "value": 3.59,
+          "value": 3.58,
           "url": "https://letterboxd.com/film/shaun-the-sheep-the-beast-of-mossy-bottom/"
         },
         "tomatoes": {
@@ -15596,7 +15596,7 @@
           "url": "https://www.imdb.com/title/tt36841161/"
         },
         "letterboxd": {
-          "value": 3.59,
+          "value": 3.58,
           "url": "https://letterboxd.com/film/shaun-the-sheep-the-beast-of-mossy-bottom/"
         },
         "tomatoes": {
@@ -16005,7 +16005,7 @@
           "url": "https://www.imdb.com/title/tt36841161/"
         },
         "letterboxd": {
-          "value": 3.59,
+          "value": 3.58,
           "url": "https://letterboxd.com/film/shaun-the-sheep-the-beast-of-mossy-bottom/"
         },
         "tomatoes": {
@@ -16731,7 +16731,7 @@
           "url": "https://www.imdb.com/title/tt36841161/"
         },
         "letterboxd": {
-          "value": 3.59,
+          "value": 3.58,
           "url": "https://letterboxd.com/film/shaun-the-sheep-the-beast-of-mossy-bottom/"
         },
         "tomatoes": {
@@ -18498,7 +18498,7 @@
           "url": "https://www.imdb.com/title/tt32104007/"
         },
         "letterboxd": {
-          "value": 2.7,
+          "value": 2.71,
           "url": "https://letterboxd.com/film/young-washington/"
         },
         "tomatoes": {
@@ -18700,7 +18700,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93426/purchase?kanal=dxf",
       "eventId": "93426",
       "promoterId": "202",
-      "sold": 28,
+      "sold": 29,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -18714,8 +18714,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 82
+      "capacity": 109,
+      "available": 80
     },
     {
       "id": "EDI20260513-2026-11-03T17:00:00-Kinosal",
@@ -18787,7 +18787,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93604/purchase?kanal=dxf",
       "eventId": "93604",
       "promoterId": "202",
-      "sold": 9,
+      "sold": 11,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -18802,7 +18802,7 @@
       },
       "reserved": 0,
       "capacity": 286,
-      "available": 277
+      "available": 275
     },
     {
       "id": "EDI20260632-2026-11-03T19:30:00-Kinosal",
@@ -18880,7 +18880,7 @@
           "url": "https://www.imdb.com/title/tt32104007/"
         },
         "letterboxd": {
-          "value": 2.7,
+          "value": 2.71,
           "url": "https://letterboxd.com/film/young-washington/"
         },
         "tomatoes": {
@@ -19128,7 +19128,7 @@
           "url": "https://www.imdb.com/title/tt36841161/"
         },
         "letterboxd": {
-          "value": 3.59,
+          "value": 3.58,
           "url": "https://letterboxd.com/film/shaun-the-sheep-the-beast-of-mossy-bottom/"
         },
         "tomatoes": {
@@ -19171,8 +19171,8 @@
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
-      "capacity": 108,
-      "available": 84
+      "capacity": 110,
+      "available": 86
     },
     {
       "id": "EDI20250084-2026-11-07T12:45:00-Storsal",
@@ -19200,7 +19200,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93413/purchase?kanal=dxf",
       "eventId": "93413",
       "promoterId": "202",
-      "sold": 9,
+      "sold": 14,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -19210,8 +19210,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 246,
-      "available": 237
+      "capacity": 241,
+      "available": 227
     },
     {
       "id": "EDI20261109-2026-11-07T14:00:00-Kinosal",
@@ -19369,12 +19369,12 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93287/purchase?kanal=dxf",
       "eventId": "93287",
       "promoterId": "202",
-      "sold": 28,
+      "sold": 39,
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
       "capacity": 246,
-      "available": 218
+      "available": 207
     },
     {
       "id": "EDI20250183-2026-11-07T19:00:00-Storsal",
@@ -19402,7 +19402,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93414/purchase?kanal=dxf",
       "eventId": "93414",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -19416,8 +19416,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 246,
-      "available": 246
+      "capacity": 244,
+      "available": 242
     },
     {
       "id": "EDI20260973-2026-11-07T19:45:00-Kinosal",
@@ -19616,7 +19616,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93538/purchase?kanal=dxf",
       "eventId": "93538",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 6,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -19626,8 +19626,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 110
+      "capacity": 106,
+      "available": 100
     },
     {
       "id": "EDI20261396-2026-11-08T20:20:00-Kinosal",
@@ -19664,7 +19664,7 @@
           "url": "https://www.imdb.com/title/tt32104007/"
         },
         "letterboxd": {
-          "value": 2.7,
+          "value": 2.71,
           "url": "https://letterboxd.com/film/young-washington/"
         },
         "tomatoes": {
