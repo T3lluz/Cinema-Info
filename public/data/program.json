@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-04T02:59:29.662Z",
+  "updatedAt": "2026-11-04T18:35:41.421Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -14632,11 +14632,11 @@
           "url": "https://www.imdb.com/title/tt13609648/"
         },
         "letterboxd": {
-          "value": 4,
+          "value": 3.98,
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 88,
+          "value": 89,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -14908,11 +14908,11 @@
           "url": "https://www.imdb.com/title/tt13609648/"
         },
         "letterboxd": {
-          "value": 4,
+          "value": 3.98,
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 88,
+          "value": 89,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -15135,11 +15135,11 @@
           "url": "https://www.imdb.com/title/tt13609648/"
         },
         "letterboxd": {
-          "value": 4,
+          "value": 3.98,
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 88,
+          "value": 89,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -15320,11 +15320,11 @@
           "url": "https://www.imdb.com/title/tt13609648/"
         },
         "letterboxd": {
-          "value": 4,
+          "value": 3.98,
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 88,
+          "value": 89,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -15501,11 +15501,11 @@
           "url": "https://www.imdb.com/title/tt13609648/"
         },
         "letterboxd": {
-          "value": 4,
+          "value": 3.98,
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 88,
+          "value": 89,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -15690,11 +15690,11 @@
           "url": "https://www.imdb.com/title/tt13609648/"
         },
         "letterboxd": {
-          "value": 4,
+          "value": 3.98,
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 88,
+          "value": 89,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -15822,11 +15822,11 @@
           "url": "https://www.imdb.com/title/tt13609648/"
         },
         "letterboxd": {
-          "value": 4,
+          "value": 3.98,
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 88,
+          "value": 89,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -16090,11 +16090,11 @@
           "url": "https://www.imdb.com/title/tt13609648/"
         },
         "letterboxd": {
-          "value": 4,
+          "value": 3.98,
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 88,
+          "value": 89,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -17418,11 +17418,11 @@
           "url": "https://www.imdb.com/title/tt13609648/"
         },
         "letterboxd": {
-          "value": 4,
+          "value": 3.98,
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 88,
+          "value": 89,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -18960,7 +18960,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93531/purchase?kanal=dxf",
       "eventId": "93531",
       "promoterId": "202",
-      "sold": 17,
+      "sold": 28,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -18971,7 +18971,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 93
+      "available": 82
     },
     {
       "id": "EDI20250183-2026-11-05T17:00:00-Kinosal",
@@ -18999,7 +18999,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93535/purchase?kanal=dxf",
       "eventId": "93535",
       "promoterId": "202",
-      "sold": 11,
+      "sold": 19,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -19014,7 +19014,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 99
+      "available": 91
     },
     {
       "id": "EDI20251399-2026-11-05T19:45:00-Kinosal",
@@ -19040,7 +19040,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93636/purchase?kanal=dxf",
       "eventId": "93636",
       "promoterId": "202",
-      "sold": 5,
+      "sold": 10,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -19049,9 +19049,9 @@
           "url": "https://www.imdb.com/title/tt0011440/"
         }
       },
-      "reserved": 0,
+      "reserved": 2,
       "capacity": 110,
-      "available": 105
+      "available": 98
     },
     {
       "id": "EDI20260975-2026-11-07T10:00:00-Kinosal",
@@ -19167,12 +19167,12 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93286/purchase?kanal=dxf",
       "eventId": "93286",
       "promoterId": "202",
-      "sold": 54,
+      "sold": 63,
       "eventStatus": "ok",
       "ratings": null,
-      "reserved": 0,
+      "reserved": 2,
       "capacity": 110,
-      "available": 56
+      "available": 45
     },
     {
       "id": "EDI20250084-2026-11-07T12:45:00-Storsal",
@@ -19244,13 +19244,13 @@
       "eventStatus": "ok",
       "ratings": {
         "letterboxd": {
-          "value": 3.33,
-          "url": "https://letterboxd.com/film/the-cat-in-the-hat/"
+          "value": 3.39,
+          "url": "https://letterboxd.com/film/the-cat-in-the-hat-2026/"
         }
       },
       "reserved": 0,
-      "capacity": 108,
-      "available": 97
+      "capacity": 110,
+      "available": 99
     },
     {
       "id": "EDI20260513-2026-11-07T14:45:00-Storsal",
@@ -19369,12 +19369,12 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93287/purchase?kanal=dxf",
       "eventId": "93287",
       "promoterId": "202",
-      "sold": 39,
+      "sold": 46,
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
       "capacity": 246,
-      "available": 207
+      "available": 200
     },
     {
       "id": "EDI20250183-2026-11-07T19:00:00-Storsal",
@@ -19456,7 +19456,7 @@
           "url": "https://letterboxd.com/film/charlie-harper/"
         },
         "tomatoes": {
-          "value": 82,
+          "value": 81,
           "url": "https://www.rottentomatoes.com/m/charlie_harper"
         }
       },
@@ -19616,7 +19616,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93538/purchase?kanal=dxf",
       "eventId": "93538",
       "promoterId": "202",
-      "sold": 6,
+      "sold": 12,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -19627,7 +19627,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 104
+      "available": 98
     },
     {
       "id": "EDI20261396-2026-11-08T20:20:00-Kinosal",
@@ -19670,6 +19670,49 @@
         "tomatoes": {
           "value": 91,
           "url": "https://www.rottentomatoes.com/m/young_washington"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20250183-2026-11-10T13:00:00-Kinosal",
+      "title": "Pensjonskuppet",
+      "screen": "Kinosal",
+      "start": "2026-11-10T13:00:00",
+      "end": "2026-11-10T15:00:11",
+      "dayKey": "2026-11-10",
+      "runningMinutes": 110,
+      "runningLabel": "1 t. 50 min.",
+      "age": "9 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": "Dagkino",
+      "kinoklubb": false,
+      "genres": [
+        "Action",
+        "Comedy",
+        "Crime"
+      ],
+      "director": "Gunnbjörg Gunnarsdottir",
+      "premiere": "2026-10-16",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/b7c7d07d556cff3e5c9868b5e6fd02656f31e59c-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93676/purchase?kanal=dxf",
+      "eventId": "93676",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.1,
+          "id": "tt39453840",
+          "url": "https://www.imdb.com/title/tt39453840/"
+        },
+        "letterboxd": {
+          "value": 3.34,
+          "url": "https://letterboxd.com/film/the-pension-heist/"
         }
       },
       "reserved": 0,
@@ -19772,7 +19815,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93253/purchase?kanal=dxf",
       "eventId": "93253",
       "promoterId": "202",
-      "sold": 58,
+      "sold": 66,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -19781,9 +19824,9 @@
           "url": "https://www.imdb.com/title/tt0011440/"
         }
       },
-      "reserved": 0,
-      "capacity": 109,
-      "available": 51
+      "reserved": 2,
+      "capacity": 110,
+      "available": 42
     },
     {
       "id": "EDI20251399-2026-11-17T19:30:00-Kinosal",
@@ -19821,6 +19864,123 @@
       "reserved": 0,
       "capacity": 108,
       "available": 93
+    },
+    {
+      "id": "EDI20251030-2026-11-18T19:45:00-Kinosal",
+      "title": "The Hunger Games: Sunrise on the Reaping",
+      "screen": "Kinosal",
+      "start": "2026-11-18T19:45:00",
+      "end": "2026-11-18T22:33:00",
+      "dayKey": "2026-11-18",
+      "runningMinutes": 158,
+      "runningLabel": "2 t. 38 min.",
+      "age": "12 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": "Norgespremiere",
+      "kinoklubb": false,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Fantasy"
+      ],
+      "director": "Francis Lawrence",
+      "premiere": "2026-11-18",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/a77228cd6145b069bbe22cff595a7a15ce9db0fc-1500x2222.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93612/purchase?kanal=dxf",
+      "eventId": "93612",
+      "promoterId": "202",
+      "sold": 3,
+      "eventStatus": "ok",
+      "ratings": null,
+      "reserved": 0,
+      "capacity": 110,
+      "available": 107
+    },
+    {
+      "id": "EDI20251787-2026-12-01T13:00:00-Kinosal",
+      "title": "Sense and Sensibility",
+      "screen": "Kinosal",
+      "start": "2026-12-01T13:00:00",
+      "end": "2026-12-01T15:22:11",
+      "dayKey": "2026-12-01",
+      "runningMinutes": 132,
+      "runningLabel": "2 t. 12 min.",
+      "age": "9 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": "Seniorkino",
+      "kinoklubb": true,
+      "genres": [
+        "Drama",
+        "Romance"
+      ],
+      "director": "Georgia Oakley",
+      "premiere": "2026-10-09",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/08c062fc034ea81b413d46721ded439a550abcb4-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93474/purchase?kanal=dxf",
+      "eventId": "93474",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.2,
+          "id": "tt13609648",
+          "url": "https://www.imdb.com/title/tt13609648/"
+        },
+        "letterboxd": {
+          "value": 3.98,
+          "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
+        },
+        "tomatoes": {
+          "value": 89,
+          "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20251703-2026-12-15T13:00:00-Kinosal",
+      "title": "Velkommen til familien",
+      "screen": "Kinosal",
+      "start": "2026-12-15T13:00:00",
+      "end": "2026-12-15T14:45:00",
+      "dayKey": "2026-12-15",
+      "runningMinutes": 95,
+      "runningLabel": "1 t. 35 min.",
+      "age": "9 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": "Seniorkino",
+      "kinoklubb": false,
+      "genres": [
+        "Comedy",
+        "Drama"
+      ],
+      "director": "Even Hafnor",
+      "premiere": "2026-11-13",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/38737a7ca32b8125125a68d3c6dcd30fa90624bd-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93641/purchase?kanal=dxf",
+      "eventId": "93641",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.2,
+          "id": "tt39383793",
+          "url": "https://www.imdb.com/title/tt39383793/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
     },
     {
       "id": "EDI20251026-2026-12-15T20:00:00-Storsal",
@@ -19978,8 +20138,8 @@
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
-      "capacity": 110,
-      "available": 103
+      "capacity": 107,
+      "available": 100
     },
     {
       "id": "BVI20200545-2026-12-18T20:00:00-Storsal",
@@ -20009,8 +20169,8 @@
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
-      "capacity": 286,
-      "available": 286
+      "capacity": 246,
+      "available": 246
     }
   ]
 }
