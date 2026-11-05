@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-05T03:28:13.905Z",
+  "updatedAt": "2026-11-05T18:41:03.015Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -13576,7 +13576,7 @@
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.64,
+          "value": 2.63,
           "url": "https://letterboxd.com/film/verity-2026/"
         },
         "tomatoes": {
@@ -13849,7 +13849,7 @@
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.64,
+          "value": 2.63,
           "url": "https://letterboxd.com/film/verity-2026/"
         },
         "tomatoes": {
@@ -14129,7 +14129,7 @@
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.64,
+          "value": 2.63,
           "url": "https://letterboxd.com/film/verity-2026/"
         },
         "tomatoes": {
@@ -14269,7 +14269,7 @@
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.64,
+          "value": 2.63,
           "url": "https://letterboxd.com/film/verity-2026/"
         },
         "tomatoes": {
@@ -14538,7 +14538,7 @@
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.64,
+          "value": 2.63,
           "url": "https://letterboxd.com/film/verity-2026/"
         },
         "tomatoes": {
@@ -14766,7 +14766,7 @@
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.64,
+          "value": 2.63,
           "url": "https://letterboxd.com/film/verity-2026/"
         },
         "tomatoes": {
@@ -15182,7 +15182,7 @@
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.64,
+          "value": 2.63,
           "url": "https://letterboxd.com/film/verity-2026/"
         },
         "tomatoes": {
@@ -15737,7 +15737,7 @@
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.64,
+          "value": 2.63,
           "url": "https://letterboxd.com/film/verity-2026/"
         },
         "tomatoes": {
@@ -18498,7 +18498,7 @@
           "url": "https://www.imdb.com/title/tt32104007/"
         },
         "letterboxd": {
-          "value": 2.71,
+          "value": 2.7,
           "url": "https://letterboxd.com/film/young-washington/"
         },
         "tomatoes": {
@@ -18880,7 +18880,7 @@
           "url": "https://www.imdb.com/title/tt32104007/"
         },
         "letterboxd": {
-          "value": 2.71,
+          "value": 2.7,
           "url": "https://letterboxd.com/film/young-washington/"
         },
         "tomatoes": {
@@ -18999,7 +18999,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93535/purchase?kanal=dxf",
       "eventId": "93535",
       "promoterId": "202",
-      "sold": 19,
+      "sold": 38,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -19014,7 +19014,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 91
+      "available": 72
     },
     {
       "id": "EDI20251399-2026-11-05T19:45:00-Kinosal",
@@ -19040,7 +19040,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93636/purchase?kanal=dxf",
       "eventId": "93636",
       "promoterId": "202",
-      "sold": 12,
+      "sold": 23,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -19051,7 +19051,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 98
+      "available": 87
     },
     {
       "id": "EDI20260975-2026-11-07T10:00:00-Kinosal",
@@ -19119,7 +19119,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93491/purchase?kanal=dxf",
       "eventId": "93491",
       "promoterId": "202",
-      "sold": 4,
+      "sold": 6,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -19138,7 +19138,7 @@
       },
       "reserved": 0,
       "capacity": 246,
-      "available": 242
+      "available": 240
     },
     {
       "id": "NOR20240691-2026-11-07T12:00:00-Kinosal",
@@ -19167,12 +19167,12 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93286/purchase?kanal=dxf",
       "eventId": "93286",
       "promoterId": "202",
-      "sold": 74,
+      "sold": 88,
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
       "capacity": 110,
-      "available": 36
+      "available": 22
     },
     {
       "id": "EDI20250084-2026-11-07T12:45:00-Storsal",
@@ -19240,22 +19240,22 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93411/purchase?kanal=dxf",
       "eventId": "93411",
       "promoterId": "202",
-      "sold": 11,
+      "sold": 17,
       "eventStatus": "ok",
       "ratings": {
-        "letterboxd": {
-          "value": 3.38,
-          "url": "https://letterboxd.com/film/the-cat-in-the-hat-2026/"
-        },
         "imdb": {
-          "value": 6.7,
+          "value": 6.8,
           "id": "tt2321555",
           "url": "https://www.imdb.com/title/tt2321555/"
+        },
+        "letterboxd": {
+          "value": 3.37,
+          "url": "https://letterboxd.com/film/the-cat-in-the-hat-2026/"
         }
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 99
+      "available": 93
     },
     {
       "id": "EDI20260513-2026-11-07T14:45:00-Storsal",
@@ -19284,7 +19284,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93353/purchase?kanal=dxf",
       "eventId": "93353",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 3,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -19298,8 +19298,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 246,
-      "available": 246
+      "capacity": 243,
+      "available": 240
     },
     {
       "id": "EDI20240688-2026-11-07T16:35:00-Kinosal",
@@ -19326,7 +19326,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93417/purchase?kanal=dxf",
       "eventId": "93417",
       "promoterId": "202",
-      "sold": 11,
+      "sold": 15,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -19344,8 +19344,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 107,
-      "available": 96
+      "capacity": 109,
+      "available": 94
     },
     {
       "id": "NOR20240691-2026-11-07T17:00:00-Storsal",
@@ -19374,12 +19374,12 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93287/purchase?kanal=dxf",
       "eventId": "93287",
       "promoterId": "202",
-      "sold": 46,
+      "sold": 58,
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
-      "capacity": 246,
-      "available": 200
+      "capacity": 243,
+      "available": 185
     },
     {
       "id": "EDI20250183-2026-11-07T19:00:00-Storsal",
@@ -19407,7 +19407,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93414/purchase?kanal=dxf",
       "eventId": "93414",
       "promoterId": "202",
-      "sold": 2,
+      "sold": 9,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -19421,8 +19421,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 246,
-      "available": 244
+      "capacity": 242,
+      "available": 233
     },
     {
       "id": "EDI20260973-2026-11-07T19:45:00-Kinosal",
@@ -19504,7 +19504,7 @@
           "url": "https://www.imdb.com/title/tt32261958/"
         },
         "letterboxd": {
-          "value": 2.64,
+          "value": 2.63,
           "url": "https://letterboxd.com/film/verity-2026/"
         },
         "tomatoes": {
@@ -19621,7 +19621,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93538/purchase?kanal=dxf",
       "eventId": "93538",
       "promoterId": "202",
-      "sold": 16,
+      "sold": 20,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -19632,7 +19632,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 94
+      "available": 90
     },
     {
       "id": "EDI20250183-2026-11-08T20:20:00-Kinosal",
@@ -19826,7 +19826,7 @@
           "url": "https://www.imdb.com/title/tt32104007/"
         },
         "letterboxd": {
-          "value": 2.71,
+          "value": 2.7,
           "url": "https://letterboxd.com/film/young-washington/"
         },
         "tomatoes": {
@@ -19977,7 +19977,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93253/purchase?kanal=dxf",
       "eventId": "93253",
       "promoterId": "202",
-      "sold": 69,
+      "sold": 73,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -19987,8 +19987,8 @@
         }
       },
       "reserved": 2,
-      "capacity": 107,
-      "available": 36
+      "capacity": 110,
+      "available": 35
     },
     {
       "id": "EDI20251399-2026-11-17T19:30:00-Kinosal",
@@ -20024,8 +20024,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 108,
-      "available": 93
+      "capacity": 110,
+      "available": 95
     },
     {
       "id": "EDI20251030-2026-11-18T19:45:00-Kinosal",
@@ -20053,12 +20053,12 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93612/purchase?kanal=dxf",
       "eventId": "93612",
       "promoterId": "202",
-      "sold": 3,
+      "sold": 5,
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
-      "capacity": 110,
-      "available": 107
+      "capacity": 108,
+      "available": 103
     },
     {
       "id": "EDI20251787-2026-12-01T13:00:00-Kinosal",
