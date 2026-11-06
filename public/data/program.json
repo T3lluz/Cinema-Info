@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-06T03:24:34.061Z",
+  "updatedAt": "2026-11-06T17:54:51.058Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -19089,8 +19089,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 103,
-      "available": 90
+      "capacity": 110,
+      "available": 97
     },
     {
       "id": "EDI20250794-2026-11-07T10:30:00-Storsal",
@@ -19119,7 +19119,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93491/purchase?kanal=dxf",
       "eventId": "93491",
       "promoterId": "202",
-      "sold": 10,
+      "sold": 21,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -19137,8 +19137,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 242,
-      "available": 232
+      "capacity": 246,
+      "available": 225
     },
     {
       "id": "NOR20240691-2026-11-07T12:00:00-Kinosal",
@@ -19167,12 +19167,12 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93286/purchase?kanal=dxf",
       "eventId": "93286",
       "promoterId": "202",
-      "sold": 88,
+      "sold": 102,
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
-      "capacity": 110,
-      "available": 22
+      "capacity": 106,
+      "available": 4
     },
     {
       "id": "EDI20250084-2026-11-07T12:45:00-Storsal",
@@ -19200,7 +19200,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93413/purchase?kanal=dxf",
       "eventId": "93413",
       "promoterId": "202",
-      "sold": 19,
+      "sold": 32,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -19210,8 +19210,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 246,
-      "available": 227
+      "capacity": 243,
+      "available": 211
     },
     {
       "id": "EDI20261109-2026-11-07T14:00:00-Kinosal",
@@ -19244,12 +19244,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.4,
+          "value": 6.7,
           "id": "tt2321555",
           "url": "https://www.imdb.com/title/tt2321555/"
         },
         "letterboxd": {
-          "value": 3.3,
+          "value": 3.23,
           "url": "https://letterboxd.com/film/the-cat-in-the-hat-2026/"
         }
       },
@@ -19297,9 +19297,9 @@
           "url": "https://letterboxd.com/film/monster-mia/"
         }
       },
-      "reserved": 0,
+      "reserved": 2,
       "capacity": 246,
-      "available": 243
+      "available": 241
     },
     {
       "id": "EDI20240688-2026-11-07T16:35:00-Kinosal",
@@ -19326,7 +19326,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93417/purchase?kanal=dxf",
       "eventId": "93417",
       "promoterId": "202",
-      "sold": 15,
+      "sold": 19,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -19344,8 +19344,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 109,
-      "available": 94
+      "capacity": 106,
+      "available": 87
     },
     {
       "id": "NOR20240691-2026-11-07T17:00:00-Storsal",
@@ -19374,12 +19374,12 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93287/purchase?kanal=dxf",
       "eventId": "93287",
       "promoterId": "202",
-      "sold": 58,
+      "sold": 74,
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
       "capacity": 246,
-      "available": 188
+      "available": 172
     },
     {
       "id": "EDI20250183-2026-11-07T19:00:00-Storsal",
@@ -19407,7 +19407,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93414/purchase?kanal=dxf",
       "eventId": "93414",
       "promoterId": "202",
-      "sold": 11,
+      "sold": 17,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -19422,7 +19422,7 @@
       },
       "reserved": 0,
       "capacity": 246,
-      "available": 235
+      "available": 229
     },
     {
       "id": "EDI20260973-2026-11-07T19:45:00-Kinosal",
@@ -19621,7 +19621,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93538/purchase?kanal=dxf",
       "eventId": "93538",
       "promoterId": "202",
-      "sold": 24,
+      "sold": 28,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -19632,7 +19632,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 86
+      "available": 82
     },
     {
       "id": "EDI20250183-2026-11-08T20:20:00-Kinosal",
@@ -19977,7 +19977,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93253/purchase?kanal=dxf",
       "eventId": "93253",
       "promoterId": "202",
-      "sold": 74,
+      "sold": 79,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -19987,8 +19987,8 @@
         }
       },
       "reserved": 2,
-      "capacity": 109,
-      "available": 33
+      "capacity": 110,
+      "available": 29
     },
     {
       "id": "EDI20251399-2026-11-17T19:30:00-Kinosal",
@@ -20014,7 +20014,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93254/purchase?kanal=dxf",
       "eventId": "93254",
       "promoterId": "202",
-      "sold": 15,
+      "sold": 17,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -20025,7 +20025,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 95
+      "available": 93
     },
     {
       "id": "EDI20251030-2026-11-18T19:45:00-Kinosal",
@@ -20055,7 +20055,12 @@
       "promoterId": "202",
       "sold": 7,
       "eventStatus": "ok",
-      "ratings": null,
+      "ratings": {
+        "letterboxd": {
+          "value": 3.9,
+          "url": "https://letterboxd.com/film/the-hunger-games-sunrise-on-the-reaping/"
+        }
+      },
       "reserved": 0,
       "capacity": 110,
       "available": 103
