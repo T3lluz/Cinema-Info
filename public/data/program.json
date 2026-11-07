@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-06T17:54:51.058Z",
+  "updatedAt": "2026-11-07T02:45:56.474Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -19079,7 +19079,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93412/purchase?kanal=dxf",
       "eventId": "93412",
       "promoterId": "202",
-      "sold": 13,
+      "sold": 18,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -19089,8 +19089,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 97
+      "capacity": 108,
+      "available": 90
     },
     {
       "id": "EDI20250794-2026-11-07T10:30:00-Storsal",
@@ -19119,7 +19119,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93491/purchase?kanal=dxf",
       "eventId": "93491",
       "promoterId": "202",
-      "sold": 21,
+      "sold": 23,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -19137,8 +19137,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 246,
-      "available": 225
+      "capacity": 244,
+      "available": 221
     },
     {
       "id": "NOR20240691-2026-11-07T12:00:00-Kinosal",
@@ -19171,8 +19171,8 @@
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
-      "capacity": 106,
-      "available": 4
+      "capacity": 110,
+      "available": 8
     },
     {
       "id": "EDI20250084-2026-11-07T12:45:00-Storsal",
@@ -19200,7 +19200,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93413/purchase?kanal=dxf",
       "eventId": "93413",
       "promoterId": "202",
-      "sold": 32,
+      "sold": 38,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -19210,8 +19210,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 243,
-      "available": 211
+      "capacity": 246,
+      "available": 208
     },
     {
       "id": "EDI20261109-2026-11-07T14:00:00-Kinosal",
@@ -19240,7 +19240,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93411/purchase?kanal=dxf",
       "eventId": "93411",
       "promoterId": "202",
-      "sold": 17,
+      "sold": 24,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -19249,13 +19249,13 @@
           "url": "https://www.imdb.com/title/tt2321555/"
         },
         "letterboxd": {
-          "value": 3.23,
+          "value": 3.19,
           "url": "https://letterboxd.com/film/the-cat-in-the-hat-2026/"
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 93
+      "capacity": 109,
+      "available": 85
     },
     {
       "id": "EDI20260513-2026-11-07T14:45:00-Storsal",
@@ -19297,9 +19297,9 @@
           "url": "https://letterboxd.com/film/monster-mia/"
         }
       },
-      "reserved": 2,
+      "reserved": 0,
       "capacity": 246,
-      "available": 241
+      "available": 243
     },
     {
       "id": "EDI20240688-2026-11-07T16:35:00-Kinosal",
@@ -19344,8 +19344,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 106,
-      "available": 87
+      "capacity": 110,
+      "available": 91
     },
     {
       "id": "NOR20240691-2026-11-07T17:00:00-Storsal",
@@ -19374,12 +19374,12 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93287/purchase?kanal=dxf",
       "eventId": "93287",
       "promoterId": "202",
-      "sold": 74,
+      "sold": 82,
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
       "capacity": 246,
-      "available": 172
+      "available": 164
     },
     {
       "id": "EDI20250183-2026-11-07T19:00:00-Storsal",
@@ -19403,11 +19403,11 @@
       ],
       "director": "Gunnbjörg Gunnarsdottir",
       "premiere": "2026-10-16",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/b7c7d07d556cff3e5c9868b5e6fd02656f31e59c-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/4fe030b928d64fd21116e82118c14e872c70ee09-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93414/purchase?kanal=dxf",
       "eventId": "93414",
       "promoterId": "202",
-      "sold": 17,
+      "sold": 19,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -19422,7 +19422,7 @@
       },
       "reserved": 0,
       "capacity": 246,
-      "available": 229
+      "available": 227
     },
     {
       "id": "EDI20260973-2026-11-07T19:45:00-Kinosal",
@@ -19656,11 +19656,11 @@
       ],
       "director": "Gunnbjörg Gunnarsdottir",
       "premiere": "2026-10-16",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/b7c7d07d556cff3e5c9868b5e6fd02656f31e59c-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/4fe030b928d64fd21116e82118c14e872c70ee09-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93679/purchase?kanal=dxf",
       "eventId": "93679",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 4,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -19674,8 +19674,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 110
+      "capacity": 108,
+      "available": 104
     },
     {
       "id": "EDI20250183-2026-11-10T13:00:00-Kinosal",
@@ -19699,7 +19699,7 @@
       ],
       "director": "Gunnbjörg Gunnarsdottir",
       "premiere": "2026-10-16",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/b7c7d07d556cff3e5c9868b5e6fd02656f31e59c-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/4fe030b928d64fd21116e82118c14e872c70ee09-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93676/purchase?kanal=dxf",
       "eventId": "93676",
       "promoterId": "202",
@@ -19894,7 +19894,7 @@
       ],
       "director": "Gunnbjörg Gunnarsdottir",
       "premiere": "2026-10-16",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/b7c7d07d556cff3e5c9868b5e6fd02656f31e59c-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/4fe030b928d64fd21116e82118c14e872c70ee09-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93680/purchase?kanal=dxf",
       "eventId": "93680",
       "promoterId": "202",
@@ -19944,7 +19944,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.2,
+          "value": 7.1,
           "id": "tt39383793",
           "url": "https://www.imdb.com/title/tt39383793/"
         }
@@ -20140,7 +20140,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.2,
+          "value": 7.1,
           "id": "tt39383793",
           "url": "https://www.imdb.com/title/tt39383793/"
         }
