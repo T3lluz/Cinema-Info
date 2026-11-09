@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-09T02:38:34.892Z",
+  "updatedAt": "2026-11-09T21:24:39.043Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -19473,7 +19473,7 @@
           "url": "https://letterboxd.com/film/charlie-harper/"
         },
         "tomatoes": {
-          "value": 81,
+          "value": 80,
           "url": "https://www.rottentomatoes.com/m/charlie_harper"
         }
       },
@@ -19721,7 +19721,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93676/purchase?kanal=dxf",
       "eventId": "93676",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 4,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -19735,8 +19735,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 110
+      "capacity": 108,
+      "available": 104
     },
     {
       "id": "NOR20240691-2026-11-10T17:00:00-Kinosal",
@@ -19804,7 +19804,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93649/purchase?kanal=dxf",
       "eventId": "93649",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -19819,7 +19819,7 @@
       },
       "reserved": 0,
       "capacity": 286,
-      "available": 286
+      "available": 284
     },
     {
       "id": "EDI20251399-2026-11-10T19:30:00-Kinosal",
@@ -19845,7 +19845,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93658/purchase?kanal=dxf",
       "eventId": "93658",
       "promoterId": "202",
-      "sold": 3,
+      "sold": 5,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -19856,7 +19856,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 107
+      "available": 105
     },
     {
       "id": "EDI20261396-2026-11-10T20:20:00-Storsal",
@@ -19932,7 +19932,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93659/purchase?kanal=dxf",
       "eventId": "93659",
       "promoterId": "202",
-      "sold": 3,
+      "sold": 4,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -19942,8 +19942,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 107
+      "capacity": 109,
+      "available": 105
     },
     {
       "id": "EDI20250183-2026-11-11T20:00:00-Kinosal",
@@ -19971,7 +19971,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93680/purchase?kanal=dxf",
       "eventId": "93680",
       "promoterId": "202",
-      "sold": 7,
+      "sold": 13,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -19986,7 +19986,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 103
+      "available": 97
     },
     {
       "id": "NOR20240691-2026-11-12T17:00:00-Kinosal",
@@ -20015,7 +20015,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93661/purchase?kanal=dxf",
       "eventId": "93661",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 3,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -20026,7 +20026,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 110
+      "available": 107
     },
     {
       "id": "EDI20250084-2026-11-12T17:30:00-Storsal",
@@ -20105,6 +20105,49 @@
       "available": 108
     },
     {
+      "id": "EDI20250183-2026-11-12T20:15:00-Storsal",
+      "title": "Pensjonskuppet",
+      "screen": "Storsal",
+      "start": "2026-11-12T20:15:00",
+      "end": "2026-11-12T22:15:11",
+      "dayKey": "2026-11-12",
+      "runningMinutes": 110,
+      "runningLabel": "1 t. 50 min.",
+      "age": "9 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Action",
+        "Comedy",
+        "Crime"
+      ],
+      "director": "Gunnbjörg Gunnarsdottir",
+      "premiere": "2026-10-16",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/4fe030b928d64fd21116e82118c14e872c70ee09-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93663/purchase?kanal=dxf",
+      "eventId": "93663",
+      "promoterId": "202",
+      "sold": 4,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.2,
+          "id": "tt39453840",
+          "url": "https://www.imdb.com/title/tt39453840/"
+        },
+        "letterboxd": {
+          "value": 3.34,
+          "url": "https://letterboxd.com/film/the-pension-heist/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 282
+    },
+    {
       "id": "NOR20240691-2026-11-13T17:00:00-Kinosal",
       "title": "Julenissens verksted",
       "screen": "Kinosal",
@@ -20131,7 +20174,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93495/purchase?kanal=dxf",
       "eventId": "93495",
       "promoterId": "202",
-      "sold": 4,
+      "sold": 13,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -20142,7 +20185,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 106
+      "available": 97
     },
     {
       "id": "EDI20251703-2026-11-13T19:00:00-Kinosal",
@@ -20225,6 +20268,171 @@
       "available": 110
     },
     {
+      "id": "NOR20240691-2026-11-14T14:45:00-Kinosal",
+      "title": "Julenissens verksted",
+      "screen": "Kinosal",
+      "start": "2026-11-14T14:45:00",
+      "end": "2026-11-14T16:07:32",
+      "dayKey": "2026-11-14",
+      "runningMinutes": 73,
+      "runningLabel": "1 t. 13 min.",
+      "age": "Tillatt for alle",
+      "tags": [
+        "Norsk tale",
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Animation",
+        "Comedy",
+        "Family"
+      ],
+      "director": "Rasmus A. Sivertsen, Mette Tange",
+      "premiere": "2026-11-06",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/48e8411522836146104d015dc86ab395cacf0345-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93708/purchase?kanal=dxf",
+      "eventId": "93708",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.1,
+          "id": "tt41475646",
+          "url": "https://www.imdb.com/title/tt41475646/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20260973-2026-11-14T16:45:00-Kinosal",
+      "title": "Charlie Harper",
+      "screen": "Kinosal",
+      "start": "2026-11-14T16:45:00",
+      "end": "2026-11-14T18:37:00",
+      "dayKey": "2026-11-14",
+      "runningMinutes": 101,
+      "runningLabel": "1 t. 41 min.",
+      "age": "12 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": "Norgespremiere",
+      "kinoklubb": false,
+      "genres": [
+        "Romance"
+      ],
+      "director": "Tom Dean",
+      "premiere": "2026-11-13",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/de52c99e5eb90a6bcef6cc32f925048845e6dd8d-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93550/purchase?kanal=dxf",
+      "eventId": "93550",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.8,
+          "id": "tt27739255",
+          "url": "https://www.imdb.com/title/tt27739255/"
+        },
+        "letterboxd": {
+          "value": 3.34,
+          "url": "https://letterboxd.com/film/charlie-harper/"
+        },
+        "tomatoes": {
+          "value": 80,
+          "url": "https://www.rottentomatoes.com/m/charlie_harper"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20251703-2026-11-14T19:10:00-Kinosal",
+      "title": "Velkommen til familien",
+      "screen": "Kinosal",
+      "start": "2026-11-14T19:10:00",
+      "end": "2026-11-14T20:55:00",
+      "dayKey": "2026-11-14",
+      "runningMinutes": 95,
+      "runningLabel": "1 t. 35 min.",
+      "age": "9 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Comedy",
+        "Drama"
+      ],
+      "director": "Even Hafnor",
+      "premiere": "2026-11-13",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/38737a7ca32b8125125a68d3c6dcd30fa90624bd-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93549/purchase?kanal=dxf",
+      "eventId": "93549",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.1,
+          "id": "tt39383793",
+          "url": "https://www.imdb.com/title/tt39383793/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20260641-2026-11-14T21:25:00-Kinosal",
+      "title": "How to Rob a Bank",
+      "screen": "Kinosal",
+      "start": "2026-11-14T21:25:00",
+      "end": "2026-11-14T23:37:00",
+      "dayKey": "2026-11-14",
+      "runningMinutes": 122,
+      "runningLabel": "2 t. 2 min.",
+      "age": "12 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Action",
+        "Comedy",
+        "Crime"
+      ],
+      "director": "David Leitch",
+      "premiere": "2026-11-13",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/c3a6811879950602c183fdfda59c4f5c0faa72b9-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93551/purchase?kanal=dxf",
+      "eventId": "93551",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "letterboxd": {
+          "value": 3.03,
+          "url": "https://letterboxd.com/film/how-to-rob-a-bank/"
+        },
+        "tomatoes": {
+          "value": 42,
+          "url": "https://www.rottentomatoes.com/m/how_to_rob_a_bank"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
       "id": "EDI20251399-2026-11-17T13:00:00-Kinosal",
       "title": "Markens grøde",
       "screen": "Kinosal",
@@ -20285,7 +20493,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93254/purchase?kanal=dxf",
       "eventId": "93254",
       "promoterId": "202",
-      "sold": 24,
+      "sold": 28,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -20295,7 +20503,7 @@
         }
       },
       "reserved": 0,
-      "capacity": 106,
+      "capacity": 110,
       "available": 82
     },
     {
@@ -20442,7 +20650,7 @@
       ],
       "director": "Denis Villeneuve",
       "premiere": "2026-12-16",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/60f17591576db88a8201bc6a130f653291bf2b32-1500x2223.webp?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/14336131d1a3bbf9b12e9a8af1496516e55b04e4-1500x2223.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93119/purchase?kanal=dxf",
       "eventId": "93119",
       "promoterId": "202",
@@ -20477,12 +20685,12 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93227/purchase?kanal=dxf",
       "eventId": "93227",
       "promoterId": "202",
-      "sold": 26,
+      "sold": 28,
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
       "capacity": 110,
-      "available": 84
+      "available": 82
     },
     {
       "id": "BVI20200545-2026-12-17T19:15:00-Kinosal",
@@ -20537,7 +20745,7 @@
       ],
       "director": "Denis Villeneuve",
       "premiere": "2026-12-16",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/60f17591576db88a8201bc6a130f653291bf2b32-1500x2223.webp?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/14336131d1a3bbf9b12e9a8af1496516e55b04e4-1500x2223.webp?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93228/purchase?kanal=dxf",
       "eventId": "93228",
       "promoterId": "202",
