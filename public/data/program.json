@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-10T04:36:40.051Z",
+  "updatedAt": "2026-11-10T18:38:35.191Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -19171,7 +19171,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.1,
+          "value": 7.3,
           "id": "tt41475646",
           "url": "https://www.imdb.com/title/tt41475646/"
         }
@@ -19384,7 +19384,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.1,
+          "value": 7.3,
           "id": "tt41475646",
           "url": "https://www.imdb.com/title/tt41475646/"
         }
@@ -19606,7 +19606,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.1,
+          "value": 7.3,
           "id": "tt41475646",
           "url": "https://www.imdb.com/title/tt41475646/"
         }
@@ -19721,7 +19721,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93676/purchase?kanal=dxf",
       "eventId": "93676",
       "promoterId": "202",
-      "sold": 4,
+      "sold": 6,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -19736,7 +19736,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 106
+      "available": 104
     },
     {
       "id": "NOR20240691-2026-11-10T17:00:00-Kinosal",
@@ -19765,18 +19765,18 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93609/purchase?kanal=dxf",
       "eventId": "93609",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 15,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.1,
+          "value": 7.3,
           "id": "tt41475646",
           "url": "https://www.imdb.com/title/tt41475646/"
         }
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 110
+      "available": 95
     },
     {
       "id": "EDI20250183-2026-11-10T17:45:00-Storsal",
@@ -19804,7 +19804,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93649/purchase?kanal=dxf",
       "eventId": "93649",
       "promoterId": "202",
-      "sold": 2,
+      "sold": 16,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -19819,7 +19819,7 @@
       },
       "reserved": 0,
       "capacity": 286,
-      "available": 284
+      "available": 270
     },
     {
       "id": "EDI20251399-2026-11-10T19:30:00-Kinosal",
@@ -19845,7 +19845,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93658/purchase?kanal=dxf",
       "eventId": "93658",
       "promoterId": "202",
-      "sold": 5,
+      "sold": 25,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -19856,7 +19856,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 105
+      "available": 85
     },
     {
       "id": "EDI20261396-2026-11-10T20:20:00-Storsal",
@@ -19936,14 +19936,14 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.1,
+          "value": 7.3,
           "id": "tt41475646",
           "url": "https://www.imdb.com/title/tt41475646/"
         }
       },
       "reserved": 0,
-      "capacity": 109,
-      "available": 105
+      "capacity": 110,
+      "available": 106
     },
     {
       "id": "EDI20250183-2026-11-11T20:00:00-Kinosal",
@@ -19971,7 +19971,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93680/purchase?kanal=dxf",
       "eventId": "93680",
       "promoterId": "202",
-      "sold": 13,
+      "sold": 21,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -19985,8 +19985,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 97
+      "capacity": 108,
+      "available": 87
     },
     {
       "id": "NOR20240691-2026-11-12T17:00:00-Kinosal",
@@ -20015,18 +20015,18 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93661/purchase?kanal=dxf",
       "eventId": "93661",
       "promoterId": "202",
-      "sold": 3,
+      "sold": 5,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.1,
+          "value": 7.3,
           "id": "tt41475646",
           "url": "https://www.imdb.com/title/tt41475646/"
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 107
+      "capacity": 108,
+      "available": 103
     },
     {
       "id": "EDI20250084-2026-11-12T17:30:00-Storsal",
@@ -20091,7 +20091,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93664/purchase?kanal=dxf",
       "eventId": "93664",
       "promoterId": "202",
-      "sold": 2,
+      "sold": 4,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -20101,8 +20101,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 108
+      "capacity": 108,
+      "available": 104
     },
     {
       "id": "EDI20250183-2026-11-12T20:15:00-Storsal",
@@ -20174,18 +20174,18 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93495/purchase?kanal=dxf",
       "eventId": "93495",
       "promoterId": "202",
-      "sold": 13,
+      "sold": 15,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.1,
+          "value": 7.3,
           "id": "tt41475646",
           "url": "https://www.imdb.com/title/tt41475646/"
         }
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 97
+      "available": 95
     },
     {
       "id": "EDI20251703-2026-11-13T19:00:00-Kinosal",
@@ -20298,7 +20298,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.1,
+          "value": 7.3,
           "id": "tt41475646",
           "url": "https://www.imdb.com/title/tt41475646/"
         }
@@ -20433,6 +20433,168 @@
       "available": 110
     },
     {
+      "id": "NOR20240691-2026-11-15T15:00:00-Kinosal",
+      "title": "Julenissens verksted",
+      "screen": "Kinosal",
+      "start": "2026-11-15T15:00:00",
+      "end": "2026-11-15T16:23:00",
+      "dayKey": "2026-11-15",
+      "runningMinutes": 73,
+      "runningLabel": "1 t. 13 min.",
+      "age": "Tillatt for alle",
+      "tags": [
+        "Norsk tale",
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Animation",
+        "Comedy",
+        "Family"
+      ],
+      "director": "Rasmus A. Sivertsen, Mette Tange",
+      "premiere": "2026-11-06",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/48e8411522836146104d015dc86ab395cacf0345-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93555/purchase?kanal=dxf",
+      "eventId": "93555",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.3,
+          "id": "tt41475646",
+          "url": "https://www.imdb.com/title/tt41475646/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20250084-2026-11-15T15:30:00-Storsal",
+      "title": "Mysteriepakken",
+      "screen": "Storsal",
+      "start": "2026-11-15T15:30:00",
+      "end": "2026-11-15T16:55:44",
+      "dayKey": "2026-11-15",
+      "runningMinutes": 86,
+      "runningLabel": "1 t. 26 min.",
+      "age": "Tillatt for alle",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Documentary",
+        "Adventure",
+        "Family"
+      ],
+      "director": "Silje Evensmo Jacobsen",
+      "premiere": "2026-10-16",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/e796551111af9fba503fffcbd45d77f4a13d0521-1080x1527.png?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93720/purchase?kanal=dxf",
+      "eventId": "93720",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 8.5,
+          "id": "tt38673337",
+          "url": "https://www.imdb.com/title/tt38673337/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
+    },
+    {
+      "id": "EDI20260973-2026-11-15T17:00:00-Kinosal",
+      "title": "Charlie Harper",
+      "screen": "Kinosal",
+      "start": "2026-11-15T17:00:00",
+      "end": "2026-11-15T18:52:00",
+      "dayKey": "2026-11-15",
+      "runningMinutes": 101,
+      "runningLabel": "1 t. 41 min.",
+      "age": "12 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Romance"
+      ],
+      "director": "Tom Dean",
+      "premiere": "2026-11-13",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/de52c99e5eb90a6bcef6cc32f925048845e6dd8d-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93552/purchase?kanal=dxf",
+      "eventId": "93552",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.8,
+          "id": "tt27739255",
+          "url": "https://www.imdb.com/title/tt27739255/"
+        },
+        "letterboxd": {
+          "value": 3.34,
+          "url": "https://letterboxd.com/film/charlie-harper/"
+        },
+        "tomatoes": {
+          "value": 80,
+          "url": "https://www.rottentomatoes.com/m/charlie_harper"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20251703-2026-11-15T17:45:00-Storsal",
+      "title": "Velkommen til familien",
+      "screen": "Storsal",
+      "start": "2026-11-15T17:45:00",
+      "end": "2026-11-15T19:30:00",
+      "dayKey": "2026-11-15",
+      "runningMinutes": 95,
+      "runningLabel": "1 t. 35 min.",
+      "age": "9 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Comedy",
+        "Drama"
+      ],
+      "director": "Even Hafnor",
+      "premiere": "2026-11-13",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/38737a7ca32b8125125a68d3c6dcd30fa90624bd-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93554/purchase?kanal=dxf",
+      "eventId": "93554",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.1,
+          "id": "tt39383793",
+          "url": "https://www.imdb.com/title/tt39383793/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
+    },
+    {
       "id": "EDI20251675-2026-11-15T19:30:00-Kinosal",
       "title": "Ebenezer",
       "screen": "Kinosal",
@@ -20471,6 +20633,48 @@
       "available": 110
     },
     {
+      "id": "EDI20260641-2026-11-15T20:15:00-Storsal",
+      "title": "How to Rob a Bank",
+      "screen": "Storsal",
+      "start": "2026-11-15T20:15:00",
+      "end": "2026-11-15T22:27:00",
+      "dayKey": "2026-11-15",
+      "runningMinutes": 122,
+      "runningLabel": "2 t. 2 min.",
+      "age": "12 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Action",
+        "Comedy",
+        "Crime"
+      ],
+      "director": "David Leitch",
+      "premiere": "2026-11-13",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/c3a6811879950602c183fdfda59c4f5c0faa72b9-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93553/purchase?kanal=dxf",
+      "eventId": "93553",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "letterboxd": {
+          "value": 3.03,
+          "url": "https://letterboxd.com/film/how-to-rob-a-bank/"
+        },
+        "tomatoes": {
+          "value": 42,
+          "url": "https://www.rottentomatoes.com/m/how_to_rob_a_bank"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
+    },
+    {
       "id": "EDI20251399-2026-11-17T13:00:00-Kinosal",
       "title": "Markens grøde",
       "screen": "Kinosal",
@@ -20494,7 +20698,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93253/purchase?kanal=dxf",
       "eventId": "93253",
       "promoterId": "202",
-      "sold": 80,
+      "sold": 85,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -20505,7 +20709,44 @@
       },
       "reserved": 2,
       "capacity": 110,
-      "available": 28
+      "available": 23
+    },
+    {
+      "id": "EDI20251399-2026-11-17T13:15:00-Storsal",
+      "title": "Markens grøde",
+      "screen": "Storsal",
+      "start": "2026-11-17T13:15:00",
+      "end": "2026-11-17T16:00:27",
+      "dayKey": "2026-11-17",
+      "runningMinutes": 155,
+      "runningLabel": "2 t. 35 min.",
+      "age": "12 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": true,
+      "genres": [
+        "Drama"
+      ],
+      "director": "Hans Petter Moland",
+      "premiere": "2026-10-30",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/0054744e1f36936a0b20e8ec95cf475d967bb7a6-1080x1514.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93687/purchase?kanal=dxf",
+      "eventId": "93687",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 6.5,
+          "id": "tt0011440",
+          "url": "https://www.imdb.com/title/tt0011440/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 246,
+      "available": 246
     },
     {
       "id": "EDI20251399-2026-11-17T19:30:00-Kinosal",
@@ -20531,7 +20772,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93254/purchase?kanal=dxf",
       "eventId": "93254",
       "promoterId": "202",
-      "sold": 28,
+      "sold": 27,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -20542,7 +20783,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 82
+      "available": 83
     },
     {
       "id": "EDI20251030-2026-11-18T19:45:00-Kinosal",
@@ -20653,7 +20894,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93641/purchase?kanal=dxf",
       "eventId": "93641",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 6,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -20663,8 +20904,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 110
+      "capacity": 108,
+      "available": 102
     },
     {
       "id": "EDI20251026-2026-12-15T20:00:00-Storsal",
