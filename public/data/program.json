@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-09T21:24:39.043Z",
+  "updatedAt": "2026-11-10T04:36:40.051Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -19735,8 +19735,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 108,
-      "available": 104
+      "capacity": 110,
+      "available": 106
     },
     {
       "id": "NOR20240691-2026-11-10T17:00:00-Kinosal",
@@ -20433,6 +20433,44 @@
       "available": 110
     },
     {
+      "id": "EDI20251675-2026-11-15T19:30:00-Kinosal",
+      "title": "Ebenezer",
+      "screen": "Kinosal",
+      "start": "2026-11-15T19:30:00",
+      "end": "2026-11-15T21:36:00",
+      "dayKey": "2026-11-15",
+      "runningMinutes": 115,
+      "runningLabel": "1 t. 55 min.",
+      "age": "12 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": "Norgespremiere",
+      "kinoklubb": false,
+      "genres": [
+        "Comedy",
+        "Drama",
+        "Fantasy"
+      ],
+      "director": "Ti West",
+      "premiere": "2026-11-13",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/ece98fe1e9a1b24ef010288a35d3384c503d2f72-954x1350.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93556/purchase?kanal=dxf",
+      "eventId": "93556",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "tomatoes": {
+          "value": 38,
+          "url": "https://www.rottentomatoes.com/m/ebenezer"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
       "id": "EDI20251399-2026-11-17T13:00:00-Kinosal",
       "title": "Markens grøde",
       "screen": "Kinosal",
@@ -20532,7 +20570,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93612/purchase?kanal=dxf",
       "eventId": "93612",
       "promoterId": "202",
-      "sold": 11,
+      "sold": 12,
       "eventStatus": "ok",
       "ratings": {
         "letterboxd": {
@@ -20542,7 +20580,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 99
+      "available": 98
     },
     {
       "id": "EDI20251787-2026-12-01T13:00:00-Kinosal",
