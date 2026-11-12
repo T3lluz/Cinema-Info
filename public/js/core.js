@@ -13,14 +13,6 @@ export const PREFS_KEY = "cinemaInfoPrefs";
 export const HISTORY_KEY = "cinemaInfoHistory";
 export const DX_AUTH_KEY = "cinemaInfoDxAuth";
 export const SEAT_MAP_KEY = "cinemaInfoSeatMaps";
-/**
- * The note at the top of every tab on the old GitHub Pages address,
- * pointing at the new one (words in i18n.js, `notice*`). It cannot be
- * dismissed; false takes it down.
- */
-export const NOTICE_ON = true;
-/** The app's home from now on. */
-export const NEW_APP_URL = "https://t3lluz.com/CinemaInfo/";
 export const HISTORY_KEEP_DAYS = 120;
 export const DX_PARTNER_ID = "202";
 export const DX_API = "https://api.dx.no/v3";
@@ -95,8 +87,6 @@ export const S = {
   keepAwake: false,
   /** The liquid ripple on opening and refreshing. */
   rippleOn: true,
-  /** The note at the top: open, or folded down to its title line. */
-  noticeOpen: true,
   /** Stats tab: "week" or "month", and which one (null = current). */
   statsPeriod: "week",
   statsAnchor: null,
@@ -185,7 +175,6 @@ export function savePrefs() {
         keepAwake: S.keepAwake,
         statsPeriod: S.statsPeriod,
         ripple: S.rippleOn,
-        noticeOpen: S.noticeOpen,
       })
     );
   } catch {

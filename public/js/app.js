@@ -46,8 +46,6 @@ import {
   setupMotion,
   setupHScroll,
   syncHScroll,
-  setupNotice,
-  refreshNotice,
   slideTo,
   toast,
   hapticTick,
@@ -114,7 +112,6 @@ function boot() {
   S.keepAwake = prefs.keepAwake === true;
   S.statsPeriod = prefs.statsPeriod === "month" ? "month" : "week";
   S.rippleOn = prefs.ripple !== false;
-  S.noticeOpen = prefs.noticeOpen !== false;
   if (resume) {
     // Reloaded for an update: back exactly where it was.
     if (TAB_ORDER.includes(resume.tab)) S.activeTab = resume.tab;
@@ -139,7 +136,6 @@ function boot() {
   setupTapRescue();
   setupMotion();
   setupHScroll();
-  setupNotice();
   setupSeatCharts();
   setupDayInteractions();
   setupDaySwipe();
@@ -247,7 +243,6 @@ function wireHooks() {
     applyLanguage();
     renderDayStrip();
     refreshSearchLanguage();
-    refreshNotice();
     renderActive();
   };
   hooks.applyWakeLock = applyWakeLock;

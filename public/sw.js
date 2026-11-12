@@ -89,7 +89,7 @@ self.addEventListener("fetch", (event) => {
   const url = new URL(req.url);
 
   // The server's own API (live feed, bridge, feedback) is never cached,
-  // whether it is same-origin (t3lluz.com) or not (GitHub Pages).
+  // whether it is same-origin (t3lluz.com) or not (the dev server).
   if (url.pathname.includes("/api/")) return;
 
   if (

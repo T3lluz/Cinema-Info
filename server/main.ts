@@ -17,8 +17,8 @@
  *                      to it (feedback.t3lluz.com), and it refuses anyone
  *                      outside ADMIN_ALLOW besides.
  *
- * GitHub Pages serves the same app and calls the same /api routes across
- * origins, so both copies show the same prefetched figures.
+ * The dev server (scripts/dev-server.mjs) calls the same /api routes
+ * across origins, so a local copy shows the same prefetched figures.
  */
 import { handler as omdbHandler } from "../supabase/functions/omdb-lookup/index.ts";
 import {
@@ -55,7 +55,7 @@ const CORS = {
   "Access-Control-Expose-Headers": "ETag",
   "Access-Control-Max-Age": "86400",
   // A tailnet device resolves t3lluz.com to a 100.x address, which Chrome
-  // treats as a local network when GitHub Pages calls it.
+  // treats as a local network when another origin calls it.
   "Access-Control-Allow-Private-Network": "true",
 };
 

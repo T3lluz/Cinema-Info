@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
-# Publish origin/main to t3lluz.com/CinemaInfo, the way the Pages workflow
-# publishes it to GitHub Pages: stage public/, stamp the build token,
-# mirror the posters, and swap the new build in at once.
+# Publish origin/main to t3lluz.com/CinemaInfo: stage public/, stamp the
+# build token, mirror the posters, and swap the new build in at once.
 #
 # cinema-info-deploy.timer runs this every minute; it does nothing unless
 # main has moved. Run it by hand any time; --force rebuilds regardless.
@@ -54,7 +53,6 @@ main() {
   # origin, not the path, so the shared "./" would become
   # https://t3lluz.com/, which is the dashboard's id too, and a phone with
   # the dashboard installed takes Cinema Info for it and offers no install.
-  # Pages keeps "./", so installs from the old address are left alone.
   node -e '
     const fs = require("node:fs");
     const file = process.argv[1];

@@ -1,24 +1,21 @@
-name: Deploy GitHub Pages
+name: Redirect GitHub Pages
 
-# Static site deploy via Actions (avoids the legacy "Deploy from a branch"
-# pipeline, which has been stuck in deployment_queued).
+# Cinema Info lives at https://t3lluz.com/CinemaInfo/ only
+# (deploy/server/update.sh publishes it there). GitHub Pages used to
+# carry a second copy; it now serves deploy/pages-redirect/ instead: a
+# page that forwards to the new address, and a service worker that
+# clears the old install off phones that still have it.
 #
-# One-time setup (repo admin): Settings → Pages → Build and deployment
-# → Source: GitHub Actions. After that, every push to main publishes.
-# Until that switch is made, this workflow builds the artifact but
-# deploy-pages cannot publish (and the legacy pages-build-deployment
-# job may still run in parallel).
+# It only needs to run when that folder changes.
 
 on:
   push:
     branches: [main]
+    paths:
+      - deploy/pages-redirect/**
+      - .github/workflows/deploy-pages.yml
   workflow_dispatch:
 
-# Snapshot refreshes are committed by github-actions[bot]. Those pushes
-# do not start this workflow, so refresh-program.yml dispatches it after
-# a real snapshot change. Human pushes to main still deploy as before.
-
-# Least privilege at workflow level; the deploy job elevates below.
 permissions:
   contents: read
 
@@ -31,31 +28,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          # The build token is the last commit that changed the app, so
-          # it needs the history to find it.
-          fetch-depth: 0
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
-      # Only the PWA surface — public/, not scripts/, supabase/, .github/, etc.
-      - name: Stage site
-        run: |
-          mkdir -p _site
-          cp -a public/. _site/
-          # Same build token as t3lluz.com (deploy/server/update.sh): a
-          # snapshot refresh keeps it, so phones get no new worker for it.
-          build=$(git log -1 --format=%H -- public ':(exclude)public/data')
-          node scripts/stamp-version.mjs _site "${build::7}"
-          # Same-origin copies of the poster thumbnails for the opening
-          # ripple, which has to read the pixels it photographs.
-          node scripts/mirror-posters.mjs _site
-
-      - name: Upload site
+      - name: Upload the redirect
         uses: actions/upload-pages-artifact@v4
         with:
-          path: _site
+          path: deploy/pages-redirect
 
   deploy:
     needs: build

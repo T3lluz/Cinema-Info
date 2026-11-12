@@ -51,26 +51,23 @@ full product description and data model.
   shell debugging against `app.dx.no`. The PWA itself needs no per-user
   DX login — see `.cursor/skills/dx-account/SKILL.md`.
 
-### Publishing (GitHub Pages and t3lluz.com)
+### Publishing (t3lluz.com)
 
-- Production URLs: `https://t3lluz.com/CinemaInfo/` and
-  `https://t3lluz.github.io/Cinema-Info/`. Both publish `main` on their own:
-  t3lluz.com through a one-minute poller on the server
-  (`deploy/server/update.sh`, same staging as the Pages workflow), Pages
-  through the workflow below.
-- Publish with `.github/workflows/deploy-pages.yml` (push to `main` or
-  workflow_dispatch). **Repo admin one-time setup:** Settings → Pages →
-  Source must be **GitHub Actions**, not “Deploy from a branch”. Legacy
-  branch deploys have been stuck in `deployment_queued`.
-- The workflow stages `public/` into the Pages artifact; it does not
-  publish `scripts/`, `supabase/`, or `.github/`.
-- Every deploy stamps a unique cache-bust token (the short commit SHA)
-  into `_site/index.html`, `_site/sw.js` and every `_site/js/*.js` import
-  (`?v=dev` placeholders) via `scripts/stamp-version.mjs`.
-  Do not hand-edit `?v=` or `cinema-info-v…` — a forgotten bump used to
-  leave phones on the old CSS/JS after push. Local `public/` placeholders
-  are enough for the local server.
+- Production URL: `https://t3lluz.com/CinemaInfo/`, and nowhere else. A
+  one-minute poller on the server (`deploy/server/update.sh`) publishes
+  `main`: it stages `public/`, stamps it and swaps it in.
+- The old GitHub Pages address only forwards to t3lluz.com. It serves
+  `deploy/pages-redirect/` through `.github/workflows/deploy-pages.yml`,
+  which runs only when that folder changes. Do not publish the app there.
+- Every deploy stamps a cache-bust token into `index.html`, `sw.js` and
+  every `js/*.js` import (`?v=dev` placeholders) via
+  `scripts/stamp-version.mjs`. The token is the last commit that changed
+  `public/` outside `public/data/`, so snapshot refreshes keep it and no
+  phone reloads for them. Do not hand-edit `?v=` or `cinema-info-v…`.
+  Local `public/` placeholders are enough for the local server.
+- Phones apply a new build on their own (see "Updates" in README.md); there
+  is no update prompt. Do not add one back.
 - The version people see (Settings → Version, e.g. `2.4.0 (a1b2c3d)`) is
   `APP_RELEASE` in `public/js/core.js` plus that build token. Bump
   `APP_RELEASE` with every change that ships: patch for fixes, minor for
-  features. Snapshot-only deploys keep the release and change the build.
+  features. Snapshot-only deploys keep both.

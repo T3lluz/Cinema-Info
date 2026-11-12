@@ -6,8 +6,6 @@
 import {
   S,
   els,
-  hooks,
-  savePrefs,
   t,
   icon,
   escapeHtml,
@@ -16,8 +14,6 @@ import {
   formatCount,
   locale,
   reducedMotion,
-  NOTICE_ON,
-  NEW_APP_URL,
 } from "./core.js?v=dev";
 import {
   statusOf,
@@ -961,78 +957,6 @@ export function setupHScroll() {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(() => syncHScroll(), 120);
   });
-}
-
-/* —— Note ———————————————————————————————————————————————————————————
- * A GitHub-style note above every tab on the old address (GitHub Pages):
- * blue rule down the left, the info icon and a title, then a link to the
- * new address. t3lluz.com shows none. It cannot be dismissed, since
- * staff still running the old install need to see it every time, but
- * the title folds it down to one line, and each device remembers that
- * (`noticeOpen` in the prefs). Set NOTICE_ON to false in core.js to take
- * it down everywhere.
- */
-const INFO_ICON =
-  '<svg class="notice-icon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"/></svg>';
-
-let noticeEl = null;
-
-function onNewAddress() {
-  return location.hostname === "t3lluz.com";
-}
-
-function renderNotice() {
-  if (!noticeEl) return;
-  noticeEl.setAttribute("aria-label", t("noticeAria"));
-  const shortUrl = NEW_APP_URL.replace(/^https:\/\//, "").replace(/\/$/, "");
-  const open = S.noticeOpen;
-  noticeEl.innerHTML = `<div class="notice-box${open ? "" : " is-folded"}">
-      <button type="button" class="notice-title" data-notice-toggle aria-expanded="${open}" aria-controls="noticeMore"
-        title="${escapeHtml(t(open ? "noticeHide" : "noticeShow"))}">
-        ${INFO_ICON}<span class="notice-title-text">${escapeHtml(t("noticeTitle"))}</span>
-        ${icon("chevronDown", "icon notice-chev")}
-      </button>
-      <div class="notice-more" id="noticeMore"${open ? "" : " inert"}>
-        <div class="notice-inner">
-          <p class="notice-body">${escapeHtml(t("noticeMoved"))}
-            <a class="notice-link" href="${NEW_APP_URL}">${escapeHtml(shortUrl)}</a></p>
-          <p class="notice-body">${escapeHtml(t("noticeReinstall"))}</p>
-        </div>
-      </div>
-    </div>`;
-}
-
-/** Fold or unfold, remember it on this device, and let the pinned bars re-measure. */
-function toggleNotice() {
-  S.noticeOpen = !S.noticeOpen;
-  savePrefs();
-  hapticTick("light");
-  const box = noticeEl.querySelector(".notice-box");
-  const btn = noticeEl.querySelector("[data-notice-toggle]");
-  const more = noticeEl.querySelector(".notice-more");
-  box.classList.toggle("is-folded", !S.noticeOpen);
-  btn.setAttribute("aria-expanded", String(S.noticeOpen));
-  btn.title = t(S.noticeOpen ? "noticeHide" : "noticeShow");
-  more.inert = !S.noticeOpen;
-  // After the fold has played (older browsers skip the animation, so no
-  // transitionend to wait for).
-  setTimeout(() => hooks.headerChanged(), 360);
-}
-
-/** Drawn at boot, in place from the first frame, so nothing jumps under it. */
-export function setupNotice() {
-  noticeEl = document.getElementById("notice");
-  if (!noticeEl || !NOTICE_ON || onNewAddress()) return;
-  renderNotice();
-  noticeEl.hidden = false;
-  noticeEl.addEventListener("click", (e) => {
-    if (e.target.closest("[data-notice-toggle]")) toggleNotice();
-  });
-}
-
-/** Redraw the note's words after a language change. */
-export function refreshNotice() {
-  if (noticeEl && !noticeEl.hidden) renderNotice();
 }
 
 /** Wire-safe clock string for a showing's start and end. */

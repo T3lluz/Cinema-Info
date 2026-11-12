@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Rewrites the PWA cache-bust tokens so a new deploy cannot be served
- * from an old service-worker cache or a sticky GitHub Pages asset URL.
+ * from an old service-worker cache or a sticky cached asset URL.
  *
  * The committed files carry `?v=dev` on every stylesheet, script and
  * module import, and `cinema-info-vdev` as the cache name; the deploy

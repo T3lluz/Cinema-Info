@@ -38,7 +38,6 @@ function savedName() {
 
 function siteOf() {
   if (location.hostname === "t3lluz.com") return "t3lluz";
-  if (location.hostname.endsWith("github.io")) return "pages";
   return "local";
 }
 

@@ -43,14 +43,6 @@ export const I18N = {
     scrollPrev: "Rull til venstre",
     scrollNext: "Rull til høyre",
 
-    noticeTitle: "Appen har flyttet",
-    noticeMoved: "Den nye adressen er",
-    noticeReinstall:
-      "Åpne lenken og legg appen på hjemskjermen derfra. Denne gamle adressen skal stenges.",
-    noticeAria: "Informasjon",
-    noticeShow: "Vis mer",
-    noticeHide: "Skjul",
-
     now: "Nå",
     soon: "Snart",
     done: "Ferdig",
@@ -376,14 +368,6 @@ export const I18N = {
     gapBefore: "{n} min before",
     scrollPrev: "Scroll left",
     scrollNext: "Scroll right",
-
-    noticeTitle: "The app has moved",
-    noticeMoved: "The new address is",
-    noticeReinstall:
-      "Open the link and add the app to your home screen from there. This old address is being shut down.",
-    noticeAria: "Information",
-    noticeShow: "Show more",
-    noticeHide: "Hide",
 
     now: "Now",
     soon: "Soon",
