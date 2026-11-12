@@ -2,23 +2,60 @@
 <html lang="nb">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#f4f2ef" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0c0c0e" media="(prefers-color-scheme: dark)" />
     <title>Buen kino har flyttet</title>
     <link rel="canonical" href="https://t3lluz.com/CinemaInfo/" />
-    <meta http-equiv="refresh" content="0; url=https://t3lluz.com/CinemaInfo/" />
+    <noscript><meta http-equiv="refresh" content="0; url=https://t3lluz.com/CinemaInfo/" /></noscript>
     <script>
-      // Cinema Info lives at t3lluz.com/CinemaInfo only. This old GitHub
-      // Pages address just forwards there, query string and all.
-      location.replace("https://t3lluz.com/CinemaInfo/" + location.search);
+      // Cinema Info lives at t3lluz.com/CinemaInfo only. In a browser tab
+      // this old GitHub Pages address forwards there at once. Opened from
+      // the old home-screen icon it stays put and says what to do, since
+      // forwarding would only open the new address in a browser frame on
+      // every launch and nobody would learn to add the new one.
+      var standalone =
+        (window.matchMedia && matchMedia("(display-mode: standalone)").matches) ||
+        navigator.standalone === true;
+      if (!standalone) location.replace("https://t3lluz.com/CinemaInfo/" + location.search);
     </script>
     <style>
-      body { margin: 0; min-height: 100vh; display: grid; place-items: center; font: 17px/1.5 system-ui, sans-serif; color: #1c1b1a; background: #f4f2ef; }
-      @media (prefers-color-scheme: dark) { body { color: #f2f1ef; background: #0c0c0e; } a { color: #ff6b6b; } }
-      a { color: #c8102e; font-weight: 650; }
+      :root { color-scheme: light dark; }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: 24px;
+        box-sizing: border-box;
+        font: 17px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+        color: #1c1b1a;
+        background: #f4f2ef;
+      }
+      main { max-width: 26em; }
+      h1 { margin: 0 0 8px; font-size: 26px; line-height: 1.2; }
+      p { margin: 0 0 20px; color: #55504a; }
+      a {
+        display: inline-block;
+        padding: 12px 18px;
+        border-radius: 12px;
+        background: #c8102e;
+        color: #fff;
+        font-weight: 650;
+        text-decoration: none;
+      }
+      @media (prefers-color-scheme: dark) {
+        body { color: #f2f1ef; background: #0c0c0e; }
+        p { color: #b9b4ad; }
+      }
     </style>
   </head>
   <body>
-    <p>Appen har flyttet til <a href="https://t3lluz.com/CinemaInfo/">t3lluz.com/CinemaInfo</a>.</p>
+    <main>
+      <h1>Appen har flyttet</h1>
+      <p>Cinema Info ligger nå på t3lluz.com/CinemaInfo. Åpne den og legg den på hjemskjermen derfra. Dette ikonet kan du slette.</p>
+      <a href="https://t3lluz.com/CinemaInfo/">Åpne t3lluz.com/CinemaInfo</a>
+    </main>
   </body>
 </html>

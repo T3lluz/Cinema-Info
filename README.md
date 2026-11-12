@@ -188,6 +188,9 @@ https://t3lluz.com/CinemaInfo/, served from t3lluserver. It publishes
 The old GitHub Pages address (t3lluz.github.io/Cinema-Info) only
 forwards there now. It serves `deploy/pages-redirect/`, whose service
 worker also clears the old install off phones that still have it.
+Opened from the old home-screen icon, that page does not forward: it
+says the app has moved and links to the new address, so people add it
+again from there.
 
 ## Updates
 

@@ -340,10 +340,10 @@ function liveBeat() {
 let sessionDay = resume?.today || todayKey();
 
 /**
- * Once the date has changed, move the selection to the new today: a phone
- * that slept past midnight, or a screen kept on all night. On the beat it
- * waits for the old day's last showing to end, so a film running past
- * midnight stays on screen.
+ * Once the date has changed, move a screen that was on today to the new
+ * today: a phone that slept past midnight, or one kept on all night. On
+ * the beat it waits for the old day's last showing to end, so a film
+ * running past midnight stays on screen.
  */
 function rollToTodayIfStale({ waitForLast = false } = {}) {
   const today = todayKey();
@@ -352,8 +352,11 @@ function rollToTodayIfStale({ waitForLast = false } = {}) {
     const now = new Date();
     if (S.state.shows.some((s) => s.dayKey === sessionDay && !isDone(s, now))) return;
   }
+  // Only a screen that was showing today follows it; a day picked on
+  // purpose stays picked.
+  const followed = S.selectedDay === sessionDay;
   sessionDay = today;
-  if (programDays().includes(today)) S.selectedDay = today;
+  if (followed && programDays().includes(today)) S.selectedDay = today;
   renderDayStrip();
   renderActive();
 }
@@ -805,9 +808,19 @@ let checkWaiter = null;
 let reloading = false;
 
 function setupServiceWorker() {
+  const touched = () => (lastInput = Date.now());
   for (const type of ["pointerdown", "keydown", "wheel", "touchstart"]) {
-    addEventListener(type, () => (lastInput = Date.now()), { passive: true, capture: true });
+    addEventListener(type, touched, { passive: true, capture: true });
   }
+  // Coming back to the app counts as a touch: someone is about to read
+  // it. A phone unlocked after a deploy finds the new worker only now,
+  // and must not reload under them a few seconds later because the last
+  // real touch was before it went in a pocket. (Registered before boot's
+  // own visibility handler, which runs a beat straight away.)
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "visible") touched();
+  });
+  addEventListener("pageshow", touched);
   if (!("serviceWorker" in navigator)) return;
   const local = ["localhost", "127.0.0.1", "[::1]"].includes(location.hostname);
   if (local) {
@@ -892,7 +905,8 @@ function applyUpdateIfQuiet({ hidden = false } = {}) {
 /**
  * Look for a new build. From Settings (`apply`) it waits to see what the
  * check found and says so: "updating" (the page reloads now), "current",
- * or "unavailable" (offline, or nothing to ask).
+ * "pending" (still downloading after 20 s) or "unavailable" (offline, or
+ * nothing to ask).
  */
 async function checkUpdate({ apply = false } = {}) {
   lastUpdateCheck = Date.now();
@@ -909,13 +923,14 @@ async function checkUpdate({ apply = false } = {}) {
   if (!apply) return "";
   if (!swReg.installing && !swReg.waiting) return "current";
   // A new worker is on its way: wait for it to take over and say whether
-  // it serves anything newer than this page.
+  // it serves anything newer than this page. On a weak signal it can take
+  // longer than that; it then applies the quiet way, by itself.
   const behind = await new Promise((resolve) => {
     checkWaiter = resolve;
     setTimeout(() => resolve(null), 20_000);
   });
   checkWaiter = null;
-  if (behind == null) return "unavailable";
+  if (behind == null) return "pending";
   if (!behind) return "current";
   reloadQuietly();
   return "updating";

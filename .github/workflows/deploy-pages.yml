@@ -3,7 +3,8 @@ name: Redirect GitHub Pages
 # Cinema Info lives at https://t3lluz.com/CinemaInfo/ only
 # (deploy/server/update.sh publishes it there). GitHub Pages used to
 # carry a second copy; it now serves deploy/pages-redirect/ instead: a
-# page that forwards to the new address, and a service worker that
+# page that forwards to the new address (or, opened from the old
+# home-screen icon, says where the app went), and a service worker that
 # clears the old install off phones that still have it.
 #
 # It only needs to run when that folder changes.

@@ -317,7 +317,8 @@ export function setupSettings() {
         updateBusy = false;
         renderSettings();
       }
-      toast(t(result === "updating" ? "updating" : result === "current" ? "upToDate" : "updateCheckFailed"));
+      const said = { updating: "updating", current: "upToDate", pending: "updatePending" };
+      toast(t(said[result] || "updateCheckFailed"));
     }
   });
 }
