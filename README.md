@@ -196,11 +196,13 @@ again from there.
 
 Nobody is asked to update. Opening the app already runs the newest
 build. A screen left open while a new build lands reloads itself the
-moment it goes to the background, or after 45 seconds without a touch,
-and comes back on the same tab, day, scroll position, seat charts and
-search. It waits while a film sheet or the feedback form is open, and
-while the phone is offline. Settings → *Se etter oppdatering* takes one
-straight away.
+moment it goes to the background, or after 45 seconds without a touch
+(coming back to the app counts as one, so an unlocked phone is never
+reloaded under someone reading it), and comes back on the same tab,
+day, scroll position, seat charts and search. It waits while a film
+sheet or the feedback form is open, and while the phone is offline.
+Settings → *Se etter oppdatering* takes one straight away, or says it
+is still downloading and will apply by itself.
 
 The build is the last commit that changed the app, not the snapshot, so
 the twice-daily programme refresh never reloads anyone; the app re-reads

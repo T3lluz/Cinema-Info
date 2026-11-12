@@ -117,6 +117,9 @@ function boot() {
   collectElements();
   const prefs = loadPrefs();
   const fresh = Date.now() - (Number(prefs.selectedDayAt) || 0) < RESUME_MS;
+  // Carried over a reload or a relaunch just after midnight, so a screen
+  // that was on the old day still rolls to the new one.
+  S.sessionDay = resume?.today || (fresh && prefs.sessionDay) || todayKey();
   const wanted = new URLSearchParams(location.search).get("tab");
   S.selectedDay = fresh ? prefs.selectedDay || "" : "";
   S.activeTab = TAB_ORDER.includes(wanted) ? wanted : fresh && TAB_ORDER.includes(prefs.activeTab) ? prefs.activeTab : "day";
@@ -172,8 +175,8 @@ function boot() {
   setInterval(liveBeat, BEAT_MS);
   document.addEventListener("visibilitychange", () => {
     if (document.visibilityState !== "visible") return;
-    // A phone in a pocket runs no beats; pick straight up again.
-    rollToTodayIfStale();
+    // A phone in a pocket runs no beats; pick straight up again. The beat
+    // also rolls the day over, once the old day's last film has ended.
     liveBeat();
     applyWakeLock();
     maybeCheckUpdate();
@@ -334,10 +337,6 @@ function liveBeat() {
   beatJob("seats", () => pulled.then(() => refreshOpenSeatCharts({ quiet: true })));
 }
 
-/** The day this session counts as today. An update's reload just after
- * midnight carries the old one over, so the beat still rolls the screen
- * to the new day once the old day's last film has ended. */
-let sessionDay = resume?.today || todayKey();
 
 /**
  * Once the date has changed, move a screen that was on today to the new
@@ -347,15 +346,15 @@ let sessionDay = resume?.today || todayKey();
  */
 function rollToTodayIfStale({ waitForLast = false } = {}) {
   const today = todayKey();
-  if (today === sessionDay || !S.state?.shows) return;
+  if (today === S.sessionDay || !S.state?.shows) return;
   if (waitForLast) {
     const now = new Date();
-    if (S.state.shows.some((s) => s.dayKey === sessionDay && !isDone(s, now))) return;
+    if (S.state.shows.some((s) => s.dayKey === S.sessionDay && !isDone(s, now))) return;
   }
   // Only a screen that was showing today follows it; a day picked on
   // purpose stays picked.
-  const followed = S.selectedDay === sessionDay;
-  sessionDay = today;
+  const followed = S.selectedDay === S.sessionDay;
+  S.sessionDay = today;
   if (followed && programDays().includes(today)) S.selectedDay = today;
   renderDayStrip();
   renderActive();
@@ -812,15 +811,17 @@ function setupServiceWorker() {
   for (const type of ["pointerdown", "keydown", "wheel", "touchstart"]) {
     addEventListener(type, touched, { passive: true, capture: true });
   }
-  // Coming back to the app counts as a touch: someone is about to read
-  // it. A phone unlocked after a deploy finds the new worker only now,
-  // and must not reload under them a few seconds later because the last
-  // real touch was before it went in a pocket. (Registered before boot's
-  // own visibility handler, which runs a beat straight away.)
+  // Coming back to the app (unlocking, switching to it, or the browser
+  // restoring it from its back/forward cache) counts as a touch: someone
+  // is about to read it. A phone unlocked after a deploy finds the new
+  // worker only now, and must not reload under them a few seconds later
+  // because the last real touch was before it went in a pocket.
+  // (Registered before boot's own visibility handler, which runs a beat
+  // straight away.)
   document.addEventListener("visibilitychange", () => {
     if (document.visibilityState === "visible") touched();
   });
-  addEventListener("pageshow", touched);
+  addEventListener("pageshow", (e) => e.persisted && touched());
   if (!("serviceWorker" in navigator)) return;
   const local = ["localhost", "127.0.0.1", "[::1]"].includes(location.hostname);
   if (local) {
@@ -871,7 +872,7 @@ function reloadQuietly() {
         at: Date.now(),
         tab: S.activeTab,
         day: S.selectedDay,
-        today: sessionDay,
+        today: S.sessionDay,
         y: Math.round(window.scrollY),
         seats: [...seatState.open],
         q: els.searchInput?.value || "",
@@ -922,15 +923,20 @@ async function checkUpdate({ apply = false } = {}) {
   }
   if (!apply) return "";
   if (!swReg.installing && !swReg.waiting) return "current";
-  // A new worker is on its way: wait for it to take over and say whether
-  // it serves anything newer than this page. On a weak signal it can take
-  // longer than that; it then applies the quiet way, by itself.
+  // A new worker is on its way: give it 20 s to take over and say whether
+  // it serves anything newer than this page. One still downloading after
+  // that applies the quiet way, by itself.
+  const worker = swReg.installing || swReg.waiting;
   const behind = await new Promise((resolve) => {
     checkWaiter = resolve;
-    setTimeout(() => resolve(null), 20_000);
+    setTimeout(() => resolve("slow"), 20_000);
+    // An install that dies (a precache fetch failing on a weak signal)
+    // leaves nothing on its way; say so rather than "downloading".
+    worker?.addEventListener("statechange", () => worker.state === "redundant" && resolve("failed"));
   });
   checkWaiter = null;
-  if (behind == null) return "pending";
+  if (behind === "failed") return "unavailable";
+  if (behind === "slow") return "pending";
   if (!behind) return "current";
   reloadQuietly();
   return "updating";

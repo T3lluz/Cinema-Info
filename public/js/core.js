@@ -78,6 +78,9 @@ export const S = {
   /** @type {{ shows: any[], updatedAt?: string } | null} */
   state: null,
   selectedDay: "",
+  /** The day this session counts as today: it lags the calendar until
+   * the old day's last film is over (rollToTodayIfStale in app.js). */
+  sessionDay: "",
   activeTab: "day",
   lang: "nb",
   /** "light" | "dark" | "system" */
@@ -167,6 +170,7 @@ export function savePrefs() {
       JSON.stringify({
         selectedDay: S.selectedDay,
         selectedDayAt: Date.now(),
+        sessionDay: S.sessionDay,
         activeTab: S.activeTab,
         lang: S.lang,
         theme: S.theme,
