@@ -334,7 +334,10 @@ function liveBeat() {
   beatJob("seats", () => pulled.then(() => refreshOpenSeatCharts({ quiet: true })));
 }
 
-let sessionDay = todayKey();
+/** The day this session counts as today. An update's reload just after
+ * midnight carries the old one over, so the beat still rolls the screen
+ * to the new day once the old day's last film has ended. */
+let sessionDay = resume?.today || todayKey();
 
 /**
  * Once the date has changed, move the selection to the new today: a phone
@@ -855,6 +858,7 @@ function reloadQuietly() {
         at: Date.now(),
         tab: S.activeTab,
         day: S.selectedDay,
+        today: sessionDay,
         y: Math.round(window.scrollY),
         seats: [...seatState.open],
         q: els.searchInput?.value || "",

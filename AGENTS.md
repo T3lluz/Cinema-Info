@@ -62,7 +62,8 @@ full product description and data model.
 - Every deploy stamps a cache-bust token into `index.html`, `sw.js` and
   every `js/*.js` import (`?v=dev` placeholders) via
   `scripts/stamp-version.mjs`. The token is the last commit that changed
-  `public/` outside `public/data/`, so snapshot refreshes keep it and no
+  `public/` outside `public/data/` (or the stamp script or `update.sh`,
+  which shape what is served), so snapshot refreshes keep it and no
   phone reloads for them. Do not hand-edit `?v=` or `cinema-info-v…`.
   Local `public/` placeholders are enough for the local server.
 - Phones apply a new build on their own (see "Updates" in README.md); there

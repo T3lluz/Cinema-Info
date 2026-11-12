@@ -169,9 +169,16 @@ function computeModel(period) {
 
   const films = new Map();
   for (const s of shows) {
-    const f = films.get(s.title) || { title: s.title, posterUrl: s.posterUrl, sold: 0, shows: 0 };
+    const f =
+      films.get(s.title) || { title: s.title, posterUrl: s.posterUrl, sold: 0, shows: 0, played: 0, playedSold: 0 };
     f.sold += soldOf(s);
     f.shows += 1;
+    // The average, like "Snitt per visning", only over showings that have
+    // started: presale would drag it down.
+    if (s.start <= now && s.sold != null && s.eventStatus !== "error") {
+      f.played += 1;
+      f.playedSold += soldOf(s);
+    }
     if (!f.posterUrl && s.posterUrl) f.posterUrl = s.posterUrl;
     films.set(s.title, f);
   }
@@ -439,8 +446,10 @@ export function renderStats() {
                   <span class="rank-sub">${escapeHtml(
                     [
                       f.shows === 1 ? t("showsOne") : t("showsMany", { n: f.shows }),
-                      t("avgPerShow", { n: formatCount(Math.round(f.sold / f.shows)) }),
-                    ].join(" · ")
+                      f.played ? t("avgPerShow", { n: formatCount(Math.round(f.playedSold / f.played)) }) : "",
+                    ]
+                      .filter(Boolean)
+                      .join(" · ")
                   )}</span>
                 </span>
                 <span class="rank-v">${formatCount(f.sold)}</span>
