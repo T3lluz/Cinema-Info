@@ -251,6 +251,7 @@ export const I18N = {
     checkingUpdate: "Sjekker…",
     upToDate: "Du har siste versjon",
     updating: "Oppdaterer…",
+    updateCheckFailed: "Fikk ikke sjekket nå. Er du på nett?",
     programUpdated: "Program hentet",
     shortcutsHint: "Tastatur: ← → bytter dag, T går til i dag, / søker.",
 
@@ -577,6 +578,7 @@ export const I18N = {
     checkingUpdate: "Checking…",
     upToDate: "You have the latest version",
     updating: "Updating…",
+    updateCheckFailed: "Couldn't check right now. Are you online?",
     programUpdated: "Program fetched",
     shortcutsHint: "Keyboard: ← → change day, T jumps to today, / searches.",
 

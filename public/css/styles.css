@@ -1538,16 +1538,30 @@ html.sheet-open .edge-blur {
   line-height: 18px;
   text-transform: uppercase;
 }
+/* On a phone the caption rarely fits. The title gives way first, down to
+ * a few letters, so the countdown and the film start stay readable; only
+ * then does that part shorten too. */
 .tl-cap-state {
+  display: flex;
+  min-width: 0;
+  overflow: hidden;
+  font-variant-numeric: tabular-nums;
+}
+.tl-cap-state strong,
+.tl-cap-when {
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-variant-numeric: tabular-nums;
 }
 .tl-cap-state strong {
+  flex: 0 1 auto;
+  min-width: min(6.5em, 45%);
   font-size: 13.5px;
   font-weight: 720;
   color: var(--ink);
+}
+.tl-cap-when {
+  flex: 0 0.001 auto;
 }
 .tl-cap > .pulse {
   margin: 0 -2px 0 2px;
@@ -4252,7 +4266,7 @@ button.col:disabled {
   :root {
     --page-max: 1840px;
     --pad: 32px;
-    --rail-w: 84px;
+    --rail-w: 92px;
     --rail-space: calc(var(--rail-w) + 22px);
   }
   body {

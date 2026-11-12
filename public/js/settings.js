@@ -25,6 +25,8 @@ import { feedbackAvailable, openFeedback } from "./feedback.js?v=dev";
 /** The last DX test, kept so a redraw does not wipe the verdict. */
 let dxTest = null;
 let dxBusy = "";
+/** Settings → Check for updates is running. */
+let updateBusy = false;
 
 function row(iconName, title, hint, control, { stack = false, attrs = "" } = {}) {
   return `<div class="row${stack ? " is-stack" : ""}" ${attrs}>
@@ -200,7 +202,9 @@ export function renderSettings() {
               "info",
               t("version"),
               APP_VERSION_LABEL,
-              `<button type="button" class="btn btn-sm" data-action="update">${escapeHtml(t("checkUpdate"))}</button>`
+              `<button type="button" class="btn btn-sm" data-action="update" ${updateBusy ? "disabled" : ""}>${escapeHtml(
+                t(updateBusy ? "checkingUpdate" : "checkUpdate")
+              )}</button>`
             )}
             ${row("day", t("programUpdated"), programFetched())}
           </div>
@@ -301,13 +305,19 @@ export function setupSettings() {
       }
     } else if (action === "install") {
       hooks.install();
-    } else if (action === "update") {
-      const btn = e.target.closest("[data-action]");
-      btn.disabled = true;
-      btn.textContent = t("checkingUpdate");
-      const found = await hooks.checkUpdate();
-      toast(t(found ? "updating" : "upToDate"));
+    } else if (action === "update" && !updateBusy) {
+      // Drawn through the render, not set on the button: the next redraw
+      // compares against what it last drew, so a hand-set label would stick.
+      updateBusy = true;
       renderSettings();
+      let result = "";
+      try {
+        result = await hooks.checkUpdate();
+      } finally {
+        updateBusy = false;
+        renderSettings();
+      }
+      toast(t(result === "updating" ? "updating" : result === "current" ? "upToDate" : "updateCheckFailed"));
     }
   });
 }

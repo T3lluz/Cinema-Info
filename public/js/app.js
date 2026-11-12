@@ -38,6 +38,7 @@ import {
   refreshForTab,
   programDays,
   setStatus,
+  isDone,
 } from "./data.js?v=dev";
 import {
   patchList,
@@ -83,7 +84,9 @@ function takeResume() {
   try {
     const saved = JSON.parse(sessionStorage.getItem(RESUME_KEY) || "null");
     sessionStorage.removeItem(RESUME_KEY);
-    return saved && Date.now() - saved.at < 60_000 ? saved : null;
+    // Generous: iOS can hold a reload started in the background until the
+    // app is opened again. Read once, so an old one is never reused.
+    return saved && Date.now() - saved.at < RESUME_MS ? saved : null;
   } catch {
     return null;
   }
@@ -95,7 +98,19 @@ function restoreView() {
     els.searchInput.value = resume.q;
     els.searchInput.dispatchEvent(new Event("input"));
   }
-  if (resume.y > 0) window.scrollTo(0, resume.y);
+  if (!(resume.y > 0)) return;
+  // Seat charts and live captions fill in after the first paint and push
+  // the page down. Follow them back to the spot for a few seconds, until
+  // someone touches the page.
+  const since = Date.now();
+  const place = () => {
+    if (lastInput > since) return ro?.disconnect();
+    window.scrollTo(0, resume.y);
+  };
+  const ro = "ResizeObserver" in window ? new ResizeObserver(place) : null;
+  ro?.observe(document.body);
+  setTimeout(() => ro?.disconnect(), 5000);
+  place();
 }
 
 function boot() {
@@ -297,11 +312,13 @@ function beatJob(name, run) {
 }
 
 function liveBeat() {
-  if (document.visibilityState !== "visible" || !S.state?.shows) return;
+  if (document.visibilityState !== "visible") return;
   // A screen left on at the box office is never hidden, so it looks for
   // a new build from here as well, and takes it once nobody is using it.
   maybeCheckUpdate();
-  if (applyUpdateIfIdle()) return;
+  if (applyUpdateIfQuiet()) return;
+  if (!S.state?.shows) return;
+  rollToTodayIfStale({ waitForLast: true });
   renderActive();
   markDoneDays();
   renderStatus();
@@ -319,10 +336,19 @@ function liveBeat() {
 
 let sessionDay = todayKey();
 
-/** If the device slept past midnight, move the selection to the new today. */
-function rollToTodayIfStale() {
+/**
+ * Once the date has changed, move the selection to the new today: a phone
+ * that slept past midnight, or a screen kept on all night. On the beat it
+ * waits for the old day's last showing to end, so a film running past
+ * midnight stays on screen.
+ */
+function rollToTodayIfStale({ waitForLast = false } = {}) {
   const today = todayKey();
   if (today === sessionDay || !S.state?.shows) return;
+  if (waitForLast) {
+    const now = new Date();
+    if (S.state.shows.some((s) => s.dayKey === sessionDay && !isDone(s, now))) return;
+  }
   sessionDay = today;
   if (programDays().includes(today)) S.selectedDay = today;
   renderDayStrip();
@@ -755,9 +781,9 @@ async function applyWakeLock() {
  *   build this page runs, there is nothing to do.
  * - A page left open across a deploy reloads itself quietly: as soon as
  *   it goes to the background, or once nobody has touched it for
- *   IDLE_RELOAD_MS with nothing open or being typed. It comes back on the
- *   same tab, day, scroll position, unfolded seat charts and search,
- *   without the opening ripple.
+ *   IDLE_RELOAD_MS. Never with a film sheet or the feedback form open,
+ *   and never offline. It comes back on the same tab, day, scroll
+ *   position, unfolded seat charts and search, without the opening ripple.
  * - Settings → Check for updates applies one straight away.
  *
  * A snapshot refresh is not a new build (deploy/server/update.sh stamps
@@ -771,11 +797,14 @@ let lastUpdateCheck = 0;
 let lastInput = Date.now();
 /** A newer build has taken this page over; reload at the next quiet moment. */
 let outdated = false;
-/** Settings asked for the update: take it the moment it lands. */
-let applyNow = false;
+/** Settings, waiting to hear whether the worker it found makes this page outdated. */
+let checkWaiter = null;
 let reloading = false;
 
 function setupServiceWorker() {
+  for (const type of ["pointerdown", "keydown", "wheel", "touchstart"]) {
+    addEventListener(type, () => (lastInput = Date.now()), { passive: true, capture: true });
+  }
   if (!("serviceWorker" in navigator)) return;
   const local = ["localhost", "127.0.0.1", "[::1]"].includes(location.hostname);
   if (local) {
@@ -788,18 +817,16 @@ function setupServiceWorker() {
       swReg = reg;
     })
     .catch(() => {});
-  for (const type of ["pointerdown", "keydown", "wheel", "touchstart"]) {
-    addEventListener(type, () => (lastInput = Date.now()), { passive: true, capture: true });
-  }
   navigator.serviceWorker.addEventListener("controllerchange", async () => {
     const build = await workerBuild(navigator.serviceWorker.controller);
-    // The first install, or a deploy this page already loaded: no change.
-    if (build === APP_VERSION) return;
-    outdated = true;
-    if (applyNow || document.visibilityState === "hidden") reloadQuietly();
+    // The first install, or a deploy this page already loaded, changes
+    // nothing. Anything else means this page runs an older build.
+    if (build !== APP_VERSION) outdated = true;
+    checkWaiter?.(outdated);
+    if (document.visibilityState === "hidden") applyUpdateIfQuiet({ hidden: true });
   });
   document.addEventListener("visibilitychange", () => {
-    if (outdated && document.visibilityState === "hidden") reloadQuietly();
+    if (document.visibilityState === "hidden") applyUpdateIfQuiet({ hidden: true });
   });
 }
 
@@ -839,33 +866,55 @@ function reloadQuietly() {
   location.reload();
 }
 
-/** On the beat: reload now if the page is outdated and nobody is using it. */
-function applyUpdateIfIdle() {
+/**
+ * Reload for an update if nothing would be lost: no film sheet or
+ * feedback form open, a connection to fetch the live figures again, and,
+ * while the page is on screen, nobody touching it for IDLE_RELOAD_MS,
+ * typing, or pulling. Going to the background needs only the first two.
+ */
+function applyUpdateIfQuiet({ hidden = false } = {}) {
   if (!outdated || reloading) return false;
-  if (Date.now() - lastInput < IDLE_RELOAD_MS) return false;
+  if (navigator.onLine === false) return false;
   if (isSheetOpen() || document.querySelector("dialog[open]")) return false;
-  if (document.activeElement?.matches?.("input, textarea, select")) return false;
-  if (document.documentElement.classList.contains("is-pulling")) return false;
+  if (!hidden) {
+    if (Date.now() - lastInput < IDLE_RELOAD_MS) return false;
+    if (document.activeElement?.matches?.("input, textarea, select")) return false;
+    if (document.documentElement.classList.contains("is-pulling")) return false;
+  }
   reloadQuietly();
   return true;
 }
 
-/** Look for a new build. `apply` (Settings) takes it at once if there is one. */
+/**
+ * Look for a new build. From Settings (`apply`) it waits to see what the
+ * check found and says so: "updating" (the page reloads now), "current",
+ * or "unavailable" (offline, or nothing to ask).
+ */
 async function checkUpdate({ apply = false } = {}) {
   lastUpdateCheck = Date.now();
   if (apply && outdated) {
     reloadQuietly();
-    return true;
+    return "updating";
   }
-  if (!swReg) return false;
+  if (!swReg || navigator.onLine === false) return "unavailable";
   try {
     await swReg.update();
   } catch {
-    return false;
+    return "unavailable";
   }
-  const found = Boolean(swReg.installing || swReg.waiting);
-  if (found && apply) applyNow = true;
-  return found;
+  if (!apply) return "";
+  if (!swReg.installing && !swReg.waiting) return "current";
+  // A new worker is on its way: wait for it to take over and say whether
+  // it serves anything newer than this page.
+  const behind = await new Promise((resolve) => {
+    checkWaiter = resolve;
+    setTimeout(() => resolve(null), 20_000);
+  });
+  checkWaiter = null;
+  if (behind == null) return "unavailable";
+  if (!behind) return "current";
+  reloadQuietly();
+  return "updating";
 }
 
 function maybeCheckUpdate() {

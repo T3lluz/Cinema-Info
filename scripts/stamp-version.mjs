@@ -4,8 +4,9 @@
  * from an old service-worker cache or a sticky cached asset URL.
  *
  * The committed files carry `?v=dev` on every stylesheet, script and
- * module import, and `cinema-info-vdev` as the cache name; the deploy
- * workflow stamps the live copy with the commit SHA:
+ * module import, and `cinema-info-vdev` as the cache name. The deploy
+ * (deploy/server/update.sh) stamps the live copy with the build token,
+ * the last commit that changed the app:
  *
  *   node scripts/stamp-version.mjs <dir> <version>
  *
