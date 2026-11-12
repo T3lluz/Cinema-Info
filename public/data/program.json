@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-11T18:38:10.066Z",
+  "updatedAt": "2026-11-12T03:47:30.749Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -19971,7 +19971,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93680/purchase?kanal=dxf",
       "eventId": "93680",
       "promoterId": "202",
-      "sold": 42,
+      "sold": 54,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -19986,7 +19986,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 68
+      "available": 56
     },
     {
       "id": "NOR20240691-2026-11-12T17:00:00-Kinosal",
@@ -20011,7 +20011,7 @@
       ],
       "director": "Rasmus A. Sivertsen, Mette Tange",
       "premiere": "2026-11-06",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/48e8411522836146104d015dc86ab395cacf0345-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/6709e48a4ac96bb7821de663e44feff52c689458-1190x1684.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93661/purchase?kanal=dxf",
       "eventId": "93661",
       "promoterId": "202",
@@ -20170,7 +20170,7 @@
       ],
       "director": "Rasmus A. Sivertsen, Mette Tange",
       "premiere": "2026-11-06",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/48e8411522836146104d015dc86ab395cacf0345-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/6709e48a4ac96bb7821de663e44feff52c689458-1190x1684.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93495/purchase?kanal=dxf",
       "eventId": "93495",
       "promoterId": "202",
@@ -20255,12 +20255,17 @@
       "eventStatus": "ok",
       "ratings": {
         "letterboxd": {
-          "value": 3.03,
-          "url": "https://letterboxd.com/film/how-to-rob-a-bank/"
+          "value": 3.17,
+          "url": "https://letterboxd.com/film/how-to-rob-a-bank-2026/"
         },
         "tomatoes": {
           "value": 42,
           "url": "https://www.rottentomatoes.com/m/how_to_rob_a_bank"
+        },
+        "imdb": {
+          "value": 6.9,
+          "id": "tt35866986",
+          "url": "https://www.imdb.com/title/tt35866986/"
         }
       },
       "reserved": 0,
@@ -20290,11 +20295,11 @@
       ],
       "director": "Rasmus A. Sivertsen, Mette Tange",
       "premiere": "2026-11-06",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/48e8411522836146104d015dc86ab395cacf0345-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/6709e48a4ac96bb7821de663e44feff52c689458-1190x1684.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93708/purchase?kanal=dxf",
       "eventId": "93708",
       "promoterId": "202",
-      "sold": 5,
+      "sold": 11,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -20304,8 +20309,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 105
+      "capacity": 104,
+      "available": 93
     },
     {
       "id": "EDI20260973-2026-11-14T16:45:00-Kinosal",
@@ -20420,12 +20425,17 @@
       "eventStatus": "ok",
       "ratings": {
         "letterboxd": {
-          "value": 3.03,
-          "url": "https://letterboxd.com/film/how-to-rob-a-bank/"
+          "value": 3.17,
+          "url": "https://letterboxd.com/film/how-to-rob-a-bank-2026/"
         },
         "tomatoes": {
           "value": 42,
           "url": "https://www.rottentomatoes.com/m/how_to_rob_a_bank"
+        },
+        "imdb": {
+          "value": 6.9,
+          "id": "tt35866986",
+          "url": "https://www.imdb.com/title/tt35866986/"
         }
       },
       "reserved": 0,
@@ -20455,7 +20465,7 @@
       ],
       "director": "Rasmus A. Sivertsen, Mette Tange",
       "premiere": "2026-11-06",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/48e8411522836146104d015dc86ab395cacf0345-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/6709e48a4ac96bb7821de663e44feff52c689458-1190x1684.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93555/purchase?kanal=dxf",
       "eventId": "93555",
       "promoterId": "202",
@@ -20581,7 +20591,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93554/purchase?kanal=dxf",
       "eventId": "93554",
       "promoterId": "202",
-      "sold": 3,
+      "sold": 5,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -20591,8 +20601,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 286,
-      "available": 283
+      "capacity": 284,
+      "available": 279
     },
     {
       "id": "EDI20251675-2026-11-15T19:30:00-Kinosal",
@@ -20624,12 +20634,17 @@
       "eventStatus": "ok",
       "ratings": {
         "letterboxd": {
-          "value": 3.24,
+          "value": 3.22,
           "url": "https://letterboxd.com/film/ebenezer-2026/"
         },
         "tomatoes": {
           "value": 38,
           "url": "https://www.rottentomatoes.com/m/ebenezer"
+        },
+        "imdb": {
+          "value": 6.9,
+          "id": "tt38773219",
+          "url": "https://www.imdb.com/title/tt38773219/"
         }
       },
       "reserved": 0,
@@ -20666,12 +20681,17 @@
       "eventStatus": "ok",
       "ratings": {
         "letterboxd": {
-          "value": 3.03,
-          "url": "https://letterboxd.com/film/how-to-rob-a-bank/"
+          "value": 3.17,
+          "url": "https://letterboxd.com/film/how-to-rob-a-bank-2026/"
         },
         "tomatoes": {
           "value": 42,
           "url": "https://www.rottentomatoes.com/m/how_to_rob_a_bank"
+        },
+        "imdb": {
+          "value": 6.9,
+          "id": "tt35866986",
+          "url": "https://www.imdb.com/title/tt35866986/"
         }
       },
       "reserved": 0,
@@ -20728,7 +20748,7 @@
       "tags": [
         "Norsk tekst"
       ],
-      "showType": null,
+      "showType": "Seniorkino",
       "kinoklubb": true,
       "genres": [
         "Drama"
@@ -20751,6 +20771,46 @@
       "reserved": 0,
       "capacity": 246,
       "available": 241
+    },
+    {
+      "id": "NOR20240691-2026-11-17T17:00:00-Kinosal",
+      "title": "Julenissens verksted",
+      "screen": "Kinosal",
+      "start": "2026-11-17T17:00:00",
+      "end": "2026-11-17T18:23:00",
+      "dayKey": "2026-11-17",
+      "runningMinutes": 73,
+      "runningLabel": "1 t. 13 min.",
+      "age": "Tillatt for alle",
+      "tags": [
+        "Norsk tale",
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Animation",
+        "Comedy",
+        "Family"
+      ],
+      "director": "Rasmus A. Sivertsen, Mette Tange",
+      "premiere": "2026-11-06",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/6709e48a4ac96bb7821de663e44feff52c689458-1190x1684.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93434/purchase?kanal=dxf",
+      "eventId": "93434",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.3,
+          "id": "tt41475646",
+          "url": "https://www.imdb.com/title/tt41475646/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
     },
     {
       "id": "EDI20251399-2026-11-17T19:30:00-Kinosal",
@@ -20788,6 +20848,93 @@
       "reserved": 0,
       "capacity": 110,
       "available": 83
+    },
+    {
+      "id": "EDI20251675-2026-11-17T20:15:00-Storsal",
+      "title": "Ebenezer",
+      "screen": "Storsal",
+      "start": "2026-11-17T20:15:00",
+      "end": "2026-11-17T22:20:21",
+      "dayKey": "2026-11-17",
+      "runningMinutes": 115,
+      "runningLabel": "1 t. 55 min.",
+      "age": "12 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Adventure",
+        "Comedy",
+        "Drama"
+      ],
+      "director": "Ti West",
+      "premiere": "2026-11-13",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/ece98fe1e9a1b24ef010288a35d3384c503d2f72-954x1350.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93692/purchase?kanal=dxf",
+      "eventId": "93692",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "letterboxd": {
+          "value": 3.22,
+          "url": "https://letterboxd.com/film/ebenezer-2026/"
+        },
+        "tomatoes": {
+          "value": 38,
+          "url": "https://www.rottentomatoes.com/m/ebenezer"
+        },
+        "imdb": {
+          "value": 6.9,
+          "id": "tt38773219",
+          "url": "https://www.imdb.com/title/tt38773219/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
+    },
+    {
+      "id": "NOR20240691-2026-11-18T17:00:00-Kinosal",
+      "title": "Julenissens verksted",
+      "screen": "Kinosal",
+      "start": "2026-11-18T17:00:00",
+      "end": "2026-11-18T18:23:00",
+      "dayKey": "2026-11-18",
+      "runningMinutes": 73,
+      "runningLabel": "1 t. 13 min.",
+      "age": "Tillatt for alle",
+      "tags": [
+        "Norsk tale",
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Animation",
+        "Comedy",
+        "Family"
+      ],
+      "director": "Rasmus A. Sivertsen, Mette Tange",
+      "premiere": "2026-11-06",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/6709e48a4ac96bb7821de663e44feff52c689458-1190x1684.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93616/purchase?kanal=dxf",
+      "eventId": "93616",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.3,
+          "id": "tt41475646",
+          "url": "https://www.imdb.com/title/tt41475646/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
     },
     {
       "id": "EDI20251030-2026-11-18T19:45:00-Kinosal",
@@ -20898,7 +21045,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93641/purchase?kanal=dxf",
       "eventId": "93641",
       "promoterId": "202",
-      "sold": 8,
+      "sold": 10,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -20908,8 +21055,46 @@
         }
       },
       "reserved": 0,
-      "capacity": 108,
+      "capacity": 110,
       "available": 100
+    },
+    {
+      "id": "EDI20251703-2026-12-15T19:30:00-Kinosal",
+      "title": "Velkommen til familien",
+      "screen": "Kinosal",
+      "start": "2026-12-15T19:30:00",
+      "end": "2026-12-15T21:15:00",
+      "dayKey": "2026-12-15",
+      "runningMinutes": 97,
+      "runningLabel": "1 t. 37 min.",
+      "age": "9 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Documentary",
+        "Family"
+      ],
+      "director": "Even Hafnor",
+      "premiere": "2026-11-13",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/38737a7ca32b8125125a68d3c6dcd30fa90624bd-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93642/purchase?kanal=dxf",
+      "eventId": "93642",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.6,
+          "id": "tt6041174",
+          "url": "https://www.imdb.com/title/tt6041174/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
     },
     {
       "id": "EDI20251026-2026-12-15T20:00:00-Storsal",
