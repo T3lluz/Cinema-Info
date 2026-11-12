@@ -13,7 +13,7 @@ services:
   # feedback store. :8080 is the public side (/CinemaInfo), :8081 the
   # feedback hub, which only Caddy on the tailnet proxies to.
   cinema-info:
-    image: denoland/deno:2.9.6
+    image: denoland/deno:2.9.8
     container_name: cinema-info
     restart: unless-stopped
     user: "${CINEMA_UID:-1000}:${CINEMA_GID:-1000}"
@@ -70,7 +70,7 @@ services:
   # lives with the tunnel in Cloudflare (set by go-public.sh). Started
   # once .env has a TUNNEL_TOKEN and COMPOSE_PROFILES=public.
   tunnel:
-    image: cloudflare/cloudflared:2026.9.3
+    image: cloudflare/cloudflared:2026.10.7
     container_name: cinema-tunnel
     restart: unless-stopped
     profiles:
