@@ -31,6 +31,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          # The build token is the last commit that changed the app, so
+          # it needs the history to find it.
+          fetch-depth: 0
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
@@ -40,7 +44,10 @@ jobs:
         run: |
           mkdir -p _site
           cp -a public/. _site/
-          node scripts/stamp-version.mjs _site "${GITHUB_SHA::7}"
+          # Same build token as t3lluz.com (deploy/server/update.sh): a
+          # snapshot refresh keeps it, so phones get no new worker for it.
+          build=$(git log -1 --format=%H -- public ':(exclude)public/data')
+          node scripts/stamp-version.mjs _site "${build::7}"
           # Same-origin copies of the poster thumbnails for the opening
           # ripple, which has to read the pixels it photographs.
           node scripts/mirror-posters.mjs _site

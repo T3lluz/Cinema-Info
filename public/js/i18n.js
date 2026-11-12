@@ -43,22 +43,11 @@ export const I18N = {
     scrollPrev: "Rull til venstre",
     scrollNext: "Rull til høyre",
 
-    noticeTitle: "NYTT: Helt nytt utseende",
-    noticeMoved: "Appen har også fått ny adresse:",
-    noticeOldEnds:
-      "Denne adressen slutter å virke 1. november. Åpne den nye lenken, og legg appen på hjemskjermen på nytt derfra.",
-    noticeHere:
-      "Du er på den nye adressen. Den gamle, t3lluz.github.io/Cinema-Info, slutter å virke 1. november.",
-    noticeCountdown: "Den gamle adressen stenges om",
-    noticeClosed: "Den gamle adressen er stengt.",
-    noticeDays: "dager",
-    noticeDay: "dag",
-    noticeHours: "timer",
-    noticeHour: "time",
-    noticeMins: "min",
-    noticeSecs: "sek",
+    noticeTitle: "Appen har flyttet",
+    noticeMoved: "Den nye adressen er",
+    noticeReinstall:
+      "Åpne lenken og legg appen på hjemskjermen derfra. Denne gamle adressen skal stenges.",
     noticeAria: "Informasjon",
-    noticeShort: "{d}d {h}t",
     noticeShow: "Vis mer",
     noticeHide: "Skjul",
 
@@ -269,8 +258,7 @@ export const I18N = {
     checkUpdate: "Se etter oppdatering",
     checkingUpdate: "Sjekker…",
     upToDate: "Du har siste versjon",
-    updateReady: "Ny versjon er klar",
-    updateNow: "Oppdater",
+    updating: "Oppdaterer…",
     programUpdated: "Program hentet",
     shortcutsHint: "Tastatur: ← → bytter dag, T går til i dag, / søker.",
 
@@ -389,22 +377,11 @@ export const I18N = {
     scrollPrev: "Scroll left",
     scrollNext: "Scroll right",
 
-    noticeTitle: "NEW: UI overhaul",
-    noticeMoved: "The app also has a new address:",
-    noticeOldEnds:
-      "This address stops working on 1 November. Open the new link and add the app to your home screen again from there.",
-    noticeHere:
-      "You're on the new address. The old one, t3lluz.github.io/Cinema-Info, stops working on 1 November.",
-    noticeCountdown: "The old address closes in",
-    noticeClosed: "The old address is closed.",
-    noticeDays: "days",
-    noticeDay: "day",
-    noticeHours: "hours",
-    noticeHour: "hour",
-    noticeMins: "min",
-    noticeSecs: "sec",
+    noticeTitle: "The app has moved",
+    noticeMoved: "The new address is",
+    noticeReinstall:
+      "Open the link and add the app to your home screen from there. This old address is being shut down.",
     noticeAria: "Information",
-    noticeShort: "{d}d {h}h",
     noticeShow: "Show more",
     noticeHide: "Hide",
 
@@ -615,8 +592,7 @@ export const I18N = {
     checkUpdate: "Check for updates",
     checkingUpdate: "Checking…",
     upToDate: "You have the latest version",
-    updateReady: "A new version is ready",
-    updateNow: "Update",
+    updating: "Updating…",
     programUpdated: "Program fetched",
     shortcutsHint: "Keyboard: ← → change day, T jumps to today, / searches.",
 

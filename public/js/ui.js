@@ -18,7 +18,6 @@ import {
   reducedMotion,
   NOTICE_ON,
   NEW_APP_URL,
-  OLD_URL_ENDS,
 } from "./core.js?v=dev";
 import {
   statusOf,
@@ -965,73 +964,39 @@ export function setupHScroll() {
 }
 
 /* —— Note ———————————————————————————————————————————————————————————
- * A GitHub-style note above every tab: blue rule down the left, the info
- * icon and a title, then the message. It cannot be dismissed, since
- * staff need to see it every time, but the title folds it down to one
- * line, and each device remembers that (`noticeOpen` in the prefs). Set
- * NOTICE_ON to false in core.js to take it down.
- *
- * It says different things on the two addresses. On the old one (GitHub
- * Pages) it links to the new one and says the old one closes on
- * 1 November; on t3lluz.com it says this is the new address. Both count
- * down to OLD_URL_ENDS, a second at a time while the page is visible.
+ * A GitHub-style note above every tab on the old address (GitHub Pages):
+ * blue rule down the left, the info icon and a title, then a link to the
+ * new address. t3lluz.com shows none. It cannot be dismissed, since
+ * staff still running the old install need to see it every time, but
+ * the title folds it down to one line, and each device remembers that
+ * (`noticeOpen` in the prefs). Set NOTICE_ON to false in core.js to take
+ * it down everywhere.
  */
 const INFO_ICON =
   '<svg class="notice-icon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"/></svg>';
 
 let noticeEl = null;
-let countdownTimer = 0;
 
 function onNewAddress() {
   return location.hostname === "t3lluz.com";
-}
-
-function countdownHtml() {
-  const left = OLD_URL_ENDS.getTime() - Date.now();
-  if (left <= 0) return `<p class="notice-count">${escapeHtml(t("noticeClosed"))}</p>`;
-  const total = Math.floor(left / 1000);
-  const d = Math.floor(total / 86400);
-  const h = Math.floor((total % 86400) / 3600);
-  const m = Math.floor((total % 3600) / 60);
-  const sec = total % 60;
-  const cell = (n, label) =>
-    `<span class="cd-cell"><b>${String(n).padStart(2, "0")}</b><small>${escapeHtml(label)}</small></span>`;
-  return `<p class="notice-count"><span class="cd-label">${escapeHtml(t("noticeCountdown"))}</span>
-    <span class="cd" role="timer">${cell(d, t(d === 1 ? "noticeDay" : "noticeDays"))}${cell(
-      h,
-      t(h === 1 ? "noticeHour" : "noticeHours")
-    )}${cell(m, t("noticeMins"))}${cell(sec, t("noticeSecs"))}</span></p>`;
-}
-
-/** "29 d 10 t": what the folded note keeps of the countdown. */
-function countdownShort() {
-  const left = OLD_URL_ENDS.getTime() - Date.now();
-  if (left <= 0) return "";
-  const hours = Math.floor(left / 3_600_000);
-  return t("noticeShort", { d: Math.floor(hours / 24), h: hours % 24 });
 }
 
 function renderNotice() {
   if (!noticeEl) return;
   noticeEl.setAttribute("aria-label", t("noticeAria"));
   const shortUrl = NEW_APP_URL.replace(/^https:\/\//, "").replace(/\/$/, "");
-  const body = onNewAddress()
-    ? `<p class="notice-body">${escapeHtml(t("noticeHere"))}</p>`
-    : `<p class="notice-body">${escapeHtml(t("noticeMoved"))}
-        <a class="notice-link" href="${NEW_APP_URL}">${escapeHtml(shortUrl)}</a></p>
-      <p class="notice-body">${escapeHtml(t("noticeOldEnds"))}</p>`;
   const open = S.noticeOpen;
   noticeEl.innerHTML = `<div class="notice-box${open ? "" : " is-folded"}">
       <button type="button" class="notice-title" data-notice-toggle aria-expanded="${open}" aria-controls="noticeMore"
         title="${escapeHtml(t(open ? "noticeHide" : "noticeShow"))}">
         ${INFO_ICON}<span class="notice-title-text">${escapeHtml(t("noticeTitle"))}</span>
-        <span class="notice-short">${escapeHtml(countdownShort())}</span>
         ${icon("chevronDown", "icon notice-chev")}
       </button>
       <div class="notice-more" id="noticeMore"${open ? "" : " inert"}>
         <div class="notice-inner">
-          ${body}
-          <div class="notice-cd">${countdownHtml()}</div>
+          <p class="notice-body">${escapeHtml(t("noticeMoved"))}
+            <a class="notice-link" href="${NEW_APP_URL}">${escapeHtml(shortUrl)}</a></p>
+          <p class="notice-body">${escapeHtml(t("noticeReinstall"))}</p>
         </div>
       </div>
     </div>`;
@@ -1054,26 +1019,15 @@ function toggleNotice() {
   setTimeout(() => hooks.headerChanged(), 360);
 }
 
-function tickCountdown() {
-  if (document.visibilityState === "visible") {
-    const host = noticeEl?.querySelector(".notice-cd");
-    if (host) host.innerHTML = countdownHtml();
-    const short = noticeEl?.querySelector(".notice-short");
-    if (short) short.textContent = countdownShort();
-  }
-  if (Date.now() >= OLD_URL_ENDS.getTime()) clearInterval(countdownTimer);
-}
-
 /** Drawn at boot, in place from the first frame, so nothing jumps under it. */
 export function setupNotice() {
   noticeEl = document.getElementById("notice");
-  if (!noticeEl || !NOTICE_ON) return;
+  if (!noticeEl || !NOTICE_ON || onNewAddress()) return;
   renderNotice();
   noticeEl.hidden = false;
   noticeEl.addEventListener("click", (e) => {
     if (e.target.closest("[data-notice-toggle]")) toggleNotice();
   });
-  countdownTimer = setInterval(tickCountdown, 1000);
 }
 
 /** Redraw the note's words after a language change. */

@@ -724,10 +724,10 @@ p {
   }
 }
 
-/* —— Warning ————————————————————————————————————————————————————————
- * Styled after GitHub's [!WARNING] alert: an amber rule down the left,
- * the alert triangle and title in amber, the message in body text —
- * here inside a box so it reads as one block on the page. Always shown.
+/* —— Note ———————————————————————————————————————————————————————————
+ * Styled after GitHub's [!NOTE] alert: a blue rule down the left, the
+ * info icon and title in blue, the message in body text, inside a box so
+ * it reads as one block on the page. Only on the old address.
  */
 .notice {
   max-width: calc(var(--page-max) + var(--safe-left) + var(--safe-right));
@@ -783,23 +783,11 @@ p {
   text-overflow: ellipsis;
   line-height: 1.25;
 }
-.notice-short {
-  font-size: 12.5px;
-  font-weight: 650;
-  color: var(--ink-2);
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
-  opacity: 0;
-  transition: opacity 0.2s;
-}
 .notice-chev {
   flex: none;
   width: 17px;
   height: 17px;
   transition: transform 0.3s var(--ease);
-}
-.is-folded .notice-short {
-  opacity: 1;
 }
 .is-folded .notice-chev {
   transform: rotate(-90deg);
@@ -817,7 +805,7 @@ p {
 .notice-inner {
   min-height: 0;
   overflow: hidden;
-  /* The link and the countdown stay above the title's tap layer. */
+  /* The link stays above the title's tap layer. */
   position: relative;
   z-index: 1;
 }
@@ -841,39 +829,6 @@ p {
   text-decoration: underline;
   text-underline-offset: 2px;
   overflow-wrap: anywhere;
-}
-.notice-count {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 6px 10px;
-  margin-top: 9px;
-  font-size: 12.5px;
-  font-weight: 600;
-  color: var(--ink-2);
-}
-.cd {
-  display: inline-flex;
-  gap: 5px;
-}
-.cd-cell {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 3px;
-  padding: 3px 7px;
-  border-radius: 7px;
-  background: var(--note-border);
-  color: var(--ink);
-  font-variant-numeric: tabular-nums;
-}
-.cd-cell b {
-  font-size: 14px;
-  font-weight: 750;
-}
-.cd-cell small {
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--ink-2);
 }
 
 /* —— App bar ———————————————————————————————————————————————————————— */

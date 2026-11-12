@@ -306,7 +306,7 @@ export function setupSettings() {
       btn.disabled = true;
       btn.textContent = t("checkingUpdate");
       const found = await hooks.checkUpdate();
-      if (!found) toast(t("upToDate"));
+      toast(t(found ? "updating" : "upToDate"));
       renderSettings();
     }
   });

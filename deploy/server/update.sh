@@ -43,7 +43,13 @@ main() {
   rm -rf "$stage"
   mkdir -p "$stage"
   cp -a "$repo/public/." "$stage/"
-  node "$repo/scripts/stamp-version.mjs" "$stage" "$sha"
+  # The build phones run is the last commit that changed the app, not
+  # $sha: a snapshot refresh only touches public/data, which an open app
+  # re-reads by itself, so it must not send every phone a new worker.
+  local build
+  build=$(git -C "$repo" log -1 --format=%H "$new" -- public ':(exclude)public/data')
+  build=${build:-$new}
+  node "$repo/scripts/stamp-version.mjs" "$stage" "${build:0:7}"
   # Its own app identity on t3lluz.com. A manifest id resolves against the
   # origin, not the path, so the shared "./" would become
   # https://t3lluz.com/, which is the dashboard's id too, and a phone with

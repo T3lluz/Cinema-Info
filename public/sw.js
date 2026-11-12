@@ -6,10 +6,13 @@
  * given URL. Live DX and bridge calls are never cached.
  *
  * Every `?v=dev` below (and in index.html and js/*.js) is replaced with
- * the commit SHA on deploy by scripts/stamp-version.mjs, so a new
- * version always lands as a fresh cache instead of a stale one.
+ * the build (the last commit that changed the app) on deploy by
+ * scripts/stamp-version.mjs, so a new version always lands as a fresh
+ * cache instead of a stale one.
  */
 const CACHE = "cinema-info-vdev";
+/** The build this worker serves: the token the page reads off its own script URL. */
+const BUILD = CACHE.slice("cinema-info-v".length);
 const PRECACHE = [
   "./",
   "./index.html",
@@ -66,6 +69,12 @@ self.addEventListener("activate", (event) => {
       )
       .then(() => self.clients.claim())
   );
+});
+
+// The page asks which build took it over, so it can tell a worker that
+// serves what it already runs from one that means it is out of date.
+self.addEventListener("message", (event) => {
+  if (event.data?.type === "build") event.ports[0]?.postMessage(BUILD);
 });
 
 async function trimPosters() {

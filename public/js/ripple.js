@@ -531,8 +531,9 @@ let touchedSinceOpen = false;
 
 /** The opening ripple, once the first real page is drawn; again when the
  * browser restores the app from its back/forward cache. Skipped if the
- * app is already being used by the time the page has settled. */
-export function armRipple(ready) {
+ * app is already being used by the time the page has settled, and on
+ * the reload that quietly applies an update (`intro: false`). */
+export function armRipple(ready, { intro = true } = {}) {
   const touched = () => (touchedSinceOpen = true);
   const listen = () => {
     touchedSinceOpen = false;
@@ -541,9 +542,11 @@ export function armRipple(ready) {
     }
   };
   listen();
-  Promise.resolve(ready)
-    .then(() => frames(2))
-    .then(() => playRipple({ settle: true, intro: true }));
+  if (intro) {
+    Promise.resolve(ready)
+      .then(() => frames(2))
+      .then(() => playRipple({ settle: true, intro: true }));
+  }
   addEventListener("pageshow", (e) => {
     if (!e.persisted) return;
     listen();

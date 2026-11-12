@@ -10,6 +10,8 @@ import {
   S,
   els,
   hooks,
+  seatState,
+  APP_VERSION,
   TAB_ORDER,
   DARK_MQ,
   SEATS_OPEN_MQ,
@@ -75,6 +77,29 @@ import { openMovie, setupSheet, isSheetOpen, refreshSheet } from "./sheet.js?v=d
 /** A selection left longer ago than this is not restored: open on today. */
 const RESUME_MS = 30 * 60 * 1000;
 
+/** What the page looked like just before it reloaded itself for an update. */
+const RESUME_KEY = "cinemaInfoResume";
+const resume = takeResume();
+
+function takeResume() {
+  try {
+    const saved = JSON.parse(sessionStorage.getItem(RESUME_KEY) || "null");
+    sessionStorage.removeItem(RESUME_KEY);
+    return saved && Date.now() - saved.at < 60_000 ? saved : null;
+  } catch {
+    return null;
+  }
+}
+
+/** The scroll position and search an update's reload left behind. */
+function restoreView() {
+  if (resume.q && els.searchInput) {
+    els.searchInput.value = resume.q;
+    els.searchInput.dispatchEvent(new Event("input"));
+  }
+  if (resume.y > 0) window.scrollTo(0, resume.y);
+}
+
 function boot() {
   collectElements();
   const prefs = loadPrefs();
@@ -90,6 +115,12 @@ function boot() {
   S.statsPeriod = prefs.statsPeriod === "month" ? "month" : "week";
   S.rippleOn = prefs.ripple !== false;
   S.noticeOpen = prefs.noticeOpen !== false;
+  if (resume) {
+    // Reloaded for an update: back exactly where it was.
+    if (TAB_ORDER.includes(resume.tab)) S.activeTab = resume.tab;
+    if (resume.day) S.selectedDay = resume.day;
+    for (const id of resume.seats || []) seatState.open.add(id);
+  }
   if (wanted) {
     // A home-screen shortcut opened us; don't keep the tab in the URL.
     const url = new URL(location.href);
@@ -148,8 +179,10 @@ let firstPaint = null;
 const firstPainted = new Promise((resolve) => (firstPaint = resolve));
 
 async function start() {
-  // The opening ripple, once the first real page is on screen.
-  armRipple(firstPainted);
+  // The opening ripple, once the first real page is on screen. Not after
+  // an update's reload: that one should not be noticed at all.
+  armRipple(firstPainted, { intro: !resume });
+  if (resume) firstPainted.then(() => requestAnimationFrame(restoreView));
   // The Movies tab, built ahead while the app is idle, posters and all.
   firstPainted.then(() => {
     const idle = window.requestIdleCallback || ((fn) => setTimeout(fn, 1500));
@@ -220,7 +253,7 @@ function wireHooks() {
   hooks.applyWakeLock = applyWakeLock;
   hooks.installState = installState;
   hooks.install = promptInstall;
-  hooks.checkUpdate = checkUpdate;
+  hooks.checkUpdate = () => checkUpdate({ apply: true });
   hooks.pullLive = pullServerLive;
 }
 
@@ -270,6 +303,10 @@ function beatJob(name, run) {
 
 function liveBeat() {
   if (document.visibilityState !== "visible" || !S.state?.shows) return;
+  // A screen left on at the box office is never hidden, so it looks for
+  // a new build from here as well, and takes it once nobody is using it.
+  maybeCheckUpdate();
+  if (applyUpdateIfIdle()) return;
   renderActive();
   markDoneDays();
   renderStatus();
@@ -716,11 +753,32 @@ async function applyWakeLock() {
 
 /* —— Service worker & updates —————————————————————————————————————————
  * The worker serves the app offline. A deploy installs a new worker in
- * the background; when it takes over, a hidden app reloads itself and a
- * visible one offers the update instead of yanking the page.
+ * the background and it takes over at once. Nobody is asked to update:
+ *
+ * - Opening the app already runs the new build, since the worker fetches
+ *   the page network first. When the worker that takes over reports the
+ *   build this page runs, there is nothing to do.
+ * - A page left open across a deploy reloads itself quietly: as soon as
+ *   it goes to the background, or once nobody has touched it for
+ *   IDLE_RELOAD_MS with nothing open or being typed. It comes back on the
+ *   same tab, day, scroll position, unfolded seat charts and search,
+ *   without the opening ripple.
+ * - Settings → Check for updates applies one straight away.
+ *
+ * A snapshot refresh is not a new build (deploy/server/update.sh stamps
+ * the last commit that changed the app), so the programme reaches an
+ * open app through its own two-minute re-read, not through a reload.
  */
+const IDLE_RELOAD_MS = 45_000;
+const UPDATE_CHECK_MS = 10 * 60_000;
 let swReg = null;
 let lastUpdateCheck = 0;
+let lastInput = Date.now();
+/** A newer build has taken this page over; reload at the next quiet moment. */
+let outdated = false;
+/** Settings asked for the update: take it the moment it lands. */
+let applyNow = false;
+let reloading = false;
 
 function setupServiceWorker() {
   if (!("serviceWorker" in navigator)) return;
@@ -729,46 +787,94 @@ function setupServiceWorker() {
     navigator.serviceWorker.getRegistrations().then((regs) => regs.forEach((r) => r.unregister()));
     return;
   }
-  const hadController = Boolean(navigator.serviceWorker.controller);
   navigator.serviceWorker
     .register("./sw.js")
     .then((reg) => {
       swReg = reg;
     })
     .catch(() => {});
-  let reloading = false;
-  navigator.serviceWorker.addEventListener("controllerchange", () => {
-    if (!hadController || reloading) return;
-    if (document.visibilityState === "hidden") {
-      reloading = true;
-      location.reload();
-      return;
-    }
-    toast(t("updateReady"), {
-      id: "update",
-      action: t("updateNow"),
-      sticky: true,
-      onAction: () => {
-        reloading = true;
-        location.reload();
-      },
-    });
+  for (const type of ["pointerdown", "keydown", "wheel", "touchstart"]) {
+    addEventListener(type, () => (lastInput = Date.now()), { passive: true, capture: true });
+  }
+  navigator.serviceWorker.addEventListener("controllerchange", async () => {
+    const build = await workerBuild(navigator.serviceWorker.controller);
+    // The first install, or a deploy this page already loaded: no change.
+    if (build === APP_VERSION) return;
+    outdated = true;
+    if (applyNow || document.visibilityState === "hidden") reloadQuietly();
+  });
+  document.addEventListener("visibilitychange", () => {
+    if (outdated && document.visibilityState === "hidden") reloadQuietly();
   });
 }
 
-async function checkUpdate() {
+/** Which build a worker serves. "" when it does not say (one from before it could). */
+function workerBuild(worker) {
+  return new Promise((resolve) => {
+    if (!worker) return resolve("");
+    const channel = new MessageChannel();
+    const timer = setTimeout(() => resolve(""), 3000);
+    channel.port1.onmessage = (e) => {
+      clearTimeout(timer);
+      resolve(String(e.data || ""));
+    };
+    worker.postMessage({ type: "build" }, [channel.port2]);
+  });
+}
+
+/** Reload for the new build, keeping what is on screen for the next page. */
+function reloadQuietly() {
+  if (reloading) return;
+  reloading = true;
+  try {
+    sessionStorage.setItem(
+      RESUME_KEY,
+      JSON.stringify({
+        at: Date.now(),
+        tab: S.activeTab,
+        day: S.selectedDay,
+        y: Math.round(window.scrollY),
+        seats: [...seatState.open],
+        q: els.searchInput?.value || "",
+      })
+    );
+  } catch {
+    /* private mode: it reloads onto today instead */
+  }
+  location.reload();
+}
+
+/** On the beat: reload now if the page is outdated and nobody is using it. */
+function applyUpdateIfIdle() {
+  if (!outdated || reloading) return false;
+  if (Date.now() - lastInput < IDLE_RELOAD_MS) return false;
+  if (isSheetOpen() || document.querySelector("dialog[open]")) return false;
+  if (document.activeElement?.matches?.("input, textarea, select")) return false;
+  if (document.documentElement.classList.contains("is-pulling")) return false;
+  reloadQuietly();
+  return true;
+}
+
+/** Look for a new build. `apply` (Settings) takes it at once if there is one. */
+async function checkUpdate({ apply = false } = {}) {
   lastUpdateCheck = Date.now();
+  if (apply && outdated) {
+    reloadQuietly();
+    return true;
+  }
   if (!swReg) return false;
   try {
     await swReg.update();
   } catch {
     return false;
   }
-  return Boolean(swReg.installing || swReg.waiting);
+  const found = Boolean(swReg.installing || swReg.waiting);
+  if (found && apply) applyNow = true;
+  return found;
 }
 
 function maybeCheckUpdate() {
-  if (Date.now() - lastUpdateCheck > 10 * 60_000) checkUpdate();
+  if (Date.now() - lastUpdateCheck > UPDATE_CHECK_MS) checkUpdate();
 }
 
 /* —— Install ————————————————————————————————————————————————————————— */
