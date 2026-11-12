@@ -321,7 +321,7 @@ function liveBeat() {
   maybeCheckUpdate();
   if (applyUpdateIfQuiet()) return;
   if (!S.state?.shows) return;
-  rollToTodayIfStale({ waitForLast: true });
+  rollToTodayIfStale();
   renderActive();
   markDoneDays();
   renderStatus();
@@ -337,25 +337,23 @@ function liveBeat() {
   beatJob("seats", () => pulled.then(() => refreshOpenSeatCharts({ quiet: true })));
 }
 
-
 /**
  * Once the date has changed, move a screen that was on today to the new
- * today: a phone that slept past midnight, or one kept on all night. On
- * the beat it waits for the old day's last showing to end, so a film
- * running past midnight stays on screen.
+ * today: a phone that slept past midnight, or one kept on all night. It
+ * waits for the old day's last showing to end, so a film running past
+ * midnight stays on screen. Runs on the beat, which also runs on unlock.
  */
-function rollToTodayIfStale({ waitForLast = false } = {}) {
+function rollToTodayIfStale() {
   const today = todayKey();
   if (today === S.sessionDay || !S.state?.shows) return;
-  if (waitForLast) {
-    const now = new Date();
-    if (S.state.shows.some((s) => s.dayKey === S.sessionDay && !isDone(s, now))) return;
-  }
+  const now = new Date();
+  if (S.state.shows.some((s) => s.dayKey === S.sessionDay && !isDone(s, now))) return;
   // Only a screen that was showing today follows it; a day picked on
   // purpose stays picked.
   const followed = S.selectedDay === S.sessionDay;
   S.sessionDay = today;
   if (followed && programDays().includes(today)) S.selectedDay = today;
+  savePrefs();
   renderDayStrip();
   renderActive();
 }
