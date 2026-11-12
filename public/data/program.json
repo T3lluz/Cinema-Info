@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T03:47:30.749Z",
+  "updatedAt": "2026-11-12T18:51:06.310Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -19171,7 +19171,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.3,
+          "value": 7.5,
           "id": "tt41475646",
           "url": "https://www.imdb.com/title/tt41475646/"
         }
@@ -19384,7 +19384,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.3,
+          "value": 7.5,
           "id": "tt41475646",
           "url": "https://www.imdb.com/title/tt41475646/"
         }
@@ -19606,7 +19606,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.3,
+          "value": 7.5,
           "id": "tt41475646",
           "url": "https://www.imdb.com/title/tt41475646/"
         }
@@ -19769,7 +19769,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.3,
+          "value": 7.5,
           "id": "tt41475646",
           "url": "https://www.imdb.com/title/tt41475646/"
         }
@@ -19936,7 +19936,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.3,
+          "value": 7.5,
           "id": "tt41475646",
           "url": "https://www.imdb.com/title/tt41475646/"
         }
@@ -20015,18 +20015,18 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93661/purchase?kanal=dxf",
       "eventId": "93661",
       "promoterId": "202",
-      "sold": 8,
+      "sold": 25,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.3,
+          "value": 7.5,
           "id": "tt41475646",
           "url": "https://www.imdb.com/title/tt41475646/"
         }
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 102
+      "available": 85
     },
     {
       "id": "EDI20250084-2026-11-12T17:30:00-Storsal",
@@ -20091,7 +20091,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93664/purchase?kanal=dxf",
       "eventId": "93664",
       "promoterId": "202",
-      "sold": 8,
+      "sold": 21,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -20102,7 +20102,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 102
+      "available": 89
     },
     {
       "id": "EDI20250183-2026-11-12T20:15:00-Storsal",
@@ -20130,7 +20130,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93663/purchase?kanal=dxf",
       "eventId": "93663",
       "promoterId": "202",
-      "sold": 4,
+      "sold": 10,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -20145,7 +20145,7 @@
       },
       "reserved": 0,
       "capacity": 286,
-      "available": 282
+      "available": 276
     },
     {
       "id": "NOR20240691-2026-11-13T17:00:00-Kinosal",
@@ -20174,18 +20174,18 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93495/purchase?kanal=dxf",
       "eventId": "93495",
       "promoterId": "202",
-      "sold": 19,
+      "sold": 26,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.3,
+          "value": 7.5,
           "id": "tt41475646",
           "url": "https://www.imdb.com/title/tt41475646/"
         }
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 91
+      "available": 84
     },
     {
       "id": "EDI20251703-2026-11-13T19:00:00-Kinosal",
@@ -20208,11 +20208,11 @@
       ],
       "director": "Even Hafnor",
       "premiere": "2026-11-13",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/38737a7ca32b8125125a68d3c6dcd30fa90624bd-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/36f2aeb3c5e2f75e430c2f28cb3bd64c5175221d-1080x1514.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93547/purchase?kanal=dxf",
       "eventId": "93547",
       "promoterId": "202",
-      "sold": 6,
+      "sold": 31,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -20222,8 +20222,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 104
+      "capacity": 108,
+      "available": 77
     },
     {
       "id": "EDI20260641-2026-11-13T21:20:00-Kinosal",
@@ -20254,18 +20254,18 @@
       "sold": 0,
       "eventStatus": "ok",
       "ratings": {
+        "imdb": {
+          "value": 6.3,
+          "id": "tt35866986",
+          "url": "https://www.imdb.com/title/tt35866986/"
+        },
         "letterboxd": {
-          "value": 3.17,
+          "value": 3.14,
           "url": "https://letterboxd.com/film/how-to-rob-a-bank-2026/"
         },
         "tomatoes": {
           "value": 42,
           "url": "https://www.rottentomatoes.com/m/how_to_rob_a_bank"
-        },
-        "imdb": {
-          "value": 6.9,
-          "id": "tt35866986",
-          "url": "https://www.imdb.com/title/tt35866986/"
         }
       },
       "reserved": 0,
@@ -20303,14 +20303,14 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.3,
+          "value": 7.5,
           "id": "tt41475646",
           "url": "https://www.imdb.com/title/tt41475646/"
         }
       },
       "reserved": 0,
-      "capacity": 104,
-      "available": 93
+      "capacity": 110,
+      "available": 99
     },
     {
       "id": "EDI20260973-2026-11-14T16:45:00-Kinosal",
@@ -20378,11 +20378,11 @@
       ],
       "director": "Even Hafnor",
       "premiere": "2026-11-13",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/38737a7ca32b8125125a68d3c6dcd30fa90624bd-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/36f2aeb3c5e2f75e430c2f28cb3bd64c5175221d-1080x1514.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93549/purchase?kanal=dxf",
       "eventId": "93549",
       "promoterId": "202",
-      "sold": 5,
+      "sold": 7,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -20393,7 +20393,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 105
+      "available": 103
     },
     {
       "id": "EDI20260641-2026-11-14T21:25:00-Kinosal",
@@ -20424,18 +20424,18 @@
       "sold": 0,
       "eventStatus": "ok",
       "ratings": {
+        "imdb": {
+          "value": 6.3,
+          "id": "tt35866986",
+          "url": "https://www.imdb.com/title/tt35866986/"
+        },
         "letterboxd": {
-          "value": 3.17,
+          "value": 3.14,
           "url": "https://letterboxd.com/film/how-to-rob-a-bank-2026/"
         },
         "tomatoes": {
           "value": 42,
           "url": "https://www.rottentomatoes.com/m/how_to_rob_a_bank"
-        },
-        "imdb": {
-          "value": 6.9,
-          "id": "tt35866986",
-          "url": "https://www.imdb.com/title/tt35866986/"
         }
       },
       "reserved": 0,
@@ -20469,18 +20469,18 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93555/purchase?kanal=dxf",
       "eventId": "93555",
       "promoterId": "202",
-      "sold": 9,
+      "sold": 16,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.3,
+          "value": 7.5,
           "id": "tt41475646",
           "url": "https://www.imdb.com/title/tt41475646/"
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 101
+      "capacity": 107,
+      "available": 91
     },
     {
       "id": "EDI20250084-2026-11-15T15:30:00-Storsal",
@@ -20587,11 +20587,11 @@
       ],
       "director": "Even Hafnor",
       "premiere": "2026-11-13",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/38737a7ca32b8125125a68d3c6dcd30fa90624bd-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/36f2aeb3c5e2f75e430c2f28cb3bd64c5175221d-1080x1514.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93554/purchase?kanal=dxf",
       "eventId": "93554",
       "promoterId": "202",
-      "sold": 5,
+      "sold": 7,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -20601,8 +20601,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 284,
-      "available": 279
+      "capacity": 246,
+      "available": 239
     },
     {
       "id": "EDI20251675-2026-11-15T19:30:00-Kinosal",
@@ -20630,9 +20630,14 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93556/purchase?kanal=dxf",
       "eventId": "93556",
       "promoterId": "202",
-      "sold": 3,
+      "sold": 5,
       "eventStatus": "ok",
       "ratings": {
+        "imdb": {
+          "value": 7.1,
+          "id": "tt38773219",
+          "url": "https://www.imdb.com/title/tt38773219/"
+        },
         "letterboxd": {
           "value": 3.22,
           "url": "https://letterboxd.com/film/ebenezer-2026/"
@@ -20640,16 +20645,11 @@
         "tomatoes": {
           "value": 38,
           "url": "https://www.rottentomatoes.com/m/ebenezer"
-        },
-        "imdb": {
-          "value": 6.9,
-          "id": "tt38773219",
-          "url": "https://www.imdb.com/title/tt38773219/"
         }
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 107
+      "available": 105
     },
     {
       "id": "EDI20260641-2026-11-15T20:15:00-Storsal",
@@ -20680,23 +20680,23 @@
       "sold": 0,
       "eventStatus": "ok",
       "ratings": {
+        "imdb": {
+          "value": 6.3,
+          "id": "tt35866986",
+          "url": "https://www.imdb.com/title/tt35866986/"
+        },
         "letterboxd": {
-          "value": 3.17,
+          "value": 3.14,
           "url": "https://letterboxd.com/film/how-to-rob-a-bank-2026/"
         },
         "tomatoes": {
           "value": 42,
           "url": "https://www.rottentomatoes.com/m/how_to_rob_a_bank"
-        },
-        "imdb": {
-          "value": 6.9,
-          "id": "tt35866986",
-          "url": "https://www.imdb.com/title/tt35866986/"
         }
       },
       "reserved": 0,
-      "capacity": 286,
-      "available": 286
+      "capacity": 246,
+      "available": 246
     },
     {
       "id": "EDI20251399-2026-11-17T13:00:00-Kinosal",
@@ -20722,7 +20722,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93253/purchase?kanal=dxf",
       "eventId": "93253",
       "promoterId": "202",
-      "sold": 88,
+      "sold": 90,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -20732,8 +20732,8 @@
         }
       },
       "reserved": 2,
-      "capacity": 110,
-      "available": 20
+      "capacity": 109,
+      "available": 17
     },
     {
       "id": "EDI20251399-2026-11-17T13:15:00-Storsal",
@@ -20759,7 +20759,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93687/purchase?kanal=dxf",
       "eventId": "93687",
       "promoterId": "202",
-      "sold": 5,
+      "sold": 12,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -20769,8 +20769,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 246,
-      "available": 241
+      "capacity": 244,
+      "available": 232
     },
     {
       "id": "NOR20240691-2026-11-17T17:00:00-Kinosal",
@@ -20803,7 +20803,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.3,
+          "value": 7.5,
           "id": "tt41475646",
           "url": "https://www.imdb.com/title/tt41475646/"
         }
@@ -20811,6 +20811,51 @@
       "reserved": 0,
       "capacity": 110,
       "available": 110
+    },
+    {
+      "id": "EDI20260973-2026-11-17T17:45:00-Storsal",
+      "title": "Charlie Harper",
+      "screen": "Storsal",
+      "start": "2026-11-17T17:45:00",
+      "end": "2026-11-17T19:37:00",
+      "dayKey": "2026-11-17",
+      "runningMinutes": 101,
+      "runningLabel": "1 t. 41 min.",
+      "age": "12 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Romance"
+      ],
+      "director": "Tom Dean",
+      "premiere": "2026-11-13",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/de52c99e5eb90a6bcef6cc32f925048845e6dd8d-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93435/purchase?kanal=dxf",
+      "eventId": "93435",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.8,
+          "id": "tt27739255",
+          "url": "https://www.imdb.com/title/tt27739255/"
+        },
+        "letterboxd": {
+          "value": 3.34,
+          "url": "https://letterboxd.com/film/charlie-harper/"
+        },
+        "tomatoes": {
+          "value": 80,
+          "url": "https://www.rottentomatoes.com/m/charlie_harper"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
     },
     {
       "id": "EDI20251399-2026-11-17T19:30:00-Kinosal",
@@ -20836,7 +20881,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93254/purchase?kanal=dxf",
       "eventId": "93254",
       "promoterId": "202",
-      "sold": 27,
+      "sold": 28,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -20847,7 +20892,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 83
+      "available": 82
     },
     {
       "id": "EDI20251675-2026-11-17T20:15:00-Storsal",
@@ -20878,6 +20923,11 @@
       "sold": 0,
       "eventStatus": "ok",
       "ratings": {
+        "imdb": {
+          "value": 7.1,
+          "id": "tt38773219",
+          "url": "https://www.imdb.com/title/tt38773219/"
+        },
         "letterboxd": {
           "value": 3.22,
           "url": "https://letterboxd.com/film/ebenezer-2026/"
@@ -20885,16 +20935,11 @@
         "tomatoes": {
           "value": 38,
           "url": "https://www.rottentomatoes.com/m/ebenezer"
-        },
-        "imdb": {
-          "value": 6.9,
-          "id": "tt38773219",
-          "url": "https://www.imdb.com/title/tt38773219/"
         }
       },
       "reserved": 0,
-      "capacity": 286,
-      "available": 286
+      "capacity": 246,
+      "available": 246
     },
     {
       "id": "NOR20240691-2026-11-18T17:00:00-Kinosal",
@@ -20927,7 +20972,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.3,
+          "value": 7.5,
           "id": "tt41475646",
           "url": "https://www.imdb.com/title/tt41475646/"
         }
@@ -20962,7 +21007,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93612/purchase?kanal=dxf",
       "eventId": "93612",
       "promoterId": "202",
-      "sold": 15,
+      "sold": 17,
       "eventStatus": "ok",
       "ratings": {
         "letterboxd": {
@@ -20972,7 +21017,171 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 95
+      "available": 93
+    },
+    {
+      "id": "NOR20240691-2026-11-19T17:00:00-Kinosal",
+      "title": "Julenissens verksted",
+      "screen": "Kinosal",
+      "start": "2026-11-19T17:00:00",
+      "end": "2026-11-19T18:23:00",
+      "dayKey": "2026-11-19",
+      "runningMinutes": 73,
+      "runningLabel": "1 t. 13 min.",
+      "age": "Tillatt for alle",
+      "tags": [
+        "Norsk tale",
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Animation",
+        "Comedy",
+        "Family"
+      ],
+      "director": "Rasmus A. Sivertsen, Mette Tange",
+      "premiere": "2026-11-06",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/6709e48a4ac96bb7821de663e44feff52c689458-1190x1684.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93620/purchase?kanal=dxf",
+      "eventId": "93620",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.5,
+          "id": "tt41475646",
+          "url": "https://www.imdb.com/title/tt41475646/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20251703-2026-11-19T18:00:00-Storsal",
+      "title": "Velkommen til familien",
+      "screen": "Storsal",
+      "start": "2026-11-19T18:00:00",
+      "end": "2026-11-19T19:45:00",
+      "dayKey": "2026-11-19",
+      "runningMinutes": 97,
+      "runningLabel": "1 t. 37 min.",
+      "age": "9 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Documentary",
+        "Family"
+      ],
+      "director": "Even Hafnor",
+      "premiere": "2026-11-13",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/36f2aeb3c5e2f75e430c2f28cb3bd64c5175221d-1080x1514.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93619/purchase?kanal=dxf",
+      "eventId": "93619",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.6,
+          "id": "tt6041174",
+          "url": "https://www.imdb.com/title/tt6041174/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
+    },
+    {
+      "id": "EDI20251030-2026-11-19T19:30:00-Kinosal",
+      "title": "The Hunger Games: Sunrise on the Reaping",
+      "screen": "Kinosal",
+      "start": "2026-11-19T19:30:00",
+      "end": "2026-11-19T22:18:00",
+      "dayKey": "2026-11-19",
+      "runningMinutes": 158,
+      "runningLabel": "2 t. 38 min.",
+      "age": "12 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Fantasy"
+      ],
+      "director": "Francis Lawrence",
+      "premiere": "2026-11-18",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/a77228cd6145b069bbe22cff595a7a15ce9db0fc-1500x2222.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93617/purchase?kanal=dxf",
+      "eventId": "93617",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "letterboxd": {
+          "value": 3.9,
+          "url": "https://letterboxd.com/film/the-hunger-games-sunrise-on-the-reaping/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20260846-2026-11-20T17:30:00-Kinosal",
+      "title": "Wildwood",
+      "screen": "Kinosal",
+      "start": "2026-11-20T17:30:00",
+      "end": "2026-11-20T19:50:00",
+      "dayKey": "2026-11-20",
+      "runningMinutes": 130,
+      "runningLabel": "2 t. 10 min.",
+      "age": "12 år",
+      "tags": [
+        "Norsk tekst",
+        "Original tale"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Fantasy"
+      ],
+      "director": "Travis Knight",
+      "premiere": "2026-10-30",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/87e8cca69961cc03bd033d51dcf4e73da65744c2-1500x2104.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93729/purchase?kanal=dxf",
+      "eventId": "93729",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 8.7,
+          "id": "tt2056785",
+          "url": "https://www.imdb.com/title/tt2056785/"
+        },
+        "letterboxd": {
+          "value": 4.39,
+          "url": "https://letterboxd.com/film/wildwood-2026/"
+        },
+        "tomatoes": {
+          "value": 97,
+          "url": "https://www.rottentomatoes.com/m/wildwood"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
     },
     {
       "id": "EDI20251787-2026-12-01T13:00:00-Kinosal",
@@ -21041,11 +21250,11 @@
       ],
       "director": "Even Hafnor",
       "premiere": "2026-11-13",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/38737a7ca32b8125125a68d3c6dcd30fa90624bd-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/36f2aeb3c5e2f75e430c2f28cb3bd64c5175221d-1080x1514.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93641/purchase?kanal=dxf",
       "eventId": "93641",
       "promoterId": "202",
-      "sold": 10,
+      "sold": 19,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -21055,8 +21264,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 100
+      "capacity": 109,
+      "available": 90
     },
     {
       "id": "EDI20251703-2026-12-15T19:30:00-Kinosal",
@@ -21079,7 +21288,7 @@
       ],
       "director": "Even Hafnor",
       "premiere": "2026-11-13",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/38737a7ca32b8125125a68d3c6dcd30fa90624bd-1500x2143.webp?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/36f2aeb3c5e2f75e430c2f28cb3bd64c5175221d-1080x1514.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93642/purchase?kanal=dxf",
       "eventId": "93642",
       "promoterId": "202",
@@ -21153,12 +21362,12 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93227/purchase?kanal=dxf",
       "eventId": "93227",
       "promoterId": "202",
-      "sold": 28,
+      "sold": 37,
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
-      "capacity": 110,
-      "available": 82
+      "capacity": 108,
+      "available": 71
     },
     {
       "id": "BVI20200545-2026-12-17T19:15:00-Kinosal",
@@ -21221,8 +21430,8 @@
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
-      "capacity": 286,
-      "available": 286
+      "capacity": 246,
+      "available": 246
     },
     {
       "id": "BVI20200545-2026-12-18T17:00:00-Kinosal",
