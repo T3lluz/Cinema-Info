@@ -6,7 +6,7 @@ Mobile-friendly schedule for **Buen kino** — same info as the KinoProgram Chro
 - Upcoming movies: the next three coming titles (Buen premieres first, then well-known films); Show more pages three at a time, Close snaps back to three
 - Search the Buen program (titles and times) plus more films — results stay visible; tap a film for poster, plot, and cast, or a time to jump there
 - Real start / end times (from eBillett)
-- Live sold / capacity / occupancy per show, with sold-out and few-left flags
+- Live sold counts per show, with sold-out and few-left flags
 - Progress bar + minutes left for shows playing right now
 - Ads: DX books each showing as runtime + 10 min, so the film starts ten
   minutes after the listed time. The app shows that block, plus the ten
@@ -182,11 +182,31 @@ instead of live DX data, open the site with `?previewScanned=1`.
 
 ## Live site
 
-- https://t3lluz.com/CinemaInfo/ (served from t3lluserver)
-- https://t3lluz.github.io/Cinema-Info/ (GitHub Pages)
+https://t3lluz.com/CinemaInfo/, served from t3lluserver. It publishes
+`main` on its own within a minute of a merge.
 
-Both are the same build of `main` and talk to the same server, and both
-publish on their own within a minute of a merge.
+The old GitHub Pages address (t3lluz.github.io/Cinema-Info) only
+forwards there now. It serves `deploy/pages-redirect/`, whose service
+worker also clears the old install off phones that still have it.
+Opened from the old home-screen icon, that page does not forward: it
+says the app has moved and links to the new address, so people add it
+again from there.
+
+## Updates
+
+Nobody is asked to update. Opening the app already runs the newest
+build. A screen left open while a new build lands reloads itself the
+moment it goes to the background, or after 45 seconds without a touch
+(coming back to the app counts as one, so a phone is not reloaded the
+moment it is unlocked), and comes back on the same tab,
+day, scroll position, seat charts and search. It waits while a film
+sheet or the feedback form is open, and while the phone is offline.
+Settings → *Se etter oppdatering* takes one straight away, or says it
+is still downloading and will apply by itself.
+
+The build is the last commit that changed the app, not the snapshot, so
+the twice-daily programme refresh never reloads anyone; the app re-reads
+the programme by itself every couple of minutes.
 
 ## Feedback
 
@@ -197,23 +217,6 @@ along, so a bug report can be placed. Notes land in a hub on the server
 (`server/hub.html`, at feedback.t3lluz.com) that only answers on the
 maintainer's tailnet. The form lives in its own dialog, so the five-second
 beat never wipes what someone is halfway through typing.
-
-## The note at the top
-
-A GitHub-style note (blue rule, info icon, *NYTT: Helt nytt utseende*)
-sits right under the header on every tab and scrolls away with the page. It tells staff about the new address and
-counts down, a second at a time, to 1 November, when the old GitHub
-Pages address stops working:
-
-- on the old address it links to https://t3lluz.com/CinemaInfo/ and
-  asks people to re-add the app to their home screen from there
-- on t3lluz.com it says this is the new address
-
-Tapping its title folds it down to that one line, with a short
-countdown (*29d 10t*) beside it; each device remembers which way it was
-left. The words live in `public/js/i18n.js` (`notice*`), the deadline in
-`OLD_URL_ENDS` and the new address in `NEW_APP_URL` (`public/js/core.js`),
-and `NOTICE_ON` takes it down.
 
 ## Layout
 
@@ -261,7 +264,7 @@ ripple is the only sign it ran. Settings → Bevegelse turns it off, and
 it never plays with reduced motion.
 
 Buen’s poster CDN refuses cross-origin reads, so the photograph takes
-posters from same-origin copies the Pages deploy makes
+posters from same-origin copies the deploy makes
 (`scripts/mirror-posters.mjs`, nothing committed). To see posters in the
 ripple on the dev server, run `node scripts/mirror-posters.mjs public`
 once (it fills the git-ignored `public/posters/`).
@@ -350,7 +353,7 @@ need a static copy.
 The repo root is tooling and docs. The site itself lives in `public/`:
 
 ```
-public/                 # what you serve / what Pages publishes
+public/                 # what you serve / what the server publishes
   index.html
   sw.js
   manifest.webmanifest
@@ -362,21 +365,14 @@ scripts/                # fetch snapshot, DX debug, regenerate icons
 supabase/               # the DX bridge and film lookups (Deno handlers)
 server/                 # the t3lluz.com server: app, prefetch, feedback hub
 deploy/server/          # its compose file, deploy poller, public tunnel
+deploy/pages-redirect/  # what the old GitHub Pages address serves now
 ```
 
 t3lluz.com publishes itself: a timer on the server polls `main` every
-minute and builds the same way (`deploy/server/update.sh`).
-
-GitHub Pages is published with the **Deploy GitHub Pages** workflow
-(`.github/workflows/deploy-pages.yml`). Each deploy stamps the commit
-SHA into the stylesheet / script URLs and the service-worker cache name,
-so a push always lands as a fresh PWA instead of a cached copy.
-**Required once:** in
-[Settings → Pages](https://github.com/T3lluz/Cinema-Info/settings/pages),
-set Source to **GitHub Actions**. Until that switch is made, pushes
-still trigger the legacy “Deploy from a branch” job (which has been
-stuck in `deployment_queued` / failing while Actions + Pages are
-degraded) and the Actions deploy cannot publish.
+minute and builds it (`deploy/server/update.sh`). Each build stamps the
+last commit that changed the app into the stylesheet and script URLs
+and the service-worker cache name, so a new version always lands fresh
+instead of from a cached copy.
 
 To read DX by hand while debugging — purchase lists, seat statuses, who
 is signed in — `scripts/dx-session.mjs` walks the same login the Edge

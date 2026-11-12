@@ -6,7 +6,7 @@
 /**
  * Movie lookup for Cinema Info.
  *
- * The PWA is static on GitHub Pages, so keys and upstream calls stay
+ * The PWA is a static site, so keys and upstream calls stay
  * here. OMDb covers search + plot/ratings; IMDb's public GraphQL fills
  * in cast headshots and the coming-soon feed. Same CORS / anon-key
  * pattern as `dx-web-login`.

@@ -10,6 +10,8 @@ import {
   S,
   els,
   hooks,
+  seatState,
+  APP_VERSION,
   TAB_ORDER,
   DARK_MQ,
   SEATS_OPEN_MQ,
@@ -36,6 +38,7 @@ import {
   refreshForTab,
   programDays,
   setStatus,
+  isDone,
 } from "./data.js?v=dev";
 import {
   patchList,
@@ -44,8 +47,6 @@ import {
   setupMotion,
   setupHScroll,
   syncHScroll,
-  setupNotice,
-  refreshNotice,
   slideTo,
   toast,
   hapticTick,
@@ -75,10 +76,50 @@ import { openMovie, setupSheet, isSheetOpen, refreshSheet } from "./sheet.js?v=d
 /** A selection left longer ago than this is not restored: open on today. */
 const RESUME_MS = 30 * 60 * 1000;
 
+/** What the page looked like just before it reloaded itself for an update. */
+const RESUME_KEY = "cinemaInfoResume";
+const resume = takeResume();
+
+function takeResume() {
+  try {
+    const saved = JSON.parse(sessionStorage.getItem(RESUME_KEY) || "null");
+    sessionStorage.removeItem(RESUME_KEY);
+    // Generous: iOS can hold a reload started in the background until the
+    // app is opened again. Read once, so an old one is never reused.
+    return saved && Date.now() - saved.at < RESUME_MS ? saved : null;
+  } catch {
+    return null;
+  }
+}
+
+/** The scroll position and search an update's reload left behind. */
+function restoreView() {
+  if (resume.q && els.searchInput) {
+    els.searchInput.value = resume.q;
+    els.searchInput.dispatchEvent(new Event("input"));
+  }
+  if (!(resume.y > 0)) return;
+  // Seat charts and live captions fill in after the first paint and push
+  // the page down. Follow them back to the spot for a few seconds, until
+  // someone touches the page.
+  const since = Date.now();
+  const place = () => {
+    if (lastInput > since) return ro?.disconnect();
+    window.scrollTo(0, resume.y);
+  };
+  const ro = "ResizeObserver" in window ? new ResizeObserver(place) : null;
+  ro?.observe(document.body);
+  setTimeout(() => ro?.disconnect(), 5000);
+  place();
+}
+
 function boot() {
   collectElements();
   const prefs = loadPrefs();
   const fresh = Date.now() - (Number(prefs.selectedDayAt) || 0) < RESUME_MS;
+  // Carried over a reload or a relaunch just after midnight, so a screen
+  // that was on the old day still rolls to the new one.
+  S.sessionDay = resume?.today || (fresh && prefs.sessionDay) || todayKey();
   const wanted = new URLSearchParams(location.search).get("tab");
   S.selectedDay = fresh ? prefs.selectedDay || "" : "";
   S.activeTab = TAB_ORDER.includes(wanted) ? wanted : fresh && TAB_ORDER.includes(prefs.activeTab) ? prefs.activeTab : "day";
@@ -89,7 +130,12 @@ function boot() {
   S.keepAwake = prefs.keepAwake === true;
   S.statsPeriod = prefs.statsPeriod === "month" ? "month" : "week";
   S.rippleOn = prefs.ripple !== false;
-  S.noticeOpen = prefs.noticeOpen !== false;
+  if (resume) {
+    // Reloaded for an update: back exactly where it was.
+    if (TAB_ORDER.includes(resume.tab)) S.activeTab = resume.tab;
+    if (resume.day) S.selectedDay = resume.day;
+    for (const id of resume.seats || []) seatState.open.add(id);
+  }
   if (wanted) {
     // A home-screen shortcut opened us; don't keep the tab in the URL.
     const url = new URL(location.href);
@@ -108,7 +154,6 @@ function boot() {
   setupTapRescue();
   setupMotion();
   setupHScroll();
-  setupNotice();
   setupSeatCharts();
   setupDayInteractions();
   setupDaySwipe();
@@ -130,8 +175,8 @@ function boot() {
   setInterval(liveBeat, BEAT_MS);
   document.addEventListener("visibilitychange", () => {
     if (document.visibilityState !== "visible") return;
-    // A phone in a pocket runs no beats; pick straight up again.
-    rollToTodayIfStale();
+    // A phone in a pocket runs no beats; pick straight up again. The beat
+    // also rolls the day over, once the old day's last film has ended.
     liveBeat();
     applyWakeLock();
     maybeCheckUpdate();
@@ -148,8 +193,10 @@ let firstPaint = null;
 const firstPainted = new Promise((resolve) => (firstPaint = resolve));
 
 async function start() {
-  // The opening ripple, once the first real page is on screen.
-  armRipple(firstPainted);
+  // The opening ripple, once the first real page is on screen. Not after
+  // an update's reload: that one should not be noticed at all.
+  armRipple(firstPainted, { intro: !resume });
+  if (resume) firstPainted.then(() => requestAnimationFrame(restoreView));
   // The Movies tab, built ahead while the app is idle, posters and all.
   firstPainted.then(() => {
     const idle = window.requestIdleCallback || ((fn) => setTimeout(fn, 1500));
@@ -214,13 +261,12 @@ function wireHooks() {
     applyLanguage();
     renderDayStrip();
     refreshSearchLanguage();
-    refreshNotice();
     renderActive();
   };
   hooks.applyWakeLock = applyWakeLock;
   hooks.installState = installState;
   hooks.install = promptInstall;
-  hooks.checkUpdate = checkUpdate;
+  hooks.checkUpdate = () => checkUpdate({ apply: true });
   hooks.pullLive = pullServerLive;
 }
 
@@ -269,7 +315,13 @@ function beatJob(name, run) {
 }
 
 function liveBeat() {
-  if (document.visibilityState !== "visible" || !S.state?.shows) return;
+  if (document.visibilityState !== "visible") return;
+  // A screen left on at the box office is never hidden, so it looks for
+  // a new build from here as well, and takes it once nobody is using it.
+  maybeCheckUpdate();
+  if (applyUpdateIfQuiet()) return;
+  if (!S.state?.shows) return;
+  rollToTodayIfStale();
   renderActive();
   markDoneDays();
   renderStatus();
@@ -285,14 +337,23 @@ function liveBeat() {
   beatJob("seats", () => pulled.then(() => refreshOpenSeatCharts({ quiet: true })));
 }
 
-let sessionDay = todayKey();
-
-/** If the device slept past midnight, move the selection to the new today. */
+/**
+ * Once the date has changed, move a screen that was on today to the new
+ * today: a phone that slept past midnight, or one kept on all night. It
+ * waits for the old day's last showing to end, so a film running past
+ * midnight stays on screen. Runs on the beat, which also runs on unlock.
+ */
 function rollToTodayIfStale() {
   const today = todayKey();
-  if (today === sessionDay || !S.state?.shows) return;
-  sessionDay = today;
-  if (programDays().includes(today)) S.selectedDay = today;
+  if (today === S.sessionDay || !S.state?.shows) return;
+  const now = new Date();
+  if (S.state.shows.some((s) => s.dayKey === S.sessionDay && !isDone(s, now))) return;
+  // Only a screen that was showing today follows it; a day picked on
+  // purpose stays picked.
+  const followed = S.selectedDay === S.sessionDay;
+  S.sessionDay = today;
+  if (followed && programDays().includes(today)) S.selectedDay = today;
+  savePrefs();
   renderDayStrip();
   renderActive();
 }
@@ -716,59 +777,171 @@ async function applyWakeLock() {
 
 /* —— Service worker & updates —————————————————————————————————————————
  * The worker serves the app offline. A deploy installs a new worker in
- * the background; when it takes over, a hidden app reloads itself and a
- * visible one offers the update instead of yanking the page.
+ * the background and it takes over at once. Nobody is asked to update:
+ *
+ * - Opening the app already runs the new build, since the worker fetches
+ *   the page network first. When the worker that takes over reports the
+ *   build this page runs, there is nothing to do.
+ * - A page left open across a deploy reloads itself quietly: as soon as
+ *   it goes to the background, or once nobody has touched it for
+ *   IDLE_RELOAD_MS. Never with a film sheet or the feedback form open,
+ *   and never offline. It comes back on the same tab, day, scroll
+ *   position, unfolded seat charts and search, without the opening ripple.
+ * - Settings → Check for updates applies one straight away.
+ *
+ * A snapshot refresh is not a new build (deploy/server/update.sh stamps
+ * the last commit that changed the app), so the programme reaches an
+ * open app through its own two-minute re-read, not through a reload.
  */
+const IDLE_RELOAD_MS = 45_000;
+const UPDATE_CHECK_MS = 10 * 60_000;
 let swReg = null;
 let lastUpdateCheck = 0;
+let lastInput = Date.now();
+/** A newer build has taken this page over; reload at the next quiet moment. */
+let outdated = false;
+/** Settings, waiting to hear whether the worker it found makes this page outdated. */
+let checkWaiter = null;
+let reloading = false;
 
 function setupServiceWorker() {
+  const touched = () => (lastInput = Date.now());
+  for (const type of ["pointerdown", "keydown", "wheel", "touchstart"]) {
+    addEventListener(type, touched, { passive: true, capture: true });
+  }
+  // Coming back to the app (unlocking, switching to it, or the browser
+  // restoring it from its back/forward cache) counts as a touch: someone
+  // is about to read it. A phone unlocked after a deploy finds the new
+  // worker only now, and must not reload under them a few seconds later
+  // because the last real touch was before it went in a pocket.
+  // (Registered before boot's own visibility handler, which runs a beat
+  // straight away.)
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "visible") touched();
+  });
+  addEventListener("pageshow", (e) => e.persisted && touched());
   if (!("serviceWorker" in navigator)) return;
   const local = ["localhost", "127.0.0.1", "[::1]"].includes(location.hostname);
   if (local) {
     navigator.serviceWorker.getRegistrations().then((regs) => regs.forEach((r) => r.unregister()));
     return;
   }
-  const hadController = Boolean(navigator.serviceWorker.controller);
   navigator.serviceWorker
     .register("./sw.js")
     .then((reg) => {
       swReg = reg;
     })
     .catch(() => {});
-  let reloading = false;
-  navigator.serviceWorker.addEventListener("controllerchange", () => {
-    if (!hadController || reloading) return;
-    if (document.visibilityState === "hidden") {
-      reloading = true;
-      location.reload();
-      return;
-    }
-    toast(t("updateReady"), {
-      id: "update",
-      action: t("updateNow"),
-      sticky: true,
-      onAction: () => {
-        reloading = true;
-        location.reload();
-      },
-    });
+  navigator.serviceWorker.addEventListener("controllerchange", async () => {
+    const build = await workerBuild(navigator.serviceWorker.controller);
+    // The first install, or a deploy this page already loaded, changes
+    // nothing. Anything else means this page runs an older build.
+    if (build !== APP_VERSION) outdated = true;
+    checkWaiter?.(outdated);
+    if (document.visibilityState === "hidden") applyUpdateIfQuiet({ hidden: true });
+  });
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "hidden") applyUpdateIfQuiet({ hidden: true });
   });
 }
 
-async function checkUpdate() {
+/** Which build a worker serves. "" when it does not say (one from before it could). */
+function workerBuild(worker) {
+  return new Promise((resolve) => {
+    if (!worker) return resolve("");
+    const channel = new MessageChannel();
+    const timer = setTimeout(() => resolve(""), 3000);
+    channel.port1.onmessage = (e) => {
+      clearTimeout(timer);
+      resolve(String(e.data || ""));
+    };
+    worker.postMessage({ type: "build" }, [channel.port2]);
+  });
+}
+
+/** Reload for the new build, keeping what is on screen for the next page. */
+function reloadQuietly() {
+  if (reloading) return;
+  reloading = true;
+  try {
+    sessionStorage.setItem(
+      RESUME_KEY,
+      JSON.stringify({
+        at: Date.now(),
+        tab: S.activeTab,
+        day: S.selectedDay,
+        today: S.sessionDay,
+        y: Math.round(window.scrollY),
+        seats: [...seatState.open],
+        q: els.searchInput?.value || "",
+      })
+    );
+  } catch {
+    /* private mode: it reloads onto today instead */
+  }
+  location.reload();
+}
+
+/**
+ * Reload for an update if nothing would be lost: no film sheet or
+ * feedback form open, a connection to fetch the live figures again, and,
+ * while the page is on screen, nobody touching it for IDLE_RELOAD_MS,
+ * typing, or pulling. Going to the background needs only the first two.
+ */
+function applyUpdateIfQuiet({ hidden = false } = {}) {
+  if (!outdated || reloading) return false;
+  if (navigator.onLine === false) return false;
+  if (isSheetOpen() || document.querySelector("dialog[open]")) return false;
+  if (!hidden) {
+    if (Date.now() - lastInput < IDLE_RELOAD_MS) return false;
+    if (document.activeElement?.matches?.("input, textarea, select")) return false;
+    if (document.documentElement.classList.contains("is-pulling")) return false;
+  }
+  reloadQuietly();
+  return true;
+}
+
+/**
+ * Look for a new build. From Settings (`apply`) it waits to see what the
+ * check found and says so: "updating" (the page reloads now), "current",
+ * "pending" (still downloading after 20 s) or "unavailable" (offline, or
+ * nothing to ask).
+ */
+async function checkUpdate({ apply = false } = {}) {
   lastUpdateCheck = Date.now();
-  if (!swReg) return false;
+  if (apply && outdated) {
+    reloadQuietly();
+    return "updating";
+  }
+  if (!swReg || navigator.onLine === false) return "unavailable";
   try {
     await swReg.update();
   } catch {
-    return false;
+    return "unavailable";
   }
-  return Boolean(swReg.installing || swReg.waiting);
+  if (!apply) return "";
+  if (!swReg.installing && !swReg.waiting) return "current";
+  // A new worker is on its way: give it 20 s to take over and say whether
+  // it serves anything newer than this page. One still downloading after
+  // that applies the quiet way, by itself.
+  const worker = swReg.installing || swReg.waiting;
+  const behind = await new Promise((resolve) => {
+    checkWaiter = resolve;
+    setTimeout(() => resolve("slow"), 20_000);
+    // An install that dies (a precache fetch failing on a weak signal)
+    // leaves nothing on its way; say so rather than "downloading".
+    worker?.addEventListener("statechange", () => worker.state === "redundant" && resolve("failed"));
+  });
+  checkWaiter = null;
+  if (behind === "failed") return "unavailable";
+  if (behind === "slow") return "pending";
+  if (!behind) return "current";
+  reloadQuietly();
+  return "updating";
 }
 
 function maybeCheckUpdate() {
-  if (Date.now() - lastUpdateCheck > 10 * 60_000) checkUpdate();
+  if (Date.now() - lastUpdateCheck > UPDATE_CHECK_MS) checkUpdate();
 }
 
 /* —— Install ————————————————————————————————————————————————————————— */

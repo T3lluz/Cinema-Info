@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
-# Publish origin/main to t3lluz.com/CinemaInfo, the way the Pages workflow
-# publishes it to GitHub Pages: stage public/, stamp the build token,
-# mirror the posters, and swap the new build in at once.
+# Publish origin/main to t3lluz.com/CinemaInfo: stage public/, stamp the
+# build token, mirror the posters, and swap the new build in at once.
 #
 # cinema-info-deploy.timer runs this every minute; it does nothing unless
 # main has moved. Run it by hand any time; --force rebuilds regardless.
@@ -43,12 +42,18 @@ main() {
   rm -rf "$stage"
   mkdir -p "$stage"
   cp -a "$repo/public/." "$stage/"
-  node "$repo/scripts/stamp-version.mjs" "$stage" "$sha"
+  # The token phones see is the last commit that changed what they run,
+  # not $sha: a snapshot refresh only touches public/data, which an open
+  # app re-reads by itself, so it must not send every phone a new worker.
+  # (Not "build": that name is the build directory above.)
+  local token
+  token=$(git -C "$repo" log -1 --format=%H "$new" -- public scripts/stamp-version.mjs deploy/server/update.sh ':(exclude)public/data')
+  token=${token:-$new}
+  node "$repo/scripts/stamp-version.mjs" "$stage" "${token:0:7}"
   # Its own app identity on t3lluz.com. A manifest id resolves against the
   # origin, not the path, so the shared "./" would become
   # https://t3lluz.com/, which is the dashboard's id too, and a phone with
   # the dashboard installed takes Cinema Info for it and offers no install.
-  # Pages keeps "./", so installs from the old address are left alone.
   node -e '
     const fs = require("node:fs");
     const file = process.argv[1];

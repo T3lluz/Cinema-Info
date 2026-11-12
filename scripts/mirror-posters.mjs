@@ -12,7 +12,8 @@
  * can display those posters but never read them. Fetched here, without an
  * Origin, they come back fine.
  *
- * Run by the Pages deploy on the staged copy, so nothing lands in the repo.
+ * Run by deploy/server/update.sh on the staged copy, so nothing lands in
+ * the repo.
  * Locally, `node scripts/mirror-posters.mjs public` fills the git-ignored
  * public/posters/ for testing the ripple on the dev server. A poster that
  * fails to download is skipped; the ripple then leaves that one out.

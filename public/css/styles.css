@@ -57,11 +57,6 @@
   --hold-soft: rgba(37, 99, 235, 0.11);
   --gap-ink: #7c3aed;
   --gap-soft: rgba(124, 58, 237, 0.12);
-  /* GitHub's "note" colours, for the note above every tab. */
-  --note-fg: #0969da;
-  --note-line: #0969da;
-  --note-border: rgba(9, 105, 218, 0.26);
-  --note-bg: rgba(9, 105, 218, 0.06);
   --chart: #4b453f;
   --chart-soft: #cdc7c0;
   --seat-free: rgba(30, 24, 18, 0.32);
@@ -105,10 +100,6 @@
   --hold-soft: rgba(106, 165, 255, 0.15);
   --gap-ink: #b69cff;
   --gap-soft: rgba(182, 156, 255, 0.16);
-  --note-fg: #4493f8;
-  --note-line: #1f6feb;
-  --note-border: rgba(31, 111, 235, 0.4);
-  --note-bg: rgba(31, 111, 235, 0.1);
   --chart: #d9d4ce;
   --chart-soft: #4f4a45;
   --seat-free: rgba(255, 255, 255, 0.3);
@@ -722,158 +713,6 @@ p {
     --hs-y: 36px;
     --hs-inset: -4px;
   }
-}
-
-/* —— Warning ————————————————————————————————————————————————————————
- * Styled after GitHub's [!WARNING] alert: an amber rule down the left,
- * the alert triangle and title in amber, the message in body text —
- * here inside a box so it reads as one block on the page. Always shown.
- */
-.notice {
-  max-width: calc(var(--page-max) + var(--safe-left) + var(--safe-right));
-  margin: 0 auto;
-  padding: 4px calc(var(--pad) + var(--safe-right)) 8px calc(var(--pad) + var(--safe-left));
-}
-.notice-box {
-  position: relative;
-  padding: 10px 14px 11px 18px;
-  overflow: hidden;
-  border: 1px solid var(--note-border);
-  border-radius: var(--r-md);
-  background: var(--note-bg);
-  animation: rise 0.5s var(--ease) 0.1s both;
-}
-.notice-box::before {
-  content: "";
-  position: absolute;
-  top: 8px;
-  bottom: 8px;
-  left: 7px;
-  width: 4px;
-  border-radius: 2px;
-  background: var(--note-line);
-}
-.notice-title {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  background: none;
-  font-size: 14px;
-  font-weight: 650;
-  line-height: 1;
-  text-align: left;
-  color: var(--note-fg);
-}
-/* The whole title line is the fold button: a bigger target than the
- * chevron, and the box's padding grows it to a full finger's height. */
-.notice-title::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-}
-.notice-title-text {
-  flex: 1;
-  min-width: 0;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  line-height: 1.25;
-}
-.notice-short {
-  font-size: 12.5px;
-  font-weight: 650;
-  color: var(--ink-2);
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
-  opacity: 0;
-  transition: opacity 0.2s;
-}
-.notice-chev {
-  flex: none;
-  width: 17px;
-  height: 17px;
-  transition: transform 0.3s var(--ease);
-}
-.is-folded .notice-short {
-  opacity: 1;
-}
-.is-folded .notice-chev {
-  transform: rotate(-90deg);
-}
-/* Folding animates the rows of a one-cell grid from 1fr to 0fr, which
- * follows the content's real height without measuring it. */
-.notice-more {
-  display: grid;
-  grid-template-rows: 1fr;
-  transition: grid-template-rows 0.32s var(--ease);
-}
-.is-folded .notice-more {
-  grid-template-rows: 0fr;
-}
-.notice-inner {
-  min-height: 0;
-  overflow: hidden;
-  /* The link and the countdown stay above the title's tap layer. */
-  position: relative;
-  z-index: 1;
-}
-.notice-icon {
-  flex: none;
-  width: 16px;
-  height: 16px;
-}
-.notice-body {
-  margin-top: 7px;
-  font-size: 13.5px;
-  line-height: 1.45;
-  color: var(--ink);
-}
-.notice-body + .notice-body {
-  margin-top: 4px;
-}
-.notice-link {
-  font-weight: 650;
-  color: var(--note-fg);
-  text-decoration: underline;
-  text-underline-offset: 2px;
-  overflow-wrap: anywhere;
-}
-.notice-count {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 6px 10px;
-  margin-top: 9px;
-  font-size: 12.5px;
-  font-weight: 600;
-  color: var(--ink-2);
-}
-.cd {
-  display: inline-flex;
-  gap: 5px;
-}
-.cd-cell {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 3px;
-  padding: 3px 7px;
-  border-radius: 7px;
-  background: var(--note-border);
-  color: var(--ink);
-  font-variant-numeric: tabular-nums;
-}
-.cd-cell b {
-  font-size: 14px;
-  font-weight: 750;
-}
-.cd-cell small {
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--ink-2);
 }
 
 /* —— App bar ———————————————————————————————————————————————————————— */
@@ -1698,16 +1537,30 @@ html.sheet-open .edge-blur {
   line-height: 18px;
   text-transform: uppercase;
 }
+/* On a phone the caption rarely fits. The title gives way first, down to
+ * a few letters, so the countdown and the film start stay readable; only
+ * then does that part shorten too. */
 .tl-cap-state {
+  display: flex;
+  min-width: 0;
+  overflow: hidden;
+  font-variant-numeric: tabular-nums;
+}
+.tl-cap-state strong,
+.tl-cap-when {
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-variant-numeric: tabular-nums;
 }
 .tl-cap-state strong {
+  flex: 0 1 auto;
+  min-width: min(6.5em, 45%);
   font-size: 13.5px;
   font-weight: 720;
   color: var(--ink);
+}
+.tl-cap-when {
+  flex: 0 0.001 auto;
 }
 .tl-cap > .pulse {
   margin: 0 -2px 0 2px;
@@ -4412,7 +4265,7 @@ button.col:disabled {
   :root {
     --page-max: 1840px;
     --pad: 32px;
-    --rail-w: 84px;
+    --rail-w: 92px;
     --rail-space: calc(var(--rail-w) + 22px);
   }
   body {

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Builds public/data/program.json for the GitHub Pages site.
+ * Builds public/data/program.json, the snapshot the app reads at startup.
  * Buen kino API is not CORS-friendly in browsers, so we snapshot it here.
  * Sold counts + real end times come from DX/eBillett.
  */

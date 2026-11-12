@@ -13,15 +13,6 @@ export const PREFS_KEY = "cinemaInfoPrefs";
 export const HISTORY_KEY = "cinemaInfoHistory";
 export const DX_AUTH_KEY = "cinemaInfoDxAuth";
 export const SEAT_MAP_KEY = "cinemaInfoSeatMaps";
-/**
- * The note at the top of every tab (words in i18n.js, `notice*`). It
- * cannot be dismissed; false takes it down.
- */
-export const NOTICE_ON = true;
-/** The app's home from now on. */
-export const NEW_APP_URL = "https://t3lluz.com/CinemaInfo/";
-/** When the old GitHub Pages address stops working: 1 November, Oslo midnight. */
-export const OLD_URL_ENDS = new Date("2026-11-01T00:00:00+01:00");
 export const HISTORY_KEEP_DAYS = 120;
 export const DX_PARTNER_ID = "202";
 export const DX_API = "https://api.dx.no/v3";
@@ -53,7 +44,7 @@ export const DX_LOGIN_ANON_KEY =
  * The release, as people read it: bump it with every change that ships
  * (major.minor.patch — a fix is a patch, a new feature a minor).
  */
-export const APP_RELEASE = "2.7.2";
+export const APP_RELEASE = "2.8.0";
 
 /** The build this page runs (the commit), stamped into the script URL on deploy. */
 export const APP_VERSION =
@@ -87,6 +78,9 @@ export const S = {
   /** @type {{ shows: any[], updatedAt?: string } | null} */
   state: null,
   selectedDay: "",
+  /** The day this session counts as today: it lags the calendar until
+   * the old day's last film is over (rollToTodayIfStale in app.js). */
+  sessionDay: "",
   activeTab: "day",
   lang: "nb",
   /** "light" | "dark" | "system" */
@@ -96,8 +90,6 @@ export const S = {
   keepAwake: false,
   /** The liquid ripple on opening and refreshing. */
   rippleOn: true,
-  /** The note at the top: open, or folded down to its title line. */
-  noticeOpen: true,
   /** Stats tab: "week" or "month", and which one (null = current). */
   statsPeriod: "week",
   statsAnchor: null,
@@ -178,6 +170,7 @@ export function savePrefs() {
       JSON.stringify({
         selectedDay: S.selectedDay,
         selectedDayAt: Date.now(),
+        sessionDay: S.sessionDay,
         activeTab: S.activeTab,
         lang: S.lang,
         theme: S.theme,
@@ -186,7 +179,6 @@ export function savePrefs() {
         keepAwake: S.keepAwake,
         statsPeriod: S.statsPeriod,
         ripple: S.rippleOn,
-        noticeOpen: S.noticeOpen,
       })
     );
   } catch {

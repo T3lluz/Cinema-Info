@@ -24,7 +24,6 @@ import {
   weekdayShort,
   todayKey,
   addDaysKey,
-  daysBetween,
   dayKeyDate,
   isoWeekInfo,
   weekStartKey,
@@ -105,6 +104,9 @@ function daysOf(period) {
 function summarize(shows, now) {
   const withSold = shows.filter((s) => s.sold != null && s.eventStatus !== "error");
   const sold = withSold.reduce((n, s) => n + soldOf(s), 0);
+  // Showings still to come only have their presale so far; averaging them
+  // in drags the figure down all week.
+  const started = withSold.filter((s) => s.start <= now);
   const done = shows.filter((s) => isDone(s, now));
   const scanned = done.filter((s) => s.scanned != null && soldOf(s) > 0);
   const scanSold = scanned.reduce((n, s) => n + soldOf(s), 0);
@@ -115,7 +117,7 @@ function summarize(shows, now) {
     films: new Set(shows.map((s) => s.title)).size,
     inside: scanIn,
     done: done.length,
-    avg: withSold.length ? sold / withSold.length : null,
+    avg: started.length ? started.reduce((n, s) => n + soldOf(s), 0) / started.length : null,
     attendance: scanSold ? (scanIn / scanSold) * 100 : null,
     hasData: withSold.length > 0,
   };
@@ -131,23 +133,26 @@ function computeModel(period) {
   const shows = showsBetween(period.start, period.end);
   const sum = summarize(shows, now);
 
-  // Delta against the same stretch of the previous period: for the
-  // period we are in, only the days played so far on both sides.
+  // Delta against the previous period. For the period we are in, it is
+  // the showings that have started by now against those that had started
+  // at the same point last time: tonight's are still selling and the rest
+  // are presale, so counting them would show a drop that is not there.
   const prev = shiftPeriod(period, -1);
   let delta = null;
   let deltaKind = "";
   if (period.start <= today) {
-    const elapsed = period.end < today ? null : daysBetween(period.start, today);
-    const curEnd = elapsed == null ? period.end : today;
-    const prevEnd = elapsed == null ? prev.end : addDaysKey(prev.start, elapsed);
-    const cur = showsBetween(period.start, curEnd).reduce((n, s) => n + soldOf(s), 0);
-    const before = showsBetween(prev.start, prevEnd < prev.end ? prevEnd : prev.end).reduce(
-      (n, s) => n + soldOf(s),
-      0
+    const ongoing = period.end >= today;
+    const soldBy = (list, cutoff) =>
+      list.filter((s) => !cutoff || s.start <= cutoff).reduce((n, s) => n + soldOf(s), 0);
+    const elapsed = now - dayKeyDate(period.start);
+    const cur = soldBy(shows, ongoing ? now : null);
+    const before = soldBy(
+      showsBetween(prev.start, prev.end),
+      ongoing ? new Date(dayKeyDate(prev.start).getTime() + elapsed) : null
     );
     if (before > 0) {
       delta = ((cur - before) / before) * 100;
-      deltaKind = elapsed == null ? "full" : "partial";
+      deltaKind = ongoing ? "partial" : "full";
     }
   }
 
@@ -164,9 +169,16 @@ function computeModel(period) {
 
   const films = new Map();
   for (const s of shows) {
-    const f = films.get(s.title) || { title: s.title, posterUrl: s.posterUrl, sold: 0, shows: 0 };
+    const f =
+      films.get(s.title) || { title: s.title, posterUrl: s.posterUrl, sold: 0, shows: 0, played: 0, playedSold: 0 };
     f.sold += soldOf(s);
     f.shows += 1;
+    // The average, like "Snitt per visning", only over showings that have
+    // started: presale would drag it down.
+    if (s.start <= now && s.sold != null && s.eventStatus !== "error") {
+      f.played += 1;
+      f.playedSold += soldOf(s);
+    }
     if (!f.posterUrl && s.posterUrl) f.posterUrl = s.posterUrl;
     films.set(s.title, f);
   }
@@ -434,8 +446,10 @@ export function renderStats() {
                   <span class="rank-sub">${escapeHtml(
                     [
                       f.shows === 1 ? t("showsOne") : t("showsMany", { n: f.shows }),
-                      t("avgPerShow", { n: formatCount(Math.round(f.sold / f.shows)) }),
-                    ].join(" · ")
+                      f.played ? t("avgPerShow", { n: formatCount(Math.round(f.playedSold / f.played)) }) : "",
+                    ]
+                      .filter(Boolean)
+                      .join(" · ")
                   )}</span>
                 </span>
                 <span class="rank-v">${formatCount(f.sold)}</span>

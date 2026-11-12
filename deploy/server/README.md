@@ -1,14 +1,14 @@
 # Cinema Info on t3lluz.com
 
-The app runs at **https://t3lluz.com/CinemaInfo/** as well as on GitHub
-Pages. Both copies are the same files from `main`, and both talk to the
-same server, which lives on t3lluserver next to the rest of t3lluz.com.
+The app runs at **https://t3lluz.com/CinemaInfo/** and nowhere else.
+The server behind it lives on t3lluserver next to the rest of t3lluz.com.
+The old GitHub Pages address only forwards here (`deploy/pages-redirect/`).
 
 ```
                  Cloudflare tunnel                 tailnet (Caddy)
  public ──────── t3lluz.com/CinemaInfo* ─┐   ┌── t3lluz.com/CinemaInfo*  ── Fredde's devices
                                          ▼   ▼   feedback.t3lluz.com
- GitHub Pages ── /CinemaInfo/api/* ──► cinema-info (Deno, server/main.ts)
+ dev server ──── /CinemaInfo/api/* ──► cinema-info (Deno, server/main.ts)
                                          :8080  app, API      (public)
                                          :8081  feedback hub  (Caddy only)
 ```
@@ -16,8 +16,7 @@ same server, which lives on t3lluserver next to the rest of t3lluz.com.
 ## What the server does
 
 - **Serves the app** under `/CinemaInfo/`, built from `main` by `update.sh`
-  exactly as the Pages workflow builds it (stamped build token, mirrored
-  posters).
+  (stamped build token, mirrored posters).
 - **Prefetches everything live** (`server/live.ts`). It reads DX on
   everyone's behalf, on the same windows the app uses:
 
@@ -64,7 +63,8 @@ Merge to `main`. Within a minute `cinema-info-deploy.timer` notices, and
 `update.sh` resets the checkout, builds the site into a new directory,
 and swaps the `current` symlink. Server code changes (`server/`,
 `supabase/functions/`) restart the container. The bot's snapshot commits
-deploy the same way, so t3lluz.com never lags GitHub Pages.
+deploy the same way, but keep the build token, so open apps pick up the
+new programme on their own two-minute re-read instead of reloading.
 
 ```bash
 journalctl --user -u cinema-info-deploy -n 20 --no-pager   # what deployed
@@ -99,6 +99,6 @@ Cloudflare Tunnel, Edit). `go-public.sh --rollback` undoes the DNS change.
 Deno services behind Tailscale Funnel. Funnel is off for that node, so
 the bridge only answered on the tailnet and staff off it got no seat
 maps. The server
-above replaces it. Once this release is on GitHub Pages nothing calls the
+above replaces it. Once this release is live nothing calls the
 old services any more, and they can go:
 `systemctl --user disable --now cinema-dx cinema-omdb`.

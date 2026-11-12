@@ -18,8 +18,8 @@
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Cinema Info" />
     <meta property="og:description" content="Program, tider og solgte billetter for Buen kino" />
-    <meta property="og:url" content="https://t3lluz.github.io/Cinema-Info/" />
-    <meta property="og:image" content="https://t3lluz.github.io/Cinema-Info/assets/icons/icon-512.png" />
+    <meta property="og:url" content="https://t3lluz.com/CinemaInfo/" />
+    <meta property="og:image" content="https://t3lluz.com/CinemaInfo/assets/icons/icon-512.png" />
     <meta name="twitter:card" content="summary" />
     <title>Buen kino</title>
     <link rel="preconnect" href="https://api.dx.no" crossorigin />
@@ -51,6 +51,8 @@
     <link rel="modulepreload" href="js/settings.js?v=dev" />
     <link rel="modulepreload" href="js/sheet.js?v=dev" />
     <link rel="modulepreload" href="js/ripple.js?v=dev" />
+    <link rel="modulepreload" href="js/live.js?v=dev" />
+    <link rel="modulepreload" href="js/feedback.js?v=dev" />
   </head>
   <body data-tab="day">
     <div id="app" class="app">
@@ -71,10 +73,6 @@
         </div>
       </header>
 
-      <!-- The warning sits right under the header on every tab and scrolls
-           away; the day strip below it sticks under the header on its own. -->
-      <section id="notice" class="notice pull-follow" role="note" aria-label="Informasjon" hidden></section>
-
       <div id="dayDock" class="day-dock pull-follow">
         <div id="dayBar" class="day-bar">
           <button id="jumpTodayBtn" class="jump-today" type="button" tabindex="-1" aria-hidden="true" data-i18n-aria="jumpTodayAria" aria-label="Gå til i dag">
@@ -94,7 +92,7 @@
       </div>
 
       <main class="main pull-follow">
-        <section id="view-day" class="view view-day" aria-live="polite">
+        <section id="view-day" class="view view-day">
           <div id="pager" class="pager">
             <div id="dayPage" class="page">
               <div class="card skeleton-card is-hero" aria-hidden="true"><i></i><i></i><i></i></div>
@@ -187,9 +185,8 @@
 
     <!-- Server endpoints, all on t3lluz.com/CinemaInfo/api (server/main.ts):
          the DX bridge, film lookups, the prefetched live feed and staff
-         feedback. Served from t3lluz.com they are same-origin; from GitHub
-         Pages or the dev server they are cross-origin calls to the same
-         place. Without this block the app falls back to the Supabase Edge
+         feedback. Served from t3lluz.com they are same-origin; from the dev
+         server they are cross-origin calls to the same place. Without this block the app falls back to the Supabase Edge
          Functions and reads DX per showing. Details: deploy/server/README.md. -->
     <script>
       (() => {

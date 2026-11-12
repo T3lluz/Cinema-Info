@@ -6,10 +6,13 @@
  * given URL. Live DX and bridge calls are never cached.
  *
  * Every `?v=dev` below (and in index.html and js/*.js) is replaced with
- * the commit SHA on deploy by scripts/stamp-version.mjs, so a new
- * version always lands as a fresh cache instead of a stale one.
+ * the build (the last commit that changed the app) on deploy by
+ * scripts/stamp-version.mjs, so a new version always lands as a fresh
+ * cache instead of a stale one.
  */
 const CACHE = "cinema-info-vdev";
+/** The build this worker serves: the token the page reads off its own script URL. */
+const BUILD = CACHE.slice("cinema-info-v".length);
 const PRECACHE = [
   "./",
   "./index.html",
@@ -41,7 +44,7 @@ const PRECACHE = [
 /** Hosts whose answers are live and must never come from a cache. */
 const LIVE_HOSTS = ["api.dx.no", "public.dx.no", "login.dx.no", "app.dx.no"];
 
-/** Poster CDNs: immutable per URL. Capped so the cache cannot grow forever. */
+/** Posters are immutable per URL. Capped so the cache cannot grow forever. */
 const POSTER_HOSTS = ["cdn.sanity.io", "m.media-amazon.com"];
 const POSTER_CACHE = "cinema-info-posters";
 const POSTER_MAX = 150;
@@ -68,6 +71,12 @@ self.addEventListener("activate", (event) => {
   );
 });
 
+// The page asks which build took it over, so it can tell a worker that
+// serves what it already runs from one that means it is out of date.
+self.addEventListener("message", (event) => {
+  if (event.data?.type === "build") event.ports[0]?.postMessage(BUILD);
+});
+
 async function trimPosters() {
   const cache = await caches.open(POSTER_CACHE);
   const keys = await cache.keys();
@@ -80,7 +89,7 @@ self.addEventListener("fetch", (event) => {
   const url = new URL(req.url);
 
   // The server's own API (live feed, bridge, feedback) is never cached,
-  // whether it is same-origin (t3lluz.com) or not (GitHub Pages).
+  // whether it is same-origin (t3lluz.com) or not (the dev server).
   if (url.pathname.includes("/api/")) return;
 
   if (
@@ -89,6 +98,26 @@ self.addEventListener("fetch", (event) => {
     url.hostname.endsWith(".ts.net") ||
     url.hostname.endsWith(".deno.dev")
   ) {
+    return;
+  }
+
+  // Posters: Buen's CDN, IMDb's, and the deploy's same-origin copies for
+  // the ripple (posters/). Never in the app cache: with snapshot refreshes
+  // keeping the build, that cache lives for weeks and would only grow.
+  const sameOriginPoster = url.origin === self.location.origin && url.pathname.includes("/posters/");
+  if (sameOriginPoster || POSTER_HOSTS.includes(url.hostname)) {
+    event.respondWith(
+      caches.open(POSTER_CACHE).then(async (cache) => {
+        const hit = await cache.match(req);
+        if (hit) return hit;
+        const res = await fetch(req);
+        // Opaque (no-cors) responses are fine to keep for <img>.
+        if (res.ok || res.type === "opaque") {
+          cache.put(req, res.clone()).then(trimPosters);
+        }
+        return res;
+      })
+    );
     return;
   }
 
@@ -115,22 +144,6 @@ self.addEventListener("fetch", (event) => {
           if (isNav) return (await caches.match("./index.html")) || (await caches.match("./"));
           return caches.match(key, { ignoreSearch: isProgram });
         })
-    );
-    return;
-  }
-
-  if (POSTER_HOSTS.includes(url.hostname)) {
-    event.respondWith(
-      caches.open(POSTER_CACHE).then(async (cache) => {
-        const hit = await cache.match(req);
-        if (hit) return hit;
-        const res = await fetch(req);
-        // Opaque (no-cors) responses are fine to keep for <img>.
-        if (res.ok || res.type === "opaque") {
-          cache.put(req, res.clone()).then(trimPosters);
-        }
-        return res;
-      })
     );
   }
 });
