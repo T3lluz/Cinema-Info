@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-13T03:23:39.649Z",
+  "updatedAt": "2026-11-13T18:29:04.847Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -20174,7 +20174,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93495/purchase?kanal=dxf",
       "eventId": "93495",
       "promoterId": "202",
-      "sold": 30,
+      "sold": 56,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -20185,7 +20185,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 80
+      "available": 54
     },
     {
       "id": "EDI20251703-2026-11-13T19:00:00-Kinosal",
@@ -20212,7 +20212,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93547/purchase?kanal=dxf",
       "eventId": "93547",
       "promoterId": "202",
-      "sold": 39,
+      "sold": 61,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -20222,8 +20222,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 109,
-      "available": 70
+      "capacity": 110,
+      "available": 49
     },
     {
       "id": "EDI20260641-2026-11-13T21:20:00-Kinosal",
@@ -20251,16 +20251,16 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93493/purchase?kanal=dxf",
       "eventId": "93493",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.2,
+          "value": 6.4,
           "id": "tt35866986",
           "url": "https://www.imdb.com/title/tt35866986/"
         },
         "letterboxd": {
-          "value": 3.13,
+          "value": 3.12,
           "url": "https://letterboxd.com/film/how-to-rob-a-bank-2026/"
         },
         "tomatoes": {
@@ -20268,9 +20268,9 @@
           "url": "https://www.rottentomatoes.com/m/how_to_rob_a_bank"
         }
       },
-      "reserved": 0,
+      "reserved": 3,
       "capacity": 110,
-      "available": 110
+      "available": 105
     },
     {
       "id": "NOR20240691-2026-11-14T14:45:00-Kinosal",
@@ -20299,7 +20299,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93708/purchase?kanal=dxf",
       "eventId": "93708",
       "promoterId": "202",
-      "sold": 11,
+      "sold": 15,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -20310,7 +20310,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 99
+      "available": 95
     },
     {
       "id": "EDI20260973-2026-11-14T16:45:00-Kinosal",
@@ -20421,16 +20421,16 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93551/purchase?kanal=dxf",
       "eventId": "93551",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.2,
+          "value": 6.4,
           "id": "tt35866986",
           "url": "https://www.imdb.com/title/tt35866986/"
         },
         "letterboxd": {
-          "value": 3.13,
+          "value": 3.12,
           "url": "https://letterboxd.com/film/how-to-rob-a-bank-2026/"
         },
         "tomatoes": {
@@ -20440,7 +20440,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 110
+      "available": 108
     },
     {
       "id": "NOR20240691-2026-11-15T15:00:00-Kinosal",
@@ -20469,7 +20469,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93555/purchase?kanal=dxf",
       "eventId": "93555",
       "promoterId": "202",
-      "sold": 16,
+      "sold": 21,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -20479,8 +20479,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 107,
-      "available": 91
+      "capacity": 110,
+      "available": 89
     },
     {
       "id": "EDI20250084-2026-11-15T15:30:00-Storsal",
@@ -20630,11 +20630,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93556/purchase?kanal=dxf",
       "eventId": "93556",
       "promoterId": "202",
-      "sold": 5,
+      "sold": 14,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.1,
+          "value": 7,
           "id": "tt38773219",
           "url": "https://www.imdb.com/title/tt38773219/"
         },
@@ -20648,8 +20648,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 105
+      "capacity": 105,
+      "available": 91
     },
     {
       "id": "EDI20260641-2026-11-15T20:15:00-Storsal",
@@ -20681,12 +20681,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.2,
+          "value": 6.4,
           "id": "tt35866986",
           "url": "https://www.imdb.com/title/tt35866986/"
         },
         "letterboxd": {
-          "value": 3.13,
+          "value": 3.12,
           "url": "https://letterboxd.com/film/how-to-rob-a-bank-2026/"
         },
         "tomatoes": {
@@ -20722,7 +20722,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93253/purchase?kanal=dxf",
       "eventId": "93253",
       "promoterId": "202",
-      "sold": 90,
+      "sold": 91,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -20732,7 +20732,7 @@
         }
       },
       "reserved": 2,
-      "capacity": 109,
+      "capacity": 110,
       "available": 17
     },
     {
@@ -20759,7 +20759,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93687/purchase?kanal=dxf",
       "eventId": "93687",
       "promoterId": "202",
-      "sold": 12,
+      "sold": 15,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -20770,7 +20770,7 @@
       },
       "reserved": 0,
       "capacity": 246,
-      "available": 234
+      "available": 231
     },
     {
       "id": "NOR20240691-2026-11-17T17:00:00-Kinosal",
@@ -20881,7 +20881,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93254/purchase?kanal=dxf",
       "eventId": "93254",
       "promoterId": "202",
-      "sold": 32,
+      "sold": 35,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -20891,8 +20891,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 108,
-      "available": 76
+      "capacity": 110,
+      "available": 75
     },
     {
       "id": "EDI20251675-2026-11-17T20:15:00-Storsal",
@@ -20924,7 +20924,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.1,
+          "value": 7,
           "id": "tt38773219",
           "url": "https://www.imdb.com/title/tt38773219/"
         },
@@ -21184,6 +21184,44 @@
       "available": 110
     },
     {
+      "id": "EDI20251030-2026-11-20T20:30:00-Kinosal",
+      "title": "The Hunger Games: Sunrise on the Reaping",
+      "screen": "Kinosal",
+      "start": "2026-11-20T20:30:00",
+      "end": "2026-11-20T23:18:00",
+      "dayKey": "2026-11-20",
+      "runningMinutes": 158,
+      "runningLabel": "2 t. 38 min.",
+      "age": "12 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Fantasy"
+      ],
+      "director": "Francis Lawrence",
+      "premiere": "2026-11-18",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/a77228cd6145b069bbe22cff595a7a15ce9db0fc-1500x2222.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93688/purchase?kanal=dxf",
+      "eventId": "93688",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "letterboxd": {
+          "value": 3.9,
+          "url": "https://letterboxd.com/film/the-hunger-games-sunrise-on-the-reaping/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
       "id": "EDI20251787-2026-12-01T13:00:00-Kinosal",
       "title": "Sense and Sensibility",
       "screen": "Kinosal",
@@ -21254,7 +21292,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93641/purchase?kanal=dxf",
       "eventId": "93641",
       "promoterId": "202",
-      "sold": 23,
+      "sold": 32,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -21264,8 +21302,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 107,
-      "available": 84
+      "capacity": 109,
+      "available": 77
     },
     {
       "id": "EDI20251703-2026-12-15T19:30:00-Kinosal",
