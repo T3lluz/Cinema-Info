@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-13T18:29:04.847Z",
+  "updatedAt": "2026-11-14T03:11:01.146Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -20268,9 +20268,9 @@
           "url": "https://www.rottentomatoes.com/m/how_to_rob_a_bank"
         }
       },
-      "reserved": 3,
+      "reserved": 0,
       "capacity": 110,
-      "available": 105
+      "available": 108
     },
     {
       "id": "NOR20240691-2026-11-14T14:45:00-Kinosal",
@@ -20299,7 +20299,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93708/purchase?kanal=dxf",
       "eventId": "93708",
       "promoterId": "202",
-      "sold": 15,
+      "sold": 17,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -20310,7 +20310,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 95
+      "available": 93
     },
     {
       "id": "EDI20260973-2026-11-14T16:45:00-Kinosal",
@@ -20382,7 +20382,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93549/purchase?kanal=dxf",
       "eventId": "93549",
       "promoterId": "202",
-      "sold": 7,
+      "sold": 11,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -20393,7 +20393,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 103
+      "available": 99
     },
     {
       "id": "EDI20260641-2026-11-14T21:25:00-Kinosal",
@@ -20591,7 +20591,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93554/purchase?kanal=dxf",
       "eventId": "93554",
       "promoterId": "202",
-      "sold": 11,
+      "sold": 13,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -20602,7 +20602,7 @@
       },
       "reserved": 0,
       "capacity": 246,
-      "available": 235
+      "available": 233
     },
     {
       "id": "EDI20251675-2026-11-15T19:30:00-Kinosal",
@@ -20634,22 +20634,22 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7,
+          "value": 7.1,
           "id": "tt38773219",
           "url": "https://www.imdb.com/title/tt38773219/"
         },
         "letterboxd": {
-          "value": 3.24,
+          "value": 3.26,
           "url": "https://letterboxd.com/film/ebenezer-2026/"
         },
         "tomatoes": {
-          "value": 50,
+          "value": 55,
           "url": "https://www.rottentomatoes.com/m/ebenezer"
         }
       },
       "reserved": 0,
-      "capacity": 105,
-      "available": 91
+      "capacity": 110,
+      "available": 96
     },
     {
       "id": "EDI20260641-2026-11-15T20:15:00-Storsal",
@@ -20759,7 +20759,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93687/purchase?kanal=dxf",
       "eventId": "93687",
       "promoterId": "202",
-      "sold": 15,
+      "sold": 17,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -20769,8 +20769,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 246,
-      "available": 231
+      "capacity": 244,
+      "available": 227
     },
     {
       "id": "NOR20240691-2026-11-17T17:00:00-Kinosal",
@@ -20881,7 +20881,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93254/purchase?kanal=dxf",
       "eventId": "93254",
       "promoterId": "202",
-      "sold": 35,
+      "sold": 38,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -20892,7 +20892,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 75
+      "available": 72
     },
     {
       "id": "EDI20251675-2026-11-17T20:15:00-Storsal",
@@ -20924,16 +20924,16 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7,
+          "value": 7.1,
           "id": "tt38773219",
           "url": "https://www.imdb.com/title/tt38773219/"
         },
         "letterboxd": {
-          "value": 3.24,
+          "value": 3.26,
           "url": "https://letterboxd.com/film/ebenezer-2026/"
         },
         "tomatoes": {
-          "value": 50,
+          "value": 55,
           "url": "https://www.rottentomatoes.com/m/ebenezer"
         }
       },
@@ -21330,7 +21330,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93642/purchase?kanal=dxf",
       "eventId": "93642",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 6,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -21340,8 +21340,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 110
+      "capacity": 104,
+      "available": 98
     },
     {
       "id": "EDI20251026-2026-12-15T20:00:00-Storsal",
