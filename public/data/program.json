@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-16T02:42:57.765Z",
+  "updatedAt": "2026-11-16T20:57:03.464Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -14636,7 +14636,7 @@
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 89,
+          "value": 88,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -14912,7 +14912,7 @@
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 89,
+          "value": 88,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -15139,7 +15139,7 @@
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 89,
+          "value": 88,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -15324,7 +15324,7 @@
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 89,
+          "value": 88,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -15505,7 +15505,7 @@
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 89,
+          "value": 88,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -15694,7 +15694,7 @@
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 89,
+          "value": 88,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -15826,7 +15826,7 @@
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 89,
+          "value": 88,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -16094,7 +16094,7 @@
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 89,
+          "value": 88,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -17422,7 +17422,7 @@
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 89,
+          "value": 88,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -19469,7 +19469,7 @@
           "url": "https://www.imdb.com/title/tt27739255/"
         },
         "letterboxd": {
-          "value": 3.33,
+          "value": 3.34,
           "url": "https://letterboxd.com/film/charlie-harper/"
         },
         "tomatoes": {
@@ -20255,7 +20255,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.4,
+          "value": 6.5,
           "id": "tt35866986",
           "url": "https://www.imdb.com/title/tt35866986/"
         },
@@ -20345,7 +20345,7 @@
           "url": "https://www.imdb.com/title/tt27739255/"
         },
         "letterboxd": {
-          "value": 3.33,
+          "value": 3.34,
           "url": "https://letterboxd.com/film/charlie-harper/"
         },
         "tomatoes": {
@@ -20425,7 +20425,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.4,
+          "value": 6.5,
           "id": "tt35866986",
           "url": "https://www.imdb.com/title/tt35866986/"
         },
@@ -20554,7 +20554,7 @@
           "url": "https://www.imdb.com/title/tt27739255/"
         },
         "letterboxd": {
-          "value": 3.33,
+          "value": 3.34,
           "url": "https://letterboxd.com/film/charlie-harper/"
         },
         "tomatoes": {
@@ -20639,7 +20639,7 @@
           "url": "https://www.imdb.com/title/tt38773219/"
         },
         "letterboxd": {
-          "value": 3.28,
+          "value": 3.27,
           "url": "https://letterboxd.com/film/ebenezer-2026/"
         },
         "tomatoes": {
@@ -20681,7 +20681,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.4,
+          "value": 6.5,
           "id": "tt35866986",
           "url": "https://www.imdb.com/title/tt35866986/"
         },
@@ -20722,7 +20722,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93253/purchase?kanal=dxf",
       "eventId": "93253",
       "promoterId": "202",
-      "sold": 96,
+      "sold": 100,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -20731,9 +20731,9 @@
           "url": "https://www.imdb.com/title/tt0011440/"
         }
       },
-      "reserved": 2,
-      "capacity": 109,
-      "available": 11
+      "reserved": 4,
+      "capacity": 110,
+      "available": 6
     },
     {
       "id": "EDI20251399-2026-11-17T13:15:00-Storsal",
@@ -20759,7 +20759,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93687/purchase?kanal=dxf",
       "eventId": "93687",
       "promoterId": "202",
-      "sold": 23,
+      "sold": 40,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -20768,9 +20768,9 @@
           "url": "https://www.imdb.com/title/tt0011440/"
         }
       },
-      "reserved": 0,
+      "reserved": 2,
       "capacity": 246,
-      "available": 223
+      "available": 204
     },
     {
       "id": "NOR20240691-2026-11-17T17:00:00-Kinosal",
@@ -20799,7 +20799,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93434/purchase?kanal=dxf",
       "eventId": "93434",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 8,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -20810,7 +20810,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 110
+      "available": 102
     },
     {
       "id": "EDI20260973-2026-11-17T17:45:00-Storsal",
@@ -20845,7 +20845,7 @@
           "url": "https://www.imdb.com/title/tt27739255/"
         },
         "letterboxd": {
-          "value": 3.33,
+          "value": 3.34,
           "url": "https://letterboxd.com/film/charlie-harper/"
         },
         "tomatoes": {
@@ -20881,7 +20881,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93254/purchase?kanal=dxf",
       "eventId": "93254",
       "promoterId": "202",
-      "sold": 54,
+      "sold": 63,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -20891,8 +20891,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 56
+      "capacity": 108,
+      "available": 45
     },
     {
       "id": "EDI20251675-2026-11-17T20:15:00-Storsal",
@@ -20929,7 +20929,7 @@
           "url": "https://www.imdb.com/title/tt38773219/"
         },
         "letterboxd": {
-          "value": 3.28,
+          "value": 3.27,
           "url": "https://letterboxd.com/film/ebenezer-2026/"
         },
         "tomatoes": {
@@ -20977,9 +20977,9 @@
           "url": "https://www.imdb.com/title/tt41475646/"
         }
       },
-      "reserved": 0,
-      "capacity": 108,
-      "available": 106
+      "reserved": 6,
+      "capacity": 110,
+      "available": 102
     },
     {
       "id": "EDI20251030-2026-11-18T19:45:00-Kinosal",
@@ -21007,7 +21007,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93612/purchase?kanal=dxf",
       "eventId": "93612",
       "promoterId": "202",
-      "sold": 33,
+      "sold": 43,
       "eventStatus": "ok",
       "ratings": {
         "letterboxd": {
@@ -21016,8 +21016,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 77
+      "capacity": 105,
+      "available": 62
     },
     {
       "id": "NOR20240691-2026-11-19T17:00:00-Kinosal",
@@ -21084,7 +21084,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93619/purchase?kanal=dxf",
       "eventId": "93619",
       "promoterId": "202",
-      "sold": 7,
+      "sold": 17,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -21095,7 +21095,7 @@
       },
       "reserved": 0,
       "capacity": 246,
-      "available": 239
+      "available": 229
     },
     {
       "id": "EDI20251030-2026-11-19T19:30:00-Kinosal",
@@ -21132,8 +21132,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 109,
-      "available": 108
+      "capacity": 110,
+      "available": 109
     },
     {
       "id": "EDI20251675-2026-11-19T20:20:00-Storsal",
@@ -21161,7 +21161,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93719/purchase?kanal=dxf",
       "eventId": "93719",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 3,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -21170,7 +21170,7 @@
           "url": "https://www.imdb.com/title/tt38773219/"
         },
         "letterboxd": {
-          "value": 3.28,
+          "value": 3.27,
           "url": "https://letterboxd.com/film/ebenezer-2026/"
         },
         "tomatoes": {
@@ -21179,8 +21179,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 286,
-      "available": 286
+      "capacity": 283,
+      "available": 280
     },
     {
       "id": "NOR20240691-2026-11-20T17:00:00-Storsal",
@@ -21209,7 +21209,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93713/purchase?kanal=dxf",
       "eventId": "93713",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 5,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -21219,8 +21219,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 286,
-      "available": 286
+      "capacity": 281,
+      "available": 276
     },
     {
       "id": "EDI20260846-2026-11-20T17:30:00-Kinosal",
@@ -21295,7 +21295,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93714/purchase?kanal=dxf",
       "eventId": "93714",
       "promoterId": "202",
-      "sold": 2,
+      "sold": 12,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -21305,8 +21305,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 284,
-      "available": 282
+      "capacity": 282,
+      "available": 270
     },
     {
       "id": "EDI20251030-2026-11-20T20:30:00-Kinosal",
@@ -21334,7 +21334,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93688/purchase?kanal=dxf",
       "eventId": "93688",
       "promoterId": "202",
-      "sold": 14,
+      "sold": 16,
       "eventStatus": "ok",
       "ratings": {
         "letterboxd": {
@@ -21343,8 +21343,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 96
+      "capacity": 108,
+      "available": 92
     },
     {
       "id": "EDI20260641-2026-11-20T21:20:00-Storsal",
@@ -21372,11 +21372,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93722/purchase?kanal=dxf",
       "eventId": "93722",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.4,
+          "value": 6.5,
           "id": "tt35866986",
           "url": "https://www.imdb.com/title/tt35866986/"
         },
@@ -21390,8 +21390,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 286,
-      "available": 286
+      "capacity": 284,
+      "available": 282
     },
     {
       "id": "NOR20240691-2026-11-21T15:00:00-Kinosal",
@@ -21430,8 +21430,47 @@
         }
       },
       "reserved": 0,
-      "capacity": 107,
-      "available": 104
+      "capacity": 110,
+      "available": 107
+    },
+    {
+      "id": "EDI20250084-2026-11-21T15:30:00-Storsal",
+      "title": "Mysteriepakken",
+      "screen": "Storsal",
+      "start": "2026-11-21T15:30:00",
+      "end": "2026-11-21T16:55:44",
+      "dayKey": "2026-11-21",
+      "runningMinutes": 86,
+      "runningLabel": "1 t. 26 min.",
+      "age": "Tillatt for alle",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Documentary",
+        "Adventure",
+        "Family"
+      ],
+      "director": "Silje Evensmo Jacobsen",
+      "premiere": "2026-10-16",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/e796551111af9fba503fffcbd45d77f4a13d0521-1080x1527.png?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93742/purchase?kanal=dxf",
+      "eventId": "93742",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 8.4,
+          "id": "tt38673337",
+          "url": "https://www.imdb.com/title/tt38673337/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
     },
     {
       "id": "EDI20260846-2026-11-21T17:00:00-Kinosal",
@@ -21482,6 +21521,44 @@
       "available": 110
     },
     {
+      "id": "EDI20251030-2026-11-21T20:00:00-Kinosal",
+      "title": "The Hunger Games: Sunrise on the Reaping",
+      "screen": "Kinosal",
+      "start": "2026-11-21T20:00:00",
+      "end": "2026-11-21T22:48:00",
+      "dayKey": "2026-11-21",
+      "runningMinutes": 158,
+      "runningLabel": "2 t. 38 min.",
+      "age": "12 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Fantasy"
+      ],
+      "director": "Francis Lawrence",
+      "premiere": "2026-11-18",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/a77228cd6145b069bbe22cff595a7a15ce9db0fc-1500x2222.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93673/purchase?kanal=dxf",
+      "eventId": "93673",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "letterboxd": {
+          "value": 3.9,
+          "url": "https://letterboxd.com/film/the-hunger-games-sunrise-on-the-reaping/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
       "id": "EDI20251787-2026-12-01T13:00:00-Kinosal",
       "title": "Sense and Sensibility",
       "screen": "Kinosal",
@@ -21519,7 +21596,7 @@
           "url": "https://letterboxd.com/film/sense-and-sensibility-2026/"
         },
         "tomatoes": {
-          "value": 89,
+          "value": 88,
           "url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026"
         }
       },
@@ -21552,7 +21629,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93641/purchase?kanal=dxf",
       "eventId": "93641",
       "promoterId": "202",
-      "sold": 32,
+      "sold": 41,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -21563,7 +21640,7 @@
       },
       "reserved": 0,
       "capacity": 109,
-      "available": 77
+      "available": 68
     },
     {
       "id": "EDI20251703-2026-12-15T19:30:00-Kinosal",
@@ -21590,7 +21667,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93642/purchase?kanal=dxf",
       "eventId": "93642",
       "promoterId": "202",
-      "sold": 8,
+      "sold": 16,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -21600,8 +21677,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 102
+      "capacity": 108,
+      "available": 92
     },
     {
       "id": "EDI20251026-2026-12-15T20:00:00-Storsal",
@@ -21610,8 +21687,8 @@
       "start": "2026-12-15T20:00:00",
       "end": "2026-12-15T22:30:00",
       "dayKey": "2026-12-15",
-      "runningMinutes": null,
-      "runningLabel": null,
+      "runningMinutes": 150,
+      "runningLabel": "2 t. 30 min.",
       "age": "15 år",
       "tags": [
         "Norsk tekst"
@@ -21660,12 +21737,12 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93227/purchase?kanal=dxf",
       "eventId": "93227",
       "promoterId": "202",
-      "sold": 45,
+      "sold": 47,
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
-      "capacity": 109,
-      "available": 64
+      "capacity": 110,
+      "available": 63
     },
     {
       "id": "BVI20200545-2026-12-17T19:15:00-Kinosal",
@@ -21705,8 +21782,8 @@
       "start": "2026-12-17T20:00:00",
       "end": "2026-12-17T22:30:00",
       "dayKey": "2026-12-17",
-      "runningMinutes": null,
-      "runningLabel": null,
+      "runningMinutes": 150,
+      "runningLabel": "2 t. 30 min.",
       "age": "15 år",
       "tags": [
         "Norsk tekst"
