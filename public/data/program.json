@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-15T17:40:09.078Z",
+  "updatedAt": "2026-11-16T02:42:57.765Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -19469,7 +19469,7 @@
           "url": "https://www.imdb.com/title/tt27739255/"
         },
         "letterboxd": {
-          "value": 3.34,
+          "value": 3.33,
           "url": "https://letterboxd.com/film/charlie-harper/"
         },
         "tomatoes": {
@@ -20260,11 +20260,11 @@
           "url": "https://www.imdb.com/title/tt35866986/"
         },
         "letterboxd": {
-          "value": 3.11,
+          "value": 3.1,
           "url": "https://letterboxd.com/film/how-to-rob-a-bank-2026/"
         },
         "tomatoes": {
-          "value": 78,
+          "value": 79,
           "url": "https://www.rottentomatoes.com/m/how_to_rob_a_bank_2026"
         }
       },
@@ -20345,7 +20345,7 @@
           "url": "https://www.imdb.com/title/tt27739255/"
         },
         "letterboxd": {
-          "value": 3.34,
+          "value": 3.33,
           "url": "https://letterboxd.com/film/charlie-harper/"
         },
         "tomatoes": {
@@ -20430,11 +20430,11 @@
           "url": "https://www.imdb.com/title/tt35866986/"
         },
         "letterboxd": {
-          "value": 3.11,
+          "value": 3.1,
           "url": "https://letterboxd.com/film/how-to-rob-a-bank-2026/"
         },
         "tomatoes": {
-          "value": 78,
+          "value": 79,
           "url": "https://www.rottentomatoes.com/m/how_to_rob_a_bank_2026"
         }
       },
@@ -20554,7 +20554,7 @@
           "url": "https://www.imdb.com/title/tt27739255/"
         },
         "letterboxd": {
-          "value": 3.34,
+          "value": 3.33,
           "url": "https://letterboxd.com/film/charlie-harper/"
         },
         "tomatoes": {
@@ -20630,7 +20630,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93556/purchase?kanal=dxf",
       "eventId": "93556",
       "promoterId": "202",
-      "sold": 36,
+      "sold": 41,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -20649,7 +20649,7 @@
       },
       "reserved": 1,
       "capacity": 110,
-      "available": 73
+      "available": 68
     },
     {
       "id": "EDI20260641-2026-11-15T20:15:00-Storsal",
@@ -20686,11 +20686,11 @@
           "url": "https://www.imdb.com/title/tt35866986/"
         },
         "letterboxd": {
-          "value": 3.11,
+          "value": 3.1,
           "url": "https://letterboxd.com/film/how-to-rob-a-bank-2026/"
         },
         "tomatoes": {
-          "value": 78,
+          "value": 79,
           "url": "https://www.rottentomatoes.com/m/how_to_rob_a_bank_2026"
         }
       },
@@ -20722,7 +20722,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93253/purchase?kanal=dxf",
       "eventId": "93253",
       "promoterId": "202",
-      "sold": 95,
+      "sold": 96,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -20732,8 +20732,8 @@
         }
       },
       "reserved": 2,
-      "capacity": 110,
-      "available": 13
+      "capacity": 109,
+      "available": 11
     },
     {
       "id": "EDI20251399-2026-11-17T13:15:00-Storsal",
@@ -20845,7 +20845,7 @@
           "url": "https://www.imdb.com/title/tt27739255/"
         },
         "letterboxd": {
-          "value": 3.34,
+          "value": 3.33,
           "url": "https://letterboxd.com/film/charlie-harper/"
         },
         "tomatoes": {
@@ -20891,8 +20891,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 108,
-      "available": 54
+      "capacity": 110,
+      "available": 56
     },
     {
       "id": "EDI20251675-2026-11-17T20:15:00-Storsal",
@@ -20968,7 +20968,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93616/purchase?kanal=dxf",
       "eventId": "93616",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -20978,8 +20978,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 110
+      "capacity": 108,
+      "available": 106
     },
     {
       "id": "EDI20251030-2026-11-18T19:45:00-Kinosal",
@@ -21007,7 +21007,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93612/purchase?kanal=dxf",
       "eventId": "93612",
       "promoterId": "202",
-      "sold": 21,
+      "sold": 33,
       "eventStatus": "ok",
       "ratings": {
         "letterboxd": {
@@ -21017,7 +21017,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 89
+      "available": 77
     },
     {
       "id": "NOR20240691-2026-11-19T17:00:00-Kinosal",
@@ -21084,7 +21084,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93619/purchase?kanal=dxf",
       "eventId": "93619",
       "promoterId": "202",
-      "sold": 5,
+      "sold": 7,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -21095,7 +21095,7 @@
       },
       "reserved": 0,
       "capacity": 246,
-      "available": 241
+      "available": 239
     },
     {
       "id": "EDI20251030-2026-11-19T19:30:00-Kinosal",
@@ -21123,7 +21123,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93617/purchase?kanal=dxf",
       "eventId": "93617",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 1,
       "eventStatus": "ok",
       "ratings": {
         "letterboxd": {
@@ -21132,8 +21132,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 110
+      "capacity": 109,
+      "available": 108
     },
     {
       "id": "EDI20251675-2026-11-19T20:20:00-Storsal",
@@ -21295,7 +21295,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93714/purchase?kanal=dxf",
       "eventId": "93714",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -21305,8 +21305,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 286,
-      "available": 286
+      "capacity": 284,
+      "available": 282
     },
     {
       "id": "EDI20251030-2026-11-20T20:30:00-Kinosal",
@@ -21334,7 +21334,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93688/purchase?kanal=dxf",
       "eventId": "93688",
       "promoterId": "202",
-      "sold": 11,
+      "sold": 14,
       "eventStatus": "ok",
       "ratings": {
         "letterboxd": {
@@ -21344,7 +21344,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 99
+      "available": 96
     },
     {
       "id": "EDI20260641-2026-11-20T21:20:00-Storsal",
@@ -21381,11 +21381,11 @@
           "url": "https://www.imdb.com/title/tt35866986/"
         },
         "letterboxd": {
-          "value": 3.11,
+          "value": 3.1,
           "url": "https://letterboxd.com/film/how-to-rob-a-bank-2026/"
         },
         "tomatoes": {
-          "value": 78,
+          "value": 79,
           "url": "https://www.rottentomatoes.com/m/how_to_rob_a_bank_2026"
         }
       },
@@ -21432,6 +21432,54 @@
       "reserved": 0,
       "capacity": 107,
       "available": 104
+    },
+    {
+      "id": "EDI20260846-2026-11-21T17:00:00-Kinosal",
+      "title": "Wildwood",
+      "screen": "Kinosal",
+      "start": "2026-11-21T17:00:00",
+      "end": "2026-11-21T19:20:00",
+      "dayKey": "2026-11-21",
+      "runningMinutes": 130,
+      "runningLabel": "2 t. 10 min.",
+      "age": "12 år",
+      "tags": [
+        "Norsk tekst",
+        "Original tale"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Fantasy"
+      ],
+      "director": "Travis Knight",
+      "premiere": "2026-10-30",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/87e8cca69961cc03bd033d51dcf4e73da65744c2-1500x2104.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93773/purchase?kanal=dxf",
+      "eventId": "93773",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 8.7,
+          "id": "tt2056785",
+          "url": "https://www.imdb.com/title/tt2056785/"
+        },
+        "letterboxd": {
+          "value": 4.38,
+          "url": "https://letterboxd.com/film/wildwood-2026/"
+        },
+        "tomatoes": {
+          "value": 97,
+          "url": "https://www.rottentomatoes.com/m/wildwood"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
     },
     {
       "id": "EDI20251787-2026-12-01T13:00:00-Kinosal",
@@ -21542,7 +21590,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93642/purchase?kanal=dxf",
       "eventId": "93642",
       "promoterId": "202",
-      "sold": 6,
+      "sold": 8,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -21553,7 +21601,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 104
+      "available": 102
     },
     {
       "id": "EDI20251026-2026-12-15T20:00:00-Storsal",
@@ -21612,12 +21660,12 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93227/purchase?kanal=dxf",
       "eventId": "93227",
       "promoterId": "202",
-      "sold": 42,
+      "sold": 45,
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
-      "capacity": 108,
-      "available": 66
+      "capacity": 109,
+      "available": 64
     },
     {
       "id": "BVI20200545-2026-12-17T19:15:00-Kinosal",
@@ -21738,12 +21786,12 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93231/purchase?kanal=dxf",
       "eventId": "93231",
       "promoterId": "202",
-      "sold": 2,
+      "sold": 6,
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
       "capacity": 246,
-      "available": 244
+      "available": 240
     }
   ]
 }
