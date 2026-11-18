@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-17T19:46:24.080Z",
+  "updatedAt": "2026-11-18T04:15:17.058Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -20255,7 +20255,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.4,
+          "value": 6.5,
           "id": "tt35866986",
           "url": "https://www.imdb.com/title/tt35866986/"
         },
@@ -20425,7 +20425,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.4,
+          "value": 6.5,
           "id": "tt35866986",
           "url": "https://www.imdb.com/title/tt35866986/"
         },
@@ -20643,7 +20643,7 @@
           "url": "https://letterboxd.com/film/ebenezer-2026/"
         },
         "tomatoes": {
-          "value": 88,
+          "value": 90,
           "url": "https://www.rottentomatoes.com/m/ebenezer_2026"
         }
       },
@@ -20681,7 +20681,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.4,
+          "value": 6.5,
           "id": "tt35866986",
           "url": "https://www.imdb.com/title/tt35866986/"
         },
@@ -20933,7 +20933,7 @@
           "url": "https://letterboxd.com/film/ebenezer-2026/"
         },
         "tomatoes": {
-          "value": 88,
+          "value": 90,
           "url": "https://www.rottentomatoes.com/m/ebenezer_2026"
         }
       },
@@ -21007,17 +21007,22 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93612/purchase?kanal=dxf",
       "eventId": "93612",
       "promoterId": "202",
-      "sold": 49,
+      "sold": 51,
       "eventStatus": "ok",
       "ratings": {
         "letterboxd": {
-          "value": 3.67,
+          "value": 3.82,
           "url": "https://letterboxd.com/film/the-hunger-games-sunrise-on-the-reaping/"
+        },
+        "imdb": {
+          "value": 7.3,
+          "id": "tt32558705",
+          "url": "https://www.imdb.com/title/tt32558705/"
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 61
+      "capacity": 108,
+      "available": 57
     },
     {
       "id": "NOR20240691-2026-11-19T17:00:00-Kinosal",
@@ -21094,8 +21099,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 243,
-      "available": 218
+      "capacity": 246,
+      "available": 221
     },
     {
       "id": "EDI20251030-2026-11-19T19:30:00-Kinosal",
@@ -21123,17 +21128,22 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93617/purchase?kanal=dxf",
       "eventId": "93617",
       "promoterId": "202",
-      "sold": 7,
+      "sold": 9,
       "eventStatus": "ok",
       "ratings": {
         "letterboxd": {
-          "value": 3.67,
+          "value": 3.82,
           "url": "https://letterboxd.com/film/the-hunger-games-sunrise-on-the-reaping/"
+        },
+        "imdb": {
+          "value": 7.3,
+          "id": "tt32558705",
+          "url": "https://www.imdb.com/title/tt32558705/"
         }
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 103
+      "available": 101
     },
     {
       "id": "EDI20251675-2026-11-19T20:20:00-Storsal",
@@ -21174,7 +21184,7 @@
           "url": "https://letterboxd.com/film/ebenezer-2026/"
         },
         "tomatoes": {
-          "value": 88,
+          "value": 90,
           "url": "https://www.rottentomatoes.com/m/ebenezer_2026"
         }
       },
@@ -21334,17 +21344,22 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93688/purchase?kanal=dxf",
       "eventId": "93688",
       "promoterId": "202",
-      "sold": 28,
+      "sold": 34,
       "eventStatus": "ok",
       "ratings": {
         "letterboxd": {
-          "value": 3.67,
+          "value": 3.82,
           "url": "https://letterboxd.com/film/the-hunger-games-sunrise-on-the-reaping/"
+        },
+        "imdb": {
+          "value": 7.3,
+          "id": "tt32558705",
+          "url": "https://www.imdb.com/title/tt32558705/"
         }
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 82
+      "available": 76
     },
     {
       "id": "EDI20260641-2026-11-20T21:20:00-Storsal",
@@ -21376,7 +21391,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.4,
+          "value": 6.5,
           "id": "tt35866986",
           "url": "https://www.imdb.com/title/tt35866986/"
         },
@@ -21430,8 +21445,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 108,
-      "available": 100
+      "capacity": 110,
+      "available": 102
     },
     {
       "id": "EDI20250084-2026-11-21T15:30:00-Storsal",
@@ -21588,8 +21603,13 @@
       "eventStatus": "ok",
       "ratings": {
         "letterboxd": {
-          "value": 3.67,
+          "value": 3.82,
           "url": "https://letterboxd.com/film/the-hunger-games-sunrise-on-the-reaping/"
+        },
+        "imdb": {
+          "value": 7.3,
+          "id": "tt32558705",
+          "url": "https://www.imdb.com/title/tt32558705/"
         }
       },
       "reserved": 0,
@@ -21635,7 +21655,7 @@
           "url": "https://letterboxd.com/film/ebenezer-2026/"
         },
         "tomatoes": {
-          "value": 88,
+          "value": 90,
           "url": "https://www.rottentomatoes.com/m/ebenezer_2026"
         }
       },
@@ -21723,6 +21743,54 @@
       "available": 110
     },
     {
+      "id": "EDI20260846-2026-11-22T16:50:00-Storsal",
+      "title": "Wildwood",
+      "screen": "Storsal",
+      "start": "2026-11-22T16:50:00",
+      "end": "2026-11-22T19:10:00",
+      "dayKey": "2026-11-22",
+      "runningMinutes": 130,
+      "runningLabel": "2 t. 10 min.",
+      "age": "12 år",
+      "tags": [
+        "Norsk tekst",
+        "Original tale"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Fantasy"
+      ],
+      "director": "Travis Knight",
+      "premiere": "2026-10-30",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/87e8cca69961cc03bd033d51dcf4e73da65744c2-1500x2104.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93702/purchase?kanal=dxf",
+      "eventId": "93702",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 8.7,
+          "id": "tt2056785",
+          "url": "https://www.imdb.com/title/tt2056785/"
+        },
+        "letterboxd": {
+          "value": 4.38,
+          "url": "https://letterboxd.com/film/wildwood-2026/"
+        },
+        "tomatoes": {
+          "value": 97,
+          "url": "https://www.rottentomatoes.com/m/wildwood"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
+    },
+    {
       "id": "EDI20251675-2026-11-22T17:45:00-Kinosal",
       "title": "Ebenezer",
       "screen": "Kinosal",
@@ -21761,13 +21829,56 @@
           "url": "https://letterboxd.com/film/ebenezer-2026/"
         },
         "tomatoes": {
-          "value": 88,
+          "value": 90,
           "url": "https://www.rottentomatoes.com/m/ebenezer_2026"
         }
       },
       "reserved": 0,
       "capacity": 109,
       "available": 108
+    },
+    {
+      "id": "EDI20251030-2026-11-22T19:45:00-Storsal",
+      "title": "The Hunger Games: Sunrise on the Reaping",
+      "screen": "Storsal",
+      "start": "2026-11-22T19:45:00",
+      "end": "2026-11-22T22:33:00",
+      "dayKey": "2026-11-22",
+      "runningMinutes": 158,
+      "runningLabel": "2 t. 38 min.",
+      "age": "12 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Fantasy"
+      ],
+      "director": "Francis Lawrence",
+      "premiere": "2026-11-18",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/a77228cd6145b069bbe22cff595a7a15ce9db0fc-1500x2222.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93672/purchase?kanal=dxf",
+      "eventId": "93672",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "letterboxd": {
+          "value": 3.82,
+          "url": "https://letterboxd.com/film/the-hunger-games-sunrise-on-the-reaping/"
+        },
+        "imdb": {
+          "value": 7.3,
+          "id": "tt32558705",
+          "url": "https://www.imdb.com/title/tt32558705/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
     },
     {
       "id": "EDI20251703-2026-11-22T20:30:00-Kinosal",
@@ -21794,7 +21905,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93701/purchase?kanal=dxf",
       "eventId": "93701",
       "promoterId": "202",
-      "sold": 2,
+      "sold": 6,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -21803,9 +21914,203 @@
           "url": "https://www.imdb.com/title/tt6041174/"
         }
       },
+      "reserved": 2,
+      "capacity": 110,
+      "available": 102
+    },
+    {
+      "id": "EDI20251399-2026-11-24T13:00:00-Kinosal",
+      "title": "Markens grøde",
+      "screen": "Kinosal",
+      "start": "2026-11-24T13:00:00",
+      "end": "2026-11-24T15:45:27",
+      "dayKey": "2026-11-24",
+      "runningMinutes": 155,
+      "runningLabel": "2 t. 35 min.",
+      "age": "12 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": "Dag kino",
+      "kinoklubb": true,
+      "genres": [
+        "Drama"
+      ],
+      "director": "Hans Petter Moland",
+      "premiere": "2026-10-30",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/0054744e1f36936a0b20e8ec95cf475d967bb7a6-1080x1514.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93776/purchase?kanal=dxf",
+      "eventId": "93776",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 6.5,
+          "id": "tt0011440",
+          "url": "https://www.imdb.com/title/tt0011440/"
+        }
+      },
       "reserved": 0,
       "capacity": 110,
-      "available": 108
+      "available": 110
+    },
+    {
+      "id": "NOR20240691-2026-11-24T17:00:00-Kinosal",
+      "title": "Julenissens verksted",
+      "screen": "Kinosal",
+      "start": "2026-11-24T17:00:00",
+      "end": "2026-11-24T18:22:32",
+      "dayKey": "2026-11-24",
+      "runningMinutes": 73,
+      "runningLabel": "1 t. 13 min.",
+      "age": "Tillatt for alle",
+      "tags": [
+        "Norsk tale",
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Animation",
+        "Comedy",
+        "Family"
+      ],
+      "director": "Rasmus A. Sivertsen, Mette Tange",
+      "premiere": "2026-11-06",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/6709e48a4ac96bb7821de663e44feff52c689458-1190x1684.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93746/purchase?kanal=dxf",
+      "eventId": "93746",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7,
+          "id": "tt41475646",
+          "url": "https://www.imdb.com/title/tt41475646/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20251030-2026-11-24T19:30:00-Kinosal",
+      "title": "The Hunger Games: Sunrise on the Reaping",
+      "screen": "Kinosal",
+      "start": "2026-11-24T19:30:00",
+      "end": "2026-11-24T22:18:00",
+      "dayKey": "2026-11-24",
+      "runningMinutes": 158,
+      "runningLabel": "2 t. 38 min.",
+      "age": "12 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Fantasy"
+      ],
+      "director": "Francis Lawrence",
+      "premiere": "2026-11-18",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/a77228cd6145b069bbe22cff595a7a15ce9db0fc-1500x2222.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93678/purchase?kanal=dxf",
+      "eventId": "93678",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "letterboxd": {
+          "value": 3.82,
+          "url": "https://letterboxd.com/film/the-hunger-games-sunrise-on-the-reaping/"
+        },
+        "imdb": {
+          "value": 7.3,
+          "id": "tt32558705",
+          "url": "https://www.imdb.com/title/tt32558705/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20261644-2026-11-27T17:30:00-Storsal",
+      "title": "Hexe: det magiske riket",
+      "screen": "Storsal",
+      "start": "2026-11-27T17:30:00",
+      "end": "2026-11-27T19:29:00",
+      "dayKey": "2026-11-27",
+      "runningMinutes": 109,
+      "runningLabel": "1 t. 49 min.",
+      "age": "6 år",
+      "tags": [
+        "Norsk tale",
+        "Norsk tekst"
+      ],
+      "showType": "Norgespremiere",
+      "kinoklubb": false,
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ],
+      "director": "Fawn Veerasunthorn, Jason Hand",
+      "premiere": "2026-11-27",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/bf8e21c21311a71e249a351f0799a559591c98da-1440x2057.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93725/purchase?kanal=dxf",
+      "eventId": "93725",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "letterboxd": {
+          "value": 3.05,
+          "url": "https://letterboxd.com/film/hexed/"
+        },
+        "tomatoes": {
+          "value": 38,
+          "url": "https://www.rottentomatoes.com/m/hexed"
+        }
+      },
+      "reserved": 0,
+      "capacity": 286,
+      "available": 286
+    },
+    {
+      "id": "EDI20250806-2026-11-27T19:00:00-Kinosal",
+      "title": "Focker In-Law",
+      "screen": "Kinosal",
+      "start": "2026-11-27T19:00:00",
+      "end": "2026-11-27T20:55:00",
+      "dayKey": "2026-11-27",
+      "runningMinutes": 105,
+      "runningLabel": "1 t. 45 min.",
+      "age": "Tillatt for alle",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": "Norgespremiere",
+      "kinoklubb": false,
+      "genres": [
+        "Comedy"
+      ],
+      "director": "John Hamburg",
+      "premiere": "2026-11-27",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/c103dfec09c25b19ec70e6c5c3fe406a0ca4296d-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93724/purchase?kanal=dxf",
+      "eventId": "93724",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": null,
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
     },
     {
       "id": "EDI20251787-2026-12-01T13:00:00-Kinosal",
@@ -21888,8 +22193,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 103,
-      "available": 51
+      "capacity": 109,
+      "available": 57
     },
     {
       "id": "EDI20251703-2026-12-15T19:30:00-Kinosal",
@@ -21955,10 +22260,10 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93119/purchase?kanal=dxf",
       "eventId": "93119",
       "promoterId": "202",
-      "sold": 11,
+      "sold": 12,
       "eventStatus": "ok",
       "ratings": null,
-      "reserved": 1,
+      "reserved": 0,
       "capacity": 246,
       "available": 234
     },
@@ -21989,9 +22294,9 @@
       "sold": 54,
       "eventStatus": "ok",
       "ratings": null,
-      "reserved": 1,
+      "reserved": 0,
       "capacity": 110,
-      "available": 55
+      "available": 56
     },
     {
       "id": "BVI20200545-2026-12-17T19:15:00-Kinosal",
