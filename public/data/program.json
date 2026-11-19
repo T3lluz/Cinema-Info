@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-19T04:09:27.041Z",
+  "updatedAt": "2026-11-19T19:27:30.029Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -19005,7 +19005,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7,
+          "value": 6.9,
           "id": "tt41475646",
           "url": "https://www.imdb.com/title/tt41475646/"
         }
@@ -19218,7 +19218,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7,
+          "value": 6.9,
           "id": "tt41475646",
           "url": "https://www.imdb.com/title/tt41475646/"
         }
@@ -19440,7 +19440,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7,
+          "value": 6.9,
           "id": "tt41475646",
           "url": "https://www.imdb.com/title/tt41475646/"
         }
@@ -19603,7 +19603,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7,
+          "value": 6.9,
           "id": "tt41475646",
           "url": "https://www.imdb.com/title/tt41475646/"
         }
@@ -19770,7 +19770,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7,
+          "value": 6.9,
           "id": "tt41475646",
           "url": "https://www.imdb.com/title/tt41475646/"
         }
@@ -19853,7 +19853,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7,
+          "value": 6.9,
           "id": "tt41475646",
           "url": "https://www.imdb.com/title/tt41475646/"
         }
@@ -20012,7 +20012,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7,
+          "value": 6.9,
           "id": "tt41475646",
           "url": "https://www.imdb.com/title/tt41475646/"
         }
@@ -20137,7 +20137,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7,
+          "value": 6.9,
           "id": "tt41475646",
           "url": "https://www.imdb.com/title/tt41475646/"
         }
@@ -20307,7 +20307,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7,
+          "value": 6.9,
           "id": "tt41475646",
           "url": "https://www.imdb.com/title/tt41475646/"
         }
@@ -20637,7 +20637,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7,
+          "value": 6.9,
           "id": "tt41475646",
           "url": "https://www.imdb.com/title/tt41475646/"
         }
@@ -20806,7 +20806,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7,
+          "value": 6.9,
           "id": "tt41475646",
           "url": "https://www.imdb.com/title/tt41475646/"
         }
@@ -20850,7 +20850,7 @@
           "url": "https://www.imdb.com/title/tt32558705/"
         },
         "letterboxd": {
-          "value": 4.13,
+          "value": 4.1,
           "url": "https://letterboxd.com/film/the-hunger-games-sunrise-on-the-reaping/"
         }
       },
@@ -20885,18 +20885,18 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93620/purchase?kanal=dxf",
       "eventId": "93620",
       "promoterId": "202",
-      "sold": 9,
+      "sold": 18,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7,
+          "value": 6.9,
           "id": "tt41475646",
           "url": "https://www.imdb.com/title/tt41475646/"
         }
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 101
+      "available": 92
     },
     {
       "id": "EDI20251703-2026-11-19T18:00:00-Storsal",
@@ -20923,7 +20923,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93619/purchase?kanal=dxf",
       "eventId": "93619",
       "promoterId": "202",
-      "sold": 29,
+      "sold": 48,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -20933,8 +20933,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 244,
-      "available": 215
+      "capacity": 246,
+      "available": 198
     },
     {
       "id": "EDI20251030-2026-11-19T19:30:00-Kinosal",
@@ -20962,7 +20962,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93617/purchase?kanal=dxf",
       "eventId": "93617",
       "promoterId": "202",
-      "sold": 15,
+      "sold": 24,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -20971,13 +20971,13 @@
           "url": "https://www.imdb.com/title/tt32558705/"
         },
         "letterboxd": {
-          "value": 4.13,
+          "value": 4.1,
           "url": "https://letterboxd.com/film/the-hunger-games-sunrise-on-the-reaping/"
         }
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 95
+      "available": 86
     },
     {
       "id": "EDI20251675-2026-11-19T20:20:00-Storsal",
@@ -21005,7 +21005,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93719/purchase?kanal=dxf",
       "eventId": "93719",
       "promoterId": "202",
-      "sold": 6,
+      "sold": 9,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -21024,7 +21024,7 @@
       },
       "reserved": 0,
       "capacity": 286,
-      "available": 280
+      "available": 277
     },
     {
       "id": "NOR20240691-2026-11-20T17:00:00-Storsal",
@@ -21057,7 +21057,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7,
+          "value": 6.9,
           "id": "tt41475646",
           "url": "https://www.imdb.com/title/tt41475646/"
         }
@@ -21139,7 +21139,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93714/purchase?kanal=dxf",
       "eventId": "93714",
       "promoterId": "202",
-      "sold": 12,
+      "sold": 17,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -21150,7 +21150,7 @@
       },
       "reserved": 0,
       "capacity": 286,
-      "available": 274
+      "available": 269
     },
     {
       "id": "EDI20251030-2026-11-20T20:30:00-Kinosal",
@@ -21178,7 +21178,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93688/purchase?kanal=dxf",
       "eventId": "93688",
       "promoterId": "202",
-      "sold": 34,
+      "sold": 38,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -21187,13 +21187,13 @@
           "url": "https://www.imdb.com/title/tt32558705/"
         },
         "letterboxd": {
-          "value": 4.13,
+          "value": 4.1,
           "url": "https://letterboxd.com/film/the-hunger-games-sunrise-on-the-reaping/"
         }
       },
-      "reserved": 0,
+      "reserved": 1,
       "capacity": 110,
-      "available": 76
+      "available": 71
     },
     {
       "id": "EDI20260641-2026-11-20T21:20:00-Storsal",
@@ -21239,8 +21239,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 284,
-      "available": 282
+      "capacity": 286,
+      "available": 284
     },
     {
       "id": "NOR20240691-2026-11-21T15:00:00-Kinosal",
@@ -21269,18 +21269,18 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93695/purchase?kanal=dxf",
       "eventId": "93695",
       "promoterId": "202",
-      "sold": 16,
+      "sold": 21,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7,
+          "value": 6.9,
           "id": "tt41475646",
           "url": "https://www.imdb.com/title/tt41475646/"
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 94
+      "capacity": 107,
+      "available": 86
     },
     {
       "id": "EDI20250084-2026-11-21T15:30:00-Storsal",
@@ -21442,13 +21442,13 @@
           "url": "https://www.imdb.com/title/tt32558705/"
         },
         "letterboxd": {
-          "value": 4.13,
+          "value": 4.1,
           "url": "https://letterboxd.com/film/the-hunger-games-sunrise-on-the-reaping/"
         }
       },
       "reserved": 0,
-      "capacity": 108,
-      "available": 106
+      "capacity": 110,
+      "available": 108
     },
     {
       "id": "EDI20251675-2026-11-21T20:45:00-Storsal",
@@ -21567,7 +21567,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7,
+          "value": 6.9,
           "id": "tt41475646",
           "url": "https://www.imdb.com/title/tt41475646/"
         }
@@ -21706,7 +21706,7 @@
           "url": "https://www.imdb.com/title/tt32558705/"
         },
         "letterboxd": {
-          "value": 4.13,
+          "value": 4.1,
           "url": "https://letterboxd.com/film/the-hunger-games-sunrise-on-the-reaping/"
         }
       },
@@ -21739,7 +21739,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93701/purchase?kanal=dxf",
       "eventId": "93701",
       "promoterId": "202",
-      "sold": 9,
+      "sold": 12,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -21750,7 +21750,7 @@
       },
       "reserved": 2,
       "capacity": 107,
-      "available": 96
+      "available": 93
     },
     {
       "id": "EDI20251399-2026-11-24T13:00:00-Kinosal",
@@ -21776,7 +21776,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93776/purchase?kanal=dxf",
       "eventId": "93776",
       "promoterId": "202",
-      "sold": 2,
+      "sold": 4,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -21786,8 +21786,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 108
+      "capacity": 108,
+      "available": 104
     },
     {
       "id": "NOR20240691-2026-11-24T17:00:00-Kinosal",
@@ -21820,7 +21820,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7,
+          "value": 6.9,
           "id": "tt41475646",
           "url": "https://www.imdb.com/title/tt41475646/"
         }
@@ -21864,7 +21864,7 @@
           "url": "https://www.imdb.com/title/tt32558705/"
         },
         "letterboxd": {
-          "value": 4.13,
+          "value": 4.1,
           "url": "https://letterboxd.com/film/the-hunger-games-sunrise-on-the-reaping/"
         }
       },
@@ -21990,7 +21990,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93641/purchase?kanal=dxf",
       "eventId": "93641",
       "promoterId": "202",
-      "sold": 52,
+      "sold": 60,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -22001,7 +22001,7 @@
       },
       "reserved": 0,
       "capacity": 109,
-      "available": 57
+      "available": 49
     },
     {
       "id": "EDI20251703-2026-12-15T19:30:00-Kinosal",
@@ -22028,7 +22028,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93642/purchase?kanal=dxf",
       "eventId": "93642",
       "promoterId": "202",
-      "sold": 16,
+      "sold": 20,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -22038,8 +22038,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 94
+      "capacity": 106,
+      "available": 86
     },
     {
       "id": "EDI20251026-2026-12-15T20:00:00-Storsal",
@@ -22193,12 +22193,12 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93329/purchase?kanal=dxf",
       "eventId": "93329",
       "promoterId": "202",
-      "sold": 10,
+      "sold": 12,
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
-      "capacity": 107,
-      "available": 97
+      "capacity": 105,
+      "available": 93
     },
     {
       "id": "BVI20200545-2026-12-18T20:00:00-Storsal",
