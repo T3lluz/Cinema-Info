@@ -1,179 +1,7 @@
 {
-  "updatedAt": "2026-11-20T19:03:43.336Z",
+  "updatedAt": "2026-11-21T03:57:03.171Z",
   "cinema": "Buen kino",
   "shows": [
-    {
-      "id": "EDI20260556-2026-07-23T17:00:00-Kinosal",
-      "title": "Superhunden Charlie",
-      "screen": "Kinosal",
-      "start": "2026-07-23T17:00:00",
-      "end": "2026-07-23T18:42:00",
-      "dayKey": "2026-07-23",
-      "runningMinutes": 95,
-      "runningLabel": "1 t. 35 min.",
-      "age": "6 år",
-      "tags": [
-        "Norsk tale",
-        "Norsk tekst"
-      ],
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/eb6e013b74dca3128a5e20492a01d569fd5b4c13-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
-      "ticketUrl": "https://checkout.ebillett.no/202/events/92665/purchase?kanal=dxf",
-      "eventId": "92665",
-      "promoterId": "202",
-      "sold": 12,
-      "eventStatus": "ok",
-      "reserved": 0,
-      "capacity": 110,
-      "available": 98,
-      "ratings": {
-        "imdb": {
-          "value": 5.3,
-          "id": "tt29612071",
-          "url": "https://www.imdb.com/title/tt29612071/"
-        },
-        "letterboxd": {
-          "value": 2.33,
-          "url": "https://letterboxd.com/film/charlie-the-wonderdog/"
-        },
-        "tomatoes": {
-          "value": 74,
-          "url": "https://www.rottentomatoes.com/m/charlie_the_wonderdog"
-        }
-      },
-      "genres": [
-        "Animation",
-        "Comedy",
-        "Family"
-      ]
-    },
-    {
-      "id": "UIP20241749-2026-07-23T17:30:00-Storsal",
-      "title": "Minions & monstre",
-      "screen": "Storsal",
-      "start": "2026-07-23T17:30:00",
-      "end": "2026-07-23T19:10:00",
-      "dayKey": "2026-07-23",
-      "runningMinutes": 85,
-      "runningLabel": "1 t. 25 min.",
-      "age": "6 år",
-      "tags": [
-        "Norsk tale",
-        "Norsk tekst"
-      ],
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/f639a9cb4e51005f32fc6e6864e40753f9066914-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
-      "ticketUrl": "https://checkout.ebillett.no/202/events/92692/purchase?kanal=dxf",
-      "eventId": "92692",
-      "promoterId": "202",
-      "sold": 23,
-      "eventStatus": "ok",
-      "reserved": 0,
-      "capacity": 286,
-      "available": 263,
-      "ratings": {
-        "imdb": {
-          "value": 6.6,
-          "id": "tt32890033",
-          "url": "https://www.imdb.com/title/tt32890033/"
-        },
-        "letterboxd": {
-          "value": 3.13,
-          "url": "https://letterboxd.com/film/minions-monsters/"
-        },
-        "tomatoes": {
-          "value": 75,
-          "url": "https://www.rottentomatoes.com/m/minions_and_monsters"
-        }
-      },
-      "genres": [
-        "Animation",
-        "Adventure",
-        "Comedy"
-      ]
-    },
-    {
-      "id": "UIP20241680-2026-07-23T19:30:00-Kinosal",
-      "title": "The Odyssey",
-      "screen": "Kinosal",
-      "start": "2026-07-23T19:30:00",
-      "end": "2026-07-23T22:32:23",
-      "dayKey": "2026-07-23",
-      "runningMinutes": 172,
-      "runningLabel": "2 t. 52 min.",
-      "age": "12 år",
-      "tags": [
-        "Norsk tekst"
-      ],
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/714c2df548403065609d371f42c15d648ba1c429-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
-      "ticketUrl": "https://checkout.ebillett.no/202/events/92680/purchase?kanal=dxf",
-      "eventId": "92680",
-      "promoterId": "202",
-      "sold": 52,
-      "eventStatus": "ok",
-      "reserved": 0,
-      "capacity": 110,
-      "available": 58,
-      "ratings": {
-        "imdb": {
-          "value": 8.5,
-          "id": "tt33764258",
-          "url": "https://www.imdb.com/title/tt33764258/"
-        },
-        "letterboxd": {
-          "value": 4.37,
-          "url": "https://letterboxd.com/film/the-odyssey-2026/"
-        },
-        "tomatoes": {
-          "value": 97,
-          "url": "https://www.rottentomatoes.com/m/the_odyssey_2026"
-        }
-      },
-      "genres": [
-        "Action",
-        "Adventure",
-        "Fantasy"
-      ]
-    },
-    {
-      "id": "EDI20260626-2026-07-23T20:15:00-Storsal",
-      "title": "Evil Dead Burn",
-      "screen": "Storsal",
-      "start": "2026-07-23T20:15:00",
-      "end": "2026-07-23T22:16:00",
-      "dayKey": "2026-07-23",
-      "runningMinutes": 110,
-      "runningLabel": "1 t. 50 min.",
-      "age": "15 år",
-      "tags": [
-        "Norsk tekst"
-      ],
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/e55446677a8ed02cd0cfa40238c2230e94ba00df-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
-      "ticketUrl": "https://checkout.ebillett.no/202/events/92668/purchase?kanal=dxf",
-      "eventId": "92668",
-      "promoterId": "202",
-      "sold": 6,
-      "eventStatus": "ok",
-      "reserved": 0,
-      "capacity": 286,
-      "available": 280,
-      "ratings": {
-        "imdb": {
-          "value": 6.4,
-          "id": "tt31170389",
-          "url": "https://www.imdb.com/title/tt31170389/"
-        },
-        "letterboxd": {
-          "value": 3.1,
-          "url": "https://letterboxd.com/film/evil-dead-burn/"
-        },
-        "tomatoes": {
-          "value": 74,
-          "url": "https://www.rottentomatoes.com/m/evil_dead_burn"
-        }
-      },
-      "genres": [
-        "Horror"
-      ]
-    },
     {
       "id": "UIP20241749-2026-07-24T16:50:00-Storsal",
       "title": "Minions & monstre",
@@ -20680,7 +20508,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.7,
+          "value": 7.6,
           "id": "tt32558705",
           "url": "https://www.imdb.com/title/tt32558705/"
         },
@@ -20805,7 +20633,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.7,
+          "value": 7.6,
           "id": "tt32558705",
           "url": "https://www.imdb.com/title/tt32558705/"
         },
@@ -21025,7 +20853,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.7,
+          "value": 7.6,
           "id": "tt32558705",
           "url": "https://www.imdb.com/title/tt32558705/"
         },
@@ -21126,8 +20954,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 108,
-      "available": 64
+      "capacity": 110,
+      "available": 66
     },
     {
       "id": "EDI20250084-2026-11-21T15:30:00-Storsal",
@@ -21155,7 +20983,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93742/purchase?kanal=dxf",
       "eventId": "93742",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -21166,7 +20994,7 @@
       },
       "reserved": 0,
       "capacity": 246,
-      "available": 246
+      "available": 244
     },
     {
       "id": "EDI20260846-2026-11-21T17:00:00-Kinosal",
@@ -21284,7 +21112,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.7,
+          "value": 7.6,
           "id": "tt32558705",
           "url": "https://www.imdb.com/title/tt32558705/"
         },
@@ -21548,11 +21376,11 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93672/purchase?kanal=dxf",
       "eventId": "93672",
       "promoterId": "202",
-      "sold": 4,
+      "sold": 6,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.7,
+          "value": 7.6,
           "id": "tt32558705",
           "url": "https://www.imdb.com/title/tt32558705/"
         },
@@ -21567,7 +21395,7 @@
       },
       "reserved": 0,
       "capacity": 286,
-      "available": 282
+      "available": 280
     },
     {
       "id": "EDI20251703-2026-11-22T20:30:00-Kinosal",
@@ -21714,7 +21542,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.7,
+          "value": 7.6,
           "id": "tt32558705",
           "url": "https://www.imdb.com/title/tt32558705/"
         },
@@ -21808,7 +21636,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 7.7,
+          "value": 7.6,
           "id": "tt32558705",
           "url": "https://www.imdb.com/title/tt32558705/"
         },
@@ -22201,8 +22029,8 @@
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
-      "capacity": 106,
-      "available": 96
+      "capacity": 110,
+      "available": 100
     },
     {
       "id": "EDI20251026-2026-12-17T20:00:00-Storsal",
