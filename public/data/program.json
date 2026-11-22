@@ -1,213 +1,7 @@
 {
-  "updatedAt": "2026-11-21T17:56:29.910Z",
+  "updatedAt": "2026-11-22T03:06:48.004Z",
   "cinema": "Buen kino",
   "shows": [
-    {
-      "id": "UIP20241749-2026-07-24T16:50:00-Storsal",
-      "title": "Minions & monstre",
-      "screen": "Storsal",
-      "start": "2026-07-24T16:50:00",
-      "end": "2026-07-24T18:30:00",
-      "dayKey": "2026-07-24",
-      "runningMinutes": 85,
-      "runningLabel": "1 t. 25 min.",
-      "age": "6 år",
-      "tags": [
-        "Norsk tale",
-        "Norsk tekst"
-      ],
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/f639a9cb4e51005f32fc6e6864e40753f9066914-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
-      "ticketUrl": "https://checkout.ebillett.no/202/events/92652/purchase?kanal=dxf",
-      "eventId": "92652",
-      "promoterId": "202",
-      "sold": 55,
-      "eventStatus": "ok",
-      "reserved": 0,
-      "capacity": 246,
-      "available": 191,
-      "ratings": {
-        "imdb": {
-          "value": 6.6,
-          "id": "tt32890033",
-          "url": "https://www.imdb.com/title/tt32890033/"
-        },
-        "letterboxd": {
-          "value": 3.13,
-          "url": "https://letterboxd.com/film/minions-monsters/"
-        },
-        "tomatoes": {
-          "value": 75,
-          "url": "https://www.rottentomatoes.com/m/minions_and_monsters"
-        }
-      },
-      "genres": [
-        "Animation",
-        "Adventure",
-        "Comedy"
-      ]
-    },
-    {
-      "id": "EDI20260819-2026-07-24T17:30:00-Kinosal",
-      "title": "Vaiana",
-      "screen": "Kinosal",
-      "start": "2026-07-24T17:30:00",
-      "end": "2026-07-24T19:35:51",
-      "dayKey": "2026-07-24",
-      "runningMinutes": 115,
-      "runningLabel": "1 t. 55 min.",
-      "age": "6 år",
-      "tags": [
-        "Norsk tale",
-        "Norsk tekst"
-      ],
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/00979151e340722952a4e453830b15b8bb625663-1440x2057.jpg?w=240&h=340&fit=crop&auto=format",
-      "ticketUrl": "https://checkout.ebillett.no/202/events/92675/purchase?kanal=dxf",
-      "eventId": "92675",
-      "promoterId": "202",
-      "sold": 55,
-      "eventStatus": "ok",
-      "reserved": 0,
-      "capacity": 110,
-      "available": 55,
-      "ratings": {
-        "imdb": {
-          "value": 5.8,
-          "id": "tt27419466",
-          "url": "https://www.imdb.com/title/tt27419466/"
-        },
-        "letterboxd": {
-          "value": 2.71,
-          "url": "https://letterboxd.com/film/moana/"
-        },
-        "tomatoes": {
-          "value": 88,
-          "url": "https://www.rottentomatoes.com/m/moana_2026"
-        }
-      },
-      "genres": [
-        "Action",
-        "Adventure",
-        "Comedy"
-      ]
-    },
-    {
-      "id": "EDI20260535-2026-07-24T19:00:00-Storsal",
-      "title": "Jackass: Best and last",
-      "screen": "Storsal",
-      "start": "2026-07-24T19:00:00",
-      "end": "2026-07-24T20:42:00",
-      "dayKey": "2026-07-24",
-      "runningMinutes": 92,
-      "runningLabel": "1 t. 32 min.",
-      "age": "12 år",
-      "tags": [
-        "Norsk tekst"
-      ],
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/e228c287db1c049b3e905a5a4a703b369f70bdbf-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
-      "ticketUrl": "https://checkout.ebillett.no/202/events/92653/purchase?kanal=dxf",
-      "eventId": "92653",
-      "promoterId": "202",
-      "sold": 5,
-      "eventStatus": "ok",
-      "reserved": 0,
-      "capacity": 246,
-      "available": 241,
-      "ratings": {
-        "imdb": {
-          "value": 6.6,
-          "id": "tt39316472",
-          "url": "https://www.imdb.com/title/tt39316472/"
-        }
-      },
-      "genres": [
-        "Documentary",
-        "Comedy"
-      ]
-    },
-    {
-      "id": "UIP20241680-2026-07-24T20:15:00-Kinosal",
-      "title": "The Odyssey",
-      "screen": "Kinosal",
-      "start": "2026-07-24T20:15:00",
-      "end": "2026-07-24T23:17:23",
-      "dayKey": "2026-07-24",
-      "runningMinutes": 172,
-      "runningLabel": "2 t. 52 min.",
-      "age": "12 år",
-      "tags": [
-        "Norsk tekst"
-      ],
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/714c2df548403065609d371f42c15d648ba1c429-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
-      "ticketUrl": "https://checkout.ebillett.no/202/events/92650/purchase?kanal=dxf",
-      "eventId": "92650",
-      "promoterId": "202",
-      "sold": 91,
-      "eventStatus": "ok",
-      "reserved": 0,
-      "capacity": 110,
-      "available": 19,
-      "ratings": {
-        "imdb": {
-          "value": 8.5,
-          "id": "tt33764258",
-          "url": "https://www.imdb.com/title/tt33764258/"
-        },
-        "letterboxd": {
-          "value": 4.37,
-          "url": "https://letterboxd.com/film/the-odyssey-2026/"
-        },
-        "tomatoes": {
-          "value": 97,
-          "url": "https://www.rottentomatoes.com/m/the_odyssey_2026"
-        }
-      },
-      "genres": [
-        "Action",
-        "Adventure",
-        "Fantasy"
-      ]
-    },
-    {
-      "id": "EDI20260626-2026-07-24T21:15:00-Storsal",
-      "title": "Evil Dead Burn",
-      "screen": "Storsal",
-      "start": "2026-07-24T21:15:00",
-      "end": "2026-07-24T23:16:00",
-      "dayKey": "2026-07-24",
-      "runningMinutes": 110,
-      "runningLabel": "1 t. 50 min.",
-      "age": "15 år",
-      "tags": [
-        "Norsk tekst"
-      ],
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/e55446677a8ed02cd0cfa40238c2230e94ba00df-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
-      "ticketUrl": "https://checkout.ebillett.no/202/events/92654/purchase?kanal=dxf",
-      "eventId": "92654",
-      "promoterId": "202",
-      "sold": 9,
-      "eventStatus": "ok",
-      "reserved": 0,
-      "capacity": 246,
-      "available": 237,
-      "ratings": {
-        "imdb": {
-          "value": 6.4,
-          "id": "tt31170389",
-          "url": "https://www.imdb.com/title/tt31170389/"
-        },
-        "letterboxd": {
-          "value": 3.1,
-          "url": "https://letterboxd.com/film/evil-dead-burn/"
-        },
-        "tomatoes": {
-          "value": 74,
-          "url": "https://www.rottentomatoes.com/m/evil_dead_burn"
-        }
-      },
-      "genres": [
-        "Horror"
-      ]
-    },
     {
       "id": "UIP20241749-2026-07-25T15:00:00-Kinosal",
       "title": "Minions & monstre",
@@ -18668,7 +18462,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.9,
+          "value": 6.8,
           "id": "tt41475646",
           "url": "https://www.imdb.com/title/tt41475646/"
         }
@@ -18881,7 +18675,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.9,
+          "value": 6.8,
           "id": "tt41475646",
           "url": "https://www.imdb.com/title/tt41475646/"
         }
@@ -19103,7 +18897,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.9,
+          "value": 6.8,
           "id": "tt41475646",
           "url": "https://www.imdb.com/title/tt41475646/"
         }
@@ -19266,7 +19060,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.9,
+          "value": 6.8,
           "id": "tt41475646",
           "url": "https://www.imdb.com/title/tt41475646/"
         }
@@ -19433,7 +19227,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.9,
+          "value": 6.8,
           "id": "tt41475646",
           "url": "https://www.imdb.com/title/tt41475646/"
         }
@@ -19516,7 +19310,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.9,
+          "value": 6.8,
           "id": "tt41475646",
           "url": "https://www.imdb.com/title/tt41475646/"
         }
@@ -19675,7 +19469,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.9,
+          "value": 6.8,
           "id": "tt41475646",
           "url": "https://www.imdb.com/title/tt41475646/"
         }
@@ -19700,8 +19494,7 @@
       "showType": "Norgespremiere",
       "kinoklubb": false,
       "genres": [
-        "Documentary",
-        "Family"
+        "Comedy"
       ],
       "director": "Even Hafnor",
       "premiere": "2026-11-13",
@@ -19714,8 +19507,8 @@
       "ratings": {
         "imdb": {
           "value": 7.6,
-          "id": "tt6041174",
-          "url": "https://www.imdb.com/title/tt6041174/"
+          "id": "tt44272926",
+          "url": "https://www.imdb.com/title/tt44272926/"
         }
       },
       "reserved": 0,
@@ -19800,7 +19593,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.9,
+          "value": 6.8,
           "id": "tt41475646",
           "url": "https://www.imdb.com/title/tt41475646/"
         }
@@ -19870,8 +19663,7 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Documentary",
-        "Family"
+        "Comedy"
       ],
       "director": "Even Hafnor",
       "premiere": "2026-11-13",
@@ -19884,8 +19676,8 @@
       "ratings": {
         "imdb": {
           "value": 7.6,
-          "id": "tt6041174",
-          "url": "https://www.imdb.com/title/tt6041174/"
+          "id": "tt44272926",
+          "url": "https://www.imdb.com/title/tt44272926/"
         }
       },
       "reserved": 0,
@@ -19970,7 +19762,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.9,
+          "value": 6.8,
           "id": "tt41475646",
           "url": "https://www.imdb.com/title/tt41475646/"
         }
@@ -20079,8 +19871,7 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Documentary",
-        "Family"
+        "Comedy"
       ],
       "director": "Even Hafnor",
       "premiere": "2026-11-13",
@@ -20093,8 +19884,8 @@
       "ratings": {
         "imdb": {
           "value": 7.6,
-          "id": "tt6041174",
-          "url": "https://www.imdb.com/title/tt6041174/"
+          "id": "tt44272926",
+          "url": "https://www.imdb.com/title/tt44272926/"
         }
       },
       "reserved": 0,
@@ -20136,11 +19927,11 @@
           "url": "https://www.imdb.com/title/tt38773219/"
         },
         "letterboxd": {
-          "value": 3.24,
+          "value": 3.23,
           "url": "https://letterboxd.com/film/ebenezer-2026/"
         },
         "tomatoes": {
-          "value": 89,
+          "value": 90,
           "url": "https://www.rottentomatoes.com/m/ebenezer_2026"
         }
       },
@@ -20300,7 +20091,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.9,
+          "value": 6.8,
           "id": "tt41475646",
           "url": "https://www.imdb.com/title/tt41475646/"
         }
@@ -20426,11 +20217,11 @@
           "url": "https://www.imdb.com/title/tt38773219/"
         },
         "letterboxd": {
-          "value": 3.24,
+          "value": 3.23,
           "url": "https://letterboxd.com/film/ebenezer-2026/"
         },
         "tomatoes": {
-          "value": 89,
+          "value": 90,
           "url": "https://www.rottentomatoes.com/m/ebenezer_2026"
         }
       },
@@ -20469,7 +20260,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.9,
+          "value": 6.8,
           "id": "tt41475646",
           "url": "https://www.imdb.com/title/tt41475646/"
         }
@@ -20513,7 +20304,7 @@
           "url": "https://www.imdb.com/title/tt32558705/"
         },
         "letterboxd": {
-          "value": 4.09,
+          "value": 4.08,
           "url": "https://letterboxd.com/film/the-hunger-games-sunrise-on-the-reaping/"
         },
         "tomatoes": {
@@ -20556,7 +20347,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.9,
+          "value": 6.8,
           "id": "tt41475646",
           "url": "https://www.imdb.com/title/tt41475646/"
         }
@@ -20581,8 +20372,7 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Documentary",
-        "Family"
+        "Comedy"
       ],
       "director": "Even Hafnor",
       "premiere": "2026-11-13",
@@ -20595,8 +20385,8 @@
       "ratings": {
         "imdb": {
           "value": 7.6,
-          "id": "tt6041174",
-          "url": "https://www.imdb.com/title/tt6041174/"
+          "id": "tt44272926",
+          "url": "https://www.imdb.com/title/tt44272926/"
         }
       },
       "reserved": 0,
@@ -20638,7 +20428,7 @@
           "url": "https://www.imdb.com/title/tt32558705/"
         },
         "letterboxd": {
-          "value": 4.09,
+          "value": 4.08,
           "url": "https://letterboxd.com/film/the-hunger-games-sunrise-on-the-reaping/"
         },
         "tomatoes": {
@@ -20685,11 +20475,11 @@
           "url": "https://www.imdb.com/title/tt38773219/"
         },
         "letterboxd": {
-          "value": 3.24,
+          "value": 3.23,
           "url": "https://letterboxd.com/film/ebenezer-2026/"
         },
         "tomatoes": {
-          "value": 89,
+          "value": 90,
           "url": "https://www.rottentomatoes.com/m/ebenezer_2026"
         }
       },
@@ -20728,7 +20518,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.9,
+          "value": 6.8,
           "id": "tt41475646",
           "url": "https://www.imdb.com/title/tt41475646/"
         }
@@ -20801,8 +20591,7 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Documentary",
-        "Family"
+        "Comedy"
       ],
       "director": "Even Hafnor",
       "premiere": "2026-11-13",
@@ -20815,8 +20604,8 @@
       "ratings": {
         "imdb": {
           "value": 7.6,
-          "id": "tt6041174",
-          "url": "https://www.imdb.com/title/tt6041174/"
+          "id": "tt44272926",
+          "url": "https://www.imdb.com/title/tt44272926/"
         }
       },
       "reserved": 0,
@@ -20858,7 +20647,7 @@
           "url": "https://www.imdb.com/title/tt32558705/"
         },
         "letterboxd": {
-          "value": 4.09,
+          "value": 4.08,
           "url": "https://letterboxd.com/film/the-hunger-games-sunrise-on-the-reaping/"
         },
         "tomatoes": {
@@ -20948,7 +20737,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.9,
+          "value": 6.8,
           "id": "tt41475646",
           "url": "https://www.imdb.com/title/tt41475646/"
         }
@@ -21060,8 +20849,7 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Documentary",
-        "Family"
+        "Comedy"
       ],
       "director": "Even Hafnor",
       "premiere": "2026-11-13",
@@ -21074,8 +20862,8 @@
       "ratings": {
         "imdb": {
           "value": 7.6,
-          "id": "tt6041174",
-          "url": "https://www.imdb.com/title/tt6041174/"
+          "id": "tt44272926",
+          "url": "https://www.imdb.com/title/tt44272926/"
         }
       },
       "reserved": 0,
@@ -21108,7 +20896,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93673/purchase?kanal=dxf",
       "eventId": "93673",
       "promoterId": "202",
-      "sold": 39,
+      "sold": 46,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -21117,7 +20905,7 @@
           "url": "https://www.imdb.com/title/tt32558705/"
         },
         "letterboxd": {
-          "value": 4.09,
+          "value": 4.08,
           "url": "https://letterboxd.com/film/the-hunger-games-sunrise-on-the-reaping/"
         },
         "tomatoes": {
@@ -21127,7 +20915,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 71
+      "available": 64
     },
     {
       "id": "EDI20251675-2026-11-21T20:45:00-Storsal",
@@ -21164,17 +20952,17 @@
           "url": "https://www.imdb.com/title/tt38773219/"
         },
         "letterboxd": {
-          "value": 3.24,
+          "value": 3.23,
           "url": "https://letterboxd.com/film/ebenezer-2026/"
         },
         "tomatoes": {
-          "value": 89,
+          "value": 90,
           "url": "https://www.rottentomatoes.com/m/ebenezer_2026"
         }
       },
       "reserved": 0,
-      "capacity": 244,
-      "available": 240
+      "capacity": 246,
+      "available": 242
     },
     {
       "id": "EDI20250084-2026-11-22T14:50:00-Storsal",
@@ -21242,18 +21030,18 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93699/purchase?kanal=dxf",
       "eventId": "93699",
       "promoterId": "202",
-      "sold": 14,
+      "sold": 18,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.9,
+          "value": 6.8,
           "id": "tt41475646",
           "url": "https://www.imdb.com/title/tt41475646/"
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 96
+      "capacity": 106,
+      "available": 88
     },
     {
       "id": "EDI20260846-2026-11-22T16:50:00-Storsal",
@@ -21338,11 +21126,11 @@
           "url": "https://www.imdb.com/title/tt38773219/"
         },
         "letterboxd": {
-          "value": 3.24,
+          "value": 3.23,
           "url": "https://letterboxd.com/film/ebenezer-2026/"
         },
         "tomatoes": {
-          "value": 89,
+          "value": 90,
           "url": "https://www.rottentomatoes.com/m/ebenezer_2026"
         }
       },
@@ -21385,7 +21173,7 @@
           "url": "https://www.imdb.com/title/tt32558705/"
         },
         "letterboxd": {
-          "value": 4.09,
+          "value": 4.08,
           "url": "https://letterboxd.com/film/the-hunger-games-sunrise-on-the-reaping/"
         },
         "tomatoes": {
@@ -21413,8 +21201,7 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Documentary",
-        "Family"
+        "Comedy"
       ],
       "director": "Even Hafnor",
       "premiere": "2026-11-13",
@@ -21422,18 +21209,18 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93701/purchase?kanal=dxf",
       "eventId": "93701",
       "promoterId": "202",
-      "sold": 14,
+      "sold": 18,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
           "value": 7.6,
-          "id": "tt6041174",
-          "url": "https://www.imdb.com/title/tt6041174/"
+          "id": "tt44272926",
+          "url": "https://www.imdb.com/title/tt44272926/"
         }
       },
       "reserved": 2,
       "capacity": 110,
-      "available": 94
+      "available": 90
     },
     {
       "id": "EDI20251399-2026-11-24T13:00:00-Kinosal",
@@ -21503,7 +21290,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.9,
+          "value": 6.8,
           "id": "tt41475646",
           "url": "https://www.imdb.com/title/tt41475646/"
         }
@@ -21547,7 +21334,7 @@
           "url": "https://www.imdb.com/title/tt32558705/"
         },
         "letterboxd": {
-          "value": 4.09,
+          "value": 4.08,
           "url": "https://letterboxd.com/film/the-hunger-games-sunrise-on-the-reaping/"
         },
         "tomatoes": {
@@ -21594,11 +21381,11 @@
           "url": "https://www.imdb.com/title/tt38773219/"
         },
         "letterboxd": {
-          "value": 3.24,
+          "value": 3.23,
           "url": "https://letterboxd.com/film/ebenezer-2026/"
         },
         "tomatoes": {
-          "value": 89,
+          "value": 90,
           "url": "https://www.rottentomatoes.com/m/ebenezer_2026"
         }
       },
@@ -21641,7 +21428,7 @@
           "url": "https://www.imdb.com/title/tt32558705/"
         },
         "letterboxd": {
-          "value": 4.09,
+          "value": 4.08,
           "url": "https://letterboxd.com/film/the-hunger-games-sunrise-on-the-reaping/"
         },
         "tomatoes": {
@@ -21669,8 +21456,7 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Documentary",
-        "Family"
+        "Comedy"
       ],
       "director": "Even Hafnor",
       "premiere": "2026-11-13",
@@ -21683,8 +21469,8 @@
       "ratings": {
         "imdb": {
           "value": 7.6,
-          "id": "tt6041174",
-          "url": "https://www.imdb.com/title/tt6041174/"
+          "id": "tt44272926",
+          "url": "https://www.imdb.com/title/tt44272926/"
         }
       },
       "reserved": 0,
@@ -21722,7 +21508,7 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.9,
+          "value": 6.8,
           "id": "tt41475646",
           "url": "https://www.imdb.com/title/tt41475646/"
         }
@@ -21913,8 +21699,7 @@
       "showType": "Seniorkino",
       "kinoklubb": false,
       "genres": [
-        "Documentary",
-        "Family"
+        "Comedy"
       ],
       "director": "Even Hafnor",
       "premiere": "2026-11-13",
@@ -21927,13 +21712,13 @@
       "ratings": {
         "imdb": {
           "value": 7.6,
-          "id": "tt6041174",
-          "url": "https://www.imdb.com/title/tt6041174/"
+          "id": "tt44272926",
+          "url": "https://www.imdb.com/title/tt44272926/"
         }
       },
       "reserved": 0,
-      "capacity": 107,
-      "available": 37
+      "capacity": 109,
+      "available": 39
     },
     {
       "id": "EDI20251703-2026-12-15T19:30:00-Kinosal",
@@ -21951,8 +21736,7 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Documentary",
-        "Family"
+        "Comedy"
       ],
       "director": "Even Hafnor",
       "premiere": "2026-11-13",
@@ -21965,8 +21749,8 @@
       "ratings": {
         "imdb": {
           "value": 7.6,
-          "id": "tt6041174",
-          "url": "https://www.imdb.com/title/tt6041174/"
+          "id": "tt44272926",
+          "url": "https://www.imdb.com/title/tt44272926/"
         }
       },
       "reserved": 0,
