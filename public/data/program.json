@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T05:25:17.799Z",
+  "updatedAt": "2026-11-25T20:27:02.904Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -19639,7 +19639,7 @@
           "url": "https://www.imdb.com/title/tt32558705/"
         },
         "letterboxd": {
-          "value": 4.02,
+          "value": 4.01,
           "url": "https://letterboxd.com/film/the-hunger-games-sunrise-on-the-reaping/"
         },
         "tomatoes": {
@@ -19763,7 +19763,7 @@
           "url": "https://www.imdb.com/title/tt32558705/"
         },
         "letterboxd": {
-          "value": 4.02,
+          "value": 4.01,
           "url": "https://letterboxd.com/film/the-hunger-games-sunrise-on-the-reaping/"
         },
         "tomatoes": {
@@ -19982,7 +19982,7 @@
           "url": "https://www.imdb.com/title/tt32558705/"
         },
         "letterboxd": {
-          "value": 4.02,
+          "value": 4.01,
           "url": "https://letterboxd.com/film/the-hunger-games-sunrise-on-the-reaping/"
         },
         "tomatoes": {
@@ -20240,7 +20240,7 @@
           "url": "https://www.imdb.com/title/tt32558705/"
         },
         "letterboxd": {
-          "value": 4.02,
+          "value": 4.01,
           "url": "https://letterboxd.com/film/the-hunger-games-sunrise-on-the-reaping/"
         },
         "tomatoes": {
@@ -20508,7 +20508,7 @@
           "url": "https://www.imdb.com/title/tt32558705/"
         },
         "letterboxd": {
-          "value": 4.02,
+          "value": 4.01,
           "url": "https://letterboxd.com/film/the-hunger-games-sunrise-on-the-reaping/"
         },
         "tomatoes": {
@@ -20669,7 +20669,7 @@
           "url": "https://www.imdb.com/title/tt32558705/"
         },
         "letterboxd": {
-          "value": 4.02,
+          "value": 4.01,
           "url": "https://letterboxd.com/film/the-hunger-games-sunrise-on-the-reaping/"
         },
         "tomatoes": {
@@ -20754,7 +20754,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93767/purchase?kanal=dxf",
       "eventId": "93767",
       "promoterId": "202",
-      "sold": 16,
+      "sold": 28,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -20763,7 +20763,7 @@
           "url": "https://www.imdb.com/title/tt32558705/"
         },
         "letterboxd": {
-          "value": 4.02,
+          "value": 4.01,
           "url": "https://letterboxd.com/film/the-hunger-games-sunrise-on-the-reaping/"
         },
         "tomatoes": {
@@ -20773,7 +20773,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 94
+      "available": 82
     },
     {
       "id": "EDI20251703-2026-11-25T20:30:00-Kinosal",
@@ -20799,7 +20799,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93768/purchase?kanal=dxf",
       "eventId": "93768",
       "promoterId": "202",
-      "sold": 32,
+      "sold": 60,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -20810,7 +20810,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 78
+      "available": 50
     },
     {
       "id": "NOR20240691-2026-11-26T17:00:00-Kinosal",
@@ -20876,7 +20876,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93794/purchase?kanal=dxf",
       "eventId": "93794",
       "promoterId": "202",
-      "sold": 2,
+      "sold": 4,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -20887,7 +20887,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 108
+      "available": 106
     },
     {
       "id": "NOR20240691-2026-11-27T17:00:00-Kinosal",
@@ -20916,7 +20916,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93810/purchase?kanal=dxf",
       "eventId": "93810",
       "promoterId": "202",
-      "sold": 6,
+      "sold": 11,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -20927,7 +20927,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 104
+      "available": 99
     },
     {
       "id": "EDI20250806-2026-11-27T19:15:00-Kinosal",
@@ -20953,17 +20953,17 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93724/purchase?kanal=dxf",
       "eventId": "93724",
       "promoterId": "202",
-      "sold": 6,
+      "sold": 10,
       "eventStatus": "ok",
       "ratings": {
         "letterboxd": {
-          "value": 3.25,
+          "value": 3.24,
           "url": "https://letterboxd.com/film/focker-in-law/"
         }
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 104
+      "available": 100
     },
     {
       "id": "EDI20261707-2026-11-27T21:45:00-Kinosal",
@@ -21042,18 +21042,18 @@
       "sold": 2,
       "eventStatus": "ok",
       "ratings": {
+        "imdb": {
+          "value": 6.8,
+          "id": "tt38077943",
+          "url": "https://www.imdb.com/title/tt38077943/"
+        },
         "letterboxd": {
-          "value": 3.2,
+          "value": 3.16,
           "url": "https://letterboxd.com/film/hexed-2026/"
         },
         "tomatoes": {
           "value": 38,
           "url": "https://www.rottentomatoes.com/m/hexed"
-        },
-        "imdb": {
-          "value": 6.8,
-          "id": "tt38077943",
-          "url": "https://www.imdb.com/title/tt38077943/"
         }
       },
       "reserved": 0,
@@ -21088,7 +21088,7 @@
       "eventStatus": "ok",
       "ratings": {
         "letterboxd": {
-          "value": 3.25,
+          "value": 3.24,
           "url": "https://letterboxd.com/film/focker-in-law/"
         }
       },
@@ -21170,7 +21170,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93751/purchase?kanal=dxf",
       "eventId": "93751",
       "promoterId": "202",
-      "sold": 5,
+      "sold": 12,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -21181,7 +21181,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 105
+      "available": 98
     },
     {
       "id": "EDI20261644-2026-11-29T15:30:00-Storsal",
@@ -21213,18 +21213,18 @@
       "sold": 0,
       "eventStatus": "ok",
       "ratings": {
+        "imdb": {
+          "value": 6.8,
+          "id": "tt38077943",
+          "url": "https://www.imdb.com/title/tt38077943/"
+        },
         "letterboxd": {
-          "value": 3.2,
+          "value": 3.16,
           "url": "https://letterboxd.com/film/hexed-2026/"
         },
         "tomatoes": {
           "value": 38,
           "url": "https://www.rottentomatoes.com/m/hexed"
-        },
-        "imdb": {
-          "value": 6.8,
-          "id": "tt38077943",
-          "url": "https://www.imdb.com/title/tt38077943/"
         }
       },
       "reserved": 0,
@@ -21255,7 +21255,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93808/purchase?kanal=dxf",
       "eventId": "93808",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 4,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -21266,7 +21266,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 110
+      "available": 106
     },
     {
       "id": "EDI20250806-2026-11-29T18:15:00-Storsal",
@@ -21296,7 +21296,7 @@
       "eventStatus": "ok",
       "ratings": {
         "letterboxd": {
-          "value": 3.25,
+          "value": 3.24,
           "url": "https://letterboxd.com/film/focker-in-law/"
         }
       },
@@ -21339,7 +21339,7 @@
           "url": "https://www.imdb.com/title/tt32558705/"
         },
         "letterboxd": {
-          "value": 4.02,
+          "value": 4.01,
           "url": "https://letterboxd.com/film/the-hunger-games-sunrise-on-the-reaping/"
         },
         "tomatoes": {
@@ -21348,8 +21348,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 106,
-      "available": 97
+      "capacity": 110,
+      "available": 101
     },
     {
       "id": "EDI20261707-2026-11-29T20:45:00-Storsal",
@@ -21468,7 +21468,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93641/purchase?kanal=dxf",
       "eventId": "93641",
       "promoterId": "202",
-      "sold": 79,
+      "sold": 81,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -21478,8 +21478,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 109,
-      "available": 30
+      "capacity": 107,
+      "available": 26
     },
     {
       "id": "EDI20251703-2026-12-15T19:30:00-Kinosal",
@@ -21548,8 +21548,8 @@
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
-      "capacity": 243,
-      "available": 228
+      "capacity": 246,
+      "available": 231
     },
     {
       "id": "BVI20200545-2026-12-16T20:00:00-Kinosal",
