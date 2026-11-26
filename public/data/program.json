@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T04:59:14.318Z",
+  "updatedAt": "2026-11-26T20:06:23.546Z",
   "cinema": "Buen kino",
   "shows": [
     {
@@ -20667,7 +20667,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93796/purchase?kanal=dxf",
       "eventId": "93796",
       "promoterId": "202",
-      "sold": 3,
+      "sold": 18,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -20677,8 +20677,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 107,
-      "available": 104
+      "capacity": 110,
+      "available": 92
     },
     {
       "id": "EDI20251399-2026-11-26T19:45:00-Kinosal",
@@ -20704,7 +20704,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93794/purchase?kanal=dxf",
       "eventId": "93794",
       "promoterId": "202",
-      "sold": 4,
+      "sold": 20,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -20715,7 +20715,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 106
+      "available": 90
     },
     {
       "id": "NOR20240691-2026-11-27T17:00:00-Kinosal",
@@ -20744,7 +20744,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93810/purchase?kanal=dxf",
       "eventId": "93810",
       "promoterId": "202",
-      "sold": 11,
+      "sold": 14,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -20755,7 +20755,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 99
+      "available": 96
     },
     {
       "id": "EDI20250806-2026-11-27T19:15:00-Kinosal",
@@ -20773,7 +20773,8 @@
       "showType": "Norgespremiere",
       "kinoklubb": false,
       "genres": [
-        "Comedy"
+        "Comedy",
+        "Drama"
       ],
       "director": "John Hamburg",
       "premiere": "2026-11-27",
@@ -20784,14 +20785,14 @@
       "sold": 10,
       "eventStatus": "ok",
       "ratings": {
-        "letterboxd": {
-          "value": 3.17,
-          "url": "https://letterboxd.com/film/focker-in-law/"
-        },
         "imdb": {
-          "value": 6.1,
+          "value": 6,
           "id": "tt34966140",
           "url": "https://www.imdb.com/title/tt34966140/"
+        },
+        "letterboxd": {
+          "value": 3.16,
+          "url": "https://letterboxd.com/film/focker-in-law/"
         }
       },
       "reserved": 0,
@@ -20842,8 +20843,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 108,
-      "available": 106
+      "capacity": 110,
+      "available": 108
     },
     {
       "id": "EDI20261644-2026-11-28T15:00:00-Kinosal",
@@ -20876,12 +20877,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.8,
+          "value": 6.7,
           "id": "tt38077943",
           "url": "https://www.imdb.com/title/tt38077943/"
         },
         "letterboxd": {
-          "value": 3.15,
+          "value": 3.13,
           "url": "https://letterboxd.com/film/hexed-2026/"
         },
         "tomatoes": {
@@ -20909,7 +20910,8 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Comedy"
+        "Comedy",
+        "Drama"
       ],
       "director": "John Hamburg",
       "premiere": "2026-11-27",
@@ -20917,22 +20919,22 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93749/purchase?kanal=dxf",
       "eventId": "93749",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 2,
       "eventStatus": "ok",
       "ratings": {
-        "letterboxd": {
-          "value": 3.17,
-          "url": "https://letterboxd.com/film/focker-in-law/"
-        },
         "imdb": {
-          "value": 6.1,
+          "value": 6,
           "id": "tt34966140",
           "url": "https://www.imdb.com/title/tt34966140/"
+        },
+        "letterboxd": {
+          "value": 3.16,
+          "url": "https://letterboxd.com/film/focker-in-law/"
         }
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 110
+      "available": 108
     },
     {
       "id": "EDI20261707-2026-11-28T21:00:00-Kinosal",
@@ -20960,7 +20962,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93750/purchase?kanal=dxf",
       "eventId": "93750",
       "promoterId": "202",
-      "sold": 0,
+      "sold": 5,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -20978,8 +20980,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 110,
-      "available": 110
+      "capacity": 105,
+      "available": 100
     },
     {
       "id": "NOR20240691-2026-11-29T15:00:00-Kinosal",
@@ -21052,12 +21054,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.8,
+          "value": 6.7,
           "id": "tt38077943",
           "url": "https://www.imdb.com/title/tt38077943/"
         },
         "letterboxd": {
-          "value": 3.15,
+          "value": 3.13,
           "url": "https://letterboxd.com/film/hexed-2026/"
         },
         "tomatoes": {
@@ -21122,7 +21124,8 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Comedy"
+        "Comedy",
+        "Drama"
       ],
       "director": "John Hamburg",
       "premiere": "2026-11-27",
@@ -21133,14 +21136,14 @@
       "sold": 0,
       "eventStatus": "ok",
       "ratings": {
-        "letterboxd": {
-          "value": 3.17,
-          "url": "https://letterboxd.com/film/focker-in-law/"
-        },
         "imdb": {
-          "value": 6.1,
+          "value": 6,
           "id": "tt34966140",
           "url": "https://www.imdb.com/title/tt34966140/"
+        },
+        "letterboxd": {
+          "value": 3.16,
+          "url": "https://letterboxd.com/film/focker-in-law/"
         }
       },
       "reserved": 0,
@@ -21191,8 +21194,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 107,
-      "available": 95
+      "capacity": 110,
+      "available": 98
     },
     {
       "id": "EDI20261707-2026-11-29T20:45:00-Storsal",
@@ -21284,8 +21287,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 106,
-      "available": 98
+      "capacity": 110,
+      "available": 102
     },
     {
       "id": "EDI20261644-2026-12-01T17:00:00-Kinosal",
@@ -21318,12 +21321,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.8,
+          "value": 6.7,
           "id": "tt38077943",
           "url": "https://www.imdb.com/title/tt38077943/"
         },
         "letterboxd": {
-          "value": 3.15,
+          "value": 3.13,
           "url": "https://letterboxd.com/film/hexed-2026/"
         },
         "tomatoes": {
@@ -21351,7 +21354,8 @@
       "showType": null,
       "kinoklubb": false,
       "genres": [
-        "Comedy"
+        "Comedy",
+        "Drama"
       ],
       "director": "John Hamburg",
       "premiere": "2026-11-27",
@@ -21362,14 +21366,14 @@
       "sold": 0,
       "eventStatus": "ok",
       "ratings": {
-        "letterboxd": {
-          "value": 3.17,
-          "url": "https://letterboxd.com/film/focker-in-law/"
-        },
         "imdb": {
-          "value": 6.1,
+          "value": 6,
           "id": "tt34966140",
           "url": "https://www.imdb.com/title/tt34966140/"
+        },
+        "letterboxd": {
+          "value": 3.16,
+          "url": "https://letterboxd.com/film/focker-in-law/"
         }
       },
       "reserved": 0,
@@ -21400,7 +21404,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93641/purchase?kanal=dxf",
       "eventId": "93641",
       "promoterId": "202",
-      "sold": 85,
+      "sold": 87,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -21410,8 +21414,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 108,
-      "available": 23
+      "capacity": 109,
+      "available": 22
     },
     {
       "id": "EDI20251703-2026-12-15T19:30:00-Kinosal",
@@ -21542,12 +21546,12 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93230/purchase?kanal=dxf",
       "eventId": "93230",
       "promoterId": "202",
-      "sold": 12,
+      "sold": 16,
       "eventStatus": "ok",
       "ratings": null,
       "reserved": 0,
-      "capacity": 108,
-      "available": 96
+      "capacity": 110,
+      "available": 94
     },
     {
       "id": "EDI20251026-2026-12-17T20:00:00-Storsal",
