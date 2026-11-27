@@ -1,179 +1,7 @@
 {
-  "updatedAt": "2026-11-26T20:06:23.546Z",
+  "updatedAt": "2026-11-27T04:59:53.186Z",
   "cinema": "Buen kino",
   "shows": [
-    {
-      "id": "EDI20260819-2026-07-29T16:50:00-Kinosal",
-      "title": "Vaiana",
-      "screen": "Kinosal",
-      "start": "2026-07-29T16:50:00",
-      "end": "2026-07-29T18:55:51",
-      "dayKey": "2026-07-29",
-      "runningMinutes": 115,
-      "runningLabel": "1 t. 55 min.",
-      "age": "6 år",
-      "tags": [
-        "Norsk tale",
-        "Norsk tekst"
-      ],
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/00979151e340722952a4e453830b15b8bb625663-1440x2057.jpg?w=240&h=340&fit=crop&auto=format",
-      "ticketUrl": "https://checkout.ebillett.no/202/events/92753/purchase?kanal=dxf",
-      "eventId": "92753",
-      "promoterId": "202",
-      "sold": 29,
-      "eventStatus": "ok",
-      "reserved": 0,
-      "capacity": 110,
-      "available": 81,
-      "ratings": {
-        "imdb": {
-          "value": 5.8,
-          "id": "tt27419466",
-          "url": "https://www.imdb.com/title/tt27419466/"
-        },
-        "letterboxd": {
-          "value": 2.71,
-          "url": "https://letterboxd.com/film/moana/"
-        },
-        "tomatoes": {
-          "value": 88,
-          "url": "https://www.rottentomatoes.com/m/moana_2026"
-        }
-      },
-      "genres": [
-        "Action",
-        "Adventure",
-        "Comedy"
-      ]
-    },
-    {
-      "id": "UIP20241749-2026-07-29T17:30:00-Storsal",
-      "title": "Minions & monstre",
-      "screen": "Storsal",
-      "start": "2026-07-29T17:30:00",
-      "end": "2026-07-29T19:10:00",
-      "dayKey": "2026-07-29",
-      "runningMinutes": 85,
-      "runningLabel": "1 t. 25 min.",
-      "age": "6 år",
-      "tags": [
-        "Norsk tale",
-        "Norsk tekst"
-      ],
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/f639a9cb4e51005f32fc6e6864e40753f9066914-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
-      "ticketUrl": "https://checkout.ebillett.no/202/events/92335/purchase?kanal=dxf",
-      "eventId": "92335",
-      "promoterId": "202",
-      "sold": 11,
-      "eventStatus": "ok",
-      "reserved": 0,
-      "capacity": 246,
-      "available": 235,
-      "ratings": {
-        "imdb": {
-          "value": 6.6,
-          "id": "tt32890033",
-          "url": "https://www.imdb.com/title/tt32890033/"
-        },
-        "letterboxd": {
-          "value": 3.13,
-          "url": "https://letterboxd.com/film/minions-monsters/"
-        },
-        "tomatoes": {
-          "value": 75,
-          "url": "https://www.rottentomatoes.com/m/minions_and_monsters"
-        }
-      },
-      "genres": [
-        "Animation",
-        "Adventure",
-        "Comedy"
-      ]
-    },
-    {
-      "id": "EDI20240688-2026-07-29T19:30:00-Kinosal",
-      "title": "Spider-Man: Brand New Day",
-      "screen": "Kinosal",
-      "start": "2026-07-29T19:30:00",
-      "end": "2026-07-29T22:05:00",
-      "dayKey": "2026-07-29",
-      "runningMinutes": 145,
-      "runningLabel": "2 t. 25 min.",
-      "age": "12 år",
-      "tags": [
-        "Norsk tekst"
-      ],
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/e7c9fcddbd72ae842fe5d16405edf688c330c177-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
-      "ticketUrl": "https://checkout.ebillett.no/202/events/92334/purchase?kanal=dxf",
-      "eventId": "92334",
-      "promoterId": "202",
-      "sold": 109,
-      "eventStatus": "ok",
-      "reserved": 0,
-      "capacity": 110,
-      "available": 1,
-      "ratings": {
-        "imdb": {
-          "value": 8,
-          "id": "tt22084616",
-          "url": "https://www.imdb.com/title/tt22084616/"
-        },
-        "letterboxd": {
-          "value": 4.02,
-          "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
-        },
-        "tomatoes": {
-          "value": 97,
-          "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
-        }
-      },
-      "genres": [
-        "Action",
-        "Adventure"
-      ]
-    },
-    {
-      "id": "EDI20240688-2026-07-29T20:00:00-Storsal",
-      "title": "Spider-Man: Brand New Day",
-      "screen": "Storsal",
-      "start": "2026-07-29T20:00:00",
-      "end": "2026-07-29T22:34:49",
-      "dayKey": "2026-07-29",
-      "runningMinutes": 145,
-      "runningLabel": "2 t. 25 min.",
-      "age": "12 år",
-      "tags": [
-        "Norsk tekst"
-      ],
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/e7c9fcddbd72ae842fe5d16405edf688c330c177-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
-      "ticketUrl": "https://checkout.ebillett.no/202/events/92779/purchase?kanal=dxf",
-      "eventId": "92779",
-      "promoterId": "202",
-      "sold": 153,
-      "eventStatus": "ok",
-      "reserved": 0,
-      "capacity": 246,
-      "available": 93,
-      "ratings": {
-        "imdb": {
-          "value": 8,
-          "id": "tt22084616",
-          "url": "https://www.imdb.com/title/tt22084616/"
-        },
-        "letterboxd": {
-          "value": 4.02,
-          "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
-        },
-        "tomatoes": {
-          "value": 97,
-          "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
-        }
-      },
-      "genres": [
-        "Action",
-        "Adventure"
-      ]
-    },
     {
       "id": "EDI20260556-2026-07-30T17:00:00-Kinosal",
       "title": "Superhunden Charlie",
@@ -19467,7 +19295,7 @@
           "url": "https://www.imdb.com/title/tt32558705/"
         },
         "letterboxd": {
-          "value": 4,
+          "value": 3.99,
           "url": "https://letterboxd.com/film/the-hunger-games-sunrise-on-the-reaping/"
         },
         "tomatoes": {
@@ -19591,7 +19419,7 @@
           "url": "https://www.imdb.com/title/tt32558705/"
         },
         "letterboxd": {
-          "value": 4,
+          "value": 3.99,
           "url": "https://letterboxd.com/film/the-hunger-games-sunrise-on-the-reaping/"
         },
         "tomatoes": {
@@ -19810,7 +19638,7 @@
           "url": "https://www.imdb.com/title/tt32558705/"
         },
         "letterboxd": {
-          "value": 4,
+          "value": 3.99,
           "url": "https://letterboxd.com/film/the-hunger-games-sunrise-on-the-reaping/"
         },
         "tomatoes": {
@@ -20068,7 +19896,7 @@
           "url": "https://www.imdb.com/title/tt32558705/"
         },
         "letterboxd": {
-          "value": 4,
+          "value": 3.99,
           "url": "https://letterboxd.com/film/the-hunger-games-sunrise-on-the-reaping/"
         },
         "tomatoes": {
@@ -20336,7 +20164,7 @@
           "url": "https://www.imdb.com/title/tt32558705/"
         },
         "letterboxd": {
-          "value": 4,
+          "value": 3.99,
           "url": "https://letterboxd.com/film/the-hunger-games-sunrise-on-the-reaping/"
         },
         "tomatoes": {
@@ -20497,7 +20325,7 @@
           "url": "https://www.imdb.com/title/tt32558705/"
         },
         "letterboxd": {
-          "value": 4,
+          "value": 3.99,
           "url": "https://letterboxd.com/film/the-hunger-games-sunrise-on-the-reaping/"
         },
         "tomatoes": {
@@ -20591,7 +20419,7 @@
           "url": "https://www.imdb.com/title/tt32558705/"
         },
         "letterboxd": {
-          "value": 4,
+          "value": 3.99,
           "url": "https://letterboxd.com/film/the-hunger-games-sunrise-on-the-reaping/"
         },
         "tomatoes": {
@@ -20786,13 +20614,17 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6,
+          "value": 6.1,
           "id": "tt34966140",
           "url": "https://www.imdb.com/title/tt34966140/"
         },
         "letterboxd": {
-          "value": 3.16,
+          "value": 3.14,
           "url": "https://letterboxd.com/film/focker-in-law/"
+        },
+        "tomatoes": {
+          "value": 87,
+          "url": "https://www.rottentomatoes.com/m/focker_in_law"
         }
       },
       "reserved": 0,
@@ -20886,8 +20718,8 @@
           "url": "https://letterboxd.com/film/hexed-2026/"
         },
         "tomatoes": {
-          "value": 38,
-          "url": "https://www.rottentomatoes.com/m/hexed"
+          "value": 86,
+          "url": "https://www.rottentomatoes.com/m/hexed_2026"
         }
       },
       "reserved": 0,
@@ -20923,13 +20755,17 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6,
+          "value": 6.1,
           "id": "tt34966140",
           "url": "https://www.imdb.com/title/tt34966140/"
         },
         "letterboxd": {
-          "value": 3.16,
+          "value": 3.14,
           "url": "https://letterboxd.com/film/focker-in-law/"
+        },
+        "tomatoes": {
+          "value": 87,
+          "url": "https://www.rottentomatoes.com/m/focker_in_law"
         }
       },
       "reserved": 0,
@@ -21063,13 +20899,13 @@
           "url": "https://letterboxd.com/film/hexed-2026/"
         },
         "tomatoes": {
-          "value": 38,
-          "url": "https://www.rottentomatoes.com/m/hexed"
+          "value": 86,
+          "url": "https://www.rottentomatoes.com/m/hexed_2026"
         }
       },
       "reserved": 0,
-      "capacity": 286,
-      "available": 286
+      "capacity": 246,
+      "available": 246
     },
     {
       "id": "EDI20251703-2026-11-29T17:00:00-Kinosal",
@@ -21137,18 +20973,22 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6,
+          "value": 6.1,
           "id": "tt34966140",
           "url": "https://www.imdb.com/title/tt34966140/"
         },
         "letterboxd": {
-          "value": 3.16,
+          "value": 3.14,
           "url": "https://letterboxd.com/film/focker-in-law/"
+        },
+        "tomatoes": {
+          "value": 87,
+          "url": "https://www.rottentomatoes.com/m/focker_in_law"
         }
       },
       "reserved": 0,
-      "capacity": 286,
-      "available": 286
+      "capacity": 246,
+      "available": 246
     },
     {
       "id": "EDI20251030-2026-11-29T19:30:00-Kinosal",
@@ -21176,7 +21016,7 @@
       "ticketUrl": "https://checkout.ebillett.no/202/events/93772/purchase?kanal=dxf",
       "eventId": "93772",
       "promoterId": "202",
-      "sold": 12,
+      "sold": 19,
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
@@ -21185,7 +21025,7 @@
           "url": "https://www.imdb.com/title/tt32558705/"
         },
         "letterboxd": {
-          "value": 4,
+          "value": 3.99,
           "url": "https://letterboxd.com/film/the-hunger-games-sunrise-on-the-reaping/"
         },
         "tomatoes": {
@@ -21195,7 +21035,7 @@
       },
       "reserved": 0,
       "capacity": 110,
-      "available": 98
+      "available": 91
     },
     {
       "id": "EDI20261707-2026-11-29T20:45:00-Storsal",
@@ -21241,8 +21081,8 @@
         }
       },
       "reserved": 0,
-      "capacity": 286,
-      "available": 286
+      "capacity": 246,
+      "available": 246
     },
     {
       "id": "EDI20251787-2026-12-01T13:00:00-Kinosal",
@@ -21330,8 +21170,8 @@
           "url": "https://letterboxd.com/film/hexed-2026/"
         },
         "tomatoes": {
-          "value": 38,
-          "url": "https://www.rottentomatoes.com/m/hexed"
+          "value": 86,
+          "url": "https://www.rottentomatoes.com/m/hexed_2026"
         }
       },
       "reserved": 0,
@@ -21367,15 +21207,186 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6,
+          "value": 6.1,
           "id": "tt34966140",
           "url": "https://www.imdb.com/title/tt34966140/"
         },
         "letterboxd": {
-          "value": 3.16,
+          "value": 3.14,
           "url": "https://letterboxd.com/film/focker-in-law/"
+        },
+        "tomatoes": {
+          "value": 87,
+          "url": "https://www.rottentomatoes.com/m/focker_in_law"
         }
       },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20261644-2026-12-02T17:00:00-Kinosal",
+      "title": "Hexe: det magiske riket",
+      "screen": "Kinosal",
+      "start": "2026-12-02T17:00:00",
+      "end": "2026-12-02T18:59:28",
+      "dayKey": "2026-12-02",
+      "runningMinutes": 109,
+      "runningLabel": "1 t. 49 min.",
+      "age": "6 år",
+      "tags": [
+        "Norsk tale",
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ],
+      "director": "Fawn Veerasunthorn, Jason Hand",
+      "premiere": "2026-11-27",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/bf8e21c21311a71e249a351f0799a559591c98da-1440x2057.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93840/purchase?kanal=dxf",
+      "eventId": "93840",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 6.7,
+          "id": "tt38077943",
+          "url": "https://www.imdb.com/title/tt38077943/"
+        },
+        "letterboxd": {
+          "value": 3.13,
+          "url": "https://letterboxd.com/film/hexed-2026/"
+        },
+        "tomatoes": {
+          "value": 86,
+          "url": "https://www.rottentomatoes.com/m/hexed_2026"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "NOR20240691-2026-12-03T17:00:00-Kinosal",
+      "title": "Julenissens verksted",
+      "screen": "Kinosal",
+      "start": "2026-12-03T17:00:00",
+      "end": "2026-12-03T18:22:32",
+      "dayKey": "2026-12-03",
+      "runningMinutes": 73,
+      "runningLabel": "1 t. 13 min.",
+      "age": "Tillatt for alle",
+      "tags": [
+        "Norsk tale",
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Animation",
+        "Comedy",
+        "Family"
+      ],
+      "director": "Rasmus A. Sivertsen, Mette Tange",
+      "premiere": "2026-11-06",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/6709e48a4ac96bb7821de663e44feff52c689458-1190x1684.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93838/purchase?kanal=dxf",
+      "eventId": "93838",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 6.8,
+          "id": "tt41475646",
+          "url": "https://www.imdb.com/title/tt41475646/"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "EDI20251030-2026-12-03T19:30:00-Kinosal",
+      "title": "The Hunger Games: Sunrise on the Reaping",
+      "screen": "Kinosal",
+      "start": "2026-12-03T19:30:00",
+      "end": "2026-12-03T22:18:20",
+      "dayKey": "2026-12-03",
+      "runningMinutes": 158,
+      "runningLabel": "2 t. 38 min.",
+      "age": "12 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": null,
+      "kinoklubb": false,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Fantasy"
+      ],
+      "director": "Francis Lawrence",
+      "premiere": "2026-11-18",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/759098369c8d9e4e168cd21dec664a9588893e2e-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93837/purchase?kanal=dxf",
+      "eventId": "93837",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": {
+        "imdb": {
+          "value": 7.6,
+          "id": "tt32558705",
+          "url": "https://www.imdb.com/title/tt32558705/"
+        },
+        "letterboxd": {
+          "value": 3.99,
+          "url": "https://letterboxd.com/film/the-hunger-games-sunrise-on-the-reaping/"
+        },
+        "tomatoes": {
+          "value": 94,
+          "url": "https://www.rottentomatoes.com/m/the_hunger_games_sunrise_on_the_reaping"
+        }
+      },
+      "reserved": 0,
+      "capacity": 110,
+      "available": 110
+    },
+    {
+      "id": "UIP20241718-2026-12-04T21:30:00-Kinosal",
+      "title": "Violent Night 2",
+      "screen": "Kinosal",
+      "start": "2026-12-04T21:30:00",
+      "end": "2026-12-04T23:30:00",
+      "dayKey": "2026-12-04",
+      "runningMinutes": 110,
+      "runningLabel": "1 t. 50 min.",
+      "age": "15 år",
+      "tags": [
+        "Norsk tekst"
+      ],
+      "showType": "Norgespremiere",
+      "kinoklubb": false,
+      "genres": [
+        "Action",
+        "Comedy"
+      ],
+      "director": "Tommy Wirkola",
+      "premiere": "2026-12-04",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/516c1eee0a0e5b8a8de321d87f9752271cd37fe0-954x1350.jpg?w=240&h=340&fit=crop&auto=format",
+      "ticketUrl": "https://checkout.ebillett.no/202/events/93685/purchase?kanal=dxf",
+      "eventId": "93685",
+      "promoterId": "202",
+      "sold": 0,
+      "eventStatus": "ok",
+      "ratings": null,
       "reserved": 0,
       "capacity": 110,
       "available": 110
