@@ -1,179 +1,7 @@
 {
-  "updatedAt": "2026-11-27T19:53:51.334Z",
+  "updatedAt": "2026-11-28T04:43:12.529Z",
   "cinema": "Buen kino",
   "shows": [
-    {
-      "id": "EDI20260556-2026-07-30T17:00:00-Kinosal",
-      "title": "Superhunden Charlie",
-      "screen": "Kinosal",
-      "start": "2026-07-30T17:00:00",
-      "end": "2026-07-30T18:42:00",
-      "dayKey": "2026-07-30",
-      "runningMinutes": 95,
-      "runningLabel": "1 t. 35 min.",
-      "age": "6 år",
-      "tags": [
-        "Norsk tale",
-        "Norsk tekst"
-      ],
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/eb6e013b74dca3128a5e20492a01d569fd5b4c13-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
-      "ticketUrl": "https://checkout.ebillett.no/202/events/92549/purchase?kanal=dxf",
-      "eventId": "92549",
-      "promoterId": "202",
-      "sold": 6,
-      "eventStatus": "ok",
-      "reserved": 0,
-      "capacity": 110,
-      "available": 104,
-      "ratings": {
-        "imdb": {
-          "value": 5.3,
-          "id": "tt29612071",
-          "url": "https://www.imdb.com/title/tt29612071/"
-        },
-        "letterboxd": {
-          "value": 2.33,
-          "url": "https://letterboxd.com/film/charlie-the-wonderdog/"
-        },
-        "tomatoes": {
-          "value": 74,
-          "url": "https://www.rottentomatoes.com/m/charlie_the_wonderdog"
-        }
-      },
-      "genres": [
-        "Animation",
-        "Comedy",
-        "Family"
-      ]
-    },
-    {
-      "id": "UIP20241749-2026-07-30T17:30:00-Storsal",
-      "title": "Minions & monstre",
-      "screen": "Storsal",
-      "start": "2026-07-30T17:30:00",
-      "end": "2026-07-30T19:10:00",
-      "dayKey": "2026-07-30",
-      "runningMinutes": 85,
-      "runningLabel": "1 t. 25 min.",
-      "age": "6 år",
-      "tags": [
-        "Norsk tale",
-        "Norsk tekst"
-      ],
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/f639a9cb4e51005f32fc6e6864e40753f9066914-1500x2122.webp?w=240&h=340&fit=crop&auto=format",
-      "ticketUrl": "https://checkout.ebillett.no/202/events/92550/purchase?kanal=dxf",
-      "eventId": "92550",
-      "promoterId": "202",
-      "sold": 19,
-      "eventStatus": "ok",
-      "reserved": 0,
-      "capacity": 246,
-      "available": 227,
-      "ratings": {
-        "imdb": {
-          "value": 6.6,
-          "id": "tt32890033",
-          "url": "https://www.imdb.com/title/tt32890033/"
-        },
-        "letterboxd": {
-          "value": 3.13,
-          "url": "https://letterboxd.com/film/minions-monsters/"
-        },
-        "tomatoes": {
-          "value": 75,
-          "url": "https://www.rottentomatoes.com/m/minions_and_monsters"
-        }
-      },
-      "genres": [
-        "Animation",
-        "Adventure",
-        "Comedy"
-      ]
-    },
-    {
-      "id": "EDI20240688-2026-07-30T19:30:00-Kinosal",
-      "title": "Spider-Man: Brand New Day",
-      "screen": "Kinosal",
-      "start": "2026-07-30T19:30:00",
-      "end": "2026-07-30T22:05:00",
-      "dayKey": "2026-07-30",
-      "runningMinutes": 145,
-      "runningLabel": "2 t. 25 min.",
-      "age": "12 år",
-      "tags": [
-        "Norsk tekst"
-      ],
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/6515f0f0c2f646f691da2071fe5a091451c966ff-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
-      "ticketUrl": "https://checkout.ebillett.no/202/events/92337/purchase?kanal=dxf",
-      "eventId": "92337",
-      "promoterId": "202",
-      "sold": 105,
-      "eventStatus": "ok",
-      "reserved": 0,
-      "capacity": 110,
-      "available": 5,
-      "ratings": {
-        "imdb": {
-          "value": 8,
-          "id": "tt22084616",
-          "url": "https://www.imdb.com/title/tt22084616/"
-        },
-        "letterboxd": {
-          "value": 4.02,
-          "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
-        },
-        "tomatoes": {
-          "value": 97,
-          "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
-        }
-      },
-      "genres": [
-        "Action",
-        "Adventure"
-      ]
-    },
-    {
-      "id": "EDI20240688-2026-07-30T20:00:00-Storsal",
-      "title": "Spider-Man: Brand New Day",
-      "screen": "Storsal",
-      "start": "2026-07-30T20:00:00",
-      "end": "2026-07-30T22:34:49",
-      "dayKey": "2026-07-30",
-      "runningMinutes": 145,
-      "runningLabel": "2 t. 25 min.",
-      "age": "12 år",
-      "tags": [
-        "Norsk tekst"
-      ],
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/6515f0f0c2f646f691da2071fe5a091451c966ff-1240x1754.jpg?w=240&h=340&fit=crop&auto=format",
-      "ticketUrl": "https://checkout.ebillett.no/202/events/92785/purchase?kanal=dxf",
-      "eventId": "92785",
-      "promoterId": "202",
-      "sold": 73,
-      "eventStatus": "ok",
-      "reserved": 0,
-      "capacity": 246,
-      "available": 173,
-      "ratings": {
-        "imdb": {
-          "value": 8,
-          "id": "tt22084616",
-          "url": "https://www.imdb.com/title/tt22084616/"
-        },
-        "letterboxd": {
-          "value": 4.02,
-          "url": "https://letterboxd.com/film/spider-man-brand-new-day/"
-        },
-        "tomatoes": {
-          "value": 97,
-          "url": "https://www.rottentomatoes.com/m/spider_man_brand_new_day"
-        }
-      },
-      "genres": [
-        "Action",
-        "Adventure"
-      ]
-    },
     {
       "id": "UIP20241749-2026-07-31T16:50:00-Storsal",
       "title": "Minions & monstre",
@@ -20614,12 +20442,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.1,
+          "value": 6.2,
           "id": "tt34966140",
           "url": "https://www.imdb.com/title/tt34966140/"
         },
         "letterboxd": {
-          "value": 3.12,
+          "value": 3.11,
           "url": "https://letterboxd.com/film/focker-in-law/"
         },
         "tomatoes": {
@@ -20701,7 +20529,7 @@
       ],
       "director": "Fawn Veerasunthorn, Jason Hand",
       "premiere": "2026-11-27",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/bf8e21c21311a71e249a351f0799a559591c98da-1440x2057.jpg?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/d6b42d3b81d0c248e28b50f1d622679220f7270f-1440x2057.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93748/purchase?kanal=dxf",
       "eventId": "93748",
       "promoterId": "202",
@@ -20714,11 +20542,11 @@
           "url": "https://www.imdb.com/title/tt38077943/"
         },
         "letterboxd": {
-          "value": 3.11,
+          "value": 3.1,
           "url": "https://letterboxd.com/film/hexed-2026/"
         },
         "tomatoes": {
-          "value": 88,
+          "value": 87,
           "url": "https://www.rottentomatoes.com/m/hexed_2026"
         }
       },
@@ -20755,12 +20583,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.1,
+          "value": 6.2,
           "id": "tt34966140",
           "url": "https://www.imdb.com/title/tt34966140/"
         },
         "letterboxd": {
-          "value": 3.12,
+          "value": 3.11,
           "url": "https://letterboxd.com/film/focker-in-law/"
         },
         "tomatoes": {
@@ -20882,7 +20710,7 @@
       ],
       "director": "Fawn Veerasunthorn, Jason Hand",
       "premiere": "2026-11-27",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/bf8e21c21311a71e249a351f0799a559591c98da-1440x2057.jpg?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/d6b42d3b81d0c248e28b50f1d622679220f7270f-1440x2057.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93752/purchase?kanal=dxf",
       "eventId": "93752",
       "promoterId": "202",
@@ -20895,11 +20723,11 @@
           "url": "https://www.imdb.com/title/tt38077943/"
         },
         "letterboxd": {
-          "value": 3.11,
+          "value": 3.1,
           "url": "https://letterboxd.com/film/hexed-2026/"
         },
         "tomatoes": {
-          "value": 88,
+          "value": 87,
           "url": "https://www.rottentomatoes.com/m/hexed_2026"
         }
       },
@@ -20973,12 +20801,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.1,
+          "value": 6.2,
           "id": "tt34966140",
           "url": "https://www.imdb.com/title/tt34966140/"
         },
         "letterboxd": {
-          "value": 3.12,
+          "value": 3.11,
           "url": "https://letterboxd.com/film/focker-in-law/"
         },
         "tomatoes": {
@@ -21153,7 +20981,7 @@
       ],
       "director": "Fawn Veerasunthorn, Jason Hand",
       "premiere": "2026-11-27",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/bf8e21c21311a71e249a351f0799a559591c98da-1440x2057.jpg?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/d6b42d3b81d0c248e28b50f1d622679220f7270f-1440x2057.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93726/purchase?kanal=dxf",
       "eventId": "93726",
       "promoterId": "202",
@@ -21166,11 +20994,11 @@
           "url": "https://www.imdb.com/title/tt38077943/"
         },
         "letterboxd": {
-          "value": 3.11,
+          "value": 3.1,
           "url": "https://letterboxd.com/film/hexed-2026/"
         },
         "tomatoes": {
-          "value": 88,
+          "value": 87,
           "url": "https://www.rottentomatoes.com/m/hexed_2026"
         }
       },
@@ -21207,12 +21035,12 @@
       "eventStatus": "ok",
       "ratings": {
         "imdb": {
-          "value": 6.1,
+          "value": 6.2,
           "id": "tt34966140",
           "url": "https://www.imdb.com/title/tt34966140/"
         },
         "letterboxd": {
-          "value": 3.12,
+          "value": 3.11,
           "url": "https://letterboxd.com/film/focker-in-law/"
         },
         "tomatoes": {
@@ -21247,7 +21075,7 @@
       ],
       "director": "Fawn Veerasunthorn, Jason Hand",
       "premiere": "2026-11-27",
-      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/bf8e21c21311a71e249a351f0799a559591c98da-1440x2057.jpg?w=240&h=340&fit=crop&auto=format",
+      "posterUrl": "https://cdn.sanity.io/images/j0wdmpyb/production/d6b42d3b81d0c248e28b50f1d622679220f7270f-1440x2057.jpg?w=240&h=340&fit=crop&auto=format",
       "ticketUrl": "https://checkout.ebillett.no/202/events/93840/purchase?kanal=dxf",
       "eventId": "93840",
       "promoterId": "202",
@@ -21260,11 +21088,11 @@
           "url": "https://www.imdb.com/title/tt38077943/"
         },
         "letterboxd": {
-          "value": 3.11,
+          "value": 3.1,
           "url": "https://letterboxd.com/film/hexed-2026/"
         },
         "tomatoes": {
-          "value": 88,
+          "value": 87,
           "url": "https://www.rottentomatoes.com/m/hexed_2026"
         }
       },
